@@ -1,6 +1,6 @@
 BRS 04-Nov-2003
 
-Added this test to verify isql comments
+bug #518349 isql show mangles relationship
 
 $CREATE cf_isql_20a.sql
 

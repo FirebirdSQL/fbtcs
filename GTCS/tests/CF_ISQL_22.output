@@ -1,12 +1,12 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
-SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_21.fdb';
+SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_22.fdb';
 SQL> 
 SQL> create table t(a int);
 SQL> create view v as select a from t;
 SQL> 
 SQL> Use CONNECT or CREATE DATABASE to specify a database
-SQL> connect 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_21.fdb';
+SQL> connect 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_22.fdb';
 SQL> show tables;
        T                               
 SQL> show views;
@@ -26,7 +26,7 @@ SQL>
 SQL>  
 SET SQL DIALECT 3; 
  
-/* CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_21.fdb' DEFAULT CHARACTER SET NONE */
+/* CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_22.fdb' DEFAULT CHARACTER SET NONE */
 
 
 

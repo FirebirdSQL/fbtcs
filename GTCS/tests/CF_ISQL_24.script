@@ -1,0 +1,51 @@
+BRS 04-Nov-2003
+
+bug #483795 Query using VIEW with UNION causes crash
+
+$CREATE cf_isql_24a.sql
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_24.fdb';
+
+CREATE TABLE table1 (
+keyfield INTEGER NOT NULL,
+field1 INTEGER NOT NULL);
+
+CREATE TABLE table2 (
+keyfield INTEGER NOT NULL,
+field2 INTEGER NOT NULL);
+
+CREATE VIEW test1 ( keyfield, field1 ) AS
+SELECT keyfield, field1
+FROM table1
+UNION
+SELECT keyfield, field1
+FROM table1;
+
+CREATE VIEW test2 ( keyfield, field2 ) AS
+SELECT keyfield, field2
+FROM table2
+UNION
+SELECT keyfield, field2
+FROM table2;
+commit;
+
+insert into table1 values (1,10);
+insert into table1 values (2,20);
+
+insert into table2 values (1,30);
+insert into table2 values (2,40);
+commit;
+
+$CREATE cf_isql_24b.sql
+
+set echo;
+connect 'WHERE_GDB:cf_isql_24.fdb';
+SELECT *
+FROM test1 i, test2 j
+WHERE i.keyfield = j.keyfield
+AND j.field2 = (SELECT MAX(x.field2) FROM test2 x);
+
+$ISQL -m -i cf_isql_24a.sql
+$ISQL -m -i cf_isql_24b.sql
+$DROP WHERE_GDB:cf_isql_24.fdb
+$DELETE cf_isql_24*

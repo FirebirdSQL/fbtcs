@@ -1,6 +1,6 @@
 BRS 04-Nov-2003
 
-Added this test to verify isql comments
+bug #781610 problems with one line comments (--)
 
 $CREATE cf_isql_19.sql
 
