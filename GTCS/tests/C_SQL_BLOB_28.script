@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_28.gdb
-$ CREATE blob028a.epp
+>> blob028a.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Create a view in the blob table 
@@ -79,13 +79,13 @@ $ GPRE -e blob028a.epp
 $ CXX FLAG_CXX blob028a.cpp
 $ LINK FLAG_LINK blob028a 
 $ RUN blob028a
-$ CREATE blob028a.qli
+>> blob028a.qli
 ready WHERE_GDB:sh_blobs_28.gdb
 show relation vmb1;
 finish;
 quit;
 $ QLI -n -a blob028a.qli
-$ CREATE blob028.epp
+>> blob028.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Inserting a blob through a view on a table. 
@@ -228,7 +228,7 @@ $ GPRE -e blob028.epp
 $ CXX FLAG_CXX blob028.cpp
 $ LINK FLAG_LINK blob028 
 $ RUN blob028
-$ CREATE blob028.qli
+>> blob028.qli
 ready WHERE_GDB:sh_blobs_28.gdb;
 select test, row, desc, bhalfk from vmb1 where test = 'blob028';
 finish;

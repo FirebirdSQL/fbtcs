@@ -1,41 +1,41 @@
 
-$CREATE COMMENT
-*******************************************************************************
- 
-Test Name:  	EXT_REL_0_27_E
-Test Level:     0
-Series Name:    EXT_LEV_0
-Date:  		July 5, 1994
-Author:  	Scott Van Voris
-Bug: 
- 
-Description:    This is a Level 0 test which is designed to verify the 
-                syntax to create an external relation with a column
-                that has an allowable constraint for an external relation.
- 
-Expected Output:       	Use CONNECT or CREATE DATABASE to specify a database
-			Statement failed, SQLCODE = -297
- 
-			Operation violates CHECK constraint SMALLER on view or table
-			Database:  ext_rel_0_27_E.gdb
- 
-			FIELD1 FIELD2 
-			====== ====== 
-			 
-			 12000  13000 
-History:
-2-Oct-95:  Mark
-  Removed the Cleanup / Setup comments from the test.
-  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+#*******************************************************************************
+# 
+#Test Name:  	EXT_REL_0_27_E
+#Test Level:     0
+#Series Name:    EXT_LEV_0
+#Date:  		July 5, 1994
+#Author:  	Scott Van Voris
+#Bug: 
+# 
+#Description:    This is a Level 0 test which is designed to verify the 
+#                syntax to create an external relation with a column
+#                that has an allowable constraint for an external relation.
+# 
+#Expected Output:       	Use CONNECT or CREATE DATABASE to specify a database
+#			Statement failed, SQLCODE = -297
+# 
+#			Operation violates CHECK constraint SMALLER on view or table
+#			Database:  ext_rel_0_27_E.gdb
+# 
+#			FIELD1 FIELD2 
+#			====== ====== 
+#			 
+#			 12000  13000 
+#History:
+#2-Oct-95:  Mark
+#  Removed the Cleanup / Setup comments from the test.
+#  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+#
+#3-Oct-95: Marco
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  by the server in the correct place when accessing data remotely.
+#  Also, I removed any referance to DIR external.dat and TYPE external.dat
+#  which would also fail when running remotely.
+#
+#*******************************************************************************
 
-3-Oct-95: Marco
-  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
-  by the server in the correct place when accessing data remotely.
-  Also, I removed any referance to DIR external.dat and TYPE external.dat
-  which would also fail when running remotely.
-
-*******************************************************************************
-$CREATE column.e
+>> column.e
 #include <stdio.h>
 #include <stdlib.h>
  
@@ -68,7 +68,7 @@ ERR:
 
 	exit(1);
 }
-$CREATE isql.in
+>> isql.in
 
 CONNECT "WHERE_GDB:ext_rel_0_27_E.gdb";
 INSERT INTO ext_table (field1,field2) VALUES (12000,13000);
@@ -82,4 +82,4 @@ $RUN column
 $ISQL -m -input isql.in
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
 $DROP WHERE_GDB:ext_rel_0_27_E.gdb
-$DELETE COMMENT isql.in column*
+$DELETE isql.in column*

@@ -1,24 +1,24 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           STARTING WITH '' - empty string
+#
+#                        SELECT JOB
+#                        FROM EMPLOYEES
+#                        WHERE JOB STARTING WITH ''
+#                        ORDER BY JOB ASCENDING;
+#
+# Tables:                employees
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta009.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           STARTING WITH '' - empty string
-
-                        SELECT JOB
-                        FROM EMPLOYEES
-                        WHERE JOB STARTING WITH ''
-                        ORDER BY JOB ASCENDING;
-
- Tables:                employees
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta009.e
 
 #include <stdio.h>
 
@@ -110,7 +110,7 @@ $ GPRE -e sta009.e
 $ CC FLAG_CC sta009.c
 $ LINK FLAG_LINK sta009 
 $ RUN sta009
-$ CREATE sta009.qli
+>> sta009.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -120,7 +120,7 @@ select count(*) from employees where job starting with '';
 finish;
 quit;
 $ QLI -n -a sta009.qli
-$ CREATE sta009.sql
+>> sta009.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT JOB FROM EMPLOYEES WHERE JOB STARTING WITH '' ORDER BY JOB ASCENDING;
 select count(*) from employees where job starting with '';

@@ -1,6 +1,7 @@
 
 $ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m WHERE_GDB:sp1.gdb
+
+>> proc_isql_17.sql
 set term go;
 create procedure insert_sno (sno varchar(5)) as
 declare variable c integer;
@@ -16,4 +17,7 @@ set term ; go
 EXECUTE PROCEDURE INSERT_SNO 'S10';
 select * from sp;
 exit;
+
+$ ISQL -m WHERE_GDB:sp1.gdb -i proc_isql_17.sql
 $ DROP WHERE_GDB:sp1.gdb  
+$DELETE proc_isql_17*

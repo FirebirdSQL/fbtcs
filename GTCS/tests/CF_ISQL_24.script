@@ -1,8 +1,10 @@
-BRS 26-Apr-2004
+#
+# BRS 26-Apr-2004
+# 
+# bug #483795 Query using VIEW with UNION causes crash
+#
 
-bug #483795 Query using VIEW with UNION causes crash
-
-$CREATE cf_isql_24a.sql
+>> cf_isql_24a.sql
 
 CREATE DATABASE 'WHERE_GDB:cf_isql_24.fdb';
 
@@ -36,7 +38,7 @@ insert into table2 values (1,30);
 insert into table2 values (2,40);
 commit;
 
-$CREATE cf_isql_24b.sql
+>> cf_isql_24b.sql
 
 set echo;
 connect 'WHERE_GDB:cf_isql_24.fdb';

@@ -1,6 +1,6 @@
 
 $ GBAK -r WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
-$ CREATE globals.c
+>> globals.c
 /*
 **      Name:           globals.c
 **      Programmer:     Ravil A. Desai

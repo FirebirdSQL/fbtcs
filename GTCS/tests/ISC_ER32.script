@@ -1,5 +1,5 @@
 
-$ CREATE er32.c
+>> er32.c
 /*
  *	isc_create_blob2
  *

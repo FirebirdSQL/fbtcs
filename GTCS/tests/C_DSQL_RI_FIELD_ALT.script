@@ -1,13 +1,15 @@
+#
+#HISTORY:
+#
+#
+#8/25/97:  failed w/compile error. logging new bug since syntax
+#          shows we should be able to do the DDL in this test.
+#          see comments in C_DSQL_RI_ALT_DROP. clare.
+#
 
-HISTORY:
-
-$ CREATE comment
-8/25/97:  failed w/compile error. logging new bug since syntax
-          shows we should be able to do the DDL in this test.
-          see comments in C_DSQL_RI_ALT_DROP. clare.
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE fieldalt.epp
+>> fieldalt.epp
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>

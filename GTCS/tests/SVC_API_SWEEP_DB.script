@@ -1,5 +1,5 @@
 $GBAK -r WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
-$CREATE svc_api_sweep_db.cpp
+>> svc_api_sweep_db.cpp
 
 #include <stdio.h>
 #include <string.h>

@@ -1,8 +1,8 @@
 
-$CREATE init.sql
+>> init.sql
 create database "WHERE_GDB:test1.gdb";
 create table t1 (a int not null, b blob);
-$CREATE p1.e
+>> p1.e
 exec sql include sqlca;
 exec sql set schema db = "WHERE_GDB:test1.gdb";
 #include <stdio.h>

@@ -1,17 +1,19 @@
 
-/*******************************************************************************
- Test Name:        dsql_except_01
- Date:             August 1993
- Expected Results: 
- Series:           dsql_exceptions
- Dependencies:     dsql_except_setup  (must be run initially to set up database)
-                   dsql_except_cleanup (should be run to remove database)
- Related Bugs:     bug_4827 - exception name > 31 chars
- Description:      Level 0 tests to check syntax for create, alter and drop 
-                   exception.
-*******************************************************************************/
-/* Level 0 create, alter, drop - autocommit on */
-$ isql -m WHERE_GDB:atlas.gdb
+#/*******************************************************************************
+# Test Name:        dsql_except_01
+# Date:             August 1993
+# Expected Results: 
+# Series:           dsql_exceptions
+# Dependencies:     dsql_except_setup  (must be run initially to set up database)
+#                   dsql_except_cleanup (should be run to remove database)
+# Related Bugs:     bug_4827 - exception name > 31 chars
+# Description:      Level 0 tests to check syntax for create, alter and drop 
+#                   exception.
+#*******************************************************************************/
+#/* Level 0 create, alter, drop - autocommit on */
+
+>> dsql_except_01.sql
+
 create exception noriver "River does not currently exist in Rivers relation";
 create exception nostate "State does not currently exist in State relation";
 create exception noupdate "Update cannot be completed because of errors";
@@ -49,3 +51,6 @@ drop exception noupdate;
 drop exception long_exception_name_31_char_tot;
 commit;
 exit;
+
+$ISQL -m WHERE_GDB:atlas.gdb -i dsql_except_01.sql
+$DELETE dsql_except_01*

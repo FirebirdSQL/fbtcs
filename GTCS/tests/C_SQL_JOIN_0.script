@@ -1,19 +1,21 @@
 
-$ CREATE doc
-history:
-12Oct95:  changed test to gbak into current dir because the .gbk file
-          in WHERE_FILES gets owned by its maker--which was R+D--and
-          the file perms prevent QA from accessing the .gbk file again.
-          For now I am leaving a gbak to WHERE_FILES too because several
-          bugs use it.  If we set umask to 000 before we run this test  
-          the db gets created w/full rw perm.      
-29Apr97:  Linda Wahler created 4.5 version.  4.2 version has two gbak -t
-	  statements right at the end of the test.  4.0 version had only
-	  one.  We were getting an error, no permission to open 
-	  WHERE_GDB:sh_join.gbk, so deleted the gbak -t statement that
-	  created it.
-28-Aug98: added doc file to the 'DELETE' statement. (changed by stsikin)
-$ CREATE sh_join.gdl
+#
+#history:
+#12Oct95:  changed test to gbak into current dir because the .gbk file
+#          in WHERE_FILES gets owned by its maker--which was R+D--and
+#          the file perms prevent QA from accessing the .gbk file again.
+#          For now I am leaving a gbak to WHERE_FILES too because several
+#          bugs use it.  If we set umask to 000 before we run this test  
+#          the db gets created w/full rw perm.      
+#29Apr97:  Linda Wahler created 4.5 version.  4.2 version has two gbak -t
+#	  statements right at the end of the test.  4.0 version had only
+#	  one.  We were getting an error, no permission to open 
+#	  WHERE_GDB:sh_join.gbk, so deleted the gbak -t statement that
+#	  created it.
+#28-Aug98: added doc file to the 'DELETE' statement. (changed by stsikin)
+#
+
+>> sh_join.gdl
 define database "WHERE_GDB:sh_join.gdb"
 	page_size 1024;
 
@@ -281,7 +283,7 @@ test_name	position 3,
 table_row	position 4;
 
 $ GDEF sh_join.gdl
-$ CREATE JLoader.e
+>> JLoader.e
 
 #include <stdio.h>
 
@@ -694,7 +696,7 @@ $ GPRE -e JLoader.e
 $ CC FLAG_CC JLoader.c
 $ LINK FLAG_LINK JLoader 
 $ RUN JLoader
-$ CREATE JLoader.qli
+>> JLoader.qli
 ready WHERE_GDB:sh_join.gdb;
 select * from st1 order by table_row;
 select * from st2 order by table_row;
@@ -711,4 +713,4 @@ quit;
 $ QLI -n -a JLoader.qli
 $ GBAK -t WHERE_GDB:sh_join.gdb sh_join.gbk
 $DROP WHERE_GDB:sh_join.gdb
-$ DELETE JLoader*  sh_join.* doc
+$ DELETE JLoader*  sh_join.*

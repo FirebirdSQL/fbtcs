@@ -1,8 +1,10 @@
-BRS 26-Apr-2004
+#
+# BRS 26-Apr-2004
+#
+# bug #583690 Complex view crashes server
+#
 
-bug #583690 Complex view crashes server
-
-$CREATE cf_isql_26a.sql
+>> cf_isql_26a.sql
 
 set echo;
 
@@ -361,7 +363,7 @@ CREATE VIEW APROMET(DATUM, SO, VRSTA,IZNOS) AS
 CREATE VIEW VV(VRSTA) AS
 	select distinct vrsta from apromet a;
 
-$CREATE cf_isql_26b.sql
+>> cf_isql_26b.sql
 
 connect 'WHERE_GDB:cf_isql_26.fdb';
 set echo on;

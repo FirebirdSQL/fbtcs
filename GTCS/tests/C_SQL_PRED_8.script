@@ -1,21 +1,22 @@
+#
+#**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:		[NOT]SINGULAR <subquery>			
+# Description:           Two table joins in subquery - SINGULAR
+#
+#                        SELECT T1.EMPNO,T1.LAST_NAME, T1.FIRST_NAME
+#                        FROM SALES_PEOPLE T1 WHERE SINGULAR
+#                        (SELECT * FROM SALES T3 , EMPLOYEES T2 WHERE
+#                        T3.SALES_REP = T1.EMPNO AND T3.TOTAL_VALUE > 6000
+#                        AND T3.SALES_REP = T2.EMPNO);
+#
+# Tables:                sales_people, employees, sales
+# Author:                Sam Hakim, Feb 19, 1993
+# ***********************************************************************
+#
 
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin009.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:		[NOT]SINGULAR <subquery>			
- Description:           Two table joins in subquery - SINGULAR
-
-                        SELECT T1.EMPNO,T1.LAST_NAME, T1.FIRST_NAME
-                        FROM SALES_PEOPLE T1 WHERE SINGULAR
-                        (SELECT * FROM SALES T3 , EMPLOYEES T2 WHERE
-                        T3.SALES_REP = T1.EMPNO AND T3.TOTAL_VALUE > 6000
-                        AND T3.SALES_REP = T2.EMPNO);
-
- Tables:                sales_people, employees, sales
- Author:                Sam Hakim, Feb 19, 1993
- ***********************************************************************
-*/
+>> sin009.e
 
 #include <stdio.h>
 
@@ -113,7 +114,7 @@ $ GPRE -e sin009.e
 $ CC FLAG_CC sin009.c
 $ LINK FLAG_LINK sin009
 $ RUN sin009
-$ CREATE sin009.qli
+>> sin009.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 
@@ -132,7 +133,7 @@ t3.sales_rep = t1.empno and t3.total_value > 6000 and t3.sales_rep = t2.empno);
 finish;
 quit;
 $ QLI -n -a sin009.qli
-$ CREATE sin009.sql
+>> sin009.sql
 connect WHERE_GDB:sh_test.gdb;
 select t1.empno,t1.last_name, t1.first_name
 from sales_people t1 where singular 

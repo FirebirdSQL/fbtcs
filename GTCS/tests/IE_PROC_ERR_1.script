@@ -1,24 +1,25 @@
 
-/****************************************************************
-* Name:    Sudhsnshu Kumar
-* Purpose: Test for Execute procedure 
-*          Error happens in Block A (i.e. Outer block).  
-*          But as execute procedure is being used
-*          There will be only one fetch. So after first 
-*          suspend no more statements would be executed.
+#/****************************************************************
+#* Name:    Sudhsnshu Kumar
+#* Purpose: Test for Execute procedure 
+#*          Error happens in Block A (i.e. Outer block).  
+#*          But as execute procedure is being used
+#*          There will be only one fetch. So after first 
+#*          suspend no more statements would be executed.
+#
+#EXPECTED RESULTS: 
+#BLOCK_IN                                           
+#================================================== 
+#<null>                                             
+#
+#BLOCK_NO    CHECK_PT 
+#======== =========== 
+#
+#A                  1 
+# 
+#***************************************************************/
 
-EXPECTED RESULTS: 
-BLOCK_IN                                           
-================================================== 
-<null>                                             
-
-BLOCK_NO    CHECK_PT 
-======== =========== 
-
-A                  1 
- 
-***************************************************************/
-$ CREATE proc_err.sql
+>> proc_err.sql
 create database "WHERE_GDB:proc_err.gdb";
 create table block_trace (block_no char(1), check_pt int);
 commit;

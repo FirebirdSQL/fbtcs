@@ -1,6 +1,6 @@
 
 $ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_25.gdb
-$ CREATE join025.e
+>> join025.e
 
 /**********************************************************************
  Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
@@ -103,7 +103,7 @@ $ GPRE -e join025.e
 $ CC FLAG_CC join025.c
 $ LINK FLAG_LINK join025 
 $ RUN join025
-$ CREATE join025.qli
+>> join025.qli
 ready WHERE_GDB:sh_join_25.gdb;
 set semicolon;
 set columns 100;
@@ -115,7 +115,7 @@ from st1 x where not exists
 finish;
 quit;
 $ QLI -n -a join025.qli
-$ CREATE join025.sql
+>> join025.sql
 connect WHERE_GDB:sh_join_25.gdb;
 select x.s1,x.s2,x.table_row
 from st1 x where not exists

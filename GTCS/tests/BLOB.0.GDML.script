@@ -1,8 +1,8 @@
 
-$CREATE init.sql
+>> init.sql
 create database "WHERE_GDB:test2.gdb";
 create table t1 (a int not null, b blob);
-$CREATE p1.e
+>> p1.e
 database db = "WHERE_GDB:test2.gdb";
 #include <stdio.h>
 #include <string.h>

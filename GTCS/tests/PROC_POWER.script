@@ -1,22 +1,23 @@
 
-/*      Reference Bug   : NONE
- *      Dependencies    : NONE
- *      Description     : Create a SP to compute x^y and all it a few times.
- *      Expected Result : Some numbers should return and a symbol indicating
- *		          numeric overflow.
-        History:         
-	24-May-95:        Failing remote due to db string appearing
-			  in the output. Changed to isql script that
-			  is executed rather than the interactive:
-			  ISQL -m -e .clare.
-	2June95:          Solaris returns "Infinity" while other machines
-			  return ++ when the double precision number is
-			  overflowed on returning the output from the procedure.
-			  Is this the InterBase msg or system msg?  Must be us.
-        3/19-96           Data General also returns "infinity"
-Original:
- */
-$ CREATE power.sql
+#/*      Reference Bug   : NONE
+# *      Dependencies    : NONE
+# *      Description     : Create a SP to compute x^y and all it a few times.
+# *      Expected Result : Some numbers should return and a symbol indicating
+# *		          numeric overflow.
+#        History:         
+#	24-May-95:        Failing remote due to db string appearing
+#			  in the output. Changed to isql script that
+#			  is executed rather than the interactive:
+#			  ISQL -m -e .clare.
+#	2June95:          Solaris returns "Infinity" while other machines
+#			  return ++ when the double precision number is
+#			  overflowed on returning the output from the procedure.
+#			  Is this the InterBase msg or system msg?  Must be us.
+#        3/19-96           Data General also returns "infinity"
+#Original:
+#
+
+>> power.sql
 create database "WHERE_GDB:power.gdb";
 set term go;
 create procedure power(x float, y integer) RETURNS(z double precision) as

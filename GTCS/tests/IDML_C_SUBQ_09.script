@@ -1,27 +1,28 @@
 
-$ CREATE doc
-By:          Clare Taylor
-Date:        03/14/94
-Test name:   IDML_C_SUBQ_09         
-Series:      IDML_C_SUBQUERYS          
-Results:     Uses EXISTS in a WHERE clause with a SUBQUERY to do an UPDATE.
-Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
-History:
-3/22/94:     UPDATES w/subquerys can cause different printed results when
-	     the update create duplicate rows and the select does an
-	     order by on the the field w/duplicates.  Because this was
-	     producing different results between machines, I removed the
-	     order by on the select which displays results and put it on
-	     the INSERT statement.  This should force the load to be ordered
-	     and the display select will print results in the same order
-	     regardless of dups.
-Sept. 05, 95: failed sun4, remote.
-Description:
-INSERTS data into one test table and then uses a SUBQUERY to return
-rows that are used for the 'EXISTS' condition.  If EXISTS returns ANY rows,
-all rows in the UPDATE field will be updated.
+#
+#By:          Clare Taylor
+#Date:        03/14/94
+#Test name:   IDML_C_SUBQ_09         
+#Series:      IDML_C_SUBQUERYS          
+#Results:     Uses EXISTS in a WHERE clause with a SUBQUERY to do an UPDATE.
+#Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
+#History:
+#3/22/94:     UPDATES w/subquerys can cause different printed results when
+#	     the update create duplicate rows and the select does an
+#	     order by on the the field w/duplicates.  Because this was
+#	     producing different results between machines, I removed the
+#	     order by on the select which displays results and put it on
+#	     the INSERT statement.  This should force the load to be ordered
+#	     and the display select will print results in the same order
+#	     regardless of dups.
+#Sept. 05, 95: failed sun4, remote.
+#Description:
+#INSERTS data into one test table and then uses a SUBQUERY to return
+#rows that are used for the 'EXISTS' condition.  If EXISTS returns ANY rows,
+#all rows in the UPDATE field will be updated.
+#
 
-$ CREATE subq9.e
+>> subq9.e
 /*-------------------------------------------------------------------------
   Case 8:  UPDATE <table> SET <field> = "string" WHERE EXISTS (subquery)
 ---------------------------------------------------------------------------*/
@@ -65,14 +66,14 @@ main()
 err: print_error();
 }
 
-$ CREATE ver9.sql 
+>> ver9.sql 
 set names iso8859_1;
 connect "WHERE_GDB:tests.gdb";
 select c_france from string_table where c_france = 'péché';
 SELECT S_ROWID, C_ENUS, C_FRANCE FROM TEST_TABLE1 ORDER BY S_ROWID;
 quit;
 
-$ CREATE subq9.sql 
+>> subq9.sql 
 set names iso8859_1;
 connect "WHERE_GDB:tests.gdb";
 delete from test_table1;
@@ -98,4 +99,4 @@ $ RUN subq9
 $ ISQL -i ver9.sql -m
 
 $ ISQL -i subq9.sql -m
-$ DELETE subq9* doc ver9.sql
+$ DELETE subq9* ver9.sql

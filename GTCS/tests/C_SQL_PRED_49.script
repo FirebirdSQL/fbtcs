@@ -1,23 +1,24 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           char-field SARTING with a single char
+#
+#                        SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB
+#                        FROM SALES S1
+#                        WHERE S1.PONUMB STARTING WITH '8' ;
+#
+# Tables:                sales
+#
+# Author:                Sam Hakim, Feb 23, 1993
+# ***********************************************************************
+
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta001.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           char-field SARTING with a single char
-
-                        SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB
-                        FROM SALES S1
-                        WHERE S1.PONUMB STARTING WITH '8' ;
-
- Tables:                sales
-
- Author:                Sam Hakim, Feb 23, 1993
- ***********************************************************************
-*/
+>> sta001.e
 
 #include <stdio.h>
 
@@ -116,7 +117,7 @@ $ GPRE -e sta001.e
 $ CC FLAG_CC sta001.c
 $ LINK FLAG_LINK sta001 
 $ RUN sta001
-$ CREATE sta001.qli
+>> sta001.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB 
@@ -126,7 +127,7 @@ select count(*) from sales where ponumb starting with '8';
 finish;
 quit;
 $ QLI -n -a sta001.qli
-$ CREATE sta001.sql
+>> sta001.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB 
 FROM SALES S1 WHERE S1.PONUMB STARTING WITH '8';

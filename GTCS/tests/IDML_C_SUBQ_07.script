@@ -1,29 +1,30 @@
 
-$ CREATE doc
-By:          Clare Taylor
-Date:        03/14/94
-Test name:   IDML_C_SUBQ_07         
-Series:      IDML_C_SUBQUERYS          
-Results:     Uses IN in a WHERE clause with a SUBQUERY to do a DELETE.
-Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
-History:
-4/14/94:     added set names under P to establish baseline results.
-             Modified verification sql scripts to use set names and
-	     select only fields for which set names applied.  Also added
-	     multiple set names/connects to control the display of the
-	     specific select.  This seems to work well and it eleminates
-	     the need for several verification scripts.
+#
+#By:          Clare Taylor
+#Date:        03/14/94
+#Test name:   IDML_C_SUBQ_07         
+#Series:      IDML_C_SUBQUERYS          
+#Results:     Uses IN in a WHERE clause with a SUBQUERY to do a DELETE.
+#Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
+#History:
+#4/14/94:     added set names under P to establish baseline results.
+#             Modified verification sql scripts to use set names and
+#	     select only fields for which set names applied.  Also added
+#	     multiple set names/connects to control the display of the
+#	     specific select.  This seems to work well and it eleminates
+#	     the need for several verification scripts.
+#
+#	     Using set names and new NONE behavior will not allow
+#	     selects of several different char set fields in one script.
+#
+#Description:
+#INSERTS data into one test table and then uses a SUBQUERY to return
+#rows that are used for the IN condition.  Rows that are IN the rows
+#returned by the subquery will be DELETED from the test table.  
+#Test executed in Embedded and ISQL, Dynamic SQL.
+#
 
-	     Using set names and new NONE behavior will not allow
-	     selects of several different char set fields in one script.
-
-Description:
-INSERTS data into one test table and then uses a SUBQUERY to return
-rows that are used for the IN condition.  Rows that are IN the rows
-returned by the subquery will be DELETED from the test table.  
-Test executed in Embedded and ISQL, Dynamic SQL.
-
-$ CREATE subq7.e
+>> subq7.e
 /*--------------------------------------------------------------------
   Case 6:  DELETE FROM <table>... WHERE a.field1 IN (subquery w/ < )
 ----------------------------------------------------------------------*/
@@ -64,7 +65,8 @@ main()
      exit(0);
 err: print_error();
 }
-$ CREATE doc2
+
+>> doc2
 
 =======================================================================
 The verification gets a bit difficult after Build P because we cannot
@@ -84,21 +86,21 @@ inserts/deletes, I experimented with using several set names statement.
 This method works well in P and I can eliminate the 802 errors by
 reconnecting after a set names.
 
-$ CREATE ver7.sql 
+>> ver7.sql 
 set names iso8859_1;
 connect "WHERE_GDB:tests.gdb";
 select count(*) from test_table1;
 SELECT S_ROWID, C_ENUS, C_FRANCE FROM TEST_TABLE1 order by c_france;
 quit;
 
-$ CREATE ver7b.sql 
+>> ver7b.sql 
 set names dos437;   
 connect "WHERE_GDB:tests.gdb";
 select count(*) from test_table1;
 SELECT S_ROWID, C_437_25 from TEST_TABLE1 order by c_437_25;
 quit;
 
-$ CREATE subq7.sql 
+>> subq7.sql 
 set names iso8859_1;
 connect "WHERE_GDB:tests.gdb";
 delete from test_table1;
@@ -140,5 +142,4 @@ $ RUN subq7
 $ ISQL -i ver7.sql -m
 
 $ ISQL -i subq7.sql -m
-$ DELETE subq7* doc ver7.sql ver7b.sql
-$ DELETE doc2
+$ DELETE subq7* ver7.sql ver7b.sql doc2

@@ -1,5 +1,5 @@
 
-$ CREATE er21.c
+>> er21.c
 /*
  *	isc_wait_for_event  NOT supported on PC.
  *

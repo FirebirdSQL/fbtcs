@@ -1,5 +1,5 @@
 
-$ CREATE er10.c
+>> er10.c
 /*
  *	isc_array_lookup_bounds
  *

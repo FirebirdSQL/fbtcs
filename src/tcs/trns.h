@@ -158,7 +158,7 @@ static struct ptl_cmd {
 	{"COBOL",		NULL,				fix_compile,	LANG_COBOL, "\t\tInvokes cobol compiler"},
 	{"COB_LINK",	NULL,				fix_link,		0, "\tInvokes cobol linker"},
 	{"COPY",		"copy_file ",		fix_isc,		0, "\t\t\"copy_file\""},
-	{"CREATE",		"create_file > ",	fix_isc,		0, "\t\t\"create_file >\""},
+//	{"CREATE",		"create_file > ",	fix_isc,		0, "\t\t\"create_file >\""},
 	{"DELETE",		NULL,				fix_isc,		0, "\t\t\"rm\""},
 	{"DELETE_REM",	"delete_file",		fix_isc,		0, "\t\t\"delete_file\""},
 	{"DROP",		"drop_gdb",			fix_isc,		0, "\t\t\"drop_gdb\""},

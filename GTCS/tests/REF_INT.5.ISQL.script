@@ -1,22 +1,22 @@
+#
+#Author: Ravi Narayanan
+#Date: Oct 10, 1994.
+#
+#Description: This is a test for referential integrity.
+#
+#Firstly, init.sql is an isql script used to create & populate
+#the database, WHERE_GDB:ref_int1.gdb.  This database has two tables 
+#"employee" and "department", and there is a referential integrity relationship
+#between these two tables by having dept_no field of table "employee" as a
+#foreign key to table "department". Also, note that emp_no is a primary key
+#for table "employee", and dept_no is a primary key for table "department".
+#
+#Secondly, test5.sql is an isql script that inactivates the unique index
+#that had been created by a primary key constraint. This should not be
+#allowed, but currently this is going through .. (bug 7517)
+#
 
-$CREATE COMMENT
-Author: Ravi Narayanan
-Date: Oct 10, 1994.
-
-Description: This is a test for referential integrity.
-
-Firstly, init.sql is an isql script used to create & populate
-the database, WHERE_GDB:ref_int1.gdb.  This database has two tables 
-"employee" and "department", and there is a referential integrity relationship
-between these two tables by having dept_no field of table "employee" as a
-foreign key to table "department". Also, note that emp_no is a primary key
-for table "employee", and dept_no is a primary key for table "department".
-
-Secondly, test5.sql is an isql script that inactivates the unique index
-that had been created by a primary key constraint. This should not be
-allowed, but currently this is going through .. (bug 7517)
-
-$CREATE init.sql
+>> init.sql
 create database "WHERE_GDB:ref_int5.gdb";
 create table department
 (dept_no char(3) not null,
@@ -43,7 +43,7 @@ insert into employee values (8, 'e8', 3);
 insert into employee values (9, 'e9', 3);
 commit;
 $ISQL -m -i init.sql
-$CREATE test5.sql
+>> test5.sql
 alter index dept_key inactive;
 commit;
 insert into department values (1, 'hello');
@@ -51,4 +51,4 @@ commit;
 select * from department;
 $ISQL WHERE_GDB:ref_int5.gdb -e -i test5.sql -merge
 $DROP WHERE_GDB:ref_int5.gdb
-$DELETE  COMMENT init.sql test5.sql
+$DELETE  init.sql test5.sql

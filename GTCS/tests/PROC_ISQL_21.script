@@ -1,12 +1,15 @@
+#
+#/**************************************************************
+#* Name: Sudhanshu Kumar
+#* Purpose: Can not use select * from p1 where p1 is proc
+#*          inside another proc p2. You can not even make 
+#*          a procedure.
+#**************************************************************/ 
+#
 
-/**************************************************************
-* Name: Sudhanshu Kumar
-* Purpose: Can not use select * from p1 where p1 is proc
-*          inside another proc p2. You can not even make 
-*          a procedure.
-**************************************************************/ 
-$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m WHERE_GDB:sp1.gdb
+$GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+
+>> proc_isql_21.sql
 create table t (x int);
 insert into t values(1);
 insert into t values(2);
@@ -25,4 +28,7 @@ set term ; go
 execute procedure p1;
 select * from t;
 exit; 
-$ DROP WHERE_GDB:sp1.gdb
+
+$ISQL -m WHERE_GDB:sp1.gdb -i proc_isql_21.sql
+$DROP WHERE_GDB:sp1.gdb
+$DELETE proc_isql_21*

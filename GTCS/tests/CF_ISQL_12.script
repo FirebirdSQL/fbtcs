@@ -1,22 +1,22 @@
 
-/*
-**  Name:		cf_isql_12
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level two test case for computed-fields.
-**			
-**			This test checks for defining computed-field using columns
-**			that themself are computed fields.
-**
-**  Expected result:	
-**			
-**  Author:		Ravil A. Desai
-**  Change history:
-**			 cloned for V6.x FSG 16.Oct:00
-*/
+#
+#  Name:		cf_isql_12
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level two test case for computed-fields.
+#			
+#			This test checks for defining computed-field using columns
+#			that themself are computed fields.
+#
+#  Expected result:	
+#			
+#  Author:		Ravil A. Desai
+#  Change history:
+#			 cloned for V6.x FSG 16.Oct:00
+#
 
-$ CREATE cf_test.sql
+>> cf_test.sql
 create database "WHERE_GDB:cf.gdb";
 
 /*---------------------------------------------*/

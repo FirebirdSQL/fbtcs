@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_18.gdb
-$ CREATE blob018.epp
+>> blob018.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT CURSOR - Use a local pointer to store the blob. 
@@ -143,7 +143,7 @@ $ GPRE -e blob018.epp
 $ CXX FLAG_CXX blob018.cpp
 $ LINK FLAG_LINK blob018 
 $ RUN blob018
-$ CREATE blob018.qli
+>> blob018.qli
 ready WHERE_GDB:sh_blobs_18.gdb;
 select test_name, row_id, b512 from mb1 where test_name = 'blob018'; 
 finish;

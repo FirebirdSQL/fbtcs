@@ -1,19 +1,19 @@
 
-/*******************************************************************************
- Test Name:       dsql_domain_14
- Series Name:     dsql_domains
- Date:            18-October-1993
- Related Bugs:    
- Comment:         This script will utilize the datatype, default and not null
-                  clauses in the create domain statement. A table is then 
-                  created using the domain definitions and data added to the 
-                  table with missing fields being supplied by the domain 
-                  defaults.
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:       dsql_domain_14
+# Series Name:     dsql_domains
+# Date:            18-October-1993
+# Related Bugs:    
+# Comment:         This script will utilize the datatype, default and not null
+#                  clauses in the create domain statement. A table is then 
+#                  created using the domain definitions and data added to the 
+#                  table with missing fields being supplied by the domain 
+#                  defaults.
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_14.sql
+>> domain_14.sql
 create domain dom14a as smallint
  default 0 not null;
 show domain dom14a;

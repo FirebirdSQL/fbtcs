@@ -1,47 +1,46 @@
 
-$CREATE comment
-*******************************************************************************
- 
-Test Name:  	EXT_REL_0_21_G
-Test Level:     0
-Series Name:    EXT_LEV_0
-Date:  		July 1, 1994
-Author:  	Scott Van Voris
-Bug:		6978 
- 
-Description:    This is a Level 0 test which is designed to verify an 
-		error is returned when an external relation with a 
-		variable-length datatype is created.
+#*******************************************************************************
+# 
+#Test Name:  	EXT_REL_0_21_G
+#Test Level:     0
+#Series Name:    EXT_LEV_0
+#Date:  		July 1, 1994
+#Author:  	Scott Van Voris
+#Bug:		6978 
+# 
+#Description:    This is a Level 0 test which is designed to verify an 
+#		error is returned when an external relation with a 
+#		variable-length datatype is created.
+#
+#		The database is connected and the tables existing in
+#		the database are checked to make sure the external relation
+#		was not created.  We also check to make sure the external
+#		file was not created.
+# 
+#Expected Output:Runs and displays the table.  
+#history:
+#15-May-95:      GDML is no longer being tested so I am not sure why we 
+#                are trying it here.
+#2-Oct-95:  Mark
+#  Removed the Cleanup / Setup comments from the test.
+#  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+#
+#3-Oct-95: Marco
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  by the server in the correct place when accessing data remotely.
+#  Also, I removed any referance to DIR external.dat and TYPE external.dat
+#  which would also fail when running remotely.
+#
+#*******************************************************************************
 
-		The database is connected and the tables existing in
-		the database are checked to make sure the external relation
-		was not created.  We also check to make sure the external
-		file was not created.
- 
-Expected Output:Runs and displays the table.  
-history:
-15-May-95:      GDML is no longer being tested so I am not sure why we 
-                are trying it here.
-2-Oct-95:  Mark
-  Removed the Cleanup / Setup comments from the test.
-  Also, added WHERE_GDB and RUN drop_gdb to the tests.
-
-3-Oct-95: Marco
-  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
-  by the server in the correct place when accessing data remotely.
-  Also, I removed any referance to DIR external.dat and TYPE external.dat
-  which would also fail when running remotely.
-
-*******************************************************************************
-
-$CREATE define.gdl
+>> define.gdl
 
 DEFINE DATABASE "WHERE_GDB:ext_rel_0_21_G.gdb";
  
 DEFINE RELATION ext_table EXTERNAL_FILE "WHERE_GDB_EXTERNAL:external.dat"
     field1 BLOB sub_type text segment_length 80;
 
-$CREATE qli.in
+>> qli.in
 
 READY "WHERE_GDB:ext_rel_0_21_G.gdb";
 
@@ -51,4 +50,4 @@ $GDEF define.gdl
 $QLI < qli.in
 $DROP WHERE_GDB:ext_rel_0_21_G.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
-$DELETE comment define.gdl qli.in
+$DELETE define.gdl qli.in

@@ -1,13 +1,15 @@
-
-/*      Reference Bug   : NONE
- *      Dependencies    : NONE
- *      Description     : 
- *      Expected Result : 
- */
-HISTORY:
+#
+#/*      Reference Bug   : NONE
+# *      Dependencies    : NONE
+# *      Description     : 
+# *      Expected Result : 
+# */
+#HISTORY:
+#
 
 $ GBAK -r WHERE_FILES:atlas.gbk WHERE_GDB:atlas.gdb
-$ ISQL -e -m WHERE_GDB:atlas.gdb
+
+>> proc_array2.sql
 set term go;
 create procedure proc_arr (city_in char(25))
 RETURNS (cit char(25), stat char(5), populatio integer, rain_arra blob) as
@@ -27,4 +29,7 @@ select * from  proc_arr ("Sacramento");
 show procedures;
 commit;
 quit;
+
+$ ISQL -e -m WHERE_GDB:atlas.gdb -i proc_array2.sql
 $ DROP WHERE_GDB:atlas.gdb
+$DELETE proc_array2*

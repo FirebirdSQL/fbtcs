@@ -1,24 +1,24 @@
 
-$ CREATE doc
-By:          Clare Taylor
-Date:        05/21/94
-Test name:   IDML_C_CHARSET_02
-Series:      IDML_C_CHARSET          
-Dependency:  requires the first test in this series to build the db
-
-History:
-May 94: changed what this series was doing due to the transliteration
-	features working differently.
-5/19/94:   Build I4.0T caused syntax to change.  all COLLATE <charset>
-	   syntax had to be changed to CHARACTER SET <charset>
-5/26/94:   Not all edits were done--the two iso fields did not have the
-	   CHARACTER SET added by the contractors so it was still failing.
-
-Description:
-A more simplified, focused test for inserts with _charset and display
-using SET NAMES.
-
-$ CREATE doc1
+#
+#By:          Clare Taylor
+#Date:        05/21/94
+#Test name:   IDML_C_CHARSET_02
+#Series:      IDML_C_CHARSET          
+#Dependency:  requires the first test in this series to build the db
+#
+#History:
+#May 94: changed what this series was doing due to the transliteration
+#	features working differently.
+#5/19/94:   Build I4.0T caused syntax to change.  all COLLATE <charset>
+#	   syntax had to be changed to CHARACTER SET <charset>
+#5/26/94:   Not all edits were done--the two iso fields did not have the
+#	   CHARACTER SET added by the contractors so it was still failing.
+#
+#Description:
+#A more simplified, focused test for inserts with _charset and display
+#using SET NAMES.
+#
+>> doc1
 rowid:
   1     Ó          O,acute:  ISO 211, DOS850 224  DOS437 undefined 
         Ë          E,umlaut: ISO 203, DOS850 211, DOS437 undefined
@@ -33,12 +33,12 @@ rowid:
         à          a, acute: ISO 224, DOS850 133, DOS437 undefined
 
 $ TYPE doc1
-$ CREATE setup1.sql
+>> setup1.sql
 create database "WHERE_GDB:charset.gdb";
 commit;
 quit;
 
-$ CREATE setup2.sql
+>> setup2.sql
 CONNECT WHERE_GDB:charset.gdb;
 CREATE DOMAIN ROWID AS                     SMALLINT;
 CREATE DOMAIN C_ASCII_25 AS CHAR(10)       CHARACTER SET ASCII;
@@ -61,7 +61,7 @@ CREATE TABLE T2 (t_rowid rowid,
 COMMIT;
 QUIT;
 
-$ CREATE isoload1.sql
+>> isoload1.sql
 SET NAMES ISO8859_1; 
 CONNECT WHERE_GDB:charset.gdb;
 
@@ -74,7 +74,7 @@ INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC)
 INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
    VALUES (33, _DOS850'ç',_ISO8859_1'ç','_DOS or _ISO c cedilla,iso 231,dos850 135');
 
-$ CREATE isoload2.sql
+>> isoload2.sql
 SET NAMES ISO8859_1; 
 CONNECT WHERE_GDB:charset.gdb;
 
@@ -93,7 +93,7 @@ INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC)
 COMMIT;
 QUIT;
 
-$ CREATE dos850l1.sql
+>> dos850l1.sql
 SET NAMES DOS850;    
 CONNECT WHERE_GDB:charset.gdb;
 
@@ -106,7 +106,7 @@ INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC)
 INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
    VALUES (33, _DOS850'ç',_ISO8859_1'ç','_DOS or _ISO c cedilla,iso 231,dos850 135');
 
-$ CREATE dos850l2.sql
+>> dos850l2.sql
 SET NAMES DOS850;     
 CONNECT WHERE_GDB:charset.gdb;
 
@@ -125,7 +125,7 @@ INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC)
 COMMIT;
 QUIT;
 
-$ CREATE dos437l1.sql
+>> dos437l1.sql
 SET NAMES DOS437;    
 CONNECT WHERE_GDB:charset.gdb;
 
@@ -140,7 +140,7 @@ INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC)
 COMMIT;
 QUIT;
 
-$ CREATE dos437l2.sql
+>> dos437l2.sql
 SET NAMES DOS437;     
 CONNECT WHERE_GDB:charset.gdb;
 
@@ -159,7 +159,7 @@ INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC)
 COMMIT;
 QUIT;
 
-$ CREATE v1
+>> v1
 ---------------------------------------------------------------
 1.
   RUNNING...                
@@ -169,7 +169,7 @@ $ CREATE v1
   quit;
 ---------------------------------------------------------------
 
-$ CREATE v2
+>> v2
 ---------------------------------------------------------------
 2.
   Then RUNNING...
@@ -179,19 +179,19 @@ $ CREATE v2
   select t_rowid, t_850,a_desc from t2;
 ---------------------------------------------------------------
 
-$ CREATE v1.sql
+>> v1.sql
 set names ISO8859_1;
 connect WHERE_GDB:charset.gdb;
 select t_rowid, t_850,a_desc from t2;
 quit;
 
-$ CREATE v2.sql
+>> v2.sql
 set names DOS850;
 connect WHERE_GDB:charset.gdb;
 select t_rowid, t_850,a_desc from t2;
 quit;
 
-$ CREATE i1
+>> i1
 ---------------------------------------------------------------
 3.
   Then RUNNING...selects on ISO field w/various set names:
@@ -201,13 +201,13 @@ $ CREATE i1
   select t_rowid, t_ISO, a_desc from t2;
 ---------------------------------------------------------------
 
-$ CREATE i1.sql
+>> i1.sql
 set names ISO8859_1;
 connect WHERE_GDB:charset.gdb;
 select t_rowid, t_ISO,a_desc from t2;
 quit;
 
-$ CREATE i2
+>> i2
 ---------------------------------------------------------------
 4.
   Then RUNNING...selects on ISO field w/various set names:
@@ -217,13 +217,13 @@ $ CREATE i2
   select t_rowid, t_ISO, a_desc from t2;
 ---------------------------------------------------------------
 
-$ CREATE i2.sql
+>> i2.sql
 set names DOS850;   
 connect WHERE_GDB:charset.gdb;
 select t_rowid, t_ISO,a_desc from t2;
 quit;
 
-$ CREATE pdoc1
+>> pdoc1
   PASS 1: LOADING DATA WITH SET NAMES = ISO8859_1--selecting DOS850 fields
 
 $ TYPE pdoc1
@@ -246,7 +246,7 @@ $ ISQL -i i2.sql -m
 
 $ DROP WHERE_GDB:charset.gdb
 
-$ CREATE pdoc2
+>> pdoc2
   PASS 2: Same thing, but LOAD THE DATA WITH SET NAMES = DOS850
 
 $ TYPE pdoc2
@@ -267,7 +267,7 @@ $TYPE i2
 $ISQL -i i2.sql -m
 $ DROP WHERE_GDB:charset.gdb
 
-$ CREATE pdoc3
+>> pdoc3
   PASS 3: Same thing, but LOAD THE DATA WITH SET NAMES = DOS437
 
 $ TYPE pdoc3
@@ -288,7 +288,7 @@ $ ISQL -i i1.sql -m
 $ TYPE i2
 $ ISQL -i i2.sql -m
 
-$ DELETE pdoc1 pdoc2 pdoc3 doc v1.sql v2.sql i1.sql i2.sql 
+$ DELETE pdoc1 pdoc2 pdoc3 v1.sql v2.sql i1.sql i2.sql 
 $ DELETE v1 v2 i1 i2
 $ DELETE dos850l2.sql dos850l1.sql dos437l1.sql dos437l2.sql 
 $ DELETE isoload1.sql isoload2.sql setup1.sql 

@@ -1,10 +1,12 @@
 
-$ CREATE comment.txt
-Name: Sudhanshu Kumar
-This test makes sure that if more then one application program  
-is waiting for some event to happen and the event happens then 
-event gets posted. 
-$CREATE event7.sql
+#
+#Name: Sudhanshu Kumar
+#This test makes sure that if more then one application program  
+#is waiting for some event to happen and the event happens then 
+#event gets posted. 
+#
+
+>> sql_event_7a.sql
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER,
@@ -32,8 +34,9 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event7.sql -sqldialect 1
-$ CREATE foo1.e
+
+$ISQL -m -I sql_event_7a.sql -sqldialect 1
+>> foo1.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
 # include <stdio.h>
@@ -70,7 +73,7 @@ $ CC FLAG_CC foo1.c
 $ LINK FLAG_LINK foo1 
 $ RUN_BG foo1 > foo1.tt1 &
 $ SLEEP 5
-$ CREATE foo2.e
+>> foo2.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
 # include <stdio.h>
@@ -107,14 +110,15 @@ $ CC FLAG_CC foo2.c
 $ LINK FLAG_LINK foo2 
 $ RUN_BG foo2 > foo2.tt2 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_7b.sql
 update project set prize = prize * 1.05 ;
 commit;
 select * from project;
 select * from works_on;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_7b.sql
 $ SLEEP 5
 $ TYPE foo1.tt1
 $ TYPE foo2.tt2
 $ DROP WHERE_GDB:events.gdb
-$ DELETE foo1* foo2* comment.txt event7.sql 
+$ DELETE foo1* foo2* sql_event_7*

@@ -1,8 +1,11 @@
 
-$ CREATE comment.txt
-Author: Sudhanshu Kumar
-Trgger calls a procedure which posta an event in application program.
-$CREATE event11.sql
+#
+#Author: Sudhanshu Kumar
+#Trgger calls a procedure which posta an event in application program.
+#
+
+>> sql_event_11a.sql
+
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER);
@@ -34,8 +37,10 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event11.sql -sqldialect 1
-$ CREATE foo.e
+
+$ISQL -m -I sql_event_11a.sql -sqldialect 1
+
+>> foo.e
 #include <stdio.h>
 DATABASE DB = "WHERE_GDB:events.gdb"
 main()
@@ -70,13 +75,14 @@ $ CC FLAG_CC foo.c
 $ LINK FLAG_LINK foo 
 $ RUN_BG foo > foo.tt1 &
 $ SLEEP  5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_11b.sql
 update project set pnumber = 11 where pnumber = 1;
 commit;
 select * from project;
 select * from works_on;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_11b.sql
 $ SLEEP 5
 $ TYPE foo.tt1
 $ DROP WHERE_GDB:events.gdb
-$ DELETE comment.txt foo* event11.sql
+$ DELETE foo* sql_event_11*

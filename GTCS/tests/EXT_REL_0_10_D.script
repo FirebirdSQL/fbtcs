@@ -1,56 +1,55 @@
 
-$CREATE COMMENT
-*******************************************************************************
- 
-Test Name:  	EXT_REL_0_10_D
-Test Level:     0
-Series Name:    EXT_LEV_0
-Date:  		June 28, 1994
-Author:  	Scott Van Voris
-Bug: 
+#*******************************************************************************
+# 
+#Test Name:  	EXT_REL_0_10_D
+#Test Level:     0
+#Series Name:    EXT_LEV_0
+#Date:  		June 28, 1994
+#Author:  	Scott Van Voris
+#Bug: 
+#
+#Description:    This is a Level 0 test which is designed to verify the 
+#		syntax to create an external relation with a fixed-length
+#		datatype is working properly.
+#
+#                In order to verify the external relation was really 
+#                created, a tuple is inserted into the relation, and the 
+#                value in the relation retreived via a query.
+# 
+#Expected Output:        Use CONNECT or CREATE DATABASE to specify a database
+#			Use CONNECT or CREATE DATABASE to specify a database
+#			Database:  ext_rel_0_10_D.gdb
+# 
+#			FIELD1     
+#			========== 
+# 
+#			Success    
+# 
+#			Success   
+#History:
+#2-Oct-95:  Mark
+#  Removed the Cleanup / Setup comments from the test.
+#  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+#
+#3-Oct-95: Marco
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  by the server in the correct place when accessing data remotely.
+#  Also, I removed any referance to DIR external.dat and TYPE external.dat
+#  which would also fail when running remotely.
+#
+#14-Oct-00: Frank Schlottmann-Goedde
+#  replaced double with single quotes where necessary to run with version 6.x
+#
+#*******************************************************************************
 
-Description:    This is a Level 0 test which is designed to verify the 
-		syntax to create an external relation with a fixed-length
-		datatype is working properly.
-
-                In order to verify the external relation was really 
-                created, a tuple is inserted into the relation, and the 
-                value in the relation retreived via a query.
- 
-Expected Output:        Use CONNECT or CREATE DATABASE to specify a database
-			Use CONNECT or CREATE DATABASE to specify a database
-			Database:  ext_rel_0_10_D.gdb
- 
-			FIELD1     
-			========== 
- 
-			Success    
- 
-			Success   
-History:
-2-Oct-95:  Mark
-  Removed the Cleanup / Setup comments from the test.
-  Also, added WHERE_GDB and RUN drop_gdb to the tests.
-
-3-Oct-95: Marco
-  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
-  by the server in the correct place when accessing data remotely.
-  Also, I removed any referance to DIR external.dat and TYPE external.dat
-  which would also fail when running remotely.
-
-14-Oct-00: Frank Schlottmann-Goedde
-  replaced double with single quotes where necessary to run with version 6.x
-
-*******************************************************************************
-
-$CREATE isql.in
+>> isql.in
 
 CREATE DATABASE 'WHERE_GDB:ext_rel_0_10_D.gdb';
 
 CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
         (field1 CHARACTER(10)) ;
  
-$CREATE isql2.in
+>> isql2.in
 
 CONNECT 'WHERE_GDB:ext_rel_0_10_D.gdb';
 INSERT INTO ext_table (field1) VALUES ('Success');
@@ -60,4 +59,4 @@ $ISQL -m -input isql.in
 $ISQL -m -input isql2.in
 $DROP WHERE_GDB:ext_rel_0_10_D.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
-$DELETE COMMENT isql.in isql2.in
+$DELETE isql.in isql2.in

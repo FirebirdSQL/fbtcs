@@ -1,5 +1,5 @@
 $GBAK -r WHERE_FILES:employee.gbk WHERE_GDB_EXTERNAL:employee.gdb
-$CREATE svc_api_backup.cpp
+>> svc_api_backup.cpp
 
 #include <stdio.h>
 #include <string.h>

@@ -1,24 +1,24 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:                [NOT] SINGULAR <subquery>
+# Description:           SINGULAR - view joins inside sub-query
+#
+#                        SELECT V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO, COUNT(*)
+#                        FROM HEAD_DEPT V1
+#                        WHERE SINGULAR
+#                        (SELECT * FROM DEPT_BUDGET V2, FULLEMP V3, EMPSAL V4
+#                        WHERE V2.DEPTNO= V1.DEPTNO AND V2.DEPARTMENT = V3.DEPARTMENT
+#                        AND V3.EMPNO = V4.EMPNO)
+#                        GROUP BY V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO
+#                        ORDER BY V1.DEPTNO;
+#
+# Tables:                customers
+# Author:                Sam Hakim, Feb 19, 1993
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin022.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:                [NOT] SINGULAR <subquery>
- Description:           SINGULAR - view joins inside sub-query
-
-                        SELECT V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO, COUNT(*)
-                        FROM HEAD_DEPT V1
-                        WHERE SINGULAR
-                        (SELECT * FROM DEPT_BUDGET V2, FULLEMP V3, EMPSAL V4
-                        WHERE V2.DEPTNO= V1.DEPTNO AND V2.DEPARTMENT = V3.DEPARTMENT
-                        AND V3.EMPNO = V4.EMPNO)
-                        GROUP BY V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO
-                        ORDER BY V1.DEPTNO;
-
- Tables:                customers
- Author:                Sam Hakim, Feb 19, 1993
- ***********************************************************************
-*/
+>> sin022.e
 
 #include <stdio.h>
 
@@ -157,7 +157,7 @@ $ GPRE -e sin022.e
 $ CC FLAG_CC sin022.c
 $ LINK FLAG_LINK sin022 
 $ RUN sin022
-$ CREATE sin022.qli
+>> sin022.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 select v1.deptno, v1.department, v1.mgrno, count(*) 
@@ -181,7 +181,7 @@ order by v1.deptno;
 finish;
 quit;
 $ QLI -n -a sin022.qli
-$ CREATE sin022.sql
+>> sin022.sql
 connect WHERE_GDB:sh_test.gdb;
 select v1.deptno, v1.department, v1.mgrno, count(*) 
 from head_dept v1 

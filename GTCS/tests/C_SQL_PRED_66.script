@@ -1,24 +1,25 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           varchar field STARTING WITH string
+#
+#                        SELECT JOB
+#                        FROM EMPLOYEES
+#                        WHERE JOB STARTING 'Mg'
+#                        ORDER BY JOB;
+#
+# Tables:                Employees
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta025.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           varchar field STARTING WITH string
-
-                        SELECT JOB
-                        FROM EMPLOYEES
-                        WHERE JOB STARTING 'Mg'
-                        ORDER BY JOB;
-
- Tables:                Employees
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta025.e
 
 #include <stdio.h>
 
@@ -110,7 +111,7 @@ $ GPRE -e sta025.e
 $ CC FLAG_CC sta025.c
 $ LINK FLAG_LINK sta025 
 $ RUN sta025
-$ CREATE sta025.qli
+>> sta025.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -121,7 +122,7 @@ select count(*) from employees where job starting 'Mg';
 finish;
 quit;
 $ QLI -n -a sta025.qli
-$ CREATE sta025.sql
+>> sta025.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT JOB FROM EMPLOYEES WHERE JOB STARTING 'Mg' ORDER BY JOB;
 select count(*) from employees where job starting 'Mg';

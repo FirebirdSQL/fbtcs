@@ -1,5 +1,5 @@
 
-$ CREATE er12.c
+>> er12.c
 /*
  *	isc_get_slice
  *

@@ -1,6 +1,7 @@
 
 $ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m WHERE_GDB:sp1.gdb
+
+>> proc_isql_11.sql
 set term go;
 create procedure proc13 RETURNS (a varchar(5), b varchar(21), c integer) as
 begin
@@ -20,4 +21,7 @@ SELECT A, AVG(C) FROM PROC13 GROUP BY A ;
 SELECT A , C FROM PROC13
         WHERE C > (SELECT AVG(C) FROM PROC13);
 exit;
+
+$ ISQL -m WHERE_GDB:sp1.gdb -i proc_isql_11.sql
 $ DROP WHERE_GDB:sp1.gdb 
+$DELETE proc_isql_11*

@@ -1,5 +1,5 @@
 
-$ CREATE er1.c
+>> er1.c
 
 /*
  *      isc_detach_database

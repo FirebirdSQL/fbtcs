@@ -1,15 +1,15 @@
 
-/*******************************************************************************
- Test Name:   dsql_domain_06
- Series Name: dsql_domains
- Date:        7-October-1993
- Comments:    This script will test level 0 syntax for alter domain with the 
-              drop default and set default clauses.
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:   dsql_domain_06
+# Series Name: dsql_domains
+# Date:        7-October-1993
+# Comments:    This script will test level 0 syntax for alter domain with the 
+#              drop default and set default clauses.
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_06.sql
+>> domain_06.sql
 create domain dom06a1 as smallint
  default 0;
 show domain dom06a1;

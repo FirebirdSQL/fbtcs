@@ -1,23 +1,24 @@
 
-$ CREATE doc
-By:          Clare Taylor
-Date:        03/22/94
-Test name:   IDML_C_SUBQ_10         
-Series:      IDML_C_SUBQUERYS          
-Results:     Syntax error for the ORDER BY in a SUBQUERY, ISQL behavior
-	     seems correct by standard.                     
-Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
-History:
+#
+#By:          Clare Taylor
+#Date:        03/22/94
+#Test name:   IDML_C_SUBQ_10         
+#Series:      IDML_C_SUBQUERYS          
+#Results:     Syntax error for the ORDER BY in a SUBQUERY, ISQL behavior
+#	     seems correct by standard.                     
+#Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
+#History:
+#
+#Description:
+#Attempts to INSERT data in sorted order through the use of an ORDER BY with
+#a SUBQUERY.  SQL II Dates book does not show that a SUBQUERY may contain a
+#ORDER BY, but it does show a GROUP BY.  The GROUP BY allows a COLLATE clause
+#so that sorted results on INSERT may be possible.  This test trys the ORDER BY
+#which should give a gpre error.  Attempts the INSERT in ISQL which fails
+#and in Embedded which works.
+#
 
-Description:
-Attempts to INSERT data in sorted order through the use of an ORDER BY with
-a SUBQUERY.  SQL II Dates book does not show that a SUBQUERY may contain a
-ORDER BY, but it does show a GROUP BY.  The GROUP BY allows a COLLATE clause
-so that sorted results on INSERT may be possible.  This test trys the ORDER BY
-which should give a gpre error.  Attempts the INSERT in ISQL which fails
-and in Embedded which works.
-
-$ CREATE doc_s10
+>> doc_s10
 
 The following test is executed in Embedded SQL where it succeeds and 
 in ISQL where it fails.  The test is for [illegal ?] syntax:
@@ -44,7 +45,7 @@ select_exp   : SELECT ...
 	                        the 'select' above.
 	        group_clause
 
-$ CREATE subq10.e
+>> subq10.e
 /*-------------------------------------------------------------------------
   Case 9:  INSERT <table> SET <field> = "string" WHERE (subquery w/order by)
 ---------------------------------------------------------------------------*/
@@ -82,13 +83,13 @@ main()
      exit(0);
 err: print_error();
 }
-$ CREATE ver10.sql 
+>> ver10.sql 
 set names iso8859_1;
 connect "WHERE_GDB:tests.gdb";
 SELECT S_ROWID, C_ENUS, C_FRANCE FROM TEST_TABLE1;
 quit;
 
-$ CREATE subq10.sql 
+>> subq10.sql 
 set names iso8859_1;
 connect "WHERE_GDB:tests.gdb";
 delete from test_table1;
@@ -108,4 +109,4 @@ $ LINK FLAG_LINK subq10
 $ RUN subq10
 $ ISQL -i ver10.sql -m
 $ ISQL -i subq10.sql -m
-$ DELETE doc ver10.sql doc_s10 subq10*
+$ DELETE ver10.sql doc_s10 subq10*

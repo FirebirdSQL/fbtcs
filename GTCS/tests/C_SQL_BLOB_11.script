@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_11.gdb
-$ CREATE blob011.epp
+>> blob011.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT CURSOR - INDICATOR keyword (MAX_SEG > Seg_length in db).
@@ -151,7 +151,7 @@ $ GPRE -e blob011.epp
 $ CXX FLAG_CXX blob011.cpp
 $ LINK FLAG_LINK blob011 
 $ RUN blob011
-$ CREATE blob011.qli
+>> blob011.qli
 ready WHERE_GDB:sh_blobs_11.gdb;
 select test_name, row_id, b512 from mb1 where test_name = 'blob011';
 finish;

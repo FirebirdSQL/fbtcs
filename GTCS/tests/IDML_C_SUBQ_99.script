@@ -1,3 +1,2 @@
 
 $DROP WHERE_GDB:tests.gdb
-#DELETE *.exe *.obj

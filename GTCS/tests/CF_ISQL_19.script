@@ -1,8 +1,11 @@
-BRS 04-Nov-2003
 
-bug #781610 problems with one line comments (--)
+#
+# BRS 04-Nov-2003
+#
+# bug #781610 problems with one line comments (--)
+#
 
-$CREATE cf_isql_19.sql
+>> cf_isql_19.sql
 
 CREATE DATABASE 'WHERE_GDB:cf_isql_19.fdb';
 

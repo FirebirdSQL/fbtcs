@@ -1,5 +1,5 @@
 
-$ CREATE er38.c
+>> er38.c
 /*
  *	isc_array_put_slice
  *

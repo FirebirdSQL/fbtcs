@@ -1,15 +1,15 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+#			[NOT]SINGULAR <subquery>			
+# Description:		Reflexive join - SINGULAR
+# Tables:                customers
+# Expected result:	 
+# Author:		Sam Hakim, Feb 18, 93
+#************************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin001.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
-			[NOT]SINGULAR <subquery>			
- Description:		Reflexive join - SINGULAR
- Tables:                customers
- Expected result:	 
- Author:		Sam Hakim, Feb 18, 93
-************************************************************************
-*/
+>> sin001.e
 
 #include <stdio.h>
 
@@ -110,7 +110,7 @@ $ GPRE -e sin001.e
 $ CC FLAG_CC sin001.c
 $ LINK FLAG_LINK sin001
 $ RUN sin001
-$ CREATE sin001.qli
+>> sin001.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 select * from customers c1
@@ -126,7 +126,7 @@ where 1 =  (select count(*) from customers c2 where c1.phone_no = c2.phone_no);
 finish;
 quit;
 $ QLI -n -a sin001.qli
-$ CREATE sin001.sql
+>> sin001.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from customers c1
 where singular (select * from customers c2 where c1.phone_no = c2.phone_no);

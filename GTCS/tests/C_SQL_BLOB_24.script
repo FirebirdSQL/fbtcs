@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_24.gdb
-$ CREATE blob024.epp
+>> blob024.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Mass update - no table cursor.
@@ -175,7 +175,7 @@ $ GPRE -e blob024.epp
 $ CXX FLAG_CXX blob024.cpp
 $ LINK FLAG_LINK blob024 
 $ RUN blob024
-$ CREATE blob024.qli
+>> blob024.qli
 ready WHERE_GDB:sh_blobs_24.gdb;
 select test_name, row_id, comment, b from mb1 where test_name = 'blob024';
 finish;

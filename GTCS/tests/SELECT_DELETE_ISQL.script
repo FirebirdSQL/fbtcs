@@ -1,6 +1,8 @@
 
 $ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m WHERE_GDB:sp1.gdb
+
+>> select_delete_isql.sql
+
 set term go; 
 create procedure proc RETURNS (x varchar(5)) as
 begin
@@ -47,4 +49,7 @@ rollback;
 select * from proc2;
 rollback;
 exit;
+
+$ ISQL -m WHERE_GDB:sp1.gdb -i select_delete_isql.sql
 $DROP WHERE_GDB:sp1.gdb
+$DELETE select_delete_isql*

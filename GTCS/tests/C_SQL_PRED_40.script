@@ -1,26 +1,26 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           blob-field containing a single char
+#
+#                        SELECT PROJ_NO
+#                        FROM PROJECTS
+#                        WHERE PROJ_DESC CONTAINING 'A';
+#
+#
+# Tables:                projects
+#
+# Author:                Sam Hakim, Feb 19, 93
+#
+# Note:                  GDML will be used to print blobs as SQL blob support
+#                        was not available at this time this test was written.
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con020.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           blob-field containing a single char
-
-                        SELECT PROJ_NO
-                        FROM PROJECTS
-                        WHERE PROJ_DESC CONTAINING 'A';
-
-
- Tables:                projects
-
- Author:                Sam Hakim, Feb 19, 93
-
- Note:                  GDML will be used to print blobs as SQL blob support
-                        was not available at this time this test was written.
- ***********************************************************************
-*/
+>> con020.e
 
 #include <stdio.h>
 
@@ -126,7 +126,7 @@ $ GPRE -e con020.e
 $ CC FLAG_CC con020.c
 $ LINK FLAG_LINK con020 
 $ RUN con020
-$ CREATE con020.qli
+>> con020.qli
 set semicolon;
 ready WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO
@@ -138,7 +138,7 @@ FINISH;
 QUIT;
 
 $ QLI -n -a con020.qli
-$ CREATE con020.sql
+>> con020.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO
 FROM PROJECTS

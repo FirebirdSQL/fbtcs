@@ -1,4 +1,4 @@
-$CREATE svc_api_connect.cpp
+>> svc_api_connect.cpp
 
 #include <stdio.h>
 #include <string.h>

@@ -1,19 +1,18 @@
 
-$CREATE comment.txt
-
-An example given to doc for ANY and SOME.
-
-some is supported in DSQL but not in ESQL (GPRE).
-08/27/99 - jeanne. changed employee.gbk to employee55.gbk
-
+#
+#An example given to doc for ANY and SOME.
+#
+#some is supported in DSQL but not in ESQL (GPRE).
+#08/27/99 - jeanne. changed employee.gbk to employee55.gbk
+#
 
 $GBAK -r WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
-$CREATE join.sql
+>> join.sql
 select emp_no, first_name, last_name, job_code, 
 salary from employee 
 where job_code = 'SRep' and salary > any 
 (select salary from employee where job_code = 'Mngr');
 quit;
 $ISQL -m -i join.sql WHERE_GDB:employee.gdb
-$DELETE join.sql comment.txt
+$DELETE join.sql
 $DROP WHERE_GDB:employee.gdb

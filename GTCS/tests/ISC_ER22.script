@@ -1,5 +1,5 @@
 
-$ CREATE er22.c
+>> er22.c
 /*
  *	isc_cancel_events
  *

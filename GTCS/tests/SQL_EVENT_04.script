@@ -1,9 +1,11 @@
 
-$ CREATE comment.txt
-This test waits on multiple events to happen. when ever one of them
-happens, It prints out event # occured. And also checks when a mass 
-update happens then evenets gete posted or not.
-$CREATE event4.sql
+#
+#This test waits on multiple events to happen. when ever one of them
+#happens, It prints out event # occured. And also checks when a mass 
+#update happens then evenets gete posted or not.
+#
+
+>> sql_event_04a.sql
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER,
@@ -39,8 +41,8 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event4.sql -sqldialect 1
-$ CREATE foo4.e
+$ISQL -m -I sql_event_04a.sql -sqldialect 1
+>> foo4.e
 
 # include <stdio.h>
 DATABASE DB = "WHERE_GDB:events.gdb"
@@ -81,31 +83,34 @@ $ CC FLAG_CC foo4.c
 $ LINK FLAG_LINK foo4 
 $ RUN_BG foo4 > foo4.tt1 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_04b.sql
 update project set prize = prize * 1.05;
 commit;
 select * from project;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_04b.sql
 $ SLEEP 5
 $ TYPE foo4.tt1
 $ RUN_BG foo4 > foo4.tt2 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_04c.sql
 update project set prize = prize * 1.16;
 commit;
 select * from project;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_04c.sql
 $ SLEEP 5
 $ TYPE foo4.tt2
 $ RUN_BG foo4 > foo4.tt3 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_04d.sql
 update project set prize = prize * 1.25;
 commit;
 select * from project;
 select * from works_on;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_04d.sql
 $ SLEEP 5
 $ TYPE foo4.tt3
 $ DROP WHERE_GDB:events.gdb
-$ DELETE foo4* comment.txt event4.sql
+$ DELETE foo4* sql_event_04*

@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           char-field, in a view
+#
+#                        SELECT DEPTNO
+#                        FROM DEPT_BUDGET
+#                        WHERE DEPTNO CONTAINING '12';
+#
+# Tables:                DEPT_BUDGET
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con013.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           char-field, in a view
-
-                        SELECT DEPTNO
-                        FROM DEPT_BUDGET
-                        WHERE DEPTNO CONTAINING '12';
-
- Tables:                DEPT_BUDGET
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con013.e
 
 #include <stdio.h>
 
@@ -109,7 +109,7 @@ $ GPRE -e con013.e
 $ CC FLAG_CC con013.c
 $ LINK FLAG_LINK con013 
 $ RUN con013
-$ CREATE con013.qli
+>> con013.qli
 set semicolon;
 ready WHERE_GDB:sh_test.gdb;
 SELECT DEPTNO
@@ -121,7 +121,7 @@ FINISH;
 QUIT;
 
 $ QLI -n -a con013.qli
-$ CREATE con013.sql
+>> con013.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT DEPTNO
 FROM DEPT_BUDGET

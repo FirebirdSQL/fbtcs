@@ -1,31 +1,32 @@
 
-$ CREATE doc
-By:          Clare Taylor
-Date:        03/14/94
-Test name:   IDML_C_SUBQ_02         
-Series:      IDML_C_SUBQUERYS          
-Results:     Creates and loads the database used for test 
-Dependency:  none
-History:
-4/14/94:     build Q/R failed these tests because the transliteration
-	     behavior changed so much.  I added the isql verify scripts
-	     to watch the changes between builds.  It is initialized in
-	     P and fails in R.  Waiting on S to see which had the correct
-	     behavior.
-5/26/94:     T build began printing out a dos437 header line from isql on
-	     query that produced translit error--s didn't do this so I
-	     reinitialized.
+#
+#By:          Clare Taylor
+#Date:        03/14/94
+#Test name:   IDML_C_SUBQ_02         
+#Series:      IDML_C_SUBQUERYS          
+#Results:     Creates and loads the database used for test 
+#Dependency:  none
+#History:
+#4/14/94:     build Q/R failed these tests because the transliteration
+#	     behavior changed so much.  I added the isql verify scripts
+#	     to watch the changes between builds.  It is initialized in
+#	     P and fails in R.  Waiting on S to see which had the correct
+#	     behavior.
+#5/26/94:     T build began printing out a dos437 header line from isql on
+#	     query that produced translit error--s didn't do this so I
+#	     reinitialized.
+#
+#Description:
+#Creates a static table into which data is loaded.  Creates 4
+#small tables to use as update and insert tables using a subquery
+#against the static data table.  Creates one table that is a 
+#duplicate of the static table for use in INSERT ... (SELECT * ...)
+#subqueries.  One insert statement loads data into all fields.  This
+#is used to verify the select * insert and update for the DUPLICATE 
+#table.  Several SQL scripts verify that the data loaded.
+#
 
-Description:
-Creates a static table into which data is loaded.  Creates 4
-small tables to use as update and insert tables using a subquery
-against the static data table.  Creates one table that is a 
-duplicate of the static table for use in INSERT ... (SELECT * ...)
-subqueries.  One insert statement loads data into all fields.  This
-is used to verify the select * insert and update for the DUPLICATE 
-table.  Several SQL scripts verify that the data loaded.
-
-$ CREATE build.sql
+>> build.sql
 CREATE DATABASE "WHERE_GDB:tests.gdb";
 COMMIT;
 
@@ -104,7 +105,7 @@ CREATE TABLE TEST_TABLE3 (S_ROWID ROWID,
 
 COMMIT;
 QUIT;
-$CREATE load.sql
+>> load.sql
 SET NAMES ISO8859_1;
 CONNECT "WHERE_GDB:tests.gdb";
 INSERT INTO STRING_TABLE (
@@ -152,7 +153,7 @@ INSERT INTO STRING_TABLE (S_ROWID, C_ENUS, C_FRANCE, C_437_25, C_850_25)
    VALUES (7, 'vice versa','vice versa',_DOS437'vice versa', 'vice versa');
 commit;
 quit;
-$ CREATE doc2
+>> doc2
 The verification scripts below show transliteration errors between dos437
 and dos850:  DOS 437 data loaded as 437, DOS 850 loaded as ISO.
 
@@ -160,7 +161,7 @@ g437.sql: set names dos437, displays iso, 437, unicode fields w/no prob
 			    transliteration error on 850 field.
 g850.sql: set names dos850, displays 850 file--transliteration error on 437
 
-$ CREATE giso.sql
+>> giso.sql
 set names ISO8859_1;
 connect WHERE_GDB:tests.gdb;
 select 'set names is ISO:',s_rowid, c_enus, c_850_25 from string_table;
@@ -168,18 +169,18 @@ select 'set names is ISO:',s_rowid, C_UNICODE_25 from string_table;
 select 'set names is ISO:',s_rowid, c_437_25 from string_table;
 QUIT;
 
-$ CREATE g437.sql
+>> g437.sql
 set names dos437;
 connect WHERE_GDB:tests.gdb;
 select 'set names is 437:',s_rowid, c_enus, c_437_25 from string_table;
 select 'set names is 437:',s_rowid, C_UNICODE_25 from string_table;
 QUIT;
-$ CREATE g850.sql
+>> g850.sql
 set names dos850;
 connect WHERE_GDB:tests.gdb;
 select 'set names is dos850:',s_rowid, c_enus, c_850_25 from string_table;
 quit;
-$ CREATE g8502.sql
+>> g8502.sql
 set names dos850;
 connect WHERE_GDB:tests.gdb;
 select 'set names is dos850:',s_rowid, c_437_25 from string_table;
@@ -192,4 +193,4 @@ $ ISQL -i g437.sql -m
 $ ISQL -i g850.sql -m
 $ ISQL -i g8502.sql -m
 
-$ DELETE load.sql build.sql doc g437.sql g850.sql g8502.sql giso.sql
+$ DELETE load.sql build.sql g437.sql g850.sql g8502.sql giso.sql

@@ -1,15 +1,14 @@
 
-$ CREATE cmt      
-History: clare.  see series cmt.
-         FSG Changed this to run without hanging in isql
+#
+#History: clare.  see series cmt.
+#         FSG Changed this to run without hanging in isql
+#
 
-$ CREATE isql.in
+>> isql.in
 quit;
-
 
 $GFIX -shut -force 10 WHERE_GDB:test.gdb
 $ISQL -m -u qa_user2 -pw qa_user2 WHERE_GDB:test.gdb -i isql.in
 $GFIX -online WHERE_GDB:test.gdb
 $ISQL -m -u qa_user2 -pw qa_user2 WHERE_GDB:test.gdb -i isql.in
-$ DELETE cmt
-$ DELETE isql.in
+$DELETE isql.in

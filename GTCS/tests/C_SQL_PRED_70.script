@@ -1,22 +1,24 @@
 
+#
+#**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:
+#
+# Description:           date-field STARTING WITH a number
+#
+#                        SELECT CUSTNO, TOTAL_VALUE, SHIPPED
+#                        FROM SALES
+#                        WHERE SHIPPED STARTING WITH '21';
+#
+# Table:                 sales
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+#
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta030.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:
-
- Description:           date-field STARTING WITH a number
-
-                        SELECT CUSTNO, TOTAL_VALUE, SHIPPED
-                        FROM SALES
-                        WHERE SHIPPED STARTING WITH '21';
-
- Table:                 sales
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta030.e
 
 #include <stdio.h>
 #include <time.h>
@@ -145,7 +147,7 @@ $ GPRE -e sta030.e
 $ CC FLAG_CC sta030.c
 $ LINK FLAG_LINK sta030 
 $ RUN sta030
-$ CREATE sta030.qli
+>> sta030.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -158,7 +160,7 @@ where shipped starting with '21';
 finish;
 quit;
 $ QLI -n -a sta030.qli
-$ CREATE sta030.sql
+>> sta030.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT CUSTNO, TOTAL_VALUE, SHIPPED 
 FROM SALES WHERE SHIPPED STARTING WITH '21';

@@ -1,5 +1,5 @@
 
-$ CREATE er25.c
+>> er25.c
 /*
  *	isc_dsql_execute_immediate
  *

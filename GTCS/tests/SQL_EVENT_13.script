@@ -1,5 +1,5 @@
 
-$ ISQL -m 
+>> sql_event_13.sql
 CREATE DATABASE "WHERE_GDB:asyn.gdb";
 CREATE TABLE CLIENT_RELATION(CLIENT_NAME VARCHAR(10),
 							 CLIENT_EVENT_COUNT INT);
@@ -24,7 +24,8 @@ go
 set term ; go
 exit;
 
-$ CREATE event_custom.h
+$ ISQL -m -i sql_event_13.sql
+>> event_custom.h
 
 /*
  *	MODULE NAME:	event_custom.h
@@ -82,7 +83,7 @@ void parse_client_args(int, char *[], LPHANDLE, int *, char *);
 
 /*------------------------------------------------------------------------*/
 
-$ CREATE event_server.e
+>> event_server.e
 
 /*
  * PROGRAM: Asynchronous Event Server
@@ -1060,7 +1061,7 @@ void finish_packets(
 }
 
 /*---------------------------------------------------------------------------*/
-$ CREATE event_client.e
+>> event_client.e
 
 /*
  * PROGRAM: Asynchronous Event Client
@@ -1259,4 +1260,5 @@ $ SLEEP 5
 $ DELETE event_custom.h
 $ DELETE event_server* 
 $ DELETE event_client* 
+$ DELETE sql_event_13*
 $ DROP WHERE_GDB:asyn.gdb

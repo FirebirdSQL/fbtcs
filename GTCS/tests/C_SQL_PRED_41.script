@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           blob-field containing a string
+#
+#                        SELECT PROJ_NO
+#                        FROM PROJECTS
+#                        WHERE PROJ_DESC CONTAINING 'platform';
+#
+# Tables:                projects
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con021.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           blob-field containing a string
-
-                        SELECT PROJ_NO
-                        FROM PROJECTS
-                        WHERE PROJ_DESC CONTAINING 'platform';
-
- Tables:                projects
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con021.e
 
 #include <stdio.h>
 
@@ -120,7 +120,7 @@ $ GPRE -e con021.e
 $ CC FLAG_CC con021.c
 $ LINK FLAG_LINK con021 
 $ RUN con021
-$ CREATE con021.qli
+>> con021.qli
 SET SEMICOLON;
 ready WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO
@@ -132,7 +132,7 @@ FINISH;
 QUIT;
 
 $ QLI -n -a con021.qli
-$ CREATE con021.sql
+>> con021.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO
 FROM PROJECTS

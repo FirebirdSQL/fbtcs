@@ -1,23 +1,23 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           char-field, containing an empty string ""
+#
+#                        SELECT JOB
+#                        FROM EMPLOYEES
+#                        WHERE JOB CONTAINING ''
+#                        ORDER BY JOB ASCENDING;
+#
+# Tables:                employees
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con008.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           char-field, containing an empty string ""
-
-                        SELECT JOB
-                        FROM EMPLOYEES
-                        WHERE JOB CONTAINING ''
-                        ORDER BY JOB ASCENDING;
-
- Tables:                employees
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con008.e
 
 #include <stdio.h>
 
@@ -112,7 +112,7 @@ $ GPRE -e con008.e
 $ CC FLAG_CC con008.c
 $ LINK FLAG_LINK con008 
 $ RUN con008
-$ CREATE con008.qli
+>> con008.qli
 set semicolon;
 ready WHERE_GDB:sh_test.gdb;
 SELECT JOB
@@ -124,7 +124,7 @@ FOR E IN EMPLOYEES SORTED BY ASCENDING E.JOB WITH E.JOB CONTAINING "" PRINT E.JO
 finish;
 quit;
 $ QLI -n -a con008.qli
-$ CREATE con008.sql
+>> con008.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT JOB
 FROM EMPLOYEES

@@ -1,9 +1,10 @@
-
-HISTORY:
+#
+#HISTORY:
+#
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE tab_prim.epp
+>> tab_prim.epp
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>

@@ -1,21 +1,22 @@
 
-/*
-**  Name:		cf_isql_17
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level one test case for computed-fields.
-**			
-**			This test uses simple arithmetic operations 
-**			and generators when defining computed-fields. 
-**  Expected result:	See source
-**			
-**  Author:		Patrick J. P. Griffin
-**  Bugs:		
-**  Change history:
-**
-*/
-$ CREATE cf_test.sql
+#
+#  Name:		cf_isql_17
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level one test case for computed-fields.
+#			
+#			This test uses simple arithmetic operations 
+#			and generators when defining computed-fields. 
+#  Expected result:	See source
+#			
+#  Author:		Patrick J. P. Griffin
+#  Bugs:		
+#  Change history:
+#
+#
+
+>> cf_test.sql
 create database "WHERE_GDB:cf.gdb";
 
 create generator gen1;

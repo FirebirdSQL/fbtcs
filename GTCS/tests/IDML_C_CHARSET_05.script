@@ -1,32 +1,33 @@
 
+#/* Requires the intlemp_05.gdb database built in test 4. 
+#   Contains DATABASE statement and SET NAMES. 
+#   Gets data from a stored procedure and inserts the data using
+#   host variables.
+#
+#   If bug 7043 fixed, this would work.
+#
+#   Currently fails with transliteration errors even when SET NAMES
+#   is used.  The insert executes but only the rowid is inserted.
+#
+#   Compile with:   gpre -m btest1.e
+#                   cc btest1.c -lgds -ldld -o btest
+#
+#11/10/94:  Added manual transaction so we don't see a warning. This
+#	   warning is new in build AA and enforces the fact that we
+#	   should  use -m with -charset or with SET NAMES.
+#30Aug95:   clare: adding a gbak at the top so that this will pass
+#	   independent of test 4 which is showing a bug in 4.0B.
+#	   This test is fine but it was failing because of the
+#	   extra row inserted in test 4.  I added a gbak to test 4
+#	   before the insert is done and that is what is used here.
+#	   reinit.
+#25-Aug-98: Vector cleanup remove DEL *.exe.  Delete explicit file
+#
+#16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
+#*/
+
 $ GBAK -r intlemp.gbk WHERE_GDB:intlemp_05.gdb
-$ CREATE btest2.e
-/* Requires the intlemp_05.gdb database built in test 4. 
-   Contains DATABASE statement and SET NAMES. 
-   Gets data from a stored procedure and inserts the data using
-   host variables.
-
-   If bug 7043 fixed, this would work.
-
-   Currently fails with transliteration errors even when SET NAMES
-   is used.  The insert executes but only the rowid is inserted.
-
-   Compile with:   gpre -m btest1.e
-                   cc btest1.c -lgds -ldld -o btest
-
-11/10/94:  Added manual transaction so we don't see a warning. This
-	   warning is new in build AA and enforces the fact that we
-	   should  use -m with -charset or with SET NAMES.
-30Aug95:   clare: adding a gbak at the top so that this will pass
-	   independent of test 4 which is showing a bug in 4.0B.
-	   This test is fine but it was failing because of the
-	   extra row inserted in test 4.  I added a gbak to test 4
-	   before the insert is done and that is what is used here.
-	   reinit.
-25-Aug-98: Vector cleanup remove DEL *.exe.  Delete explicit file
-
-16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
-*/
+>> btest2.e
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -100,7 +101,7 @@ if (SQLCODE != 100)
 exit(1);
 }
 
-$ CREATE verify.sql
+>> verify.sql
 set names iso8859_1;
 connect WHERE_GDB:intlemp_05.gdb;
 select * from employee;

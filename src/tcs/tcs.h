@@ -32,10 +32,11 @@ typedef long	STATUS;
 // externing the entry points
 
 const int CMD			= 1;	// line type for commands
-const int SYMDFN		= 2;	// line type for symbol definitions
-const int NOXCMD		= 3;	// line type for non translated commands
-const int REGTXT		= 4;	// line type for regular text
-const int COMML			= 5;	// line type for comment
+const int INPUTFILE		= 2;
+const int SYMDFN		= 3;	// line type for symbol definitions
+const int NOXCMD		= 4;	// line type for non translated commands
+const int REGTXT		= 5;	// line type for regular text
+const int COMML			= 6;	// line type for comment
 const int BUFSIZE		= 1024;	/* max input line length */
 
 // Miscellaneous constants

@@ -1,24 +1,24 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:                [NOT] SINGULAR <subquery>
+# Description:           SINGULAR - view joins inside sub-query
+#
+#                        SELECT *
+#                        FROM HEAD_DEPT V1
+#                        WHERE SINGULAR
+#                        (SELECT *
+#                        FROM DEPT_BUDGET V2,FULLEMP V3,EMPSAL V4
+#                        WHERE V2.DEPTNO= V1.DEPTNO
+#                        AND V2.DEPARTMENT = V3.DEPARTMENT
+#                        AND V3.EMPNO = V4.EMPNO);
+#
+# Tables:                customers
+# Author:                Sam Hakim, Feb 19, 1993
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin021.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:                [NOT] SINGULAR <subquery>
- Description:           SINGULAR - view joins inside sub-query
-
-                        SELECT *
-                        FROM HEAD_DEPT V1
-                        WHERE SINGULAR
-                        (SELECT *
-                        FROM DEPT_BUDGET V2,FULLEMP V3,EMPSAL V4
-                        WHERE V2.DEPTNO= V1.DEPTNO
-                        AND V2.DEPARTMENT = V3.DEPARTMENT
-                        AND V3.EMPNO = V4.EMPNO);
-
- Tables:                customers
- Author:                Sam Hakim, Feb 19, 1993
- ***********************************************************************
-*/
+>> sin021.e
 
 #include <stdio.h>
 
@@ -165,7 +165,7 @@ $ GPRE -e sin021.e
 $ CC FLAG_CC sin021.c
 $ LINK FLAG_LINK sin021 
 $ RUN sin021
-$ CREATE sin021.qli
+>> sin021.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 select * from head_dept v1 where singular
@@ -181,7 +181,7 @@ v3.empno = v4.empno);
 finish;
 quit;
 $ QLI -n -a sin021.qli
-$ CREATE sin021.sql
+>> sin021.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from head_dept v1 where singular
 (select * from dept_budget v2,fullemp v3,empsal v4 where

@@ -1,9 +1,10 @@
 
-$ CREATE doc
-  depends on idml_c_assign_1 for the db build/load. Currently part of
-  charset series.
+#
+#  depends on idml_c_assign_1 for the db build/load. Currently part of
+#  charset series.
+#
 
-$ CREATE assign2.e
+>> assign2.e
 /*-------------------------------------------------------------------------
   Case 1:    INSERT 8-bit data into an international field by selecting it
 	     from a field of a different character set.
@@ -88,7 +89,7 @@ EXEC SQL COMMIT;
      exit(0);
 err: print_error();
 }
-$ CREATE ver1.sql
+>> ver1.sql
 set names ISO8859_1;
 connect WHERE_GDB:assign.gdb;
 select c_437_25,c_850_25 from test_table1;
@@ -98,7 +99,7 @@ $ GPRE -m assign2.e
 $ CC FLAG_CC assign2.c
 $ LINK FLAG_LINK assign2 
 
-$ CREATE doc2
+>> doc2
   Using SET NAMES NONE.
   The following test is for embedded field assignment between 
   international fields of dissimilar character sets.  The insert
@@ -119,4 +120,4 @@ $ ISQL -i ver1.sql -m
 $ RUN assign2 DOS437
 $ ISQL -i ver1.sql -m
 
-$ DELETE assign2* doc doc2 ver1.sql 
+$ DELETE assign2* doc2 ver1.sql 

@@ -1,24 +1,25 @@
-
-HISTORY:
-
-$CREATE comment
-History:
-21-Aug-97: clare: Jeanne found that these are failing
-   gpre compile w/a new error which indicates that prod
-   behavior changed.  compatibility issue for sure.
-   The problem is that 4.0 allowed a Foreign key definition
-   to NOT name the field when it specifies the table for the
-   primary key.  We should be smart enough to figure out the
-   primary key since there is only one.  This program does not
-   specify the primary key and so it fails compilation in beta1,
-   B5.0.  I can work around it and get the test to pass, but
-   it is a bug.
-   Either bug fix or?? (bug 8531)
+#
+#HISTORY:
+#
+#
+#History:
+#21-Aug-97: clare: Jeanne found that these are failing
+#   gpre compile w/a new error which indicates that prod
+#   behavior changed.  compatibility issue for sure.
+#   The problem is that 4.0 allowed a Foreign key definition
+#   to NOT name the field when it specifies the table for the
+#   primary key.  We should be smart enough to figure out the
+#   primary key since there is only one.  This program does not
+#   specify the primary key and so it fails compilation in beta1,
+#   B5.0.  I can work around it and get the test to pass, but
+#   it is a bug.
+#   Either bug fix or?? (bug 8531)
+#
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-/*---------------------------------------------------------*/
-$ CREATE alt_drop.epp
+
+>> alt_drop.epp
 
 #include <stdio.h>
 #include <cstdlib>

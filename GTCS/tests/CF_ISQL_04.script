@@ -1,40 +1,40 @@
 
-/*
-**  Name:		cf_isql_04
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level one test case for computed-fields.
-**			
-**			This test uses simple string operations when
-**			defining computed-fields. This includes test cases
-**			where computed-fields are string literals, which
-**			really doesn't do any good. 
-**
-**			Using VARCHAR field.
-**
-**			This is the model of most of the tests defined here:
-**
-**			- Create a table with computed field.
-**                      - Show table to verify the create table.
-**			- Insert couple of rows with data.
-**			- Query the table with matching expression and see
-**			  if we get back same number of rows.
-**			- Update a row.
-**			- Query again using same expression as above.
-**
-**  Expected result:	For every set of testcase there will be two output lines.
-**			
-**			'Passed xx - Insert'
-**			'Passed xx - Update'
-**
-**  Author:		Ravil A. Desai
-**  Bugs:		6604 - Use of "|" as concat operator not recognized.
-**  Change history:
-**
-*/
+#
+#  Name:		cf_isql_04
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level one test case for computed-fields.
+#			
+#			This test uses simple string operations when
+#			defining computed-fields. This includes test cases
+#			where computed-fields are string literals, which
+#			really doesn't do any good. 
+#
+#			Using VARCHAR field.
+#
+#			This is the model of most of the tests defined here:
+#
+#			- Create a table with computed field.
+#                      - Show table to verify the create table.
+#			- Insert couple of rows with data.
+#			- Query the table with matching expression and see
+#			  if we get back same number of rows.
+#			- Update a row.
+#			- Query again using same expression as above.
+#
+#  Expected result:	For every set of testcase there will be two output lines.
+#			
+#			'Passed xx - Insert'
+#			'Passed xx - Update'
+#
+#  Author:		Ravil A. Desai
+#  Bugs:		6604 - Use of "|" as concat operator not recognized.
+#  Change history:
+#
+#
 
-$ CREATE cf_test.sql
+>> cf_test.sql
 create database "WHERE_GDB:cf.gdb";
 
 /*

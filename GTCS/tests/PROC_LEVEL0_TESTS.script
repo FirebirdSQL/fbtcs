@@ -1,8 +1,9 @@
+#
+#   This suite contains all level 0 tests for the Stored Procedure.
+#
 
-$ CREATE comment.txt
-   This suite contains all level 0 tests for the Stored Procedure.
+>> proc_level0_tests.sql
 
-$ ISQL -m
 create database "WHERE_GDB:foo.gdb";
 set echo;
 /* This script checks how long a procedure name can be. */
@@ -27,5 +28,6 @@ execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
 execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
 exit;
 
-$ DELETE comment.txt
+$ ISQL -m -i proc_level0_tests.sql
 $ DROP WHERE_GDB:foo.gdb
+$DELETE proc_level0_tests*

@@ -1,9 +1,9 @@
 
-$ CREATE blob33.sql
+>> blob33.sql
 create database "WHERE_GDB:blob33.gdb";
 quit;
 $ ISQL -m -i blob33.sql
-$ CREATE blob33x.epp
+>> blob33x.epp
 exec sql set database db = "WHERE_GDB:blob33.gdb";
 exec sql include sqlca;
 exec sql whenever sqlerror goto err;
@@ -32,7 +32,7 @@ $ GPRE -e -n blob33x.epp
 $ CXX FLAG_CXX blob33x.cpp
 $ LINK FLAG_LINK blob33x 
 $ RUN blob33x
-$ CREATE blob33.epp
+>> blob33.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
 

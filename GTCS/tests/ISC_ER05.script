@@ -1,5 +1,5 @@
 
-$ CREATE er5.c
+>> er5.c
 /*
  *	isc_dsql_exec_immed2
  *

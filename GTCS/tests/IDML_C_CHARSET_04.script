@@ -1,44 +1,45 @@
 
-$ CREATE comments
-By:          Clare Taylor
-Date:        08/03/94
-Test name:   IDML_C_CHARSET_04         
-Series:      IDML_C_CHARSET          
-Dependency:  none
-Results:     Fails with transliteration error.  Bug--not
-	     specific to stored procedures.  Also occurs
-	     when select is used and -charset was used to
-	     compile.  Bug_no:  7095             
-History:
-11/3/94:     bug w/-charset fixed, must use manual transactions.
-	     added them here. 
-11/16/94:    doing local init on NT due to translit error.
-Aug. 30 95:  failing w/db err 4.0B
-25-Aug-98:   vector cleanup:  delete testcmt2 and b1test* instead of *.exe
-23-Apr-04:   Changed NONE charset
+#
+#By:          Clare Taylor
+#Date:        08/03/94
+#Test name:   IDML_C_CHARSET_04         
+#Series:      IDML_C_CHARSET          
+#Dependency:  none
+#Results:     Fails with transliteration error.  Bug--not
+#	     specific to stored procedures.  Also occurs
+#	     when select is used and -charset was used to
+#	     compile.  Bug_no:  7095             
+#History:
+#11/3/94:     bug w/-charset fixed, must use manual transactions.
+#	     added them here. 
+#11/16/94:    doing local init on NT due to translit error.
+#Aug. 30 95:  failing w/db err 4.0B
+#25-Aug-98:   vector cleanup:  delete testcmt2 and b1test* instead of *.exe
+#23-Apr-04:   Changed NONE charset
+#
+#Series/Test Set Description:
+#The next four tests in this series test for the -charset option 
+#with and without stored procedures and with insert statements.
+#The first in the set builds and loads the database.  The last 
+#deletes the database.
+#
+#The four test cases:
+#Charset_04 1: translit error on insert, uses -charset only and
+#	      selects from stored proc into host vars.  Then inserts
+#	      using host vars into a table.  Fails before AA build,
+#	      requies -m and manual code to run.
+#Charset_05 2: Translit error on procedure select due to bug 7043
+#              uses SET NAMES/CONNECT.  (need to do one w/just the
+#	      input parameter)
+#Charset_06 3: Select is from the table and insert after select fails 
+#	      to work.  uses -charset only.  new bug 7122 filed.
+#              No data actually got inserted.
+#
+#Charset_07 4: Using SET NAMES/CONNECT select from the table.
+#              no errors--data gets inserted.
+#
 
-Series/Test Set Description:
-The next four tests in this series test for the -charset option 
-with and without stored procedures and with insert statements.
-The first in the set builds and loads the database.  The last 
-deletes the database.
-
-The four test cases:
-Charset_04 1: translit error on insert, uses -charset only and
-	      selects from stored proc into host vars.  Then inserts
-	      using host vars into a table.  Fails before AA build,
-	      requies -m and manual code to run.
-Charset_05 2: Translit error on procedure select due to bug 7043
-              uses SET NAMES/CONNECT.  (need to do one w/just the
-	      input parameter)
-Charset_06 3: Select is from the table and insert after select fails 
-	      to work.  uses -charset only.  new bug 7122 filed.
-              No data actually got inserted.
-
-Charset_07 4: Using SET NAMES/CONNECT select from the table.
-              no errors--data gets inserted.
-
-$ CREATE ddlfile.sql 
+>> ddlfile.sql 
 CREATE DATABASE 'WHERE_GDB:intlemp.gdb' DEFAULT CHARACTER SET ISO8859_1;
 COMMIT;
 CREATE DOMAIN firstname     AS VARCHAR(15) COLLATE FR_FR;
@@ -70,7 +71,7 @@ SET TERM ; !!
 COMMIT;
 QUIT;
 
-$ CREATE dmlfile.sql
+>> dmlfile.sql
 SET NAMES ISO8859_1;
 CONNECT WHERE_GDB:intlemp.gdb;
 
@@ -82,7 +83,7 @@ VALUES (2, 'Bruce', 'Nélsôn');
 COMMIT;
 QUIT;
 
-$ CREATE btest1.e
+>> btest1.e
 /* Contains DATABASE statement and CONNECT db so that the -m -charset
    options will work (11/10/94) modified:
 
@@ -162,7 +163,7 @@ if (SQLCODE != 100)
 $ ISQL -m -i ddlfile.sql
 $ ISQL -m -i dmlfile.sql
 $ GBAK -t WHERE_GDB:intlemp.gdb intlemp.gbk
-$ CREATE testcmt1
+>> testcmt1
 
 ----------------------------------------------------------------
   The program is using a stored procedure for the select.
@@ -174,7 +175,7 @@ $ CREATE testcmt1
   -charset option to work.  Should work to select/insert data
 ----------------------------------------------------------------
 
-$ CREATE testcmt2
+>> testcmt2
 ----------------------------------------------------------------
   Now compiling with no -charset so we should attach with
   charset NONE and the insert should fail.
@@ -196,4 +197,4 @@ $ RUN btest2 > btest2.out
 $ TYPE btest2.out
 $ DROP WHERE_GDB:intlemp.gdb
 $ DELETE ddlfile.sql dmlfile.sql btest2*
-$ DELETE comments testcmt1 testcmt2
+$ DELETE testcmt1 testcmt2

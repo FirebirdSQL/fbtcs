@@ -1,5 +1,5 @@
 
-$ CREATE er40.c
+>> er40.c
 /*
  *	isc_put_slice
  *

@@ -1,5 +1,5 @@
 
-$ CREATE bug6164.sql
+>> bug6164.sql
 create database "WHERE_GDB:bug6164.gdb";
 create domain s1_type smallint not null;
 create domain table_row_type char(6) not null;
@@ -40,7 +40,7 @@ insert into st5 values (-15,'unique');
 commit;
 quit;
 $ISQL -m -i bug6164.sql
-$ CREATE bug6164.e
+>> bug6164.e
 
 /**********************************************************************
  Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
@@ -173,7 +173,7 @@ $ GPRE -e bug6164.e
 $ CC FLAG_CC bug6164.c
 $ LINK FLAG_LINK bug6164 
 $ RUN bug6164
-$ CREATE bug6164.qli
+>> bug6164.qli
 ready WHERE_GDB:bug6164.gdb;
 set semicolon;
 set columns 100;

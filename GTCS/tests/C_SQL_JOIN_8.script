@@ -1,6 +1,6 @@
 
 $ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_8.gdb
-$ CREATE join008.e
+>> join008.e
 /**********************************************************************
  Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
  Description:           FULL JOIN - Syntax check
@@ -105,7 +105,7 @@ $ GPRE -e join008.e
 $ CC FLAG_CC join008.c
 $ LINK FLAG_LINK join008 
 $ RUN join008
-$ CREATE join008.qli
+>> join008.qli
 ready WHERE_GDB:sh_join_8.gdb;
 set semicolon;
 set columns 100;
@@ -116,7 +116,7 @@ from ct1 t1 full join ct2 t2 on t1.c1 = t2.c1;
 finish;
 quit;
 $ QLI -n -a join008.qli
-$ CREATE join008.sql
+>> join008.sql
 connect WHERE_GDB:sh_join_8.gdb;
 select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row 
 from ct1 t1 full join ct2 t2 on t1.c1 = t2.c1;

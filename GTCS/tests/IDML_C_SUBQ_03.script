@@ -1,35 +1,36 @@
 
-$ CREATE doc
-By:          Clare Taylor
-Date:        03/14/94
-Test name:   IDML_C_SUBQ_02         
-Series:      IDML_C_SUBQUERYS          
-Results:     Passes: The table TEST_TABLE1 is populated       
-Dependency:  none
-History:
-4/13/94:     Adding set names statements.  Fails in Q no matter what
-	     I do because transliteration may not be working well
-	     between fields.
-5/26/94:     The .e program is not returning any rows in this build.
-	     I get 802 translit err. could be something in the code of
-	     the test that got by in previous builds? Init rec. shows
-	     all 7 rows returned.  T-build can't translit the 437 field
-	     to iso when it was loaded using iso...do some qli scripts
-	     to try to see if its a bug.
-6/7/94:      adding -m option to ISQL stuff.
+#
+#By:          Clare Taylor
+#Date:        03/14/94
+#Test name:   IDML_C_SUBQ_02         
+#Series:      IDML_C_SUBQUERYS          
+#Results:     Passes: The table TEST_TABLE1 is populated       
+#Dependency:  none
+#History:
+#4/13/94:     Adding set names statements.  Fails in Q no matter what
+#	     I do because transliteration may not be working well
+#	     between fields.
+#5/26/94:     The .e program is not returning any rows in this build.
+#	     I get 802 translit err. could be something in the code of
+#	     the test that got by in previous builds? Init rec. shows
+#	     all 7 rows returned.  T-build can't translit the 437 field
+#	     to iso when it was loaded using iso...do some qli scripts
+#	     to try to see if its a bug.
+#6/7/94:      adding -m option to ISQL stuff.
+#
+# /* Build S allowed this:
+#    EXEC SQL
+#      FETCH C_SEL INTO :p_enus, :p_france, :p_437;
+#      Build T fails w/translit error due to p_437--take it out */
+#
+#Description:
+#Simple insert using a subquery on a subset of rows from the static
+#table.  Selects the data from the test table using a cursor in embedded
+#SQL.  The other tests in this series just use ISQL to verify the action
+#of the insert or update.
+#
 
- /* Build S allowed this:
-    EXEC SQL
-      FETCH C_SEL INTO :p_enus, :p_france, :p_437;
-      Build T fails w/translit error due to p_437--take it out */
-
-Description:
-Simple insert using a subquery on a subset of rows from the static
-table.  Selects the data from the test table using a cursor in embedded
-SQL.  The other tests in this series just use ISQL to verify the action
-of the insert or update.
-
-$ CREATE subq3.e 
+>> subq3.e 
 /*-------------------------------------------------------------------
   Case:  1  INSERT INTO TEST_TABLE SELECT [subset] FROM STRING_TABLE
 ---------------------------------------------------------------------*/
@@ -137,7 +138,7 @@ char p_setnames[10];
      exit(0);
 err: print_error();
 }
-$ CREATE subq3.sql
+>> subq3.sql
 SET NAMES ISO8859_1;
 connect "WHERE_GDB:tests.gdb";
 delete from TEST_TABLE1;
@@ -154,12 +155,12 @@ commit;
 select c_enus, c_france from test_table1;
 select c_enus, c_france from test_table2;
 
-$ CREATE dos437.sql
+>> dos437.sql
 SET NAMES DOS437;   
 connect "WHERE_GDB:tests.gdb";
 select c_437_25 from test_table1;
 quit;
-$ CREATE isosel.sql
+>> isosel.sql
 SET NAMES ISO8859_1;
 connect "WHERE_GDB:tests.gdb";
 select c_437_25 from test_table1;
@@ -173,4 +174,4 @@ $ ISQL -i isosel.sql -m
 
 $ ISQL -i subq3.sql -m
 $ ISQL -i dos437.sql -m
-$ DELETE isosel.sql doc dos437.sql subq3*
+$ DELETE isosel.sql dos437.sql subq3*

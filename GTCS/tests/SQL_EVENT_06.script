@@ -1,9 +1,11 @@
 
-$ CREATE comment.txt
-Name: Sudhanshu Kumar
-This checks when a mass update happens for a table then triggers gets fired
-and event gets posted. 
-$CREATE event6.sql
+#
+#Name: Sudhanshu Kumar
+#This checks when a mass update happens for a table then triggers gets fired
+#and event gets posted. 
+#
+
+>> sql_event_6a.sql
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER,
@@ -31,8 +33,8 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event6.sql -sqldialect 1
-$ CREATE foo6.e
+$ISQL -m -I sql_event_6a.sql -sqldialect 1
+>> foo6.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
 # include <stdio.h>
@@ -68,12 +70,15 @@ $ CC FLAG_CC foo6.c
 $ LINK FLAG_LINK foo6 
 $ RUN_BG foo6 > foo6.tt1 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_6b.sql
+
 update project set prize = prize * 1.05 ;
 commit;
 select * from project;
 select * from works_on;
+
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_6b.sql
 $ SLEEP 5
 $ TYPE foo6.tt1
 $ DROP WHERE_GDB:events.gdb 
-$ DELETE foo6* comment.txt event6.sql
+$ DELETE foo6* sql_event_6*

@@ -1,24 +1,24 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:
+#
+# Description:           char-field with edit string (e.g. Proj_No);
+#
+#                        SELECT PROJ_NO, PROJ_NAME, PRODUCT, VERSION
+#                        FROM PROJECTS
+#                        WHERE PROJ_NO STARTING WITH 'HH300';
+#
+#                        Note: edit string for Proj_no is xx-x.xx
+#
+# Tables:                projects
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta011.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:
-
- Description:           char-field with edit string (e.g. Proj_No);
-
-                        SELECT PROJ_NO, PROJ_NAME, PRODUCT, VERSION
-                        FROM PROJECTS
-                        WHERE PROJ_NO STARTING WITH 'HH300';
-
-                        Note: edit string for Proj_no is xx-x.xx
-
- Tables:                projects
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta011.e
 
 #include <stdio.h>
 
@@ -114,7 +114,7 @@ $ GPRE -e sta011.e
 $ CC FLAG_CC sta011.c
 $ LINK FLAG_LINK sta011 
 $ RUN sta011
-$ CREATE sta011.qli
+>> sta011.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -127,7 +127,7 @@ select count(*) from projects where proj_no starting with 'HH300';
 finish;
 quit;
 $ QLI -n -a sta011.qli
-$ CREATE sta011.sql
+>> sta011.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO, PROJ_NAME, PRODUCT, VERSION 
 FROM PROJECTS 

@@ -1,5 +1,5 @@
 
-$ CREATE er23.c
+>> er23.c
 /*
  *	isc_commit_transaction
  *

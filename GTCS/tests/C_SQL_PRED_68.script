@@ -1,23 +1,24 @@
 
+#
+# **********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           varchar field starting with a  number
+#
+#                        SELECT EMPNO
+#                        FROM MANAGEMENT
+#                        WHERE EMPNO STARTING WITH 1;
+#
+# View:                  management
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta028.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           varchar field starting with a  number
-
-                        SELECT EMPNO
-                        FROM MANAGEMENT
-                        WHERE EMPNO STARTING WITH 1;
-
- View:                  management
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta028.e
 
 #include <stdio.h>
 
@@ -107,7 +108,7 @@ $ GPRE -e sta028.e
 $ CC FLAG_CC sta028.c
 $ LINK FLAG_LINK sta028 
 $ RUN sta028
-$ CREATE sta028.qli
+>> sta028.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -118,7 +119,7 @@ select count(*) from management where empno starting with 1;
 finish;
 quit;
 $ QLI -n -a sta028.qli
-$ CREATE sta028.sql
+>> sta028.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT EMPNO FROM MANAGEMENT WHERE EMPNO STARTING WITH 1;
 select count(*) from management where empno starting with 1;

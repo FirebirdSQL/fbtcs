@@ -1,9 +1,11 @@
 
-$ CREATE comment.txt
-Name: Sudhnashu Kumar
-This test has a before update trigger which is fired first then upddate stmt
-is executed, then at commit time event is poted to application program.  
-$CREATE event2.sql
+#
+#Name: Sudhnashu Kumar
+#This test has a before update trigger which is fired first then upddate stmt
+#is executed, then at commit time event is poted to application program.  
+#
+
+>> sql_event_02a.sql
 create database "WHERE_GDB:events1.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER);
@@ -33,8 +35,8 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event2.sql -sqldialect 1
-$ CREATE foo2.e
+$ISQL -m -I sql_event_02a.sql -sqldialect 1
+>> foo2.e
 #include <stdio.h>
 DATABASE DB = "WHERE_GDB:events1.gdb"
 main()
@@ -69,13 +71,14 @@ $ CC FLAG_CC foo2.c
 $ LINK FLAG_LINK foo2 
 $ RUN_BG foo2 > foo2.tt1 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events1.gdb
+>> sql_event_02b.sql
 update project set pnumber = 22 where pnumber = 2;
 commit;
 select * from project;
 select * from works_on;
 exit;
+$ ISQL -m WHERE_GDB:events1.gdb -i sql_event_02b.sql
 $ SLEEP 5
 $ TYPE foo2.tt1
 $ DROP WHERE_GDB:events1.gdb
-$ DELETE foo2* comment.txt event2.sql
+$ DELETE foo2* sql_event_02*

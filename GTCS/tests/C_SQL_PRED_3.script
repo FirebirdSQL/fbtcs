@@ -1,14 +1,14 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:		[NOT]SINGULAR <subquery>			
+# Description:           Two table join - NOT SINGULAR
+# Tables:                customers, sales (one-to-many relation)
+# Author:		Sam Hakim, Feb 18, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin004.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:		[NOT]SINGULAR <subquery>			
- Description:           Two table join - NOT SINGULAR
- Tables:                customers, sales (one-to-many relation)
- Author:		Sam Hakim, Feb 18, 93
- ***********************************************************************
-*/
+>> sin004.e
 
 #include <stdio.h>
 
@@ -106,7 +106,7 @@ $ GPRE -e sin004.e
 $ CC FLAG_CC sin004.c
 $ LINK FLAG_LINK sin004 
 $ RUN sin004
-$ CREATE sin004.qli
+>> sin004.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 
@@ -124,7 +124,7 @@ or 1 < (select count(*) from sales s2 where s2.custno = c1.custno);
 finish;
 quit;
 $ QLI -n -a sin004.qli
-$ CREATE sin004.sql
+>> sin004.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from customers c1
 where not singular (select * from sales s1 where s1.custno = c1.custno);

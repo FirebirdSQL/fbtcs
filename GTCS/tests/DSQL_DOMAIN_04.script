@@ -1,15 +1,15 @@
 
-/*******************************************************************************
- Test Name:   dsql_domain_04
- Series Name: dsql_triggers
- Date:        6-October-1993
- Comments:    This script will test level 0 syntax for SQL create domain using
-              datatype and the check constraint clause.
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:   dsql_domain_04
+# Series Name: dsql_triggers
+# Date:        6-October-1993
+# Comments:    This script will test level 0 syntax for SQL create domain using
+#              datatype and the check constraint clause.
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_04.sql
+>> domain_04.sql
 create domain dom04a as smallint
   check (value >=0 and value < 100);
 commit;

@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           field containing another field
+#
+#                        SELECT NAME
+#                        FROM EMPLOYEES
+#                        WHERE NAME CONTAINING LAST_NAME ORDER BY NAME;
+#
+# Table:                 employees
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con037.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           field containing another field
-
-                        SELECT NAME
-                        FROM EMPLOYEES
-                        WHERE NAME CONTAINING LAST_NAME ORDER BY NAME;
-
- Table:                 employees
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con037.e
 
 #include <stdio.h>
 
@@ -109,7 +109,7 @@ $ GPRE -e con037.e
 $ CC FLAG_CC con037.c
 $ LINK FLAG_LINK con037 
 $ RUN con037
-$ CREATE con037.qli
+>> con037.qli
 SET SEMICOLON;
 ready WHERE_GDB:sh_test.gdb;
 SELECT NAME
@@ -121,7 +121,7 @@ finish;
 quit;
 
 $ QLI -n -a con037.qli
-$ CREATE con037.sql
+>> con037.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT NAME
 FROM EMPLOYEES

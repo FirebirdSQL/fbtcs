@@ -1,15 +1,15 @@
 
-/*******************************************************************************
- Test Name:   dsql_domain_03
- Series Name: dsql_domains
- Date:        5-October-1993
- Comments:    This script will test level 0 syntax for create domain using
-              datatype and the not null constraint.
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:   dsql_domain_03
+# Series Name: dsql_domains
+# Date:        5-October-1993
+# Comments:    This script will test level 0 syntax for create domain using
+#              datatype and the not null constraint.
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_03.sql
+>> domain_03.sql
 create domain dom03a as smallint
  not null;
 commit;

@@ -1,5 +1,5 @@
 
-$ CREATE sh_blobs.gdl
+>> sh_blobs.gdl
 
 define database "WHERE_GDB:sh_blobs.gdb";
 
@@ -41,7 +41,7 @@ bin1            position 2,
 bin2            position 3,
 comment         position 4;
 $ GDEF sh_blobs.gdl
-$ CREATE BlobLoader.epp
+>> BlobLoader.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Populate the blob database WHERE_GDB:sh_blobs.gdb. 

@@ -1,19 +1,19 @@
+#
+#Author: Narayan 
+#Date: Oct 3, 1994.
+#
+#Description: This is a test to test the auto-commit behavior of IB for DDLs. 
+#
+#The auto-commit behavior is set using unix sed commands.
+#We sed the A.c file to insert isc_autocommit in its tpb defintion.
+#
 
-$CREATE COMMENT
-Author: Narayan 
-Date: Oct 3, 1994.
-
-Description: This is a test to test the auto-commit behavior of IB for DDLs. 
-
-The auto-commit behavior is set using unix sed commands.
-We sed the A.c file to insert isc_autocommit in its tpb defintion.
-
-$CREATE init.sql
+>> init.sql
   create database 'WHERE_GDB:test.gdb';
   create domain a_var as integer;
   commit;
 
-$CREATE A.e
+>> A.e
 #include <stdio.h>
 exec sql include salca
 
@@ -52,7 +52,7 @@ main()
   exec sql disconnect DB;
 
 }
-$CREATE show.sql
+>> show.sql
  connect 'WHERE_GDB:test.gdb';
  show domain  a_var;
 $ISQL -m -i init.sql
@@ -63,5 +63,5 @@ $CC FLAG_CC A2.c
 $LINK FLAG_LINK A2 
 $RUN A2
 $ISQL -m -i show.sql
-$DELETE COMMENT init.sql show.sql A.* A1.* A2.*
+$DELETE init.sql show.sql A.* A1.* A2.*
 $DROP WHERE_GDB:test.gdb

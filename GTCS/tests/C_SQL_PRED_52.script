@@ -1,24 +1,25 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           Negation - No records should be qualified for this search
+#
+#                        SELECT CUSTNO, CUSTOMER
+#                        FROM CUSTOMERS
+#                        WHERE CUSTOMER STARTING WITH 'A'
+#                        ORDER BY CUSTNO;
+#
+# Tables:                customers
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta004.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           Negation - No records should be qualified for this search
-
-                        SELECT CUSTNO, CUSTOMER
-                        FROM CUSTOMERS
-                        WHERE CUSTOMER STARTING WITH 'A'
-                        ORDER BY CUSTNO;
-
- Tables:                customers
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta004.e
 
 #include <stdio.h>
 
@@ -113,7 +114,7 @@ $ GPRE -e sta004.e
 $ CC FLAG_CC sta004.c
 $ LINK FLAG_LINK sta004 
 $ RUN sta004
-$ CREATE sta004.qli
+>> sta004.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 SELECT CUSTNO, CUSTOMER 
@@ -126,7 +127,7 @@ finish;
 quit;
 
 $ QLI -n -a sta004.qli
-$ CREATE sta004.sql
+>> sta004.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT CUSTNO, CUSTOMER 
 FROM CUSTOMERS 

@@ -1,23 +1,25 @@
 
+#
+#**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           field of integer (GDML long) starting with a number
+#
+#                        SELECT SALARY
+#                        FROM MANAGEMENT
+#                        WHERE SALARY STARTING 1;
+#
+# View:                  management
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+#
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta029.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           field of integer (GDML long) starting with a number
-
-                        SELECT SALARY
-                        FROM MANAGEMENT
-                        WHERE SALARY STARTING 1;
-
- View:                  management
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta029.e
 
 #include <stdio.h>
 
@@ -107,7 +109,7 @@ $ GPRE -e sta029.e
 $ CC FLAG_CC sta029.c
 $ LINK FLAG_LINK sta029 
 $ RUN sta029
-$ CREATE sta029.qli
+>> sta029.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -118,7 +120,7 @@ SELECT COUNT(*) FROM management WHERE salary STARTING WITH 1;
 FINISH;
 QUIT;
 $ QLI -n -a sta029.qli
-$ CREATE sta029.sql
+>> sta029.sql
 CONNECT WHERE_GDB:sh_test.gdb;
 SELECT salary FROM management WHERE salary STARTING 1;
 SELECT COUNT(*) FROM management WHERE salary STARTING WITH 1;

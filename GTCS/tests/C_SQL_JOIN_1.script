@@ -1,10 +1,12 @@
 
-HISTORY:
-2001-Oct-04 Neil McCalden 
-Update query to pass improved field ambiguity tests in Firebird.
+#
+#HISTORY:
+#2001-Oct-04 Neil McCalden 
+#Update query to pass improved field ambiguity tests in Firebird.
+#
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas_join_1.gdb
-$ CREATE join001.e
+>> join001.e
 
 /*
  Out join example 2.9.1 page 64
@@ -58,7 +60,7 @@ $ GPRE -e join001.e
 $ CC FLAG_CC join001.c
 $ LINK FLAG_LINK join001 
 $ RUN join001
-$ CREATE join001.qli
+>> join001.qli
 ready WHERE_GDB:atlas_join_1.gdb;
 set semicolon;
 set columns 100;
@@ -66,7 +68,7 @@ SELECT C.CITY, S.STATE FROM CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE;
 finish;
 quit;
 $ QLI -n -a join001.qli
-$ CREATE join001.sql
+>> join001.sql
 connect WHERE_GDB:atlas_join_1.gdb;
 SELECT C.CITY, S.STATE FROM CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE;
 quit;

@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:                [NOT] SINGULAR <subquery>
+# Description:           SINGULAR - using views
+#
+#                        SELECT *
+#                        FROM DEPT_BUDGET V1
+#                        WHERE SINGULAR
+#                        (SELECT *
+#                        FROM FULLEMP
+#                        V2 WHERE V2.DEPARTMENT = V1.DEPARTMENT);
+#
+# Tables:                customers
+# Author:                Sam Hakim, Feb 19, 1993
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin020.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:                [NOT] SINGULAR <subquery>
- Description:           SINGULAR - using views
-
-                        SELECT *
-                        FROM DEPT_BUDGET V1
-                        WHERE SINGULAR
-                        (SELECT *
-                        FROM FULLEMP
-                        V2 WHERE V2.DEPARTMENT = V1.DEPARTMENT);
-
- Tables:                customers
- Author:                Sam Hakim, Feb 19, 1993
- ***********************************************************************
-*/
+>> sin020.e
 
 #include <stdio.h>
 
@@ -160,7 +160,7 @@ $ GPRE -e sin020.e
 $ CC FLAG_CC sin020.c
 $ LINK FLAG_LINK sin020 
 $ RUN sin020
-$ CREATE sin020.qli
+>> sin020.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 select * from dept_budget v1 where singular (select * from fullemp
@@ -172,7 +172,7 @@ v2 where v2.department = v1.department);
 finish;
 quit;
 $ QLI -n -a sin020.qli
-$ CREATE sin020.sql
+>> sin020.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from dept_budget v1 where singular (select * from fullemp
 v2 where v2.department = v1.department);

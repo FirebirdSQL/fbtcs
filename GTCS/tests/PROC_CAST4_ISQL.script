@@ -1,30 +1,32 @@
 
-$CREATE comment
-/*      Reference Bug   : NONE
- *      Dependencies    : sp1.gbk
- *      Description     : 
- *      Expected Result : 
-	History:
-	24-May-95        clare. failing remote.  Was probably initialized on
-			 hp and sun does a different dec representation?
-                         Yes, this passes on HP.  The remote was running to
-			 Sun.
-	 < conversion error from string "10.23"
-         ---------------------------------------------
-	 > conversion error from string "10.230000000000000426326"
-	 ++++++++++++++++++++++++++++++++++++++++++++++++++
-24-Feb-97: failing as shown above for NevaStone build 59--no local
-       access.  I am doing a local init for now. clare
-May 6, 1997: clare: was failing on V4.5 because it was using the NT
-       4.2 init record and because meyer had created a local init w/
-       a db not found error. Removed the local init and got the result
-       above on HPUX 10.20--a diff due to the string length.  Did a 
-       global init on HP so other platforms will need local inits.
-Aug 4, 98: clare: failing again due to using the wrong init. It has only
-       a local 4.0 init so it is picking up a global before the local.
-       doing a 5.5 local init. 
+#/*      Reference Bug   : NONE
+# *      Dependencies    : sp1.gbk
+# *      Description     : 
+# *      Expected Result : 
+#	History:
+#	24-May-95        clare. failing remote.  Was probably initialized on
+#			 hp and sun does a different dec representation?
+#                         Yes, this passes on HP.  The remote was running to
+#			 Sun.
+#	 < conversion error from string "10.23"
+#         ---------------------------------------------
+#	 > conversion error from string "10.230000000000000426326"
+#	 ++++++++++++++++++++++++++++++++++++++++++++++++++
+#24-Feb-97: failing as shown above for NevaStone build 59--no local
+#       access.  I am doing a local init for now. clare
+#May 6, 1997: clare: was failing on V4.5 because it was using the NT
+#       4.2 init record and because meyer had created a local init w/
+#       a db not found error. Removed the local init and got the result
+#       above on HPUX 10.20--a diff due to the string length.  Did a 
+#       global init on HP so other platforms will need local inits.
+#Aug 4, 98: clare: failing again due to using the wrong init. It has only
+#       a local 4.0 init so it is picking up a global before the local.
+#       doing a 5.5 local init. 
+#
+
 $GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -sqldialect 3 -e -m WHERE_GDB:sp1.gdb
+
+>> proc_cast4.sql
 set term go;
 create procedure cast1(a double precision) RETURNS (b smallint) as
 begin
@@ -95,5 +97,7 @@ execute procedure cast8 100.98;
 execute procedure cast9 100.98;
 
 exit;
+
+$ ISQL -sqldialect 3 -e -m WHERE_GDB:sp1.gdb -i proc_cast4.sql
 $DROP WHERE_GDB:sp1.gdb
-$DELETE comment
+$DELETE proc_cast4*

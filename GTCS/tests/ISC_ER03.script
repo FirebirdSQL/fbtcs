@@ -1,5 +1,5 @@
 
-$ CREATE er3.c
+>> er3.c
 /*
  *	isc_dsql_alloc_statement2
  *

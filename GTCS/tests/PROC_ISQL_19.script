@@ -1,6 +1,7 @@
 
 $ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m WHERE_GDB:sp1.gdb
+
+>> proc_isql_19.sql
 set term go;
 create procedure  proc_select_insert2 as
 declare variable t varchar(5); 
@@ -19,4 +20,7 @@ select * from sp;
 EXECUTE PROCEDURE PROC_SELECT_INSERT2;
 select * from sp;
 exit;
+
+$ ISQL -m WHERE_GDB:sp1.gdb -i proc_isql_19.sql
 $ DROP WHERE_GDB:sp1.gdb 
+$DELETE proc_isql_19*

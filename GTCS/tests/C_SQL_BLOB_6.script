@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_6.gdb
-$ CREATE blob006.epp
+>> blob006.epp
 /**********************************************************************
  Purpose:               Test SQL blob  support in InterBase 4.0
  Description:           FETCH blobcursor - Buffer size < segment_len in db

@@ -1,5 +1,4 @@
 
-$CREATE COMMENT
 Author: Narayan 
 Date: Mar 18, 1994.
 History:
@@ -9,8 +8,6 @@ History:
 	     which we simply do not use.  It would never have been set
 	     and would have needed to be set to equal WHERE_GDB anyway.
 	     I changed it to WHERE_GDB. clare.
-9-Oct-96: changed "#CREATE COMMENT" to "$CREATE COMMENT", so the test
-	     has a chance of passing on VMS.		--Chris Jewell
 
 Description: This is a test to test the exclusive lock transactions. 
 It creates table t. Program A1 locks the table t with an exclusive 
@@ -18,7 +15,7 @@ lock and program A2 tries to modify the same table.
 The exclusive lock behavior is set using unix sed commands.
 We sed the A.c file to insert isc_tpb_exclusive in its tpb defintion.
 
-$CREATE init.sql
+>> init.sql
  create database "WHERE_GDB:test.gdb";
  create table t (a integer);
  insert into t values (10);
@@ -28,7 +25,7 @@ $CREATE init.sql
  insert into t values (50);
  commit;
 
-$CREATE A1.e
+>> A1.e
 #include <stdio.h>
 exec sql include sqlca
 
@@ -56,7 +53,7 @@ char * argv[];
   qa_mu_cleanup();
 }
 
-$CREATE A2.e
+>> A2.e
 #include <stdio.h>
 exec sql include sqlca
 
@@ -104,5 +101,5 @@ $GPRE -e A2.e
 $CC FLAG_CC A2.c
 $LINK FLAG_LINK_MU A2 
 $RUN WHERE_MU:mu -p A1a -q 20 -l 10 -p A2 -q 20 -l 10
-$DELETE A1a A1a.c A1a.o A1.e A1.c A1.o A2 A2.e A2.c A2.o init.sql COMMENT
+$DELETE A1a A1a.c A1a.o A1.e A1.c A1.o A2 A2.e A2.c A2.o init.sql
 $DROP WHERE_GDB:test.gdb

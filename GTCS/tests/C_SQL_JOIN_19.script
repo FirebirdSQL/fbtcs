@@ -1,7 +1,10 @@
-23-Apr-04 Changed the order of nulls according to SQL standard
+
+#
+#23-Apr-04 Changed the order of nulls according to SQL standard
+#
 
 $ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_19.gdb
-$ CREATE join019.e
+>> join019.e
 
 /**********************************************************************
  Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
@@ -125,7 +128,7 @@ $ GPRE -e join019.e
 $ CC FLAG_CC join019.c
 $ LINK FLAG_LINK join019 
 $ RUN join019
-$ CREATE join019.qli
+>> join019.qli
 ready WHERE_GDB:sh_join_19.gdb;
 set semicolon;
 set columns 100;

@@ -1,5 +1,6 @@
 
-$ ISQL -m 
+>> proc_level_tests_2.sql
+
 create database "WHERE_GDB:foo.gdb";
 set term go;
 create procedure proc RETURNS (abcdefghijklmnopqrstuvwxyzabcde  int) as
@@ -20,4 +21,7 @@ go
 set term ; go
 show procedures;
 exit;
-$ DROP WHERE_GDB:foo.gdb
+
+$ISQL -m -i proc_level_tests_2.sql
+$DROP WHERE_GDB:foo.gdb
+$DELETE proc_level_tests_2*

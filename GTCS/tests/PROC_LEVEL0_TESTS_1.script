@@ -1,5 +1,5 @@
 
-$ISQL -m 
+>> proc_level0_tests1.sql
 /* This script checks wheather procedure names are case sensitive or not.*/
 create database "WHERE_GDB:foo.gdb";
 set echo;
@@ -20,4 +20,6 @@ go
 set term ; go
 show proc;
 
-$ DROP WHERE_GDB:foo.gdb
+$ISQL -m -i proc_level0_tests1.sql
+$DROP WHERE_GDB:foo.gdb
+$DELETE proc_level0_tests1*

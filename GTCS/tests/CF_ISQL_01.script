@@ -1,38 +1,37 @@
-
-/*
-**  Name:		cf_isql_01
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level one test case for computed-fields.
-**			
-**			This test uses simple arithmetic operations when
-**			defining computed-fields. This includes test cases
-**			where computed-fields are constant-expressions, which
-**			really doesn't do any good.
-**
-**			This is the model of most of the tests defined here:
-**
-**			- Create a table with computed field.
-**                      - Show table to verify the create table.
-**			- Insert couple of rows with data.
-**			- Query the table with matching expression and see
-**			  if we get back same number of rows.
-**			- Update a row.
-**			- Query again using same expression as above.
-**
-**  Expected result:	For every set of testcase there will be two output lines.
-**			
-**			'Passed xx - Insert'
-**			'Passed xx - Update'
-**
-**  Author:		Ravil A. Desai
-**  Bugs:		6605 - Use of unary "+" is not recognized.
-**  Change history:
-**
-*/
-
-$ CREATE cf_test.sql
+#
+#  Name:		cf_isql_01
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level one test case for computed-fields.
+#			
+#			This test uses simple arithmetic operations when
+#			defining computed-fields. This includes test cases
+#			where computed-fields are constant-expressions, which
+#			really doesn't do any good.
+#
+#			This is the model of most of the tests defined here:
+#
+#			- Create a table with computed field.
+#                      - Show table to verify the create table.
+#			- Insert couple of rows with data.
+#			- Query the table with matching expression and see
+#			  if we get back same number of rows.
+#			- Update a row.
+#			- Query again using same expression as above.
+#
+#  Expected result:	For every set of testcase there will be two output lines.
+#			
+#			'Passed xx - Insert'
+#			'Passed xx - Update'
+#
+#  Author:		Ravil A. Desai
+#  Bugs:		6605 - Use of unary "+" is not recognized.
+#  Change history:
+#
+#
+#
+>> cf_isql_01.sql
 create database "WHERE_GDB:cf.gdb";
 
 /*
@@ -187,5 +186,5 @@ select 'Passed 11 - Update' from t50 where j = (4*2-4+4)/2 having count(*) = 2;
 drop database;
 exit;
 
-$ ISQL -m -input cf_test.sql
-$ DELETE cf_test.sql
+$ ISQL -m -input cf_isql_01.sql
+$ DELETE cf_isql_01*

@@ -1,23 +1,23 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           NOT STARTING WITH on blobs - No records qualify.
+#
+#                        SELECT PROJ_NO
+#                        FROM PROJECTS
+#                        WHERE PROJ_DESC NOT STARTING WITH 'Porting';
+#
+# Tables:                projects
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta022.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           NOT STARTING WITH on blobs - No records qualify.
-
-                        SELECT PROJ_NO
-                        FROM PROJECTS
-                        WHERE PROJ_DESC NOT STARTING WITH 'Porting';
-
- Tables:                projects
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta022.e
 
 #include <stdio.h>
 
@@ -120,7 +120,7 @@ $ GPRE -e sta022.e
 $ CC FLAG_CC sta022.c
 $ LINK FLAG_LINK sta022 
 $ RUN sta022
-$ CREATE sta022.qli
+>> sta022.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -131,7 +131,7 @@ select count(*) from projects where proj_desc not starting with 'Porting';
 finish;
 quit;
 $ QLI -n -a sta022.qli
-$ CREATE sta022.sql
+>> sta022.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO FROM PROJECTS WHERE PROJ_DESC NOT STARTING WITH 'Porting';
 select count(*) from projects where proj_desc not starting with 'Porting';

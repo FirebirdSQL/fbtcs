@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_4.gdb
-$ CREATE blob004.epp
+>> blob004.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT BLOB INTO TABLE MAXIMUM_SEGMENT 
@@ -135,7 +135,7 @@ $ GPRE -e blob004.epp
 $ CXX FLAG_CXX blob004.cpp
 $ LINK FLAG_LINK blob004 
 $ RUN blob004
-$ CREATE blob004.qli
+>> blob004.qli
 ready WHERE_GDB:sh_blobs_4.gdb;
 select test_name, row_id,b256 from mb1 where test_name = 'blob004';
 finish;

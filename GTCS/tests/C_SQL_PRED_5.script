@@ -1,29 +1,30 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:		[NOT]SINGULAR <subquery>			
+# Description:           Nested subqueries - SINGULAR
+#
+#                        SELECT EMPNO
+#                        FROM SALES_PEOPLE T1
+#                        WHERE SINGULAR
+#                        (SELECT *
+#                        FROM SALES T2
+#                        WHERE T1.EMPNO=T2.SALES_REP
+#                        AND T2.TOTAL_VALUE > 6000 AND SINGULAR
+#                        (SELECT *
+#                        FROM CUSTOMERS T3
+#                        WHERE T3.CUSTNO = T2.CUSTNO))AND SINGULAR
+#                        (SELECT *
+#                        FROM SALES_PERF T4
+#                        WHERE T4.EMPNO = T1.EMPNO);
+#
+# Tables:                sales, customers (many-to-one relationship)
+# Author:		Sam Hakim, Feb 18, 93
+# ***********************************************************************
+
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin006.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:		[NOT]SINGULAR <subquery>			
- Description:           Nested subqueries - SINGULAR
-
-                        SELECT EMPNO
-                        FROM SALES_PEOPLE T1
-                        WHERE SINGULAR
-                        (SELECT *
-                        FROM SALES T2
-                        WHERE T1.EMPNO=T2.SALES_REP
-                        AND T2.TOTAL_VALUE > 6000 AND SINGULAR
-                        (SELECT *
-                        FROM CUSTOMERS T3
-                        WHERE T3.CUSTNO = T2.CUSTNO))AND SINGULAR
-                        (SELECT *
-                        FROM SALES_PERF T4
-                        WHERE T4.EMPNO = T1.EMPNO);
-
- Tables:                sales, customers (many-to-one relationship)
- Author:		Sam Hakim, Feb 18, 93
- ***********************************************************************
-*/
+>> sin006.e
 
 #include <stdio.h>
 
@@ -133,7 +134,7 @@ $ GPRE -e sin006.e
 $ CC FLAG_CC sin006.c
 $ LINK FLAG_LINK sin006 
 $ RUN sin006
-$ CREATE sin006.qli
+>> sin006.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 
@@ -157,7 +158,7 @@ and t2.total_value > 6000 and 1 =
 finish;
 quit;
 $QLI -a sin006.qli
-$CREATE sin006.sql
+>> sin006.sql
 select empno from sales_people t1 where singular
 (select * from sales t2 where t1.empno=t2.sales_rep
 and t2.total_value > 6000 and singular

@@ -1,5 +1,7 @@
-
-$CREATE cf_isql_27a.sql
+#
+# 
+#
+>> cf_isql_27a.sql
 
 set echo;
 
@@ -35,7 +37,7 @@ SET TERM ; ^
 commit;
 show procedures;
 
-$CREATE cf_isql_27b.sql
+>> cf_isql_27b.sql
 
 connect 'WHERE_GDB:cf_isql_27.fdb';
 set echo on;

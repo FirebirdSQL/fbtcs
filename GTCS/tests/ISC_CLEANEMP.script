@@ -1,5 +1,5 @@
 
-$CREATE comment
+>> comment
 Changed what: Added extra files to the 'delete' statement
 Changed why:  AUDIT_FINISH fails in ISC_ARRBLOB_CK and ISC_BLOB series
 Changed by:   Stanislav Tsikin, 20-Aug-1998

@@ -1,5 +1,5 @@
 
-$ CREATE er8.c
+>> er8.c
 /*
  *	isc_open_blob
  *

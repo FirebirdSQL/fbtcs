@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_23.gdb
-$ CREATE blob023.epp
+>> blob023.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           READ BLOB/INSERT BLOB to simulate an update. 
@@ -180,7 +180,7 @@ $ GPRE -e blob023.epp
 $ CXX FLAG_CXX blob023.cpp
 $ LINK FLAG_LINK blob023 
 $ RUN blob023
-$ CREATE blob023.qli
+>> blob023.qli
 ready WHERE_GDB:sh_blobs_23.gdb;
 select test_name, row_id, comment, b from mb1 where test_name = 'blob023';
 finish;

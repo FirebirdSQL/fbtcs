@@ -1,23 +1,23 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           varchar field containing string
+#
+#                        SELECT JOB
+#                        FROM EMPLOYEES
+#                        WHERE JOB CONTAINING 'mgr'
+#                        ORDER BY JOB;
+#
+# Tables:                Employees
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con028.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           varchar field containing string
-
-                        SELECT JOB
-                        FROM EMPLOYEES
-                        WHERE JOB CONTAINING 'mgr'
-                        ORDER BY JOB;
-
- Tables:                Employees
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con028.e
 
 #include <stdio.h>
 
@@ -110,7 +110,7 @@ $ GPRE -e con028.e
 $ CC FLAG_CC con028.c
 $ LINK FLAG_LINK con028 
 $ RUN con028
-$ CREATE con028.qli
+>> con028.qli
 set semicolon;
 ready WHERE_GDB:sh_test.gdb;
 SELECT JOB
@@ -123,7 +123,7 @@ finish;
 quit;
 
 $ QLI -n -a con028.qli
-$ CREATE con028.sql
+>> con028.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT JOB
 FROM EMPLOYEES

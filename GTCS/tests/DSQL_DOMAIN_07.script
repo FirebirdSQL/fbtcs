@@ -1,15 +1,15 @@
 
-/*******************************************************************************
- Test Name:   dsql_domain_07
- Series Name: dsql_triggers
- Date:        8-October-1993
- Comments:    This script will test level 0 syntax for SQL alter domain using
-              drop constraint and add constraint clauses.
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:   dsql_domain_07
+# Series Name: dsql_triggers
+# Date:        8-October-1993
+# Comments:    This script will test level 0 syntax for SQL alter domain using
+#              drop constraint and add constraint clauses.
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_07.sql
+>> domain_07.sql
 create domain dom07a as smallint
   check (value >=0 and value < 100);
 show domain dom07a;

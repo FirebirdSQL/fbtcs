@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           STARTING  - Logical AND, WITH keyword omitted
+#
+#                        SELECT STATE FROM CUSTOMERS
+#                        WHERE STATE STARTING 'C' AND STATE NOT IN ('CA');
+#
+# Tables:                customers
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta008.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           STARTING  - Logical AND, WITH keyword omitted
-
-                        SELECT STATE FROM CUSTOMERS
-                        WHERE STATE STARTING 'C' AND STATE NOT IN ('CA');
-
- Tables:                customers
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta008.e
 
 #include <stdio.h>
 
@@ -104,7 +104,7 @@ $ GPRE -e sta008.e
 $ CC FLAG_CC sta008.c
 $ LINK FLAG_LINK sta008 
 $ RUN sta008
-$ CREATE sta008.qli
+>> sta008.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -112,7 +112,7 @@ SELECT STATE FROM CUSTOMERS WHERE STATE STARTING 'C' AND STATE NOT IN ('CA');
 finish;
 quit;
 $ QLI -n -a sta008.qli
-$ CREATE sta008.sql
+>> sta008.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT STATE FROM CUSTOMERS WHERE STATE STARTING 'C' AND STATE NOT IN ('CA');
 quit;

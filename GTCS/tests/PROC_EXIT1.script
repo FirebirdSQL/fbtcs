@@ -1,5 +1,5 @@
 
-$ ISQL -m 
+>> proc_exit1.sql
 create database "WHERE_GDB:foo.gdb";
 set term !!;
 create procedure p returns(r int) as
@@ -20,4 +20,7 @@ set term ; !!
 execute procedure p;
 select * from p;
 exit;
+
+$ ISQL -m -i proc_exit1.sql
 $DROP WHERE_GDB:foo.gdb
+$DELETE proc_exit1*

@@ -1,5 +1,5 @@
 
-$ CREATE er13.c
+>> er13.c
 /*
  *	isc_put_slice
  *

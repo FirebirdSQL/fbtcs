@@ -1,39 +1,38 @@
+#
+#
+#  Name:		cf_isql_02
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level one test case for computed-fields.
+#			
+#			This test uses simple arithmetic operations when
+#			defining computed-fields. This test case tests for other
+#			numeric datatypes: SMALLINT, DECIMAL, NUMERIC, FLOAT,
+#			and DOUBLE PRECISION. 
+#
+#			This is the model of most of the tests defined here:
+#
+#			- Create a table with computed field.
+#			- Show table to verify the create table.
+#			- Insert couple of rows with data.
+#			- Query the table with matching expression and see
+#			  if we get back same number of rows.
+#			- Update a row.
+#			- Query again using same expression as above.
+#
+#  Expected result:	For every set of testcase there will be two output lines.
+#			
+#			'Passed xx - Insert'
+#			'Passed xx - Update'
+#
+#  Author:		Ravil A. Desai
+#  Bugs:
+#  Change history:
+#
+#
 
-$CREATE comment.txt
-/*
-**  Name:		cf_isql_02
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level one test case for computed-fields.
-**			
-**			This test uses simple arithmetic operations when
-**			defining computed-fields. This test case tests for other
-**			numeric datatypes: SMALLINT, DECIMAL, NUMERIC, FLOAT,
-**			and DOUBLE PRECISION. 
-**
-**			This is the model of most of the tests defined here:
-**
-**			- Create a table with computed field.
-**			- Show table to verify the create table.
-**			- Insert couple of rows with data.
-**			- Query the table with matching expression and see
-**			  if we get back same number of rows.
-**			- Update a row.
-**			- Query again using same expression as above.
-**
-**  Expected result:	For every set of testcase there will be two output lines.
-**			
-**			'Passed xx - Insert'
-**			'Passed xx - Update'
-**
-**  Author:		Ravil A. Desai
-**  Bugs:
-**  Change history:
-**
-*/
-
-$CREATE cf_test.sql
+>> cf_test.sql
 create database "WHERE_GDB:cf.gdb";
 
 /*
@@ -228,5 +227,6 @@ select 'Passed 3(dp) - Update' from t10_dp where j = i+i having count(*) = 2;
 
 drop database;
 exit;
+
 $ISQL -m -input cf_test.sql
-$DELETE cf_test.sql comment.txt
+$DELETE cf_test.sql

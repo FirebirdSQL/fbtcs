@@ -1,8 +1,10 @@
-BRS 26-Apr-2004
+#
+# BRS 26-Apr-2004
+#
+# bug #518349 isql show mangles relationship
+#
 
-bug #518349 isql show mangles relationship
-
-$CREATE cf_isql_20a.sql
+>> cf_isql_20a.sql
 
 set echo;
 
@@ -15,7 +17,7 @@ create trigger t for u after delete as begin
 old.a=old.a; end^
 commit ^
 
-$CREATE cf_isql_20b.sql
+>> cf_isql_20b.sql
 
 set echo;
 connect 'WHERE_GDB:cf_isql_20.fdb';

@@ -1,5 +1,5 @@
 
-$ ISQL -m 
+>> proc_empty.sql
 create database "WHERE_GDB:foo.gdb";
 create table foo (i integer);
 set term go;
@@ -29,5 +29,6 @@ go
 exit
 go
 
+$ ISQL -m -i proc_empty.sql
 $ DROP WHERE_GDB:foo.gdb
-
+$DELETE proc_empty*

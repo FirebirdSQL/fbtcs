@@ -1,5 +1,5 @@
 
-$ CREATE er20.c
+>> er20.c
 /*
  *	isc_que_events
  *

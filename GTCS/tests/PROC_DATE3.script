@@ -1,6 +1,7 @@
 
 $ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m WHERE_GDB:sp1.gdb
+
+>> proc_date3.sql
 set term go;
 create procedure test(a date) RETURNS (x date) as 
 begin
@@ -58,4 +59,7 @@ go
 set term ; go
 execute procedure cast6;
 exit;
+
+$ ISQL -m WHERE_GDB:sp1.gdb -i proc_date3.sql
 $ DROP WHERE_GDB:sp1.gdb
+$DELETE proc_date3*

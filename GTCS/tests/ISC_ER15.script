@@ -1,5 +1,5 @@
 
-$ CREATE er15.c
+>> er15.c
 /*
  *	isc_array_put_slice
  *

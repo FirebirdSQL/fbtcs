@@ -1,43 +1,42 @@
 
-$CREATE COMMENT
-*******************************************************************************
- 
-Test Name:  	EXT_REL_0_35_E
-Test Level:     0
-Series Name:    EXT_LEV_0
-Date:  		July 3, 1994
-Author:  	Scott Van Voris
-Bug: 		#6984
- 
-Description:    This is a Level 0 test which is designed to verify that 
-                DROP TABLE drops the internal representation of the external
-                table, but does NOT remove the external file.
- 
-                The external table is created, a tuple is inserted, the
-                relation is SELECT'ed, the table is DROP'ped, the metadata
-                in the database is displayed (there should be none), and
-                the contents of the external file are displayed.
+#*******************************************************************************
+# 
+#Test Name:  	EXT_REL_0_35_E
+#Test Level:     0
+#Series Name:    EXT_LEV_0
+#Date:  		July 3, 1994
+#Author:  	Scott Van Voris
+#Bug: 		#6984
+# 
+#Description:    This is a Level 0 test which is designed to verify that 
+#                DROP TABLE drops the internal representation of the external
+#                table, but does NOT remove the external file.
+# 
+#                The external table is created, a tuple is inserted, the
+#                relation is SELECT'ed, the table is DROP'ped, the metadata
+#                in the database is displayed (there should be none), and
+#                the contents of the external file are displayed.
+#
+#Expected Output:       Due to bug #6984, the table cannot be DROP'ped
+#History:
+#15-May-95:      Added a RELEASE to the COMMIT.  I believe that this was
+#		the cause of the reported bug on this test.  Works now. clare
+#2-Oct-95:  Mark
+#  Removed the Cleanup / Setup comments from the test.
+#  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+#
+#3-Oct-95: Marco
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  by the server in the correct place when accessing data remotely.
+#  Also, I removed any referance to DIR external.dat and TYPE external.dat
+#  which would also fail when running remotely.
+#
+#14-Oct-00: Frank Schlottmann-Goedde
+#  replaced double with single quotes where necessary to run with version 6.x
+#
+#*******************************************************************************
 
-Expected Output:       Due to bug #6984, the table cannot be DROP'ped
-History:
-15-May-95:      Added a RELEASE to the COMMIT.  I believe that this was
-		the cause of the reported bug on this test.  Works now. clare
-2-Oct-95:  Mark
-  Removed the Cleanup / Setup comments from the test.
-  Also, added WHERE_GDB and RUN drop_gdb to the tests.
-
-3-Oct-95: Marco
-  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
-  by the server in the correct place when accessing data remotely.
-  Also, I removed any referance to DIR external.dat and TYPE external.dat
-  which would also fail when running remotely.
-
-14-Oct-00: Frank Schlottmann-Goedde
-  replaced double with single quotes where necessary to run with version 6.x
-
-*******************************************************************************
-
-$CREATE fixedL.e
+>> fixedL.e
 #include <stdio.h>
 #include <stdlib.h>
  
@@ -77,7 +76,7 @@ ERR:
 	exit(1);
 
 }
-$CREATE drop_rel.e
+>> drop_rel.e
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -126,7 +125,7 @@ ERR:
 	exit(1);
 
 }
-$CREATE isql.in
+>> isql.in
 CONNECT 'WHERE_GDB:ext_rel_0_35_E.gdb';
 SHOW TABLE ext_table;
 
@@ -141,4 +140,4 @@ $RUN drop_rel
 $ISQL -m -input isql.in 
 $DROP WHERE_GDB:ext_rel_0_35_E.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
-$DELETE COMMENT fixedL* drop_rel* isql.in
+$DELETE fixedL* drop_rel* isql.in

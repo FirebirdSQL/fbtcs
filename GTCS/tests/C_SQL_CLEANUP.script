@@ -1,5 +1,5 @@
 
-$CREATE cmt
+>> cmt
 This test is being added to the C_SQL_* series to ensure that all files created by
 tests in this series are removed once the series has completed.
 

@@ -1,18 +1,20 @@
 
+#
+#**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+# Description:           DELETE ... where field containing <value>
+#			DELETE FROM CUSTOMERS 
+#			WHERE CUSTOMER CONTAINING "'";
+#
+# Table:                 CUSTOMERS
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+#
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con039.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
- Description:           DELETE ... where field containing <value>
-			DELETE FROM CUSTOMERS 
-			WHERE CUSTOMER CONTAINING "'";
-
- Table:                 CUSTOMERS
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con039.e
 
 #include <stdio.h>
 
@@ -112,13 +114,13 @@ $ GPRE -e con039.e
 $ CC FLAG_CC con039.c
 $ LINK FLAG_LINK con039 
 $ RUN con039
-$ CREATE con039.qli
+>> con039.qli
 ready WHERE_GDB:sh_test.gdb;
 select count(*) from customers where customer containing "'";
 finish;
 quit;
 $ QLI -n -a con039.qli
-$ CREATE con039.sql
+>> con039.sql
 connect WHERE_GDB:sh_test.gdb;
 select count(*) from customers where customer containing "'";
 quit;

@@ -1,16 +1,16 @@
 
-/*******************************************************************************
- Test Name:   dsql_domain_11
- Series Name: dsql_domains
- Date:        11-October-1993
- Comments:    This script will test level 0 syntax for SQL drop domain statement
- History:     Cloning test for 6.0. Changing "dec(25,10)" domain definition
-              to "dec(18,10)". (stsikin, 10-Dec-1998)
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:   dsql_domain_11
+# Series Name: dsql_domains
+# Date:        11-October-1993
+# Comments:    This script will test level 0 syntax for SQL drop domain statement
+# History:     Cloning test for 6.0. Changing "dec(25,10)" domain definition
+#              to "dec(18,10)". (stsikin, 10-Dec-1998)
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_11a.sql
+>> domain_11a.sql
 create domain dom11a_1 as smallint;
 show domain dom11a_1;
 create domain dom11a_2 as numeric(3,1);
@@ -75,7 +75,7 @@ exit;
 /*******************************************************************************
  attempt drops that will cause error messages.
 *******************************************************************************/
-$ CREATE domain_11b.sql
+>> domain_11b.sql
 drop domain rubbish;
 exit;
 $ isql -m WHERE_GDB:atlas.gdb -i domain_11a.sql

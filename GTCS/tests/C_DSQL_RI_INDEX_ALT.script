@@ -1,9 +1,10 @@
-
-HISTORY:
+#
+#HISTORY:
+#
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE indexalt.epp
+>> indexalt.epp
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>

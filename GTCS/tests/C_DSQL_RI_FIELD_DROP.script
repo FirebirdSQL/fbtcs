@@ -1,10 +1,11 @@
-
-HISTORY:
+#
+#HISTORY:
+#
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
 
-$ CREATE fieldrop.epp
+>> fieldrop.epp
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>

@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           date-field containing number
+#
+#                        SELECT CUSTNO, TOTAL_VALUE, SHIPPED
+#                        FROM SALES
+#                        WHERE SHIPPED CONTAINING 'Jul';
+#
+# Table:                 sales
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con033.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           date-field containing number
-
-                        SELECT CUSTNO, TOTAL_VALUE, SHIPPED
-                        FROM SALES
-                        WHERE SHIPPED CONTAINING 'Jul';
-
- Table:                 sales
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con033.e
 
 #include <stdio.h>
 #include <time.h>
@@ -146,7 +146,7 @@ $ GPRE -e con033.e
 $ CC FLAG_CC con033.c
 $ LINK FLAG_LINK con033 
 $ RUN con033
-$ CREATE con033.qli
+>> con033.qli
 SET SEMICOLON;
 ready WHERE_GDB:sh_test.gdb;
 SELECT CUSTNO, TOTAL_VALUE, SHIPPED
@@ -158,7 +158,7 @@ S.TOTAL_VALUE, S.SHIPPED;
 finish;
 quit;
 $ QLI -n -a con033.qli
-$ CREATE con033.sql
+>> con033.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT CUSTNO, TOTAL_VALUE, SHIPPED
 FROM SALES

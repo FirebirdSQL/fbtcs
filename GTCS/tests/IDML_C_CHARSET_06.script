@@ -1,33 +1,35 @@
 
-$ GBAK -r intlemp.gbk WHERE_GDB:intlemp_06.gdb
-$ CREATE comment
-By:          Clare Taylor
-Date:        08/--/94
-Test name:   IDML_C_CHARSET_06         
-Series:      IDML_C_CHARSET          
-Results:     Still not working properly due to bug 7095? or the
-	     one filed for -charset
+#>> comment
+#By:          Clare Taylor
+#Date:        08/--/94
+#Test name:   IDML_C_CHARSET_06         
+#Series:      IDML_C_CHARSET          
+#Results:     Still not working properly due to bug 7095? or the
+#	     one filed for -charset
+#
+#Dependency:  Requires db built in IDML_C_CHARSET_04 W/the .gbk
+#	     file created in that test.
+#History:
+#8/11/94:     build W: reinit due to additional results from 
+#	     one of the other tests (a bug fix allowed the
+#	     stored procedure insert w/set names to work).  This
+#	     still shows bad results--if -charset is used the
+#	     8-bit insert fails.  Reinit when bugs are fixed.
+#11/10/94:    add -m for -charset option and add manual transactions.
+#	     remove the -d database and put it in the program.
+#             This may now be about the same test as charset 4.  Check
+#	     at some point in the future.  Under time pressure for
+#	     build AA testing now so just fix it and go.
+#30Aug95:     failing due to bug in test 04.  Changing all tests to
+#	     work from a .gbk file that has just 2 rows of data.
+#	     This should pass now regardless of whether test 4 fails
+#	     or passes.
+#16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
+#Description:
+#
 
-Dependency:  Requires db built in IDML_C_CHARSET_04 W/the .gbk
-	     file created in that test.
-History:
-8/11/94:     build W: reinit due to additional results from 
-	     one of the other tests (a bug fix allowed the
-	     stored procedure insert w/set names to work).  This
-	     still shows bad results--if -charset is used the
-	     8-bit insert fails.  Reinit when bugs are fixed.
-11/10/94:    add -m for -charset option and add manual transactions.
-	     remove the -d database and put it in the program.
-             This may now be about the same test as charset 4.  Check
-	     at some point in the future.  Under time pressure for
-	     build AA testing now so just fix it and go.
-30Aug95:     failing due to bug in test 04.  Changing all tests to
-	     work from a .gbk file that has just 2 rows of data.
-	     This should pass now regardless of whether test 4 fails
-	     or passes.
-16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
-Description:
-$ CREATE btest3.e
+$ GBAK -r intlemp.gbk WHERE_GDB:intlemp_06.gdb
+>> btest3.e
 /* Case 3:
    Contains NO DATABASE statement so: 
 
@@ -118,7 +120,7 @@ $ GPRE -m -charset iso8859_1 btest3.e
 $ CC FLAG_CC btest3.c
 $ LINK FLAG_LINK btest3 
 $ RUN btest3
-$ CREATE verify.sql
+>> verify.sql
 set names iso8859_1;
 connect WHERE_GDB:intlemp_06.gdb;
 select * from employee;
@@ -126,4 +128,4 @@ quit;
 
 $ ISQL -m -i verify.sql
 $ DROP WHERE_GDB:intlemp_06.gdb
-$ DELETE btest3* comment verify.sql
+$ DELETE btest3* verify.sql

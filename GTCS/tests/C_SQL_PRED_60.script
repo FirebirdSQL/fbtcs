@@ -1,22 +1,23 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:
+#
+# Description:           char-field in a view
+#
+#                        SELECT DEPTNO
+#                        FROM DEPT_BUDGET
+#                        WHERE DEPTNO STARTING '12';
+#
+# Tables:                DEPT_BUDGET
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta013.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:
-
- Description:           char-field in a view
-
-                        SELECT DEPTNO
-                        FROM DEPT_BUDGET
-                        WHERE DEPTNO STARTING '12';
-
- Tables:                DEPT_BUDGET
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta013.e
 
 #include <stdio.h>
 
@@ -107,7 +108,7 @@ $ GPRE -e sta013.e
 $ CC FLAG_CC sta013.c
 $ LINK FLAG_LINK sta013 
 $ RUN sta013
-$ CREATE sta013.qli
+>> sta013.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -117,7 +118,7 @@ select count(*) from dept_budget where deptno starting with '12';
 finish;
 quit;
 $ QLI -n -a sta013.qli
-$ CREATE sta013.sql
+>> sta013.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT DEPTNO FROM DEPT_BUDGET WHERE DEPTNO STARTING '12';
 select count(*) from dept_budget where deptno starting with '12';

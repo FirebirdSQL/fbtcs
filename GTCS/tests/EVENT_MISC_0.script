@@ -1,22 +1,24 @@
 
-$ CREATE doc
-Series:   EVENT_MISC    
-Test:     EVENT_MISC_0  (new V4.5 version to see if bug exists)
-History:
-May 7, 97: clare: trying to see if the problem exists in SS
-Aug 28, 97: bsriram: test does not pass only on an SMP Solaris 2.5 Box.
-                     Passes with IB5.0 DEV and Beta1 kits on all uni-processor
-                     machines. The SERVER_RELATION is not getting updated 
-                     for each event sent by the clients.
-Dec 2, 1997:clare:This was still failing because TCS was picking
-            up an old local 4.0 test rather than the new 4.5 test.  I 
-            had to delete the hp local test and local init for 4.0 to
-            force the 4.5 global test to run against the new 4.5 solaris
-            global init. Reported problem to dmitri.  HP now passes
-            with the SO init record.  Whatever bugs there were seem to
-            be fixed: 5540, the status is still open, I believe.
+#
+#Series:   EVENT_MISC    
+#Test:     EVENT_MISC_0  (new V4.5 version to see if bug exists)
+#History:
+#May 7, 97: clare: trying to see if the problem exists in SS
+#Aug 28, 97: bsriram: test does not pass only on an SMP Solaris 2.5 Box.
+#                     Passes with IB5.0 DEV and Beta1 kits on all uni-processor
+#                     machines. The SERVER_RELATION is not getting updated 
+#                     for each event sent by the clients.
+#Dec 2, 1997:clare:This was still failing because TCS was picking
+#            up an old local 4.0 test rather than the new 4.5 test.  I 
+#            had to delete the hp local test and local init for 4.0 to
+#            force the 4.5 global test to run against the new 4.5 solaris
+#            global init. Reported problem to dmitri.  HP now passes
+#            with the SO init record.  Whatever bugs there were seem to
+#            be fixed: 5540, the status is still open, I believe.
+#
+
 $ GBAK -r WHERE_FILES:asyn_evnts.gbk WHERE_GDB:asyn_evnts.gdb
-$ CREATE event_custom.h
+>> event_custom.h
 
 /*
  *	MODULE NAME:	event_custom.h
@@ -77,7 +79,7 @@ void parse_client_args(int,char *[],int *,int *,char *);
 #define UPPER(c)	((c) >= 'a' && (c) <= 'z' ? (c) & 0x5F : (c))
 
 /*------------------------------------------------------------------------*/
-$ CREATE event_server.e
+>> event_server.e
 
 
 /*
@@ -1208,7 +1210,7 @@ void finish_packets(long pipe_fd[MAX_CLIENTS][2], short verbose)
 }
 
 /*---------------------------------------------------------------------------*/
-$ CREATE event_client.e
+>> event_client.e
 
 /*
  * PROGRAM: Asynchronous Event Client
@@ -1432,7 +1434,7 @@ void parse_client_args(
 }    
 
 /*---------------------------------------------------------------------------*/
-$ CREATE delay.c
+>> delay.c
 #ifdef WIN_NT
 #include <windows.h>
 #endif
@@ -1470,4 +1472,4 @@ $ DELETE event_server*
 $ DELETE event_client* 
 $ SLEEP 10
 $ DROP WHERE_GDB:asyn_evnts.gdb
-$ DELETE delay* doc
+$ DELETE delay*

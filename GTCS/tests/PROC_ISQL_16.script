@@ -1,6 +1,7 @@
 
 $GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m WHERE_GDB:sp1.gdb
+
+>> proc_isql_16.sql
 set term go;
 create procedure proc_insert (a char(5), b char(20), c char(6), d smallint, e char(15)) as
 begin
@@ -15,4 +16,7 @@ EXECUTE PROCEDURE PROC_INSERT 'P15',NULL , 'Pink', NULL, 'Hoboken';
 INSERT INTO P VALUES ('P16', NULL, NULL, NULL, 'Varanasi');
 select * from p;
 exit;
-$ DROP WHERE_GDB:sp1.gdb 
+
+$ISQL -m WHERE_GDB:sp1.gdb -i proc_isql_16.sql
+$DROP WHERE_GDB:sp1.gdb 
+$DELETE proc_isql_16*

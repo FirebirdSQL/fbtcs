@@ -1,5 +1,5 @@
 
-$CREATE event_mgr.e
+>> event_mgr.e
 /*---------------------------------------------------------------------------*/
 /*                        EVENTS  TEST  MANAGER                              */ 
 /*---------------------------------------------------------------------------*/
@@ -138,7 +138,7 @@ char ** argv;
     COMMIT;
     FINISH STOCKS_DB;
 }
-$CREATE post_events.e
+>> post_events.e
 /* This program updates the stock values in the database hence posting the 
    event 
 */
@@ -195,7 +195,7 @@ char **argv;
 	}
 	EXEC SQL COMMIT RELEASE;
 }
-$CREATE stocks.gdl
+>> stocks.gdl
 
 define database "stocks.gdb"
 	page_size 1024;
@@ -240,7 +240,7 @@ if new.price != old.price
 
 	end_trigger;
 $GDEF -r stocks.gdl
-$CREATE input.sql
+>> input.sql
 connect stocks.gdb;
 insert into stocks ( company, price) values ( "DG", 55.50);
 insert into stocks ( company, price) values ( "DEC", 122.00);

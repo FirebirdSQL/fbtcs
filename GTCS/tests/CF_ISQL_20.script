@@ -1,8 +1,10 @@
-BRS 26-Apr-2004
+#
+# BRS 26-Apr-2004
+#
+# bug #223126 Misplaced collation when extracting metadata with isql
+#
 
-bug #223126 Misplaced collation when extracting metadata with isql
-
-$CREATE cf_isql_20a.sql
+>> cf_isql_20a.sql
 
 CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb';
 
@@ -15,7 +17,7 @@ CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
 
 ALTER TABLE T_EXTRACT_BUG ADD check(a>='c');
 
-$CREATE cf_isql_20b.sql
+>> cf_isql_20b.sql
 
 connect 'WHERE_GDB:cf_isql_20.fdb';
 show domain extract_bug;

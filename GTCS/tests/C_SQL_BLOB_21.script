@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_21.gdb
-$ CREATE blob021.epp
+>> blob021.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           SET A BLOB TO NULL 
@@ -92,7 +92,7 @@ $ GPRE -e blob021.epp
 $ CXX FLAG_CXX blob021.cpp
 $ LINK FLAG_LINK blob021 
 $ RUN blob021
-$ CREATE blob021.qli
+>> blob021.qli
 ready WHERE_GDB:sh_blobs_21.gdb;
 select test_name, row_id, comment, b from mb1 where test_name = 'blob021' and b is null;
 finish;

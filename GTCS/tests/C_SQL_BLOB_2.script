@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_2.gdb
-$ CREATE blob002.epp
+>> blob002.epp
 /**********************************************************************
  Purpose:               Test SQL blob  support in InterBase 4.0
  Description:           MAXIMUM_SEGMENT keyword in the declare

@@ -1,6 +1,6 @@
 
 $ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_7.gdb
-$ CREATE join007.e
+>> join007.e
 /**********************************************************************
  Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
  Description:           INNER JOIN - Syntax check
@@ -104,7 +104,7 @@ $ GPRE -e join007.e
 $ CC FLAG_CC join007.c
 $ LINK FLAG_LINK join007 
 $ RUN join007
-$ CREATE join007.qli
+>> join007.qli
 ready WHERE_GDB:sh_join_7.gdb;
 set semicolon;
 set columns 100;
@@ -113,7 +113,7 @@ from ct1 t1 inner join ct2 t2 on t1.c1 = t2.c1;
 finish;
 quit;
 $ QLI -n -a join007.qli
-$ CREATE join007.sql
+>> join007.sql
 connect WHERE_GDB:sh_join_7.gdb;
 select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row 
 from ct1 t1 inner join ct2 t2 on t1.c1 = t2.c1;

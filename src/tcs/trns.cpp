@@ -49,6 +49,8 @@
 static int process_command(char* in_line, char* result);
 static int process_defn(char* in_line);
 static int process_noxcmd(char* in_line, char*  result);
+static int process_file(char* in_line, char*  result);
+static int process_comml(char* in_line, char*  result);
 static int process_regtxt(char* in_line, char*  result);
 static int handle_keyword(char* in_line, char* result);
 
@@ -168,6 +170,15 @@ int PTSL_2ap(char *in_line, char *result)
 		success = (USHORT) process_command(in_line, result); //  command line
 	}
 
+	else if (*in_line == '>' && *(in_line+1) == '>')
+	{
+		linetype = INPUTFILE;
+		success = (USHORT) process_file(in_line, result);	/* no translate cmd */
+	}
+	else if (*in_line == '#'){
+		linetype = COMML;
+		success = (USHORT) process_comml(in_line, result);
+	}
 	// If the first character is a carat and the second is a '$'
 	// then we do not process the command, but mark it as a command
 	// anyway and return.
@@ -1129,6 +1140,51 @@ static int process_noxcmd(char *in_line, char *result)
 	 **************************************/
 
 	strcpy(result, ++in_line);
+	return true;
+}
+
+static int process_comml(char *in_line, char *result)
+{
+	/**************************************
+	 *
+	 *	p r o c e s s _ n o x c m d _ l i n e
+	 *
+	 **************************************
+	 *
+	 * Functional description
+	 *      This routine removes the '^" from the front of a command line
+	 *      that is not to be translated.
+	 *      
+	 **************************************/
+
+	strcpy(result, in_line);
+	return true;
+}
+
+static int process_file(char *in_line, char *result)
+{
+	/**************************************
+	 *
+	 *	p r o c e s s _ n o x c m d _ l i n e
+	 *
+	 **************************************
+	 *
+	 * Functional description
+	 *      This routine removes the '^" from the front of a command line
+	 *      that is not to be translated.
+	 *      
+	 **************************************/
+//	int jj = 1; // remove >
+	int ii = 0;
+	in_line += 2;
+	while (*in_line != '\0') {
+		if (*in_line != ' ' && *in_line != '\n'){
+			result[ii++] = *in_line;
+		}
+		in_line++;
+	}
+	result[ii] = 0;
+//	strcpy(result, +in_line);
 	return true;
 }
 

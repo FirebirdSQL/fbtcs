@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           varchar field containing number
+#
+#                        SELECT EMPNO
+#                        FROM MANAGEMENT
+#                        WHERE EMPNO CONTAINING 1;
+#
+# View:                  management
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con031.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           varchar field containing number
-
-                        SELECT EMPNO
-                        FROM MANAGEMENT
-                        WHERE EMPNO CONTAINING 1;
-
- View:                  management
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con031.e
 
 #include <stdio.h>
 
@@ -107,7 +107,7 @@ $ GPRE -e con031.e
 $ CC FLAG_CC con031.c
 $ LINK FLAG_LINK con031 
 $ RUN con031
-$ CREATE con031.qli
+>> con031.qli
 SET SEMICOLON;
 ready WHERE_GDB:sh_test.gdb;
 SELECT EMPNO
@@ -119,7 +119,7 @@ finish;
 quit;
 
 $ QLI -n -a con031.qli
-$ CREATE con031.sql
+>> con031.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT EMPNO
 FROM MANAGEMENT

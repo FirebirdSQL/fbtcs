@@ -1,8 +1,10 @@
 
-$ CREATE comment.txt
-Author: Sudhanshu Kumar
-In this test event init shows its interest in two events. 
-$CREATE event3.sql
+#
+#Author: Sudhanshu Kumar
+#In this test event init shows its interest in two events. 
+#
+
+>> sql_event_03a.sql
 create database "WHERE_GDB:events.gdb";
 
 create table works_on (SSN       INTEGER Not Null,
@@ -27,8 +29,8 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event3.sql -sqldialect 1
-$ CREATE foo3.e
+$ISQL -m -I sql_event_03a.sql -sqldialect 1
+>> foo3.e
 # include <stdio.h>
 DATABASE DB = "WHERE_GDB:events.gdb"
 main()
@@ -68,24 +70,26 @@ $ CC FLAG_CC foo3.c
 $ LINK FLAG_LINK foo3 
 $ RUN_BG foo3 > foo3.tt1 &
 $ SLEEP 5
-$ ISQL -m 
+>> sql_event_03b.sql
 connect "WHERE_GDB:events.gdb" ;
 update works_on set hours = hours + 10 where pnumber = 1 ;
 commit;
 select * from works_on;
 quit;
+$ ISQL -m -i sql_event_03b.sql
 $ SLEEP 5
 $ TYPE foo3.tt1 
 $ RUN_BG foo3 > foo3.tt2 &
 $ SLEEP 5
-$ ISQL -m 
+>> sql_event_03c.sql
 connect "WHERE_GDB:events.gdb" ;
 update works_on set hours = hours - 10 where pnumber = 2 ;
 commit;
 select * from works_on;
 quit;
+$ ISQL -m -i sql_event_03c.sql
 $ SLEEP 5
 $ TYPE foo3.tt2
 $ DROP WHERE_GDB:events.gdb 
-$ DELETE foo3* comment.txt event3.sql
+$ DELETE foo3* sql_event_03*
 

@@ -1,13 +1,12 @@
 
-HISTORY:
 
 $ COPY WHERE_FILES:make.filter make.filter
-$ CREATE p666.sh
+>> p666.sh
 sed 's/-z//g' make.filter >makefile
 chmod 777 makefile
 $ SH p666.sh
 $ MAKE -s new
-$ CREATE slides.e 
+>> slides.e 
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
 

@@ -1,27 +1,26 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+#			[NOT]SINGULAR <subquery>			
+#
+# Description:           Error trapping - SINGULAR
+#
+#                        SELECT * FROM NOTABLE T1 WHERE SINGULAR
+#                        (SELECT T2.CUSTNO, T2.TOTAL_VALUE
+#                        FROM SALES T2
+#                        WHERE T1.CUSTNO = T2.CUSTNO
+#                        ORDER BY T2.CUSTNO ASCENDING,
+#                        T2.TOTAL_VALUE DESCENDING);
+#
+# Tables:		customers		
+#
+# Author:		Sam Hakim, Feb 18, 93
+#************************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin092.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
-			[NOT]SINGULAR <subquery>			
-
- Description:           Error trapping - SINGULAR
-
-                        SELECT * FROM NOTABLE T1 WHERE SINGULAR
-                        (SELECT T2.CUSTNO, T2.TOTAL_VALUE
-                        FROM SALES T2
-                        WHERE T1.CUSTNO = T2.CUSTNO
-                        ORDER BY T2.CUSTNO ASCENDING,
-                        T2.TOTAL_VALUE DESCENDING);
-
- Tables:		customers		
-
- Author:		Sam Hakim, Feb 18, 93
-************************************************************************
-*/
+>> sin092.e
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
 
 DATABASE DB = 'WHERE_GDB:sh_test.gdb';
 EXEC SQL	INCLUDE SQLCA;

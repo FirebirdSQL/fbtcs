@@ -1,30 +1,29 @@
 
-$ CREATE cmt
-This test was corrupted sometime late June 14 when someone was
-attempting to view the test after a rs command.  The corruption
-occurred on millions which was running the vectored run.  Morgan
-did a kill -9 on a process and shortly after that entered TCS
-and tried to run again.  This gave a blob not found error.  The
-next time he got into TCS there was a fortran test in this test.
-The blob id for the test must have gotten assigned a random? blobid
-from the db.  I had been running the test outside TCS so had saved
-all the scripts and am restoring the test.
-this was the old tcs.script.  I think I got the test reconstructed:
+#This test was corrupted sometime late June 14 when someone was
+#attempting to view the test after a rs command.  The corruption
+#occurred on millions which was running the vectored run.  Morgan
+#did a kill -9 on a process and shortly after that entered TCS
+#and tried to run again.  This gave a blob not found error.  The
+#next time he got into TCS there was a fortran test in this test.
+#The blob id for the test must have gotten assigned a random? blobid
+#from the db.  I had been running the test outside TCS so had saved
+#all the scripts and am restoring the test.
+#this was the old tcs.script.  I think I got the test reconstructed:
+#
+#isql<tcs.data0
+#cat >  foo1.e<tcs.data1
+#gpre -n -m foo1.e
+#cc -w -c -I/usr/gds/tests foo1.c
+#cc foo1.o  -o foo1 -lgds
+#foo1 > foo1.tt1 &<tcs.data2
+#sleep 2
+#isql -m ./events.gdb<tcs.data3
+#sleep 2
+#cat < foo1.tt1
+#drop_gdb ./events.gdb
+#rm -f foo1*
 
-isql<tcs.data0
-cat >  foo1.e<tcs.data1
-gpre -n -m foo1.e
-cc -w -c -I/usr/gds/tests foo1.c
-cc foo1.o  -o foo1 -lgds
-foo1 > foo1.tt1 &<tcs.data2
-sleep 2
-isql -m ./events.gdb<tcs.data3
-sleep 2
-cat < foo1.tt1
-drop_gdb ./events.gdb
-rm -f foo1*
-
-$ CREATE create.sql
+>> sql_event_01a.sql
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER);
@@ -52,8 +51,8 @@ go
 set term ; go
 
 exit;
-$ISQL -m -I create.sql -sqldialect 1
-$ CREATE foo1.e
+$ISQL -m -I sql_event_01a.sql -sqldialect 1
+>> foo1.e
 #include <stdio.h>
 /* This program had no semi colon after this statment and
    was using the GDML DATABASE statement.  On Solaris2/3, this
@@ -95,13 +94,14 @@ $ CC FLAG_CC foo1.c
 $ LINK FLAG_LINK foo1 
 $ RUN_BG foo1 > foo1.tt1 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_01b.sql
 update project set pnumber = 11 where pnumber = 1;
 commit;
 select * from project;
 select * from works_on;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_01b.sql
 $ SLEEP 5
 $ TYPE foo1.tt1
 $ DROP WHERE_GDB:events.gdb
-$ DELETE foo1* cmt create.sql
+$ DELETE foo1* sql_event_01*

@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_13.gdb
-$ CREATE blob013.epp
+>> blob013.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT CURSOR - BufferLen < 0 
@@ -158,7 +158,7 @@ $ GPRE -e blob013.epp
 $ CXX FLAG_CXX blob013.cpp
 $ LINK FLAG_LINK blob013 
 $ RUN blob013
-$ CREATE blob013.qli
+>> blob013.qli
 ready WHERE_GDB:sh_blobs_13.gdb;
 select test_name, row_id, b512 from mb1 where test_name = 'blob013';
 finish;

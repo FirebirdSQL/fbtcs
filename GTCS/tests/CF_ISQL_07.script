@@ -1,51 +1,51 @@
 
-/*
-**  Name:		cf_isql_07
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level two test case for computed-fields.
-**			
-**			This test checks for valid conversion of different
-**			datatypes when defining computed fields. It tries
-**			for following combinations.
-**
-**			- integer and float
-**			- integer and character
-**			- float and character
-**			- float and date
-**			- character and date
-**			- string literal and integer
-**			- string literal and float
-**			- string literal and date
-**
-**			Note: Not adding tests for all the data types combination
-**			      since, either they are covered in other tests or
-**			      redundant (as trying combination of smallint and float
-**			      or integer with double, etc.)
-**
-**			This is the model of most of the tests defined here:
-**
-**			- Create a table with computed field.
-**                      - Show table to verify the create table.
-**			- Insert couple of rows with data.
-**			- Query the table with matching expression and see
-**			  if we get back same number of rows.
-**			- Update a row.
-**			- Query again using same expression as above.
-**
-**  Expected result:	For every set of testcase there will be two output lines.
-**			
-**			'Passed xx - Insert'
-**			'Passed xx - Update'
-**
-**  Author:		Ravil A. Desai
-**  Bugs:		
-**  Change history:
-**
-*/
+#
+#  Name:		cf_isql_07
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level two test case for computed-fields.
+#			
+#			This test checks for valid conversion of different
+#			datatypes when defining computed fields. It tries
+#			for following combinations.
+#
+#			- integer and float
+#			- integer and character
+#			- float and character
+#			- float and date
+#			- character and date
+#			- string literal and integer
+#			- string literal and float
+#			- string literal and date
+#
+#			Note: Not adding tests for all the data types combination
+#			      since, either they are covered in other tests or
+#			      redundant (as trying combination of smallint and float
+#			      or integer with double, etc.)
+#
+#			This is the model of most of the tests defined here:
+#
+#			- Create a table with computed field.
+#                      - Show table to verify the create table.
+#			- Insert couple of rows with data.
+#			- Query the table with matching expression and see
+#			  if we get back same number of rows.
+#			- Update a row.
+#			- Query again using same expression as above.
+#
+#  Expected result:	For every set of testcase there will be two output lines.
+#			
+#			'Passed xx - Insert'
+#			'Passed xx - Update'
+#
+#  Author:		Ravil A. Desai
+#  Bugs:		
+#  Change history:
+#
+#
 
-$ CREATE cf_test.sql
+>> cf_test.sql
 create database "WHERE_GDB:cf.gdb";
 
 /*

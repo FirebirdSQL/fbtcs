@@ -1,27 +1,27 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           containing null
+#
+#                        SELECT COUNT(*)
+#                        FROM SALES
+#                        WHERE SHIPPED IS NULL;
+#
+# Tables:                DEPT_BUDGET
+#
+# Author:                Sam Hakim, Feb 19, 93
+#
+# Note:			GPRE could not pre-precess a statement such as
+#			containing null.  This was changed
+#			to is null.  This is consitent with GDML
+#			representation of containing null.
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con015.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           containing null
-
-                        SELECT COUNT(*)
-                        FROM SALES
-                        WHERE SHIPPED IS NULL;
-
- Tables:                DEPT_BUDGET
-
- Author:                Sam Hakim, Feb 19, 93
-
- Note:			GPRE could not pre-precess a statement such as
-			containing null.  This was changed
-			to is null.  This is consitent with GDML
-			representation of containing null.
- ***********************************************************************
-*/
+>> con015.e
 
 #include <stdio.h>
 
@@ -114,7 +114,7 @@ $ GPRE -e con015.e
 $ CC FLAG_CC con015.c
 $ LINK FLAG_LINK con015 
 $ RUN con015
-$ CREATE con015.qli
+>> con015.qli
 set semicolon;
 ready WHERE_GDB:sh_test.gdb;
 SELECT COUNT(*)
@@ -126,7 +126,7 @@ FINISH;
 QUIT;
 
 $ QLI -n -a con015.qli
-$ CREATE con015.sql
+>> con015.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT COUNT(*)
 FROM SALES

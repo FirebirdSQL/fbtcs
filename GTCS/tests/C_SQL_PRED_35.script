@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           char-field, concatenated field
+#
+#                        SELECT NAME
+#                        FROM EMPLOYEES
+#                        WHERE NAME CONTAINING 'z'
+#
+# Tables:                employees
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con010.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           char-field, concatenated field
-
-                        SELECT NAME
-                        FROM EMPLOYEES
-                        WHERE NAME CONTAINING 'z'
-
- Tables:                employees
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con010.e
 
 #include <stdio.h>
 
@@ -109,7 +109,7 @@ $ GPRE -e con010.e
 $ CC FLAG_CC con010.c
 $ LINK FLAG_LINK con010 
 $ RUN con010
-$ CREATE con010.qli
+>> con010.qli
 set semicolon;
 ready WHERE_GDB:sh_test.gdb;
 SELECT NAME
@@ -120,7 +120,7 @@ FOR E IN EMPLOYEES WITH E.NAME CONTAINING 'z' PRINT NAME;
 FINISH;
 QUIT;
 $ QLI -n -a con010.qli
-$ CREATE con010.sql
+>> con010.sql
 SELECT NAME
 FROM EMPLOYEES
 WHERE NAME CONTAINING 'z';

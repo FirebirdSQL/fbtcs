@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+#			[NOT]SINGULAR <subquery>			
+#
+# Description:           SINGULAR - subquery uses CONTAINING
+#
+#                        SELECT * FROM CUSTOMERS C1 WHERE SINGULAR
+#                        (SELECT * FROM SALES S1
+#                        WHERE S1.CUSTNO = C1.CUSTNO
+#                        AND S1.PONUMB CONTAINING '8902')
+#
+# Tables:		customers		
+#
+# Author:		Sam Hakim, Feb 18, 93
+#************************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin027.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
-			[NOT]SINGULAR <subquery>			
-
- Description:           SINGULAR - subquery uses CONTAINING
-
-                        SELECT * FROM CUSTOMERS C1 WHERE SINGULAR
-                        (SELECT * FROM SALES S1
-                        WHERE S1.CUSTNO = C1.CUSTNO
-                        AND S1.PONUMB CONTAINING '8902')
-
- Tables:		customers		
-
- Author:		Sam Hakim, Feb 18, 93
-************************************************************************
-*/
+>> sin027.e
 
 #include <stdio.h>
 
@@ -148,7 +148,7 @@ $ GPRE -e sin027.e
 $ CC FLAG_CC sin027.c
 $ LINK FLAG_LINK sin027 
 $ RUN sin027
-$ CREATE sin027.qli
+>> sin027.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 select * from customers c1 where singular 
@@ -162,7 +162,7 @@ where s1.custno = c1.custno and s1.ponumb containing '8902');
 finish;
 quit;
 $ QLI -n -a sin027.qli
-$ CREATE sin027.sql
+>> sin027.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from customers c1 where singular 
 (select * from sales s1 

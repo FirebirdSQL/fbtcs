@@ -1,17 +1,17 @@
 
-/*******************************************************************************
- Test Name:         dsql_domain_20
- Test Series:       dsql_domains
- Date:              20-Oct-1993
- Related bugs:      bug_xxxx  -  have to exit db for changes made to domains 
-                                 to affect data being entered into tables.
- Comments:          This script will test using the alter domain statement on
-                    domains that are already in use in table definitions.
-/*******************************************************************************
-HISTORY:
+#/*******************************************************************************
+# Test Name:         dsql_domain_20
+# Test Series:       dsql_domains
+# Date:              20-Oct-1993
+# Related bugs:      bug_xxxx  -  have to exit db for changes made to domains 
+#                                 to affect data being entered into tables.
+# Comments:          This script will test using the alter domain statement on
+#                    domains that are already in use in table definitions.
+#/*******************************************************************************
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_20a.sql
+>> domain_20a.sql
 create domain dom20a as smallint 
  default 30;
 commit;
@@ -57,7 +57,7 @@ commit;
 show domain dom20a;
 commit;
 exit;
-$ CREATE domain_20b.sql
+>> domain_20b.sql
 insert into tab20a (fld8) values (5001);
 commit;
 select * from tab20a;

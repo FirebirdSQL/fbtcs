@@ -1,23 +1,23 @@
 
-/*
-**  Name:		cf_isql_14
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level two test case for computed-fields.
-**			
-**			This test checks the behaviour of computed-field when
-**			trying to insert a value in computed-field column and even
-**			trying to update an compute-field column. 
-**
-**  Expected result:	The insert and update both should fail.
-**			
-**  Author:		Ravil A. Desai
-**  Change history:
-**                       cloned for V6.x FSG 16.Oct:00
-*/
+#
+#  Name:		cf_isql_14
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level two test case for computed-fields.
+#			
+#			This test checks the behaviour of computed-field when
+#			trying to insert a value in computed-field column and even
+#			trying to update an compute-field column. 
+#
+#  Expected result:	The insert and update both should fail.
+#			
+#  Author:		Ravil A. Desai
+#  Change history:
+#                       cloned for V6.x FSG 16.Oct:00
+#
 
-$ CREATE cf_test.sql
+>> cf_test.sql
 create database "WHERE_GDB:cf.gdb";
 
 /*---------------------------------------------*/

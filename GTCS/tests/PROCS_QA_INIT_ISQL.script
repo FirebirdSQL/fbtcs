@@ -1,5 +1,5 @@
 
-$ CREATE sp1.sql
+>> sp1.sql
 create database "WHERE_GDB:sp1.gdb";
 commit;
 set echo;

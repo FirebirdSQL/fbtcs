@@ -1,9 +1,11 @@
 
-$ CREATE comment.txt
-Name: Sudhanshu Kumar 
-This test contains two event init statement in application program.
-The secon event init statement contains more events then first one.
-$CREATE event14.sql
+#
+#Name: Sudhanshu Kumar 
+#This test contains two event init statement in application program.
+#The secon event init statement contains more events then first one.
+#
+
+>> sql_event_14a.sql
 create database "WHERE_GDB:events.gdb";
 
 create table project  ( PNAME   VARCHAR(15) Not Null,
@@ -85,8 +87,8 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event14.sql -sqldialect 1
-$ CREATE foo.e
+$ISQL -m -I sql_event_14a.sql -sqldialect 1
+>> foo.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
 # include <stdio.h>
@@ -155,7 +157,7 @@ $ CC FLAG_CC foo.c
 $ LINK FLAG_LINK foo 
 $ RUN_BG foo > foo.tt1 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_14b.sql
 update project set prize = prize * 1.05  where pnumber = 1 ;
 commit;
 execute procedure proc1 8;
@@ -163,7 +165,8 @@ commit;
 select * from project;
 select * from works_on;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_14b.sql
 $ SLEEP 5
 $ TYPE foo.tt1
 $ DROP WHERE_GDB:events.gdb
-$ DELETE foo* comment.txt event14.sql
+$ DELETE foo* sql_event_14*

@@ -1,8 +1,9 @@
-
-HISTORY:
+#
+#HISTORY:
+#
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE ri_views.epp
+>> ri_views.epp
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>
@@ -188,7 +189,7 @@ $ GPRE ri_views.epp -e
 $ CXX FLAG_CXX ri_views.cpp
 $ LINK FLAG_LINK ri_views
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE pv1.epp
+>> pv1.epp
 /* pr_views.e 
    6/2/93 by mshulman
    prints out the contents of the system views

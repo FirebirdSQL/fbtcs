@@ -11,7 +11,7 @@ to insert in table t2. Program A2 has snapshot table stability trans.
 The exclusive lock behavior is set using unix sed commands.
 We sed the A.c file to insert isc_tpb_exclusive in its tpb defintion.
 
-$CREATE init.sql
+>> init.sql
  create database "WHERE_GDB:test.gdb";
  create table t1 (
     a integer, 
@@ -24,7 +24,7 @@ $CREATE init.sql
  insert into t1 values (1,2);
  commit;
 
-$CREATE A1.e
+>> A1.e
 #include <stdio.h>
 exec sql include sqlca
 
@@ -52,7 +52,7 @@ char * argv[];
   qa_mu_cleanup();
 }
 
-$CREATE A2.e
+>> A2.e
 #include <stdio.h>
 exec sql include sqlca
 
@@ -81,7 +81,7 @@ char * argv[];
 
   qa_mu_cleanup();
 }
-$CREATE show.sql
+>> show.sql
 connect "WHERE_GDB:test.gdb";
 show table t1;
 show table t2;

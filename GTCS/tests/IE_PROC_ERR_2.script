@@ -1,5 +1,5 @@
 
-$ CREATE proc_err.sql 
+>> proc_err.sql 
 create database "WHERE_GDB:proc_err.gdb";
 create table block_trace (block_no char(1), check_pt int);
 commit;

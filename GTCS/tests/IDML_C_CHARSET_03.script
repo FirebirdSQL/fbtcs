@@ -1,37 +1,38 @@
-$ CREATE doc
-By:          Clare Taylor
-Date:        05/09/94
-Test name:   IDML_C_CHARSET_03
-Series:      IDML_C_CHARSET          
-Dependency:  requires the first test in this series to build the db
+#
+#By:          Clare Taylor
+#Date:        05/09/94
+#Test name:   IDML_C_CHARSET_03
+#Series:      IDML_C_CHARSET          
+#Dependency:  requires the first test in this series to build the db
+#
+#History:
+#5/26/94:     a bug prevents our being able to set names OCTETS with
+#	     any dependable results.  See the init record comments. I
+#	     used ISO8859_1 settings to initialize this test.  Using
+#	     OCTETS gives:
+#
+#	     > Statement failed, SQLCODE = -204
+#	     >
+#	     > Dynamic SQL Error
+#	     > -SQL error code = -204
+#	     > -Table unknown
+#	     > -T2
+#When the bug is fixed, reinit the test.  For now no run flag is set to
+#1.
+#18-Sept-95:  Failing in build 4.0B(2)--it passed last build, I think.
+#             now it says octets is not defined...someone set this to
+#             run again.  It had a no run flag.  We can't use octet in
+#             isql set names so it fails.
+#Description:
+#Simple selects from the T2 table.  Data was loaded with SET NAMES
+#= OCTETS using both the _CHARSET notation for each field and the
+#simple string notation (insert into (T_850) values (_dos850"string");
+#		        insert into (T_850) values ("string");	
+#
+#This test checks the data returned in ISQL when SET NAMES is OCTETS.
+#
 
-History:
-5/26/94:     a bug prevents our being able to set names OCTETS with
-	     any dependable results.  See the init record comments. I
-	     used ISO8859_1 settings to initialize this test.  Using
-	     OCTETS gives:
-
-	     > Statement failed, SQLCODE = -204
-	     >
-	     > Dynamic SQL Error
-	     > -SQL error code = -204
-	     > -Table unknown
-	     > -T2
-When the bug is fixed, reinit the test.  For now no run flag is set to
-1.
-18-Sept-95:  Failing in build 4.0B(2)--it passed last build, I think.
-             now it says octets is not defined...someone set this to
-             run again.  It had a no run flag.  We can't use octet in
-             isql set names so it fails.
-Description:
-Simple selects from the T2 table.  Data was loaded with SET NAMES
-= OCTETS using both the _CHARSET notation for each field and the
-simple string notation (insert into (T_850) values (_dos850"string");
-		        insert into (T_850) values ("string");	
-
-This test checks the data returned in ISQL when SET NAMES is OCTETS.
-
-$ CREATE v1 
+>> v1 
 -------------------------------------------------------------------------
 
   RUNNING...                
@@ -42,13 +43,13 @@ $ CREATE v1
   quit;
 -------------------------------------------------------------------------
 
-$ CREATE v1.sql 
+>> v1.sql 
 set names OCTETS;  
 connect "WHERE_GDB:charset.gdb";
 select t_rowid, t_iso from T2;
 quit;
 
-$ CREATE v2 
+>> v2 
 -------------------------------------------------------------------------
 
   Then RUNNING...
@@ -58,13 +59,13 @@ $ CREATE v2
   select t_rowid, t_850 from T2;
 -------------------------------------------------------------------------
 
-$ CREATE v2.sql 
+>> v2.sql 
 set names OCTETS;     
 connect "WHERE_GDB:charset.gdb";
 select t_rowid, t_850 from T2;
 quit;
 
-$ CREATE v2a 
+>> v2a 
 -------------------------------------------------------------------------
 
   Trying that again with rowid selects to force many fails for translit:
@@ -83,7 +84,7 @@ the others were input as _unicode"str" so they are 3 byte chars trying
 to be converted to dos chars.  Only one byte has valid data.
 -------------------------------------------------------------------------
 
-$ CREATE v2a.sql 
+>> v2a.sql 
 set names OCTETS;     
 connect "WHERE_GDB:charset.gdb";
   select t_rowid, t_850 from T2 where t_rowid = 1;
@@ -95,7 +96,7 @@ connect "WHERE_GDB:charset.gdb";
 quit;
 $ TYPE v1
 
-$ CREATE v3 
+>> v3 
 -------------------------------------------------------------------------
 
   Then RUNNING...
@@ -105,13 +106,13 @@ $ CREATE v3
   select t_rowid, t_uni from T2;
 -------------------------------------------------------------------------
 
-$ CREATE v3.sql 
+>> v3.sql 
 set names OCTETS;    
 connect "WHERE_GDB:charset.gdb";
 select t_rowid, t_uni from T2;
 quit;
 
-$ CREATE v3a 
+>> v3a 
 -------------------------------------------------------------------------
 
   Trying that again with rowid selects to force many fails for translit:
@@ -130,7 +131,7 @@ the others were input as _unicode"str" so they are 3 byte chars trying
 to be converted to dos chars.  Only one byte has valid data.
 -------------------------------------------------------------------------
 
-$ CREATE v3a.sql 
+>> v3a.sql 
 set names OCTETS;     
 connect "WHERE_GDB:charset.gdb";
   select t_rowid, t_uni from T2 where t_rowid = 1;

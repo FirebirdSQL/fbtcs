@@ -1,29 +1,28 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+#			[NOT]SINGULAR <subquery>			
+#
+# Description:           Error trapping - SINGULAR
+#
+#                        SELECT * FROM CUSTOMERS T1 WHERE SINGULAR
+#                        (SELECT T2.CUSTNO
+#                        FROM SALES T2
+#                        WHERE T1.CUSTNO = T2.CUSTNO
+#                        ORDER BY T2.CUSTNO ASCENDING,
+#                        T2.TOTAL_VALUE DESCENDING);
+#
+# Tables:		customers		
+#
+# Expected result:	 order by not allowed in sub-query
+#
+# Author:		Sam Hakim, Feb 18, 93
+#************************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin091.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
-			[NOT]SINGULAR <subquery>			
-
- Description:           Error trapping - SINGULAR
-
-                        SELECT * FROM CUSTOMERS T1 WHERE SINGULAR
-                        (SELECT T2.CUSTNO
-                        FROM SALES T2
-                        WHERE T1.CUSTNO = T2.CUSTNO
-                        ORDER BY T2.CUSTNO ASCENDING,
-                        T2.TOTAL_VALUE DESCENDING);
-
- Tables:		customers		
-
- Expected result:	 order by not allowed in sub-query
-
- Author:		Sam Hakim, Feb 18, 93
-************************************************************************
-*/
+>> sin091.e
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
 
 DATABASE DB = 'WHERE_GDB:sh_test.gdb';
 EXEC SQL	INCLUDE SQLCA;
@@ -59,7 +58,7 @@ char *argv[];
 	
 	int verbose;
 
-	/*--- check if verbose is requested ------ */
+
 	verbose = FALSE;
 	if (--argc > 0){	
 		if (*argv[1] == 'v' || *argv[1] == 'V')

@@ -1,30 +1,30 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:		[NOT]SINGULAR <subquery>			
+# Description:           Two table joins in nested subquery, aggregates - SINGULAR
+#
+#                        SELECT DISTINCT T1.SALES_REP , T1.TOTAL_VALUE
+#                        FROM SALES T1
+#                        WHERE SINGULAR
+#                        (SELECT *
+#                        FROM SALES T2
+#                        WHERE T2.SALES_REP = T1.SALES_REP
+#                        AND T2.TOTAL_VALUE >
+#                        (SELECT AVG(T3.TOTAL_VALUE)
+#                        FROM SALES T3
+#                        WHERE T3.SALES_REP = 137));
+# 
+# Tables:                sales_people, employees, sales
+#
+# Expected result:	 
+# error: it returns more than one row for 125 and 137 (problem with distinct)
+#
+# Author:                Sam Hakim, Feb 19, 1993
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin011.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:		[NOT]SINGULAR <subquery>			
- Description:           Two table joins in nested subquery, aggregates - SINGULAR
-
-                        SELECT DISTINCT T1.SALES_REP , T1.TOTAL_VALUE
-                        FROM SALES T1
-                        WHERE SINGULAR
-                        (SELECT *
-                        FROM SALES T2
-                        WHERE T2.SALES_REP = T1.SALES_REP
-                        AND T2.TOTAL_VALUE >
-                        (SELECT AVG(T3.TOTAL_VALUE)
-                        FROM SALES T3
-                        WHERE T3.SALES_REP = 137));
- 
- Tables:                sales_people, employees, sales
-
- Expected result:	 
- error: it returns more than one row for 125 and 137 (problem with distinct)
-
- Author:                Sam Hakim, Feb 19, 1993
- ***********************************************************************
-*/
+>> sin011.e
 
 #include <stdio.h>
 
@@ -130,7 +130,7 @@ $ GPRE -e sin011.e
 $ CC FLAG_CC sin011.c
 $ LINK FLAG_LINK sin011 
 $ RUN sin011
-$ CREATE sin011.qli
+>> sin011.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 
@@ -157,7 +157,7 @@ where t3.sales_rep = 137));
 finish;
 quit;
 $ QLI -n -a sin011.qli
-$ CREATE sin011.sql
+>> sin011.sql
 connect WHERE_GDB:sh_test.gdb;
 select distinct t1.sales_rep,t1.total_value from sales t1 
 where singular 

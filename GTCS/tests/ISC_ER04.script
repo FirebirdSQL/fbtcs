@@ -1,5 +1,5 @@
 
-$ CREATE er4.c
+>> er4.c
 /*
  *	isc_dsql_execute_immediate
  *

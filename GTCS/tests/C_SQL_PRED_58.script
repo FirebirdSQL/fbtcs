@@ -1,23 +1,23 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           concatenated char field (e.g. Name)
+#
+#                        SELECT EMPNO, FIRST_NAME, LAST_NAME
+#                        FROM EMPLOYEES
+#                        WHERE NAME STARTING WITH 'S';
+#
+# Tables:                employees
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta010.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           concatenated char field (e.g. Name)
-
-                        SELECT EMPNO, FIRST_NAME, LAST_NAME
-                        FROM EMPLOYEES
-                        WHERE NAME STARTING WITH 'S';
-
- Tables:                employees
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta010.e
 
 #include <stdio.h>
 
@@ -110,7 +110,7 @@ $ GPRE -e sta010.e
 $ CC FLAG_CC sta010.c
 $ LINK FLAG_LINK sta010 
 $ RUN sta010
-$ CREATE sta010.qli
+>> sta010.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -120,7 +120,7 @@ select count(*) from employees where name starting with 'S';
 finish;
 quit;
 $ QLI -n -a sta010.qli
-$ CREATE sta010.sql
+>> sta010.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT EMPNO, LAST_NAME, FIRST_NAME FROM EMPLOYEES WHERE NAME STARTING WITH 'S';
 select count(*) from employees where name starting with 'S';

@@ -1,20 +1,20 @@
 
-/*******************************************************************************
- Test Name:       dsql_domain_15
- Series Name:     dsql_domains
- Date:            18-October-1993
- Related Bugs:    bug_5659 - problem when using column default null on field
-                             based on domain with not null clause.
- Comment:         This script will utilize the datatype, default and not null
-                  clauses in the create domain statement. A table is then 
-                  created using the domain definitions with overriding column
-                  deafults, then data is added to the table with missing fields 
-                  being supplied by the column or domain defaults.
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:       dsql_domain_15
+# Series Name:     dsql_domains
+# Date:            18-October-1993
+# Related Bugs:    bug_5659 - problem when using column default null on field
+#                             based on domain with not null clause.
+# Comment:         This script will utilize the datatype, default and not null
+#                  clauses in the create domain statement. A table is then 
+#                  created using the domain definitions with overriding column
+#                  deafults, then data is added to the table with missing fields 
+#                  being supplied by the column or domain defaults.
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_15.sql
+>> domain_15.sql
 create domain dom15a as smallint
  default 0 not null;
 show domain dom15a;

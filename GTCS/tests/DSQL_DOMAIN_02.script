@@ -1,17 +1,17 @@
 
-/*******************************************************************************
- Test Name:   dsql_domain_02
- Series Name: dsql_domains
- Date:        4-October_1993
- Comments:    This script will test level 0 syntax of the SQL create domain
-              statement using datatype and default clauses.
- Associated Bugs: bug_5106 contains illegal cases that were not correctly
-                  generating error messages.
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:   dsql_domain_02
+# Series Name: dsql_domains
+# Date:        4-October_1993
+# Comments:    This script will test level 0 syntax of the SQL create domain
+#              statement using datatype and default clauses.
+# Associated Bugs: bug_5106 contains illegal cases that were not correctly
+#                  generating error messages.
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_02.sql
+>> domain_02.sql
 create domain dom02a1 as smallint
  default 0;
 commit;

@@ -1,8 +1,10 @@
-BRS 26-Apr-2004
+#
+# BRS 26-Apr-2004
+#
+# bug #585624 IB server stalled by simple script
+#
 
-bug #585624 IB server stalled by simple script
-
-$CREATE cf_isql_23a.sql
+>> cf_isql_23a.sql
 
 SET SQL DIALECT 3;
 SET NAMES ISO8859_1;
@@ -120,7 +122,7 @@ commit;
 execute procedure INSERT_VALUES( 3000 , 1);
 commit;
 
-$CREATE cf_isql_23b.sql
+>> cf_isql_23b.sql
 
 set echo;
 connect 'WHERE_GDB:cf_isql_23.fdb';

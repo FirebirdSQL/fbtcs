@@ -1,6 +1,8 @@
 
 $ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m WHERE_GDB:sp1.gdb
+
+>> proc_cast11.sql
+
 create table t (i int, j int);
 insert into t values (1, 1);
 commit;
@@ -38,5 +40,7 @@ end
 go
 set term ; go
 select * from p3;
+
+$ ISQL -m WHERE_GDB:sp1.gdb -i proc_cast11.sql
 $ DROP WHERE_GDB:sp1.gdb
-$ DELETE sp1.gbk sp1.sql
+$ DELETE proc_cast11.sql sp1.gbk sp1.sql

@@ -1,6 +1,7 @@
 
 $GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m -sqldialect 3 WHERE_GDB:sp1.gdb
+
+>> proc_cast2.sql
 set term go;
 create procedure cast1(a int) RETURNS (b smallint) as
 begin
@@ -75,4 +76,7 @@ execute procedure cast7 100;
 execute procedure cast9 100;
 execute procedure cast10 100;
 exit;
+
+$ ISQL -m -sqldialect 3 WHERE_GDB:sp1.gdb -i proc_cast2.sql
 $ DROP WHERE_GDB:sp1.gdb
+$ DELETE proc_cast2*

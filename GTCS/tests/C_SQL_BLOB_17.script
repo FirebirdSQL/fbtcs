@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_17.gdb
-$ CREATE blob017.epp
+>> blob017.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT CURSOR - Rollback
@@ -146,7 +146,7 @@ $ GPRE -e blob017.epp
 $ CXX FLAG_CXX blob017.cpp
 $ LINK FLAG_LINK blob017 
 $ RUN blob017
-$ CREATE blob017.qli
+>> blob017.qli
 ready WHERE_GDB:sh_blobs_17.gdb;
 select test_name, row_id, b120 from mb1 where test_name = 'blob017'; 
 finish;

@@ -1,26 +1,26 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:                [NOT] SINGULAR <subquery>
+# Description:           SINGULAR - view joins inside sub-query
+#
+#                        SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, SUM(V2.BUDGET)
+#                        FROM DEPT_BUDGET V2
+#                        WHERE SINGULAR
+#                        (SELECT * FROM FULLEMP V3, EMPSAL V4, SALES T1
+#                        WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
+#                        V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
+#                        AND T1.TOTAL_VALUE >
+#                        (SELECT AVG(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 137))
+#                        GROUP BY V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO
+#                        ORDER BY V2.DEPTNO;
+#
+# Tables:                customers
+# Author:                Sam Hakim, Feb 19, 1993
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin023.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:                [NOT] SINGULAR <subquery>
- Description:           SINGULAR - view joins inside sub-query
-
-                        SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, SUM(V2.BUDGET)
-                        FROM DEPT_BUDGET V2
-                        WHERE SINGULAR
-                        (SELECT * FROM FULLEMP V3, EMPSAL V4, SALES T1
-                        WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
-                        V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
-                        AND T1.TOTAL_VALUE >
-                        (SELECT AVG(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 137))
-                        GROUP BY V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO
-                        ORDER BY V2.DEPTNO;
-
- Tables:                customers
- Author:                Sam Hakim, Feb 19, 1993
- ***********************************************************************
-*/
+>> sin023.e
 
 #include <stdio.h>
 
@@ -163,7 +163,7 @@ $ GPRE -e sin023.e
 $ CC FLAG_CC sin023.c
 $ LINK FLAG_LINK sin023 
 $ RUN sin023
-$ CREATE sin023.qli
+>> sin023.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 
@@ -192,7 +192,7 @@ order by v2.deptno;
 finish;
 quit;
 $ QLI -n -a sin023.qli
-$ CREATE sin023.sql
+>> sin023.sql
 connect WHERE_GDB:sh_test.gdb;
 select v2.deptno, v2.department, v2.mgrno, sum(v2.budget)
 from dept_budget v2

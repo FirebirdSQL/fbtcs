@@ -1,19 +1,21 @@
 
-/*******************************************************************************
- Test Name:     dsql_except_03
- Date:          August 1993
- Expected Results: Create and alter of exception for use in a trigger should
-                   execute successfully. Should NOT be allowed to drop exception
-                   used in a trigger, until after trigger has been dropped.
- Series:        dsql_exceptions
- Dependencies:  dsql_except_setup - to set up database for use
- Related Bugs:  
- Description:   Create an exception for use within a trigger. Alter the 
-                exception after the trigger has been created. Attempt to drop 
-                the exception used by the trigger (should not be allowed). Drop
-                the trigger and then the associated exception.
-*******************************************************************************/
-$ isql -m WHERE_GDB:atlas.gdb
+#/*******************************************************************************
+# Test Name:     dsql_except_03
+# Date:          August 1993
+# Expected Results: Create and alter of exception for use in a trigger should
+#                   execute successfully. Should NOT be allowed to drop exception
+#                   used in a trigger, until after trigger has been dropped.
+# Series:        dsql_exceptions
+# Dependencies:  dsql_except_setup - to set up database for use
+# Related Bugs:  
+# Description:   Create an exception for use within a trigger. Alter the 
+#                exception after the trigger has been created. Attempt to drop 
+#                the exception used by the trigger (should not be allowed). Drop
+#                the trigger and then the associated exception.
+#*******************************************************************************/
+
+>> dsql_except_03.sql
+
 create exception trig03_nullriver "River field cannot be left blank";
 create trigger test03a for river_states
 active before insert position 2
@@ -31,3 +33,6 @@ commit;
 show trigger river_states;
 show exception trig03_nullriver;
 exit;
+
+$ISQL -m WHERE_GDB:atlas.gdb -i dsql_except_03.sql
+$DELETE dsql_except_03*

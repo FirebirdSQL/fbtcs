@@ -1,28 +1,29 @@
 
-$ CREATE doc
-By:          Clare Taylor
-Date:        03/14/94
-Test name:   IDML_C_ASSIGN_01       
-Series:      IDML_C_ASSIGNMENT         
-Results:     
-Dependency:  none
-History:
-5/19/94:   Build I4.0T caused syntax to change.  all COLLATE <charset>
-	   syntax had to be changed to CHARACTER SET <charset>
-5/26/94:   These failed after edits by contractors.  This one does
-	   not appear to have been fully updated. The COLLATE clauses
-	   were not all replaced with CHARACTER SET.
+#
+#By:          Clare Taylor
+#Date:        03/14/94
+#Test name:   IDML_C_ASSIGN_01       
+#Series:      IDML_C_ASSIGNMENT         
+#Results:     
+#Dependency:  none
+#History:
+#5/19/94:   Build I4.0T caused syntax to change.  all COLLATE <charset>
+#	   syntax had to be changed to CHARACTER SET <charset>
+#5/26/94:   These failed after edits by contractors.  This one does
+#	   not appear to have been fully updated. The COLLATE clauses
+#	   were not all replaced with CHARACTER SET.
+#
+#Description:
+#Creates a static table into which data is loaded.  Creates 4
+#small tables to use as update and insert tables for various
+#assignments between international fields.  This series is
+#attempting to increase code coverage for:
+#jrd/intl.c: INTL_charset, INTL_compare, INTL_convert_bytes,
+#            INTL_convert_lookup, INTL_convert_string, 
+#	    INTL_data, INTL_data_or_binary...
+#
 
-Description:
-Creates a static table into which data is loaded.  Creates 4
-small tables to use as update and insert tables for various
-assignments between international fields.  This series is
-attempting to increase code coverage for:
-jrd/intl.c: INTL_charset, INTL_compare, INTL_convert_bytes,
-            INTL_convert_lookup, INTL_convert_string, 
-	    INTL_data, INTL_data_or_binary...
-
-$ CREATE build.sql
+>> build.sql
 CREATE DATABASE "WHERE_GDB:assign.gdb";
 COMMIT;
 
@@ -103,7 +104,7 @@ CREATE TABLE TEST_TABLE3 (S_ROWID ROWID,
 COMMIT;
 QUIT;
 
-$ CREATE load.sql
+>> load.sql
 SET NAMES ISO8859_1;
 CONNECT "WHERE_GDB:assign.gdb";
 INSERT INTO STRING_TABLE (
@@ -147,11 +148,11 @@ INSERT INTO STRING_TABLE (S_ROWID, C_OCTETS, C_ENUS, C_FRANCE, C_437_25, C_850_2
     VALUES (22,_OCTETS'¢',_ISO8859_1'¢',_ISO8859_1'¢',_DOS437'¢',_DOS850'¢');
 commit;
 quit;
-$ CREATE doc1
+>> doc1
 SIMPLE INSERT INTO A DOS 437 field by selecting 7-bit data from a
 DOS850 field.  Should always work.
 
-$ CREATE ins1.sql
+>> ins1.sql
 set names dos437;
 connect WHERE_GDB:assign.gdb;
 INSERT INTO TEST_TABLE1 (C_437_25)
@@ -160,14 +161,14 @@ COMMIT;
 select c_437_25 from test_table1;
 QUIT;
 
-$ CREATE doc2
+>> doc2
 SIMPLE INSERT INTO A DOS 437 and 850 field by selecting valid 8-bit
 data from a DOS850 field--the cent symbol.  The data was
 loaded into the DOS850 field without the _charset notation
 with set names = iso.  It appears as garbage on display for both
 fields.
 
-$ CREATE ins2.sql
+>> ins2.sql
 set names dos437;
 connect WHERE_GDB:assign.gdb;
 INSERT INTO TEST_TABLE1 (C_437_25, C_850_25)
@@ -179,12 +180,12 @@ set names dos850;
 select c_437_25, c_850_25 from test_table1;
 QUIT;
 
-$ CREATE doc3
+>> doc3
 SIMPLE INSERT INTO A DOS 437 field by selecting valid 8-bit
 data from a DOS850 field--the cent symbol.  This data was
 loaded into the DOS850 field using _DOS850"¢".
 
-$ CREATE ins3.sql
+>> ins3.sql
 set names dos437;
 connect WHERE_GDB:assign.gdb;
 INSERT INTO TEST_TABLE1 (C_437_25, C_850_25)
@@ -205,4 +206,4 @@ $ ISQL -i ins2.sql -m
 $ TYPE doc3
 $ ISQL -i ins3.sql -m
 
-$ DELETE doc doc1 doc2 doc3 build.sql load.sql ins1.sql ins2.sql ins3.sql
+$ DELETE doc1 doc2 doc3 build.sql load.sql ins1.sql ins2.sql ins3.sql

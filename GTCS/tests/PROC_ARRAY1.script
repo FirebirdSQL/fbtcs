@@ -1,5 +1,6 @@
 
-$ ISQL -m 
+>> proc_array1.sql
+
 create database "WHERE_GDB:employe1.gdb";
 CREATE TABLE job
 (
@@ -48,4 +49,6 @@ set term ; go
 select * from proc_array;
 exit;
 
-$ DROP WHERE_GDB:employe1.gdb
+$ISQL -m -i proc_array1.sql
+$DROP WHERE_GDB:employe1.gdb
+$DELETE proc_array1*

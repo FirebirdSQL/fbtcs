@@ -1,5 +1,5 @@
 
-$ CREATE er36.c
+>> er36.c
 /*
  *	isc_array_lookup_desc
  *

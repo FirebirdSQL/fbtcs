@@ -1,17 +1,17 @@
 
-/*******************************************************************************
- Test Name:   dsql_domain_01
- Series Name: dsql_domains
- Date:        4-October-1993
- Comments:    This script will test the level 0 syntax for SQL create domain,
-              defining only the datatype.
- History:     Cloning test for 6.0. Eliminating "DEC(25,10)" domain definition
-              since it is no longer valid for 6.0 (stsikin, 10-Dec-1998)
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:   dsql_domain_01
+# Series Name: dsql_domains
+# Date:        4-October-1993
+# Comments:    This script will test the level 0 syntax for SQL create domain,
+#              defining only the datatype.
+# History:     Cloning test for 6.0. Eliminating "DEC(25,10)" domain definition
+#              since it is no longer valid for 6.0 (stsikin, 10-Dec-1998)
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_01a.sql
+>> domain_01a.sql
 create domain dom01a_1 as smallint;
 commit;
 show domain dom01a_1;
@@ -75,7 +75,7 @@ exit;
  attempt to use illegal syntax.
 *******************************************************************************/
 
-$ CREATE domain_01b.sql
+>> domain_01b.sql
 create domain long_domain_name_of_31_charsxxx as integer;
 commit;
 show domain long_domain_name_of_31_charsxxx;

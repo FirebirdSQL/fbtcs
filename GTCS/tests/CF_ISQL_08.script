@@ -1,36 +1,36 @@
 
-/*
-**  Name:		cf_isql_08
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level one test case for computed-fields.
-**			
-**			This test defines a computed-field which is defined using
-**			built-in function UPPER.
-**
-**			This is the model of most of the tests defined here:
-**
-**			- Create a table with computed field.
-**                      - Show table to verify the create table.
-**			- Insert couple of rows with data.
-**			- Query the table with matching expression and see
-**			  if we get back same number of rows.
-**			- Update a row.
-**			- Query again using same expression as above.
-**
-**  Expected result:	For every set of testcase there will be two output lines.
-**			
-**			'Passed xx - Insert'
-**			'Passed xx - Update'
-**
-**  Author:		Ravil A. Desai
-**  Bugs:		
-**  Change history:
-**
-*/
+#
+#  Name:		cf_isql_08
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level one test case for computed-fields.
+#			
+#			This test defines a computed-field which is defined using
+#			built-in function UPPER.
+#
+#			This is the model of most of the tests defined here:
+#
+#			- Create a table with computed field.
+#                      - Show table to verify the create table.
+#			- Insert couple of rows with data.
+#			- Query the table with matching expression and see
+#			  if we get back same number of rows.
+#			- Update a row.
+#			- Query again using same expression as above.
+#
+#  Expected result:	For every set of testcase there will be two output lines.
+#			
+#			'Passed xx - Insert'
+#			'Passed xx - Update'
+#
+#  Author:		Ravil A. Desai
+#  Bugs:		
+#  Change history:
+#
+#
 
-$ CREATE cf_test.sql
+>> cf_test.sql
 create database "WHERE_GDB:cf.gdb";
 
 /*----------------------*/

@@ -1,20 +1,20 @@
 
-$ CREATE comment.txt
-*****************************************************************************
-Name: Sudhanshu Kumar 
-This tests waits for multiple events the difference from previous test update
-is happening only for a row.
+#*****************************************************************************
+#Name: Sudhanshu Kumar 
+#This tests waits for multiple events the difference from previous test update
+#is happening only for a row.
+#
+#History:
+# 
+#5-Oct-95	Marco: I changed the Sleep command from sleep 2 to a 
+#		sleep 5.  Two (2) seconds was not long enough for the 
+#		Windows platform.
+#5-Oct-95	DaveS:  And I changed it to 15, 2 wasn't long enough for
+#		Solaris either!
+#
+#*****************************************************************************
 
-History:
- 
-5-Oct-95	Marco: I changed the Sleep command from sleep 2 to a 
-		sleep 5.  Two (2) seconds was not long enough for the 
-		Windows platform.
-5-Oct-95	DaveS:  And I changed it to 15, 2 wasn't long enough for
-		Solaris either!
-
-*****************************************************************************
-$CREATE event5.sql
+>> sql_event_05a.sql
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER,
@@ -50,8 +50,8 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event5.sql -sqldialect 1 
-$ CREATE foo5.e
+$ISQL -m -I sql_event_05a.sql -sqldialect 1 
+>> foo5.e
 
 # include <stdio.h>
 DATABASE DB = "WHERE_GDB:events.gdb"
@@ -92,13 +92,16 @@ $ CC FLAG_CC foo5.c
 $ LINK FLAG_LINK foo5 
 $ RUN_BG foo5 > foo5.tt1 &
 $ SLEEP 5 
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_05b.sql
+
 update project set prize = prize * 1.05  where pnumber = 1 ;
 commit;
 select * from project;
 select * from works_on;
 exit;
+
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_05b.sql
 $ TYPE foo5.tt1
 $ SLEEP 5
-$ DELETE foo5* comment.txt event5.sql
+$ DELETE foo5* sql_event_05*
 $ DROP WHERE_GDB:events.gdb

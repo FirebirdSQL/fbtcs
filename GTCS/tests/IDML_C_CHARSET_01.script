@@ -1,40 +1,41 @@
 
-$ CREATE doc
-By:          Clare Taylor
-Date:        2/14/94 
-Test name:   IDML_C_CHARSET_01    
-Series:      IDML_C_CHARSET (transliteration tests)     
-Results:     Creates the database to used for transliteration tests.
-Dependency:  none
-history:
-5/26/94:     Fails on NLM, build t.  Not sure which results are correct.
-	     NLM gives no data returned for some selects.  Probably due
-	     to BUG_6649.
-8/17/94:     Will produce different results when run remote due to the
-	     way errors and data are returned. Named Pipes on NT will
-	     also fail because it is run as a loopback and therefore
-	     has the same results as if run remote.  For this reason
-	     we need local init records for NLM, NT,remote and NT,
-	     named_pipes.
-9/14/94:     modified test cases for select so that remote and local
-	     translit errors would be the same in the init record.  This
-	     means we must selects for each row of data based on the
-	     rowid if the select will produce the translit error.  I
-	     did this because it was the only failure in the series.
+#
+#By:          Clare Taylor
+#Date:        2/14/94 
+#Test name:   IDML_C_CHARSET_01    
+#Series:      IDML_C_CHARSET (transliteration tests)     
+#Results:     Creates the database to used for transliteration tests.
+#Dependency:  none
+#history:
+#5/26/94:     Fails on NLM, build t.  Not sure which results are correct.
+#	     NLM gives no data returned for some selects.  Probably due
+#	     to BUG_6649.
+#8/17/94:     Will produce different results when run remote due to the
+#	     way errors and data are returned. Named Pipes on NT will
+#	     also fail because it is run as a loopback and therefore
+#	     has the same results as if run remote.  For this reason
+#	     we need local init records for NLM, NT,remote and NT,
+#	     named_pipes.
+#9/14/94:     modified test cases for select so that remote and local
+#	     translit errors would be the same in the init record.  This
+#	     means we must selects for each row of data based on the
+#	     rowid if the select will produce the translit error.  I
+#	     did this because it was the only failure in the series.
+#
+#Description:
+#Basic transliteration test for the product using ISQL.  Inserts and
+#displays in DOS850, ISO8859_1 and UNICODE_FSS to verify that inserts
+#succeed and that each character set may be transliterated to the other
+#character set for display.  All characters that are inserted are valid
+#in each of the three character sets.
+#
 
-Description:
-Basic transliteration test for the product using ISQL.  Inserts and
-displays in DOS850, ISO8859_1 and UNICODE_FSS to verify that inserts
-succeed and that each character set may be transliterated to the other
-character set for display.  All characters that are inserted are valid
-in each of the three character sets.
-
-$ CREATE setup1.sql
+>> setup1.sql
 create database "WHERE_GDB:charset.gdb";
 commit;
 quit;
 
-$ CREATE setup2.sql
+>> setup2.sql
 CONNECT WHERE_GDB:charset.gdb;
 CREATE DOMAIN ROWID AS                     SMALLINT;
 CREATE DOMAIN C_ASCII_25 AS CHAR(10)       CHARACTER SET ASCII;
@@ -57,7 +58,7 @@ CREATE TABLE T2 (t_rowid rowid,
 COMMIT;
 QUIT;
 
-$ CREATE setup3.sql
+>> setup3.sql
 SET NAMES ISO8859_1; 
 CONNECT WHERE_GDB:charset.gdb;
 
@@ -71,7 +72,7 @@ INSERT INTO T2 (T_ROWID, T_850, T_UNI, A_DESC)
 INSERT INTO T2 (T_ROWID, T_850, T_UNI, A_DESC) 
    VALUES (33, _DOS850'çµ',_UNICODE_FSS'çµ','_DOS/_UNI c cedilla, script u');
 
-$ CREATE setup4.sql
+>> setup4.sql
 SET NAMES ISO8859_1; 
 CONNECT WHERE_GDB:charset.gdb;
 
@@ -87,7 +88,7 @@ INSERT INTO T2 (T_ROWID, T_850, T_UNI, A_DESC)
 COMMIT;
 QUIT;
 
-$ CREATE v1
+>> v1
 ---------------------------------------------------------------
 
   RUNNING...                
@@ -98,7 +99,7 @@ $ CREATE v1
   quit;
 ---------------------------------------------------------------
 
-$ CREATE v2
+>> v2
 ---------------------------------------------------------------
 
   Then RUNNING...
@@ -109,7 +110,7 @@ $ CREATE v2
   select t_rowid, t_uni,a_desc from t2;
 ---------------------------------------------------------------
 
-$ CREATE v1.sql
+>> v1.sql
 set names ISO8859_1;
 connect WHERE_GDB:charset.gdb;
 select t_rowid, t_850,a_desc from t2;
@@ -124,7 +125,7 @@ select t_rowid, t_uni,a_desc from t2 where t_rowid = 44;
 /* should force remote and local runs to produce same translit errs */
 quit;
 
-$ CREATE v2.sql
+>> v2.sql
 set names DOS850;
 connect WHERE_GDB:charset.gdb;
 select t_rowid, t_850,a_desc from t2;
@@ -139,7 +140,7 @@ select t_rowid, t_850,a_desc from t2;
 /* should force remote and local runs to produce same translit errs */
 quit;
 
-$ CREATE v3
+>> v3
 ---------------------------------------------------------------
 
   Then RUNNING...
@@ -149,7 +150,7 @@ $ CREATE v3
   select t_rowid, t_850 from t2;
 ---------------------------------------------------------------
 
-$ CREATE v3.sql
+>> v3.sql
 set names UNICODE_FSS;
 connect WHERE_GDB:charset.gdb;
 select t_rowid, t_850,a_desc from t2 where t_rowid not in (4,44);
@@ -170,6 +171,6 @@ $ TYPE v2
 $ ISQL -i v2.sql -m
 $ TYPE v3
 $ ISQL -i v3.sql -m
-$ DELETE doc v1.sql v2.sql v3.sql v1 v2 v3
+$ DELETE  v1.sql v2.sql v3.sql v1 v2 v3
 $ DELETE setup1.sql setup2.sql setup3.sql setup4.sql
 $ DROP WHERE_GDB:charset.gdb

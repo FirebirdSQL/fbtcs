@@ -1,7 +1,7 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_26.gdb
 $ COPY WHERE_FILES:sh_binary.tif sh_binary.tif
-$ CREATE blob026.epp
+>> blob026.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Read a binary file into a blob.
@@ -216,7 +216,7 @@ $ GPRE -e -n blob026.epp
 $ CXX FLAG_CXX blob026.cpp
 $ LINK FLAG_LINK blob026 
 $ RUN blob026
-$ CREATE blob027.epp
+>> blob027.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Read a binary blob, output the blob

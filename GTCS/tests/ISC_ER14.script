@@ -1,5 +1,5 @@
 
-$ CREATE er14.c
+>> er14.c
 /*
  *	isc_array_get_slice
  *

@@ -1,10 +1,12 @@
 
-$ CREATE comment.txt
-Name: Sudhanshu Kumar
-In this test  transaction takes place trigger trig01 gets fired, 
-event1 is posted in application program 1. trigger2 gets fired 
-application program is waiting for event2 to happen.
-$CREATE event8.sql
+#
+#Name: Sudhanshu Kumar
+#In this test  transaction takes place trigger trig01 gets fired, 
+#event1 is posted in application program 1. trigger2 gets fired 
+#application program is waiting for event2 to happen.
+#
+
+>> sql_event_8a.sql
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER,
@@ -44,8 +46,8 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event8.sql -e -sqldialect 1
-$ CREATE foo1.e
+$ISQL -m -I sql_event_8a.sql -e -sqldialect 1
+>> foo1.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
 # include <stdio.h>
@@ -82,7 +84,7 @@ $ CC FLAG_CC foo1.c
 $ LINK FLAG_LINK foo1 
 $ RUN_BG foo1 > foo1.tt1 &
 $ SLEEP 5
-$ CREATE foo2.e
+>> foo2.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
  
@@ -119,15 +121,16 @@ $ CC FLAG_CC foo2.c
 $ LINK FLAG_LINK foo2 
 $ RUN_BG foo2 > foo2.tt2 &
 $ SLEEP 5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_8b.sql
 update project set prize = prize * 1.05 ;
 commit;
 select * from project;
 select * from works_on;
 select * from works_on1;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_8b.sql
 $ SLEEP 5
 $ TYPE foo1.tt1
 $ TYPE foo2.tt2
 $ DROP WHERE_GDB:events.gdb
-$ DELETE foo* comment.txt event8.sql 
+$ DELETE foo* sql_event_8*

@@ -1,3 +1,4 @@
+
 #
 # BRS 04-Nov-2003
 # 
@@ -5,7 +6,8 @@
 #
 # Bug found and test send by Arno Brickman
 #
-$CREATE create_db.sql
+
+>> create_db.sql
 
 CREATE DATABASE 'WHERE_GDB:cf_18.fdb' DEFAULT CHARACTER SET ISO8859_1;
 
@@ -51,7 +53,7 @@ CREATE ASC INDEX I_TEST1_LEEG_ASC ON TEST1 (LEEG);
 
 CREATE ASC INDEX I_TEST1_VN_ASC ON TEST1 (VOORNAAM);
 
-$CREATE run_test.sql
+>> run_test.sql
 
 SET NAMES ISO8859_1;
 CONNECT 'WHERE_GDB:cf_18.fdb';

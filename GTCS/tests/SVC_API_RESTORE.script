@@ -1,5 +1,5 @@
 $COPY WHERE_FILES:employee.gbk WHERE_GDB_EXTERNAL:employee.gbk
-$CREATE svc_api_restore.cpp
+>> svc_api_restore.cpp
 
 #include <stdio.h>
 #include <string.h>

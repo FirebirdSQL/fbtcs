@@ -1,5 +1,5 @@
 
-$ CREATE er6.c
+>> er6.c
 /*
  *	isc_create_blob
  *

@@ -1,22 +1,22 @@
 
-/*******************************************************************************
- Test Name:         dsql_domain_22
- Test Series:       dsql_domains
- Date:              20-Oct-1993
- Related bugs:      bug_xxxx  -  have to exit db for changes made to domains 
-                                 to affect data being entered into tables.
- Comments:          This script will test for error conditions when using the 
-                    alter domain statement on domains that are already in use 
-                    in table definitions, with domain defaults and check 
-                    constraints.
-/*******************************************************************************
-HISTORY:
-2001-Aug-27 Neil McCalden 
-Expected output updated to reflect fix for:
-[ firebird-Bugs-448062 ] ALTER DOMAIN leaves CONSTRAINT word
+#/*******************************************************************************
+# Test Name:         dsql_domain_22
+# Test Series:       dsql_domains
+# Date:              20-Oct-1993
+# Related bugs:      bug_xxxx  -  have to exit db for changes made to domains 
+#                                 to affect data being entered into tables.
+# Comments:          This script will test for error conditions when using the 
+#                    alter domain statement on domains that are already in use 
+#                    in table definitions, with domain defaults and check 
+#                    constraints.
+#/*******************************************************************************
+#HISTORY:
+#2001-Aug-27 Neil McCalden 
+#Expected output updated to reflect fix for:
+#[ firebird-Bugs-448062 ] ALTER DOMAIN leaves CONSTRAINT word
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_22a.sql
+>> domain_22a.sql
 create domain dom20a as smallint 
  default 0
  check (value >= 0 and value < 100);
@@ -72,7 +72,7 @@ commit;
 show domain dom20a;
 commit;
 exit;
-$ CREATE domain_22b.sql
+>> domain_22b.sql
 show domain dom20a;
 insert into tab20a (fld1) values (0);
 commit;

@@ -1,23 +1,23 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:
+#
+# Description:           field in a VIEW NOT STARTING WITH char string literal
+#
+#                        SELECT DEPTNO
+#                        FROM DEPT_BUDGET
+#                        WHERE DEPTNO NOT STARTING '12'
+#                        ORDER BY DEPTNO DESCENDING;
+#
+# Tables:                DEPT_BUDGET
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta014.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:
-
- Description:           field in a VIEW NOT STARTING WITH char string literal
-
-                        SELECT DEPTNO
-                        FROM DEPT_BUDGET
-                        WHERE DEPTNO NOT STARTING '12'
-                        ORDER BY DEPTNO DESCENDING;
-
- Tables:                DEPT_BUDGET
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta014.e
 
 #include <stdio.h>
 
@@ -112,7 +112,7 @@ $ GPRE -e sta014.e
 $ CC FLAG_CC sta014.c
 $ LINK FLAG_LINK sta014 
 $ RUN sta014
-$ CREATE sta014.qli
+>> sta014.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -128,7 +128,7 @@ select count(*) from dept_budget where deptno not starting '12';
 finish;
 quit;
 $ QLI -n -a sta014.qli
-$ CREATE sta014.sql
+>> sta014.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT DEPTNO 
 FROM DEPT_BUDGET 

@@ -1,17 +1,17 @@
 
-/*******************************************************************************
- Test Name:         dsql_domain_26
- Test Series:       dsql_domains
- Date:              October-1993
- Related bugs:      
- Comments:          Using drop domain on domains that have been created with 
-                    various combinations of datatype / default / constraint
-                    clauses and in use in a table definition.
-/*******************************************************************************
-HISTORY:
+#/*******************************************************************************
+# Test Name:         dsql_domain_26
+# Test Series:       dsql_domains
+# Date:              October-1993
+# Related bugs:      
+# Comments:          Using drop domain on domains that have been created with 
+#                    various combinations of datatype / default / constraint
+#                    clauses and in use in a table definition.
+#/*******************************************************************************
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_26.sql
+>> domain_26.sql
 create domain dom20a as smallint 
  default 0
  check (value >= 0 and value < 100);

@@ -1,5 +1,5 @@
 
-$CREATE init.sql
+>> init.sql
 create database "WHERE_GDB:test.gdb";
 create table t ( a int);
 $ISQL -m -i init.sql

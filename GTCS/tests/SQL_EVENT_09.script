@@ -1,8 +1,10 @@
 
-$ CREATE comment.txt
-Name: Sudhanshu Kumar
-This test makes sure that events can be posted through a stored proceudre.
-$CREATE event9.sql
+#
+#Name: Sudhanshu Kumar
+#This test makes sure that events can be posted through a stored proceudre.
+#
+
+>> sql_event_9a.sql
 create database "WHERE_GDB:events.gdb";
 create table works_on (SSN       INTEGER Not Null,
                        PNUMBER   INTEGER Not Null,
@@ -19,8 +21,8 @@ end
 go
 set term ; go
 exit;
-$ISQL -m -I event9.sql -e -sqldialect 1
-$ CREATE foo.e
+$ISQL -m -I sql_event_9a.sql -e -sqldialect 1
+>> foo.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
 # include <stdio.h>
@@ -56,12 +58,14 @@ $ CC FLAG_CC foo.c
 $ LINK FLAG_LINK foo 
 $ RUN_BG foo > foo.tt1 &
 $ SLEEP  5
-$ ISQL -m WHERE_GDB:events.gdb
+>> sql_event_9b.sql
 execute procedure proc1 5;
 commit;
 select * from works_on;
 exit;
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_9b.sql
 $ SLEEP  5
 $ TYPE foo.tt1
-$ DELETE foo* comment.txt event9.sql 
+$ DELETE foo* sql_event_9*
 $ DROP WHERE_GDB:events.gdb
+

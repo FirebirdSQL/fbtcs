@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_15.gdb
-$ CREATE blob015.epp
+>> blob015.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT CURSOR - Buffer is empty (Buffer[0]='\0' 
@@ -105,7 +105,7 @@ $ GPRE -e blob015.epp
 $ CXX FLAG_CXX blob015.cpp
 $ LINK FLAG_LINK blob015 
 $ RUN blob015
-$ CREATE blob015.qli
+>> blob015.qli
 ready WHERE_GDB:sh_blobs_15.gdb;
 select test_name, row_id, b512 from mb1 where test_name = 'blob015';
 finish;

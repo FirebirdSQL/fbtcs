@@ -1,46 +1,46 @@
 
-$CREATE comment
-*******************************************************************************
- 
-Test Name:  	EXT_REL_0_24_E
-Test Level:     0
-Series Name:    EXT_LEV_0
-Date:  		July 5, 1994
-Author:  	Scott Van Voris
-Bug: 
-Setup Tests:    EXT_REL_0_SETUP
-Cleanup Tests:  EXT_REL_0_CLEAN
- 
-Description:    This is a Level 0 test which is designed to verify the 
-		syntax to create an external relation with certain column
-		specific syntax works properly.
+#*******************************************************************************
+# 
+#Test Name:  	EXT_REL_0_24_E
+#Test Level:     0
+#Series Name:    EXT_LEV_0
+#Date:  		July 5, 1994
+#Author:  	Scott Van Voris
+#Bug: 
+#Setup Tests:    EXT_REL_0_SETUP
+#Cleanup Tests:  EXT_REL_0_CLEAN
+# 
+#Description:    This is a Level 0 test which is designed to verify the 
+#		syntax to create an external relation with certain column
+#		specific syntax works properly.
+#
+#                In this case the 'DEFAULT 0' syntax is exercised.
+# 
+#Expected Output:	Use CONNECT or CREATE DATABASE to specify a database
+#			Database:  ext_rel_0_24_E.gdb
+# 
+#			FIELD1 FIELD2     
+#			====== ========== 
+# 
+#			 12000 Success    
+#			     0 Success    
+#History:
+#2-Oct-95:  Mark
+#  Removed the Cleanup / Setup #s from the test.
+#  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+#
+#3-Oct-95: Marco
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  by the server in the correct place when accessing data remotely.
+#  Also, I removed any referance to DIR external.dat and TYPE external.dat
+#  which would also fail when running remotely.
+#
+#14-Oct-00: Frank Schlottmann-Goedde
+#  replaced double with single quotes where necessary to run with version 6.x
+#
+#*******************************************************************************
 
-                In this case the 'DEFAULT 0' syntax is exercised.
- 
-Expected Output:	Use CONNECT or CREATE DATABASE to specify a database
-			Database:  ext_rel_0_24_E.gdb
- 
-			FIELD1 FIELD2     
-			====== ========== 
- 
-			 12000 Success    
-			     0 Success    
-History:
-2-Oct-95:  Mark
-  Removed the Cleanup / Setup comments from the test.
-  Also, added WHERE_GDB and RUN drop_gdb to the tests.
-
-3-Oct-95: Marco
-  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
-  by the server in the correct place when accessing data remotely.
-  Also, I removed any referance to DIR external.dat and TYPE external.dat
-  which would also fail when running remotely.
-
-14-Oct-00: Frank Schlottmann-Goedde
-  replaced double with single quotes where necessary to run with version 6.x
-
-*******************************************************************************
-$CREATE column.e
+>> column.e
 #include <stdio.h>
 #include <stdlib.h>
  
@@ -73,7 +73,7 @@ ERR:
  
     exit(1);
 }
-$CREATE isql.in
+>> isql.in
 
 CONNECT 'WHERE_GDB:ext_rel_0_24_E.gdb';
 INSERT INTO ext_table (field1,field2) VALUES (12000,'Success');
@@ -87,4 +87,4 @@ $RUN column
 $ISQL -m -input isql.in
 $DROP WHERE_GDB:ext_rel_0_24_E.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
-$DELETE comment isql.in column*
+$DELETE isql.in column*

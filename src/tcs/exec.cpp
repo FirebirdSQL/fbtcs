@@ -618,7 +618,6 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 		buff = buffer;
 
 		//  Loop on every character -- moving a line of text into buff
-
 		while (ch!= 0)
 		{
 
@@ -644,6 +643,7 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 			fclose (script_file);
 			return false;
 		}
+//printf("linetype=%d \n%s", linetype, result);
 
 		//  If we are processing a TCS environment variable definition,
 		//  PTSL_2ap() already finished processing the line, so move to
@@ -668,6 +668,7 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 				fclose (data);
 				file_open = false;
 			} 
+/*
 			else if (command) 
 			{
 				if (putc ('\n',script_file) == EOF) 
@@ -682,8 +683,8 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 					return false;
 				}
 			}
-
 			command = true;			//  Set command flag to true...
+*/
 			cmdcount++;				//  Increment cmdcount...
 
 			//  Throw the rest of the line in the file.
@@ -701,6 +702,76 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 					return false;
 				}
 			}
+			if (putc ('\n',script_file) == EOF) 
+			{
+				print_error("IO error on write to \"%s\"\n", 
+							const_cast<char*>(SCRIPT_FILE),0,0);
+				if (file_open)
+					fclose (data);
+
+				fclose (script_file);
+				disk_io_error = true;
+				return false;
+			}
+		}
+		else if (linetype == INPUTFILE)
+		{
+			if (file_open)
+			{
+				fclose (data);
+				file_open = false;
+			}
+
+			//  Throw the rest of the line in the file.
+/*
+			while (*c != '\n')
+			{
+				if (putc ((unsigned char)*c++, script_file) == EOF) {
+					print_error("IO error on write to \"%s\"\n", 
+								const_cast<char*>(SCRIPT_FILE),0,0);
+					if (file_open)
+						fclose (data);
+
+					fclose (script_file);
+					disk_io_error = true;
+					return false;
+				}
+			}
+*/
+
+			strcpy(data_file, c);
+/*
+			if (fprintf (script_file, "create_file > cf_test.sql <%s\n", data_file) == EOF)
+			{
+				print_error("IO error on write to \"%s\"\n",
+							const_cast<char*>(SCRIPT_FILE),0,0);
+				fclose (script_file);
+				disk_io_error = true;
+				return false;
+			};
+*/
+
+			//  Try to open the data file with the appropriate number.
+			if (!(data = fopen (data_file, "w")))
+			{
+				print_error ("Can't create file \"%s\"\n", data_file,0,0);
+				fclose (script_file);
+				disk_io_error = true;
+				return false;
+			}
+/*
+			if (fputs (c, data) == EOF)		//  Dump to the data file.
+			{
+				print_error ("IO error on write to \"%s\"\n", data_file,0,0);
+				fclose (data);
+				fclose (script_file);
+				disk_io_error = true;
+				return false;
+			}
+
+			command = false;	//  Set the command flag to false
+*/
+			file_open = true;	//  Set the file_open flag to true
 		}
 
 		//  If processing something besides a command or environment
@@ -708,10 +779,25 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 
 		else
 		{
+			if (file_open){
+				if (fputs (c, data) == EOF) {
+					print_error ("IO error on write to \"%s\"\n", data_file,0,0);
+					fclose (data);
+					fclose (script_file);
+					disk_io_error = true;
+					return false;
+				}
+			}
+			else if (linetype != COMML && *c != '\n'){
+					print_error("Regular text line outside input file\nline=\"%s\"\n",c,0,0);
+					fclose(script_file);
+					disk_io_error = true;
+					return false;
+			}
 
 			//  If we just finished processing a command then we need to create
 			//  and open a new data file, so do it.
-
+/*
 			if (command)
 			{
 				sprintf (data_file, DAT_FILE, (*n)++);
@@ -756,13 +842,14 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 					return false;
 				}
 			}
+*/
 		}
 	}
 
 	//  Finished processing, so clean up.  If a command was the last
 	//  thing we processed then put a new line at the end.  If we
 	//  just finished with a data file then close it.
-
+/*
 	if (command)
 		if (putc ('\n', script_file) == EOF) {
 			print_error("IO error on write to \"%s\"\n",
@@ -774,7 +861,7 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 			disk_io_error = true;
 			return false;
 		}
-
+*/
 	if (file_open)
 		fclose (data);
 

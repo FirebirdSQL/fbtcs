@@ -1,41 +1,40 @@
 
-$CREATE COMMENT
-*******************************************************************************
- 
-Test Name:  	EXT_REL_0_1_E
-Test Level:     0
-Series Name:    EXT_LEV_0
-Date:  		June 28, 1994
-Author:  	Scott Van Voris
-Bug: 
+#*******************************************************************************
+# 
+#Test Name:  	EXT_REL_0_1_E
+#Test Level:     0
+#Series Name:    EXT_LEV_0
+#Date:  		June 28, 1994
+#Author:  	Scott Van Voris
+#Bug: 
+#
+#Description:    This is a Level 0 test which is designed to verify that 
+#		the syntax to create an external relation is working properly.
+#		In order to verify that the external relation was really 
+#		created, a tuple is inserted into the relation, and the 
+#		value in the external file displayed.
+# 
+#Expected Output: 	Success   
+#
+#History:
+#
+#2-Oct-95:  Mark
+#  Removed the Cleanup / Setup comments from the test.
+#  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+#
+#3-Oct-95: Marco
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  by the server in the correct place when accessing data remotely.
+#  Also, I removed any referance to DIR external.dat and TYPE external.dat
+#  which would also fail when running remotely.
+#
+#4-Oct-95: Marco
+#  Renamed Fixed.e to FixedL.e, so that we no longer call DELETE fixed*, which also 
+#  deleted fixed.sed.
+#
+#*******************************************************************************
 
-Description:    This is a Level 0 test which is designed to verify that 
-		the syntax to create an external relation is working properly.
-		In order to verify that the external relation was really 
-		created, a tuple is inserted into the relation, and the 
-		value in the external file displayed.
- 
-Expected Output: 	Success   
-
-History:
-
-2-Oct-95:  Mark
-  Removed the Cleanup / Setup comments from the test.
-  Also, added WHERE_GDB and RUN drop_gdb to the tests.
-
-3-Oct-95: Marco
-  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
-  by the server in the correct place when accessing data remotely.
-  Also, I removed any referance to DIR external.dat and TYPE external.dat
-  which would also fail when running remotely.
-
-4-Oct-95: Marco
-  Renamed Fixed.e to FixedL.e, so that we no longer call DELETE fixed*, which also 
-  deleted fixed.sed.
-
-*******************************************************************************
-
-$CREATE fixedL.e 
+>> fixedL.e 
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -88,4 +87,4 @@ $LINK FLAG_LINK fixedL
 $RUN fixedL
 $DROP WHERE_GDB:ext_rel_0_1_E.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
-$DELETE COMMENT fixedL*
+$DELETE fixedL*

@@ -1,7 +1,8 @@
+#
+#HISTORY:
+#
 
-HISTORY:
-
-$CREATE db_info.e
+>> db_info.e
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

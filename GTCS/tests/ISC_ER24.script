@@ -1,5 +1,5 @@
 
-$ CREATE er24.c
+>> er24.c
 /*
  *	isc_transaction_info
  *

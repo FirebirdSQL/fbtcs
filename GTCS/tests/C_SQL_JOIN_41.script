@@ -1,11 +1,12 @@
 
-HISTORY:
-04-Oct-2001 Neil McCalden 
-Remove field ambiguity which Firebird now checks for.
-
+#
+#HISTORY:
+#04-Oct-2001 Neil McCalden 
+#Remove field ambiguity which Firebird now checks for.
+#
 
 $ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_41.gdb
-$ CREATE join041.e
+>> join041.e
 
 /**********************************************************************
  Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
@@ -122,7 +123,7 @@ $ GPRE -e join041.e
 $ CC FLAG_CC join041.c
 $ LINK FLAG_LINK join041 
 $ RUN join041
-$ CREATE join041.qli
+>> join041.qli
 ready WHERE_GDB:sh_join_41.gdb;
 set semicolon;
 set columns 100;
@@ -136,7 +137,7 @@ order by t.table_row ascending;
 finish;
 quit;
 $ QLI -n -a join041.qli
-$ CREATE join041.sql
+>> join041.sql
 connect WHERE_GDB:sh_join_41.gdb;
 select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
 from (st1 t left outer join st2 x on t.s1 = x.s1)

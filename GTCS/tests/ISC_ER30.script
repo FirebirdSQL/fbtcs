@@ -1,5 +1,5 @@
 
-$ CREATE er30.c
+>> er30.c
 /*
  *	isc_dsql_prepare
  *

@@ -1,8 +1,10 @@
-BRS 26-Apr-2004
+# 
+# BRS 26-Apr-2004
+# 
+# bug #910430 ISQL and database dialect
+#
 
-bug #910430 ISQL and database dialect
-
-$CREATE cf_isql_25a.sql
+>> cf_isql_25a.sql
 
 set echo on;
 SHOW SQL DIALECT;

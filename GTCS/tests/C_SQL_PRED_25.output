@@ -1,5 +1,5 @@
-(E) sin092.e:68: table NOTABLE not defined
+(E) sin092.e:49: table NOTABLE not defined
+(E) sin092.e:57: expected <cursor name>, encountered "CR"
+(E) sin092.e:60: expected <cursor name>, encountered "CR"
 (E) sin092.e:76: expected <cursor name>, encountered "CR"
-(E) sin092.e:79: expected <cursor name>, encountered "CR"
-(E) sin092.e:95: expected <cursor name>, encountered "CR"
   4 errors, no warnings

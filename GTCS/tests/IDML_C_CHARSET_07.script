@@ -1,6 +1,6 @@
 
 $ GBAK -r intlemp.gbk WHERE_GDB:intlemp_07.gdb
-$ CREATE btest4.e
+>> btest4.e
 /* 8/11/94: reinit due to bug fixes that caused test 4-6 to
 	    insert more data.  The display results here changed
 	    as a result.
@@ -92,7 +92,7 @@ $ GPRE -m btest4.e
 $ CC FLAG_CC btest4.c
 $ LINK FLAG_LINK btest4 
 $ RUN btest4
-$ CREATE verify.sql
+>> verify.sql
 set names iso8859_1;
 connect WHERE_GDB:intlemp_07.gdb;
 select * from employee;

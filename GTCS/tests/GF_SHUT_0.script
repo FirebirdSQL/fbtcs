@@ -1,7 +1,9 @@
 
+>> gf_shut_0.sql
+ exit;
+
 $GFIX -shut -attach 1 WHERE_GDB:test.gdb
-$ISQL -m -u shut1 -pw shut1 WHERE_GDB:test.gdb
- exit;
+$ISQL -m -u shut1 -pw shut1 WHERE_GDB:test.gdb -i gf_shut_0.sql
 $GFIX -online WHERE_GDB:test.gdb
-$ISQL -m -u shut1 -pw shut1 WHERE_GDB:test.gdb
- exit;
+$ISQL -m -u shut1 -pw shut1 WHERE_GDB:test.gdb -i gf_shut_0.sql
+$DELETE gf_shut_0*

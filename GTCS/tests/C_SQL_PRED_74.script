@@ -1,42 +1,43 @@
+#
+#**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                [NOT] SINGULAR <subquery>
+#
+# Description:           SINGULAR - Subquery returning duplicates.
+#			Row set should be empty.
+#
+#                        SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET
+#                        FROM DEPT_BUDGET V2
+#                        WHERE SINGULAR
+#                        (SELECT * FROM FULLEMP V3, EMPSAL V4, SALES T1
+#                        WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
+#                        V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
+#                        AND T1.TOTAL_VALUE >
+#                        (SELECT MIN(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 100))
+#                        ORDER BY V2.DEPTNO;
+#
+# Note: The above query should be equivalent to the following:
+#
+#                        SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET
+#                        FROM DEPT_BUDGET V2
+#                        WHERE 1 = 
+#                        (SELECT count(*) FROM FULLEMP V3, EMPSAL V4, SALES T1
+#                        WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
+#                        V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
+#                        AND T1.TOTAL_VALUE >
+#                        (SELECT MIN(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 100))
+#                        ORDER BY V2.DEPTNO;
+#
+# Views:                  DEPT_BUDGET,FULLEMP, EMPSAL
+# Tables:                 SALES
+#
+# Author:                Sam Hakim, Feb 19, 1993
+# ***********************************************************************
+#
 
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin026.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                [NOT] SINGULAR <subquery>
-
- Description:           SINGULAR - Subquery returning duplicates.
-			Row set should be empty.
-
-                        SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET
-                        FROM DEPT_BUDGET V2
-                        WHERE SINGULAR
-                        (SELECT * FROM FULLEMP V3, EMPSAL V4, SALES T1
-                        WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
-                        V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
-                        AND T1.TOTAL_VALUE >
-                        (SELECT MIN(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 100))
-                        ORDER BY V2.DEPTNO;
-
-Note: The above query should be equivalent to the following:
-
-                        SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET
-                        FROM DEPT_BUDGET V2
-                        WHERE 1 = 
-                        (SELECT count(*) FROM FULLEMP V3, EMPSAL V4, SALES T1
-                        WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
-                        V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
-                        AND T1.TOTAL_VALUE >
-                        (SELECT MIN(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 100))
-                        ORDER BY V2.DEPTNO;
-
-Views:                  DEPT_BUDGET,FULLEMP, EMPSAL
-Tables:                 SALES
-
- Author:                Sam Hakim, Feb 19, 1993
- ***********************************************************************
-*/
+>> sin026.e
 
 #include <stdio.h>
 
@@ -241,7 +242,7 @@ $ GPRE -e sin026.e
 $ CC FLAG_CC sin026.c
 $ LINK FLAG_LINK sin026 
 $ RUN sin026
-$ CREATE sin026.qli
+>> sin026.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 
@@ -268,7 +269,7 @@ order by v2.deptno;
 finish;
 quit;
 $ QLI -n -a sin026.qli
-$ CREATE sin026.sql
+>> sin026.sql
 
 select v2.deptno, v2.department, v2.mgrno, v2.budget
 from dept_budget v2

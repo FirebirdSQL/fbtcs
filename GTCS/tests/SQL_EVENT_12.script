@@ -1,13 +1,14 @@
 
-/*******************************************************************
-*Author: Sudhanshu Kumar
-*Trigger calls a procedure which posts an event in application program.
-*This test is same previous test only difference procedure is 
-*called only when  a new pnumber is inserted in project relation.
-*This traps for error message.(Does not work)
-***********************************************************************/
+#/*******************************************************************
+#*Author: Sudhanshu Kumar
+#*Trigger calls a procedure which posts an event in application program.
+#*This test is same previous test only difference procedure is 
+#*called only when  a new pnumber is inserted in project relation.
+#*This traps for error message.(Does not work)
+#***********************************************************************/
 
-$ ISQL -m 
+>> sql_event_12a.sql
+
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER);
@@ -41,58 +42,64 @@ go
 set term ; go
 exit;
 
-/**************************************************
-*Modified: 7/26/94
-* I am commenting out this section of this test because this test "apparently"
-* tests for the fix to bug 4741 which states that:
-* PROBLEM_RESOLUTION        For Pre/post insert triggers the OLD context will
-* not be created and for Pre/post delete triggers the NEW context will not 
-* be created.  This will result in follwoing kind syntax errors when the
-* triggers are *defined:
-*
-*	            -SQL error code = -206
-*	            -Field unknown
-*	            -OLD.RIVER
-*
-* Which means that the trigger never gets defined, never gets fired, and 
-* foo12 never completes and files don't get deleted and tests fail.
-*
-*$ CREATE foo12.e
-*DATABASE DB = "WHERE_GDB:events.gdb"
-*main()
-*{
-*  EXEC SQL 
-*	CONNECT DB;
-*  EXEC SQL 
-*	SET TRANSACTION;
-*  EXEC SQL 
-*	EVENT INIT xyz DB ("abc") ;
-*
-*  if (isc_status[1])
-*        isc_print_status(isc_status);
-*
-*  EXEC SQL 
-*	EVENT WAIT xyz;
-*  EXEC SQL 
-*	COMMIT WORK;
-*
-*  if (isc_status[1])
-*        isc_print_status(isc_status);
-*  else
-*        printf ("\nfoo12 done, event (abc) was posted.\n");
-*}
-*$ GPRE  -n -m foo12.e
-*$ CC FLAG_CC foo12.c
-*$ LINK FLAG_LINK foo12 
-*
-*$ RUN foo12 &
-*****************************************************/
+$ ISQL -m -i sql_event_12a.sql
 
-$ ISQL -m WHERE_GDB:events.gdb
+#/**************************************************
+#*Modified: 7/26/94
+#* I am commenting out this section of this test because this test "apparently"
+#* tests for the fix to bug 4741 which states that:
+#* PROBLEM_RESOLUTION        For Pre/post insert triggers the OLD context will
+#* not be created and for Pre/post delete triggers the NEW context will not 
+#* be created.  This will result in follwoing kind syntax errors when the
+#* triggers are *defined:
+#*
+#*	            -SQL error code = -206
+#*	            -Field unknown
+#*	            -OLD.RIVER
+#*
+#* Which means that the trigger never gets defined, never gets fired, and 
+#* foo12 never completes and files don't get deleted and tests fail.
+#*
+#*>> foo12.e
+#*DATABASE DB = "WHERE_GDB:events.gdb"
+#*main()
+#*{
+#*  EXEC SQL 
+#*	CONNECT DB;
+#*  EXEC SQL 
+#*	SET TRANSACTION;
+#*  EXEC SQL 
+#*	EVENT INIT xyz DB ("abc") ;
+#*
+#*  if (isc_status[1])
+#*        isc_print_status(isc_status);
+#*
+#*  EXEC SQL 
+#*	EVENT WAIT xyz;
+#*  EXEC SQL 
+#*	COMMIT WORK;
+#*
+#*  if (isc_status[1])
+#*        isc_print_status(isc_status);
+#*  else
+#*        printf ("\nfoo12 done, event (abc) was posted.\n");
+#*}
+#*$ GPRE  -n -m foo12.e
+#*$ CC FLAG_CC foo12.c
+#*$ LINK FLAG_LINK foo12 
+#*
+#*$ RUN foo12 &
+#*****************************************************/
+
+>> sql_event_12b.sql
+
 insert into project values('ProductA',4);
 commit;
 select * from project;
 select * from works_on;
 exit;
+
+$ ISQL -m WHERE_GDB:events.gdb -i sql_event_12b.sql
 $ SLEEP 5
 $ DROP WHERE_GDB:events.gdb
+$DELETE sql_event_12*

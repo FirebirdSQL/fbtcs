@@ -1,24 +1,24 @@
+#
+#Author: Ravi Narayanan
+#Date: Oct 10, 1994.
+#
+#Description: This is a test for referential integrity.
+#
+#Firstly, init.sql is an isql script used to create & populate
+#the database, WHERE_GDB:ref_int1.gdb.  This database has two tables 
+#"employee" and "department", and there is a referential integrity relationship
+#between these two tables by having dept_no field of table "employee" as a
+#foreign key to table "department". Also, note that emp_no is a primary key
+#for table "employee", and dept_no is a primary key for table "department".
+#
+#Secondly, test8.sql is an isql script that inactivates the  index that
+#had been created by a foreign key constraint. This should not be
+#allowed, but currently this is going through .. The test,then attempts
+#to insert valid and invalid records into this table and the insertion
+#goes through, and this is not correct .. (Bug 7517)
+#
 
-$CREATE COMMENT
-Author: Ravi Narayanan
-Date: Oct 10, 1994.
-
-Description: This is a test for referential integrity.
-
-Firstly, init.sql is an isql script used to create & populate
-the database, WHERE_GDB:ref_int1.gdb.  This database has two tables 
-"employee" and "department", and there is a referential integrity relationship
-between these two tables by having dept_no field of table "employee" as a
-foreign key to table "department". Also, note that emp_no is a primary key
-for table "employee", and dept_no is a primary key for table "department".
-
-Secondly, test8.sql is an isql script that inactivates the  index that
-had been created by a foreign key constraint. This should not be
-allowed, but currently this is going through .. The test,then attempts
-to insert valid and invalid records into this table and the insertion
-goes through, and this is not correct .. (Bug 7517)
-
-$CREATE init.sql
+>> init.sql
 create database "WHERE_GDB:ref_int8.gdb";
 create table department
 (dept_no char(3) not null,
@@ -45,11 +45,11 @@ insert into employee values (8, 'e8', 3);
 insert into employee values (9, 'e9', 3);
 commit;
 $ISQL -m -i init.sql
-$CREATE test8.sql
+>> test8.sql
 alter index ref_key inactive;
 commit;
 insert into employee values (11, 'e11', 1);
 insert into employee values (12, 'e12', 234);
 $ISQL WHERE_GDB:ref_int8.gdb -e -i test8.sql -merge
 $DROP WHERE_GDB:ref_int8.gdb
-$DELETE  COMMENT init.sql test8.sql
+$DELETE init.sql test8.sql

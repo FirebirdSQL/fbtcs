@@ -1,22 +1,22 @@
 
-/*
-**  Name:		cf_isql_15
-**  Series:		cf_isql
-**  Meta-Series:
-**  Dependencies:	None
-**  Description:	This test is a level two test case for computed-fields.
-**			
-**			This test checks the behaviour of computed-field defined
-**			using non-existing UDF.
-**
-**  Expected result:	The create table definition should fail.
-**			
-**  Author:		Ravil A. Desai
-**  Change history:
-**
-*/
+#
+#  Name:		cf_isql_15
+#  Series:		cf_isql
+#  Meta-Series:
+#  Dependencies:	None
+#  Description:	This test is a level two test case for computed-fields.
+#			
+#			This test checks the behaviour of computed-field defined
+#			using non-existing UDF.
+#
+#  Expected result:	The create table definition should fail.
+#			
+#  Author:		Ravil A. Desai
+#  Change history:
+#
+#
 
-$ CREATE cf_test.sql
+>> cf_test.sql
 create database "WHERE_GDB:cf.gdb";
 
 /*-----------------------------------------------------------------------------*/

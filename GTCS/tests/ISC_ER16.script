@@ -1,5 +1,5 @@
 
-$ CREATE er16.c
+>> er16.c
 /*
  *	isc_start_transaction
  *

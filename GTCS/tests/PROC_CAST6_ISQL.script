@@ -1,26 +1,28 @@
+#
+#/*      Reference Bug   : NONE
+# *      Dependencies    : sp1.gbk
+# *      Description     : Insert 2 large double precision numbers then
+# *              select them and their product.
+# *      Expected Result : Two large numbers and a symbol indicating numeric
+# *              overflow.
+#	History:
+#	24-May-95:        clare. Differences in Sun/HP cause different
+#			  results. This will fail remote unless we use local
+#			  inits.  On sun we see:
+#			  "100.97999999999998976818" rather than the HP
+#			  results: "100.97999999999999"
+#			  The number being cast is:
+#			  execute procedure cast6 100.98;
+#       08-Dec-97:         clare. HP still produces a very long number in the
+#			  conversion error. Created new hp 4.5 tcs init. Sun
+#			  will fail because it produces the short 100.98 string
+#			  as the conversion string in the err msg. Not sure which
+#			  is more correct.
+# */
 
-/*      Reference Bug   : NONE
- *      Dependencies    : sp1.gbk
- *      Description     : Insert 2 large double precision numbers then
- *              select them and their product.
- *      Expected Result : Two large numbers and a symbol indicating numeric
- *              overflow.
-	History:
-	24-May-95:        clare. Differences in Sun/HP cause different
-			  results. This will fail remote unless we use local
-			  inits.  On sun we see:
-			  "100.97999999999998976818" rather than the HP
-			  results: "100.97999999999999"
-			  The number being cast is:
-			  execute procedure cast6 100.98;
-       08-Dec-97:         clare. HP still produces a very long number in the
-			  conversion error. Created new hp 4.5 tcs init. Sun
-			  will fail because it produces the short 100.98 string
-			  as the conversion string in the err msg. Not sure which
-			  is more correct.
- */
 $GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -m -sqldialect 3 -e WHERE_GDB:sp1.gdb
+
+>> proc_cast6.sql
 set term go;
 create procedure cast1(a decimal(5,2)) RETURNS (b smallint) as
 begin
@@ -90,4 +92,7 @@ execute procedure cast7 100.98;
 execute procedure cast8 100.98;
 execute procedure cast9 100.98;
 exit;
+
+$ ISQL -m -sqldialect 3 -e WHERE_GDB:sp1.gdb -i proc_cast6.sql
 $ DROP WHERE_GDB:sp1.gdb
+$ DELETE proc_cast6*

@@ -1,19 +1,19 @@
 
-/*******************************************************************************
- Test Name:   dsql_domain_12
- Series Name: dsql_domains
- Date:        18-Oct-1993
- Related Bugs:  bug_5537 - problem with decimal fields, removed from test.
- Comment:     This script will run level 1 testing, checking syntax of create 
-              domain using datatype and default clauses, then creating a table 
-              using the domain fields and inserting data to those fields, 
-              allowing missing data to be supplied by the default definitions 
-              for the domain.
-*******************************************************************************/
-HISTORY:
+#/*******************************************************************************
+# Test Name:   dsql_domain_12
+# Series Name: dsql_domains
+# Date:        18-Oct-1993
+# Related Bugs:  bug_5537 - problem with decimal fields, removed from test.
+# Comment:     This script will run level 1 testing, checking syntax of create 
+#              domain using datatype and default clauses, then creating a table 
+#              using the domain fields and inserting data to those fields, 
+#              allowing missing data to be supplied by the default definitions 
+#              for the domain.
+#*******************************************************************************/
+#HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE domain_12.sql
+>> domain_12.sql
 create domain dom12a1 as smallint
  default 0;
 create domain dom12b1 as integer

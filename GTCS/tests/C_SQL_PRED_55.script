@@ -1,24 +1,24 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           Order by, Group by after STARTING WITH keyword
+#
+#                        SELECT STATE, COUNT(*) FROM CUSTOMERS
+#                        WHERE STATE STARTING WITH 'C'
+#                        GROUP BY STATE
+#                        ORDER BY CUSTNO;
+#
+# Tables:                customers
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta007.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           Order by, Group by after STARTING WITH keyword
-
-                        SELECT STATE, COUNT(*) FROM CUSTOMERS
-                        WHERE STATE STARTING WITH 'C'
-                        GROUP BY STATE
-                        ORDER BY CUSTNO;
-
- Tables:                customers
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta007.e
 
 #include <stdio.h>
 
@@ -113,7 +113,7 @@ $ GPRE -e sta007.e
 $ CC FLAG_CC sta007.c
 $ LINK FLAG_LINK sta007 
 $ RUN sta007
-$ CREATE sta007.qli
+>> sta007.qli
 
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
@@ -123,7 +123,7 @@ WHERE STATE STARTING WITH 'C' GROUP BY STATE ORDER BY STATE;
 finish;
 quit;
 $ QLI -n -a sta007.qli
-$ CREATE sta007.sql
+>> sta007.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT STATE, COUNT(*) 
 FROM CUSTOMERS 

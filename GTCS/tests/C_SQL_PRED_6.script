@@ -1,25 +1,25 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# Syntax:		[NOT]SINGULAR <subquery>			
+# Description:           Nested subqueries - SINGULAR
+#
+#                        SELECT T1.EMPNO,T1.LAST_NAME, T1.FIRST_NAME
+#                        FROM SALES_PEOPLE T1 WHERE SINGULAR
+#                        (SELECT * FROM SALES T2 WHERE T1.EMPNO=T2.SALES_REP
+#                        AND T2.TOTAL_VALUE > 6000 AND EXISTS
+#                        (SELECT * FROM CUSTOMERS T3)) AND SINGULAR
+#                        (SELECT * FROM SALES_PERF T4 WHERE T4.EMPNO = T1.EMPNO);
+#
+# Tables:                sales, customers (many-to-one relationship)
+# Author:		Sam Hakim, Feb 18, 93
+#
+# Bugs:			BugNo. 4593: EXIST (sub-query) without where clause
+#			does not get complete answer set.
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sin007.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- Syntax:		[NOT]SINGULAR <subquery>			
- Description:           Nested subqueries - SINGULAR
-
-                        SELECT T1.EMPNO,T1.LAST_NAME, T1.FIRST_NAME
-                        FROM SALES_PEOPLE T1 WHERE SINGULAR
-                        (SELECT * FROM SALES T2 WHERE T1.EMPNO=T2.SALES_REP
-                        AND T2.TOTAL_VALUE > 6000 AND EXISTS
-                        (SELECT * FROM CUSTOMERS T3)) AND SINGULAR
-                        (SELECT * FROM SALES_PERF T4 WHERE T4.EMPNO = T1.EMPNO);
-
- Tables:                sales, customers (many-to-one relationship)
- Author:		Sam Hakim, Feb 18, 93
-
- Bugs:			BugNo. 4593: EXIST (sub-query) without where clause
-			does not get complete answer set.
- ***********************************************************************
-*/
+>> sin007.e
 
 #include <stdio.h>
 
@@ -123,7 +123,7 @@ $ GPRE -e sin007.e
 $ CC FLAG_CC sin007.c
 $ LINK FLAG_LINK sin007 
 $ RUN sin007
-$ CREATE sin007.qli
+>> sin007.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 
@@ -148,7 +148,7 @@ and t2.total_value > 6000 and exists
 finish;
 quit;
 $ QLI -n -a sin007.qli
-$ CREATE sin007.sql
+>> sin007.sql
 connect WHERE_GDB:sh_test.gdb;
 select t1.empno,t1.last_name, t1.first_name
 from sales_people t1 where singular 

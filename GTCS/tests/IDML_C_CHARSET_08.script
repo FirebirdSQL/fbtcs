@@ -1,5 +1,32 @@
 
-$ CREATE create.sql
+#/* 
+#By:          Clare Taylor
+#Date:        08/03/94
+#Test name:   IDML_C_CHARSET_08         
+#Series:      IDML_C_CHARSET
+#Results:     bug_7122 causes half of this test to fail 
+#             Executes and does the insert if _CHARSET is used.
+#             Fails with translit error if no _CHARSET is used--bug 7122.
+#Dependency:  
+#History:
+#8/3/94:      logged bug 7122 which is the same as test case
+#	     IDML_C_CHARSET_06.  These test cases are the
+#	     additional proofs that the product has a problem.
+#11/10/94:    recode--add db statement, connect and set transaction
+#	     per the bug fix which says we must use manual transactions.
+#
+#16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
+#Description:
+#Tries two simple inserts: one with hard-coded strings
+#and _ISO8859_1 and one without the _CHARSET NOTATION.  
+#
+#   contains  DATABASE statement now: 
+#   Compile with:   gpre -m -charset iso8859_1 btest1.e
+#                   cc btest1.c -lgds -ldld -o btest
+#
+#*/
+
+>> create.sql
 create database "WHERE_GDB:intlemp2.gdb";
 create table EMPLOYEE(
     emp_no smallint,
@@ -7,33 +34,8 @@ create table EMPLOYEE(
     last_name varchar(20) character set ISO8859_1 collate FR_FR
 );
 COMMIT;
-$ CREATE btest5.e
-/* 
-By:          Clare Taylor
-Date:        08/03/94
-Test name:   IDML_C_CHARSET_08         
-Series:      IDML_C_CHARSET
-Results:     bug_7122 causes half of this test to fail 
-             Executes and does the insert if _CHARSET is used.
-             Fails with translit error if no _CHARSET is used--bug 7122.
-Dependency:  
-History:
-8/3/94:      logged bug 7122 which is the same as test case
-	     IDML_C_CHARSET_06.  These test cases are the
-	     additional proofs that the product has a problem.
-11/10/94:    recode--add db statement, connect and set transaction
-	     per the bug fix which says we must use manual transactions.
+>> btest5.e
 
-16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
-Description:
-Tries two simple inserts: one with hard-coded strings
-and _ISO8859_1 and one without the _CHARSET NOTATION.  
-
-   contains  DATABASE statement now: 
-   Compile with:   gpre -m -charset iso8859_1 btest1.e
-                   cc btest1.c -lgds -ldld -o btest
-
-*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -83,7 +85,7 @@ if (SQLCODE != 100)
      isc_print_status (gds__status);
 exit(1);
 }
-$ CREATE verify2.sql
+>> verify2.sql
 set names iso8859_1;
 connect WHERE_GDB:intlemp2.gdb;
 select * from employee;

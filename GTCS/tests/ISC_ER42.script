@@ -1,5 +1,5 @@
 
-$ CREATE er42.c
+>> er42.c
 /*
  *	isc_prepare_transaction2
  *

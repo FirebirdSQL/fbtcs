@@ -1,8 +1,10 @@
-BRS 26-Apr-2004
+#
+# BRS 26-Apr-2004
+# 
+# bug #223513 ambiguity between tables and views
+#
 
-bug #223513 ambiguity between tables and views
-
-$CREATE cf_isql_22a.sql
+>> cf_isql_22a.sql
 
 set echo;
 
@@ -11,7 +13,7 @@ CREATE DATABASE 'WHERE_GDB:cf_isql_22.fdb';
 create table t(a int);
 create view v as select a from t;
 
-$CREATE cf_isql_22b.sql
+>> cf_isql_22b.sql
 
 set echo;
 connect 'WHERE_GDB:cf_isql_22.fdb';

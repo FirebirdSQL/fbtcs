@@ -1,24 +1,24 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column spec> STARTING [WITH] <value spec>
+#                        Case sensitive searches including blob string
+#
+# Description:           char-field, starting with a single upper char
+#
+#                        SELECT CUSTNO, CUSTOMER
+#                        FROM CUSTOMERS
+#                        WHERE CUSTOMER STARTING WITH 'C'
+#                        ORDER BY CUSTNO;
+#
+# Tables:                customers
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE sta003.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column spec> STARTING [WITH] <value spec>
-                        Case sensitive searches including blob string
-
- Description:           char-field, starting with a single upper char
-
-                        SELECT CUSTNO, CUSTOMER
-                        FROM CUSTOMERS
-                        WHERE CUSTOMER STARTING WITH 'C'
-                        ORDER BY CUSTNO;
-
- Tables:                customers
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> sta003.e
 
 #include <stdio.h>
 
@@ -114,7 +114,7 @@ $ GPRE -e sta003.e
 $ CC FLAG_CC sta003.c
 $ LINK FLAG_LINK sta003 
 $ RUN sta003
-$ CREATE sta003.qli
+>> sta003.qli
 ready WHERE_GDB:sh_test.gdb;
 set semicolon;
 SELECT CUSTNO, CUSTOMER FROM CUSTOMERS 
@@ -125,7 +125,7 @@ select count(*) from customers where customer starting with 'C';
 finish;
 quit;
 $ QLI -n -a sta003.qli
-$ CREATE sta003.sql
+>> sta003.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT CUSTNO, CUSTOMER FROM CUSTOMERS 
 WHERE CUSTOMER STARTING WITH 'C' 

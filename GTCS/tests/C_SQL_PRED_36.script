@@ -1,22 +1,22 @@
 
+#/**********************************************************************
+# Purpose:		Test predicates support in InterBase SQL 4.0
+# 
+# Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+#
+# Description:           char-field, edited field
+#
+#                        SELECT PROJ_NO, PROJ_NAME
+#                        FROM PROJECTS
+#                        WHERE PROJ_NO CONTAINING '3';
+#
+# Tables:                projects
+#
+# Author:                Sam Hakim, Feb 19, 93
+# ***********************************************************************
+
 $ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
-$ CREATE con011.e
-/**********************************************************************
- Purpose:		Test predicates support in InterBase SQL 4.0
- 
- Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
-
- Description:           char-field, edited field
-
-                        SELECT PROJ_NO, PROJ_NAME
-                        FROM PROJECTS
-                        WHERE PROJ_NO CONTAINING '3';
-
- Tables:                projects
-
- Author:                Sam Hakim, Feb 19, 93
- ***********************************************************************
-*/
+>> con011.e
 
 #include <stdio.h>
 
@@ -112,7 +112,7 @@ $ GPRE -e con011.e
 $ CC FLAG_CC con011.c
 $ LINK FLAG_LINK con011 
 $ RUN con011
-$ CREATE con011.qli
+>> con011.qli
 Set semicolon;
 ready WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO, PROJ_NAME
@@ -124,7 +124,7 @@ FINISH;
 QUIT;
 
 $ QLI -n -a con011.qli
-$ CREATE con011.sql
+>> con011.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO, PROJ_NAME
 FROM PROJECTS
