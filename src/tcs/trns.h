@@ -166,7 +166,7 @@ static struct ptl_cmd {
 	{"GBAK",		"gbak",				fix_isc,		0, "\t\t\"gbak\""},
 	{"GDEF",		"gdef",				fix_isc,		0, "\t\t\"gdef\""},
 	{"GFIX",		"gfix",				fix_isc,		0, "\t\t\"gfix\""},
-	{"GJRN",		"gjrn",				fix_isc,		0, "\t\t\"gjrn\""},
+	{"GSTAT",		"gstat",			fix_isc,		0, "\t\t\"gstat\""},
 	{"GPRE",		"gpre",				fix_isc,		0, "\t\t\"gpre\""},
 	{"GSEC",		"gsec",				fix_isc,		0, "\t\t\"gsec\""},
 	{"ISQL",		"isql",				fix_isc,		0, "\t\t\"isql\""},
