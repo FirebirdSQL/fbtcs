@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> connect 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_23.fdb';
+SQL> connect 'WHERE_GDB:cf_isql_23.fdb';
 SQL>  delete from TEST where T_GROUP = 2;
 SQL> execute procedure GROUP_COPY( 1 , 2 );
 SQL> commit;

@@ -20,7 +20,7 @@ CONSTRAINT INTEG_1:
  
 SET SQL DIALECT 3; 
  
-/* CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_20.fdb' DEFAULT CHARACTER SET NONE */
+/* CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb' DEFAULT CHARACTER SET NONE */
 
 
 /* Domain definitions */

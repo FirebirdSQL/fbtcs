@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
-SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_26.fdb';
+SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_26.fdb';
 SQL> 
 SQL> CREATE TABLE DRZAVA(
 CON> 	POZIVNIBROJDRZAVE VARCHAR(4) NOT NULL,

@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
-SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_20.fdb';
+SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb';
 SQL> 
 SQL> create table t(a int);
 SQL> create table u(a int);
@@ -10,7 +10,7 @@ CON> old.a=old.a; end^
 SQL> commit ^
 SQL> 
 SQL> Use CONNECT or CREATE DATABASE to specify a database
-SQL> connect 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_20.fdb';
+SQL> connect 'WHERE_GDB:cf_isql_20.fdb';
 SQL> show table t;
 A                               INTEGER Nullable 
 SQL> show table u;
@@ -22,7 +22,7 @@ SQL>
 SQL>  
 SET SQL DIALECT 3; 
  
-/* CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_20.fdb' DEFAULT CHARACTER SET NONE */
+/* CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb' DEFAULT CHARACTER SET NONE */
 
 
 

@@ -5,7 +5,7 @@ SQL> SET SQL DIALECT 1;
 SQL> SHOW SQL DIALECT;
         Client SQL dialect is set to: 1. No database has been connected.
 SQL> SET SQL DIALECT 3;
-SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_25.fdb';
+SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_25.fdb';
 SQL> SHOW SQL DIALECT;
         Client SQL dialect is set to: 3 and database SQL dialect is: 3
 SQL> DROP DATABASE;

@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
-SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_27.fdb';
+SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_27.fdb';
 SQL> 
 SQL> CREATE GENERATOR GEN_TEST1;
 SQL> SET GENERATOR GEN_TEST1 TO 0;
