@@ -145,5 +145,5 @@ where x.c1 like 'a%'
 order by x.c1 ascending;
 quit;
 $ISQL -m -i join017.sql
-#$DROP WHERE_GDB:sh_join_17.gdb
-#$ DELETE join017* 
+$DROP WHERE_GDB:sh_join_17.gdb
+$ DELETE join017* 
