@@ -1,12 +1,11 @@
 
-Database "d:/proyectos/firebird/fbtcs/temp/employee.gdb"
-
+Database "WHERE_GDB_EXTERNAL:employee.gdb"
 Database header page information:
 	Flags			0
 	Checksum		12345
 	Generation		25
 	Page size		1024
-	ODS version		11.0
+	ODS version		11.0 type 0200
 	Oldest transaction	1
 	Oldest active		2
 	Oldest snapshot		1
@@ -18,7 +17,6 @@ Database header page information:
 	Shadow count		0
 	Page buffers		0
 	Next header page	0
-	Clumplet End		102
 	Database dialect	1
 
     Variable header data:

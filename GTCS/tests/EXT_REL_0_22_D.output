@@ -1,7 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLCODE = -625
-
 validation error for column FIELD1, value "*** null ***"
 
  FIELD1 FIELD2     

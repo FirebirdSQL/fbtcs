@@ -1,5 +1,4 @@
 Statement failed, SQLCODE = -902
-
 database WHERE_GDB_EXTERNAL:test.gdb shutdown
 Use CONNECT or CREATE DATABASE to specify a database
  

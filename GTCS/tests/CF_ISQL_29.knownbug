@@ -2,7 +2,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
 SQL> SET SQL DIALECT 3;
 SQL> 
-SQL> CREATE DATABASE 'localhost:c:/proyectos/firebird/fbtcs/temp/cf_isql_29.fdb';
+SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_29.fdb';
 SQL> 
 SQL> SET TERM ^ ;
 SQL> 
