@@ -5,20 +5,13 @@
 set FBTT=%1
 set FBTN=%2
 
-@if "%3" NEQ "" (set FIREBIRD=%3)
-:: BRS 
-:: Get all the file name when there are spaces
-:: this can be also achieved with %* but I don't know which versions of 
-:: windows allows it
-:LOOP
-	@shift
-	@if "%3"==""  (goto DONE)
-        @set FIREBIRD=%FIREBIRD% %3
-	@goto loop
-:DONE
+@if "%FIREBIRD%"=="" (goto :HELP2 & goto :EOF)
+@if "%ISC_USER%"=="" (goto :HELP3 & goto :EOF)
+@if "%ISC_PASSWORD%"=="" (goto :HELP4 & goto :EOF)
 
 @echo FIREBIRD=%FIREBIRD%
-@if "%FIREBIRD%"=="" (goto :HELP2 & goto :EOF)
+@echo ISC_USER=%ISC_USER%
+@echo ISC_PASSWORD=%ISC_PASSWORD%
 
 ::********************************************************
 :: Take care, the tool needs the path with forward slashes
@@ -56,7 +49,7 @@ goto:END2
 @echo   rms : run a test meta-serie
 @echo.
 @echo   The valid command syntax for runtcs is
-@echo   runtcs type name [FIREBIRD dir]
+@echo   runtcs type name
 @echo.
 @goto :END2
 
@@ -66,9 +59,20 @@ goto:END2
 @echo   The fbtcs need the FIREBIRD environment variable set to work.
 @echo   FIREBIRD value should be the root directory of your Firebird installation.
 @echo.
-@echo   The valid command syntax for runtcs is
-@echo   runtcs type name [FIREBIRD dir]
-@echo. 
+@goto :END2
+
+::===========
+:HELP3
+@echo.
+@echo   The fbtcs need the ISC_USER environment variable set to work.
+@echo.
+@goto :END2
+
+::===========
+:HELP4
+@echo.
+@echo   The fbtcs need the ISC_PASSWORD environment variable set to work.
+@echo.
 @goto :END2
 
 :END2

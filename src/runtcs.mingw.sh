@@ -16,19 +16,40 @@
 #
 # Contributor(s): ______________________________________.
 
-if [ "$3" = "" ]; then
-	if [ "$FIREBIRD" = "" ]; then
-		echo "FIREBIRD not defined."
-		echo "If environment variable is not set "
-		echo "the third argument for `basename $0` is the value of FIREBIRD"
-		exit
-	fi
-else
-	FIREBIRD="$3"
-	export FIREBIRD
+if [ "$1" = "" ]; then
+	echo "Test type not defined."
+	echo "allowed values are rt (run test), rs (run series) and rms(run meta series)"
+	echo "the first argument for `basename $0` is the test type"
+	exit
+fi
+
+if [ "$2" = "" ]; then
+	echo "Test/series/metaseries name not defined."
+	echo "the second argument for `basename $0` is the Test/series/metaseries name"
+	exit
+fi
+
+if [ "$FIREBIRD" = "" ]; then
+	echo "FIREBIRD environment variable not defined."
+	echo "You need to define it to run the tests"
+	exit
+fi
+
+if [ "$ISC_USER" = "" ]; then
+	echo "ISC_USER environment variable not defined."
+	echo "You need to define it to run the tests"
+	exit
+fi
+
+if [ "$ISC_PASSWORD" = "" ]; then
+	echo "ISC_PASSWORD environment variable not defined."
+	echo "You need to define it to run the tests"
+	exit
 fi
 
 echo "FIREBIRD=$FIREBIRD"
+echo "ISC_USER=$ISC_USER"
+echo "ISC_PASSWORD=$ISC_PASSWORD"
 
 cd ..
 FBTCS="$(pwd -W)"
