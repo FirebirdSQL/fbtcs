@@ -72,29 +72,29 @@ $ CREATE event_custom.h
 #endif
 
 #ifndef WIN_NT
-#define HANDLE int
-#define LPHANDLE int *
+#define HANDLE long
+#define LPHANDLE long *
 #endif
 
 /* Function prototypes */
 
-void init_server(char **,short);
+void init_server(char**, short);
 
-void parse_server_args(int,char *[],int *,short);
+void parse_server_args(int, char*[], int*,short);
 
-void create_client(int *, HANDLE[MAX_CLIENTS][2],int,char *);
+void create_client(int *, HANDLE[MAX_CLIENTS][2], int, char *);
 
-void packet_handler(int[], HANDLE[MAX_CLIENTS][2],short);
+void packet_handler(long[], HANDLE[MAX_CLIENTS][2], short);
 
 int update_server_relation(int[], short);
 
-int  event_handler(char *,short,char *);
+int  event_handler(char *, short, char *);
 
-void finish_packets(HANDLE[MAX_CLIENTS][2],short);
+void finish_packets(HANDLE[MAX_CLIENTS][2], short);
 
-int  report_events(char *,int,short);
+int  report_events(char *, int, short);
 
-void parse_client_args(int,char *[],LPHANDLE,int *,char *);
+void parse_client_args(int, char *[], LPHANDLE, int *, char *);
 
 /* Macros */
 
@@ -751,7 +751,7 @@ void packet_handler(
 /*--------------------------------------------------------------------------*/
 
 int update_server_relation(
-	int		count_array[],
+	long	count_array[],
 	short	verbose)
 {
 /****************************************************************************
