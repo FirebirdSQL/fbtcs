@@ -3,7 +3,11 @@ $CREATE svc_api_connect.cpp
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#ifndef DARWIN
 #include <ibase.h>
+#else
+#include <Firebird/ibase.h>
+#endif
 
 int main(int argc, char* argv[]){
 	char	*user = "SYSDBA";
