@@ -550,7 +550,7 @@ static int run_text(char *script,
 	success = false;
 
 	//  Execute the script...
-	SLONG clock = time(NULL);
+	const time_t clock = time(NULL);
 	struct tm times1 = *localtime (&clock);
 
 	success = execute_script(script_file_name, output_file_name);

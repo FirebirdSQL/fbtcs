@@ -30,7 +30,7 @@ if [ "$1" = "" ]; then
 	if [ "$FIREBIRD" = "" ]; then
 		echo "FIREBIRD not defined."
 		echo "If environment variable is not set "
-		echo "the first argument for `basename $0` if the value of FIREBIRD"
+		echo "the first argument for `basename $0` is the value of FIREBIRD"
 		exit
 	fi
 else
@@ -54,6 +54,13 @@ case `uname -s` in
 		exeext=
 		ext=linux
 		CFLAGS="-ggdb -Wall -Wno-parentheses -DLINUX"
+		LIBS="-lstdc++"
+		CLIENTLIB="$FIREBIRD/lib/libfbclient.so"
+		;;
+	FreeBSD)	
+		exeext=
+		ext=freebsd
+		CFLAGS="-ggdb -Wall -Wno-parentheses -DFREEBSD -pthread"
 		LIBS="-lstdc++"
 		CLIENTLIB="$FIREBIRD/lib/libfbclient.so"
 		;;

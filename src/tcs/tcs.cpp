@@ -1067,14 +1067,13 @@ static int test_one(char *string)
 	USHORT		count;
 	TEST_RESULT	result;
 	char		test_name[33];
-	SLONG		clock;
 	struct tm	times;
 
 	series_results.tr_test_count++;
 	count =  0;
 
 	// Get current time.
-	clock = time (NULL);
+	const time_t clock = time (NULL);
 	times = *localtime (&clock);
 
 	// The first byte of test_name is used to store a symbol to
@@ -1277,7 +1276,6 @@ static int test_series(char *string, char *start)
 	int 	loop = true;
 
 	struct 	tm times1;
-	SLONG 	clock;
 
 	// This test will set up an AUDIT system for a test series.
 	// Currently it deletes existing database files so a test
@@ -1315,7 +1313,7 @@ static int test_series(char *string, char *start)
 		total = (s_count < 0) ? -s_count : 0;
 
 		// Get the current time to print out before running a series
-		clock = time (NULL);
+		const time_t clock = time (NULL);
 		times1 = *localtime (&clock);
 		printf("\tseries %s started on %s", string, asctime(&times1));
 		fflush (stdout);
@@ -1422,7 +1420,7 @@ static int test_series(char *string, char *start)
 
 ULONG get_elapsed_time(struct tm times1)
 {
-	SLONG clock = time(NULL);
+	const time_t clock = time(NULL);
 	struct tm times2 = *localtime (&clock);
 	ULONG run_time;
 

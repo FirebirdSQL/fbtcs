@@ -36,7 +36,7 @@
 #include <io.h>
 #include <stdlib.h>
 #else
-#if !defined(LINUX) && !defined(DARWIN)
+#if !defined(LINUX) && !defined(DARWIN) && !defined(FREEBSD)
 extern char	*sys_errlist[];
 extern int	sys_nerr;
 #endif
