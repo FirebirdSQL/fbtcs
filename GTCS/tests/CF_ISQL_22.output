@@ -1,0 +1,40 @@
+Use CONNECT or CREATE DATABASE to specify a database
+SQL> 
+SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_21.fdb';
+SQL> 
+SQL> create table t(a int);
+SQL> create view v as select a from t;
+SQL> 
+SQL> Use CONNECT or CREATE DATABASE to specify a database
+SQL> connect 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_21.fdb';
+SQL> show tables;
+       T                               
+SQL> show views;
+       V                               
+SQL> show table v;
+There is no table V in this database
+SQL> show table t;
+A                               INTEGER Nullable 
+SQL> show view v;
+A                               INTEGER Nullable 
+View Source:
+==== ======
+ select a from t
+SQL> show view t;
+There is no view T in this database
+SQL> 
+SQL>  
+SET SQL DIALECT 3; 
+ 
+/* CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_21.fdb' DEFAULT CHARACTER SET NONE */
+
+
+
+/* Table: T, Owner: SYSDBA */
+CREATE TABLE T (A INTEGER);
+
+/* View: V, Owner: SYSDBA */
+CREATE VIEW V (A) AS
+ select a from t;
+
+/* Grant permissions for this database */

@@ -1,0 +1,28 @@
+BRS 04-Nov-2003
+
+Added this test to verify isql comments
+
+$CREATE cf_isql_20a.sql
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb';
+
+set echo;
+
+CREATE DOMAIN EXTRACT_BUG AS CHAR(1) CHARACTER SET ISO8859_1 default 'v' check(value >='a' and value <='z') COLLATE ES_ES;
+
+/* Table: T_EXTRACT_BUG, Owner: SYSDBA */
+CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
+
+ALTER TABLE T_EXTRACT_BUG ADD check(a>='c');
+
+$CREATE cf_isql_20b.sql
+
+connect 'WHERE_GDB:cf_isql_20.fdb';
+show domain extract_bug;
+show table t_extract_bug;
+
+$ISQL -m -i cf_isql_20a.sql
+$ISQL -m -i cf_isql_20b.sql
+$ISQL -m -x WHERE_GDB:cf_isql_20.fdb
+$DROP WHERE_GDB:cf_isql_20.fdb
+$DELETE cf_isql_20*

@@ -1,0 +1,29 @@
+BRS 04-Nov-2003
+
+Added this test to verify isql comments
+
+$CREATE cf_isql_20a.sql
+
+set echo;
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb';
+
+create table t(a int);
+create table u(a int);
+set term ^;
+create trigger t for u after delete as begin
+old.a=old.a; end^
+commit ^
+
+$CREATE cf_isql_20b.sql
+
+set echo;
+connect 'WHERE_GDB:cf_isql_20.fdb';
+show table t;
+show table u;
+
+$ISQL -m -i cf_isql_20a.sql
+$ISQL -m -i cf_isql_20b.sql
+$ISQL -m -x WHERE_GDB:cf_isql_20.fdb
+$DROP WHERE_GDB:cf_isql_20.fdb
+$DELETE cf_isql_20*

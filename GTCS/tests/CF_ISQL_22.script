@@ -1,0 +1,29 @@
+BRS 04-Nov-2003
+
+Added this test to verify isql comments
+
+$CREATE cf_isql_21a.sql
+
+set echo;
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_21.fdb';
+
+create table t(a int);
+create view v as select a from t;
+
+$CREATE cf_isql_21b.sql
+
+set echo;
+connect 'WHERE_GDB:cf_isql_21.fdb';
+show tables;
+show views;
+show table v;
+show table t;
+show view v;
+show view t;
+
+$ISQL -m -i cf_isql_21a.sql
+$ISQL -m -i cf_isql_21b.sql
+$ISQL -m -x WHERE_GDB:cf_isql_21.fdb
+$DROP WHERE_GDB:cf_isql_21.fdb
+$DELETE cf_isql_21*
