@@ -1,5 +1,105 @@
+2003-11-11  bellardo
+	* test-files/isc_test.h:
+		Fix up more headers for darwin
+
+	* GTCS/tests/BLOB.0.DSQL.script:
+	* GTCS/tests/EVENT_MISC_0.script:
+	* GTCS/tests/FLD0_V40_1006.script:
+	* GTCS/tests/FLD0_V40_1007.script:
+	* GTCS/tests/IDML_C_CHARSET_05.script:
+	* GTCS/tests/IDML_C_CHARSET_06.script:
+	* GTCS/tests/IDML_C_CHARSET_07.script:
+	* GTCS/tests/IDML_C_CHARSET_08.script:
+	* GTCS/tests/IDML_C_CHARSET_09.script:
+	* GTCS/tests/ISC_ERRSET.script:
+	* GTCS/tests/SQL_EVENT_13.script:
+	* GTCS/tests/SVC_API_BACKUP.script:
+	* GTCS/tests/SVC_API_RESTORE.script:
+	* GTCS/tests/SVC_API_SWEEP_DB.script:
+	* GTCS/tests/SVC_API_VALIDATE_DB.script:
+		Some darwin related changes
+
+2003-11-06  brodsom
+	* GTCS/series/QA_PROCS_ISQL.list:
+	* GTCS/series/RICH_FLD_GEN_V40.list:
+	* GTCS/tests/CF_ISQL_19.output:
+	* GTCS/tests/CF_ISQL_19.script:
+		Corrections
+
+2003-11-04  brodsom
+	* GTCS/series/CF_ISQL.list:
+	* GTCS/tests/CF_ISQL_18.output:
+	* GTCS/tests/CF_ISQL_18.script:
+		Add new test (Thanks to Arno)
+
+	* GTCS/series/CF_ISQL.list:
+	* GTCS/tests/CF_ISQL_19.output:
+	* GTCS/tests/CF_ISQL_19.script:
+		Add new test (isql comments)
+
+2003-11-03  brodsom
+	* GTCS/meta_series/ALL_SERIES.list:
+	* LI_LTCS/tests/MISC_EVENT_0.knownbug:
+	* LI_LTCS/tests/MISC_EVENT_0.script:
+	* LI_LTCS/tests/MISC_EVENT_1.knownbug:
+	* LI_LTCS/tests/MISC_EVENT_1.script:
+	* doc/Status.html:
+		Enable EVENT_MISC (excluding Linux)
+
+	* GTCS/tests/IDML_C_CHARSET_02.script:
+	* NT_LTCS/tests/IDML_C_CHARSET_01.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_02.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_02.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_04.output:
+		Correction
+
+	* NT_LTCS/tests/IDML_C_CHARSET_01.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_01.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_01.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_01.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_02.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_02.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_02.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_02.output:
+	* NT_LTCS/tests/IDML_C_CHARSET_02.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_02.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_02.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_02.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_02.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_04.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_04.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_04.output:
+	* NT_LTCS/tests/IDML_C_SUBQ_04.output:
+		Corrections
+
+2003-11-02  brodsom
+	* GTCS/tests/EVENT_MISC_0.output:
+	* GTCS/tests/EVENT_MISC_0.script:
+	* GTCS/tests/EVENT_MISC_1.script:
+	* GTCS/tests/IDML_C_CHARSET_05.script:
+	* src/tcs/exec.cpp:
+	* src/tcs/tcs.cpp:
+	* src/tcs/tcs_proto.h:
+		Corrections
+
+2003-10-31  brodsom
+	* GTCS/tests/SQL_EVENT_13.script:
+		Correction
+
+	* LI_LTCS/tests/SQL_EVENT_13.knownbug:
+	* LI_LTCS/tests/SQL_EVENT_13.script:
+		Add dummy test
+
 2003-10-30  brodsom
+	* LI_LTCS/environments/env_linux:
+		Correction
+
+	* GTCS/series/EVENT_MISC.list:
+	* GTCS/series/EXT_LEV_0.list:
+	* GTCS/series/RI_TESTS.list:
 	* GTCS/series/SQL_EVENTS.list:
+	* GTCS/tests/EXT_LEV_0_CLEANUP.output:
+	* GTCS/tests/EXT_LEV_0_CLEANUP.script:
 	* GTCS/tests/SQL_EVENTS_CLEANUP.output:
 	* GTCS/tests/SQL_EVENTS_CLEANUP.script:
 	* LI_LTCS/boiler_plates/BP_FB:
@@ -36,7 +136,20 @@
 		Cleaning
 
 	* doc/Status.html:
+	* doc/Status.html:
 		Update
+
+	* GTCS/series/SQL_EVENTS.list:
+	* GTCS/tests/SQL_EVENT_03.script:
+	* GTCS/tests/SQL_EVENT_04.script:
+	* GTCS/tests/SQL_EVENT_07.script:
+	* GTCS/tests/SQL_EVENT_08.script:
+	* GTCS/tests/SQL_EVENT_13.output:
+	* GTCS/tests/SQL_EVENT_13.script:
+	* GTCS/tests/SQL_EVENT_13.script:
+	* GTCS/tests/SQL_EVENT_13.script:
+	* GTCS/tests/SQL_EVENT_13.script:
+		Corrections
 
 2003-10-29  brodsom
 	* src/tcs/build.log:
