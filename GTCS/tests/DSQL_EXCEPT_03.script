@@ -17,11 +17,17 @@
 >> dsql_except_03.sql
 
 create exception trig03_nullriver "River field cannot be left blank";
+
+set term ^ ;
+
 create trigger test03a for river_states
 active before insert position 2
 as begin
  if (new.river is null) then
-  exception trig03_nullriver; end;
+  exception trig03_nullriver;
+end^
+
+set term ; ^
 commit;
 drop exception trig03_nullriver;
 commit;
