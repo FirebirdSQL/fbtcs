@@ -64,7 +64,7 @@ T_ROWID T_850      A_DESC
      22 ¢          _DOS or _ISO cent,iso 162, dos850 189                   
       4 ë          ae(as one)                                              
      44 Ê          _DOS or _ISO ae(as one),iso 230, dos850 145             
-      5 ?          O, slash                                                
+      5 ù          O, slash                                                
      55 ÿ          _DOS or _ISO O, slash,iso 216, dos850 157               
 
 ---------------------------------------------------------------
@@ -114,8 +114,8 @@ T_ROWID T_ISO      A_DESC
      22 Ω          _DOS or _ISO cent,iso 162, dos850 189                   
       4 ë          ae(as one)                                              
      44 ë          _DOS or _ISO ae(as one),iso 230, dos850 145             
-      5 ?          O, slash                                                
-     55 ?          _DOS or _ISO O, slash,iso 216, dos850 157               
+      5 ù          O, slash                                                
+     55 ù          _DOS or _ISO O, slash,iso 216, dos850 157               
 
   PASS 2: Same thing, but LOAD THE DATA WITH SET NAMES = DOS850
 
@@ -221,7 +221,7 @@ T_ROWID T_ISO      A_DESC
       4 Ê          ae(as one)                                              
      44 ë          _DOS or _ISO ae(as one),iso 230, dos850 145             
       5 ÿ          O, slash                                                
-     55 ?          _DOS or _ISO O, slash,iso 216, dos850 157               
+     55 ù          _DOS or _ISO O, slash,iso 216, dos850 157               
 
   PASS 3: Same thing, but LOAD THE DATA WITH SET NAMES = DOS437
 
@@ -327,5 +327,5 @@ T_ROWID T_ISO      A_DESC
      22 Ω          _DOS or _ISO cent,iso 162, dos850 189                   
       4 Ê          ae(as one)                                              
      44 ë          _DOS or _ISO ae(as one),iso 230, dos850 145             
-     55 ?          _DOS or _ISO O, slash,iso 216, dos850 157               
+     55 ù          _DOS or _ISO O, slash,iso 216, dos850 157               
 

@@ -291,5 +291,5 @@ $ ISQL -i i2.sql -m
 $ DELETE pdoc1 pdoc2 pdoc3 doc v1.sql v2.sql i1.sql i2.sql 
 $ DELETE v1 v2 i1 i2
 $ DELETE dos850l2.sql dos850l1.sql dos437l1.sql dos437l2.sql 
-$ DELETE tcs.dat* isoload1.sql isoload2.sql setup1.sql 
+$ DELETE isoload1.sql isoload2.sql setup1.sql 
 $ DELETE setup2.sql

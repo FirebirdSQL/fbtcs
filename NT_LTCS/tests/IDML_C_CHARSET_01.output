@@ -93,7 +93,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 T_ROWID T_850      A_DESC                                                  
 ======= ========== ======================================================= 
 
-      1 ‡.ru†?p    O,acute,.rua,acute,Oslash,p                             
+      1 ‡.ru†ùp    O,acute,.rua,acute,Oslash,p                             
      11 ”.ru·ÿp    _DOS/_UNI Oacute,.ru,aacute,Oslash,p                    
       3 áÊ         c cedilla,script u                                      
      33 Áµ         _DOS/_UNI c cedilla, script u                           
@@ -106,7 +106,7 @@ T_ROWID T_850      A_DESC
 T_ROWID T_UNI                          
 ======= ============================== 
 
-      1 ‡.ru†?p                        
+      1 ‡.ru†ùp                        
 
 
 T_ROWID T_UNI                          
@@ -169,9 +169,9 @@ T_ROWID T_850      A_DESC
 ======= ========== ======================================================= 
 
       1 √ì.ru√°√òp O,acute,.rua,acute,Oslash,p                             
-     11 √ã.ru√ü√?p _DOS/_UNI Oacute,.ru,aacute,Oslash,p                    
+     11 √ã.ru√ü√èp _DOS/_UNI Oacute,.ru,aacute,Oslash,p                    
       3 √ß¬µ       c cedilla,script u                                      
-     33 √æ√?       _DOS/_UNI c cedilla, script u                           
+     33 √æ√Å       _DOS/_UNI c cedilla, script u                           
       2 ¬¢¬°       cent sign, upside down exclam                           
      22 √≥√≠       _DOS/_UNI cent sign, upside down exclam                 
 
