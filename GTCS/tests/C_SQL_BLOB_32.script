@@ -1,0 +1,125 @@
+
+HISTORY:
+
+$ COPY WHERE_FILES:make.filter make.filter
+$ CREATE p666.sh
+sed 's/-z//g' make.filter >makefile
+chmod 777 makefile
+$ SH p666.sh
+$ MAKE -s new
+$ CREATE slides.e 
+/**********************************************************************
+ Purpose:               Test SQL blob support in InterBase 4.0
+
+ Description:           FILTER usage of blobs in SQL.
+			DECLARE bcr CURSOR FOR
+        		READ BLOB text FROM text
+        		FILTER FROM -1 TO 1
+
+ Requirement:		This test requires that make.filter in interbase
+			examples work properly on this platform.  database
+			WHERE_GDB:slides.gdb, filter.c and whatever make.filter needs
+			is required to be present in the current directory.
+
+ Note:			This is a modified version of slides.  SQL section
+			was appended to the the existing slides.e
+
+			This test may not port to NLM or NT.
+
+ Author:                Sam Hakim
+
+ Mods:			This test is not needed.  All filter tests
+			are in a different series and are self contained.
+			Sam 11/10/94
+ **********************************************************************/
+DATABASE DB = FILENAME "WHERE_GDB:slides.gdb";
+
+BASED ON TEXT.SEMINAR		Seminar;
+BASED ON TEXT.TALK		Talk;
+BASED ON TEXT.TEXT.SEGMENT	TextSegment;
+BASED ON TEXT.TEXT		TextId;
+unsigned short			TextLen;
+
+main ()
+{
+READY;
+START_TRANSACTION;
+FOR T IN TEXT
+    printf ("seminar:\t%s\t\ttalk:\t%s\n", T.SEMINAR, T.TALK);
+    printf ("filtered test in GDML:\n");
+    OPEN_BLOB B IN T.TEXT FILTER FROM -1 TO 1; 
+    GET_SEGMENT B;
+    while (!gds__status [1] || gds__status [1] == gds__segment)
+	{
+	B.SEGMENT [B.LENGTH] = 0;
+	printf ("\t%s", B.SEGMENT); 
+	GET_SEGMENT B;
+	}
+    CLOSE_BLOB B;
+    printf ("unfiltered test in GDML:\n");
+    OPEN_BLOB BU IN T.TEXT; 
+    GET_SEGMENT BU;
+    while (!gds__status [1] || gds__status [1] == gds__segment)
+	{
+	BU.SEGMENT [BU.LENGTH] = 0;
+	printf ("\t%s", BU.SEGMENT); 
+	GET_SEGMENT BU;
+	}
+    CLOSE_BLOB BU;
+    printf ("\n");
+END_FOR;
+
+COMMIT;
+/*-------------------------------------------------*/
+/* Let's do this in SQL */
+EXEC SQL
+	SELECT seminar, talk, text 
+	INTO :Seminar, :Talk, :TextId
+	FROM text;
+
+printf ("seminar:\t%s\t\ttalk:\t%s\n", Seminar, Talk);
+printf ("filtered test in SQL:\n");
+EXEC SQL
+	DECLARE bcr CURSOR FOR
+	READ BLOB text FROM text
+	FILTER FROM -1 TO 1;
+EXEC SQL
+	OPEN bcr USING :TextId;
+EXEC SQL
+	FETCH bcr INTO :TextSegment:TextLen;
+while (SQLCODE !=100 || SQLCODE == 101){
+	printf("\t%*.*s",TextLen,TextLen,TextSegment);
+	EXEC SQL
+	FETCH bcr INTO :TextSegment:TextLen;
+}
+EXEC SQL
+	CLOSE bcr;
+
+/* Get the unfiltered blob in SQL, just like you did in GDML */
+printf ("unfiltered test in SQL:\n");
+EXEC SQL
+        SELECT seminar, talk, text
+        INTO :Seminar, :Talk, :TextId
+        FROM text;
+
+EXEC SQL
+        DECLARE u_bcr CURSOR FOR
+        READ BLOB text FROM text;
+EXEC SQL
+        OPEN u_bcr USING :TextId;
+EXEC SQL
+        FETCH u_bcr INTO :TextSegment:TextLen;
+while (SQLCODE !=100 || SQLCODE == 101){
+        printf("\t%*.*s",TextLen,TextLen,TextSegment);
+        EXEC SQL
+        FETCH u_bcr INTO :TextSegment:TextLen;
+}
+EXEC SQL
+        CLOSE u_bcr;
+FINISH;
+exit (0);
+}
+$ MAKE -s
+$ RUN slides
+$ MAKE -s clean
+$ DELETE nr_filter.* slides* FILTERLIB make.filter makefile p666.sh

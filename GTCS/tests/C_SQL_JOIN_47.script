@@ -1,0 +1,191 @@
+
+$ CREATE bug6164.sql
+create database "WHERE_GDB:bug6164.gdb";
+create domain s1_type smallint not null;
+create domain table_row_type char(6) not null;
+
+create table st1 (s1 s1_type, table_row table_row_type);
+create table st2 (s1 s1_type, table_row table_row_type);
+create table st3 (s1 s1_type, table_row table_row_type);
+create table st4 (s1 s1_type, table_row table_row_type);
+create table st5 (s1 s1_type, table_row table_row_type);
+
+insert into st1 values (1,'st1-1');
+insert into st1 values (2,'st1-2');
+insert into st1 values (-1,'st1-3');
+insert into st1 values (-11,'unique');
+
+insert into st2 values (1,'st2-1');
+insert into st2 values (2,'st2-2');
+insert into st2 values (-1,'st2-3');
+insert into st2 values (-12,'unique');
+
+insert into st3 values (1,'st3-1');
+insert into st3 values (2,'st3-2');
+insert into st3 values (-1,'st3-3');
+insert into st3 values (-13,'unique');
+
+insert into st4 values (1,'st4-1');
+insert into st4 values (2,'st4-2');
+insert into st4 values (-1,'st4-3');
+insert into st4 values (-14,'unique');
+
+insert into st5 values (1,'st5-1');
+insert into st5 values (1,'st5-2');
+insert into st5 values (2,'st5-3');
+insert into st5 values (2,'st5-4');
+insert into st5 values (-1,'st5-5');
+insert into st5 values (-15,'unique');
+
+commit;
+quit;
+$ISQL -i bug6164.sql -m
+$ CREATE bug6164.e
+
+/**********************************************************************
+ Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
+ Description:           5 table joins
+ Author:                Sam Hakim, June 1, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:bug6164.gdb";
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON st1.s1     t1s1;
+BASED_ON st1.table_row   t1table_row;
+
+BASED_ON st2.s1     t2s1;
+BASED_ON st2.table_row   t2table_row;
+
+BASED_ON st3.s1     t3s1;
+BASED_ON st3.table_row   t3table_row;
+
+BASED_ON st4.s1     t4s1;
+BASED_ON st4.table_row   t4table_row;
+
+BASED_ON st5.s1     t5s1;
+BASED_ON st5.table_row   t5table_row;
+
+char Test[]="\
+select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row \
+from ((((st1 a left outer join st2 b on a.s1 = b.s1) left outer join st3 c on b.s1 = c.s1) left outer join \
+st4 d on c.s1 = d.s1) left outer join st5 e on d.s1 = e.s1) \
+order by a.table_row ascending";
+
+void Underline();
+
+main()
+{
+
+short t1s1Ind,t1table_rowInd;
+short t2s1Ind,t2table_rowInd;
+short t3s1Ind,t3table_rowInd;
+short t4s1Ind,t4table_rowInd;
+short t5s1Ind,t5table_rowInd;
+	
+    int Count;
+	Count = 0;
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+
+    EXEC SQL
+        DECLARE CR CURSOR FOR
+        select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row
+        from ((((st1 a left outer join st2 b on a.s1 = b.s1) left outer join st3 c on b.s1 = c.s1) left outer join
+        st4 d on c.s1 = d.s1) left outer join st5 e on d.s1 = e.s1)
+        order by a.table_row ascending;
+
+        EXEC SQL
+		OPEN CR;
+		
+    EXEC SQL    FETCH CR INTO
+                :t1s1:t1s1Ind,:t1table_row:t1table_rowInd,
+                :t2s1:t2s1Ind,:t2table_row:t2table_rowInd,
+                :t3s1:t3s1Ind,:t3table_row:t3table_rowInd,
+                :t4s1:t4s1Ind,:t4table_row:t4table_rowInd,
+                :t5s1:t5s1Ind,:t5table_row:t5table_rowInd;
+
+        while (SQLCODE == 0){
+		Count++;
+
+		if (t1s1Ind == 0) printf("%5d  ",t1s1); else printf("<null>");
+                if (t1table_rowInd == 0) printf("%-10s  ",t1table_row); else printf("<null>");
+                if (t2s1Ind == 0) printf("%5d  ",t2s1); else printf("<null>");
+                if (t2table_rowInd == 0) printf("%-10s  ",t2table_row); else printf("<null>");
+                if (t3s1Ind == 0) printf("%5d  ",t3s1); else printf("<null>");
+                if (t3table_rowInd == 0) printf("%-10s  ",t3table_row); else printf("<null>");
+                if (t4s1Ind == 0) printf("%5d  ",t4s1); else printf("<null>");
+                if (t4table_rowInd == 0) printf("%-10s  ",t4table_row); else printf("<null>");
+                if (t5s1Ind == 0) printf("%5d  ",t5s1); else printf("<null>");
+                if (t5table_rowInd == 0) printf("%-10s\n",t5table_row); else printf("<null>");
+
+                EXEC SQL FETCH CR INTO
+                :t1s1:t1s1Ind,:t1table_row:t1table_rowInd,
+                :t2s1:t2s1Ind,:t2table_row:t2table_rowInd,
+                :t3s1:t3s1Ind,:t3table_row:t3table_rowInd,
+                :t4s1:t4s1Ind,:t4table_row:t4table_rowInd,
+                :t5s1:t5s1Ind,:t5table_row:t5table_rowInd;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e bug6164.e
+$ CC FLAG_CC bug6164.c
+$ LINK FLAG_LINK bug6164 
+$ RUN bug6164
+$ CREATE bug6164.qli
+ready WHERE_GDB:bug6164.gdb;
+set semicolon;
+set columns 100;
+
+select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row
+from ((((st1 a left outer join st2 b on a.s1 = b.s1) left outer join st3 c on b.s1 = c.s1) left outer join
+st4 d on c.s1 = d.s1) left outer join st5 e on d.s1 = e.s1)
+order by a.table_row ascending;
+
+finish;
+quit;
+$ QLI -n -a bug6164.qli
+$DROP WHERE_GDB:bug6164.gdb
+$ DELETE bug6164*

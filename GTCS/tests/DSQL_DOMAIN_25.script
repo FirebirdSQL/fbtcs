@@ -1,0 +1,72 @@
+
+/*******************************************************************************
+ Test Name:         dsql_domain_25
+ Test Series:       dsql_domains
+ Date:              October-1993
+ Related bugs:      
+ Comments:          Using drop domain on domains that have been created with 
+                    various combinations of datatype / default / constraint
+                    clauses.
+/*******************************************************************************
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_25.sql
+create domain dom20a as smallint 
+ default 0
+ check (value >= 0 and value < 100);
+commit;
+show domain dom20a;
+create domain dom20b as integer
+ default 500
+ check (value >= 500);
+commit;
+show domain dom20b;
+create domain dom20c as date
+ check (value >= 'today');
+commit;
+show domain dom20c;
+create domain dom20d as char(20)
+ check (value in (select river from rivers));
+commit;
+show domain dom20d;
+create domain dom20e as varchar(25)
+ default 'VARYING DEFAULT';
+commit;
+show domain dom20e;
+create domain dom20f as decimal(6,2)
+ default 4.2
+ check (value > 0);
+commit;
+show domain dom20f;
+create domain dom20g as float
+ default 500.1
+ check (value < 50000.00);
+commit;
+show domain dom20g;
+create domain dom20h as double precision
+ default 1000
+ not null;
+commit;
+show domain dom20h;
+drop domain dom20a;
+drop domain dom20b;
+drop domain dom20c;
+drop domain dom20d;
+drop domain dom20e;
+drop domain dom20f;
+drop domain dom20g;
+drop domain dom20h;
+commit;
+show domain dom20a;
+show domain dom20b;
+show domain dom20c;
+show domain dom20d;
+show domain dom20e;
+show domain dom20f;
+show domain dom20g;
+show domain dom20h;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_25.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_25.sql

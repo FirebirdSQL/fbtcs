@@ -1,0 +1,7 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+
+BLOCK_IN                                           
+================================================== 

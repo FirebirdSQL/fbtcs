@@ -1,0 +1,33 @@
+Test:
+ SELECT T1.EMPNO,T1.LAST_NAME, T1.FIRST_NAME FROM SALES_PEOPLE T1 WHERE SINGULAR (SELECT * FROM SALES T3 , EMPLOYEES T2 WHERE T3.SALES_REP = T1.EMPNO AND T3.TOTAL_VALUE > 6000 AND T3.SALES_REP = T2.EMPNO)
+--------------------------------------------------------------------------------
+118	Griffon	Ronald
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 1
+
+ Empno    Last Name    First Name
+====== =============== ==========
+
+   118 Griffon         Ronald
+
+
+ Empno    Last Name    First Name
+====== =============== ==========
+
+   118 Griffon         Ronald
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+  EMPNO LAST_NAME       FIRST_NAME 
+======= =============== ========== 
+
+    118 Griffon         Ronald     
+
+
+  EMPNO LAST_NAME       FIRST_NAME 
+======= =============== ========== 
+
+    118 Griffon         Ronald     
+

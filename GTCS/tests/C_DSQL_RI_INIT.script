@@ -1,0 +1,339 @@
+
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE ri_views.e
+#include <stdio.h>
+/* Build views for RI */
+/* Include the SQL Communications Area. */
+EXEC SQL
+	INCLUDE SQLCA
+
+/* Set up to catch SQL errors. Note: this will require that 
+each routine containing executeable SQL commands has
+an error handling section labeled 'err'.*/
+EXEC SQL
+	WHENEVER SQLERROR GO TO err;
+
+DATABASE DB = COMPILETIME "WHERE_GDB:atlas.gdb"
+	         RUNTIME db_name;
+
+char	db_name[128];
+
+/* Forward declarations */
+static void print_error();
+int istable(); 
+
+
+main (argc, argv)
+    int		argc;
+    char	*argv[];
+{
+
+/* Get database name */
+
+	if (argc < 2)
+		{
+		fprintf (stderr, "Usage: ri_views <db_name>    Adds new system views to database.\n");
+		exit (1);
+		}
+	++argv;
+	strcpy (db_name, *argv);
+
+	printf("Starting to update metadata.\n");
+
+	if (istable("TABLE_CONSTRAINTS")) {
+		printf("dropping old TABLE_CONSTRAINTS view.\n");
+
+		EXEC SQL
+			DROP VIEW TABLE_CONSTRAINTS;
+
+		EXEC SQL
+			COMMIT RELEASE;	
+	}
+
+	EXEC SQL
+		CREATE VIEW TABLE_CONSTRAINTS (CONSTRAINT_NAME, 
+			TABLE_NAME, CONSTRAINT_TYPE, IS_DEFERRABLE, 
+			INITIALLY_DEFERRED )
+		AS SELECT RDB$CONSTRAINT_NAME, RDB$RELATION_NAME, 
+			RDB$CONSTRAINT_TYPE, RDB$DEFERRABLE, 
+			RDB$INITIALLY_DEFERRED 
+		FROM RDB$RELATION_CONSTRAINTS;
+		
+	EXEC SQL
+		COMMIT RELEASE;
+	
+	printf("View TABLE_CONSTRAINTS created ok.\n");
+		
+	if (istable("REFERENTIAL_CONSTRAINTS")) {
+		printf("dropping old REFERENTIAL_CONSTRAINTS view.\n");
+
+		EXEC SQL
+			DROP VIEW REFERENTIAL_CONSTRAINTS;
+
+		EXEC SQL
+			COMMIT RELEASE;	
+	}
+
+	EXEC SQL
+		CREATE VIEW REFERENTIAL_CONSTRAINTS (CONSTRAINT_NAME, 
+			UNIQUE_CONSTRAINT_NAME, MATCH_OPTION,
+			UPDATE_RULE, DELETE_RULE) 
+		AS SELECT RDB$CONSTRAINT_NAME, RDB$CONST_NAME_UQ, 
+			RDB$MATCH_OPTION, RDB$UPDATE_RULE, 
+			RDB$DELETE_RULE 
+		FROM RDB$REF_CONSTRAINTS;
+	
+	EXEC SQL
+		COMMIT RELEASE;
+		
+	printf("View REFERENTIAL_CONSTRAINTS created ok.\n");
+	
+	if (istable("CHECK_CONSTRAINTS")) {
+		printf("dropping old CHECK_CONSTRAINTS view.\n");
+
+		EXEC SQL
+			DROP VIEW CHECK_CONSTRAINTS;
+
+		EXEC SQL
+			COMMIT RELEASE;	
+	}
+
+	EXEC SQL
+		CREATE VIEW CHECK_CONSTRAINTS (CONSTRAINT_NAME, CHECK_CLAUSE) 
+		AS SELECT RDB$CONSTRAINT_NAME, RDB$TRIGGER_SOURCE 
+		FROM RDB$CHECK_CONSTRAINTS, RDB$TRIGGERS 
+		WHERE RDB$CHECK_CONSTRAINTS.RDB$TRIGGER_NAME 
+			= RDB$TRIGGERS.RDB$TRIGGER_NAME;
+			
+	EXEC SQL
+		COMMIT RELEASE;
+		
+	printf("View CHECK_CONSTRAINTS created ok.\n");
+	
+	if (istable("CONSTRAINTS_COLUMN_USAGE")) {
+		printf("dropping old CONSTRAINTS_COLUMN_USAGE view.\n");
+
+		EXEC SQL
+			DROP VIEW CONSTRAINTS_COLUMN_USAGE;
+
+		EXEC SQL
+			COMMIT RELEASE;	
+	}
+
+	EXEC SQL
+		CREATE VIEW CONSTRAINTS_COLUMN_USAGE (TABLE_NAME,
+			COLUMN_NAME,CONSTRAINT_NAME) 
+		AS SELECT RDB$RELATION_NAME, RDB$FIELD_NAME, 
+			RDB$CONSTRAINT_NAME 
+		FROM RDB$RELATION_CONSTRAINTS, RDB$INDEX_SEGMENTS 
+		WHERE RDB$RELATION_CONSTRAINTS.RDB$INDEX_NAME = 
+			RDB$INDEX_SEGMENTS.RDB$INDEX_NAME 
+		UNION 
+		SELECT DISTINCT RDB$DEPENDED_ON_NAME, RDB$FIELD_NAME, 
+			RDB$CONSTRAINT_NAME 
+		FROM RDB$CHECK_CONSTRAINTS, RDB$DEPENDENCIES 
+		WHERE 
+			(RDB$CHECK_CONSTRAINTS.RDB$TRIGGER_NAME = 
+				RDB$DEPENDENCIES.RDB$DEPENDENT_NAME 
+			AND RDB$DEPENDENCIES.RDB$DEPENDENT_TYPE = 2) 
+		UNION 
+		SELECT DISTINCT RDB$RELATION_NAME, RDB$FIELD_NAME, 
+			RDB$CONSTRAINT_NAME 
+		FROM RDB$CHECK_CONSTRAINTS, RDB$RELATION_FIELDS 
+		WHERE (RDB$CHECK_CONSTRAINTS.RDB$TRIGGER_NAME = 
+			RDB$RELATION_FIELDS.RDB$FIELD_SOURCE);
+
+	EXEC SQL
+		COMMIT RELEASE;
+		
+	printf("View CONSTRAINTS_COLUMN_USAGE created ok.\n");
+
+	exit (0);
+	/* Output error information. */
+err:		print_error();
+	exit (1);
+}
+
+int istable(tname)
+char* tname;
+{
+	int exists;
+
+	if (!tname)
+		return 0;
+		
+	EXEC SQL
+		SELECT COUNT (*)
+		INTO :exists
+		FROM rdb$relations
+		WHERE rdb$relation_name = :tname;
+	
+	EXEC SQL
+		ROLLBACK WORK;
+			
+	return exists;
+err:		
+	print_error();
+}
+
+static void print_error()
+
+/* Print out error message */
+{
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status(gds__status);
+}
+$ GPRE ri_views.e -e
+$ CC FLAG_CC ri_views.c
+$ LINK FLAG_LINK ri_views 
+$ RUN ri_views WHERE_GDB:atlas.gdb
+$ CREATE pv1.e
+/* pr_views.e 
+   6/2/93 by mshulman
+   prints out the contents of the system views
+*/
+
+/* Include the SQL Communications Area. */
+EXEC SQL
+	INCLUDE SQLCA;
+
+extern die_on_error();
+
+int print_views() {
+	if (print_TABLE_CONSTRAINTS())
+		exit(1);
+	if (print_CONSTRAINTS_COLUMN_USAGE())
+		exit(1);
+	if (print_REFERENTIAL_CONSTRAINTS())
+		exit(1);
+	return 0;
+}
+
+int print_TABLE_CONSTRAINTS() {
+	char constraint_name[32];
+	char table_name[32];
+	char constraint_type[12];
+	char is_deferrable[4];
+	char initially_deferred[4];
+
+	printf("\n\nTABLE_CONSTRAINTS:\n");
+	printf(    "------------------\n");
+	
+	EXEC SQL
+		DECLARE TABLE_CONSTRAINTS_CURSOR CURSOR FOR
+		SELECT * FROM TABLE_CONSTRAINTS;
+
+	EXEC SQL
+		OPEN TABLE_CONSTRAINTS_CURSOR;
+
+	EXEC SQL
+		FETCH TABLE_CONSTRAINTS_CURSOR INTO :constraint_name, :table_name, 
+			:constraint_type, :is_deferrable, :initially_deferred;
+
+	while (!SQLCODE) {
+		printf("%s,%s,%s,%s,%s\n", constraint_name, table_name, constraint_type,
+			is_deferrable, initially_deferred);
+		
+		EXEC SQL
+			FETCH TABLE_CONSTRAINTS_CURSOR INTO :constraint_name, :table_name,
+				:constraint_type, :is_deferrable, :initially_deferred;
+	}
+
+	EXEC SQL
+		CLOSE TABLE_CONSTRAINTS_CURSOR;
+
+	EXEC SQL
+		COMMIT WORK;
+
+	return 0;
+err:		die_on_error();
+}
+
+int print_CONSTRAINTS_COLUMN_USAGE() {
+	char constraint_name[32];
+	char table_name[32];
+	char column_name[32];
+
+	printf("\n\nCONSTRAINTS_COLUMN_USAGE:\n");
+	printf(    "-------------------------\n");
+
+	EXEC SQL
+		DECLARE CONSTRAINTS_COLUMN_USAGE_CURSOR CURSOR FOR
+		SELECT CONSTRAINT_NAME, TABLE_NAME, COLUMN_NAME 
+		FROM CONSTRAINTS_COLUMN_USAGE;
+
+	EXEC SQL
+		OPEN CONSTRAINTS_COLUMN_USAGE_CURSOR;
+
+	EXEC SQL
+		FETCH CONSTRAINTS_COLUMN_USAGE_CURSOR INTO :constraint_name, 
+			:table_name, :column_name;
+
+	while (!SQLCODE) {
+		printf("%s,%s,%s\n", constraint_name, table_name, column_name);
+		
+		EXEC SQL
+			FETCH CONSTRAINTS_COLUMN_USAGE_CURSOR INTO :constraint_name, 
+				:table_name, :column_name;
+	}
+
+	EXEC SQL
+		CLOSE CONSTRAINTS_COLUMN_USAGE_CURSOR;
+
+	EXEC SQL
+		COMMIT WORK;
+
+	return 0;
+err:		die_on_error();
+}
+
+int print_REFERENTIAL_CONSTRAINTS() {
+	char constraint_name[32];
+	char unique_constraint_name[32];
+	char match_option[8];
+	char update_rule[12];
+	char delete_rule[12];
+
+	printf("\n\nREFERENTIAL_CONSTRAINTS:\n");
+	printf(    "------------------------\n");
+	
+	EXEC SQL
+		DECLARE REFERENTIAL_CONSTRAINTS_CURSOR CURSOR FOR
+		SELECT * FROM REFERENTIAL_CONSTRAINTS;
+
+	EXEC SQL
+		OPEN REFERENTIAL_CONSTRAINTS_CURSOR;
+
+	EXEC SQL
+		FETCH REFERENTIAL_CONSTRAINTS_CURSOR INTO 
+			:constraint_name, :unique_constraint_name, 
+			:match_option, :update_rule, :delete_rule;
+
+	while (!SQLCODE) {
+		printf("%s,%s,%s,%s,%s\n", constraint_name, unique_constraint_name,
+			match_option, update_rule, delete_rule);
+		
+		EXEC SQL
+			FETCH REFERENTIAL_CONSTRAINTS_CURSOR INTO 
+				:constraint_name, :unique_constraint_name, 
+				:match_option, :update_rule, :delete_rule;
+	}
+
+	EXEC SQL
+		CLOSE REFERENTIAL_CONSTRAINTS_CURSOR;
+
+	EXEC SQL
+		COMMIT WORK;
+
+	return 0;
+err:		die_on_error();
+}
+
+$ GPRE pv1.e -d WHERE_GDB:atlas.gdb
+$ RUN sed "s/gds_[_,$]database/isc_db1/g" pv1.c > pv2.c
+$ RUN sed "s/gds_[_,$]trans/isc_tr1/g" pv2.c > pr_views.c
+$ CC FLAG_CC pr_views.c
+$DROP WHERE_GDB:atlas.gdb
+$ DELETE pv*.*

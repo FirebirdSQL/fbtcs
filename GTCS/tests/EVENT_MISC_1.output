@@ -1,0 +1,7 @@
+Use CONNECT or CREATE DATABASE to specify a database
+COMPANY       OLD_PRICE        NEW_PRICE
+DG            55.500           53.500   
+DEC           122.000          120.000  
+HP            85.000           83.000   
+IBM           145.000          143.000  
+SUN           55.750           53.750   

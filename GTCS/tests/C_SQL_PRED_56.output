@@ -1,0 +1,21 @@
+Test:
+ SELECT STATE FROM CUSTOMERS WHERE STATE STARTING 'C' AND STATE NOT IN ('CA')
+--------------------------------------------------------------------------------
+CT
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 1
+
+State
+=====
+
+CT
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+STATE  
+====== 
+
+CT     
+

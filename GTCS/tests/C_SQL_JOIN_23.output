@@ -1,0 +1,36 @@
+Test:
+ select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row,z.s1,z.s2,z.table_row from (st1 x left join st2 y on x.s1 = y.s1) left join st3 z on z.s1 = y.s1 where exists (select a.s1 from (st1 a left join st2 b on a.s1 = b.s1) left join st3 c on c.s1 = b.s1 and c.s1 = 1)
+--------------------------------------------------------------------------------
+    1     101   st1-1            1     101   st2-1            1     101   st3-1     
+    2     102   st1-2            2     102   st2-2            2     102   st3-2     
+    0     103   st1-3            0       0                    0       0             
+    4       0   st1-4            4       0   st2-4            4       0   st3-4     
+    0       0   st1-5            0       0                    0       0             
+   -1    -101   st1-6            0       0                    0       0             
+
+
+* Total Records Listed >>> 6
+
+               TABLE                TABLE                TABLE
+  S1     S2     ROW    S1     S2     ROW    S1     S2     ROW
+====== ====== ====== ====== ====== ====== ====== ====== ======
+
+     1    101 st1-1       1    101 st2-1       1    101 st3-1 
+     2    102 st1-2       2    102 st2-2       2    102 st3-2 
+          103 st1-3                                     
+     4        st1-4       4        st2-4       4        st3-4 
+              st1-5                                     
+    -1   -101 st1-6                                     
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+     S1      S2 TABLE_ROW      S1      S2 TABLE_ROW      S1      S2 TABLE_ROW 
+======= ======= ========= ======= ======= ========= ======= ======= ========= 
+
+      1     101 st1-1           1     101 st2-1           1     101 st3-1     
+      2     102 st1-2           2     102 st2-2           2     102 st3-2     
+ <null>     103 st1-3      <null>  <null> <null>     <null>  <null> <null>    
+      4  <null> st1-4           4  <null> st2-4           4  <null> st3-4     
+ <null>  <null> st1-5      <null>  <null> <null>     <null>  <null> <null>    
+     -1    -101 st1-6      <null>  <null> <null>     <null>  <null> <null>    
+

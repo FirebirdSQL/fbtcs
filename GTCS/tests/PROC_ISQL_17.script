@@ -1,0 +1,19 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure insert_sno (sno varchar(5)) as
+declare variable c integer;
+begin
+select count(*) from sp where sno = :sno into :c;
+if (c = 0 ) then
+  INSERT INTO SP(sno)
+values(:sno);
+SUSPEND;
+end
+go
+set term ; go
+EXECUTE PROCEDURE INSERT_SNO 'S10';
+select * from sp;
+exit;
+$ DROP WHERE_GDB:sp1.gdb  

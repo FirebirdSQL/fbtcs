@@ -1,0 +1,49 @@
+
+$ CREATE er24.c
+/*
+ *	isc_transaction_info
+ *
+ *	Pass an invalid transaction handle.
+ * 
+ *  Test name: er24.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+
+static char titems[] = {isc_info_end};
+
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	char tinfo[32];
+
+
+	LogPrintf("Running ER24, Bad tr handle to trans. info.\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_transaction_info(status, &trans, sizeof(titems), titems,
+			sizeof(tinfo), tinfo)) ==0)
+		LogPrintf("BUG: Bad tr handle to trans. info.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	trans = NULL;
+	if ((rc=isc_transaction_info(status, &trans, sizeof(titems), titems,
+			sizeof(tinfo), tinfo)) ==0)
+		LogPrintf("BUG: Bad tr handle to trans. info.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER24\n");
+}
+$ CC FLAG_CC er24.c
+$ LINK FLAG_LINK er24
+$ RUN er24
+$ DELETE er24*

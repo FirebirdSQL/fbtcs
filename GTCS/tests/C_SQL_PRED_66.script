@@ -1,0 +1,142 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sta025.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column spec> STARTING [WITH] <value spec>
+                        Case sensitive searches including blob string
+
+ Description:           varchar field STARTING WITH string
+
+                        SELECT JOB
+                        FROM EMPLOYEES
+                        WHERE JOB STARTING 'Mg'
+                        ORDER BY JOB;
+
+ Tables:                Employees
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON EMPLOYEES.JOB          Job;
+
+
+char Test[]="SELECT JOB \
+FROM EMPLOYEES \
+WHERE JOB STARTING 'Mg' \
+ORDER BY JOB";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                        SELECT JOB
+                        FROM EMPLOYEES
+                        WHERE JOB STARTING 'Mg'
+                        ORDER BY JOB;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Job;
+
+        while (SQLCODE == 0){
+
+                Count++;
+                printf("%s\n",Job);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :Job;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e sta025.e
+$ CC FLAG_CC sta025.c
+$ LINK FLAG_LINK sta025 
+$ RUN sta025
+$ CREATE sta025.qli
+
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+SELECT JOB FROM EMPLOYEES WHERE JOB STARTING 'Mg' ORDER BY JOB;
+for employees sorted by job with job starting with 'Mg'
+print job;
+select count(*) from employees where job starting 'Mg';
+finish;
+quit;
+$ QLI -n -a sta025.qli
+$ CREATE sta025.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT JOB FROM EMPLOYEES WHERE JOB STARTING 'Mg' ORDER BY JOB;
+select count(*) from employees where job starting 'Mg';
+quit;
+$ISQL -i sta025.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sta025* 
+

@@ -1,0 +1,24 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure proc5 RETURNS (a varchar(6), b varchar(5),c integer) as
+begin
+    select color, pno, weight from  p  where weight = 19  group by color, pno, weight
+    into :a, :b, :c;
+    SUSPEND;
+end
+go
+set term ; go
+set echo;
+EXECUTE PROCEDURE PROC5 ;
+SELECT  * FROM PROC5;
+SELECT MAX(A) FROM PROC5;
+SELECT  C FROM PROC5;
+SELECT A,C FROM PROC5 ORDER BY A;
+SELECT A, AVG(C) FROM PROC5 GROUP BY A HAVING AVG(C) > 35;
+SELECT A, AVG(C) FROM PROC5 GROUP BY A ;
+SELECT A , C FROM PROC5
+WHERE C = (SELECT AVG(C) FROM PROC5);
+exit;
+$ DROP WHERE_GDB:sp1.gdb 

@@ -1,0 +1,48 @@
+
+$ CREATE er1.c
+
+/*
+ *      isc_detach_database
+ *
+ *      Pass an invalid database handle.
+ *
+ *  Test name: er1.c
+ *  Created by: Marina Meyer
+ *  Date created: April 1994
+ *
+ *  Comment: somedb.GDB is not intended to exist, thus it will not attach.
+ *
+ */
+
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle   DB;
+	ISC_STATUS      rc, status[20];
+	char            err_buf[128];
+
+	LogPrintf("Running ER1, invalid db handle to attach\n");
+
+
+	/* 1. Pass an invalid database handle. */
+
+	DB = (isc_db_handle) -1;
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	/* 2. Pass a NULL database handle. */
+
+	DB = NULL;
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER1\n");
+}
+
+$ CC FLAG_CC er1.c
+$ LINK FLAG_LINK er1 
+$ RUN er1
+$ DELETE er1*

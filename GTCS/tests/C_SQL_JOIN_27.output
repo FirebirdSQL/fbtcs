@@ -1,0 +1,20 @@
+Test:
+ select min(x.s1),max(x.s2),avg(y.s3), sum(y.sscale) from (st5 x left join st1 y on x.s2 = y.s2)
+--------------------------------------------------------------------------------
+   -5    103  1002.00   9.00
+
+
+* Total Records Listed >>> 1
+
+    MIN         MAX         AVG     TOTAL
+=========== =========== =========== =====
+
+         -5         103        1002  009
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+    MIN     MAX     AVG          SUM 
+======= ======= ======= ============ 
+
+     -5     103    1002          9.0 
+

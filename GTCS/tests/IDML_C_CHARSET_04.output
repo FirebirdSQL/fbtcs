@@ -1,0 +1,45 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+
+----------------------------------------------------------------
+  The program is using a stored procedure for the select.
+  It then attempts an insert using the values returned from the
+  procedure.
+
+  It does NOT use SET NAMES and uses  -charset at compile time.
+  It must use a DATATBASE db=  command and a CONNECT to get the -m
+  -charset option to work.  Should work to select/insert data
+----------------------------------------------------------------
+
+--------------------------------------------------------------
+   PRINTING ALL EMPLOYEES--Using Stored Procedure.
+
+   (transliteration is FROM ISO to NONE so it should work.
+
+1          Rôbért          Nélsôn              
+2          Bruce           Nélsôn              
+
+--------------------------------------------------------------
+   INSERTING NEW DATA--using host variables from stored p
+
+----------------------------------------------------------------
+  Now compiling with no -charset so we should attach with
+  charset NONE and the insert should fail.
+  Select is fine but the insert should fail.
+----------------------------------------------------------------
+  
+--------------------------------------------------------------
+   PRINTING ALL EMPLOYEES--Using Stored Procedure.
+
+   (transliteration is FROM ISO to NONE so it should work.
+
+1          Rôbért          Nélsôn              
+2          Bruce           Nélsôn              
+111        Bruce           Nélsôn              
+
+--------------------------------------------------------------
+   INSERTING NEW DATA--using host variables from stored p
+
+
+Error: -------------------------------------------------------
+DATABASE ERROR, SQLCODE = -802 

@@ -1,0 +1,334 @@
+
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ RUN ri_views WHERE_GDB:atlas.gdb
+$CREATE alt_add.e
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+/* Author: Michael Shulman
+   Date:   02-Apr-93
+   Title:  alt_add.e
+
+   Purpose: RI test suite 
+   
+   Tests are:
+   	Table Constraints:
+   		unique		tab_uniq.e
+   		primary key	tab_prim.e
+   		referential	tab_ref.e     
+   		check const	tab_check.e
+   	
+   	Column Constraints:
+   		unique		col_uniq.e
+   		primary key	col_prim.e
+   		referential	col_ref.e
+   		check const	col_check.e
+   		not null    col_nnull.e
+
+	DDL Modify Operations:
+		alter table add constraint	alt_add.e	<--------- this test
+		alter table drop constraint	alt_drop.e
+		drop table			drop_tab.e
+		alter field			field_alt.e
+		drop field			field_drop.e
+		alter index			index_alt.e
+		drop index			index_drop.e
+		delete trigger			trigger_del.e
+		modify trigger			trigger_mod.e
+
+
+Overview: this test makes sure that new constraints are added correctly. It will:
+	CREATE TABLE BOOKS (BOOK_ID CHAR(6) NOT NULL,...)   [no constraints]
+	INSERT records, some with duplicate values
+	ALTER TABLE BOOKS ADD UNIQUE (BOOK_ID)     [should fail]
+	DELETE FROM BOOKS 
+	ALTER TABLE BOOKS ADD UNIQUE (BOOK_ID)
+	INSERT records, some with duplicate values
+	SELECT * FROM BOOKS                        [see what made it]
+
+    Dependencies: Need to run C_DSQL_RI_INIT first.
+
+*/
+
+/* Include the SQL Communications Area. */
+EXEC SQL
+	INCLUDE SQLCA;
+
+/* Set up to catch SQL errors. Note: this will require that 
+each routine containing executeable SQL commands has
+an error handling section labeled 'err'.*/
+EXEC SQL
+	WHENEVER SQLERROR GO TO err;
+	
+/* Forward declarations */
+void die_on_error();
+int setup();
+int verify();
+int insert_books();
+int print_books();
+extern print_views();
+int alter_add_unique();
+int delete_all();
+int strupper();
+int istable();
+
+
+int verbose;
+
+main(argc, argv)
+int argc;
+char *argv[];
+{
+
+        /*--- check if verbose is requested ------ */
+        verbose = FALSE;
+        if (--argc > 0){
+                if (*argv[1] == 'v' || *argv[1] == 'V')
+                        verbose = TRUE;
+        }
+	if (setup()) 		/* create table */
+		exit (1);
+	
+	if (insert_books())
+		exit (1);
+
+	if (verify(4))            /* expect all 4 are kept */
+		exit (1);
+
+	if (!(alter_add_uniq()))    /* should fail because some rows have nulls */
+		exit (1);
+
+	if (delete_all())
+		exit (1);
+
+	if (alter_add_uniq())
+		exit (1);
+
+	if (insert_books())       /* 2 should be kept, 2 rejected for dups */
+		exit (1);
+	
+	if (verify(2)) 
+		exit (1);
+
+	exit (0);
+err:		die_on_error();
+}
+
+
+int setup() {
+
+	if (verbose)
+		printf("entered setup\n");
+
+	if (istable("books")) {
+		if (verbose) 
+			printf("books found... will be dropped\n");
+		
+		EXEC SQL
+			DROP TABLE BOOKS;
+			
+	}
+
+	if (verbose)
+		printf("about to create books...\n");
+
+	EXEC SQL
+		DECLARE BOOKS TABLE
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+			 BOOK_AUTH_ID CHAR(11));
+
+	EXEC SQL
+		CREATE TABLE BOOKS
+			(BOOK_ID CHAR(6) NOT NULL, BOOK_NAME VARCHAR(80),
+			 BOOK_AUTH_ID CHAR(11))
+
+	if (verbose)
+		printf("books created successfully.\n");
+
+	return 0;
+err:		die_on_error();
+}
+
+int verify(num_recs) 
+int num_recs;
+{
+	if (verbose)
+		printf("Entering verify...\n");
+
+	if (print_books(num_recs))
+		exit(1);
+
+	if (print_views())
+		exit(1);
+
+	return (0);
+
+err:		die_on_error();
+}
+
+int insert_books() {
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+
+	EXEC SQL
+		INSERT INTO BOOKS VALUES ('BU1032','The Busy Executive''s Database Guide', NULL);
+
+	EXEC SQL
+		INSERT INTO BOOKS VALUES ('BU1032',
+			'Cooking with Computers: Surreptitious Balance Sheets',
+			'213-46-8915');
+	
+	EXEC SQL
+		INSERT INTO BOOKS VALUES ('BU2075','You Can Combat Computer Stress!',
+			'238-95-7766');
+
+	EXEC SQL
+		INSERT INTO BOOKS VALUES ('BU2075','The Gourmet Microwave','341-22-1782');
+
+	if (verbose)
+		printf("Inserted 4 records, 2 with duplicate BOOK_IDs.\n");
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	EXEC SQL
+		COMMIT WORK;
+
+	return (0);
+
+err:		die_on_error();
+}
+
+int print_books(num_expected) 
+int num_expected;
+{
+
+	char book_id[12];
+	char book_name[81];
+	char book_auth_id[12];	
+	int i=0;
+
+	EXEC SQL
+		DECLARE BOOK_CURSOR CURSOR FOR
+		SELECT * FROM BOOKS;
+
+	EXEC SQL
+		OPEN BOOK_CURSOR;
+
+	EXEC SQL
+		FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
+
+	while (!SQLCODE) {
+		printf("%s,%s,%s\n", book_id, book_name, book_auth_id);
+		i++;
+		
+		EXEC SQL
+			FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
+	}
+
+	EXEC SQL
+		CLOSE BOOK_CURSOR;
+
+	EXEC SQL
+		COMMIT WORK;
+
+	printf("Number expected: %d, number found: %d.\n", num_expected, i);
+
+	return 0;
+err:		die_on_error();
+}
+
+int alter_add_uniq() {
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL
+		ALTER TABLE BOOKS ADD UNIQUE (BOOK_ID);
+
+	if (SQLCODE) {
+		got_err = TRUE;
+		printf ("alter_add_uniq got SQLCODE = %d\n", SQLCODE);
+	}
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+}
+
+int delete_all() {
+		
+	EXEC SQL
+		DELETE FROM BOOKS; 
+
+	EXEC SQL
+		COMMIT WORK;
+
+	return (0);
+err:		die_on_error();
+}
+
+int strupper(targ, source) 
+char * targ, * source;
+{
+	int ii;
+	
+	for (ii=0; *targ++ = toupper(*source++); ii++);
+
+	return ii;
+}
+
+int istable(tname) 
+char * tname;
+{
+
+	int exists;
+	char *utname;
+
+	if (!tname)
+		return 0;
+		
+	utname = (char *) malloc(strlen(tname)+1);
+
+	strupper(utname, tname);
+	
+	EXEC SQL
+		SELECT COUNT (*)
+		INTO :exists
+		FROM rdb$relations
+		WHERE rdb$relation_name = :utname;
+
+	EXEC SQL
+		ROLLBACK WORK;
+			
+	free(utname);
+
+	return exists;
+err:		
+	free(utname);
+	die_on_error();
+}
+
+void die_on_error()
+
+/* Print out error message and die*/
+{
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status(gds__status);
+	EXEC SQL
+		ROLLBACK WORK;
+
+err:
+	exit (1);
+}
+$ GPRE alt_add.e -d WHERE_GDB:atlas.gdb
+$ CC FLAG_CC alt_add.c
+$ LINK FLAG_LINK alt_add pr_views 
+$ RUN alt_add
+$DROP WHERE_GDB:atlas.gdb
+$ DELETE alt_add*

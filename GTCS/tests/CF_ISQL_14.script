@@ -1,0 +1,52 @@
+
+/*
+**  Name:		cf_isql_14
+**  Series:		cf_isql
+**  Meta-Series:
+**  Dependencies:	None
+**  Description:	This test is a level two test case for computed-fields.
+**			
+**			This test checks the behaviour of computed-field when
+**			trying to insert a value in computed-field column and even
+**			trying to update an compute-field column. 
+**
+**  Expected result:	The insert and update both should fail.
+**			
+**  Author:		Ravil A. Desai
+**  Change history:
+**                       cloned for V6.x FSG 16.Oct:00
+*/
+
+$ CREATE cf_test.sql
+create database "WHERE_GDB:cf.gdb";
+
+/*---------------------------------------------*/
+/* Create a table with computed field.         */
+/*---------------------------------------------*/
+create table t0 (a integer, af computed by (a*3));
+insert into t0(a) values(10);
+
+/*---------------------------------------------------------------*/
+/* Insert a value into computed-field column, which should fail. */
+/*---------------------------------------------------------------*/
+insert into t0(af) values(11);
+select * from t0;
+
+/*---------------------------------------------------------------*/
+/* Update the computed-field column directly, which should fail. */
+/*---------------------------------------------------------------*/
+update t0 set af = 99 where a = 10;
+select * from t0;
+
+/*-----------------------------------------------------------------------------*/
+/* Create a table with only a computed-field, which has constant value. Trying */
+/* to insert a value in it should fail.                                        */
+/*-----------------------------------------------------------------------------*/
+create table t5 (af computed by (1+2));
+insert into t5 values(10);
+
+drop database;
+exit;
+$ ISQL -input cf_test.sql
+
+$ DELETE cf_test.sql

@@ -1,0 +1,121 @@
+
+$ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_5.gdb
+$ CREATE join005.e
+/**********************************************************************
+ Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
+ Description:		LEFT JOIN
+ Author:                Sam Hakim, June 1, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_join_5.gdb";
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON ct1.c1      t1c1;
+BASED_ON ct2.c1      t2c1;
+BASED_ON ct2.c10     t2c10;
+BASED_ON ct2.table_row   t2table_row;
+
+char Test[]="\
+select t1.c1,t2.c1,t2.c10,t2.table_row \
+from ct1 t1 left join ct2 t2 on t1.c1 = t2.c1";
+
+void Underline();
+
+main()
+{
+	
+    int Count;
+	Count = 0;
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+
+    EXEC SQL
+                DECLARE CR CURSOR FOR
+                select t1.c1,t2.c1,t2.c10,t2.table_row
+                from ct1 t1 left join ct2 t2 on t1.c1 = t2.c1;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :t1c1,:t2c1,:t2c10,:t2table_row;
+
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%-10s",t1c1);
+                printf("%-10s",t2c1);
+                printf("%-10s",t2c10);
+                printf("%-10s\n",t2table_row);
+		
+                EXEC SQL
+                FETCH CR INTO :t1c1,:t2c1,:t2c10,:t2table_row;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e join005.e
+$ CC FLAG_CC join005.c
+$ LINK FLAG_LINK join005 
+$ RUN join005
+$ CREATE join005.qli
+ready WHERE_GDB:sh_join_5.gdb;
+set semicolon;
+set columns 100;
+select t1.c1,t2.c1,t2.c10,t2.table_row 
+from ct1 t1 left join ct2 t2 on t1.c1 = t2.c1;
+finish;
+quit;
+$ QLI -n -a join005.qli
+$ CREATE join005.sql
+connect WHERE_GDB:sh_join_5.gdb;
+select t1.c1,t2.c1,t2.c10,t2.table_row 
+from ct1 t1 left join ct2 t2 on t1.c1 = t2.c1;
+quit;
+$ISQL -i join005.sql
+$DROP WHERE_GDB:sh_join_5.gdb
+$ DELETE join005*

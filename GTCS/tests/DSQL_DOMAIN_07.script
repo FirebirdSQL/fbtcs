@@ -1,0 +1,97 @@
+
+/*******************************************************************************
+ Test Name:   dsql_domain_07
+ Series Name: dsql_triggers
+ Date:        8-October-1993
+ Comments:    This script will test level 0 syntax for SQL alter domain using
+              drop constraint and add constraint clauses.
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_07.sql
+create domain dom07a as smallint
+  check (value >=0 and value < 100);
+show domain dom07a;
+alter domain dom07a
+ drop constraint;
+show domain dom07a;
+alter domain dom07a
+ add check (value = 5000);
+show domain dom07a;
+create domain dom07b as integer
+  check (value > 5000);
+show domain dom07b;
+alter domain dom07b
+ drop constraint;
+show domain dom07b;
+alter domain dom07b
+ add check (value <= 0);
+show domain dom07b; 
+create domain dom07c as date
+  check (value >= 'today');
+show domain dom07c;
+alter domain dom07c
+ drop constraint;
+show domain dom07c;
+alter domain dom07c
+ add check (value < 'today');
+show domain dom07c;
+create domain dom07d as char(20)
+  check (value in (select river from rivers));
+show domain dom07d;
+alter domain dom07d
+ drop constraint;
+show domain dom07d;
+alter domain dom07d
+ add check (value in ("TEST1","TEST2","TEST3"));
+show domain dom07d;
+create domain dom07e as varchar(25)
+  check (value in (select river from river_states));
+show domain dom07e;
+alter domain dom07e
+ drop constraint;
+show domain dom07e;
+alter domain dom07e
+ add check (value is null);
+show domain dom07e;
+create domain dom07f as decimal(6,2)
+  check (value > 0);
+show domain dom07f;
+alter domain dom07f
+ drop constraint;
+show domain dom07f;
+alter domain dom07f
+ add check (value in (1,4,6,10));
+show domain dom07f;
+create domain dom07g as float
+  check (value < 50000.00);
+show domain dom07g;
+alter domain dom07g
+ drop constraint;
+show domain dom07g;
+alter domain dom07g
+ add check (value > 0);
+show domain dom07g;
+create domain dom07h as double precision
+  check (value > 99.999);
+show domain dom07h;
+alter domain dom07h
+ drop constraint;
+show domain dom07h;
+alter domain dom07h
+ add check (value > (select count(*) from rivers));
+show domain dom07h;
+create domain dom07i as blob
+  check (value > 500);
+show domain dom07i;
+alter domain dom07i
+ drop constraint;
+show domain dom07i;
+alter domain dom07i
+ add check (value is not null);
+show domain dom07i;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_07.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_07.sql

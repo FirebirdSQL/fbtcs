@@ -1,0 +1,68 @@
+
+/*
+**  Name:		cf_isql_08
+**  Series:		cf_isql
+**  Meta-Series:
+**  Dependencies:	None
+**  Description:	This test is a level one test case for computed-fields.
+**			
+**			This test defines a computed-field which is defined using
+**			built-in function UPPER.
+**
+**			This is the model of most of the tests defined here:
+**
+**			- Create a table with computed field.
+**                      - Show table to verify the create table.
+**			- Insert couple of rows with data.
+**			- Query the table with matching expression and see
+**			  if we get back same number of rows.
+**			- Update a row.
+**			- Query again using same expression as above.
+**
+**  Expected result:	For every set of testcase there will be two output lines.
+**			
+**			'Passed xx - Insert'
+**			'Passed xx - Update'
+**
+**  Author:		Ravil A. Desai
+**  Bugs:		
+**  Change history:
+**
+*/
+
+$ CREATE cf_test.sql
+create database "WHERE_GDB:cf.gdb";
+
+/*----------------------*/
+/* Computed by UPPER(a) */
+/*----------------------*/
+create table t0 (a char(25), upper_a computed by (upper(a)));
+show table t0;
+insert into t0(a) values('abcdef');
+insert into t0(a) values('ABCDEF');
+insert into t0(a) values('123456');
+insert into t0(a) values('aBcDeF');
+select 'Passed 1 - Insert' from t0 where upper_a = upper(a) having count(*) = 4;
+
+update t0 set a = 'xyz' where a = 'abc';
+select 'Passed 1 - Update' from t0 where upper_a = upper(a) having count(*) = 4;
+
+/*-----------------------------------*/
+/* Computed by a || UPPER('upper()') */
+/*-----------------------------------*/
+create table t5 (a char(25), upper_const computed by (a || upper('upper()')));
+show table t5;
+insert into t5(a) values('abcdef');
+insert into t5(a) values('ABCDEF');
+insert into t5(a) values('123456');
+insert into t5(a) values('aBcDeF');
+select 'Passed 2 - Insert' from t5 where upper_const = a || upper('upper()') having count(*) = 4;
+
+update t5 set a = 'xyz' where a = 'abcdef';
+select 'Passed 2 - Update' from t5 where upper_const = a || upper('upper()') having count(*) = 4;
+
+drop database;
+exit;
+
+$ ISQL -m -input cf_test.sql
+$ DELETE cf_test.sql

@@ -1,0 +1,31 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+BU1032,The Busy Executive's Database Guide,172-32-1176
+BU1111,Cooking with Computers: Surreptitious Balance Sheets,213-46-8915
+BU2075,You Can Combat Computer Stress!,238-95-7766
+BU9999,Assorted Parables!,
+Number expected: 4, number found: 4.
+
+
+TABLE_CONSTRAINTS:
+------------------
+INTEG_1                        ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_NAME_PRIM_6789012345678901,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+INTEG_2                        ,BOOKS                          ,NOT NULL   ,NO ,NO 
+INTEG_3                        ,BOOKS                          ,PRIMARY KEY,NO ,NO 
+INTEG_4                        ,BOOKS                          ,FOREIGN KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_NAME_PRIM_6789012345678901,AUTHORS                        ,AUTH_ID                        
+INTEG_4                        ,BOOKS                          ,BOOK_AUTH_ID                   
+INTEG_3                        ,BOOKS                          ,BOOK_ID                        
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+INTEG_4                        ,AUTH_NAME_PRIM_6789012345678901,FULL   ,RESTRICT   ,RESTRICT   

@@ -1,0 +1,138 @@
+
+$CREATE init.sql
+create database "WHERE_GDB:test3.gdb";
+create table t1 (a int not null, b blob);
+$CREATE p1.e
+#include <stdio.h>
+#include <string.h>
+#include <gds.h>
+exec sql include sqlca;
+exec sql set database db = "WHERE_GDB:test3.gdb";
+
+main(argc, argv)
+int argc;
+char *argv[];
+{
+	XSQLDA *insqlda, *outsqlda;
+	GDS__QUAD to_blob;
+	char buffer[80];
+	char user_status[20];
+	char  segment[80];
+	char *sentence="This is segment number %d\n";
+	char insert[100], select[100];
+	long blobret;
+	long ret;
+	long * stmt;
+	long * to_blob_handle;
+	int segment_len;
+	int i, j;
+	int k = 0;
+	short length = 0,ind = 0;
+
+	if (isc_attach_database(user_status, 0, "WHERE_GDB:test3.gdb", &db, 0, NULL))
+		isc_print_status(user_status);
+	if (isc_start_transaction(user_status, &gds__trans, 1, &db, 0, NULL))
+		isc_print_status(user_status);
+
+	strcpy(insert,"insert into t1 values (?, ?)");
+	insqlda = (XSQLDA *) malloc(XSQLDA_LENGTH(2));
+	insqlda->sqld = insqlda->sqln = 2;
+	insqlda->version = 1;
+
+	insqlda->sqlvar[0].sqldata = &j;
+	insqlda->sqlvar[0].sqltype = SQL_LONG;
+	insqlda->sqlvar[0].sqlind  = &ind;
+	insqlda->sqlvar[0].sqllen  = sizeof(j);
+	insqlda->sqlvar[0].sqlscale = 0;
+
+	insqlda->sqlvar[1].sqldata = &to_blob;
+	insqlda->sqlvar[1].sqltype = SQL_BLOB;
+	insqlda->sqlvar[1].sqlind  = &ind;
+	insqlda->sqlvar[1].sqllen  = sizeof(to_blob);
+	insqlda->sqlvar[1].sqlscale = 0;
+	j = 0;
+
+	while (j< 6)
+	{
+		to_blob_handle = 0;
+		if (isc_create_blob(user_status, &db, &gds__trans, &to_blob_handle, &to_blob))
+			isc_print_status(user_status);
+
+		for ( i = 0; i< 5; i++)
+		{
+			sprintf(segment, sentence, i+j*10);
+			segment_len = sizeof(segment);
+			if (isc_put_segment (user_status, &to_blob_handle,segment_len, segment))
+				isc_print_status(user_status);
+		}
+		isc_close_blob (user_status, &to_blob_handle);
+		if (isc_dsql_exec_immed2(user_status, &db, &gds__trans, 0, 
+								insert, 1, insqlda, (XSQLDA *)0))
+		{
+			isc_print_status(user_status);
+		}
+
+		if (j % 2) 
+			isc_commit_transaction(user_status, &gds__trans);
+		else
+			isc_rollback_transaction(user_status, &gds__trans);
+		if (isc_start_transaction(user_status, &gds__trans, 1, &db, 0, NULL))
+			isc_print_status(user_status);
+		j++;
+	}
+
+	strcpy(select,"select b from t1");
+	outsqlda = (XSQLDA *) malloc(XSQLDA_LENGTH(1));
+	outsqlda->sqld = outsqlda->sqln = 1;
+	outsqlda->version = 1;
+
+	outsqlda->sqlvar[0].sqldata = &to_blob;
+	outsqlda->sqlvar[0].sqltype = SQL_BLOB;
+	outsqlda->sqlvar[0].sqlind  = &ind;
+	outsqlda->sqlvar[0].sqllen  = sizeof(to_blob);
+	outsqlda->sqlvar[0].sqlscale = 0;
+
+	stmt = 0;
+	if(isc_dsql_allocate_statement(user_status, &db, &stmt))
+		isc_print_status(user_status);
+	
+	if (isc_dsql_prepare(user_status, &gds__trans, &stmt, 0, select, 1, outsqlda))
+		isc_print_status(user_status);
+	if (isc_dsql_execute(user_status, &gds__trans, &stmt, 1, (XSQLDA *)0))
+		isc_print_status(user_status);
+	while (1)
+	{
+		to_blob_handle = 0;
+		length = 0;
+		ret = isc_dsql_fetch(user_status, &stmt, 1, outsqlda);
+		if (ret != 0) 
+			break;
+		if(isc_open_blob(user_status, &db, &gds__trans, &to_blob_handle, &to_blob))
+			isc_print_status(user_status);
+		while (1)
+		{
+			blobret = isc_get_segment(user_status, &to_blob_handle, &length, 
+										sizeof(buffer), buffer); 
+			if (blobret == gds__segstr_eof)
+			{
+				isc_close_blob (user_status, &to_blob_handle);
+				break;
+			}
+			printf("%s", buffer);
+		}
+	}
+	if (ret != 100 && ret != 0)
+		isc_print_status(user_status);
+	if (isc_commit_transaction(user_status, &gds__trans))
+		isc_print_status(user_status);
+	if (isc_detach_database(user_status, &db))
+		isc_print_status(user_status);
+}
+
+$ISQL -i init.sql
+$GPRE -m -e  p1.e
+$CC FLAG_CC p1.c
+$LINK FLAG_LINK p1 
+$RUN p1
+$DELETE -f p1* init.sql
+$DROP WHERE_GDB:test3.gdb

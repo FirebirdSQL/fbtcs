@@ -1,0 +1,17 @@
+
+$ CREATE comment.txt
+   This suite contains all level 0 tests for the Stored Procedure.
+$ ISQL 
+create database "WHERE_GDB:foo.gdb";
+set term go;
+create procedure proc RETURNS (a int, a char(2)) as
+declare variable x int;
+begin
+  x = 10;
+end
+go
+set term ; go
+show proc;
+exit;
+$ DELETE comment.txt
+$ DROP WHERE_GDB:foo.gdb

@@ -1,0 +1,83 @@
+SQL> EXECUTE PROCEDURE PROC15 ;
+
+           A 
+============ 
+          10 
+
+SQL> SELECT * FROM PROC15;
+
+           A 
+============ 
+
+          10 
+          12 
+          14 
+          17 
+          19 
+          20 
+          30 
+
+SQL> SELECT MAX(A) FROM PROC15;
+
+         MAX 
+============ 
+
+          30 
+
+SQL> SELECT A FROM PROC15;
+
+           A 
+============ 
+
+          10 
+          12 
+          14 
+          17 
+          19 
+          20 
+          30 
+
+SQL> SELECT A FROM PROC15 ORDER BY A;
+
+           A 
+============ 
+
+          10 
+          12 
+          14 
+          17 
+          19 
+          20 
+          30 
+
+SQL> SELECT A, AVG(A) FROM PROC15 GROUP BY A HAVING AVG(A) > 20;
+
+           A                   AVG 
+============ ===================== 
+
+          30                    30 
+
+SQL> SELECT A, AVG(A) FROM PROC15 GROUP BY A ;
+
+           A                   AVG 
+============ ===================== 
+
+          10                    10 
+          12                    12 
+          14                    14 
+          17                    17 
+          19                    19 
+          20                    20 
+          30                    30 
+
+SQL> SELECT A  FROM PROC15
+CON>         WHERE A > (SELECT AVG(A) FROM PROC15);
+
+           A 
+============ 
+
+          19 
+          20 
+          30 
+
+SQL> exit;

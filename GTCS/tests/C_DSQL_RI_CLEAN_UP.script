@@ -1,0 +1,7 @@
+
+$ CREATE COMMENT
+Changed what: Added extra files to the 'delete' statement
+Changed why:  AUDIT_FINISH fails in RI_TESTS series
+Changed by:   Stanislav Tsikin, 20-Aug-1998
+$ DELETE pr_views* ri_views*
+$ DELETE COMMENT

@@ -1,0 +1,55 @@
+SQL> EXECUTE PROCEDURE PROC14;
+
+A                                B 
+===================== ============ 
+Bolt                            17 
+
+SQL> SELECT  * FROM PROC14;
+
+A                                B 
+===================== ============ 
+
+Bolt                            17 
+Cog                             19 
+
+SQL> SELECT MAX(B) FROM PROC14;
+
+         MAX 
+============ 
+
+          19 
+
+SQL> SELECT  B FROM PROC14;
+
+           B 
+============ 
+
+          17 
+          19 
+
+SQL> SELECT A,B FROM PROC14 ORDER BY B;
+
+A                                B 
+===================== ============ 
+
+Bolt                            17 
+Cog                             19 
+
+SQL> SELECT A, AVG(B) FROM PROC14 GROUP BY A HAVING AVG(B) > 350;
+SQL> SELECT A, AVG(B) FROM PROC14 GROUP BY A ;
+
+A                                       AVG 
+===================== ===================== 
+
+Bolt                                     17 
+Cog                                      19 
+
+SQL> SELECT A , B FROM PROC14
+CON>         WHERE B > (SELECT AVG(B) FROM PROC14);
+
+A                                B 
+===================== ============ 
+
+Cog                             19 
+
+SQL> exit;

@@ -1,0 +1,36 @@
+Test:
+ select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row from (st1 t left join st2 x on t.s1 = x.s2)
+--------------------------------------------------------------------------------
+         1         101        1001  st1-1                0           0            
+         2         102        1002  st1-2                0           0            
+         0         103        1003  st1-3                0           0            
+         4           0        1004  st1-4                0           0            
+         0           0           0  st1-5                0           0            
+        -1        -101       -1001  st1-6                0           0            
+
+
+* Total Records Listed >>> 6
+
+                      TABLE                TABLE
+  S1     S2     S3     ROW    S1     S2     ROW
+====== ====== ====== ====== ====== ====== ======
+
+     1    101   1001 st1-1                
+     2    102   1002 st1-2                
+          103   1003 st1-3                
+     4          1004 st1-4                
+                     st1-5                
+    -1   -101  -1001 st1-6                
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+     S1      S2      S3 TABLE_ROW      S1      S2 TABLE_ROW 
+======= ======= ======= ========= ======= ======= ========= 
+
+      1     101    1001 st1-1      <null>  <null> <null>    
+      2     102    1002 st1-2      <null>  <null> <null>    
+ <null>     103    1003 st1-3      <null>  <null> <null>    
+      4  <null>    1004 st1-4      <null>  <null> <null>    
+ <null>  <null>  <null> st1-5      <null>  <null> <null>    
+     -1    -101   -1001 st1-6      <null>  <null> <null>    
+

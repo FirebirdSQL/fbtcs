@@ -1,0 +1,44 @@
+Test:
+ SELECT CUSTNO, CUSTOMER FROM CUSTOMERS WHERE CUSTOMER STARTING WITH 'C' ORDER BY CUSTNO
+--------------------------------------------------------------------------------
+108	Carbone Machine Tools
+--------------------------------------------------------------------------------
+109	Czbrynik Meat Packer
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 2
+
+Custno         Customer
+====== =========================
+
+   108 Carbone Machine Tools
+   109 Czbrynik Meat Packer
+
+
+Custno         Customer
+====== =========================
+
+   108 Carbone Machine Tools
+   109 Czbrynik Meat Packer
+
+
+   COUNT
+===========
+
+          2
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+ CUSTNO CUSTOMER                  
+======= ========================= 
+
+    108 Carbone Machine Tools     
+    109 Czbrynik Meat Packer      
+
+
+       COUNT 
+============ 
+
+           2 
+

@@ -1,0 +1,21 @@
+#!/bin/sh
+# *** Modified for V5.0 certification **
+#	COMPILERS:
+#	C/C++ netapp:/vol/vol0/apps/sun5/lang/workshop/5.1/SUNWspro/bin
+#
+#
+# change path now that netapp/apps is automounted as /netapp/apps/SunOS5.6
+#
+#PATH=./:/netapp/apps/lang/workshop/5.1/SUNWspro/bin:/usr/ccs/bin:/usr/gds.sogood/bin:/usr/gds.sogood/qa_tools/bin:/usr/gds.`hostname`/bin:/usr/ucb:/usr/bin:/usr/interbase/bin:/usr/gds/bin:$PATH
+PATH=./:/netapp/apps/lang/workshop/5.1/SUNWspro/bin:/usr/ccs/bin:/usr/gds.sogood/bin:/usr/gds.sogood/qa_tools/bin:/usr/gds.`hostname`/bin:/usr/ucb:/usr/bin:/usr/interbase/bin:/netapp/apps/isc/bin:$PATH
+TMP=/tmp
+LM_LICENSE_FILE=/etc/opt/licenses/licenses_combined
+LOCAL_HOST=`hostname`:"`pwd`/"
+#LD_LIBRARY_PATH=/netapp/apps/sun5/lang/workshop/5.1/SUNWspro/lib
+LD_LIBRARY_PATH=/netapp/apps/lang/workshop/5.1/SUNWspro/lib:/netapp/apps/isc/lib
+export PATH
+export TMP
+export LM_LICENSE_FILE
+export LOCAL_HOST
+export LD_LIBRARY_PATH
+umask 000

@@ -1,0 +1,36 @@
+Test:
+ select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row from ((((st1 a inner outer join st2 b on a.s1 = b.s2) left outer join st3 c on b.s1 = c.s1) left outer join st4 d on c.s1 = d.s1) left outer join st5 e on d.s1 = e.s1) order by a.table_row ascending
+--------------------------------------------------------------------------------
+    1  st1-1           1  st1-1           1  st1-1           1  st1-1           1  st1-1     
+    2  st1-2           2  st1-2           2  st1-2           2  st1-2           2  st1-2     
+    0  st1-3           0                  0                  0                  0            
+    4  st1-4           4  st1-4           4  st1-4           4  st1-4           4  st1-4     
+    0  st1-5           0                  0                  0                  0            
+   -1  st1-6          -1  st1-6          -1  st1-6          -1  st1-6          -1  st1-6     
+
+
+* Total Records Listed >>> 6
+
+        TABLE         TABLE         TABLE         TABLE         TABLE
+  S1     ROW    S1     ROW    S1     ROW    S1     ROW    S1     ROW
+====== ====== ====== ====== ====== ====== ====== ====== ====== ======
+
+     1 st1-1       1 st1-1       1 st1-1       1 st1-1       1 st1-1 
+     2 st1-2       2 st1-2       2 st1-2       2 st1-2       2 st1-2 
+       st1-3                                                   
+     4 st1-4       4 st1-4       4 st1-4       4 st1-4       4 st1-4 
+       st1-5                                                   
+    -1 st1-6      -1 st1-6      -1 st1-6      -1 st1-6      -1 st1-6 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+     S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW 
+======= ========= ======= ========= ======= ========= ======= ========= ======= ========= 
+
+      1 st1-1           1 st1-1           1 st1-1           1 st1-1           1 st1-1     
+      2 st1-2           2 st1-2           2 st1-2           2 st1-2           2 st1-2     
+ <null> st1-3      <null> <null>     <null> <null>     <null> <null>     <null> <null>    
+      4 st1-4           4 st1-4           4 st1-4           4 st1-4           4 st1-4     
+ <null> st1-5      <null> <null>     <null> <null>     <null> <null>     <null> <null>    
+     -1 st1-6          -1 st1-6          -1 st1-6          -1 st1-6          -1 st1-6     
+

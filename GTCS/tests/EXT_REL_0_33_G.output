@@ -1,0 +1,3 @@
+unsuccessful metadata update
+-Operation not supported for EXTERNAL FILE table EXT_TABLE
+create.gdl:8: error committing metadata changes

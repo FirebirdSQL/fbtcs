@@ -1,0 +1,7 @@
+Test:
+ select x.s1,x.s2,x.table_row from st1 x where not exists (select a.s1 from (st1 a left join st2 b on a.s1 = b.s1) left join st3 c on c.s1 = b.s1 and c.s1 = 1)
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 0
+Use CONNECT or CREATE DATABASE to specify a database

@@ -1,0 +1,17 @@
+Test:
+ SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET FROM DEPT_BUDGET V2 WHERE SINGULAR (SELECT * FROM FULLEMP V3, EMPSAL V4, SALES T1 WHERE V2.DEPARTMENT = V3.DEPARTMENT AND V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP AND T1.TOTAL_VALUE > (SELECT MAX(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 100)) ORDER BY V2.DEPTNO
+--------------------------------------------------------------------------------
+115	Federal Sales Region     	138	 157000.00
+--------------------------------------------------
+
+
+* Total Records Listed >>> 1
+
+Verification: SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET FROM DEPT_BUDGET V2 WHERE 1 =  (SELECT count(*) FROM FULLEMP V3, EMPSAL V4, SALES T1 WHERE V2.DEPARTMENT = V3.DEPARTMENT AND V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP AND T1.TOTAL_VALUE > (SELECT MAX(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 100)) ORDER BY V2.DEPTNO
+ --------------------------------------------------------------------------------
+115	Federal Sales Region     	138	 157000.00
+--------------------------------------------------
+
+
+* Total Records Listed should be >>> 1
+Use CONNECT or CREATE DATABASE to specify a database

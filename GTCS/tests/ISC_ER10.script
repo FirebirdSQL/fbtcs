@@ -1,0 +1,50 @@
+
+$ CREATE er10.c
+/*
+ *	isc_array_lookup_bounds
+ *
+ *	Pass an invalid database handle.
+ *
+ *  Test name: er10.c 
+ *  Created by: Marina Meyer 
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	ISC_ARRAY_DESC	desc;
+
+	LogPrintf("Running ER10, invalid db handle\n");
+	LogPrintf("to array_lookup_bounds\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_array_lookup_bounds(status, &DB, &trans,
+			"TBL1", "IONE", &desc)) ==0)
+	{
+		LogPrintf("BUG: array lookup bounds on invalid DB.\n");
+	}
+	else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	if ((rc=isc_array_lookup_bounds(status, &DB, &trans,
+			"TBL1", "IONE", &desc)) ==0)
+	{
+		LogPrintf("BUG: array lookup bounds on Null DB.\n");
+	}
+	else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER10\n");
+}
+$ CC FLAG_CC er10.c
+$ LINK FLAG_LINK er10 
+$ RUN er10
+$ DELETE er10*

@@ -1,0 +1,11 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+External file: WHERE_GDB_EXTERNAL:(PLATFORM_UPPER)EXTERNAL_DAT:
+FIELD1                          CHAR(10) Nullable 
+
+FIELD1     
+========== 
+
+Success    
+
+There is no table EXT_TABLE in this database

@@ -1,0 +1,42 @@
+Test:
+ SELECT T1.EMPNO,T1.LAST_NAME, T1.FIRST_NAME, T2.JOB, T2.SALARY, T2.HIRE_DATE FROM SALES_PEOPLE T1 , EMPLOYEES T2 WHERE T1.EMPNO = T2.EMPNO AND SINGULAR (SELECT * FROM SALES T3 WHERE T3.SALES_REP = T2.EMPNO AND T3.TOTAL_VALUE > 6000)
+--------------------------------------------------------------------------------
+118	Griffon	Ronald	Sales	45000.00	26-Jul-1987 
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 1
+
+                                                           Date
+ Empno    Last Name    First Name  Job      Salary         Hired
+====== =============== ========== ===== =============== ===========
+
+   118 Griffon         Ronald     Sales     $ 45,000.00 26-Jul-1987
+
+
+                                                           Date
+ Empno    Last Name    First Name  Job      Salary         Hired
+====== =============== ========== ===== =============== ===========
+
+   118 Griffon         Ronald     Sales     $ 45,000.00 26-Jul-1987
+
+
+                                                           Date
+ Empno    Last Name    First Name  Job      Salary         Hired
+====== =============== ========== ===== =============== ===========
+
+   118 Griffon         Ronald     Sales     $ 45,000.00 26-Jul-1987
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+  EMPNO LAST_NAME       FIRST_NAME JOB          SALARY   HIRE_DATE 
+======= =============== ========== ====== ============ =========== 
+
+    118 Griffon         Ronald     Sales      45000.00 26-JUL-1987 
+
+
+  EMPNO LAST_NAME       FIRST_NAME JOB          SALARY   HIRE_DATE 
+======= =============== ========== ====== ============ =========== 
+
+    118 Griffon         Ronald     Sales      45000.00 26-JUL-1987 
+

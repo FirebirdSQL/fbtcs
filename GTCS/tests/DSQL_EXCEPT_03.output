@@ -1,0 +1,14 @@
+Statement failed, SQLCODE = -607
+
+unsuccessful metadata update
+-cannot delete
+-EXCEPTION TRIG03_NULLRIVER
+-there are 1 dependencies
+Exception Name                  Used by, Type
+=============================== =============================================
+TRIG03_NULLRIVER                TEST03A, Trigger
+  River field cannot be left blank
+
+There are no triggers on table RIVER_STATES in this database
+There is no exception TRIG03_NULLRIVER in this database
+ 

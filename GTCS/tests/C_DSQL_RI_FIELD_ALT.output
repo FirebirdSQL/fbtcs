@@ -1,0 +1,86 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTH_ID_NOT_NULL               ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_ID_KEY                    ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+BOOK_AUTH_ID                   ,BOOKS                          ,FOREIGN KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_ID_KEY                    ,AUTHORS                        ,AUTHOR_ID                      
+BOOK_AUTH_ID                   ,BOOKS                          ,BOOK_AUTH_ID                   
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+BOOK_AUTH_ID                   ,AUTH_ID_KEY                    ,FULL   ,RESTRICT   ,RESTRICT   
+Joe        ,Joe Smith   
+John       ,John Doe    
+Jack       ,Jack Jackson
+Number found: 3 Number expected: 3
+alter_drop_nnull_constr expected SQLCODE = -607. Got SQLCODE = -607
+alter_drop_key_constr expected SQLCODE = -607. Got SQLCODE = -607
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTH_ID_NOT_NULL               ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_ID_KEY                    ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+BOOK_AUTH_ID                   ,BOOKS                          ,FOREIGN KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_ID_KEY                    ,AUTHORS                        ,AUTHOR_ID                      
+BOOK_AUTH_ID                   ,BOOKS                          ,BOOK_AUTH_ID                   
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+BOOK_AUTH_ID                   ,AUTH_ID_KEY                    ,FULL   ,RESTRICT   ,RESTRICT   
+alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = 0
+alter_drop_nnull_constr expected SQLCODE = -607. Got SQLCODE = -607
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTH_ID_NOT_NULL               ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_ID_KEY                    ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_ID_KEY                    ,AUTHORS                        ,AUTHOR_ID                      
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+alter_drop_key_constr expected SQLCODE = 0. Got SQLCODE = 0
+alter_drop_nnull_constr expected SQLCODE = 0. Got SQLCODE = 0
+
+
+TABLE_CONSTRAINTS:
+------------------
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+Joe        ,Joe Smith   
+John       ,John Doe    
+Jack       ,Jack Jackson
+Joe        ,Joe Smith   
+John       ,John Doe    
+Jack       ,Jack Jackson
+John       ,John Doe    
+Number found: 7 Number expected: 7

@@ -1,0 +1,397 @@
+
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ RUN ri_views WHERE_GDB:atlas.gdb
+
+$ CREATE fieldrop.e
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+/* Author: Allen Zhao
+   Date:   Oct-11-93
+   Title:  fieldrop.e  TCS TEST NAME:  c_dsql_ri_field_drop
+
+   Dependencies: Need to run C_DSQL_RI_INIT first.
+   
+   Purpose: RI test suite 
+   History:
+   16-JUL-1995 B.Sriram
+               This test is now OBSOLETE. A new test has been 
+               written in this one's place. The new test's
+               name is C_DSQL_RI_FIELD_DRP1.
+               The current test resulted in creating multiple INET
+               servers because of COMMIT statements, thereby
+               having caching problems. The new test does 
+               the whole job in a single transaction.
+ 
+   18-May-95:  Failing remote from HP to Sun. Passes local,
+	       fails loopback: -object AUTHORS is in use is
+	       the error. B4.0E build.
+               REFERENTIAL_CONSTRAINTS:
+	       ------------------------
+	       entered setup_books
+	       Data base error, SQLCODE = -607
+	       unsuccessful metadata update
+	       -object AUTHORS is in use
+	     
+	       Adding a COMMIT RELEASE before the call to the
+	       constraint creating part removed the AUTHORS in use
+	       error, but no constraints get created when running
+	       remote.
+   Tests are:
+   	Table Constraints:
+   		unique		tab_uniq.e
+   		primary key	tab_prim.e
+   		referential	tab_ref.e     
+   		check const	tab_check.e
+   	
+   	Column Constraints:
+   		unique		col_uniq.e
+   		primary key	col_prim.e
+   		referential	col_ref.e
+   		check const	col_check.e
+   		not null    col_nnull.e
+
+	DDL Modify Operations:
+		alter table add constraint	alt_add.e	
+		alter table drop constraint	alt_drop.e   
+		drop table			drop_tab.e
+		alter field			field_alt.e
+		drop field			fieldrop.e <------- this test
+		alter index			index_alt.e
+		drop index			index_drop.e
+		delete trigger			trigger_del.e
+		modify trigger			trigger_mod.e
+
+
+Overview: this test makes sure that new constraints are added correctly. 
+It will:
+	CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11), AUTHOR_NAME VARCHAR(50))
+	ALTER TABLE AUTHORS DROP AUTHOR_ID     			[should succeed] 
+	[Verify fiels for AUTHORS]
+
+	ALTER TABLE AUTHORS ADD AUTHOR_ID with constraints   	[should succeed] 
+
+	CREATE TABLE BOOKS (BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+		BOOK_AUTH_ID CHAR(11) CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)
+	[Verify constraints on AUTHORS and BOOKS]
+
+	ALTER TABLE AUTHORS DROP AUTHOR_ID      	[field referenced, should fail]
+	[Verify constraints on AUTHORS]
+
+	ALTER TABLE BOOKS DROP BOOK_AUTH_ID			[should succeed]
+	ALTER TABLE AUTHORS DROP AUTHOR_ID      		[should succeed]
+	[Verify constraints on AUTHORS]
+
+	
+
+*/
+
+/* Include the SQL Communications Area. */
+EXEC SQL
+	INCLUDE SQLCA;
+
+/* Set up to catch SQL errors. Note: this will require that 
+each routine containing executeable SQL commands has
+an error handling section labeled 'err'.*/
+EXEC SQL
+	WHENEVER SQLERROR GO TO err;
+	
+/* Forward declarations */
+void die_on_error();
+int setup_authors();
+int setup_books();
+int test_drop_add();
+int test_drop();
+extern print_views(); 
+int alter_drop_field();
+int alter_drop_referring_field();
+int alter_add_field(); 
+int strupper();
+int istable();
+
+
+int verbose;
+enum flags {errs, works};
+
+main(argc, argv)
+int argc;
+char *argv[];
+{
+
+        /*--- check if verbose is requested ------ */
+        verbose = FALSE;
+        if (--argc > 0){
+                if (*argv[1] == 'v' || *argv[1] == 'V')
+                        verbose = TRUE;
+        }
+
+	if (setup_authors()) 		/* create authors table only */
+		exit (1);
+        
+	if (test_drop_add())
+		exit (1);
+        EXEC SQL COMMIT RELEASE;
+	if (setup_books())		/* create books table only */
+		exit (1);
+	
+	if (test_drop())
+		exit (1);
+
+	exit (0);
+err:  die_on_error();
+}
+
+
+int test_drop_add()
+{
+	if (alter_drop_field(works))    /* field not yet referenced; should succeed */
+		exit (1);
+
+	if (print_views())
+		exit (1);
+
+	if (alter_add_field())	  	/* add field with constraints; should succeed */
+		exit (1);
+
+	if (print_views())
+		exit (1);
+
+	return 0;
+err:  die_on_error();
+}
+
+
+int test_drop()
+{
+	if (!alter_drop_field(errs))     /* field referenced; should fail */
+		exit (1);
+
+	if (print_views())         /* ! used after error is encountered */
+		exit (1);	    /* else program exits here */
+
+	if (alter_drop_referring_field())   /* drop referring field; should succeed */
+		exit (1);
+
+	if (alter_drop_field(works))  /* field no longer referenced; should succeed */
+		exit (1);
+
+	if (print_views())
+		exit (1);
+
+	return 0;
+err:  die_on_error();
+}
+
+
+int setup_authors() {
+
+	if (verbose)
+		printf("entered setup_authors\n");
+
+	if (istable("authors")) {
+		if (verbose) 
+			printf("authors found... will be dropped\n");
+		
+		EXEC SQL DROP TABLE AUTHORS;
+		EXEC SQL COMMIT RELEASE;
+	}
+	if (verbose)
+		printf("about to create authors...\n");
+
+	EXEC SQL
+		DECLARE AUTHORS TABLE
+			(AUTHOR_ID CHAR(11), AUTHOR_NAME CHAR(12))
+	
+	EXEC SQL
+		CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) 
+			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL 
+				CONSTRAINT AUTH_ID_KEY PRIMARY KEY,
+			AUTHOR_NAME CHAR(12))
+	if (verbose)
+		printf("authors created\n");
+
+	EXEC SQL COMMIT RELEASE;
+	return 0;
+err:		die_on_error();
+}
+
+
+int setup_books() {
+
+	if (verbose)
+		printf("entered setup_books\n");
+
+	if (istable("books")) {
+		if (verbose) 
+			printf("books found... will be dropped\n");
+		
+		EXEC SQL
+			DROP TABLE BOOKS;
+	        EXEC SQL COMMIT RELEASE
+		}
+
+	if (verbose) 
+		printf("No books table... creating one\n");
+	EXEC SQL
+		DECLARE BOOKS TABLE
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+			 BOOK_AUTH_ID CHAR(11));
+
+	if (verbose) 
+		printf("After the declare, CREATE TABLE..\n");
+	EXEC SQL
+		CREATE TABLE BOOKS
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+			 BOOK_AUTH_ID CHAR(11)
+			 CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)
+
+        EXEC SQL COMMIT RELEASE;
+	if (verbose)
+		printf("books created successfully.\n");
+
+	return 0;
+err:		die_on_error();
+}
+
+
+int alter_drop_field(flag)
+int flag;
+{
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL     /* should succeed if flag is ok_flag; should fail otherwise */ 
+	   	ALTER TABLE AUTHORS DROP AUTHOR_ID 
+
+	if (SQLCODE) 
+		got_err = TRUE;
+
+	if (flag == works)
+		printf ("alter_drop_field expected SQLCODE = 0. ");
+	else
+		printf ("alter_drop_field expected SQLCODE = -607. "); 
+
+	printf("Got SQLCODE = %d\n", SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+}
+
+
+int alter_drop_referring_field() {
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL   /* should succeed */
+	   	ALTER TABLE BOOKS DROP BOOK_AUTH_ID 
+
+	if (SQLCODE) 
+		got_err = TRUE;
+
+        EXEC SQL COMMIT RELEASE;
+	printf ("alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = %d\n", 
+			SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+}
+
+
+int alter_add_field() {
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL   /* should work */
+	   	ALTER TABLE AUTHORS ADD AUTHOR_ID CHAR (11) 
+				CONSTRAINT AUTHOR_ID_NOT_NULL NOT NULL
+				CONSTRAINT AUTHOR_ID_KEY PRIMARY KEY
+
+	if (SQLCODE) 
+		got_err = TRUE;
+        EXEC SQL COMMIT RELEASE;
+
+	printf("alter_add_field expected SQLCODE = 0. Got SQLCODE = %d\n",SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+}
+
+
+int strupper(targ, source) 
+char * targ, * source; 
+{
+	int ii;
+	
+	for (ii=0; *targ++ = toupper(*source++); ii++);
+
+	return ii;
+}
+
+int istable(tname) 
+char * tname; 
+{
+
+	int exists;
+	char *utname;
+
+	if (!tname)
+		return 0;
+		
+	utname = (char *) malloc(strlen(tname)+1);
+
+	strupper(utname, tname);
+	
+	EXEC SQL
+		SELECT COUNT (*)
+		INTO :exists
+		FROM rdb$relations
+		WHERE rdb$relation_name = :utname;
+
+	EXEC SQL
+		ROLLBACK WORK;
+			
+	free(utname);
+
+	return exists;
+err:		
+	free(utname);
+	die_on_error();
+}
+
+void die_on_error()
+
+/* Print out error message and die*/
+{
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status(gds__status);
+	EXEC SQL
+		ROLLBACK WORK;
+
+err:
+	exit (1);
+}
+
+$ GPRE fieldrop.e -d WHERE_GDB:atlas.gdb
+$ CC FLAG_CC fieldrop.c
+$ LINK FLAG_LINK fieldrop pr_views 
+$ RUN fieldrop
+$DROP WHERE_GDB:atlas.gdb
+$ DELETE fieldrop*

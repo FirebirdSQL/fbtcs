@@ -1,0 +1,23 @@
+
+$ ISQL
+create database "WHERE_GDB:foo.gdb";
+set term !!;
+create procedure p returns(r int) as
+begin
+  r = 0;
+  while (r < 5 ) do
+  begin
+    r = r + 1;
+    if (r = 3) then 
+    begin
+       suspend;
+       exit;
+    end
+  end
+end
+!!
+set term ; !!
+execute procedure p;
+select * from p;
+exit;
+$DROP WHERE_GDB:foo.gdb

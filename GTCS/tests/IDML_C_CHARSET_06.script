@@ -1,0 +1,122 @@
+
+$ GBAK -r intlemp.gbk WHERE_GDB:intlemp_06.gdb
+$ CREATE comment
+By:          Clare Taylor
+Date:        08/--/94
+Test name:   IDML_C_CHARSET_06         
+Series:      IDML_C_CHARSET          
+Results:     Still not working properly due to bug 7095? or the
+	     one filed for -charset
+
+Dependency:  Requires db built in IDML_C_CHARSET_04 W/the .gbk
+	     file created in that test.
+History:
+8/11/94:     build W: reinit due to additional results from 
+	     one of the other tests (a bug fix allowed the
+	     stored procedure insert w/set names to work).  This
+	     still shows bad results--if -charset is used the
+	     8-bit insert fails.  Reinit when bugs are fixed.
+11/10/94:    add -m for -charset option and add manual transactions.
+	     remove the -d database and put it in the program.
+             This may now be about the same test as charset 4.  Check
+	     at some point in the future.  Under time pressure for
+	     build AA testing now so just fix it and go.
+30Aug95:     failing due to bug in test 04.  Changing all tests to
+	     work from a .gbk file that has just 2 rows of data.
+	     This should pass now regardless of whether test 4 fails
+	     or passes.
+16-Feb-2000 JLI:  Added #include <gds.h> for the gds calls.
+Description:
+$ CREATE btest3.e
+/* Case 3:
+   Contains NO DATABASE statement so: 
+
+   Compile with:   gpre -m -charset iso8859_1 btest1.e
+                   cc btest1.c -lgds -ldld -o btest
+
+   Uses a straight SELECT statement to load the host variables and then
+   attempts to insert them.
+
+   Results: Executes and selects data without a problem (charset ISO to
+	    charset NONE will not produce an error.)  However,
+	    when the insert is done, an error occurs so the -charset
+	    option is not being used.  It should be quite legal to select
+	    into host variables which are then inserted into the table.
+*/
+#include "WHERE_FILES:tcs.h"
+#include "WHERE_FILES:example.h"
+#include <gds.h>
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL WHENEVER SQLERROR GOTO Err;
+EXEC SQL SET DATABASE db = "WHERE_GDB:intlemp_06.gdb";
+
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL BEGIN DECLARE SECTION;
+     BASED ON EMPLOYEE.EMP_NO       e_empno;      
+     BASED ON EMPLOYEE.FIRST_NAME   e_firstname;
+     BASED ON EMPLOYEE.FIRST_NAME   s_firstname;
+     BASED ON EMPLOYEE.LAST_NAME    e_lastname;
+     BASED ON EMPLOYEE.LAST_NAME    s_lastname;
+EXEC SQL END DECLARE SECTION;
+
+void print_error          PROTO((void));
+
+int main PROTO((void))
+{    
+     char  c;
+
+     printf("\n--------------------------------------------------------------\n");
+     printf("   PRINTING ALL EMPLOYEES--Using Select and 8-bit data\n\n");
+     printf("   (Transliteration is FROM ISO to NONE) BOTH WORK, CORRECT.\n\n");
+
+EXEC SQL CONNECT db;
+EXEC SQL SET TRANSACTION;
+     EXEC SQL
+          DECLARE T_SEARCH CURSOR FOR
+          SELECT * FROM EMPLOYEE;
+     EXEC SQL OPEN T_SEARCH;
+     EXEC SQL FETCH T_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
+ 
+     while (SQLCODE == 0)
+         {
+          printf ("%-10d %-15s %-20s\n", e_empno, e_firstname, e_lastname);
+	  strcpy(s_firstname,e_firstname); /* save the last row */
+	  strcpy(s_lastname,e_lastname);
+
+          EXEC SQL FETCH T_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
+         }
+     EXEC SQL CLOSE T_SEARCH;
+
+     printf("\n--------------------------------------------------------------\n");
+     printf("INSERTING NEW DATA, ID: 333, %s, %s: did it get inserted?...using SELECT\n\n",s_firstname, s_lastname);
+
+     EXEC SQL
+          INSERT INTO employee (emp_no, first_name, last_name)
+          VALUES (333, :s_firstname,:s_lastname);
+EXEC SQL COMMIT;
+
+     exit(0);
+Err:
+  print_error();
+}
+void print_error PROTO((void))
+{
+if (SQLCODE != 100)
+     printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+     isc_print_sqlerror(SQLCODE, gds__status); 
+     isc_print_status (gds__status);
+exit(1);
+}
+$ GPRE -m -charset iso8859_1 btest3.e
+$ CC FLAG_CC btest3.c
+$ LINK FLAG_LINK btest3 
+$ RUN btest3
+$ CREATE verify.sql
+set names iso8859_1;
+connect WHERE_GDB:intlemp_06.gdb;
+select * from employee;
+quit;
+
+$ ISQL -i verify.sql -m
+$ DROP WHERE_GDB:intlemp_06.gdb
+$ DELETE btest3* comment verify.sql

@@ -1,0 +1,211 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sin012.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ Syntax:		[NOT]SINGULAR <subquery>			
+ Description:           Order by, Group for outer query - SINGULAR
+
+                        SELECT T1.SALES_REP, SUM(T1.TOTAL_VALUE)
+                        FROM SALES T1
+                        WHERE SINGULAR
+                        (SELECT *
+                        FROM SALES T2
+                        WHERE T2.SALES_REP = T1.SALES_REP
+                        AND T2.TOTAL_VALUE >
+                        (SELECT AVG(T3.TOTAL_VALUE)
+                        FROM SALES T3
+                        WHERE T3.SALES_REP = 137))
+                        GROUP BY T1.SALES_REP
+                        ORDER BY T1.SALES_REP;
+
+ Tables:                sales_people, employees, sales
+
+ Expected result:	 
+ error: it returns more than one row for 125 and 137 (problem with distinct)
+ Problem fixed in build G.
+
+ Author:                Sam Hakim, Feb 19, 1993
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON SALES.SALES_REP        Sales_Rep;
+BASED_ON SALES.TOTAL_VALUE      Total_Value;
+
+
+char Test[]="SELECT T1.SALES_REP, SUM(T1.TOTAL_VALUE) \
+FROM SALES T1 \
+WHERE SINGULAR \
+(SELECT * \
+FROM SALES T2 \
+WHERE T2.SALES_REP = T1.SALES_REP \
+AND T2.TOTAL_VALUE > \
+(SELECT AVG(T3.TOTAL_VALUE) \
+FROM SALES T3 \
+WHERE T3.SALES_REP = 137)) \
+GROUP BY T1.SALES_REP \
+ORDER BY T1.SALES_REP DESCENDING";
+
+void Underline();
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT T1.SALES_REP, SUM(T1.TOTAL_VALUE)
+                FROM SALES T1
+                WHERE SINGULAR
+                (SELECT *
+                FROM SALES T2
+                WHERE T2.SALES_REP = T1.SALES_REP
+                AND T2.TOTAL_VALUE >
+                (SELECT AVG(T3.TOTAL_VALUE)
+                FROM SALES T3
+                WHERE T3.SALES_REP = 137))
+                GROUP BY T1.SALES_REP
+		ORDER BY T1.SALES_REP DESCENDING;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Sales_Rep,:Total_Value;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%d\t",Sales_Rep);
+                printf("%8.2f\n",(double)(Total_Value));
+                Underline(80);
+		
+                EXEC SQL
+                FETCH CR INTO :Sales_Rep,:Total_Value;
+        }
+	
+NOMORE:
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e sin012.e
+$ CC FLAG_CC sin012.c
+$ LINK FLAG_LINK sin012 
+$ RUN sin012
+$ CREATE sin012.qli
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+
+select t1.sales_rep, sum(t1.total_value)
+from sales t1 
+where singular 
+(select * 
+from sales t2 
+where t2.sales_rep = t1.sales_rep 
+and t2.total_value > 
+(select avg(t3.total_value) 
+from sales t3 
+where t3.sales_rep = 137))
+group by t1.sales_rep
+order by t1.sales_rep descending;
+
+select t1.sales_rep, sum(t1.total_value)
+from sales t1 
+where 1 =
+(select count(*)
+from sales t2 
+where t2.sales_rep = t1.sales_rep 
+and t2.total_value > 
+(select avg(t3.total_value) 
+from sales t3 
+where t3.sales_rep = 137))
+group by t1.sales_rep
+order by t1.sales_rep descending;
+
+finish;
+quit;
+$ QLI -n -a sin012.qli
+$ CREATE sin012.sql
+connect WHERE_GDB:sh_test.gdb;
+select t1.sales_rep, sum(t1.total_value)
+from sales t1 
+where singular 
+(select * 
+from sales t2 
+where t2.sales_rep = t1.sales_rep 
+and t2.total_value > 
+(select avg(t3.total_value) 
+from sales t3 
+where t3.sales_rep = 137))
+group by t1.sales_rep
+order by t1.sales_rep descending;
+
+select t1.sales_rep, sum(t1.total_value)
+from sales t1 
+where 1 =
+(select count(*)
+from sales t2 
+where t2.sales_rep = t1.sales_rep 
+and t2.total_value > 
+(select avg(t3.total_value) 
+from sales t3 
+where t3.sales_rep = 137))
+group by t1.sales_rep
+order by t1.sales_rep descending;
+quit;
+$ISQL -i sin012.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sin012* 
+

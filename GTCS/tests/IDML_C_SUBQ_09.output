@@ -1,0 +1,40 @@
+(W) subq9.e:17: SET NAMES requires -manual switch to gpre.
+No errors, 1 warning
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_FRANCE                  
+========================= 
+
+péché                     
+
+
+S_ROWID C_ENUS                    C_FRANCE                  
+======= ========================= ========================= 
+
+      1 péché                     UPDATED                   
+      2 Ålborg                    UPDATED                   
+      3 cæsium                    UPDATED                   
+      4 Aalborg                   UPDATED                   
+      5 aïeul                     UPDATED                   
+      6 caennais                  UPDATED                   
+      7 vice versa                UPDATED                   
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+       COUNT 
+============ 
+
+           7 
+
+
+S_ROWID C_ENUS                    C_FRANCE                  
+======= ========================= ========================= 
+
+      1 péché                     UPDATED                   
+      2 Ålborg                    UPDATED                   
+      3 cæsium                    UPDATED                   
+      4 Aalborg                   UPDATED                   
+      5 aïeul                     UPDATED                   
+      6 caennais                  UPDATED                   
+      7 vice versa                UPDATED                   
+

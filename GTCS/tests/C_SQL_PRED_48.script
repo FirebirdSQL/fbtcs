@@ -1,0 +1,142 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE con037.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+
+ Description:           field containing another field
+
+                        SELECT NAME
+                        FROM EMPLOYEES
+                        WHERE NAME CONTAINING LAST_NAME ORDER BY NAME;
+
+ Table:                 employees
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON EMPLOYEES.NAME         Name;
+
+
+
+char Test[]="SELECT NAME \
+FROM EMPLOYEES \
+WHERE NAME CONTAINING LAST_NAME ORDER BY NAME";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT NAME
+                FROM EMPLOYEES
+                WHERE NAME CONTAINING LAST_NAME ORDER BY NAME;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Name;
+
+        while (SQLCODE == 0){
+
+                Count++;
+                printf("%s\n",Name);
+                Underline(80);
+
+                EXEC SQL
+                        FETCH CR INTO :Name;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e con037.e
+$ CC FLAG_CC con037.c
+$ LINK FLAG_LINK con037 
+$ RUN con037
+$ CREATE con037.qli
+SET SEMICOLON;
+ready WHERE_GDB:sh_test.gdb;
+SELECT NAME
+FROM EMPLOYEES
+WHERE NAME CONTAINING LAST_NAME ORDER BY NAME;
+
+FOR NAME IN EMPLOYEES SORTED BY NAME WITH NAME CONTAINING LAST_NAME PRINT NAME;
+finish;
+quit;
+
+$ QLI -n -a con037.qli
+$ CREATE con037.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT NAME
+FROM EMPLOYEES
+WHERE NAME CONTAINING LAST_NAME ORDER BY NAME;
+quit;
+$ISQL -i con037.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE con037* 

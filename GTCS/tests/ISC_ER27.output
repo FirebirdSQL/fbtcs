@@ -1,0 +1,9 @@
+Running ER27, invalid transaction handle
+to isc_dsql_execute2
+RC=335544324
+ERROR: Unsuccessful execution caused by an unavailable resource.
+RC=335544569
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+RC=335544569
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+Finished ER27

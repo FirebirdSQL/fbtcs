@@ -1,0 +1,51 @@
+
+/*******************************************************************************
+ Test Name:        dsql_except_01
+ Date:             August 1993
+ Expected Results: 
+ Series:           dsql_exceptions
+ Dependencies:     dsql_except_setup  (must be run initially to set up database)
+                   dsql_except_cleanup (should be run to remove database)
+ Related Bugs:     bug_4827 - exception name > 31 chars
+ Description:      Level 0 tests to check syntax for create, alter and drop 
+                   exception.
+*******************************************************************************/
+/* Level 0 create, alter, drop - autocommit on */
+$ isql WHERE_GDB:atlas.gdb
+create exception noriver "River does not currently exist in Rivers relation";
+create exception nostate "State does not currently exist in State relation";
+create exception noupdate "Update cannot be completed because of errors";
+create exception error "This error message comes from exception handling";
+commit;
+show exceptions;
+alter exception noupdate "Update cannot be completed because of data errors";
+commit;
+show exception noupdate;
+drop exception error;
+commit;
+show exception error;
+/*                                */
+/* Level 1 create, alter, drop - autocommit on */
+/* bug_4827 removed to series sql_exception_bugs */
+create exception long_exception_name_31_char_tot
+ "This exception name should be ok, only 31 chars long";
+create exception 123_illegal_name "Should be illegal name starting numerics";
+rollback;
+create exception $_also_illegal "Not allowed, name beginning with $";
+rollback;
+create exception nostate "This message should cause an error - duplicate name";
+rollback;
+commit;
+alter exception rubbish "Attempt to alter non-existent exception";
+rollback;
+drop exception rubbish;
+rollback;
+commit;
+/*                                                                  */
+/* Tidy up database - drop all exceptions created for this test run */
+drop exception noriver;
+drop exception nostate;
+drop exception noupdate;
+drop exception long_exception_name_31_char_tot;
+commit;
+exit;

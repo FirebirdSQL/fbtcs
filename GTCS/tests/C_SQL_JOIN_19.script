@@ -1,0 +1,142 @@
+
+$ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_19.gdb
+$ CREATE join019.e
+
+/**********************************************************************
+ Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
+ Description:           Outer join & correlated subquery in where clause
+ Author:                Sam Hakim, June 1, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_join_19.gdb";
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON ct1.c1      t1c1;
+BASED_ON ct1.c10     t1c10;
+BASED_ON ct1.table_row   t1table_row;
+
+BASED_ON ct2.c1      t2c1;
+BASED_ON ct2.c10     t2c10;
+BASED_ON ct2.table_row   t2table_row;
+
+BASED_ON ct3.c1      t3c1;
+BASED_ON ct3.c10     t3c10;
+BASED_ON ct3.table_row   t3table_row;
+BASED_ON ct3.test_name	t3test_name;
+
+char Test[]="\
+select x.c1,x.c10,x.table_row,y.c1,y.c10,y.table_row,z.c1,z.c10,z.table_row,z.test_name \
+from (ct1 x right join ct2 y on x.c1 = y.c1) right join ct3 z on z.c1 = x.c1 \
+where 1 = (select s1 from st1 where z.test_name = st1.test_name and st1.table_row = 'st1-1') \
+order by x.table_row ascending";
+
+void Underline();
+
+main()
+{
+	
+    int Count;
+	Count = 0;
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+
+    EXEC SQL
+                DECLARE CR CURSOR FOR
+                select x.c1,x.c10,x.table_row,y.c1,y.c10,y.table_row,z.c1,z.c10,z.table_row,z.test_name
+                from (ct1 x right join ct2 y on x.c1 = y.c1) right join ct3 z on z.c1 = x.c1
+                where 1 = (select s1 from st1 where z.test_name = st1.test_name and st1.table_row = 'st1-1')
+                order by x.table_row ascending;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :t1c1,:t1c10,:t1table_row,
+                :t2c1,:t2c10,:t2table_row,
+                :t3c1,:t3c10,:t3table_row,:t3test_name;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%-5s   ",t1c1);
+                printf("%-10s   ",t1c10);
+                printf("%-10s   ",t1table_row);
+		
+                printf("%-5s   ",t2c1);
+                printf("%-10s   ",t2c10);
+                printf("%-10s   ",t2table_row);
+
+                printf("%-5s   ",t3c1);
+                printf("%-10s   ",t3c10);
+                printf("%-10s   ",t3table_row);
+                printf("%-10s\n",t3test_name);
+
+                EXEC SQL
+                FETCH CR INTO :t1c1,:t1c10,:t1table_row, 
+                :t2c1,:t2c10,:t2table_row, 
+                :t3c1,:t3c10,:t3table_row,:t3test_name;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e join019.e
+$ CC FLAG_CC join019.c
+$ LINK FLAG_LINK join019 
+$ RUN join019
+$ CREATE join019.qli
+ready WHERE_GDB:sh_join_19.gdb;
+set semicolon;
+set columns 100;
+
+select x.c1,x.c10,x.table_row,y.c1,y.c10,y.table_row,z.c1,z.c10,z.table_row,z.test_name
+from (ct1 x right join ct2 y on x.c1 = y.c1) right join ct3 z on z.c1 = x.c1
+where 1 = (select s1 from st1 where z.test_name = st1.test_name and st1.table_row = 'st1-1') 
+order by x.table_row ascending;
+
+finish;
+quit;
+$ QLI -n -a join019.qli
+$DROP WHERE_GDB:sh_join_19.gdb
+$ DELETE join019* 

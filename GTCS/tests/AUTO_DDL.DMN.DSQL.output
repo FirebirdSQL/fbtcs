@@ -1,0 +1,6 @@
+Use CONNECT or CREATE DATABASE to specify a database
+unsuccessful metadata update
+-STORE RDB$FIELDS failed
+-attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_2"
+Use CONNECT or CREATE DATABASE to specify a database
+A_VAR                           CHAR(10) Nullable

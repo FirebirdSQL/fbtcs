@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> New Document </TITLE>
+<META NAME="Generator" CONTENT="EditPlus">
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+</HEAD>
+
+<BODY>
+<H2>FBTCS status</H2>
+
+<h3>1.-General issues</h3>
+<p>Sometimes FB fails to drop a database due to object in use. The tests was modified in the 
+first fbtcs version to avoid cascade failures, to achieve that database name reuse should be avoided.</p>
+<h3>2.- Series status</h3>
+
+<blockquote>
+<table border="1" cellpadding="3" width="80%" valign="top">
+<tr valign="top" bgcolor="#FFCC33">
+<td>SERIES</td>
+<td>Global</td>
+<td>MinGW</td>
+<td>MSVC6</td>
+<tr valign="top">
+<td>CF_ISQL</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>C_SQL_PRED</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>ISC_ARRBLOB_CK</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>DSQL_DOMAINS</td>
+<td>DSQL_DOMAIN_08<br>- Different column number (parser)</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>DSQL_EXCEPTIONS</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>SQL_EVENTS</td>
+<td>SQL_EVENT_13 (commented)<br>
+- waits undefinitely</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>C_SQL_BLOB</td>
+<td>C_SQL_BLOB_26<br>
+- blob size differs</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>C_SQL_JOIN</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>V4_AUTO_COMMIT</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top" bgcolor="#E1E1E1">
+<td>V4_EXCLUSIVE</td>
+<td>Pending</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>IDML_C_CHARSET</td>
+<td>IDML_C_CHARSET_01<br>
+IDML_C_CHARSET_02<br>
+- different unknown character</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>IDML_C_SUBQUERYS</td>
+<td>IDML_C_SUBQ_02<br>
+IDML_C_SUBQ_04<br>
+- different unknown character</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top" bgcolor="#E1E1E1">
+<td>EVENT_MISC</td>
+<td>Pending</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>EXT_LEV_0</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>GF_SHUTDOWN</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>QA_PROC_IES_ERR</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>REF_INT_INDX</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>RICH_FLD_GEN_V40</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>RI_TESTS</td>
+<td>C_DSQL_RI_FIELD_DROP<br>
+- object is in use</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>V4_AUTO_DDL_DSQL</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>V4_TRANS_BLOB</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>QA_PROCS_ISQL</td>
+<td>PROC_CAST9_ISQL<br>
+- Different error<br>
+PROC_DATE3<br>
+- Don't allow some values seems to be a bug.<br>
+PROC_POWER<br>
+- Difference in output<br>
+PROC_EMPTY<br>
+- Don't throw error on empty procedure.
+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>FB_SQL</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>SVC_API</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>DDL</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</table>
+</blockquote>
+
+</ul>
+

@@ -1,0 +1,151 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sta014.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:
+
+ Description:           field in a VIEW NOT STARTING WITH char string literal
+
+                        SELECT DEPTNO
+                        FROM DEPT_BUDGET
+                        WHERE DEPTNO NOT STARTING '12'
+                        ORDER BY DEPTNO DESCENDING;
+
+ Tables:                DEPT_BUDGET
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON DEPARTMENTS.DEPTNO     DeptNo;
+
+
+char Test[]="SELECT DEPTNO \
+FROM DEPT_BUDGET \
+WHERE DEPTNO NOT STARTING '12' \
+ORDER BY DEPTNO DESCENDING";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                        SELECT DEPTNO
+                        FROM DEPT_BUDGET
+                        WHERE DEPTNO NOT STARTING '12'
+                        ORDER BY DEPTNO DESCENDING;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :DeptNo;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%s\n",DeptNo);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :DeptNo;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+
+$ GPRE -e sta014.e
+$ CC FLAG_CC sta014.c
+$ LINK FLAG_LINK sta014 
+$ RUN sta014
+$ CREATE sta014.qli
+
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+SELECT DEPTNO 
+FROM DEPT_BUDGET 
+WHERE DEPTNO NOT STARTING '12' 
+ORDER BY DEPTNO DESCENDING;
+for dept_budget sorted by desc deptno 
+with deptno not starting '12' 
+print deptno;
+select count(*) from dept_budget where deptno not starting '12';
+
+finish;
+quit;
+$ QLI -n -a sta014.qli
+$ CREATE sta014.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT DEPTNO 
+FROM DEPT_BUDGET 
+WHERE DEPTNO NOT STARTING '12' 
+ORDER BY DEPTNO DESCENDING;
+select count(*) from dept_budget where deptno not starting '12';
+quit;
+$ISQL -i sta014.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sta014* 

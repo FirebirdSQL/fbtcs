@@ -1,0 +1,124 @@
+
+                               COMP                  TEST               TABLE
+  S1     S2     S3   SSCALE      S                   NAME                ROW
+====== ====== ====== ====== =========== ============================== ======
+
+     1    101   1001  001           101 Loader                         st1-1 
+     2    102   1002  002           204 Loader                         st1-2 
+          103   1003  003               Loader                         st1-3 
+     4          1004  004               Loader                         st1-4 
+                                        Loader                         st1-5 
+    -1   -101  -1001  ***           101 Loader                         st1-6 
+
+
+                               COMP                  TEST               TABLE
+  S1     S2     S3   SSCALE      S                   NAME                ROW
+====== ====== ====== ====== =========== ============================== ======
+
+     1    101   1001  001           101 Loader                         st2-1 
+     2    102   1002  002           204 Loader                         st2-2 
+          103   1003  003               Loader                         st2-3 
+     4          1004  004               Loader                         st2-4 
+                                        Loader                         st2-5 
+    -2   -102  -1002  ***           204 Loader                         st2-6 
+
+
+                               COMP                  TEST               TABLE
+  S1     S2     S3   SSCALE      S                   NAME                ROW
+====== ====== ====== ====== =========== ============================== ======
+
+     1    101   1001  001           101 Loader                         st3-1 
+     2    102   1002  002           204 Loader                         st3-2 
+          103   1003  003               Loader                         st3-3 
+     4          1004  004               Loader                         st3-4 
+                                        Loader                         st3-5 
+    -3   -103  -1003  ***           309 Loader                         st3-6 
+
+
+                               COMP                  TEST               TABLE
+  S1     S2     S3   SSCALE      S                   NAME                ROW
+====== ====== ====== ====== =========== ============================== ======
+
+     1    101   1001  001           101 Loader                         st4-1 
+     2    102   1002  002           204 Loader                         st4-2 
+          103   1003  003               Loader                         st4-3 
+     4          1004  004               Loader                         st4-4 
+                                        Loader                         st4-5 
+    -4   -104  -1004  ***           416 Loader                         st4-6 
+
+
+                               COMP                  TEST               TABLE
+  S1     S2     S3   SSCALE      S                   NAME                ROW
+====== ====== ====== ====== =========== ============================== ======
+
+     1    101   1001  001           101 Loader                         st5-1 
+     1    101   1001  001           101 Loader                         st5-2 
+     2    102   1002  002           204 Loader                         st5-3 
+     2    102   1002  002           204 Loader                         st5-4 
+          103   1003  003               Loader                         st5-5 
+     4          1004  004               Loader                         st5-6 
+                                        Loader                         st5-7 
+    -5   -105  -1005  ***           525 Loader                         st5-8 
+
+
+                            TEST               TABLE
+C1      C10                 NAME                ROW
+=== ========== ============================== ======
+
+a-1 c10-1      Loader                         ct1-1 
+a-2 c10-2      Loader                         ct1-2 
+    c10-3      Loader                         ct1-3 
+a-4            Loader                         ct1-4 
+               Loader                         ct1-5 
+1   unique-1   Loader                         ct1-6 
+
+
+                            TEST               TABLE
+C1      C10                 NAME                ROW
+=== ========== ============================== ======
+
+a-1 c10-1      Loader                         ct2-1 
+a-2 c10-2      Loader                         ct2-2 
+    c10-3      Loader                         ct2-3 
+a-4            Loader                         ct2-4 
+               Loader                         ct2-5 
+2   unique-2   Loader                         ct2-6 
+
+
+                            TEST               TABLE
+C1      C10                 NAME                ROW
+=== ========== ============================== ======
+
+a-1 c10-1      Loader                         ct3-1 
+a-2 c10-2      Loader                         ct3-2 
+    c10-3      Loader                         ct3-3 
+a-4            Loader                         ct3-4 
+               Loader                         ct3-5 
+3   unique-3   Loader                         ct3-6 
+
+
+                            TEST               TABLE
+C1      C10                 NAME                ROW
+=== ========== ============================== ======
+
+a-1 c10-1      Loader                         ct4-1 
+a-2 c10-2      Loader                         ct4-2 
+    c10-3      Loader                         ct4-3 
+a-4            Loader                         ct4-4 
+               Loader                         ct4-5 
+4   unique-4   Loader                         ct4-6 
+
+
+                            TEST               TABLE
+C1      C10                 NAME                ROW
+=== ========== ============================== ======
+
+a-1 c10-1      Loader                         ct5-1 
+a-1 c10-1      Loader                         ct5-2 
+a-2 c10-2      Loader                         ct5-3 
+a-2 c10-2      Loader                         ct5-4 
+    c10-3      Loader                         ct5-5 
+a-4            Loader                         ct5-6 
+               Loader                         ct5-7 
+5   unique-5   Loader                         ct5-8 
+

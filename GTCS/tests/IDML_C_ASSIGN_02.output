@@ -1,0 +1,69 @@
+  Using SET NAMES NONE.
+  The following test is for embedded field assignment between 
+  international fields of dissimilar character sets.  The insert
+  is done in embedded with set names ISO, DOS437 and DOS850.  A
+  select is done in embedded using the same set names.
+
+  An ISQL verification is then done to attempt to determine it
+  the embedded set names was affecting the insert or not.
+
+
+Embedded INSERT FROM A DOS850 FIELD TO A DOS437 and DOS850 FIELD. SET NAMES is: NONE
+
+Found string: 0 , O                        
+Found string: 0 , ›                        
+Found string: 0 , ¢                        
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  C_850_25                  
+========================= ========================= 
+
+O                         O                         
+¢                         ¢                         
+ó                         ó                         
+
+
+Embedded INSERT FROM A DOS850 FIELD TO A DOS437 and DOS850 FIELD. SET NAMES is: ISO8859_1
+
+Found string: 0 , O                        
+Found string: 0 , ¢                        
+Found string: 0 , ó                        
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  C_850_25                  
+========================= ========================= 
+
+O                         O                         
+¢                         ¢                         
+ó                         ó                         
+
+
+Embedded INSERT FROM A DOS850 FIELD TO A DOS437 and DOS850 FIELD. SET NAMES is: DOS850
+
+Found string: 0 , O                        
+Found string: 0 , ½                        
+Found string: 0 , ¢                        
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  C_850_25                  
+========================= ========================= 
+
+O                         O                         
+¢                         ¢                         
+ó                         ó                         
+
+
+Embedded INSERT FROM A DOS850 FIELD TO A DOS437 and DOS850 FIELD. SET NAMES is: DOS437
+
+Found string: 0 , O                        
+Found string: 0 , ›                        
+Found string: 0 , ¢                        
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  C_850_25                  
+========================= ========================= 
+
+O                         O                         
+¢                         ¢                         
+ó                         ó                         
+

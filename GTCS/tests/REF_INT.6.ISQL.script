@@ -1,0 +1,56 @@
+
+$CREATE COMMENT
+Author: Ravi Narayanan
+Date: Oct 10, 1994.
+
+Description: This is a test for referential integrity.
+
+Firstly, init.sql is an isql script used to create & populate
+the database, WHERE_GDB:ref_int1.gdb.  This database has two tables 
+"employee" and "department", and there is a referential integrity relationship
+between these two tables by having dept_no field of table "employee" as a
+foreign key to table "department". Also, note that emp_no is a primary key
+for table "employee", and dept_no is a primary key for table "department".
+
+Secondly, test6.sql is an isql script that inactivates the unique index
+that had been created by a primary key constraint. This should not be
+allowed, but currently this is going through .. The test,then attempts
+to insert records into another table in violation of the referential
+integrity constraint. The current behaviour is that even though the
+unique index has been inactivated, the insertion fails because of referential
+integrity violation.. (bug 7517)
+
+$CREATE init.sql
+create database "WHERE_GDB:ref_int6.gdb";
+create table department
+(dept_no char(3) not null,
+ dept_name varchar(20) not null,
+ constraint dept_key primary key (dept_no));
+commit;
+create table employee
+(emp_no smallint not null,
+ last_name varchar(20) not null, 
+ dept_no char(3) not null constraint ref_key references department(dept_no),
+ constraint emp_key primary key (emp_no));
+commit;
+insert into department values (1, 'd1');
+insert into department values (2, 'd2');
+insert into department values (3, 'd3');
+insert into employee values (1, 'e1', 1);
+insert into employee values (2, 'e2', 2);
+insert into employee values (3, 'e3', 3);
+insert into employee values (4, 'e4', 1);
+insert into employee values (5, 'e5', 1);
+insert into employee values (6, 'e6', 1);
+insert into employee values (7, 'e7', 2);
+insert into employee values (8, 'e8', 3);
+insert into employee values (9, 'e9', 3);
+commit;
+$ISQL -i init.sql
+$CREATE test6.sql
+alter index dept_key inactive;
+commit;
+insert into employee values (11, 'e11', 34);
+$ISQL WHERE_GDB:ref_int6.gdb -e -i test6.sql -merge 
+$DROP WHERE_GDB:ref_int6.gdb
+$DELETE  COMMENT init.sql test6.sql

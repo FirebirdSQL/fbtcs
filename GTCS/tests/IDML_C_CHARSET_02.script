@@ -1,0 +1,295 @@
+
+$ CREATE doc
+By:          Clare Taylor
+Date:        05/21/94
+Test name:   IDML_C_CHARSET_02
+Series:      IDML_C_CHARSET          
+Dependency:  requires the first test in this series to build the db
+
+History:
+May 94: changed what this series was doing due to the transliteration
+	features working differently.
+5/19/94:   Build I4.0T caused syntax to change.  all COLLATE <charset>
+	   syntax had to be changed to CHARACTER SET <charset>
+5/26/94:   Not all edits were done--the two iso fields did not have the
+	   CHARACTER SET added by the contractors so it was still failing.
+
+Description:
+A more simplified, focused test for inserts with _charset and display
+using SET NAMES.
+
+$ CREATE doc1
+rowid:
+  1     Ó          O,acute:  ISO 211, DOS850 224  DOS437 undefined 
+        Ë          E,umlaut: ISO 203, DOS850 211, DOS437 undefined
+  2     ç          c,cedilla:ISO 231, DOS850 135, DOS437 135
+        þ          thorn:    ISO 254, DOS850 231, DOS437 undefined
+  3     ¢          cent sign:ISO 162, DOS850 189, DOS437 155
+        ó          o, acute: ISO 243, DOS850 162, DOS437 162
+  4     æ          ae(as one)ISO 230, DOS850 145, DOS437 145
+        µ          scrip u:  ISO 181, DOS850 230, DOS437 230       
+  5     Ø          O, slash: ISO 216, DOS850 157, DOS437 undefined
+        Ï          I,umlaut: ISO 207, DOS850 216, DOS437 undefined   
+        à          a, acute: ISO 224, DOS850 133, DOS437 undefined
+
+$ TYPE doc1
+$ CREATE setup1.sql
+create database "WHERE_GDB:charset.gdb";
+commit;
+quit;
+
+$ CREATE setup2.sql
+CONNECT WHERE_GDB:charset.gdb;
+CREATE DOMAIN ROWID AS                     SMALLINT;
+CREATE DOMAIN C_ASCII_25 AS CHAR(10)       CHARACTER SET ASCII;
+CREATE DOMAIN C_437_25 AS CHAR(10)         CHARACTER SET DOS437;
+CREATE DOMAIN C_850_25 AS CHAR(10)         CHARACTER SET DOS850;
+CREATE DOMAIN C_865_25 AS CHAR(10)         CHARACTER SET DOS865;
+CREATE DOMAIN I_153 AS CHAR(10)            CHARACTER SET ISO8859_1 COLLATE EN_US;
+CREATE DOMAIN I_FRANCE AS CHAR(10)         CHARACTER SET ISO8859_1 COLLATE FR_FR;
+CREATE DOMAIN I_UNICODE AS CHAR(10)        CHARACTER SET UNICODE_FSS;
+CREATE DOMAIN LONG_ASCII AS CHAR(55)       CHARACTER SET ASCII;       
+
+CREATE TABLE T2 (t_rowid rowid,
+	T_ISO      I_FRANCE,
+	T_153      I_153,
+	T_437      C_437_25,
+	T_850      C_850_25, 
+        T_UNI      I_UNICODE,
+        A_DESC     LONG_ASCII
+         );
+COMMIT;
+QUIT;
+
+$ CREATE isoload1.sql
+SET NAMES ISO8859_1; 
+CONNECT WHERE_GDB:charset.gdb;
+
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (1,'Ó','Ó','O,acute: set names is iso');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (11, _DOS850'Ó',_ISO8859_1'Ó','_DOS or _ISO O,acute,iso 211,dos850 224');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (3,'ç','ç','c cedilla');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (33, _DOS850'ç',_ISO8859_1'ç','_DOS or _ISO c cedilla,iso 231,dos850 135');
+
+$ CREATE isoload2.sql
+SET NAMES ISO8859_1; 
+CONNECT WHERE_GDB:charset.gdb;
+
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (2,'¢','¢','cent sign');       
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (22,_DOS850'¢',_ISO8859_1'¢','_DOS or _ISO cent,iso 162, dos850 189');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (4,'æ','æ','ae(as one)');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (44, _DOS850'æ',_ISO8859_1'æ','_DOS or _ISO ae(as one),iso 230, dos850 145');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (5,'Ø','Ø','O, slash ');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (55, _DOS850'Ø',_ISO8859_1'Ø','_DOS or _ISO O, slash,iso 216, dos850 157');
+COMMIT;
+QUIT;
+
+$ CREATE dos850l1.sql
+SET NAMES DOS850;    
+CONNECT WHERE_GDB:charset.gdb;
+
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (1,'Ó','Ó','O,acute: set names is iso');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (11, _DOS850'Ó',_ISO8859_1'Ó','_DOS or _ISO O,acute,iso 211,dos850 224');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (3,'ç','ç','c cedilla');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (33, _DOS850'ç',_ISO8859_1'ç','_DOS or _ISO c cedilla,iso 231,dos850 135');
+
+$ CREATE dos850l2.sql
+SET NAMES DOS850;     
+CONNECT WHERE_GDB:charset.gdb;
+
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (2,'¢','¢','cent sign');       
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (22,_DOS850'¢',_ISO8859_1'¢','_DOS or _ISO cent,iso 162, dos850 189');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (4,'æ','æ','ae(as one)');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (44, _DOS850'æ',_ISO8859_1'æ','_DOS or _ISO ae(as one),iso 230, dos850 145');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (5,'Ø','Ø','O, slash ');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (55, _DOS850'Ø',_ISO8859_1'Ø','_DOS or _ISO O, slash,iso 216, dos850 157');
+COMMIT;
+QUIT;
+
+$ CREATE dos437l1.sql
+SET NAMES DOS437;    
+CONNECT WHERE_GDB:charset.gdb;
+
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (1,'Ó','Ó','O,acute: set names is iso');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (11, _DOS850'Ó',_ISO8859_1'Ó','_DOS or _ISO O,acute,iso 211,dos850 224');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (3,'ç','ç','c cedilla');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (33, _DOS850'ç',_ISO8859_1'ç','_DOS or _ISO c cedilla,iso 231,dos850 135');
+COMMIT;
+QUIT;
+
+$ CREATE dos437l2.sql
+SET NAMES DOS437;     
+CONNECT WHERE_GDB:charset.gdb;
+
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (2,'¢','¢','cent sign');       
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (22,_DOS850'¢',_ISO8859_1'¢','_DOS or _ISO cent,iso 162, dos850 189');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (4,'æ','æ','ae(as one)');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (44, _DOS850'æ',_ISO8859_1'æ','_DOS or _ISO ae(as one),iso 230, dos850 145');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (5,'Ø','Ø','O, slash ');
+INSERT INTO T2 (T_ROWID, T_850, T_ISO, A_DESC) 
+   VALUES (55, _DOS850'Ø',_ISO8859_1'Ø','_DOS or _ISO O, slash,iso 216, dos850 157');
+COMMIT;
+QUIT;
+
+$ CREATE v1
+---------------------------------------------------------------
+1.
+  RUNNING...                
+  set names iso8859_1;
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+  quit;
+---------------------------------------------------------------
+
+$ CREATE v2
+---------------------------------------------------------------
+2.
+  Then RUNNING...
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+---------------------------------------------------------------
+
+$ CREATE v1.sql
+set names ISO8859_1;
+connect WHERE_GDB:charset.gdb;
+select t_rowid, t_850,a_desc from t2;
+quit;
+
+$ CREATE v2.sql
+set names DOS850;
+connect WHERE_GDB:charset.gdb;
+select t_rowid, t_850,a_desc from t2;
+quit;
+
+$ CREATE i1
+---------------------------------------------------------------
+3.
+  Then RUNNING...selects on ISO field w/various set names:
+
+  set names iso8859_1;  
+  connect "tests.gdb";
+  select t_rowid, t_ISO, a_desc from t2;
+---------------------------------------------------------------
+
+$ CREATE i1.sql
+set names ISO8859_1;
+connect WHERE_GDB:charset.gdb;
+select t_rowid, t_ISO,a_desc from t2;
+quit;
+
+$ CREATE i2
+---------------------------------------------------------------
+4.
+  Then RUNNING...selects on ISO field w/various set names:
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_ISO, a_desc from t2;
+---------------------------------------------------------------
+
+$ CREATE i2.sql
+set names DOS850;   
+connect WHERE_GDB:charset.gdb;
+select t_rowid, t_ISO,a_desc from t2;
+quit;
+
+$ CREATE pdoc1
+  PASS 1: LOADING DATA WITH SET NAMES = ISO8859_1--selecting DOS850 fields
+
+$ TYPE pdoc1
+$ ISQL -i setup1.sql -m
+$ ISQL -i setup2.sql -m
+$ ISQL -i isoload1.sql -m
+$ ISQL -i isoload2.sql -m
+
+$ TYPE v1
+$ ISQL -i v1.sql -m
+
+$ TYPE v2
+$ ISQL -i v2.sql -m
+
+$ TYPE i1
+$ ISQL -i i1.sql -m
+
+$ TYPE i2
+$ ISQL -i i2.sql -m
+
+$ DROP WHERE_GDB:charset.gdb
+
+$ CREATE pdoc2
+  PASS 2: Same thing, but LOAD THE DATA WITH SET NAMES = DOS850
+
+$ TYPE pdoc2
+$ ISQL -i setup1.sql -m
+$ ISQL -i setup2.sql -m
+$ ISQL -i dos850l1.sql -m
+$ ISQL -i dos850l2.sql -m
+
+$ TYPE v1
+$ ISQL -i v1.sql -m
+
+$ TYPE v2
+$ ISQL -i v2.sql -m
+
+$TYPE i1
+$ ISQL -i i1.sql -m
+$TYPE i2
+$ISQL -i i2.sql -m
+$ DROP WHERE_GDB:charset.gdb
+
+$ CREATE pdoc3
+  PASS 3: Same thing, but LOAD THE DATA WITH SET NAMES = DOS437
+
+$ TYPE pdoc3
+$ ISQL -i setup1.sql -m
+$ ISQL -i setup2.sql -m
+$ ISQL -i dos437l1.sql -m
+$ ISQL -i dos437l2.sql -m
+
+$ TYPE v1
+$ ISQL -i v1.sql -m
+
+$ TYPE v2
+$ ISQL -i v2.sql -m
+
+$TYPE i1
+$ ISQL -i i1.sql -m
+
+$ TYPE i2
+$ ISQL -i i2.sql -m
+
+$ DELETE pdoc1 pdoc2 pdoc3 doc v1.sql v2.sql i1.sql i2.sql 
+$ DELETE v1 v2 i1 i2
+$ DELETE dos850l2.sql dos850l1.sql dos437l1.sql dos437l2.sql 
+$ DELETE tcs.dat* isoload1.sql isoload2.sql setup1.sql 
+$ DELETE setup2.sql

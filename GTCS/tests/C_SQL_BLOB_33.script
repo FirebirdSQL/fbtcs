@@ -1,0 +1,452 @@
+
+$ CREATE blob33.sql
+create database "WHERE_GDB:blob33.gdb";
+quit;
+$ ISQL -i blob33.sql
+$ CREATE blob33x.e
+exec sql set database db = "WHERE_GDB:blob33.gdb";
+exec sql include sqlca;
+exec sql whenever sqlerror goto err;
+
+main()
+{
+exec sql connect db;
+
+exec sql create table big_blob (test_name char(15),comment char(30), 
+row_id integer, b32k blob(32767,1), b40k blob(40960,1), b64k blob(65535,1));
+
+exit(0);
+
+err:
+	exec sql whenever sqlerror continue;
+	isc_print_status (gds__status);
+	exec sql rollback;
+	exec sql disconnect all;
+	exit(1);
+}
+$ GPRE -e -n blob33x.e
+$ CC FLAG_CC blob33x.c
+$ LINK FLAG_LINK blob33x 
+$ RUN blob33x
+$ CREATE blob33.e
+/**********************************************************************
+ Purpose:               Test SQL blob support in InterBase 4.0
+
+ Description:           Insert big 32k, 40k and 64k segements 
+			WHERE_GDB:blob33.gdb. 
+
+ Author:                Sam Hakim, June 7, 93
+ 
+ Note:			Requested by Michael and Doc to find out the limit
+			of segments for blobs.
+
+ Bug 5198.
+ **********************************************************************/
+#include <stdio.h>
+#include <string.h>
+#include "WHERE_FILES:sh_test.h"
+
+EXEC SQL SET DATABASE DB = "WHERE_GDB:blob33.gdb";
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL WHENEVER SQLERROR GOTO ERR;
+
+BASED_ON BIG_BLOB.TEST_NAME      Test_Name;
+BASED_ON BIG_BLOB.COMMENT        Comment;
+BASED_ON BIG_BLOB.ROW_ID         Row_Id;
+BASED_ON BIG_BLOB.B32K		 b32k_id;
+BASED_ON BIG_BLOB.B32K.SEGMENT	 b32k_segment;
+BASED_ON BIG_BLOB.B40K		 b40k_id;
+BASED_ON BIG_BLOB.B40K.SEGMENT	 b40k_segment;
+BASED_ON BIG_BLOB.B64K		 b64k_id;
+BASED_ON BIG_BLOB.B64K.SEGMENT	 b64k_segment;
+
+
+int verbose,DumpRecs;
+
+char Test[]="Populating the blob database, please wait...\n";
+
+void Underline();
+void CreateSegment();
+void EmptyBuffer();
+void ErrTrap();
+
+GDS__QUAD WriteBlob1();
+GDS__QUAD WriteBlob2();
+GDS__QUAD WriteBlob3();
+
+void ReadRecords();
+void ReadBlob1();
+void ReadBlob2();
+void ReadBlob3();
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+short                       i,j,k,l;
+int Count;
+
+    verbose = DumpRecs = FALSE;
+
+    if (--argc > 0){
+        if (*argv[1] == 'v' || *argv[1] == 'V')
+            verbose = TRUE;
+    }
+
+    if (--argc > 0){
+	if (*argv[2] == 'd' || *argv[2] == 'D')
+		DumpRecs = TRUE;
+    }
+
+    EXEC SQL CONNECT DB;
+    EXEC SQL SET TRANSACTION;
+
+    strcpy(Test_Name,"BlobLoader");
+    printf ("Test:\n %s\n",Test);
+    Underline(strlen(Test));
+  
+    /* insert 2 records for each blob */ 
+    for (j=1; j<3; j++){
+
+	b32k_id = WriteBlob1(sizeof(b32k_segment), b32k_segment, b32k_id);
+	b40k_id = WriteBlob2(sizeof(b40k_segment), b40k_segment, b40k_id);  
+
+	b64k_id = WriteBlob3(sizeof(b64k_segment)-1, b64k_segment, b64k_id); 
+
+    	EXEC SQL INSERT INTO big_blob (TEST_NAME,ROW_ID,B32K,B40K,B64K) 
+		VALUES (:Test_Name,:j,:b32k_id,:b40k_id,:b64k_id); 
+
+        EXEC SQL COMMIT;
+    }
+
+
+
+	ReadRecords();
+
+	EXEC SQL DISCONNECT ALL;
+
+exit(0);
+
+ERR:
+	if (SQLCODE < 0) {
+		EXEC SQL WHENEVER SQLERROR CONTINUE;
+
+		ErrTrap("main");
+		exit(1);
+	}
+}
+/************************************************************
+ * Draw and underline
+ ************************************************************/
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+/***********************************************************
+ * EmptyBuffer
+ * print an underline
+ ***********************************************************/
+void EmptyBuffer(Bf,L)
+char *Bf;
+unsigned short L;
+{
+char *s;
+for (s=Bf;L;L--)
+	*s++ = ' ';
+}
+/************************************************************
+ * Create a line with numbers stuffed in a char string. 
+ ************************************************************/
+void CreateSegment(pBuffer,L,LineNo)
+char *pBuffer;
+unsigned short L;
+int LineNo;
+{
+char      TempBuf[8], *pBf;
+int	  i,j;
+
+pBf = pBuffer;
+
+     j = 1;
+     sprintf (pBf,"Line %3d:",LineNo);
+     L = L - strlen(pBf) - 7;
+
+     for (i = 1; i < L; j++){
+	/* A new line so we can pull the blob into an editor */
+	if ((i % 20) == 0)
+		sprintf (TempBuf,"%d\n",j);
+	else
+		sprintf (TempBuf,"%d,",j);
+
+	memcpy(pBf,TempBuf,strlen(TempBuf));
+	pBf += strlen(TempBuf);
+	i+= strlen(TempBuf);  
+     }
+	memcpy(pBf,"<EOL\n\0",6);
+
+if (verbose)
+ 	printf("%s\n, length=%d, i = %d \n", pBf, strlen(pBuffer),i); 
+
+}
+/*******************************************************************
+ * Write the blob to the database.
+ *******************************************************************/
+GDS__QUAD WriteBlob1(L,Bf, BlobId)
+unsigned short L;
+char *Bf;
+GDS__QUAD BlobId;
+{
+
+unsigned short BfLen;
+int i;
+
+    EXEC SQL DECLARE BCW1 CURSOR FOR INSERT BLOB b32k INTO big_blob;
+    EXEC SQL OPEN BCW1 INTO :BlobId; 
+
+    for (i=1; i<3; i++){
+
+        CreateSegment(Bf,L,i);
+        BfLen = strlen(Bf);
+
+        EXEC SQL INSERT CURSOR BCW1 VALUES (:Bf:BfLen);
+
+        if (verbose)
+            printf("SQLCODE %d, BufferLen %d \n",SQLCODE,BfLen);
+
+        EmptyBuffer(Bf,BfLen);
+    }
+    sprintf (Bf,"Line %3d: --- End of BLOB b32k ---\n",i);
+    BfLen = strlen(Bf);
+
+    EXEC SQL INSERT CURSOR BCW1 VALUES (:Bf:BfLen);
+    EXEC SQL CLOSE BCW1;
+return (BlobId);
+}
+/*******************************************************************
+ * Write the blob to the database.
+ *******************************************************************/
+GDS__QUAD WriteBlob2(L,Bf, BlobId)
+unsigned short L;
+char *Bf;
+GDS__QUAD BlobId;
+{
+unsigned short BfLen;
+int i;
+
+    EXEC SQL DECLARE BCW2 CURSOR FOR INSERT BLOB b40k INTO big_blob;
+    EXEC SQL OPEN BCW2 INTO :BlobId;  
+
+    for (i=1; i<3; i++){
+
+        CreateSegment(Bf,L,i);
+        BfLen = strlen(Bf);
+
+        EXEC SQL INSERT CURSOR BCW2 VALUES (:Bf:BfLen);
+
+        if (verbose)
+            printf("SQLCODE %d, BufferLen %d \n",SQLCODE,BfLen);
+
+        EmptyBuffer(Bf,BfLen);
+    }
+
+    sprintf (Bf,"Line %3d: --- End of BLOB b40k ---\n",i);
+    BfLen = strlen(Bf);
+
+    EXEC SQL INSERT CURSOR BCW2 VALUES (:Bf:BfLen);
+    EXEC SQL CLOSE BCW2;
+
+return(BlobId);
+}
+/*******************************************************************
+ * Write the blob to the database.
+ *******************************************************************/
+GDS__QUAD WriteBlob3(L, Bf, BlobId)
+unsigned short L;
+char *Bf;
+GDS__QUAD BlobId;
+{
+
+unsigned short BfLen;
+int i;
+    EXEC SQL WHENEVER SQLERROR GOTO ERR3;
+
+    EXEC SQL DECLARE BCW3 CURSOR FOR INSERT BLOB b64k INTO big_blob;
+    EXEC SQL OPEN BCW3 INTO :BlobId;
+
+    for (i=1; i<2; i++){
+
+        CreateSegment(Bf,L,i);
+        BfLen = strlen(Bf);
+	
+        EXEC SQL INSERT CURSOR BCW3 VALUES (:Bf:BfLen);
+
+        if (verbose)
+            printf("SQLCODE %d, BufferLen %d \n",SQLCODE,BfLen);
+
+        EmptyBuffer(Bf,BfLen);
+    }
+
+    sprintf (Bf,"Line %3d: --- End of BLOB b64k ---\n",i);
+    BfLen = strlen(Bf);
+
+    EXEC SQL INSERT CURSOR BCW3 VALUES (:Bf:BfLen);
+    EXEC SQL CLOSE BCW3;
+ERR3:
+	if (SQLCODE < 0)
+		EXEC SQL WHENEVER SQLERROR CONTINUE;
+		ErrTrap("WriteBlob3");
+
+return(BlobId);
+	
+}
+/**************************************************************
+ * Read records. 
+ **************************************************************/
+void ReadRecords()
+{
+EXEC SQL WHENEVER SQLERROR CONTINUE;
+EXEC SQL WHENEVER SQLERROR GO TO ReadERR;
+
+EXEC SQL DECLARE TCR CURSOR FOR
+         SELECT TEST_NAME,ROW_ID,b32k, b40k, b64k, COMMENT
+         FROM big_blob WHERE TEST_NAME = 'BlobLoader';
+
+EXEC SQL OPEN TCR;
+EXEC SQL FETCH TCR 
+INTO :Test_Name,:Row_Id,:b32k_id, :b40k_id, :b64k_id, :Comment;
+
+while (SQLCODE != 100){
+	printf("Test_Name: %s  Row_Id: %d  Comment: %s \n",Test_Name, Row_Id,Comment);
+	ReadBlob1(sizeof(b32k_segment));
+	ReadBlob2(sizeof(b40k_segment));
+	ReadBlob3(sizeof(b64k_segment));
+
+	EXEC SQL FETCH TCR 
+	INTO :Test_Name,:Row_Id,:b32k_id, :b40k_id, :b64k_id, :Comment;
+}
+EXEC SQL CLOSE TCR;
+
+ReadERR:
+EXEC SQL WHENEVER SQLERROR CONTINUE;
+	if (SQLCODE<0){
+        	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        	isc_print_status(gds__status);
+	}
+
+}
+
+/**************************************************************
+ * Read blobs from the table.
+ **************************************************************/
+void ReadBlob1(L)
+unsigned short L;
+{
+char *Bf;
+unsigned short Bl;
+int BlobSize;
+
+Bf = (char*) malloc(L);
+BlobSize = 0;
+
+EXEC SQL DECLARE BCR1 CURSOR FOR
+         READ BLOB b32k FROM big_blob;
+
+EXEC SQL OPEN BCR1 USING :b32k_id;
+EXEC SQL FETCH BCR1 INTO :Bf:Bl;
+
+while (SQLCODE != 100 || SQLCODE == 101){
+        printf("%*.*s\n",Bl,Bl,Bf);
+	BlobSize+= Bl;
+        EXEC SQL FETCH BCR1 INTO :Bf:Bl;
+ }
+printf("\n");
+printf("\n BlobSize = %d\n",BlobSize);
+EXEC SQL CLOSE BCR1;
+free(Bf);
+}
+/**************************************************************
+ * Read blobs from the table.
+ **************************************************************/
+void ReadBlob2(L)
+unsigned short L;
+{
+char *Bf;
+unsigned short Bl;
+int BlobSize;
+
+Bf = (char*) malloc(L);
+BlobSize = 0;
+
+EXEC SQL DECLARE BCR2 CURSOR FOR
+         READ BLOB b40k FROM big_blob;
+
+EXEC SQL OPEN BCR2 USING :b40k_id;
+EXEC SQL FETCH BCR2 INTO :Bf:Bl;
+
+while (SQLCODE != 100 || SQLCODE == 101){
+        printf("%*.*s\n",Bl,Bl,Bf);
+	BlobSize+= Bl;
+        EXEC SQL FETCH BCR2 INTO :Bf:Bl;
+ }
+printf("\n");
+printf("\n BlobSize = %d\n",BlobSize);
+EXEC SQL CLOSE BCR2;
+free(Bf);
+}
+/**************************************************************
+ * Read blobs from the table.
+ **************************************************************/
+void ReadBlob3(L)
+{
+char *Bf;
+unsigned short Bl;
+int BlobSize;
+
+Bf = (char*) malloc(L);
+BlobSize = 0;
+
+EXEC SQL DECLARE BCR3 CURSOR FOR
+         READ BLOB b64k FROM big_blob;
+
+EXEC SQL OPEN BCR3 USING :b64k_id;
+EXEC SQL FETCH BCR3 INTO :Bf:Bl;
+
+while (SQLCODE != 100 || SQLCODE == 101){
+        printf("%*.*s\n",Bl,Bl,Bf);
+	BlobSize+= Bl;
+        EXEC SQL FETCH BCR3 INTO :Bf:Bl;
+ }
+printf("\n");
+printf("\n BlobSize = %d\n",BlobSize);
+EXEC SQL CLOSE BCR3;
+free(Bf);
+}
+
+void ErrTrap(ModuleName)
+char ModuleName[30];
+{
+
+EXEC SQL WHENEVER SQLERROR CONTINUE;
+
+if (SQLCODE<0){
+	printf("Module: %s Database error, SQLCODE = %d\n",ModuleName,SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL ROLLBACK RELEASE;
+	EXEC SQL DISCONNECT ALL;
+}
+
+}
+
+$ GPRE -e -n blob33.e
+$ CC FLAG_CC blob33.c
+$ LINK FLAG_LINK blob33 
+$ RUN blob33
+$ DROP WHERE_GDB:blob33.gdb
+$ DELETE blob33*

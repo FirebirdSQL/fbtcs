@@ -1,0 +1,53 @@
+
+$CREATE COMMENT
+*******************************************************************************
+ 
+Test Name:  	EXT_REL_0_24_G
+Test Level:     0
+Series Name:    EXT_LEV_0
+Date:  		July G, 1994
+Author:  	Scott Van Voris
+Bug: 
+Description:    This is a Level 0 test which is designed to verify the 
+		syntax to create an external relation with certain column
+		specific syntax works properly.
+
+		In this case the 'DEFAULT 0' syntax is exercised.
+ 
+Expected Output:	Welcome to QLI
+			Query Language Interpreter
+			QLI> QLI> QLI> QLI> QLI> 
+			FIELD1   FIELD2
+			====== ==========
+ 
+			 12000 Success   
+			     0 Success   
+ 
+			QLI> QLI> 
+History:
+2-Oct-95:  Mark
+  Removed the Cleanup / Setup comments from the test.
+  Also, added WHERE_GDB and RUN drop_gdb to the tests. 
+
+*******************************************************************************
+
+$CREATE create.gdl
+
+DEFINE DATABASE "WHERE_GDB:ext_rel_0_24_G.gdb";
+
+DEFINE RELATION ext_table EXTERNAL_FILE "WHERE_GDB_EXTERNAL:external.dat"
+        field1 SHORT MISSING_VALUE IS 0,
+	field2 CHAR[10] ;
+
+$CREATE qli.in
+
+READY "WHERE_GDB:ext_rel_0_24_G.gdb";
+INSERT INTO ext_table (field1,field2) VALUES (12000,"Success");
+INSERT INTO ext_table (field2) VALUES ("Success");
+SELECT * FROM ext_table;
+
+$GDEF create.gdl
+$QLI < qli.in
+$DROP WHERE_GDB:ext_rel_0_24_G.gdb
+$DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
+$DELETE COMMENT qli.in create.gdl

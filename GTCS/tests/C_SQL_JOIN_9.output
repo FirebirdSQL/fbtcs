@@ -1,0 +1,36 @@
+Test:
+ select t1.c1,t2.c1,t2.c10,t2.table_row from ct1 t1 left outer join ct2 t2 on t1.c1 = t2.c1
+--------------------------------------------------------------------------------
+a-1       a-1       c10-1     ct2-1     
+a-2       a-2       c10-2     ct2-2     
+                                        
+a-4       a-4                 ct2-4     
+                                        
+1                                       
+
+
+* Total Records Listed >>> 6
+
+                    TABLE
+C1  C1      C10      ROW
+=== === ========== ======
+
+a-1 a-1 c10-1      ct2-1 
+a-2 a-2 c10-2      ct2-2 
+                   
+a-4 a-4            ct2-4 
+                   
+1                  
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C1     C1     C10        TABLE_ROW 
+====== ====== ========== ========= 
+
+a-1    a-1    c10-1      ct2-1     
+a-2    a-2    c10-2      ct2-2     
+<null> <null> <null>     <null>    
+a-4    a-4    <null>     ct2-4     
+<null> <null> <null>     <null>    
+1      <null> <null>     <null>    
+

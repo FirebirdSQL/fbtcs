@@ -1,0 +1,147 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sta003.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column spec> STARTING [WITH] <value spec>
+                        Case sensitive searches including blob string
+
+ Description:           char-field, starting with a single upper char
+
+                        SELECT CUSTNO, CUSTOMER
+                        FROM CUSTOMERS
+                        WHERE CUSTOMER STARTING WITH 'C'
+                        ORDER BY CUSTNO;
+
+ Tables:                customers
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON CUSTOMERS.CUSTNO               CustNo;
+BASED_ON CUSTOMERS.CUSTOMER             Customer;
+
+char Test[]="SELECT CUSTNO, CUSTOMER \
+FROM CUSTOMERS \
+WHERE CUSTOMER STARTING WITH 'C' \
+ORDER BY CUSTNO";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                        SELECT CUSTNO, CUSTOMER
+                        FROM CUSTOMERS
+                        WHERE CUSTOMER STARTING WITH 'C'
+                        ORDER BY CUSTNO;
+
+        EXEC SQL
+                OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :CustNo, :Customer;
+
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%d\t",CustNo);
+                printf("%s\n",Customer);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :CustNo, :Customer;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e sta003.e
+$ CC FLAG_CC sta003.c
+$ LINK FLAG_LINK sta003 
+$ RUN sta003
+$ CREATE sta003.qli
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+SELECT CUSTNO, CUSTOMER FROM CUSTOMERS 
+WHERE CUSTOMER STARTING WITH 'C' 
+ORDER BY CUSTNO;
+for customers sorted by custno with customer starting with 'C' print custno, customer;
+select count(*) from customers where customer starting with 'C';
+finish;
+quit;
+$ QLI -n -a sta003.qli
+$ CREATE sta003.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT CUSTNO, CUSTOMER FROM CUSTOMERS 
+WHERE CUSTOMER STARTING WITH 'C' 
+ORDER BY CUSTNO;
+select count(*) from customers where customer starting with 'C';
+quit;
+$ISQL -i sta003.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sta003* 

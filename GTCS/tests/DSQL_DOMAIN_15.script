@@ -1,0 +1,72 @@
+
+/*******************************************************************************
+ Test Name:       dsql_domain_15
+ Series Name:     dsql_domains
+ Date:            18-October-1993
+ Related Bugs:    bug_5659 - problem when using column default null on field
+                             based on domain with not null clause.
+ Comment:         This script will utilize the datatype, default and not null
+                  clauses in the create domain statement. A table is then 
+                  created using the domain definitions with overriding column
+                  deafults, then data is added to the table with missing fields 
+                  being supplied by the column or domain defaults.
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_15.sql
+create domain dom15a as smallint
+ default 0 not null;
+show domain dom15a;
+create domain dom15b as integer
+ default 500 not null;
+show domain dom15b;
+create domain dom15c as date
+ default 'today' not null;
+show domain dom15c;
+create domain dom15d as char(20)
+ default 'DEFAULT' not null;
+show domain dom15d;
+create domain dom15e as varchar(25)
+ default 'VARYING DEFAULT' not null;
+show domain dom15e;
+create domain dom15f as decimal(6,2)
+ default 4.2 not null;
+show domain dom15f;
+create domain dom15g as float
+ default 500.1 not null;
+show domain dom15g;
+create domain dom15h as double precision
+ default 1000 not null;
+show domain dom15h;
+create table tab15a
+ (fld1 dom15a default 5000, 
+  fld2 dom15b, 
+  fld3 dom15c default '01/01/90', 
+  fld4 dom15d default 'COL DEFAULT',
+  fld5 dom15e, 
+  fld6 dom15f default 0, 
+  fld7 dom15g default 500.2,
+  fld8 dom15h);
+show table tab15a;
+insert into tab15a (fld1) values (100);
+commit;
+insert into tab15a (fld2) values (200);
+commit;
+insert into tab15a (fld3) values ('12/12/57');
+commit;
+insert into tab15a (fld4) values ('20 characters xxxxxx');
+commit;
+insert into tab15a (fld5) values ('25 varying characters xxx');
+commit;
+insert into tab15a (fld6) values (2500);
+commit;
+insert into tab15a (fld7) values (10000);
+commit;
+insert into tab15a (fld8) values (200000);
+commit;
+select * from tab15a;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_15.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_15.sql

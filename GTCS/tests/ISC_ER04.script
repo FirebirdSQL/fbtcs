@@ -1,0 +1,44 @@
+
+$ CREATE er4.c
+/*
+ *	isc_dsql_execute_immediate
+ *
+ *	Pass an invalid database handle.
+ * 
+ *  Test name: er4.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	char	*buf = "update x set y = 0";
+
+	LogPrintf("Running ER4, invalid db handle\n");
+	LogPrintf("to isc_execute_immediate\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_dsql_execute_immediate(status, &DB, &trans,0, buf, 1, 0L))==0)
+		LogPrintf("BUG: execute_immed on invalid DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	if ((rc=isc_dsql_execute_immediate(status, &DB, &trans,0, buf, 1, 0L))==0)
+		LogPrintf("BUG: execute_immed on Null DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER4\n");
+}
+$ CC FLAG_CC er4.c
+$ LINK FLAG_LINK er4 
+$ RUN er4
+$ DELETE er4*

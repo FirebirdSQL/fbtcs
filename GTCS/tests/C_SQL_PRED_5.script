@@ -1,0 +1,184 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sin006.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ Syntax:		[NOT]SINGULAR <subquery>			
+ Description:           Nested subqueries - SINGULAR
+
+                        SELECT EMPNO
+                        FROM SALES_PEOPLE T1
+                        WHERE SINGULAR
+                        (SELECT *
+                        FROM SALES T2
+                        WHERE T1.EMPNO=T2.SALES_REP
+                        AND T2.TOTAL_VALUE > 6000 AND SINGULAR
+                        (SELECT *
+                        FROM CUSTOMERS T3
+                        WHERE T3.CUSTNO = T2.CUSTNO))AND SINGULAR
+                        (SELECT *
+                        FROM SALES_PERF T4
+                        WHERE T4.EMPNO = T1.EMPNO);
+
+ Tables:                sales, customers (many-to-one relationship)
+ Author:		Sam Hakim, Feb 18, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON SALES_PEOPLE.EMPNO         EmpNo;
+
+
+char Test[]="SELECT EMPNO \
+FROM SALES_PEOPLE T1 \
+WHERE SINGULAR \
+(SELECT * \
+FROM SALES T2 \
+WHERE T1.EMPNO=T2.SALES_REP \
+AND T2.TOTAL_VALUE > 6000 AND SINGULAR \
+(SELECT * \
+FROM CUSTOMERS T3 \
+WHERE T3.CUSTNO = T2.CUSTNO))AND SINGULAR \
+(SELECT * \
+FROM SALES_PERF T4 \
+WHERE T4.EMPNO = T1.EMPNO)";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT EMPNO
+                FROM SALES_PEOPLE T1
+                WHERE SINGULAR
+                (SELECT *
+                FROM SALES T2
+                WHERE T1.EMPNO=T2.SALES_REP
+                AND T2.TOTAL_VALUE > 6000 AND SINGULAR
+                (SELECT *
+                FROM CUSTOMERS T3
+                WHERE T3.CUSTNO = T2.CUSTNO))AND SINGULAR
+                (SELECT *
+                FROM SALES_PERF T4
+                WHERE T4.EMPNO = T1.EMPNO);
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :EmpNo;
+
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%d\n",EmpNo);
+                Underline(80);
+		
+                EXEC SQL
+                FETCH CR INTO :EmpNo;
+        }
+	
+NOMORE:
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e sin006.e
+$ CC FLAG_CC sin006.c
+$ LINK FLAG_LINK sin006 
+$ RUN sin006
+$ CREATE sin006.qli
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+
+select empno from sales_people t1 where singular 
+(select * from sales t2 where t1.empno=t2.sales_rep 
+and t2.total_value > 6000 and singular
+(select * from customers t3 where t3.custno = t2.custno)) and singular
+(select * from sales_perf t4 where t4.empno = t1.empno);
+
+/*--- table 1 and 2 join ---*/
+for t1 in sales_people with unique t2 in sales with t1.empno = t2.sales_rep
+and t2.total_value > 6000
+print t1.empno;
+
+select empno from sales_people t1 where 1 =
+(select count(*) from sales t2 where t1.empno=t2.sales_rep
+and t2.total_value > 6000 and 1 =
+(select count(*) from customers t3 where t3.custno = t2.custno)) and 1 =
+(select count(*) from sales_perf t4 where t4.empno = t1.empno);
+
+finish;
+quit;
+$QLI -a sin006.qli
+$CREATE sin006.sql
+select empno from sales_people t1 where singular
+(select * from sales t2 where t1.empno=t2.sales_rep
+and t2.total_value > 6000 and singular
+(select * from customers t3 where t3.custno = t2.custno)) and singular
+(select * from sales_perf t4 where t4.empno = t1.empno);
+
+select empno from sales_people t1 where 1 =
+(select count(*) from sales t2 where t1.empno=t2.sales_rep
+and t2.total_value > 6000 and 1 =
+(select count(*) from customers t3 where t3.custno = t2.custno)) and 1 =
+(select count(*) from sales_perf t4 where t4.empno = t1.empno);
+quit;
+$ISQL -i sin006.sql WHERE_GDB:sh_test.gdb
+$DROP WHERE_GDB:sh_test.gdb
+$DELETE sin006* 

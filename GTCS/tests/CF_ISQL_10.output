@@ -1,0 +1,20 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Generator GEN1, current value is 1000
+A                               INTEGER Nullable 
+GENID_FIELD                     Computed by: (a + gen_id(gen1, 1))
+
+           A           GENID_FIELD 
+============ ===================== 
+
+          10                  1011 
+          12                  1014 
+
+Generator GEN1, current value is 1000
+
+           A           GENID_FIELD 
+============ ===================== 
+
+          10                  1011 
+          12                  1014 
+
+Generator GEN1, current value is 1000

@@ -1,0 +1,69 @@
+Test:
+ SELECT PROJ_NO FROM PROJECTS WHERE PROJ_DESC STARTING WITH 'Porting'
+--------------------------------------------------------------------------------
+HH300
+--------------------------------------------------------------------------------
+DE300
+--------------------------------------------------------------------------------
+FJ300
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 3
+
+* Using GDML to print blob 
+HH300
+Porting our software to the Howard Hues
+platform.  All interfaces should be 
+available across the plaform.
+
+--------------------------------------------------------------------------------
+DE300
+Porting our software to the new Dec 
+platform.  All interfaces should be 
+available across the plaform.
+
+--------------------------------------------------------------------------------
+FJ300
+Porting our software to the Fujima
+platform.  All interfaces should be 
+available across the plaform.
+
+--------------------------------------------------------------------------------
+
+Project No
+==========
+
+ HH-3.00
+ DE-3.00
+ FJ-3.00
+
+
+Project No
+==========
+
+ HH-3.00
+ DE-3.00
+ FJ-3.00
+
+
+   COUNT
+===========
+
+          3
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+PROJ_NO 
+======= 
+
+HH300   
+DE300   
+FJ300   
+
+
+       COUNT 
+============ 
+
+           3 
+

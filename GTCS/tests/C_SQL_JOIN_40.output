@@ -1,0 +1,39 @@
+Test:
+ select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row from (st1 t left outer join st2 x on t.comp_s = x.comp_s) order by t.table_row ascending
+--------------------------------------------------------------------------------
+         1         101         101  st1-1                1         101         101  st2-1     
+         2         102         204  st1-2                2         102         204  st2-2     
+         2         102         204  st1-2               -2        -102         204  st2-6     
+         0         103           0  st1-3                0           0           0            
+         4           0           0  st1-4                0           0           0            
+         0           0           0  st1-5                0           0           0            
+        -1        -101         101  st1-6                1         101         101  st2-1     
+
+
+* Total Records Listed >>> 7
+
+                 COMP      TABLE                  COMP      TABLE
+  S1     S2        S        ROW    S1     S2        S        ROW
+====== ====== =========== ====== ====== ====== =========== ======
+
+     1    101         101 st1-1       1    101         101 st2-1 
+     2    102         204 st1-2       2    102         204 st2-2 
+     2    102         204 st1-2      -2   -102         204 st2-6 
+          103             st1-3                            
+     4                    st1-4                            
+                          st1-5                            
+    -1   -101         101 st1-6       1    101         101 st2-1 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+     S1      S2       COMP_S TABLE_ROW      S1      S2       COMP_S TABLE_ROW 
+======= ======= ============ ========= ======= ======= ============ ========= 
+
+      1     101          101 st1-1           1     101          101 st2-1     
+      2     102          204 st1-2           2     102          204 st2-2     
+      2     102          204 st1-2          -2    -102          204 st2-6     
+ <null>     103       <null> st1-3      <null>  <null>       <null> <null>    
+      4  <null>       <null> st1-4      <null>  <null>       <null> <null>    
+ <null>  <null>       <null> st1-5      <null>  <null>       <null> <null>    
+     -1    -101          101 st1-6           1     101          101 st2-1     
+

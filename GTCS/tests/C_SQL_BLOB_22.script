@@ -1,0 +1,187 @@
+
+$ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_22.gdb
+$ CREATE blob022.e
+/**********************************************************************
+ Purpose:               Test SQL blob support in InterBase 4.0
+ Description:           READ BLOB/INSERT BLOB to simulate an update. 
+ Author:                Sam Hakim, June 16, 93
+ Note:			READ/INSERT cursors will use the sam blob id.
+ **********************************************************************/
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_blobs_22.gdb";
+EXEC SQL	INCLUDE SQLCA;
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+
+BASED_ON MB1.TEST_NAME      Test_Name;
+BASED_ON MB1.COMMENT        Comment;
+BASED_ON MB1.ROW_ID         Row_Id;
+BASED_ON MB1.B              BlobId1;
+
+int verbose;
+
+struct Buf{
+    char            *Buffer[5];			/* Buffer vector to store blobs */
+    unsigned short  BufferLen[5];		
+};
+struct Buf M;
+
+char Test[]="DECLARE TCR CURSOR FOR SELECT TEST_NAME,ROW_ID,B,COMMENT \
+FROM MB1 WHERE ROW_ID <2 FOR UPDATE OF TEST_NAME,ROW_ID,B,COMMENT";
+
+void Underline();
+void UpdateBlob();
+void WriteBlob();
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+short                       i,j,k,l;
+int Count;
+
+    verbose = FALSE;
+    if (--argc > 0){
+        if (*argv[1] == 'v' || *argv[1] == 'V')
+            verbose = TRUE;
+        }
+
+    READY;              /* Bug 4549 will be fixed in verion G */
+    START_TRANSACTION;
+
+    printf("Test:\n %s \n",Test);
+    M.Buffer[0] = (char*) malloc(80);
+    M.BufferLen[0] = 80;
+	
+    EXEC SQL DECLARE TCR CURSOR FOR
+             SELECT TEST_NAME,ROW_ID,B,COMMENT
+             FROM MB1 WHERE ROW_ID <2 FOR UPDATE OF TEST_NAME,ROW_ID,B,COMMENT;
+
+    EXEC SQL OPEN TCR ;
+    EXEC SQL FETCH TCR INTO :Test_Name,:Row_Id,:BlobId1,:Comment;
+
+    UpdateBlob(M.Buffer[0],M.BufferLen[0]);
+    strcpy(Test_Name,"blob022");
+	
+    EXEC SQL UPDATE MB1 SET TEST_NAME = :Test_Name, ROW_ID = 1, B = :BlobId1,
+	COMMENT = "Blob Update" WHERE CURRENT OF TCR;
+    EXEC SQL CLOSE TCR;
+    EXEC SQL COMMIT;
+
+FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/************************************************************
+ * U p d a t e B l o b
+ ************************************************************/
+ void UpdateBlob(Bf,L)
+ char *Bf;
+ short L;
+ {
+ unsigned short Bl;
+ int BlobSize;
+ char *BigBuffer;
+
+ /* Allocate 100 k for buffer */
+ BigBuffer = (char*) malloc(1024*100);
+
+ if (!BigBuffer)		
+	printf("\n\n Error: Could not allocate 100K memory \n");
+ 
+ BigBuffer[0] = 0;
+ BlobSize = 0;
+
+ EXEC SQL DECLARE BCR CURSOR FOR
+          READ BLOB B FROM MB1;
+
+ EXEC SQL OPEN BCR USING :BlobId1;
+ EXEC SQL FETCH BCR INTO :Bf:Bl;
+
+ while (SQLCODE != 100 || SQLCODE == 101){
+	if (verbose)
+		printf("%*.*s\n",Bl,Bl,Bf);
+	BlobSize += Bl;
+	strncat(BigBuffer,Bf,Bl);
+        EXEC SQL FETCH BCR INTO :Bf:Bl;
+ }
+ EXEC SQL CLOSE BCR;		
+
+ strncat(BigBuffer,"Updated",7);
+ BlobSize +=7;
+ WriteBlob(BigBuffer,BlobSize);
+ free (BigBuffer);
+
+ERR:
+	if (SQLCODE < 0){
+		printf("Database error, SQLCODE = %d\n",SQLCODE);
+        	isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+	}
+
+}
+/***********************************************************
+ * U n d e r l i n e
+ * print an underline
+ ***********************************************************/
+void Underline(i)
+int i;
+{
+int j;
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+}
+/************************************************************
+ * W r i t e B l o b
+ ************************************************************/
+ void WriteBlob(Bf,L)
+ char *Bf;
+ short L;
+ {
+
+    EXEC SQL WHENEVER SQLERROR CONTINUE;
+    EXEC SQL WHENEVER SQLERROR GOTO ERR1;
+    EXEC SQL DECLARE BCW CURSOR FOR INSERT BLOB B INTO MB1 MAXIMUM_SEGMENT 65535;
+    EXEC SQL OPEN BCW INTO :BlobId1;      	
+    EXEC SQL INSERT CURSOR BCW VALUES (:Bf:L);
+    EXEC SQL CLOSE BCW;
+    if (verbose)
+    	printf("The new blob:\n %*.*s\n",L,L,Bf);
+
+ERR1:
+	if (SQLCODE <0){
+        printf("WriteBlob: Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+	EXEC SQL ROLLBACK;
+	}
+
+}
+
+$ GPRE -e blob022.e
+$ CC FLAG_CC blob022.c
+$ LINK FLAG_LINK blob022 
+$ RUN blob022
+$ CREATE blob022.qli
+ready WHERE_GDB:sh_blobs_22.gdb;
+select test_name, row_id, comment, b from mb1 where test_name = 'blob022';
+finish;
+quit;
+$ QLI -n -a blob022.qli
+$DROP WHERE_GDB:sh_blobs_22.gdb
+$ DELETE blob022*

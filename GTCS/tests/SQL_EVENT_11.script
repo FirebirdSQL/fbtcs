@@ -1,0 +1,82 @@
+
+$ CREATE comment.txt
+Author: Sudhanshu Kumar
+Trgger calls a procedure which posta an event in application program.
+$CREATE event11.sql
+create database "WHERE_GDB:events.gdb";
+create table project  ( PNAME   VARCHAR(15) Not Null,
+                        PNUMBER     INTEGER);
+
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     INTEGER);
+
+insert into project values('ProductX',1);
+insert into project values('ProductY',2);
+insert into project values('ProductZ',3);
+
+insert into works_on values (1,1,1);
+insert into works_on values (2,2,2);
+insert into works_on values (3,3,3);
+
+set term go;
+create procedure proc1 as
+begin
+  post_event 'abc';
+  insert into works_on values (11,11,11);
+end
+go
+create trigger trig01 for project
+active before update position 1
+as begin
+   execute procedure proc1;
+end
+go
+set term ; go
+exit;
+$ISQL -I event11.sql -sqldialect 1
+$ CREATE foo.e
+#include <stdio.h>
+DATABASE DB = "WHERE_GDB:events.gdb"
+main()
+{
+  EXEC SQL 
+	CONNECT DB;
+  EXEC SQL 
+	SET TRANSACTION;
+  EXEC SQL 
+	EVENT INIT xyz DB ("abc") ;
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+
+  EXEC SQL 
+	EVENT WAIT xyz;
+  EXEC SQL 
+	COMMIT WORK;
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+  else
+        printf ("\nfoo done, event (abc) was posted.\n");
+
+ EXEC SQL
+	DISCONNECT DB;
+
+ return 0;
+}
+$ GPRE  -n -m foo.e
+$ CC FLAG_CC foo.c
+$ LINK FLAG_LINK foo 
+$ RUN_BG foo > foo.tt1 &
+$ SLEEP  5
+$ ISQL WHERE_GDB:events.gdb
+update project set pnumber = 11 where pnumber = 1;
+commit;
+select * from project;
+select * from works_on;
+exit;
+$ SLEEP 5
+$ TYPE foo.tt1
+$ DROP WHERE_GDB:events.gdb
+$ DELETE comment.txt foo* event11.sql

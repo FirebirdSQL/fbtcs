@@ -1,0 +1,42 @@
+
+$ CREATE er16.c
+/*
+ *	isc_start_transaction
+ *
+ *	Pass an invalid database handle.
+ * 
+ *  Test name: er16.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+
+	LogPrintf("Running ER16, start trans. on invalid DB.\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_start_transaction(status, &trans, 1, &DB,0, NULL))==0)
+		printf("BUG: start trans. on invalid DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	if ((rc=isc_start_transaction(status, &trans, 1, &DB,0, NULL))==0)
+		printf("BUG: start trans. on NUll DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER16\n");
+}
+$ CC FLAG_CC er16.c
+$ LINK FLAG_LINK er16 
+$ RUN er16
+$ DELETE er16*

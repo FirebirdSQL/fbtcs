@@ -1,0 +1,60 @@
+
+$ CREATE er35.c
+/*
+ *	isc_array_lookup_bounds
+ *
+ *	Pass an invalid transaction handle.
+ * 
+ *  Test name: er35.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+
+int main()
+{
+	extern  char empdb[128];
+
+	isc_db_handle	DB = NULL, DB2 = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	ISC_ARRAY_DESC	desc;
+
+	LogPrintf("Running ER35, invalid transaction handle\n");
+	LogPrintf("to isc_array_lookup_bounds\n");
+
+	fill_db_parameter_buffer();
+
+	if (isc_attach_database(status, 0, empdb, &DB, 0, 0L))
+		{ERREXIT(status, rc, err_buf)};
+
+	if ((rc=isc_start_transaction(status, &trans, 1, &DB2, 0, NULL))==0)
+		LogPrintf("BUG: Bad DB to start trans.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_array_lookup_bounds(status, &DB, &trans,"TBL1",
+			"IONE", &desc))==0)
+		LogPrintf("BUG: Bad tr handle to array lookup bounds\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	trans = NULL;
+	if ((rc=isc_array_lookup_bounds(status, &DB, &trans,"TBL1",
+			"IONE", &desc))==0)
+		LogPrintf("BUG: Bad tr handle to array lookup bounds\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_detach_database(status, &DB)) !=0)
+		{ERREXIT(status, rc, err_buf)};
+
+	LogPrintf("Finished ER35\n");
+}
+$ CC FLAG_CC er35.c
+$ CC FLAG_CC globals.c
+$ LINK FLAG_LINK er35 globals 
+$ RUN er35
+$ DELETE er35*

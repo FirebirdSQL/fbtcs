@@ -1,0 +1,47 @@
+Use CONNECT or CREATE DATABASE to specify a database
+A                               INTEGER Nullable 
+B                               INTEGER Nullable 
+A_B                             Computed by: (a*b)
+
+                  
+================= 
+
+Passed 1 - Insert 
+
+
+                  
+================= 
+
+Passed 1 - Update 
+
+A                               INTEGER Nullable 
+B                               INTEGER Nullable 
+C                               INTEGER Nullable 
+A_B_C                           Computed by: (a*b/c)
+
+                  
+================= 
+
+Passed 2 - Insert 
+
+
+                  
+================= 
+
+Passed 2 - Update 
+
+A                               INTEGER Nullable 
+B                               INTEGER Nullable 
+A_B_CONST                       Computed by: (a/10*b)
+
+                  
+================= 
+
+Passed 3 - Insert 
+
+
+                  
+================= 
+
+Passed 3 - Update 
+

@@ -1,0 +1,68 @@
+
+$CREATE init.gdl
+
+define database "WHERE_GDB:index.gdb";
+ 
+define field fld1 short;
+define field fld2 varying[25];
+
+define relation data_table1
+fld1 position 0,
+fld2 position 1;
+
+define index idx1_1 for data_table1 unique fld1;
+define index idx1_2 for data_table1 fld1;
+define index idx1_3 for data_table1 desc fld1;
+define index idx1_4 for data_table1 asc fld1;
+
+$CREATE init.qli
+
+READY "WHERE_GDB:index.gdb";
+
+show indexes;
+
+insert into data_table1 (fld1, fld2) values (1, 'one');
+insert into data_table1 (fld1, fld2) values (2, 'two');
+insert into data_table1 (fld1, fld2) values (3, 'three');
+
+select fld1, fld2 from data_table1 order by fld1;
+select fld1, fld2 from data_table1 order by fld1 desc;
+select fld1, fld2 from data_table1 order by fld1 asc;
+
+finish;
+quit;
+
+$CREATE init.sql
+
+connect 'WHERE_GDB:index.gdb';
+create table data_table2(
+fld1 integer not null,
+fld2 varchar(10) not null
+);
+create unique index idx2_1 on data_table2(fld1);
+create index idx2_2 on data_table2(fld1);
+create desc index idx2_3 on data_table2(fld1);
+create asc  index idx2_4 on data_table2(fld1);
+
+show index;
+
+insert into data_table2 values(1,'one');
+insert into data_table2 values(2,'two');
+insert into data_table2 values(3,'three');
+
+select * from data_table1 order by fld1;
+select * from data_table1 order by fld1 desc;
+select * from data_table1 order by fld1 asc;
+
+select * from data_table2 order by fld1;
+select * from data_table2 order by fld1 desc;
+select * from data_table2 order by fld1 asc;
+
+drop database;
+exit;
+
+$GDEF init.gdl
+$QLI -n -a init.qli
+$ISQL -i init.sql
+$DELETE init.*
+

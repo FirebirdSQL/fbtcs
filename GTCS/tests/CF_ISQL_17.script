@@ -1,0 +1,119 @@
+
+/*
+**  Name:		cf_isql_17
+**  Series:		cf_isql
+**  Meta-Series:
+**  Dependencies:	None
+**  Description:	This test is a level one test case for computed-fields.
+**			
+**			This test uses simple arithmetic operations 
+**			and generators when defining computed-fields. 
+**  Expected result:	See source
+**			
+**  Author:		Patrick J. P. Griffin
+**  Bugs:		
+**  Change history:
+**
+*/
+$ CREATE cf_test.sql
+create database "WHERE_GDB:cf.gdb";
+
+create generator gen1;
+set generator gen1 to 999;
+show generator gen1;
+
+create generator gen2;
+set generator gen2 to 199;
+show generator gen2;
+
+create generator gen3;
+set generator gen3 to 29;
+show generator gen3;
+
+create table t0 (
+        a integer,
+        genid_field1 computed by (gen_id(gen1, 1)),
+        genid_field2 computed by (gen_id(gen2, genid_field1)),
+        genid_field3 computed by (gen_id(gen3, genid_field2))
+);
+
+show table t0;
+insert into t0(a) values(4);
+insert into t0(a) values(1);
+
+/* first row:
+   a:  4
+   genid_field3:=genid3+(genid2+(genid1+1))
+               :=29+(199+(999+1)
+               :=29+(199+1000)
+               :=29+1199
+               :=1228
+   second row:
+   a: 1
+   genid_field3:=genid3+(genid2+(genid1+1))
+               :=1228+(1199+(1000+1)
+               :=1228+(1199+1001)
+               :=1228+(2200)
+               :=3428
+
+so expected result is:
+
+           A          GENID_FIELD3
+============ =====================
+
+           4                  1228
+           1                  3428
+
+*/
+
+
+select a,genid_field3 from t0;
+
+/* first row:
+   a:  4
+   genid_field3:=genid3+(genid2+(genid1+1))
+               :=3428+(2200+(1001+1)
+               :=3428+(2200+1002)
+               :=3429+3202
+               :=6630
+   genid_field2:=genid2+(genid1+1)
+               :=3202+(1002+1)
+               :=3202+1003
+               :=4205
+   genid_field1:=genid1+1
+               :=1003+1
+               :=1004
+
+   second row:
+   a:  1
+   genid_field3:=genid3+(genid2+(genid1+1))
+               :=6630+(4205+(1004+1))
+               :=6630+(4205+1005)
+               :=6630+5210
+               :=11840
+   genid_field2:=genid2+(genid1+1)
+               :=5210+(1005+1)
+               :=5210+1006
+               :=6216
+   genid_field1:=genid1+1
+               :=1006+1
+               :=1007
+
+so expected result is:
+
+           A          GENID_FIELD1          GENID_FIELD2          GENID_FIELD3
+============ ===================== ===================== =====================
+
+           4                  1004                  4205                  6630
+           1                  1007                  6216                 11840
+
+
+*/
+
+select * from t0;
+
+drop database;
+exit;
+
+$ ISQL -m -input cf_test.sql
+$ DELETE cf_test.sql

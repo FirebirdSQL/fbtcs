@@ -1,0 +1,23 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb -e
+set term go;
+create procedure proc9  RETURNS (a integer) as
+begin
+  for select distinct max(qty) from sp where qty > 300 into :a
+  do  SUSPEND;
+end
+go
+set term ; go
+set echo;
+EXECUTE PROCEDURE PROC9;
+SELECT * FROM PROC9;
+SELECT MAX(A) FROM PROC9;
+SELECT A FROM PROC9;
+SELECT * FROM PROC9 ORDER BY A;
+SELECT A, AVG(A) FROM PROC9 GROUP BY A HAVING AVG(A) > 350;
+SELECT A, AVG(A) FROM PROC9 GROUP BY A;
+SELECT A FROM PROC9
+		WHERE A = (SELECT AVG(A) FROM PROC9);
+exit;
+$ DROP WHERE_GDB:sp1.gdb 

@@ -1,0 +1,33 @@
+SQL> set term go;
+SQL> create procedure proc_arr (city_in char(25))
+CON> RETURNS (cit char(25), stat char(5), populatio integer, rain_arra blob) as
+CON> begin
+CON> 
+CON>         SELECT city, state, population, rain_array
+CON>         FROM cities
+CON>         WHERE CITY = :city_in
+CON>         INTO :cit, :stat, :populatio, :rain_arra;
+CON> 
+CON> SUSPEND;
+CON> end
+CON> go
+SQL> set term ; go
+SQL> commit;
+SQL> select * from  proc_arr ("Sacramento");
+
+CIT                       STAT      POPULATIO         RAIN_ARRA 
+========================= ====== ============ ================= 
+
+Sacramento                CA           275741             81:e8 
+==============================================================================
+RAIN_ARRA:  
+BLOB display set to subtype 1. This BLOB: subtype = 0
+
+==============================================================================
+
+SQL> show procedures;
+Procedure Name                    Dependency, Type
+================================= ======================================
+PROC_ARR                          CITIES, Table
+SQL> commit;
+SQL> quit;

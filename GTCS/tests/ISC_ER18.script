@@ -1,0 +1,55 @@
+
+$ CREATE er18.c
+/*
+ *	isc_start_multiple
+ *
+ *	Pass an invalid database handle.
+ * 
+ *  Test name: er18.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+
+typedef struct {
+	isc_db_handle *dbb_ptr;
+	long tpb_len;
+	char *tpb_ptr;
+} TEB;
+
+TEB teb_vec[1];
+
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+
+	LogPrintf("Running ER18, start multiple on invalid DB.\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	teb_vec[0].dbb_ptr = &DB;
+
+	if ((rc=isc_start_multiple(status, &trans, 1, teb_vec)) ==0)
+		LogPrintf("BUG: start multiple on invalid DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	teb_vec[0].dbb_ptr = &DB;
+
+	if ((rc=isc_start_multiple(status, &trans, 1, teb_vec)) ==0)
+		LogPrintf("BUG: start multiple on Null DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER18\n");
+}
+$ CC FLAG_CC er18.c
+$ LINK FLAG_LINK er18 
+$ RUN er18
+$ DELETE er18*

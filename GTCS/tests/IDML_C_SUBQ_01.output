@@ -1,0 +1,22 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+
+       INT_1 
+============ 
+
+           1 
+           2 
+           3 
+           4 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+       INT_2 CHAR_2     
+============ ========== 
+
+           1 aa aa      
+           2 bb bb      
+           3 cc cc      
+           4 ab cd      
+

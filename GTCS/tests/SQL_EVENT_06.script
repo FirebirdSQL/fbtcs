@@ -1,0 +1,79 @@
+
+$ CREATE comment.txt
+Name: Sudhanshu Kumar
+This checks when a mass update happens for a table then triggers gets fired
+and event gets posted. 
+$CREATE event6.sql
+create database "WHERE_GDB:events.gdb";
+create table project  ( PNAME   VARCHAR(15) Not Null,
+                        PNUMBER     INTEGER,
+                        PRIZE        DOUBLE PRECISION);
+
+insert into project values('ProductX',1,22);
+insert into project values('ProductY',2,26);
+
+commit;
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     DOUBLE PRECISION);
+insert into works_on values (1,1,20);
+commit;
+
+set term go;
+create trigger trig01 for project 
+active after update position 1
+as 
+declare variable x int;
+begin
+    insert into works_on values (4, 4, new.prize/old.prize);     
+    post_event 'event1';
+end
+go
+set term ; go
+exit;
+$ISQL -I event6.sql -sqldialect 1
+$ CREATE foo6.e
+
+DATABASE DB = "WHERE_GDB:events.gdb"
+# include <stdio.h>
+main()
+{
+  EXEC SQL 
+	CONNECT DB;
+  EXEC SQL 
+	SET TRANSACTION;
+  EXEC SQL 
+	EVENT INIT xyz DB ("event1");
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+
+  EXEC SQL 
+	EVENT WAIT xyz;
+  EXEC SQL 
+	COMMIT WORK;
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+  else
+        printf ("\nfoo6 done, event (event1) was posted.\n");
+
+ EXEC SQL
+	DISCONNECT DB;
+
+ return 0;
+}
+$ GPRE  -n -m foo6.e
+$ CC FLAG_CC foo6.c
+$ LINK FLAG_LINK foo6 
+$ RUN_BG foo6 > foo6.tt1 &
+$ SLEEP 5
+$ ISQL -m WHERE_GDB:events.gdb
+update project set prize = prize * 1.05 ;
+commit;
+select * from project;
+select * from works_on;
+$ SLEEP 5
+$ TYPE foo6.tt1
+$ DROP WHERE_GDB:events.gdb 
+$ DELETE foo6* comment.txt event6.sql

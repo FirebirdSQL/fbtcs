@@ -1,0 +1,39 @@
+
+$ CREATE proc_err.sql 
+create database "WHERE_GDB:proc_err.gdb";
+create table block_trace (block_no char(1), check_pt int);
+commit;
+set term !!;
+create procedure p_error1 RETURNS (block_in varchar(50)) as
+begin
+    insert into block_trace values ('A', 1);
+    insert into block_trace values ('AAA', 2);
+    insert into block_trace values ('A', 3);
+    suspend;
+    begin
+       insert into block_trace values ('B', 1);
+       insert into block_trace values ('B', 2);
+       insert into block_trace values ('B', 3);
+       suspend;
+       begin
+          insert into block_trace values ('C', 1);
+          insert into block_trace values ('C', 2);
+          insert into block_trace values ('C', 3);
+          suspend;
+       end
+       insert into block_trace values ('B', 4);
+      when SQLCODE -802 do
+       begin
+        block_in = 'Error handled in block B.';
+        suspend;
+       end
+     end  
+     insert into block_trace values ('A', 4);
+end !!
+set term ; !!
+select * from p_error1;
+select * from block_trace;
+exit;
+$ ISQL -i proc_err.sql
+$ DELETE proc_err.sql
+$ DROP WHERE_GDB:proc_err.gdb

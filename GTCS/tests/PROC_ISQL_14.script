@@ -1,0 +1,24 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure proc16 RETURNS (a varchar(20), b integer) as
+begin
+   for select pname,weight from p where weight < (select avg(weight) from p)
+      into :a, :b
+   do SUSPEND;
+end
+go
+set term ; go
+set echo;
+EXECUTE PROCEDURE PROC16 ;
+SELECT * FROM PROC16;
+SELECT MAX(B) FROM PROC16;
+SELECT  B FROM PROC16;
+SELECT A,B FROM PROC16 ORDER BY A;
+SELECT A, AVG(B) FROM PROC16 GROUP BY A HAVING AVG(B) > 10;
+SELECT A, AVG(B) FROM PROC16 GROUP BY A ;
+SELECT A , B FROM PROC16
+        WHERE B > (SELECT AVG(B) FROM PROC16);
+exit;
+$ DROP WHERE_GDB:sp1.gdb 

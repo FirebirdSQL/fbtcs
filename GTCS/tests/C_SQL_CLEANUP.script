@@ -1,0 +1,9 @@
+
+$CREATE cmt
+This test is being added to the C_SQL_* series to ensure that all files created by
+tests in this series are removed once the series has completed.
+
+24-Aug-1998  M. Duquette
+
+$DELETE sh_blobs.gbk
+$DELETE cmt

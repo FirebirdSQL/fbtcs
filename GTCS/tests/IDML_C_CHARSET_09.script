@@ -1,0 +1,151 @@
+
+$ CREATE comment
+By:          Clare Taylor
+Date:        08/18/94
+Test name:   IDML_C_CHARSET_09
+Series:      IDML_C_CHARSET          
+Results:     outputs data used for bug 6092 in a better format.
+	     Uses both isql and embedded to look at the records.
+Dependency:  none
+History:
+8/18/94:     Failing on local NT runs so this was written to make
+	     debugging easier.
+11/10/94:    Added manual transactions so we don't see the warning
+	     that was added in build AA. When SET NAMES is used, we
+	     should use -m and manual transactions.
+16-Feb-2000 JLI:  Added #include <gds.h> for the gds calls.
+
+Description:
+Originally, data was read from a file.  The read was not
+being done properly and results were different between NT and UNIX.
+Neither system was loading the proper data from the flat file!
+
+The test came from bug6092 which produced different results depending
+on where it was run.  This produced questions about whether or not
+Japanese loads were working on NT. I modified the load to use ISQL
+INSERTs with michael's original data (cut and pasted so it should be
+identical).  It now inputs and outputs the same data on Unix.
+
+$ CREATE j1.sql 
+CREATE DATABASE 'WHERE_GDB:sundb.gdb' DEFAULT CHARACTER SET SJIS;
+CREATE TABLE NJINDATA (
+  row smallint,
+  MYOUJI CHAR(11),
+  NAMAE CHAR (11),
+  KAISHA CHAR(25),
+  DENWABANGOU CHAR(23));
+COMMIT;
+
+CREATE TABLE JA (
+  row smallint,
+  LNAME CHAR(11),
+  FNAME CHAR (11),
+  COMP CHAR(25),
+  PHONE CHAR(23));
+COMMIT;
+QUIT;
+
+$ CREATE j2.sql 
+SET NAMES EUCJ_0208;
+CONNECT "WHERE_GDB:sundb.gdb";
+SELECT '           LIKE %ÆÃ%:',ROW,COMP FROM JA WHERE COMP LIKE '%ÆÃ%';
+SELECT 'LIKE _EUCJ_0208 %ÆÃ%:',ROW,COMP FROM JA WHERE COMP LIKE _EUCJ_0208'%ÆÃ%';
+SELECT 'LIKE _SJIS_0208 %“Á%:',ROW,COMP FROM JA WHERE COMP LIKE _SJIS_0208'%“Á%';
+SELECT 'LIKE _SJIS_0208 %ÆÃ%',ROW,COMP FROM JA WHERE COMP LIKE _SJIS_0208'%ÆÃ%'	/* bogus case */;
+SELECT '          = ÅìÍÎÆÃÇä:',ROW,COMP FROM JA WHERE COMP = 'ÅìÍÎÆÃÇä';
+QUIT;
+
+$ CREATE f1.e
+#include "WHERE_FILES:tcs.h"
+#include <gds.h>
+EXEC SQL WHENEVER SQLERROR GOTO ERR;
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL SET DATABASE dbfoo = "WHERE_GDB:sundb.gdb";
+EXEC SQL BEGIN DECLARE SECTION;       /* moved the vars here */ 
+  BASED ON JA.ROW      p_row;    
+  BASED ON JA.LNAME    fam_name;
+  BASED ON JA.FNAME    name;
+  BASED ON JA.COMP     comp_name;
+  BASED ON JA.PHONE    tel_num;
+EXEC SQL END DECLARE SECTION;
+
+main()
+{
+    EXEC SQL SET NAMES EUCJ;  
+    EXEC SQL CONNECT dbfoo;           
+    EXEC SQL SET TRANSACTION;
+    /*--------------------------------------------------------------
+	This works well and was used to insure that the data were
+	loaded properly.  For easier reading, I then took out most
+	of the variables.  If there is ever a question of data loaded,
+	put it back in and use the alternate print statement below. */
+    EXEC SQL
+          DECLARE C_GET CURSOR FOR
+          SELECT ROW, LNAME, FNAME, COMP FROM JA;      
+
+    EXEC SQL OPEN C_GET;    
+    EXEC SQL FETCH C_GET INTO :p_row, :fam_name, :name, :comp_name;
+    /*---------------------------------------------------------------*/
+    /*
+    EXEC SQL
+          DECLARE C_GET CURSOR FOR
+          SELECT ROW, COMP FROM JA;      
+
+    EXEC SQL OPEN C_GET;    
+    EXEC SQL FETCH C_GET INTO :p_row, :comp_name;
+    */
+    while (SQLCODE == 0)
+         {
+          /* Use this if you use the cursor that selects all data:*/
+
+	  printf ("%-3d %-11s %-11s %-25s\n", p_row, fam_name, name, comp_name);
+          EXEC SQL FETCH C_GET INTO :p_row, :fam_name, :name, :comp_name;
+          
+	  /*
+          printf ("%-3d  %-25s\n", p_row, comp_name);
+          EXEC SQL FETCH C_GET INTO :p_row, :comp_name;
+	 */
+         }
+    EXEC SQL CLOSE C_GET;    
+    EXEC SQL COMMIT;
+exit(0);
+ERR:
+        isc_print_sqlerror (SQLCODE, gds__status);
+        isc_print_status (gds__status);
+exit(1);    
+}
+$ CREATE sqldata.sql
+SET NAMES EUCJ;
+CONNECT WHERE_GDB:sundb.gdb;
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(1,'»°µÈ', 'µ±', 'Æü¸÷´Ñ¸÷');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(2,'¹­ÅÄ', '½ç»Ò', 'ÆÃµÞ¶ä¹Ô');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(3,'°¤Éô', '¹°Èþ', '£Â£Ò£É£Ô£Å¡¡£Ã£Ì£Å£Á£Î');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(4,'ÎëÌÚ', '¤µ¤ó¤´', '£È£Ï£Ì£É£Ä£Á£Ù¡¡£É£Î£Î');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(5,'¾®ÎÓ', '´îÈþ»Ò', '¹­¡¼£Î');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(6,'¥ß¥é¡¼', '¥Ù¥ó', 'ÅìÍÎÆÃÇä');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(7,'Æ£¸¶', '¿¿µª»Ò', 'ÆüËÜ£Ç£Ï');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(8,'²Ï¾å', '·½»Ò', '¹Ò¹Ô³¤´Ñ');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(9,'¿¹ËÜ', 'É÷»Ò', 'ÂçÆó°õ');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(10,'¹­ÅÄ','½ç»Ò', 'aaaaabbbbbcccccdddddÆÃ');
+COMMIT;
+QUIT;
+$ CREATE dat1
+»°µÈ         µ±           Æü¸÷´Ñ¸÷                   05424558
+¹­ÅÄ         ½ç»Ò         ÆÃµÞ¶ä¹Ô                   05494129
+°¤Éô         ¹°Èþ         £Â£Ò£É£Ô£Å¡¡£Ã£Ì£Å£Á£Î     02454324
+ÎëÌÚ         ¤µ¤ó¤´       £È£Ï£Ì£É£Ä£Á£Ù¡¡£É£Î£Î     07267932
+¾®ÎÓ         ´îÈþ»Ò       ¹­¡¼£Î                     033424524
+¥ß¥é¡¼       ¥Ù¥ó         ÅìÍÎÆÃÇä                   04524652
+Æ£¸¶         ¿¿µª»Ò       ÆüËÜ£Ç£Ï                   033545842
+²Ï¾å         ·½»Ò         ¹Ò¹Ô³¤´Ñ                   02345234
+¿¹ËÜ         É÷»Ò         ÂçÆó°õ                     02452462
+¹­ÅÄ         ½ç»Ò         aaaaabbbbbcccccdddddÆÃ     05494128
+$ ISQL -i j1.sql -m
+$ ISQL -i sqldata.sql -m
+$ GPRE -e -m f1.e
+$ CC FLAG_CC f1.c
+$ LINK FLAG_LINK f1 
+$ RUN f1
+$ ISQL -i j2.sql -m
+$ DROP WHERE_GDB:sundb.gdb
+$ DELETE dat1 f1* comment j1.sql j2.sql sqldata.sql

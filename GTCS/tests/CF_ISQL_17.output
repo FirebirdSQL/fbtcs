@@ -1,0 +1,22 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Generator GEN1, current value is 999
+Generator GEN2, current value is 199
+Generator GEN3, current value is 29
+A                               INTEGER Nullable 
+GENID_FIELD1                    Computed by: (gen_id(gen1, 1))
+GENID_FIELD2                    Computed by: (gen_id(gen2, genid_field1))
+GENID_FIELD3                    Computed by: (gen_id(gen3, genid_field2))
+
+           A          GENID_FIELD3 
+============ ===================== 
+
+           4                  1228 
+           1                  3428 
+
+
+           A          GENID_FIELD1          GENID_FIELD2          GENID_FIELD3 
+============ ===================== ===================== ===================== 
+
+           4                  1004                  4205                  6630 
+           1                  1007                  6216                 11840 
+

@@ -1,0 +1,26 @@
+Use CONNECT or CREATE DATABASE to specify a database
+SQL> set term go;
+SQL> create procedure abc RETURNS( x varchar(2)) as
+CON> begin
+CON>   x = 'Q';
+CON>   SUSPEND;
+CON> end
+CON> go
+SQL> create procedure ABC RETURNS( x varchar(2)) as
+CON> begin
+CON>   x = 'Q';
+CON>   SUSPEND;
+CON> end
+CON> go
+Statement failed, SQLCODE = -607
+
+unsuccessful metadata update
+-Procedure ABC already exists
+SQL> 
+SQL> set term ; go
+SQL> show proc;
+Procedure Name                    Dependency, Type
+================================= ======================================
+ABC                               
+SQL> 
+SQL> 

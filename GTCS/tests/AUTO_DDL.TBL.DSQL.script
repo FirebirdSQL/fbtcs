@@ -1,0 +1,77 @@
+
+$CREATE COMMENT
+Author: Narayan 
+Date: Oct 3, 1994.
+
+Description: This is a test to test the auto-commit behavior of IB for DDLs. 
+
+The auto-commit behavior is set using unix sed commands.
+We sed the A.c file to insert isc_autocommit in its tpb defintion.
+
+$CREATE init.sql
+  create database "WHERE_GDB:test.gdb";
+  create table t (a integer);
+  create table u (b integer);
+  commit;
+
+$CREATE A.e
+#include <stdio.h>
+exec sql include salca
+
+exec sql set database DB = "WHERE_GDB:test.gdb";
+
+main()
+{
+  exec sql connect DB;
+
+  exec sql set transaction;
+
+  exec sql execute immediate 'CREATE TABLE T (A INTEGER, B INTEGER)';
+
+  if (SQLCODE) isc_print_status(isc_status);
+
+  exec sql disconnect DB;
+
+  exec sql connect DB;
+
+  exec sql set transaction;
+
+  exec sql insert into t values (10);
+
+  if (SQLCODE) isc_print_status(isc_status);
+
+  exec sql disconnect DB;
+
+  exec sql connect DB;
+
+  exec sql set transaction;
+
+  exec sql execute immediate 'DROP TABLE T';
+
+  if (SQLCODE) isc_print_status(isc_status);
+
+  exec sql disconnect DB;
+
+  exec sql connect DB;
+
+  exec sql set transaction;
+
+  exec sql execute immediate 'CREATE TABLE T (A INTEGER, B INTEGER)';
+
+  if (SQLCODE) isc_print_status(isc_status);
+
+  exec sql disconnect DB;
+}
+$CREATE show.sql
+ connect "WHERE_GDB:test.gdb";
+ show table t;
+$ISQL -i init.sql
+$GPRE -e  A.e
+$RUN sed "/isc_tpb_. \[/s/\[.\] = {1,/\[\] = {1, isc_tpb_autocommit,/" A.c > A1.c
+$RUN sed "/isc_start_transaction /s/4/5/" A1.c > A2.c
+$CC FLAG_CC A2.c
+$LINK FLAG_LINK A2 
+$RUN A2
+$ISQL -i show.sql
+$DELETE COMMENT init.sql show.sql A.* A1.* A2.*
+$DROP WHERE_GDB:test.gdb

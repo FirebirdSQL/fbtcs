@@ -1,0 +1,70 @@
+SQL> set term go;
+SQL> create procedure  proc_select_insert as
+CON> begin
+CON>     insert into sp(sno)
+CON>     select sno from s where sno NOT IN
+CON>     (select sno from sp) ;
+CON> SUSPEND;
+CON> end
+CON> go
+SQL> set term ; go
+SQL> select * from sp;
+
+SNO    PNO             QTY 
+====== ====== ============ 
+
+S1     P1              300 
+S1     P3              400 
+S2     P1              300 
+S2     P2              400 
+S4     P4              300 
+S4     P5              400 
+
+SQL> EXECUTE PROCEDURE PROC_SELECT_INSERT;
+SQL> select * from sp;
+
+SNO    PNO             QTY 
+====== ====== ============ 
+
+S1     P1              300 
+S1     P3              400 
+S2     P1              300 
+S2     P2              400 
+S4     P4              300 
+S4     P5              400 
+S3     <null>       <null> 
+S5     <null>       <null> 
+
+SQL> rollback;
+SQL> select * from sp;
+
+SNO    PNO             QTY 
+====== ====== ============ 
+
+S1     P1              300 
+S1     P3              400 
+S2     P1              300 
+S2     P2              400 
+S4     P4              300 
+S4     P5              400 
+
+SQL> select * from proc_select_insert;
+Statement failed, SQLCODE = -84
+
+Dynamic SQL Error
+-SQL error code = -84
+-procedure PROC_SELECT_INSERT does not return any values
+-At line 1, column 15.
+SQL> select * from sp;
+
+SNO    PNO             QTY 
+====== ====== ============ 
+
+S1     P1              300 
+S1     P3              400 
+S2     P1              300 
+S2     P2              400 
+S4     P4              300 
+S4     P5              400 
+
+SQL> exit;

@@ -1,0 +1,47 @@
+
+/****************************************************************
+* Name: Sudhsnshu Kumar
+* Purpose: Test for SELECT proceudre 
+*          Error happens in Block A (i.e. Outer block).  
+
+EXPECTED RESULTS: 
+BLOCK_IN                                           
+================================================== 
+
+<null>                                             
+Error handled in block A.                          
+
+
+BLOCK_NO    CHECK_PT 
+======== =========== 
+
+A                  1 
+
+
+-------------------
+ 
+***************************************************************/
+$ CREATE proc_err.sql
+create database "WHERE_GDB:proc_err.gdb";
+create table block_trace (block_no char(1), check_pt int);
+commit;
+set term !!;
+create procedure p_error1 RETURNS (block_in varchar(50)) as
+begin
+    insert into block_trace values ('A', 1);
+    suspend;
+    insert into block_trace values ('AAA', 2);
+    insert into block_trace values ('A', 2);
+    suspend;
+    when SQLCODE -802 do
+     begin
+      block_in = 'Error handled in block A.';
+      suspend;
+     end
+end !!
+set term ; !!
+select * from p_error1;
+select * from block_trace;
+$ ISQL -i proc_err.sql
+$ DELETE proc_err.sql
+$ DROP WHERE_GDB:proc_err.gdb

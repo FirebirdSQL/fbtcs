@@ -1,0 +1,72 @@
+(W) subq8.e:17: SET NAMES requires -manual switch to gpre.
+No errors, 1 warning
+Use CONNECT or CREATE DATABASE to specify a database
+
+S_ROWID C_FRANCE                  
+======= ========================= 
+
+      1 péché                     
+      7 vice versa                
+
+
+S_ROWID C_ENUS                    C_FRANCE                  
+======= ========================= ========================= 
+
+      1 péché                     UPDATED                   
+      2 Ålborg                    Ålborg                    
+      3 cæsium                    cæsium                    
+      4 Aalborg                   Aalborg                   
+      5 aïeul                     aïeul                     
+      6 caennais                  caennais                  
+      7 vice versa                UPDATED                   
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+       COUNT 
+============ 
+
+           0 
+
+
+S_ROWID C_ENUS                    C_FRANCE                  
+======= ========================= ========================= 
+
+      1 péché                     péché                     
+      2 Ålborg                    Ålborg                    
+      3 cæsium                    cæsium                    
+      4 Aalborg                   Aalborg                   
+      5 aïeul                     aïeul                     
+      6 caennais                  caennais                  
+      7 vice versa                vice versa                
+
+
+S_ROWID C_437_25                  
+======= ========================= 
+
+      1 péché                     
+      2 Ålborg                    
+      3 cæsium                    
+      4 Aalborg                   
+      5 aïeul                     
+      6 caennais                  
+      7 vice versa                
+
+
+S_ROWID C_FRANCE                  
+======= ========================= 
+
+      1 péché                     
+      7 vice versa                
+
+
+S_ROWID C_ENUS                    C_FRANCE                  
+======= ========================= ========================= 
+
+      1 péché                     UPDATED                   
+      2 Ålborg                    Ålborg                    
+      3 cæsium                    cæsium                    
+      4 Aalborg                   Aalborg                   
+      5 aïeul                     aïeul                     
+      6 caennais                  caennais                  
+      7 vice versa                UPDATED                   
+

@@ -1,0 +1,19 @@
+#
+# Environment symbols definition
+#
+# Dollar Verbs definition
+#
+ve CC=cl
+ve CXX=cl
+ve DELETE=del
+ve LINK=link
+ve MAKE=nmake
+ve RUN=
+ve RUN_BG=start /B
+ve SH=cmd.exe /C
+#
+# Template symbols 
+#
+te FLAG_CC -c -w /MD /D "WIN_NT" %s /I WHERE_FIREBIRD_INCLUDE: /I WHERE_FBTCS_INCLUDE: /nologo > nul
+te FLAG_CXX -c -w /MD /D "WIN_NT" %s /I WHERE_FIREBIRD_INCLUDE: /I WHERE_FBTCS_INCLUDE: /nologo > nul
+te FLAG_LINK %s Advapi32.lib kernel32.lib WHERE_FIREBIRD_LIB:fbclient_ms.lib /OUT:%s.exe /NOLOGO

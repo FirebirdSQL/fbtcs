@@ -1,0 +1,52 @@
+
+$ CREATE doc
+By:          Clare Taylor
+Date:        02/28/94
+Test name:   IDML_C_SUBQ_01         
+Series:      IDML_C_SUBQUERYS          
+Dependency:  none
+Results:     Inserts data based on a subquery select 
+History:
+4/14/94:     To try to force success in Q/R builds and to
+	     be consistent, I made the create db statement
+	     separate.  A bug in Q prevented the db attach
+	     from using the set names command so we need
+	     a separate load program w/set names.  Because this
+	     only uses 7-bit chars in the default field type, it
+	     should always pass.
+Description:
+This is the simple case for subquery selects and inserts--no 
+international fields or data.
+$ CREATE crdb.sql
+create database "WHERE_GDB:foo.gdb";
+commit;
+quit;
+$ CREATE tbl.sql
+set names iso8859_1;
+connect WHERE_GDB:foo.gdb;
+create table t1 (int_1 integer, char_1 char(10));
+create table t2 (int_2 integer, char_2 char(10));
+commit;
+insert into t1 (int_1, char_1) values (1,'aa aa');
+insert into t1 (int_1, char_1) values (2,'bb bb');
+insert into t1 (int_1, char_1) values (3,'cc cc');
+insert into t1 (int_1, char_1) values (4,'ab cd');
+commit;
+quit;
+$ CREATE q1.sql
+connect "WHERE_GDB:foo.gdb";
+select int_1 from t1 where int_1 in (select int_1 from t1);
+commit;
+quit;
+$ CREATE ins1.sql
+connect "WHERE_GDB:foo.gdb";
+insert into t2 select * from t1;
+commit;
+select * from t2;
+quit;
+$ ISQL -i crdb.sql -m
+$ ISQL -i tbl.sql -m
+$ ISQL -i q1.sql -m
+$ ISQL -i ins1.sql -m 
+$ DELETE q1.sql crdb.sql tbl.sql ins1.sql
+$ DROP WHERE_GDB:foo.gdb

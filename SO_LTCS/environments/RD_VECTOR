@@ -1,0 +1,10 @@
+#
+# environment variables defition
+#
+LD ld
+LIBRARIES
+LIB_TYPE sharemt
+FLAG_CC -mt -w -DSOLARIS -I/usr/interbase/include -I. -c %s 
+FLAG_CXX -mt -w -c %s
+FLAG_LINK %s -o %s -lgdsmt -lsocket -lthread -lnsl -ldl 
+FLAG_LINK_MU %s -o %s -lgdsmt -lthread -lsocket -lnsl -ldl -L/netapp/apps/isc/lib  -lmu

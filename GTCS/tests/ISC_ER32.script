@@ -1,0 +1,61 @@
+
+$ CREATE er32.c
+/*
+ *	isc_create_blob2
+ *
+ *	Pass an invalid transaction handle.
+ * 
+ *  Test name: er32.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+
+int main()
+{
+	extern  char empdb[128];
+
+	isc_db_handle	DB = NULL, DB2 = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	ISC_QUAD	blob_id;
+        isc_blob_handle blob_handle=NULL;
+	int		len;
+	char		bpb[32];
+
+	LogPrintf("Running ER32, invalid transaction handle\n");
+	LogPrintf("to isc_create_blob2\n");
+
+	fill_db_parameter_buffer();
+
+	if (isc_attach_database(status, 0, empdb, &DB, 0, 0L))
+		{ERREXIT(status, rc, err_buf)};
+
+	if ((rc=isc_start_transaction(status, &trans, 1, &DB2, 0, NULL))==0)
+		LogPrintf("BUG: Bad DB to start trans.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_create_blob2(status, &DB, &trans,&blob_handle, &blob_id, len, bpb))==0)
+		LogPrintf("BUG: Bad tr handle to create blob2.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	trans = NULL;
+	if ((rc=isc_create_blob2(status, &DB, &trans,&blob_handle, &blob_id, len, bpb))==0)
+		LogPrintf("BUG: Bad tr handle to create blob2.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_detach_database(status, &DB)) !=0)
+		{ERREXIT(status, rc, err_buf)};
+
+	LogPrintf("Finished ER32\n");
+}
+$ CC FLAG_CC er32.c
+$ CC FLAG_CC globals.c
+$ LINK FLAG_LINK er32 globals 
+$ RUN er32
+$ DELETE er32*

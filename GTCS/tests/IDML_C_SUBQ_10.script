@@ -1,0 +1,109 @@
+
+$ CREATE doc
+By:          Clare Taylor
+Date:        03/22/94
+Test name:   IDML_C_SUBQ_10         
+Series:      IDML_C_SUBQUERYS          
+Results:     Syntax error for the ORDER BY in a SUBQUERY, ISQL behavior
+	     seems correct by standard.                     
+Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
+History:
+
+Description:
+Attempts to INSERT data in sorted order through the use of an ORDER BY with
+a SUBQUERY.  SQL II Dates book does not show that a SUBQUERY may contain a
+ORDER BY, but it does show a GROUP BY.  The GROUP BY allows a COLLATE clause
+so that sorted results on INSERT may be possible.  This test trys the ORDER BY
+which should give a gpre error.  Attempts the INSERT in ISQL which fails
+and in Embedded which works.
+
+$ CREATE doc_s10
+
+The following test is executed in Embedded SQL where it succeeds and 
+in ISQL where it fails.  The test is for [illegal ?] syntax:
+
+         INSERT INTO TEST_TABLE1 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 
+	       FROM STRING_TABLE ORDER BY C_FRANCE;
+
+Using an ORDER BY in a SUBQUERY is questionable by SQL II standards.  
+The Dates book, page 347-349 are given as reference:  
+
+    insert   ::= INSERT INTO ...table-exp...
+    table-exp::= does not show an ORDER BY allowed anywhere.  Only 
+		 the GROUP BY is supported and that takes a COLLATE 
+		 clause which is how ordered data would be obtained 
+		 in an INSERT w/subquery.
+
+From parse.y, which appears to allow the ORDER BY as a result of 
+the select definition:
+
+select       : union_exp order_clause for_update_clause
+union_expr   : select_exp
+select_exp   : SELECT ...
+               where_clause --> does not allow ORDER BY here, it comes from 
+	                        the 'select' above.
+	        group_clause
+
+$ CREATE subq10.e
+/*-------------------------------------------------------------------------
+  Case 9:  INSERT <table> SET <field> = "string" WHERE (subquery w/order by)
+---------------------------------------------------------------------------*/
+#include <WHERE_FILES:tcs.h>
+EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
+EXEC SQL WHENEVER SQLERROR GOTO err;
+EXEC SQL INCLUDE SQLCA;
+
+
+static print_error()
+{
+    if (SQLCODE != 100)
+        printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+}
+main()
+{
+     EXEC SQL SET NAMES ISO8859_1; /* not required */
+     EXEC SQL CONNECT db;
+
+     EXEC SQL DELETE FROM TEST_TABLE1;
+     EXEC SQL COMMIT;
+     printf("\nProgram attempting Embedded INSERTw/SUBQUERY and ORDER BY--works!\n\n"); 
+     /* attempting an ORDER BY in the subquery--illegal syntax. */
+
+     EXEC SQL
+         INSERT INTO TEST_TABLE1 
+	 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 
+	 FROM STRING_TABLE ORDER BY C_FRANCE;
+
+     EXEC SQL COMMIT;
+
+     EXEC SQL COMMIT RELEASE;
+     exit(0);
+err: print_error();
+}
+$ CREATE ver10.sql 
+set names iso8859_1;
+connect "WHERE_GDB:tests.gdb";
+SELECT S_ROWID, C_ENUS, C_FRANCE FROM TEST_TABLE1;
+quit;
+
+$ CREATE subq10.sql 
+set names iso8859_1;
+connect "WHERE_GDB:tests.gdb";
+delete from test_table1;
+commit;
+select * from test_table1;
+
+INSERT INTO TEST_TABLE1 
+    SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 
+    FROM STRING_TABLE ORDER BY C_FRANCE;
+
+select S_ROWID, C_ENUS, C_FRANCE from test_table1;
+commit;
+$ TYPE doc_s10
+$ GPRE subq10.e
+$ CC FLAG_CC subq10.c
+$ LINK FLAG_LINK subq10 
+$ RUN subq10
+$ ISQL -i ver10.sql -m
+$ ISQL -i subq10.sql -m
+$ DELETE doc ver10.sql doc_s10 subq10*

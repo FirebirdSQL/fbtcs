@@ -1,0 +1,109 @@
+
+$ GBAK -r intlemp.gbk WHERE_GDB:intlemp_05.gdb
+$ CREATE btest2.e
+/* Requires the intlemp_05.gdb database built in test 4. 
+   Contains DATABASE statement and SET NAMES. 
+   Gets data from a stored procedure and inserts the data using
+   host variables.
+
+   If bug 7043 fixed, this would work.
+
+   Currently fails with transliteration errors even when SET NAMES
+   is used.  The insert executes but only the rowid is inserted.
+
+   Compile with:   gpre -m btest1.e
+                   cc btest1.c -lgds -ldld -o btest
+
+11/10/94:  Added manual transaction so we don't see a warning. This
+	   warning is new in build AA and enforces the fact that we
+	   should  use -m with -charset or with SET NAMES.
+30Aug95:   clare: adding a gbak at the top so that this will pass
+	   independent of test 4 which is showing a bug in 4.0B.
+	   This test is fine but it was failing because of the
+	   extra row inserted in test 4.  I added a gbak to test 4
+	   before the insert is done and that is what is used here.
+	   reinit.
+25-Aug-98: Vector cleanup remove DEL *.exe.  Delete explicit file
+
+16-Feb-2000 JLI:  Added #include <gds.h> for the gds calls.
+*/
+#include "WHERE_FILES:tcs.h"
+#include "WHERE_FILES:example.h"
+#include <gds.h>
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL WHENEVER SQLERROR GOTO Err;
+
+EXEC SQL DATABASE db = "WHERE_GDB:intlemp_05.gdb";
+
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL BEGIN DECLARE SECTION;
+     BASED ON EMPLOYEE.EMP_NO       e_empno;      
+     BASED ON EMPLOYEE.FIRST_NAME   e_firstname;
+     BASED ON EMPLOYEE.FIRST_NAME   s_firstname;
+     BASED ON EMPLOYEE.LAST_NAME    e_lastname;
+     BASED ON EMPLOYEE.LAST_NAME    s_lastname;
+EXEC SQL END DECLARE SECTION;
+
+void print_error          PROTO((void));
+
+int main PROTO((void))
+{    
+     char  c;
+
+     EXEC SQL SET NAMES ISO8859_1;
+     EXEC SQL CONNECT db;
+
+     printf("--------------------------------------------------------------\n");
+     printf("   PRINTING ALL EMPLOYEES--Using Stored Procedure with SET NAMES/CONNECT.\n\n");
+     printf("   (When bug_7043 is fixed it will work: using set names causes select from stored procedure to fail.\n\n");
+EXEC SQL SET TRANSACTION;
+     EXEC SQL
+          DECLARE A_SEARCH CURSOR FOR
+          SELECT * FROM GET_EMP_ID;
+     EXEC SQL OPEN A_SEARCH;
+     EXEC SQL FETCH A_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
+ 
+     while (SQLCODE == 0)
+         {
+          printf ("%-10d %-15s %-20s\n", e_empno, e_firstname, e_lastname);
+	  strcpy(s_firstname,e_firstname);
+	  strcpy(s_lastname,e_lastname);  /* save the last record for insert below */
+          EXEC SQL FETCH A_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
+         }
+     EXEC SQL CLOSE A_SEARCH;
+
+     printf("\n--------------------------------------------------------------\n");
+     printf("   INSERTING NEW DATA--using host variables loaded from stored procedure\n\n");
+     
+     EXEC SQL
+          INSERT INTO employee (emp_no, first_name, last_name)
+          VALUES (222, :s_firstname,:s_lastname);
+
+EXEC SQL COMMIT;
+     exit(0);
+Err:
+  print_error();
+}
+
+void print_error PROTO((void))
+{
+if (SQLCODE != 100)
+     printf ("Error: ---------------------------------------------\n");
+     printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+     isc_print_sqlerror(SQLCODE, gds__status); 
+     isc_print_status (gds__status);
+exit(1);
+}
+$ CREATE verify.sql
+set names iso8859_1;
+connect WHERE_GDB:intlemp_05.gdb;
+select * from employee;
+quit;
+
+$ GPRE -m btest2.e
+$ CC FLAG_CC btest2.c
+$ LINK FLAG_LINK btest2 
+$ RUN btest2
+$ ISQL -i verify.sql
+$ DELETE tcs.dat* btest2* verify.sql
+$ DROP WHERE_GDB:intlemp_05.gdb

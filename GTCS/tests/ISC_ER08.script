@@ -1,0 +1,45 @@
+
+$ CREATE er8.c
+/*
+ *	isc_open_blob
+ *
+ *	Pass an invalid database handle.
+ * 
+ *  Test name: er8.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	ISC_QUAD	blob_id;
+	isc_blob_handle	blob_handle = NULL;
+
+	LogPrintf("Running ER8, invalid db handle\n");
+	LogPrintf("to isc_open_blob\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_open_blob(status, &DB, &trans,&blob_handle, &blob_id))==0)
+		LogPrintf("BUG: open blob on invalid DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	if ((rc=isc_open_blob(status, &DB, &trans,&blob_handle, &blob_id))==0)
+		LogPrintf("BUG: open blob on invalid DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER8\n");
+}
+$ CC FLAG_CC er8.c
+$ LINK FLAG_LINK er8 
+$ RUN er8
+$ DELETE er8*

@@ -1,0 +1,53 @@
+DOM20A                          SMALLINT Nullable
+                                default 0
+                                check (value >= 0 and value < 100)
+DOM20B                          INTEGER Nullable
+                                default 500
+                                check (value >= 500)
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+DOM20C                          TIMESTAMP Nullable
+                                check (value >= 'today')
+DOM20D                          CHAR(20) Nullable
+                                check (value in (select river from rivers))
+DOM20E                          VARCHAR(25) Nullable
+                                default 'VARYING DEFAULT'
+DOM20F                          DECIMAL(6, 2) Nullable
+                                default 4.2
+                                check (value > 0)
+DOM20G                          FLOAT Nullable
+                                default 500.1
+                                check (value < 50000.00)
+DOM20H                          DOUBLE PRECISION Not Null
+                                default 1000
+FLD1                            (DOM20A) SMALLINT Nullable default 0
+                                check (value >= 0 and value < 100)
+FLD2                            (DOM20B) INTEGER Nullable default 500
+                                check (value >= 500)
+FLD3                            (DOM20C) TIMESTAMP Nullable 
+                                check (value >= 'today')
+FLD4                            (DOM20D) CHAR(20) Nullable 
+                                check (value in (select river from rivers))
+FLD5                            (DOM20E) VARCHAR(25) Nullable default 'VARYING DEFAULT'
+FLD6                            (DOM20F) DECIMAL(6, 2) Nullable default 4.2
+                                check (value > 0)
+FLD7                            (DOM20G) FLOAT Nullable default 500.1
+                                check (value < 50000.00)
+FLD8                            (DOM20H) DOUBLE PRECISION Not Null default 1000
+DOM20A                          SMALLINT Nullable
+                                check (value > 100)
+DOM20A                          SMALLINT Nullable
+                                check (value > 100)
+Statement failed, SQLCODE = -625
+
+validation error for column FLD1, value "0"
+Statement failed, SQLCODE = -625
+
+validation error for column FLD4, value "*** null ***"
+
+   FLD1         FLD2        FLD3 FLD4                 FLD5                              FLD6           FLD7                    FLD8 
+======= ============ =========== ==================== ========================= ============ ============== ======================= 
+
+      0          500  1-JAN-2050 Sacramento           VARYING DEFAULT                   4.20      500.10001       1000.000000000000 
+
+ 

@@ -1,0 +1,130 @@
+
+$ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_22.gdb
+$ CREATE join022.e
+
+/**********************************************************************
+ Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
+ Description:           COLUMN <= COLUMN
+ Author:                Sam Hakim, June 1, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_join_22.gdb";
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON st1.s1     t1s1;
+BASED_ON st1.s2     t1s2;
+BASED_ON st1.table_row   t1table_row;
+
+BASED_ON st2.s1     t2s1;
+BASED_ON st2.s2     t2s2;
+BASED_ON st2.table_row   t2table_row;
+
+char Test[]="\
+select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row \
+from (st1 x right join st2 y on x.s1 <= y.s1)";
+
+void Underline();
+
+main()
+{
+	
+    int Count;
+	Count = 0;
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+
+    EXEC SQL
+                DECLARE CR CURSOR FOR
+                select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row
+                from (st1 x right join st2 y on x.s1 <= y.s1);
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :t1s1,:t1s2,:t1table_row,
+                :t2s1,:t2s2,:t2table_row;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%5d   ",t1s1);
+                printf("%5d   ",t1s2);
+                printf("%-10s   ",t1table_row);
+		
+                printf("%5d   ",t2s1);
+                printf("%5d   ",t2s2);
+                printf("%-10s\n",t2table_row);
+
+                EXEC SQL
+                FETCH CR INTO :t1s1,:t1s2,:t1table_row,
+                :t2s1,:t2s2,:t2table_row;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e join022.e
+$ CC FLAG_CC join022.c
+$ LINK FLAG_LINK join022 
+$ RUN join022
+$ CREATE join022.qli
+ready WHERE_GDB:sh_join_22.gdb;
+set semicolon;
+set columns 100;
+
+select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row
+from (st1 x right join st2 y on x.s1 <= y.s1) ;
+
+finish;
+quit;
+$ QLI -n -a join022.qli
+$ CREATE join022.sql
+connect WHERE_GDB:sh_join_22.gdb;
+select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row
+from (st1 x right join st2 y on x.s1 <= y.s1) ;
+quit;
+$ISQL -i join022.sql
+$DROP WHERE_GDB:sh_join_22.gdb
+$ DELETE join022* 

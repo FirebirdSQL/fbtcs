@@ -1,0 +1,21 @@
+Test:
+ SELECT PROJ_NO FROM PROJECTS WHERE PROJ_DESC NOT STARTING WITH 'Porting'
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 0
+
+* Using GDML to print blob 
+
+   COUNT
+===========
+
+          0
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+       COUNT 
+============ 
+
+           0 
+

@@ -1,0 +1,27 @@
+
+Test:
+SELECT COUNT(*)FROM SALES WHERE SHIPPED IS NULL
+--------------------------------------------------------------------------------
+2
+
+
+* Total Records Listed >>> 1
+
+   COUNT
+===========
+
+          2
+
+
+   COUNT
+===========
+
+          2
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+       COUNT 
+============ 
+
+           2 
+

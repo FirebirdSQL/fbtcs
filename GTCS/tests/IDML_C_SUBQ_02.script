@@ -1,0 +1,195 @@
+
+$ CREATE doc
+By:          Clare Taylor
+Date:        03/14/94
+Test name:   IDML_C_SUBQ_02         
+Series:      IDML_C_SUBQUERYS          
+Results:     Creates and loads the database used for test 
+Dependency:  none
+History:
+4/14/94:     build Q/R failed these tests because the transliteration
+	     behavior changed so much.  I added the isql verify scripts
+	     to watch the changes between builds.  It is initialized in
+	     P and fails in R.  Waiting on S to see which had the correct
+	     behavior.
+5/26/94:     T build began printing out a dos437 header line from isql on
+	     query that produced translit error--s didn't do this so I
+	     reinitialized.
+
+Description:
+Creates a static table into which data is loaded.  Creates 4
+small tables to use as update and insert tables using a subquery
+against the static data table.  Creates one table that is a 
+duplicate of the static table for use in INSERT ... (SELECT * ...)
+subqueries.  One insert statement loads data into all fields.  This
+is used to verify the select * insert and update for the DUPLICATE 
+table.  Several SQL scripts verify that the data loaded.
+
+$ CREATE build.sql
+CREATE DATABASE "WHERE_GDB:tests.gdb";
+COMMIT;
+
+CREATE DOMAIN ROWID AS                     SMALLINT;
+CREATE DOMAIN C_DEFAULT AS CHAR(25);
+CREATE DOMAIN C_OCTETS  AS CHAR(25)        CHARACTER SET OCTETS;
+
+CREATE DOMAIN C_437_25 AS CHAR(25)         CHARACTER SET DOS437;
+CREATE DOMAIN V_437_25 AS VARCHAR(240)     CHARACTER SET DOS437;
+CREATE DOMAIN B_437_BLOB AS BLOB           CHARACTER SET DOS437;          
+
+CREATE DOMAIN C_850_25 AS CHAR(25)         CHARACTER SET DOS850;
+CREATE DOMAIN C_850_240 AS CHAR(25)        CHARACTER SET DOS850;
+CREATE DOMAIN V_850_25 AS VARCHAR(240)     CHARACTER SET DOS850;
+CREATE DOMAIN B_850_BLOB AS BLOB           CHARACTER SET DOS850;           
+
+CREATE DOMAIN C_ENUS AS CHAR(25)           CHARACTER SET ISO8859_1 COLLATE EN_US;     
+CREATE DOMAIN C_GERMANY AS CHAR(25)        CHARACTER SET ISO8859_1 COLLATE DE_DE;
+CREATE DOMAIN C_SWEDEN AS CHAR(25)         CHARACTER SET ISO8859_1 COLLATE SV_SV;
+CREATE DOMAIN C_FRANCE AS CHAR(25)         CHARACTER SET ISO8859_1 COLLATE FR_FR;
+CREATE DOMAIN V_FRANCE_240 AS VARCHAR(240) CHARACTER SET ISO8859_1 COLLATE FR_FR;
+CREATE DOMAIN C_CANADA AS CHAR(25)         CHARACTER SET ISO8859_1 COLLATE FR_CA;
+
+CREATE DOMAIN C_LATIN1_25 AS CHAR(25)  CHARACTER SET ISO8859_1;
+CREATE DOMAIN B_LATIN1_BLOB AS BLOB CHARACTER SET ISO8859_1;
+
+CREATE DOMAIN C_UNICODE_25 AS CHAR(25) CHARACTER SET UNICODE_FSS;
+CREATE DOMAIN V_UNICODE_25 AS VARCHAR(240) CHARACTER SET UNICODE_FSS;
+CREATE DOMAIN B_UNICODE_BLOB AS BLOB CHARACTER SET UNICODE_FSS;
+
+CREATE DOMAIN C_SJIS_25 AS CHAR(25) CHARACTER SET SJIS_0208;
+CREATE DOMAIN V_SJIS_25 AS VARCHAR(240) CHARACTER SET SJIS_0208;
+
+CREATE TABLE STRING_TABLE (S_ROWID ROWID,
+	C_DEFAULT    C_DEFAULT,
+	C_OCTETS     C_OCTETS,
+	C_ENUS       C_ENUS,
+	C_GERMANY    C_GERMANY,
+	C_SWEDEN     C_SWEDEN,
+	C_FRANCE     C_FRANCE,
+	C_CANADA     C_CANADA,
+	C_437_25     C_437_25,
+	C_850_25     C_850_25,
+	C_LATIN1_25  C_LATIN1_25,
+        V_UNICODE_25 V_UNICODE_25, 
+	C_UNICODE_25 C_UNICODE_25);
+
+CREATE TABLE DUPLICATE (S_ROWID ROWID,
+	C_DEFAULT    C_DEFAULT,
+	C_OCTETS     C_OCTETS,
+	C_ENUS       C_ENUS,
+	C_GERMANY    C_GERMANY,
+	C_SWEDEN     C_SWEDEN,
+	C_FRANCE     C_FRANCE,
+	C_CANADA     C_CANADA,
+	C_437_25     C_437_25,
+	C_850_25     C_850_25,
+	C_LATIN1_25  C_LATIN1_25,
+        V_UNICODE_25 V_UNICODE_25, 
+	C_UNICODE_25 C_UNICODE_25);
+
+CREATE TABLE TEST_TABLE1 (S_ROWID ROWID,
+	C_ENUS    C_ENUS,
+	C_FRANCE C_FRANCE,
+	C_437_25 C_437_25);
+
+CREATE TABLE TEST_TABLE2 (S_ROWID ROWID,
+	C_ENUS   C_ENUS,
+	C_FRANCE C_FRANCE,
+	C_437_25 C_437_25);
+
+CREATE TABLE TEST_TABLE3 (S_ROWID ROWID,
+	C_DEFAULT C_DEFAULT,
+	C_OCTETS  C_OCTETS,
+	C_FRANCE  C_FRANCE);
+
+COMMIT;
+QUIT;
+$CREATE load.sql
+SET NAMES ISO8859_1;
+CONNECT "WHERE_GDB:tests.gdb";
+INSERT INTO STRING_TABLE (
+	S_ROWID,
+        C_DEFAULT,
+        C_OCTETS,
+	C_ENUS, 
+        C_GERMANY,
+        C_SWEDEN,
+	C_FRANCE, 
+        C_CANADA,
+	C_437_25, 
+	C_850_25,
+        C_LATIN1_25,
+        V_UNICODE_25,
+        C_UNICODE_25
+	)
+   VALUES 
+	(1,
+	 'péché',
+         'péché',
+         'péché',
+         'péché',
+         'péché',
+         'péché',
+         'péché',
+         _DOS437'péché',
+         'péché',
+         'péché',
+         'péché',
+         'péché'
+	   );
+
+INSERT INTO STRING_TABLE (S_ROWID, C_ENUS, C_FRANCE, C_437_25, C_850_25)
+   VALUES (2, 'Ålborg','Ålborg',_DOS437'Ålborg', 'Ålborg');
+INSERT INTO STRING_TABLE (S_ROWID, C_ENUS, C_FRANCE, C_437_25, C_850_25)
+   VALUES (3, 'cæsium','cæsium',_DOS437'cæsium','cæsium');
+INSERT INTO STRING_TABLE (S_ROWID, C_ENUS, C_FRANCE, C_437_25, C_850_25)
+   VALUES (4, 'Aalborg','Aalborg',_DOS437'Aalborg','Aalborg');
+INSERT INTO STRING_TABLE (S_ROWID, C_ENUS, C_FRANCE, C_437_25, C_850_25)
+   VALUES (5, 'aïeul','aïeul',_DOS437'aïeul','aïeul');
+INSERT INTO STRING_TABLE (S_ROWID, C_ENUS, C_FRANCE, C_437_25, C_850_25)
+   VALUES (6, 'caennais','caennais',_DOS437'caennais', 'caennais');
+INSERT INTO STRING_TABLE (S_ROWID, C_ENUS, C_FRANCE, C_437_25, C_850_25)
+   VALUES (7, 'vice versa','vice versa',_DOS437'vice versa', 'vice versa');
+commit;
+quit;
+$ CREATE doc2
+The verification scripts below show transliteration errors between dos437
+and dos850:  DOS 437 data loaded as 437, DOS 850 loaded as ISO.
+
+g437.sql: set names dos437, displays iso, 437, unicode fields w/no prob
+			    transliteration error on 850 field.
+g850.sql: set names dos850, displays 850 file--transliteration error on 437
+
+$ CREATE giso.sql
+set names ISO8859_1;
+connect WHERE_GDB:tests.gdb;
+select 'set names is ISO:',s_rowid, c_enus, c_850_25 from string_table;
+select 'set names is ISO:',s_rowid, C_UNICODE_25 from string_table;
+select 'set names is ISO:',s_rowid, c_437_25 from string_table;
+QUIT;
+
+$ CREATE g437.sql
+set names dos437;
+connect WHERE_GDB:tests.gdb;
+select 'set names is 437:',s_rowid, c_enus, c_437_25 from string_table;
+select 'set names is 437:',s_rowid, C_UNICODE_25 from string_table;
+QUIT;
+$ CREATE g850.sql
+set names dos850;
+connect WHERE_GDB:tests.gdb;
+select 'set names is dos850:',s_rowid, c_enus, c_850_25 from string_table;
+quit;
+$ CREATE g8502.sql
+set names dos850;
+connect WHERE_GDB:tests.gdb;
+select 'set names is dos850:',s_rowid, c_437_25 from string_table;
+quit;
+
+$ ISQL -i build.sql -m
+$ ISQL -i load.sql -m
+$ ISQL -i giso.sql -m
+$ ISQL -i g437.sql -m
+$ ISQL -i g850.sql -m
+$ ISQL -i g8502.sql -m
+
+$ DELETE load.sql build.sql doc g437.sql g850.sql g8502.sql giso.sql

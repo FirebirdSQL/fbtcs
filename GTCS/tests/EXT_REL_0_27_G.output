@@ -1,0 +1,12 @@
+validation error for column FIELD2, value "1"
+Welcome to QLI
+Query Language Interpreter
+QLI> QLI> QLI> QLI> ** QLI error from database "WHERE_GDB:ext_rel_0_27_G.gdb" **
+
+QLI> 
+FIELD1 FIELD2
+====== ======
+
+ 12000  13000
+
+QLI> QLI> 

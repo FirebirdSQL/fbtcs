@@ -1,0 +1,140 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sta010.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column spec> STARTING [WITH] <value spec>
+                        Case sensitive searches including blob string
+
+ Description:           concatenated char field (e.g. Name)
+
+                        SELECT EMPNO, FIRST_NAME, LAST_NAME
+                        FROM EMPLOYEES
+                        WHERE NAME STARTING WITH 'S';
+
+ Tables:                employees
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON EMPLOYEES.EMPNO                EmpNo;
+BASED_ON EMPLOYEES.LAST_NAME            Last_Name;
+BASED_ON EMPLOYEES.FIRST_NAME           First_Name;
+
+char Test[]="SELECT EMPNO, LAST_NAME, FIRST_NAME \
+FROM EMPLOYEES \
+WHERE NAME STARTING WITH 'S'";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                        SELECT EMPNO, FIRST_NAME, LAST_NAME
+                        FROM EMPLOYEES
+                        WHERE NAME STARTING WITH 'S';
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :EmpNo,:First_Name,:Last_Name;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%d\t",EmpNo);
+                printf("%s\t",First_Name);
+                printf("%s\n",Last_Name);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :EmpNo,:First_Name,:Last_Name;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e sta010.e
+$ CC FLAG_CC sta010.c
+$ LINK FLAG_LINK sta010 
+$ RUN sta010
+$ CREATE sta010.qli
+
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+SELECT EMPNO, LAST_NAME, FIRST_NAME FROM EMPLOYEES WHERE NAME STARTING WITH 'S';
+for employees with name starting with 'S' print empno, last_name, first_name;
+select count(*) from employees where name starting with 'S';
+finish;
+quit;
+$ QLI -n -a sta010.qli
+$ CREATE sta010.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT EMPNO, LAST_NAME, FIRST_NAME FROM EMPLOYEES WHERE NAME STARTING WITH 'S';
+select count(*) from employees where name starting with 'S';
+quit;
+$ISQL -i sta010.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sta010* 

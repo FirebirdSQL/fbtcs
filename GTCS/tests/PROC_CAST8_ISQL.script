@@ -1,0 +1,75 @@
+
+$GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL -sqldialect 3 WHERE_GDB:sp1.gdb
+set term go;
+create procedure cast1(a blob) RETURNS (b smallint) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast2(a blob) RETURNS (b integer) as
+begin
+    b = a ;
+    SUSPEND;
+end
+go
+create procedure cast3(a blob) RETURNS (b float) as
+begin
+    b = a ;
+    SUSPEND;
+end
+go
+create procedure cast4(a blob) RETURNS (b double precision) as
+begin
+    b = a ;
+    SUSPEND;
+end
+go
+create procedure cast5(a blob) RETURNS (b decimal(5,2)) as
+begin
+    b = a ;
+    SUSPEND;
+end
+go
+create procedure cast6(a blob) RETURNS (b date) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast7(a blob) RETURNS (b numeric(5,2)) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast8(a blob ) RETURNS (b blob) as begin
+   b = a;
+   SUSPEND;
+ end
+go
+create procedure cast9(a blob) RETURNS (b char(10)) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast10(a blob) RETURNS (b varchar(10)) as
+ begin
+   b = a;
+   SUSPEND;
+ end
+go
+
+commit
+go
+set term ; go
+execute procedure cast1 100;
+execute procedure cast2 100;
+execute procedure cast3 100;
+execute procedure cast4 100;
+execute procedure cast5 100;
+execute procedure cast7 100;
+exit;
+$ DROP WHERE_GDB:sp1.gdb

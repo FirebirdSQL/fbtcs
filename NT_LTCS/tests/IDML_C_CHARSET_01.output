@@ -1,0 +1,202 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+---------------------------------------------------------------
+
+  RUNNING...                
+  set names iso8859_1;
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+  select t_rowid, t_uni,a_desc from t2;
+  quit;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 Ó.ruáØp    O,acute,.rua,acute,Oslash,p                             
+     11 Ë.rußÏp    _DOS/_UNI Oacute,.ru,aacute,Oslash,p                    
+      3 çµ         c cedilla,script u                                      
+     33 þÁ         _DOS/_UNI c cedilla, script u                           
+      2 ¢¡         cent sign, upside down exclam                           
+     22 óí         _DOS/_UNI cent sign, upside down exclam                 
+      4 æ«ruáçp    ae(as one),left arrow,ru,aacute, cced,p                 
+     44 µ½rußþp    _DOS/_UNI ae(as one),left arrow,ru,aacute, cced,p       
+
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+
+      1 Ó.ruáØp                        O,acute,.rua,acute,Oslash,p                             
+
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+
+      2 ¢¡                             cent sign, upside down exclam                           
+
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+
+      3 çµ                             c cedilla,script u                                      
+
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+
+      4 æ«ruáçp                        ae(as one),left arrow,ru,aacute, cced,p                 
+
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+---------------------------------------------------------------
+
+  Then RUNNING...
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+  select t_rowid, t_uni,a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 à.ru ?p    O,acute,.rua,acute,Oslash,p                             
+     11 Ó.ruáØp    _DOS/_UNI Oacute,.ru,aacute,Oslash,p                    
+      3 ‡æ         c cedilla,script u                                      
+     33 çµ         _DOS/_UNI c cedilla, script u                           
+      2 ½­         cent sign, upside down exclam                           
+     22 ¢¡         _DOS/_UNI cent sign, upside down exclam                 
+      4 ‘®ru ‡p    ae(as one),left arrow,ru,aacute, cced,p                 
+     44 æ«ruáçp    _DOS/_UNI ae(as one),left arrow,ru,aacute, cced,p       
+
+
+T_ROWID T_UNI                          
+======= ============================== 
+
+      1 à.ru ?p                        
+
+
+T_ROWID T_UNI                          
+======= ============================== 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+
+T_ROWID T_UNI                          
+======= ============================== 
+
+      2 ½­                             
+
+
+T_ROWID T_UNI                          
+======= ============================== 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+
+T_ROWID T_UNI                          
+======= ============================== 
+
+      3 ‡æ                             
+
+
+T_ROWID T_UNI                          
+======= ============================== 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+
+T_ROWID T_UNI                          
+======= ============================== 
+
+      4 ‘®ru ‡p                        
+
+
+T_ROWID T_UNI                          
+======= ============================== 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+---------------------------------------------------------------
+
+  Then RUNNING...
+
+  set names UNICODE_FSS;
+  connect "tests.gdb";
+  select t_rowid, t_850 from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 Ã“.ruÃ¡Ã˜p O,acute,.rua,acute,Oslash,p                             
+     11 Ã‹.ruÃŸÃ?p _DOS/_UNI Oacute,.ru,aacute,Oslash,p                    
+      3 Ã§Âµ       c cedilla,script u                                      
+     33 Ã¾Ã?       _DOS/_UNI c cedilla, script u                           
+      2 Â¢Â¡       cent sign, upside down exclam                           
+     22 Ã³Ã­       _DOS/_UNI cent sign, upside down exclam                 
+
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+
+T_ROWID T_UNI                          A_DESC                                                  
+======= ============================== ======================================================= 
+
+      1 Ã“.ruÃ¡Ã˜p                     O,acute,.rua,acute,Oslash,p                             
+     11 Ó.ruáØp                        _DOS/_UNI Oacute,.ru,aacute,Oslash,p                    
+      3 Ã§Âµ                           c cedilla,script u                                      
+     33 çµ                             _DOS/_UNI c cedilla, script u                           
+      2 Â¢Â¡                           cent sign, upside down exclam                           
+     22 ¢¡                             _DOS/_UNI cent sign, upside down exclam                 
+      4 Ã¦Â«ruÃ¡Ã§p                    ae(as one),left arrow,ru,aacute, cced,p                 
+     44 æ«ruáçp                        _DOS/_UNI ae(as one),left arrow,ru,aacute, cced,p       
+

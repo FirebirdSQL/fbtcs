@@ -1,0 +1,149 @@
+
+$CREATE COMMENT
+*******************************************************************************
+ 
+Test Name:  	EXT_REL_0_11_D
+Test Level:     0
+Series Name:    EXT_LEV_0
+Date:  		July 1, 1994
+Author:  	Scott Van Voris
+Bug:            7983, incorrect insert gives consis chk err.
+ 
+Description:    This is a Level 0 test which is designed to verify the 
+		syntax to create an external relation with a fixed-length
+		datatype is working properly.
+
+                In order to verify the external relation was really 
+                created, a tuple is inserted into the relation, and the 
+                value in the relation retreived via a query.
+ 
+Expected Output: Error because we can't define an array in an external
+History:
+15-May-95:      table--only CHAR data is allowed so when the product attempts
+		to convert, it thinks that the array is a binary char array
+		and attempts to do the conversion -- and fails.
+History:
+15-May-95: clare:Actually is giving a consistency chk error right now. Removed
+		the offending stmt and reported as bug.
+                One of the problems in the test is that it defines 2 tables
+		of the same name -- one using GDML and one w/SQL.  I don't
+		think the test was designed to do this at all.
+2-Oct-95:  Mark
+  Removed the Cleanup / Setup comments from the test.
+  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+
+3-Oct-95: Marco
+  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+  by the server in the correct place when accessing data remotely.
+  Also, I removed any referance to DIR external.dat and TYPE external.dat
+  which would also fail when running remotely.
+
+
+*******************************************************************************
+
+$CREATE create11.e
+#include <stdio.h>
+#include <stdlib.h>
+ 
+EXEC SQL
+    INCLUDE SQLCA
+ 
+EXEC SQL
+    WHENEVER SQLERROR GO TO ERR;
+ 
+main()
+{
+ 
+EXEC SQL
+   CREATE DATABASE "WHERE_GDB:ext_rel_0_11_E.gdb";
+
+EXEC SQL
+   CREATE TABLE ext_table EXTERNAL FILE "WHERE_GDB_EXTERNAL:external.dat"
+        (field1 SMALLINT[4]);
+ 
+exit(0);
+ERR:
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status (gds__status);
+
+    EXEC SQL ROLLBACK RELEASE;
+ 
+    exit(1);
+ 
+}
+
+$CREATE query.e
+#include <stdio.h>
+#include <stdlib.h>
+ 
+EXEC SQL
+    INCLUDE SQLCA
+ 
+EXEC SQL
+    WHENEVER SQLERROR GO TO ERR;
+ 
+EXEC SQL
+    SET DATABASE DB = "WHERE_GDB:ext_rel_0_11_E.gdb";
+ 
+main()
+{
+EXEC SQL
+   BEGIN DECLARE SECTION;
+ 
+   BASED ON EXT_TABLE.FIELD1 value;
+   BASED ON EXT_TABLE.FIELD1 full_arry;
+
+EXEC SQL
+   END DECLARE SECTION;
+
+full_arry[0] = 10;
+/* produces a consistency check error if executed first--not if executed later.
+   ...we shouldn't cause a serious problem due to a programming mistake. This
+   is caused by the :full_arry variable being passed in as the host var.  The
+   types don't match.  We should get an error...not a consistancy chk err!
+   Logged as bug 7983.
+
+EXEC SQL
+   INSERT INTO ext_table (field1) VALUES (:full_arry); 
+*/ 
+
+/* produced the proper error about blob insert */
+EXEC SQL
+   INSERT INTO ext_table (field1) VALUES (12);
+
+EXEC SQL
+   INSERT INTO ext_table (field1) VALUES (:full_arry[0]);
+
+exit(0);
+
+ERR:
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+	printf("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status (gds__status);
+
+	EXEC SQL ROLLBACK RELEASE;
+	exit(1);
+
+}
+
+$GPRE create11.e
+$CC FLAG_CC create11.c
+$LINK FLAG_LINK create11
+$RUN create11
+$ CREATE errcmt
+
+Above stmt should work...just DDL in ESQL
+Below are 2 inserts.  Both produce expected errors.
+
+********************************  blob conversion error is proper result
+
+$ TYPE errcmt
+$GPRE query.e
+$CC FLAG_CC query.c
+$LINK FLAG_LINK query
+$RUN query
+$DROP WHERE_GDB:ext_rel_0_11_E.gdb
+$DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
+$DELETE COMMENT errcmt create11*
+$DELETE query*

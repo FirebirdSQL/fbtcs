@@ -1,0 +1,56 @@
+
+$CREATE COMMENT
+*******************************************************************************
+ 
+Test Name:  	EXT_REL_0_40_D
+Test Level:     0
+Series Name:    EXT_LEV_0
+Date:  		July 5, 1994
+Author:  	Scott Van Voris
+Bug: 
+Description:    This is a test that determines whether a proper error
+		message occurs when a CREATE INDEX statement in executed
+		on an external table.
+
+ 
+Expected Output:       **  The core should not be dumped, instead a 
+			graceful exit with an appropriate error message
+			should occur.  **
+History:
+2-Oct-95:  Mark
+  Removed the Cleanup / Setup comments from the test.
+  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+
+3-Oct-95: Marco
+  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+  by the server in the correct place when accessing data remotely.
+  Also, I removed any referance to DIR external.dat and TYPE external.dat
+  which would also fail when running remotely.
+
+*******************************************************************************
+
+$CREATE isql.in
+
+CREATE DATABASE "WHERE_GDB:ext_rel_0_40_D.gdb";
+
+CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
+       (field1 SMALLINT NOT NULL,
+	field2 CHARACTER(10)) ;
+
+$CREATE isql2.in
+CONNECT "WHERE_GDB:ext_rel_0_40_D.gdb";
+
+CREATE UNIQUE INDEX my_idx
+ON ext_table (field1); 
+
+$CREATE isql3.in
+
+CONNECT "WHERE_GDB:ext_rel_0_40_D.gdb";
+SHOW TABLE ext_table;
+
+$ISQL -m -input isql.in
+$ISQL -m -input isql2.in
+$ISQL -m -input isql3.in
+$DROP WHERE_GDB:ext_rel_0_40_D.gdb
+$DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
+$DELETE COMMENT isql.in isql2.in isql3.in

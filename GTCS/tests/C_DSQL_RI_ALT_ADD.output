@@ -1,0 +1,42 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+BU1032,The Busy Executive's Database Guide,
+BU1032,Cooking with Computers: Surreptitious Balance Sheets,213-46-8915
+BU2075,You Can Combat Computer Stress!,238-95-7766
+BU2075,The Gourmet Microwave,341-22-1782
+Number expected: 4, number found: 4.
+
+
+TABLE_CONSTRAINTS:
+------------------
+INTEG_1                        ,BOOKS                          ,NOT NULL   ,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+alter_add_uniq got SQLCODE = -803
+BU1032,The Busy Executive's Database Guide,
+BU2075,You Can Combat Computer Stress!,238-95-7766
+Number expected: 2, number found: 2.
+
+
+TABLE_CONSTRAINTS:
+------------------
+INTEG_1                        ,BOOKS                          ,NOT NULL   ,NO ,NO 
+INTEG_3                        ,BOOKS                          ,UNIQUE     ,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+INTEG_3                        ,BOOKS                          ,BOOK_ID                        
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------

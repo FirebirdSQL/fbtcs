@@ -1,0 +1,39 @@
+Test:
+ SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, SUM(V2.BUDGET) FROM DEPT_BUDGET V2 WHERE SINGULAR (SELECT * FROM FULLEMP V3, EMPSAL V4, SALES T1 WHERE V2.DEPARTMENT = V3.DEPARTMENT AND V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP AND T1.TOTAL_VALUE > (SELECT AVG(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP= 137)) GROUP BY V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO ORDER BY V2.DEPTNO)
+--------------------------------------------------------------------------------
+111	Eastern Sales Region     	142	 276500.00
+--------------------------------------------------
+115	Federal Sales Region     	138	 157000.00
+--------------------------------------------------
+
+
+* Total Records Listed >>> 2
+
+Deptno        Department          Mgrno      TOTAL
+====== ========================= ====== ==============
+
+ 111   Eastern Sales Region         142    $276,500.00
+ 115   Federal Sales Region         138    $157,000.00
+
+
+Deptno        Department          Mgrno      TOTAL
+====== ========================= ====== ==============
+
+ 111   Eastern Sales Region         142    $276,500.00
+ 115   Federal Sales Region         138    $157,000.00
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+DEPTNO DEPARTMENT                  MGRNO          SUM 
+====== ========================= ======= ============ 
+
+111    Eastern Sales Region          142    276500.00 
+115    Federal Sales Region          138    157000.00 
+
+
+DEPTNO DEPARTMENT                  MGRNO          SUM 
+====== ========================= ======= ============ 
+
+111    Eastern Sales Region          142    276500.00 
+115    Federal Sales Region          138    157000.00 
+

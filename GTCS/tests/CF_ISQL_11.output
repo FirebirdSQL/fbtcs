@@ -1,0 +1,16 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -206
+
+Dynamic SQL Error
+-SQL error code = -206
+-Column unknown
+-B
+-At line 4, column 45.
+Statement failed, SQLCODE = -206
+
+Dynamic SQL Error
+-SQL error code = -206
+-Column unknown
+-A
+-At line 4, column 34.
+There are no tables in this database

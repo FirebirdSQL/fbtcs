@@ -1,0 +1,40 @@
+Test:
+ SELECT EMPNO FROM SALES_PEOPLE T1 WHERE SINGULAR (SELECT * FROM SALES T2 WHERE T1.EMPNO=T2.SALES_REP AND T2.TOTAL_VALUE > 6000 AND SINGULAR (SELECT * FROM CUSTOMERS T3 WHERE T3.CUSTNO = T2.CUSTNO))AND SINGULAR (SELECT * FROM SALES_PERF T4 WHERE T4.EMPNO = T1.EMPNO)
+--------------------------------------------------------------------------------
+118
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 1
+Welcome to QLI
+Query Language Interpreter
+
+ Empno
+======
+
+   118
+
+
+ Empno
+======
+
+   118
+
+
+ Empno
+======
+
+   118
+
+
+  EMPNO 
+======= 
+
+    118 
+
+
+  EMPNO 
+======= 
+
+    118 
+

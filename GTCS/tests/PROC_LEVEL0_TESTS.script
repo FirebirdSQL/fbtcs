@@ -1,0 +1,31 @@
+
+$ CREATE comment.txt
+   This suite contains all level 0 tests for the Stored Procedure.
+
+$ ISQL -m
+create database "WHERE_GDB:foo.gdb";
+set echo;
+/* This script checks how long a procedure name can be. */
+set term go;
+create procedure pabcdefghijklmnopqrstuvwxyzabcd  RETURNS (a int) as
+begin
+   a = 10;
+   SUSPEND;
+end
+go
+
+create procedure qabcdefghijklmnopqrstuvwxyzabcde  RETURNS (a int) as
+begin
+   a = 10;
+   SUSPEND;
+end
+go
+
+set term ; go
+show proc;
+execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
+execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
+exit;
+
+$ DELETE comment.txt
+$ DROP WHERE_GDB:foo.gdb

@@ -1,0 +1,59 @@
+Test:
+ SELECT CUSTNO, CUSTOMER FROM CUSTOMERS WHERE CUSTOMER STARTING WITH 'T' OR CUSTOMER STARTING WITH 'S' ORDER BY CUSTOMER ASCENDING
+--------------------------------------------------------------------------------
+101	Scott Bros Auto Care
+--------------------------------------------------------------------------------
+110	Sporting Life Health Bars
+--------------------------------------------------------------------------------
+106	The Bike Mart
+--------------------------------------------------------------------------------
+103	The Groton Company
+--------------------------------------------------------------------------------
+100	Thomas Novelty Co.
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 5
+
+Custno         Customer
+====== =========================
+
+   101 Scott Bros Auto Care
+   110 Sporting Life Health Bars
+   106 The Bike Mart
+   103 The Groton Company
+   100 Thomas Novelty Co.
+
+
+Custno         Customer
+====== =========================
+
+   101 Scott Bros Auto Care
+   110 Sporting Life Health Bars
+   106 The Bike Mart
+   103 The Groton Company
+   100 Thomas Novelty Co.
+
+
+   COUNT
+===========
+
+          5
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+ CUSTNO CUSTOMER                  
+======= ========================= 
+
+    101 Scott Bros Auto Care      
+    110 Sporting Life Health Bars 
+    106 The Bike Mart             
+    103 The Groton Company        
+    100 Thomas Novelty Co.        
+
+
+       COUNT 
+============ 
+
+           5 
+

@@ -1,0 +1,37 @@
+Test:
+ SELECT * FROM HEAD_DEPT V1 WHERE SINGULAR (SELECT * FROM DEPT_BUDGET V2,FULLEMP V3,EMPSAL V4 WHERE V2.DEPTNO= V1.DEPTNO AND V2.DEPARTMENT = V3.DEPARTMENT AND V3.EMPNO = V4.EMPNO)
+--------------------------------------------------------------------------------
+000	Corporate Headquarters   	120	9	1	000	527500.00
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 1
+
+                                            SUB
+                                           TOTAL          Head     Budget
+Deptno        Department          Mgrno   REPORTS   Level Dept    Inc Subs
+====== ========================= ====== =========== ===== ==== ==============
+
+ 000   Corporate Headquarters       120           9   1   000     $527,500.00
+
+
+                                            SUB
+                                           TOTAL          Head     Budget
+Deptno        Department          Mgrno   REPORTS   Level Dept    Inc Subs
+====== ========================= ====== =========== ===== ==== ==============
+
+ 000   Corporate Headquarters       120           9   1   000     $527,500.00
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+DEPTNO DEPARTMENT                  MGRNO SUB_TOTAL_REPORTS DEPT_LEVEL HEAD_DEPT   SUB_BUDGET 
+====== ========================= ======= ================= ========== ========= ============ 
+
+000    Corporate Headquarters        120                 9 1          000          527500.00 
+
+
+DEPTNO DEPARTMENT                  MGRNO SUB_TOTAL_REPORTS DEPT_LEVEL HEAD_DEPT   SUB_BUDGET 
+====== ========================= ======= ================= ========== ========= ============ 
+
+000    Corporate Headquarters        120                 9 1          000          527500.00 
+

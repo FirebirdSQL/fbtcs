@@ -1,0 +1,7 @@
+
+/*****************************************************************************
+ Test Name:           dsql_except_cleanup
+ Series:              dsql_exceptions
+ Description:         Removes atlas.gdb after use by the series.
+*****************************************************************************/
+$ DROP WHERE_GDB:atlas.gdb

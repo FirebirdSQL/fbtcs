@@ -1,0 +1,216 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sin022.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ Syntax:                [NOT] SINGULAR <subquery>
+ Description:           SINGULAR - view joins inside sub-query
+
+                        SELECT V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO, COUNT(*)
+                        FROM HEAD_DEPT V1
+                        WHERE SINGULAR
+                        (SELECT * FROM DEPT_BUDGET V2, FULLEMP V3, EMPSAL V4
+                        WHERE V2.DEPTNO= V1.DEPTNO AND V2.DEPARTMENT = V3.DEPARTMENT
+                        AND V3.EMPNO = V4.EMPNO)
+                        GROUP BY V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO
+                        ORDER BY V1.DEPTNO;
+
+ Tables:                customers
+ Author:                Sam Hakim, Feb 19, 1993
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON DEPARTMENTS.DEPTNO             DeptNo;
+BASED_ON DEPARTMENTS.DEPARTMENT         Department;
+BASED_ON DEPARTMENTS.MGRNO              MgrNo;
+int                                     DeptCount;
+
+void Underline();
+void pad();
+
+
+char Test[]=" SELECT V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO, COUNT(*) \
+FROM HEAD_DEPT V1 \
+WHERE SINGULAR \
+(SELECT * FROM DEPT_BUDGET V2, FULLEMP V3, EMPSAL V4 \
+WHERE V2.DEPTNO= V1.DEPTNO AND V2.DEPARTMENT = V3.DEPARTMENT \
+AND V3.EMPNO = V4.EMPNO) \
+GROUP BY V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO \
+ORDER BY V1.DEPTNO)";
+
+void Underline();
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+		DECLARE CR CURSOR FOR
+                SELECT V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO, COUNT(*)
+                FROM HEAD_DEPT V1
+                WHERE SINGULAR
+                (SELECT * FROM DEPT_BUDGET V2, FULLEMP V3, EMPSAL V4
+                WHERE V2.DEPTNO= V1.DEPTNO AND V2.DEPARTMENT = V3.DEPARTMENT
+                AND V3.EMPNO = V4.EMPNO)
+                GROUP BY V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO
+                ORDER BY V1.DEPTNO;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :DeptNo,:Department,:MgrNo,:DeptCount;
+
+        while (SQLCODE == 0){
+		Count++;
+                pad(Department, sizeof(Department));
+
+                printf("%s\t",DeptNo);
+                printf("%s\t",Department);
+                printf("%d\t",MgrNo);
+                printf("%d\n",DeptCount);
+
+		Underline(50);	
+
+                EXEC SQL
+                        FETCH CR INTO :DeptNo,:Department,:MgrNo,:DeptCount;
+        }
+	
+NOMORE:
+
+	EXEC SQL
+		CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:    EXEC SQL
+                CLOSE CR;
+
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+
+/***************************************************************
+ * pad the character string with blanks
+ ***************************************************************
+*/
+void pad(string,l)
+char *string;
+int l;
+{
+
+char *s;
+int i;
+
+i = 1;
+s = string;
+
+while (*s){
+	s++;
+	i++;
+}
+for (;i<l;s++,i++)
+	*s=' ';	
+*s='\0';
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e sin022.e
+$ CC FLAG_CC sin022.c
+$ LINK FLAG_LINK sin022 
+$ RUN sin022
+$ CREATE sin022.qli
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+select v1.deptno, v1.department, v1.mgrno, count(*) 
+from head_dept v1 
+where singular
+(select * from dept_budget v2, fullemp v3, empsal v4 where
+v2.deptno= v1.deptno and v2.department = v3.department and
+v3.empno = v4.empno) 
+group by v1.deptno, v1.department, v1.mgrno
+order by v1.deptno;
+
+select v1.deptno, v1.department, v1.mgrno, count(*) 
+from head_dept v1 
+where 1 =
+(select count(*) from dept_budget v2, fullemp v3, empsal v4 where
+v2.deptno= v1.deptno and v2.department = v3.department and
+v3.empno = v4.empno) 
+group by v1.deptno, v1.department, v1.mgrno
+order by v1.deptno;
+
+finish;
+quit;
+$ QLI -n -a sin022.qli
+$ CREATE sin022.sql
+connect WHERE_GDB:sh_test.gdb;
+select v1.deptno, v1.department, v1.mgrno, count(*) 
+from head_dept v1 
+where singular
+(select * from dept_budget v2, fullemp v3, empsal v4 where
+v2.deptno= v1.deptno and v2.department = v3.department and
+v3.empno = v4.empno) 
+group by v1.deptno, v1.department, v1.mgrno
+order by v1.deptno;
+
+select v1.deptno, v1.department, v1.mgrno, count(*) 
+from head_dept v1 
+where 1 =
+(select count(*) from dept_budget v2, fullemp v3, empsal v4 where
+v2.deptno= v1.deptno and v2.department = v3.department and
+v3.empno = v4.empno) 
+group by v1.deptno, v1.department, v1.mgrno
+order by v1.deptno;
+quit;
+$ISQL -i sin022.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sin022* 
+

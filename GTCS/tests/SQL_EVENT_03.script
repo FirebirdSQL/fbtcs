@@ -1,0 +1,91 @@
+
+$ CREATE comment.txt
+Author: Sudhanshu Kumar
+In this test event init shows its interest in two events. 
+$CREATE event3.sql
+create database "WHERE_GDB:events.gdb";
+
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     INTEGER);
+
+insert into works_on values (1, 1, 20);
+insert into works_on values (1, 2, 30);
+insert into works_on values (3, 3, 40);
+
+set term go;
+create trigger trig01 for works_on 
+active before update position 1
+as 
+declare variable x int;
+begin
+if (new.hours > old.hours) then 
+     post_event 'hours_increased';
+else 
+     post_event 'hours_decreased';
+end
+go
+set term ; go
+exit;
+$ISQL -I event3.sql -sqldialect 1
+$ CREATE foo3.e
+# include <stdio.h>
+DATABASE DB = "WHERE_GDB:events.gdb"
+main()
+{
+  EXEC SQL 
+	CONNECT DB;
+  EXEC SQL 
+	SET TRANSACTION;
+  EXEC SQL 
+	EVENT INIT xyz DB ("hours_increased", "hours_decreased");
+
+  if (isc_status[1])
+        isc_print_status(gds__status);
+
+  EXEC SQL 
+	EVENT WAIT xyz;
+  EXEC SQL 
+	COMMIT WORK;
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+
+  if (gds__events[0])
+        printf ("\nfoo3 done, event (hours_increased) was posted.\n");
+  if (gds__events[1])
+        printf ("\nfoo3 done, event (hours_decreased) was posted.\n");
+
+  EXEC SQL
+	DISCONNECT DB;
+
+ return 0;
+
+}
+
+$ GPRE  -n -m foo3.e
+$ CC FLAG_CC foo3.c
+$ LINK FLAG_LINK foo3 
+$ RUN_BG foo3 > foo3.tt1 &
+$ SLEEP 5
+$ ISQL 
+connect "WHERE_GDB:events.gdb" ;
+update works_on set hours = hours + 10 where pnumber = 1 ;
+commit;
+select * from works_on;
+quit;
+$ SLEEP 5
+$ TYPE foo3.tt1 
+$ RUN_BG foo3 > foo3.tt2
+$ SLEEP 5
+$ ISQL 
+connect "WHERE_GDB:events.gdb" ;
+update works_on set hours = hours - 10 where pnumber = 2 ;
+commit;
+select * from works_on;
+quit;
+$ SLEEP 5
+$ TYPE foo3.tt2
+$ DROP WHERE_GDB:events.gdb 
+$ DELETE foo3* comment.txt event3.sql
+

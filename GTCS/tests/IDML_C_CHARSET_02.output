@@ -1,0 +1,331 @@
+rowid:
+  1     Ó          O,acute:  ISO 211, DOS850 224  DOS437 undefined 
+        Ë          E,umlaut: ISO 203, DOS850 211, DOS437 undefined
+  2     ç          c,cedilla:ISO 231, DOS850 135, DOS437 135
+        þ          thorn:    ISO 254, DOS850 231, DOS437 undefined
+  3     ¢          cent sign:ISO 162, DOS850 189, DOS437 155
+        ó          o, acute: ISO 243, DOS850 162, DOS437 162
+  4     æ          ae(as one)ISO 230, DOS850 145, DOS437 145
+        µ          scrip u:  ISO 181, DOS850 230, DOS437 230       
+  5     Ø          O, slash: ISO 216, DOS850 157, DOS437 undefined
+        Ï          I,umlaut: ISO 207, DOS850 216, DOS437 undefined   
+        à          a, acute: ISO 224, DOS850 133, DOS437 undefined
+
+  PASS 1: LOADING DATA WITH SET NAMES = ISO8859_1--selecting DOS850 fields
+
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+---------------------------------------------------------------
+1.
+  RUNNING...                
+  set names iso8859_1;
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+  quit;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 Ó          O,acute: set names is iso                               
+     11 Ë          _DOS or _ISO O,acute,iso 211,dos850 224                 
+      3 ç          c cedilla                                               
+     33 þ          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ¢          cent sign                                               
+     22 ó          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 æ          ae(as one)                                              
+     44 µ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+      5 Ø          O, slash                                                
+     55 Ï          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+2.
+  Then RUNNING...
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 à          O,acute: set names is iso                               
+     11 Ó          _DOS or _ISO O,acute,iso 211,dos850 224                 
+      3 ‡          c cedilla                                               
+     33 ç          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ½          cent sign                                               
+     22 ¢          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 ‘          ae(as one)                                              
+     44 æ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+      5 ?          O, slash                                                
+     55 Ø          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+3.
+  Then RUNNING...selects on ISO field w/various set names:
+
+  set names iso8859_1;  
+  connect "tests.gdb";
+  select t_rowid, t_ISO, a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_ISO      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 Ó          O,acute: set names is iso                               
+     11 Ó          _DOS or _ISO O,acute,iso 211,dos850 224                 
+      3 ç          c cedilla                                               
+     33 ç          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ¢          cent sign                                               
+     22 ¢          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 æ          ae(as one)                                              
+     44 æ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+      5 Ø          O, slash                                                
+     55 Ø          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+4.
+  Then RUNNING...selects on ISO field w/various set names:
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_ISO, a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_ISO      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 à          O,acute: set names is iso                               
+     11 à          _DOS or _ISO O,acute,iso 211,dos850 224                 
+      3 ‡          c cedilla                                               
+     33 ‡          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ½          cent sign                                               
+     22 ½          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 ‘          ae(as one)                                              
+     44 ‘          _DOS or _ISO ae(as one),iso 230, dos850 145             
+      5 ?          O, slash                                                
+     55 ?          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+  PASS 2: Same thing, but LOAD THE DATA WITH SET NAMES = DOS850
+
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+---------------------------------------------------------------
+1.
+  RUNNING...                
+  set names iso8859_1;
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+  quit;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 Ë          O,acute: set names is iso                               
+     11 Ë          _DOS or _ISO O,acute,iso 211,dos850 224                 
+      3 þ          c cedilla                                               
+     33 þ          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ó          cent sign                                               
+     22 ó          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 µ          ae(as one)                                              
+     44 µ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+      5 Ï          O, slash                                                
+     55 Ï          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+2.
+  Then RUNNING...
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 Ó          O,acute: set names is iso                               
+     11 Ó          _DOS or _ISO O,acute,iso 211,dos850 224                 
+      3 ç          c cedilla                                               
+     33 ç          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ¢          cent sign                                               
+     22 ¢          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 æ          ae(as one)                                              
+     44 æ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+      5 Ø          O, slash                                                
+     55 Ø          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+3.
+  Then RUNNING...selects on ISO field w/various set names:
+
+  set names iso8859_1;  
+  connect "tests.gdb";
+  select t_rowid, t_ISO, a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_ISO      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 Ë          O,acute: set names is iso                               
+     11 Ó          _DOS or _ISO O,acute,iso 211,dos850 224                 
+      3 þ          c cedilla                                               
+     33 ç          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ó          cent sign                                               
+     22 ¢          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 µ          ae(as one)                                              
+     44 æ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+      5 Ï          O, slash                                                
+     55 Ø          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+4.
+  Then RUNNING...selects on ISO field w/various set names:
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_ISO, a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_ISO      A_DESC                                                  
+======= ========== ======================================================= 
+
+      1 Ó          O,acute: set names is iso                               
+     11 à          _DOS or _ISO O,acute,iso 211,dos850 224                 
+      3 ç          c cedilla                                               
+     33 ‡          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ¢          cent sign                                               
+     22 ½          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 æ          ae(as one)                                              
+     44 ‘          _DOS or _ISO ae(as one),iso 230, dos850 145             
+      5 Ø          O, slash                                                
+     55 ?          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+  PASS 3: Same thing, but LOAD THE DATA WITH SET NAMES = DOS437
+
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -802
+
+arithmetic exception, numeric overflow, or string truncation
+-Cannot transliterate character between character sets
+---------------------------------------------------------------
+1.
+  RUNNING...                
+  set names iso8859_1;
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+  quit;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+     11 Ë          _DOS or _ISO O,acute,iso 211,dos850 224                 
+     33 þ          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ó          cent sign                                               
+     22 ó          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 µ          ae(as one)                                              
+     44 µ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+     55 Ï          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+2.
+  Then RUNNING...
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_850,a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      A_DESC                                                  
+======= ========== ======================================================= 
+
+     11 Ó          _DOS or _ISO O,acute,iso 211,dos850 224                 
+     33 ç          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ¢          cent sign                                               
+     22 ¢          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 æ          ae(as one)                                              
+     44 æ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+     55 Ø          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+3.
+  Then RUNNING...selects on ISO field w/various set names:
+
+  set names iso8859_1;  
+  connect "tests.gdb";
+  select t_rowid, t_ISO, a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_ISO      A_DESC                                                  
+======= ========== ======================================================= 
+
+     11 Ó          _DOS or _ISO O,acute,iso 211,dos850 224                 
+     33 ç          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ó          cent sign                                               
+     22 ¢          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 µ          ae(as one)                                              
+     44 æ          _DOS or _ISO ae(as one),iso 230, dos850 145             
+     55 Ø          _DOS or _ISO O, slash,iso 216, dos850 157               
+
+---------------------------------------------------------------
+4.
+  Then RUNNING...selects on ISO field w/various set names:
+
+  set names dos850;     
+  connect "tests.gdb";
+  select t_rowid, t_ISO, a_desc from t2;
+---------------------------------------------------------------
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_ISO      A_DESC                                                  
+======= ========== ======================================================= 
+
+     11 à          _DOS or _ISO O,acute,iso 211,dos850 224                 
+     33 ‡          _DOS or _ISO c cedilla,iso 231,dos850 135               
+      2 ¢          cent sign                                               
+     22 ½          _DOS or _ISO cent,iso 162, dos850 189                   
+      4 æ          ae(as one)                                              
+     44 ‘          _DOS or _ISO ae(as one),iso 230, dos850 145             
+     55 ?          _DOS or _ISO O, slash,iso 216, dos850 157               
+

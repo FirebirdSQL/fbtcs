@@ -1,0 +1,46 @@
+Test:
+ SELECT NAME FROM EMPLOYEES WHERE NAME CONTAINING 'z'
+--------------------------------------------------------------------------------
+Jessie Borzoi
+--------------------------------------------------------------------------------
+Karl Schnauzer
+--------------------------------------------------------------------------------
+Kelly Spitz
+--------------------------------------------------------------------------------
+Elayne Schnauzer
+--------------------------------------------------------------------------------
+Chantal Bowzer
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 5
+
+           Name
+==========================
+
+Jessie Borzoi
+Karl Schnauzer
+Kelly Spitz
+Elayne Schnauzer
+Chantal Bowzer
+
+
+           Name
+==========================
+
+Jessie Borzoi
+Karl Schnauzer
+Kelly Spitz
+Elayne Schnauzer
+Chantal Bowzer
+
+
+NAME                       
+========================== 
+
+Jessie Borzoi              
+Karl Schnauzer             
+Kelly Spitz                
+Elayne Schnauzer           
+Chantal Bowzer             
+

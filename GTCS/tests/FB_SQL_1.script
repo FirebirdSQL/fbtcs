@@ -1,0 +1,164 @@
+
+HISTORY:
+19-May-2001  Neil McCalden    New test created.
+
+$ GBAK -r WHERE_FILES:atlas.gbk WHERE_GDB:atlas.gdb
+$ISQL WHERE_GDB:atlas.gdb -i WHERE_EXAMPLES:ib_udf.sql
+$ CREATE udfgrp.e
+/**********************************************************************
+ Purpose:		Test group by a udf function 
+ 
+ Description:     Group by a udf function on base table
+
+                  SELECT SUBSTR(FIRST_NAME,1,2) AS SNAME ,COUNT(*)
+                  FROM MAYORS 
+                  GROUP BY SUBSTR(FIRST_NAME,1,2);
+
+ Tables:          mayors
+
+ Author:          Neil McCalden
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:atlas.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON MAYORS.STATE                   Sname;
+int                                     SnameCount;
+
+char Test[]="select substr(first_name,1,2) ,count(*) \
+from mayors \
+group by substr(first_name,1,2)";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+					select substr(first_name,1,2) ,count(*) 
+					from mayors 
+					group by substr(first_name,1,2)
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Sname,:SnameCount;
+
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%s\t",Sname);
+                printf("%d\n",SnameCount);
+                Underline(80);
+
+                EXEC SQL
+                        FETCH CR INTO :Sname,:SnameCount;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e udfgrp.e
+$ CC FLAG_CC udfgrp.c
+$ LINK FLAG_LINK udfgrp 
+$ RUN udfgrp
+
+$CREATE grpview.sql
+connect WHERE_GDB:atlas.gdb;
+create view udfgrp_view
+(first_name,last_name,state,sname)
+as
+select first_name,last_name,state,substr(first_name,1,2)
+from mayors;
+quit;
+$ISQL -i grpview.sql
+$CREATE udfgrp1.sql
+connect WHERE_GDB:atlas.gdb;
+select substr(first_name,1,2) as sname ,count(*)
+ from mayors 
+group by substr(first_name,1,2);
+quit;
+$ISQL -i udfgrp1.sql
+$CREATE udfgrp2.sql
+connect WHERE_GDB:atlas.gdb;
+select sname,count(*) from udfgrp_view
+group by sname;
+quit;
+$ISQL -i udfgrp2.sql
+$CREATE udfgrp3.sql
+connect WHERE_GDB:atlas.gdb;
+select state,substr(first_name,1,2) as sname ,count(*)
+ from mayors 
+group by state,substr(first_name,1,2);
+quit;
+$ISQL -i udfgrp3.sql
+$CREATE udfgrp4.sql
+connect WHERE_GDB:atlas.gdb;
+select state,sname,count(*) from udfgrp_view
+group by state,sname;
+quit;
+$ISQL -i udfgrp4.sql
+
+$DROP WHERE_GDB:atlas.gdb
+$ DELETE grpview.sql udfgrp*
+
+

@@ -1,0 +1,42 @@
+
+$ CREATE er23.c
+/*
+ *	isc_commit_transaction
+ *
+ *	Pass an invalid transaction handle.
+ * 
+ *  Test name: er23.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+
+	LogPrintf("Running ER23, Bad tr handle to commit trans.\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_commit_transaction (status, &trans)) ==0)
+		LogPrintf("BUG: Bad tr handle to commit trans.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	trans = NULL;
+	if ((rc=isc_commit_transaction (status, &trans)) ==0)
+		LogPrintf("BUG: Bad tr handle to commit trans.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER23\n");
+}
+$ CC FLAG_CC er23.c
+$ LINK FLAG_LINK er23 
+$ RUN er23
+$ DELETE er23*

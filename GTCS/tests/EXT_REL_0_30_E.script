@@ -1,0 +1,82 @@
+
+$CREATE COMMENT
+*******************************************************************************
+ 
+Test Name:  	EXT_REL_0_30_E
+Test Level:     0
+Series Name:    EXT_LEV_0
+Date:  		July 5, 1994
+Author:  	Scott Van Voris
+Bug: 
+Description:    This is a Level 0 test which is designed to verify that 
+		a column created in an external file is not created with
+                an automatic index.
+
+                In this case a foreign key is the cause of the index.
+                (REFERENCES.)
+ 
+Expected Output:       **  We should get some appropriate error message and 
+			InterBase should gracefully exit without creating
+			the index (or column?).  **
+History:
+2-Oct-95:  Mark
+  Removed the Cleanup / Setup comments from the test.
+  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+
+3-Oct-95: Marco
+  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+  by the server in the correct place when accessing data remotely.
+  Also, I removed any referance to DIR external.dat and TYPE external.dat
+  which would also fail when running remotely.
+
+*******************************************************************************
+$CREATE column.e
+#include <stdio.h>
+#include <stdlib.h>
+ 
+EXEC SQL
+    INCLUDE SQLCA
+ 
+EXEC SQL
+    WHENEVER SQLERROR GO TO ERR;
+ 
+ 
+main()
+{
+ 
+EXEC SQL
+   CREATE DATABASE "WHERE_GDB:ext_rel_0_30_E.gdb";
+
+EXEC SQL
+   CREATE TABLE int_table 
+	(field1 SMALLINT NOT NULL PRIMARY KEY);
+
+EXEC SQL
+   CREATE TABLE ext_table EXTERNAL FILE "WHERE_GDB_EXTERNAL:external.dat"
+        (field1 SMALLINT NOT NULL REFERENCES int_table (field1),
+         field2 SMALLINT);
+
+exit(0);
+ERR:
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status (gds__status);
+ 
+    EXEC SQL
+        ROLLBACK RELEASE;
+ 
+    exit(1);
+}
+$CREATE isql.in
+
+CONNECT "WHERE_GDB:ext_rel_0_30_E.gdb";
+SHOW TABLE ext_table;
+
+$GPRE column.e
+$CC FLAG_CC column.c
+$LINK FLAG_LINK column
+$RUN column
+$ISQL -input isql.in
+$DROP WHERE_GDB:ext_rel_0_30_E.gdb
+$DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
+$DELETE COMMENT isql.in column*

@@ -1,0 +1,14 @@
+Running ER38, invalid transaction handle
+to isc_array_put_slice
+1
+RC=335544324
+ERROR: Unsuccessful execution caused by an unavailable resource.
+2
+RC=335544332
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+3
+RC=335544332
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+4
+5
+Finished ER38

@@ -1,0 +1,41 @@
+Test:
+ SELECT PROJ_NO, PROJ_NAME, PRODUCT, VERSION FROM PROJECTS WHERE PROJ_NO STARTING WITH 'HH300'
+--------------------------------------------------------------------------------
+HH300	Howard Hues	RDBMS	HHI30A
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 1
+
+               Project
+Project No      Name          Product    Version
+========== =============== ============ ========
+
+ HH-3.00   Howard Hues     RDBMS        HH-I3.0A
+
+
+               Project
+Project No      Name          Product    Version
+========== =============== ============ ========
+
+ HH-3.00   Howard Hues     RDBMS        HH-I3.0A
+
+
+   COUNT
+===========
+
+          1
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+PROJ_NO PROJ_NAME       PRODUCT      VERSION 
+======= =============== ============ ======= 
+
+HH300   Howard Hues     RDBMS        HHI30A  
+
+
+       COUNT 
+============ 
+
+           1 
+

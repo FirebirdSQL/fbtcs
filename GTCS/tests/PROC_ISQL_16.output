@@ -1,0 +1,29 @@
+SQL> select * from p;
+
+PNO    PNAME                COLOR        WEIGHT CITY            
+====== ==================== ====== ============ =============== 
+
+P1     Nut                  Red              12 London          
+P2     Bolt                 Green            17 Paris           
+P3     Screw                Blue             17 Rome            
+P4     Screw                Red              14 London          
+P5     Cam                  Blue             12 Paris           
+P6     Cog                  Red              19 London          
+
+SQL> EXECUTE PROCEDURE PROC_INSERT 'P15',NULL , 'Pink', NULL, 'Hoboken';
+SQL> INSERT INTO P VALUES ('P16', NULL, NULL, NULL, 'Varanasi');
+SQL> select * from p;
+
+PNO    PNAME                COLOR        WEIGHT CITY            
+====== ==================== ====== ============ =============== 
+
+P1     Nut                  Red              12 London          
+P2     Bolt                 Green            17 Paris           
+P3     Screw                Blue             17 Rome            
+P4     Screw                Red              14 London          
+P5     Cam                  Blue             12 Paris           
+P6     Cog                  Red              19 London          
+P15    <null>               Pink         <null> Hoboken         
+P16    <null>               <null>       <null> Varanasi        
+
+SQL> exit;

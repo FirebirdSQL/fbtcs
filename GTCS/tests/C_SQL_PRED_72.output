@@ -1,0 +1,21 @@
+Test:
+ UPDATE CUSTOMERS SET ZIP_CODE='99999'  WHERE CUSTOMER CONTAINING ' 
+--------------------------------------------------------------------------------
+Nature's Food Co-op 99999
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 1
+
+        Customer           Zip
+========================= =====
+
+Nature's Food Co-op       99999
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+CUSTOMER                  ZIP_CODE 
+========================= ======== 
+
+Nature's Food Co-op       99999    
+

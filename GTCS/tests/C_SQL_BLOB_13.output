@@ -1,0 +1,9 @@
+Test:
+ INSERT BLOB-CURSOR VALUES (Buffer,-1) - Buffer length<0 
+              Bufferlen<0 produces core dumps and not allowed. 
+ 	     BufferLen type should be unsigned short
+--------------------------------------------------------------------------------
+A signed short for buff len < 0 produces core dump
+A signed short for buff len < 0 produces core dump
+A signed short for buff len < 0 produces core dump
+A signed short for buff len < 0 produces core dump

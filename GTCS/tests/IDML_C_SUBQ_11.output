@@ -1,0 +1,43 @@
+The following test is for legal syntax and produce ordered results using a
+simple select on TABLE 1 after an insert using a SUBQUERY w/GROUP BY COLLATE FR_FR;
+
+It does.  The query on TABLE 2 is the result of the same insert without the 
+GROUP BY--it does not appear sorted.
+
+The final test is done in ISQL and produces the error at the end of the results.
+ISQL does not support the GROUP BY COLLATE used in this way.
+
+
+Attempting an insert using a SUBQUERY with GROUP BY COLLATE FR_FR--works.
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+           C_ENUS                    C_FRANCE                  C_437_25                  
+========== ========================= ========================= ========================= 
+
+ table 1:  Aalborg                   Aalborg                   Aalborg                   
+ table 1:  aïeul                     aïeul                     aïeul                     
+ table 1:  Ålborg                    Ålborg                    Ålborg                    
+ table 1:  caennais                  caennais                  caennais                  
+ table 1:  cæsium                    cæsium                    cæsium                    
+ table 1:  péché                     péché                     péché                     
+ table 1:  vice versa                vice versa                vice versa                
+
+
+           C_ENUS                    C_FRANCE                  C_437_25                  
+========== ========================= ========================= ========================= 
+
+ table 2:  péché                     péché                     péché                     
+ table 2:  Ålborg                    Ålborg                    Ålborg                    
+ table 2:  cæsium                    cæsium                    cæsium                    
+ table 2:  Aalborg                   Aalborg                   Aalborg                   
+ table 2:  aïeul                     aïeul                     aïeul                     
+ table 2:  caennais                  caennais                  caennais                  
+ table 2:  vice versa                vice versa                vice versa                
+
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -104
+
+Dynamic SQL Error
+-SQL error code = -104
+-Invalid expression in the select list (not contained in either an aggregate function or the GROUP BY clause)

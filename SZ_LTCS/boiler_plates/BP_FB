@@ -1,0 +1,16 @@
+#!/bin/sh
+PATH=$PATH:/usr/apc/firebird/bin:.
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/apc/firebird/lib
+COBDIR=
+ADADIR=
+TMP=/tmp
+umask 000
+LM_LICENSE_FILE=/apps/lang/license_dir/sunpro.lic,1
+LOCAL_HOST=`hostname`:"`pwd`/"
+export PATH
+export LD_LIBRARY_PATH
+export COBDIR
+export ADADIR
+export TMP
+export LM_LICENSE_FILE
+export LOCAL_HOST

@@ -1,0 +1,147 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE con014.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+
+ Description:           char-field, in a view
+
+                        SELECT DEPTNO
+                        FROM DEPT_BUDGET
+                        WHERE DEPTNO NOT CONTAINING '12'
+                        ORDER BY DEPTNO;
+
+ Tables:                DEPT_BUDGET
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON DEPARTMENTS.DEPTNO     DeptNo;
+
+
+char Test[]="SELECT DEPTNO \
+FROM DEPT_BUDGET \
+WHERE DEPTNO NOT CONTAINING '12' \
+ORDER BY DEPTNO";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT DEPTNO
+                FROM DEPT_BUDGET
+                WHERE DEPTNO NOT CONTAINING '12'
+                ORDER BY DEPTNO;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :DeptNo;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%s\n",DeptNo);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :DeptNo;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e con014.e
+$ CC FLAG_CC con014.c
+$ LINK FLAG_LINK con014 
+$ RUN con014
+$ CREATE con014.qli
+set semicolon;
+ready WHERE_GDB:sh_test.gdb;
+SELECT DEPTNO
+FROM DEPT_BUDGET
+WHERE DEPTNO NOT CONTAINING '12'
+ORDER BY DEPTNO;
+
+FOR D IN DEPT_BUDGET SORTED BY D.DEPTNO
+WITH D.DEPTNO NOT CONTAINING '12' PRINT DEPTNO;
+FINISH;
+QUIT;
+
+$ QLI -n -a con014.qli
+$ CREATE con014.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT DEPTNO
+FROM DEPT_BUDGET
+WHERE DEPTNO NOT CONTAINING '12'
+ORDER BY DEPTNO;
+quit;
+$ISQL -i con014.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE con014* 

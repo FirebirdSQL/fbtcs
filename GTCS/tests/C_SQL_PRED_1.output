@@ -1,0 +1,7 @@
+Test:
+ SELECT * FROM CUSTOMERS C1 WHERE NOT SINGULAR (SELECT * FROM CUSTOMERS C2 WHERE C2.CUSTOMER = C1.CUSTOMER)
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 0
+Use CONNECT or CREATE DATABASE to specify a database

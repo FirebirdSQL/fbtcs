@@ -1,0 +1,10 @@
+Running ER13, invalid db handle
+to isc_putt_slice
+RC=335544344
+ERROR: Unsuccessful execution caused by a system error that precludes
+successful execution of subsequent statements
+RC=335544324
+ERROR: Unsuccessful execution caused by an unavailable resource.
+RC=335544324
+ERROR: Unsuccessful execution caused by an unavailable resource.
+Finished ER13

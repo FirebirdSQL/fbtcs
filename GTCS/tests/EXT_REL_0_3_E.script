@@ -1,0 +1,145 @@
+
+$CREATE COMMENT
+*******************************************************************************
+ 
+Test Name:  	EXT_REL_0_3_E
+Test Level:     0
+Series Name:    EXT_LEV_0
+Date:  		June 28, 1994
+Author:  	Scott Van Voris
+Bug: 
+ 
+Description:    This is a Level 0 test which is designed to verify the 
+		syntax to create an external relation with a fixed-length
+		datatype is working properly.
+
+                In order to verify the external relation was really 
+                created, a tuple is inserted into the relation, and the 
+                value in the relation retreived via a query.
+ 
+Expected Output:        This is value:  12000
+ 
+History:
+
+2-Oct-95:  Mark
+  Removed the Cleanup / Setup comments from the test.
+  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+
+3-Oct-95: Marco
+  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+  by the server in the correct place when accessing data remotely.
+  Also, I removed any referance to DIR external.dat and TYPE external.dat
+  which would also fail when running remotely.
+
+4-Oct-95: Marco
+  Renamed Fixed.e to FixedL.e, so that we no longer call DELETE fixed*, which also 
+  deleted fixed.sed.
+
+7-Jan-97: CJewell
+  Added "WHENEVER SQLERROR CONTINUE" in the error-handling routine of
+  fixedL.e and query.e, after a setup error lead to endless loop which
+  produced 279MB in tcs.output before I saw it the next morning.  :-(
+
+10-Feb-97: Sudesh
+  Changing "EXEC ISQL" to "EXEC SQL" . This statement preceded "WHENEVER SQLERROR CONTINUE".
+  This is obviously a typo which was left out somehow and was creating failures in SOLARIS.
+
+*******************************************************************************
+
+$CREATE fixedL.e
+#include <stdio.h>
+#include <stdlib.h>
+ 
+EXEC SQL
+    INCLUDE SQLCA
+
+EXEC SQL
+    WHENEVER SQLERROR GO TO ERR;
+ 
+main()
+{
+
+EXEC SQL
+   CREATE DATABASE "WHERE_GDB:ext_rel_0_3_E.gdb";
+ 
+EXEC SQL
+   DECLARE ext_table TABLE
+       (field1 SMALLINT) ;
+ 
+EXEC SQL
+   CREATE TABLE ext_table EXTERNAL FILE "WHERE_GDB_EXTERNAL:external.dat"
+       (field1 SMALLINT) ;
+ 
+ 
+exit(0);
+ERR:
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status (gds__status);
+ 
+    EXEC SQL
+        WHENEVER SQLERROR CONTINUE;
+
+    EXEC SQL
+        ROLLBACK RELEASE;
+ 
+    exit(1);
+ 
+}
+$CREATE query.e
+#include <stdio.h>
+#include <stdlib.h>
+
+EXEC SQL
+    INCLUDE SQLCA
+ 
+EXEC SQL
+    WHENEVER SQLERROR GO TO ERR;
+ 
+EXEC SQL
+    SET DATABASE DB = "WHERE_GDB:ext_rel_0_3_E.gdb";
+
+main()
+{
+EXEC SQL 
+   BEGIN DECLARE SECTION;
+
+   BASED ON EXT_TABLE.FIELD1 value;
+EXEC SQL 
+   END DECLARE SECTION;
+
+EXEC SQL
+   INSERT INTO ext_table (field1) VALUES (12000);
+
+EXEC SQL
+   SELECT field1 INTO :value FROM EXT_TABLE;
+
+printf ("This is value:  %d\n",value);
+
+exit(0);
+ERR:
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status (gds__status);
+ 
+    EXEC SQL
+        WHENEVER SQLERROR CONTINUE;
+
+    EXEC SQL
+        ROLLBACK RELEASE;
+ 
+    exit(1);
+ 
+}
+
+$GPRE fixedL.e
+$CC FLAG_CC fixedL.c
+$LINK FLAG_LINK fixedL
+$RUN fixedL
+$GPRE query.e
+$CC FLAG_CC query.c
+$LINK FLAG_LINK query
+$RUN query 
+$DROP WHERE_GDB:ext_rel_0_3_E.gdb
+$DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
+$DELETE COMMENT fixedL* query*

@@ -1,0 +1,36 @@
+Test:
+ select t1.c1,t1.table_row,t2.c1,t2.table_row from ct1 t1 right join ct2 t2 on t1.c1 = t2.c1
+--------------------------------------------------------------------------------
+a-1       ct1-1     a-1       ct2-1     
+a-2       ct1-2     a-2       ct2-2     
+                              ct2-3     
+a-4       ct1-4     a-4       ct2-4     
+                              ct2-5     
+                    2         ct2-6     
+
+
+* Total Records Listed >>> 6
+
+     TABLE      TABLE
+C1    ROW  C1    ROW
+=== ====== === ======
+
+a-1 ct1-1  a-1 ct2-1 
+a-2 ct1-2  a-2 ct2-2 
+               ct2-3 
+a-4 ct1-4  a-4 ct2-4 
+               ct2-5 
+           2   ct2-6 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C1     TABLE_ROW C1     TABLE_ROW 
+====== ========= ====== ========= 
+
+a-1    ct1-1     a-1    ct2-1     
+a-2    ct1-2     a-2    ct2-2     
+<null> <null>    <null> ct2-3     
+a-4    ct1-4     a-4    ct2-4     
+<null> <null>    <null> ct2-5     
+<null> <null>    2      ct2-6     
+

@@ -1,0 +1,52 @@
+
+/*******************************************************************************
+ Test Name:   dsql_domain_04
+ Series Name: dsql_triggers
+ Date:        6-October-1993
+ Comments:    This script will test level 0 syntax for SQL create domain using
+              datatype and the check constraint clause.
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_04.sql
+create domain dom04a as smallint
+  check (value >=0 and value < 100);
+commit;
+show domain dom04a;
+create domain dom04b as integer
+  check (value > 5000);
+commit;
+show domain dom04b;
+create domain dom04c as date
+  check (value >= 'today');
+commit;
+show domain dom04c;
+create domain dom04d as char(20)
+  check (value in (select river from rivers));
+commit;
+show domain dom04d;
+create domain dom04e as varchar(25)
+  check (value in (select river from river_states));
+commit;
+show domain dom04e;
+create domain dom04f as decimal(6,2)
+  check (value > 0);
+commit;
+show domain dom04f;
+create domain dom04g as float
+  check (value < 50000.00);
+commit;
+show domain dom04g;
+create domain dom04h as double precision
+  check (value > 99.999);
+commit;
+show domain dom04h;
+create domain dom04i as blob
+  check (value > 500);
+commit;
+show domain dom04i;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_04.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_04.sql

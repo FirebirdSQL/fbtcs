@@ -1,0 +1,11 @@
+Use CONNECT or CREATE DATABASE to specify a database
+unsuccessful metadata update
+-DEFINE GENERATOR failed
+-attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_11"
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -204
+
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-INS

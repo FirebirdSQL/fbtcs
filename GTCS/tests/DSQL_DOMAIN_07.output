@@ -1,0 +1,48 @@
+DOM07A                          SMALLINT Nullable
+                                check (value >=0 and value < 100)
+DOM07A                          SMALLINT Nullable
+DOM07A                          SMALLINT Nullable
+                                check (value = 5000)
+DOM07B                          INTEGER Nullable
+                                check (value > 5000)
+DOM07B                          INTEGER Nullable
+DOM07B                          INTEGER Nullable
+                                check (value <= 0)
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+DOM07C                          TIMESTAMP Nullable
+                                check (value >= 'today')
+DOM07C                          TIMESTAMP Nullable
+DOM07C                          TIMESTAMP Nullable
+                                check (value < 'today')
+DOM07D                          CHAR(20) Nullable
+                                check (value in (select river from rivers))
+DOM07D                          CHAR(20) Nullable
+DOM07D                          CHAR(20) Nullable
+                                check (value in ("TEST1","TEST2","TEST3"))
+DOM07E                          VARCHAR(25) Nullable
+                                check (value in (select river from river_states))
+DOM07E                          VARCHAR(25) Nullable
+DOM07E                          VARCHAR(25) Nullable
+                                check (value is null)
+DOM07F                          DECIMAL(6, 2) Nullable
+                                check (value > 0)
+DOM07F                          DECIMAL(6, 2) Nullable
+DOM07F                          DECIMAL(6, 2) Nullable
+                                check (value in (1,4,6,10))
+DOM07G                          FLOAT Nullable
+                                check (value < 50000.00)
+DOM07G                          FLOAT Nullable
+DOM07G                          FLOAT Nullable
+                                check (value > 0)
+DOM07H                          DOUBLE PRECISION Nullable
+                                check (value > 99.999)
+DOM07H                          DOUBLE PRECISION Nullable
+DOM07H                          DOUBLE PRECISION Nullable
+                                check (value > (select count(*) from rivers))
+DOM07I                          BLOB segment 80, subtype UNKNOWN Nullable
+                                check (value > 500)
+DOM07I                          BLOB segment 80, subtype UNKNOWN Nullable
+DOM07I                          BLOB segment 80, subtype UNKNOWN Nullable
+                                check (value is not null)
+ 

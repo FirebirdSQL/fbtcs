@@ -1,0 +1,548 @@
+connected to service manager OK
+service started OK
+gbak: readied database WHERE_GDB_EXTERNAL:employee.gdb for backup 
+gbak: creating file WHERE_GDB_EXTERNAL:employee.gbk 
+gbak: starting transaction 
+gbak: database WHERE_GDB_EXTERNAL:employee.gdb has a page size of 1024 bytes. 
+gbak: writing domains 
+gbak:     writing domain FIRSTNAME 
+gbak:     writing domain LASTNAME 
+gbak:     writing domain PHONENUMBER 
+gbak:     writing domain COUNTRYNAME 
+gbak:     writing domain ADDRESSLINE 
+gbak:     writing domain EMPNO 
+gbak:     writing domain DEPTNO 
+gbak:     writing domain PROJNO 
+gbak:     writing domain CUSTNO 
+gbak:     writing domain JOBCODE 
+gbak:     writing domain JOBGRADE 
+gbak:     writing domain SALARY 
+gbak:     writing domain BUDGET 
+gbak:     writing domain PRODTYPE 
+gbak:     writing domain PONUMBER 
+gbak:     writing domain RDB$1 
+gbak:     writing domain RDB$2 
+gbak:     writing domain RDB$3 
+gbak:     writing domain RDB$4 
+gbak:     writing domain RDB$5 
+gbak:     writing domain RDB$6 
+gbak:     writing domain RDB$7 
+gbak:     writing domain RDB$8 
+gbak:     writing domain RDB$9 
+gbak:     writing domain RDB$10 
+gbak:     writing domain RDB$11 
+gbak:     writing domain RDB$12 
+gbak:     writing domain RDB$13 
+gbak:     writing domain RDB$14 
+gbak:     writing domain RDB$15 
+gbak:     writing domain RDB$16 
+gbak:     writing domain RDB$17 
+gbak:     writing domain RDB$18 
+gbak:     writing domain RDB$19 
+gbak:     writing domain RDB$20 
+gbak:     writing domain RDB$21 
+gbak:     writing domain RDB$22 
+gbak:     writing domain RDB$23 
+gbak:     writing domain RDB$24 
+gbak:     writing domain RDB$25 
+gbak:     writing domain RDB$26 
+gbak:     writing domain RDB$27 
+gbak:     writing domain RDB$28 
+gbak:     writing domain RDB$29 
+gbak:     writing domain RDB$30 
+gbak:     writing domain RDB$31 
+gbak:     writing domain RDB$32 
+gbak:     writing domain RDB$33 
+gbak:     writing domain RDB$34 
+gbak:     writing domain RDB$35 
+gbak:     writing domain RDB$36 
+gbak:     writing domain RDB$37 
+gbak:     writing domain RDB$38 
+gbak:     writing domain RDB$39 
+gbak:     writing domain RDB$40 
+gbak:     writing domain RDB$41 
+gbak:     writing domain RDB$42 
+gbak:     writing domain RDB$43 
+gbak:     writing domain RDB$44 
+gbak:     writing domain RDB$45 
+gbak:     writing domain RDB$46 
+gbak:     writing domain RDB$47 
+gbak:     writing domain RDB$48 
+gbak:     writing domain RDB$49 
+gbak:     writing domain RDB$50 
+gbak:     writing domain RDB$51 
+gbak:     writing domain RDB$52 
+gbak:     writing domain RDB$53 
+gbak:     writing domain RDB$54 
+gbak:     writing domain RDB$55 
+gbak:     writing domain RDB$56 
+gbak:     writing domain RDB$57 
+gbak:     writing domain RDB$58 
+gbak:     writing domain RDB$59 
+gbak:     writing domain RDB$60 
+gbak:     writing domain RDB$61 
+gbak:     writing domain RDB$62 
+gbak:     writing domain RDB$63 
+gbak:     writing domain RDB$64 
+gbak: writing shadow files 
+gbak: writing tables 
+gbak:     writing table COUNTRY 
+gbak:          writing column CURRENCY 
+gbak:          writing column COUNTRY 
+gbak:     writing table JOB 
+gbak:          writing column MIN_SALARY 
+gbak:          writing column MAX_SALARY 
+gbak:          writing column JOB_REQUIREMENT 
+gbak:          writing column JOB_GRADE 
+gbak:          writing column JOB_CODE 
+gbak:          writing column JOB_COUNTRY 
+gbak:          writing column JOB_TITLE 
+gbak:          writing column LANGUAGE_REQ 
+gbak:     writing table DEPARTMENT 
+gbak:          writing column BUDGET 
+gbak:          writing column MNGR_NO 
+gbak:          writing column PHONE_NO 
+gbak:          writing column DEPT_NO 
+gbak:          writing column DEPARTMENT 
+gbak:          writing column HEAD_DEPT 
+gbak:          writing column LOCATION 
+gbak:     writing table EMPLOYEE 
+gbak:          writing column HIRE_DATE 
+gbak:          writing column SALARY 
+gbak:          writing column EMP_NO 
+gbak:          writing column LAST_NAME 
+gbak:          writing column PHONE_EXT 
+gbak:          writing column JOB_GRADE 
+gbak:          writing column FIRST_NAME 
+gbak:          writing column DEPT_NO 
+gbak:          writing column JOB_CODE 
+gbak:          writing column JOB_COUNTRY 
+gbak:          writing column FULL_NAME 
+gbak:     writing table PHONE_LIST 
+gbak:          writing column EMP_NO 
+gbak:          writing column LAST_NAME 
+gbak:          writing column PHONE_EXT 
+gbak:          writing column PHONE_NO 
+gbak:          writing column FIRST_NAME 
+gbak:          writing column LOCATION 
+gbak:     writing table PROJECT 
+gbak:          writing column PROJ_DESC 
+gbak:          writing column PROJ_NAME 
+gbak:          writing column TEAM_LEADER 
+gbak:          writing column PRODUCT 
+gbak:          writing column PROJ_ID 
+gbak:     writing table CUSTOMER 
+gbak:          writing column ADDRESS_LINE1 
+gbak:          writing column ADDRESS_LINE2 
+gbak:          writing column CUST_NO 
+gbak:          writing column CONTACT_LAST 
+gbak:          writing column PHONE_NO 
+gbak:          writing column POSTAL_CODE 
+gbak:          writing column CUSTOMER 
+gbak:          writing column CONTACT_FIRST 
+gbak:          writing column CITY 
+gbak:          writing column STATE_PROVINCE 
+gbak:          writing column COUNTRY 
+gbak:          writing column ON_HOLD 
+gbak:     writing table SALES 
+gbak:          writing column PO_NUMBER 
+gbak:          writing column ORDER_DATE 
+gbak:          writing column SHIP_DATE 
+gbak:          writing column DATE_NEEDED 
+gbak:          writing column AGED 
+gbak:          writing column CUST_NO 
+gbak:          writing column QTY_ORDERED 
+gbak:          writing column TOTAL_VALUE 
+gbak:          writing column DISCOUNT 
+gbak:          writing column SALES_REP 
+gbak:          writing column ITEM_TYPE 
+gbak:          writing column ORDER_STATUS 
+gbak:          writing column PAID 
+gbak:     writing table EMPLOYEE_PROJECT 
+gbak:          writing column EMP_NO 
+gbak:          writing column PROJ_ID 
+gbak:     writing table PROJ_DEPT_BUDGET 
+gbak:          writing column PROJECTED_BUDGET 
+gbak:          writing column FISCAL_YEAR 
+gbak:          writing column QUART_HEAD_CNT 
+gbak:          writing column PROJ_ID 
+gbak:          writing column DEPT_NO 
+gbak:     writing table SALARY_HISTORY 
+gbak:          writing column CHANGE_DATE 
+gbak:          writing column OLD_SALARY 
+gbak:          writing column PERCENT_CHANGE 
+gbak:          writing column NEW_SALARY 
+gbak:          writing column EMP_NO 
+gbak:          writing column UPDATER_ID 
+gbak: writing functions 
+gbak: writing types 
+gbak: writing filters 
+gbak: writing id generators 
+gbak:     writing generator EMP_NO_GEN value 145 
+gbak:     writing generator CUST_NO_GEN value 1015 
+gbak: writing stored procedures 
+gbak: writing stored procedure GET_EMP_PROJ 
+gbak: writing parameter EMP_NO for stored procedure 
+gbak: writing parameter PROJ_ID for stored procedure 
+gbak: writing stored procedure ADD_EMP_PROJ 
+gbak: writing parameter EMP_NO for stored procedure 
+gbak: writing parameter PROJ_ID for stored procedure 
+gbak: writing stored procedure SUB_TOT_BUDGET 
+gbak: writing parameter HEAD_DEPT for stored procedure 
+gbak: writing parameter TOT_BUDGET for stored procedure 
+gbak: writing parameter AVG_BUDGET for stored procedure 
+gbak: writing parameter MIN_BUDGET for stored procedure 
+gbak: writing parameter MAX_BUDGET for stored procedure 
+gbak: writing stored procedure DELETE_EMPLOYEE 
+gbak: writing parameter EMP_NUM for stored procedure 
+gbak: writing stored procedure DEPT_BUDGET 
+gbak: writing parameter DNO for stored procedure 
+gbak: writing parameter TOT for stored procedure 
+gbak: writing stored procedure ORG_CHART 
+gbak: writing parameter HEAD_DEPT for stored procedure 
+gbak: writing parameter DEPARTMENT for stored procedure 
+gbak: writing parameter MNGR_NAME for stored procedure 
+gbak: writing parameter TITLE for stored procedure 
+gbak: writing parameter EMP_CNT for stored procedure 
+gbak: writing stored procedure MAIL_LABEL 
+gbak: writing parameter CUST_NO for stored procedure 
+gbak: writing parameter LINE1 for stored procedure 
+gbak: writing parameter LINE2 for stored procedure 
+gbak: writing parameter LINE3 for stored procedure 
+gbak: writing parameter LINE4 for stored procedure 
+gbak: writing parameter LINE5 for stored procedure 
+gbak: writing parameter LINE6 for stored procedure 
+gbak: writing stored procedure SHIP_ORDER 
+gbak: writing parameter PO_NUM for stored procedure 
+gbak: writing stored procedure SHOW_LANGS 
+gbak: writing parameter CODE for stored procedure 
+gbak: writing parameter GRADE for stored procedure 
+gbak: writing parameter CTY for stored procedure 
+gbak: writing parameter LANGUAGES for stored procedure 
+gbak: writing stored procedure ALL_LANGS 
+gbak: writing parameter CODE for stored procedure 
+gbak: writing parameter GRADE for stored procedure 
+gbak: writing parameter COUNTRY for stored procedure 
+gbak: writing parameter LANG for stored procedure 
+gbak: writing exceptions 
+gbak: writing exception UNKNOWN_EMP_ID 
+gbak: writing exception REASSIGN_SALES 
+gbak: writing exception ORDER_ALREADY_SHIPPED 
+gbak: writing exception CUSTOMER_ON_HOLD 
+gbak: writing exception CUSTOMER_CHECK 
+gbak: writing Character Sets 
+gbak: writing Collations 
+gbak:     writing index RDB$PRIMARY20 
+gbak:     writing index RDB$FOREIGN21 
+gbak:     writing index UPDATERX 
+gbak:     writing index CHANGEX 
+gbak:     writing data for table SALARY_HISTORY 
+gbak: 49 records written 
+gbak:     writing index RDB$PRIMARY17 
+gbak:     writing index RDB$FOREIGN18 
+gbak:     writing index RDB$FOREIGN19 
+gbak:     writing data for table PROJ_DEPT_BUDGET 
+gbak: 24 records written 
+gbak:     writing index RDB$PRIMARY14 
+gbak:     writing index RDB$FOREIGN15 
+gbak:     writing index RDB$FOREIGN16 
+gbak:     writing data for table EMPLOYEE_PROJECT 
+gbak: 28 records written 
+gbak:     writing index RDB$PRIMARY24 
+gbak:     writing index RDB$FOREIGN25 
+gbak:     writing index RDB$FOREIGN26 
+gbak:     writing index NEEDX 
+gbak:     writing index SALESTATX 
+gbak:     writing index QTYX 
+gbak:     writing data for table SALES 
+gbak: 33 records written 
+gbak:     writing index RDB$PRIMARY22 
+gbak:     writing index RDB$FOREIGN23 
+gbak:     writing index CUSTNAMEX 
+gbak:     writing index CUSTREGION 
+gbak:     writing data for table CUSTOMER 
+gbak: 15 records written 
+gbak:     writing index RDB$11 
+gbak:     writing index RDB$PRIMARY12 
+gbak:     writing index RDB$FOREIGN13 
+gbak:     writing index PRODTYPEX 
+gbak:     writing data for table PROJECT 
+gbak: 6 records written 
+gbak:     writing index RDB$PRIMARY7 
+gbak:     writing index RDB$FOREIGN8 
+gbak:     writing index RDB$FOREIGN9 
+gbak:     writing index NAMEX 
+gbak:     writing data for table EMPLOYEE 
+gbak: 42 records written 
+gbak:     writing index RDB$4 
+gbak:     writing index RDB$PRIMARY5 
+gbak:     writing index RDB$FOREIGN6 
+gbak:     writing index BUDGETX 
+gbak:     writing index RDB$FOREIGN10 
+gbak:     writing data for table DEPARTMENT 
+gbak: 21 records written 
+gbak:     writing index RDB$PRIMARY2 
+gbak:     writing index RDB$FOREIGN3 
+gbak:     writing index MINSALX 
+gbak:     writing index MAXSALX 
+gbak:     writing data for table JOB 
+gbak: 31 records written 
+gbak:     writing index RDB$PRIMARY1 
+gbak:     writing data for table COUNTRY 
+gbak: 14 records written 
+gbak: writing triggers 
+gbak:     writing trigger CHECK_1 
+gbak:     writing trigger CHECK_2 
+gbak:     writing trigger CHECK_3 
+gbak:     writing trigger CHECK_4 
+gbak:     writing trigger SET_EMP_NO 
+gbak:     writing trigger CHECK_5 
+gbak:     writing trigger CHECK_6 
+gbak:     writing trigger CHECK_7 
+gbak:     writing trigger CHECK_8 
+gbak:     writing trigger SAVE_SALARY_CHANGE 
+gbak:     writing trigger CHECK_9 
+gbak:     writing trigger CHECK_10 
+gbak:     writing trigger SET_CUST_NO 
+gbak:     writing trigger CHECK_11 
+gbak:     writing trigger CHECK_12 
+gbak:     writing trigger CHECK_13 
+gbak:     writing trigger CHECK_14 
+gbak:     writing trigger CHECK_15 
+gbak:     writing trigger CHECK_16 
+gbak:     writing trigger CHECK_17 
+gbak:     writing trigger CHECK_18 
+gbak:     writing trigger CHECK_19 
+gbak:     writing trigger CHECK_20 
+gbak:     writing trigger CHECK_21 
+gbak:     writing trigger CHECK_22 
+gbak:     writing trigger CHECK_23 
+gbak:     writing trigger CHECK_24 
+gbak:     writing trigger CHECK_25 
+gbak:     writing trigger CHECK_26 
+gbak:     writing trigger CHECK_27 
+gbak:     writing trigger CHECK_28 
+gbak:     writing trigger POST_NEW_ORDER 
+gbak: writing trigger messages 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user SYSDBA 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak:     writing privilege for user PUBLIC 
+gbak: writing table constraints 
+gbak: writing constraint INTEG_1 
+gbak: writing constraint INTEG_2 
+gbak: writing constraint INTEG_3 
+gbak: writing constraint INTEG_4 
+gbak: writing constraint INTEG_5 
+gbak: writing constraint INTEG_6 
+gbak: writing constraint INTEG_7 
+gbak: writing constraint INTEG_8 
+gbak: writing constraint INTEG_9 
+gbak: writing constraint INTEG_10 
+gbak: writing constraint INTEG_11 
+gbak: writing constraint INTEG_12 
+gbak: writing constraint INTEG_13 
+gbak: writing constraint INTEG_14 
+gbak: writing constraint INTEG_15 
+gbak: writing constraint INTEG_16 
+gbak: writing constraint INTEG_17 
+gbak: writing constraint INTEG_18 
+gbak: writing constraint INTEG_19 
+gbak: writing constraint INTEG_20 
+gbak: writing constraint INTEG_21 
+gbak: writing constraint INTEG_22 
+gbak: writing constraint INTEG_23 
+gbak: writing constraint INTEG_24 
+gbak: writing constraint INTEG_25 
+gbak: writing constraint INTEG_26 
+gbak: writing constraint INTEG_27 
+gbak: writing constraint INTEG_28 
+gbak: writing constraint INTEG_29 
+gbak: writing constraint INTEG_30 
+gbak: writing constraint INTEG_31 
+gbak: writing constraint INTEG_32 
+gbak: writing constraint INTEG_33 
+gbak: writing constraint INTEG_34 
+gbak: writing constraint INTEG_35 
+gbak: writing constraint INTEG_36 
+gbak: writing constraint INTEG_37 
+gbak: writing constraint INTEG_38 
+gbak: writing constraint INTEG_39 
+gbak: writing constraint INTEG_40 
+gbak: writing constraint INTEG_41 
+gbak: writing constraint INTEG_42 
+gbak: writing constraint INTEG_43 
+gbak: writing constraint INTEG_44 
+gbak: writing constraint INTEG_45 
+gbak: writing constraint INTEG_46 
+gbak: writing constraint INTEG_47 
+gbak: writing constraint INTEG_48 
+gbak: writing constraint INTEG_49 
+gbak: writing constraint INTEG_50 
+gbak: writing constraint INTEG_51 
+gbak: writing constraint INTEG_52 
+gbak: writing constraint INTEG_53 
+gbak: writing constraint INTEG_54 
+gbak: writing constraint INTEG_55 
+gbak: writing constraint INTEG_56 
+gbak: writing constraint INTEG_57 
+gbak: writing constraint INTEG_58 
+gbak: writing constraint INTEG_59 
+gbak: writing constraint INTEG_60 
+gbak: writing constraint INTEG_61 
+gbak: writing constraint INTEG_62 
+gbak: writing constraint INTEG_63 
+gbak: writing constraint INTEG_64 
+gbak: writing constraint INTEG_65 
+gbak: writing constraint INTEG_66 
+gbak: writing constraint INTEG_67 
+gbak: writing constraint INTEG_68 
+gbak: writing constraint INTEG_69 
+gbak: writing constraint INTEG_70 
+gbak: writing constraint INTEG_71 
+gbak: writing constraint INTEG_72 
+gbak: writing constraint INTEG_73 
+gbak: writing constraint INTEG_74 
+gbak: writing constraint INTEG_75 
+gbak: writing constraint INTEG_76 
+gbak: writing constraint INTEG_77 
+gbak: writing constraint INTEG_78 
+gbak: writing constraint INTEG_79 
+gbak: writing constraint INTEG_80 
+gbak: writing referential constraints 
+gbak: writing check constraints 
+gbak: writing SQL roles 
+gbak: closing file, committing, and finishing. 72704 bytes written 
+Output completed

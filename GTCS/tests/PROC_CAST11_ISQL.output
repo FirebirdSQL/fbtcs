@@ -1,0 +1,24 @@
+
+           I            J 
+============ ============ 
+
+           1            1 
+
+
+X      
+====== 
+
+1      
+
+Statement failed, SQLCODE = -413
+
+conversion error from string "10001"
+
+X      
+====== 
+
+X          
+========== 
+
+10001      
+

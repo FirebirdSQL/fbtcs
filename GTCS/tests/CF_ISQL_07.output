@@ -1,0 +1,152 @@
+Use CONNECT or CREATE DATABASE to specify a database
+F_INTEGER                       INTEGER Nullable 
+F_FLOAT                         FLOAT Nullable 
+INTEGER_FLOAT                   Computed by: (f_integer*f_float)
+
+                  
+================= 
+
+Passed 1 - Insert 
+
+
+   F_INTEGER        F_FLOAT           INTEGER_FLOAT 
+============ ============== ======================= 
+
+          10      10.120000       101.1999988555908 
+          11      11.120000       122.3199987411499 
+
+
+                  
+================= 
+
+Passed 1 - Update 
+
+
+   F_INTEGER        F_FLOAT           INTEGER_FLOAT 
+============ ============== ======================= 
+
+          12      12.120000       145.4399986267090 
+          13      11.120000       144.5599985122681 
+
+F_INTEGER                       INTEGER Nullable 
+F_CHAR                          CHAR(5) Nullable 
+INTEGER_CHAR                    Computed by: (f_integer*f_char)
+
+                  
+================= 
+
+Passed 2 - Insert 
+
+
+   F_INTEGER F_CHAR INTEGER_CHAR 
+============ ====== ============ 
+
+          10 10              100 
+          11 11              121 
+
+
+                  
+================= 
+
+Passed 2 - Update 
+
+
+   F_INTEGER F_CHAR INTEGER_CHAR 
+============ ====== ============ 
+
+          12 12              144 
+          13 11              143 
+
+F_FLOAT                         FLOAT Nullable 
+F_CHAR                          CHAR(5) Nullable 
+FLOAT_CHAR                      Computed by: (f_float*f_char)
+
+                  
+================= 
+
+Passed 2 - Insert 
+
+
+                  
+================= 
+
+Passed 2 - Update 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+F_FLOAT                         FLOAT Nullable 
+F_DATE                          TIMESTAMP Nullable 
+FLOAT_DATE                      Computed by: (f_date+f_float)
+
+                  
+================= 
+
+Passed 3 - Insert 
+
+
+                  
+================= 
+
+Passed 3 - Update 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+F_CHAR                          CHAR(15) Nullable 
+F_DATE                          TIMESTAMP Nullable 
+CHAR_DATE                       Computed by: (f_char - f_date)
+
+                  
+================= 
+
+Passed 4 - Insert 
+
+
+                  
+================= 
+
+Passed 4 - Update 
+
+F_INTEGER                       INTEGER Nullable 
+LITERAL_INTEGER                 Computed by: ('10' + f_integer)
+
+                  
+================= 
+
+Passed 5 - Insert 
+
+
+                  
+================= 
+
+Passed 5 - Update 
+
+F_FLOAT                         FLOAT Nullable 
+LITERAL_FLOAT                   Computed by: ('1.12' + f_float)
+
+                  
+================= 
+
+Passed 6 - Insert 
+
+
+                  
+================= 
+
+Passed 6 - Update 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+F_DATE                          TIMESTAMP Nullable 
+LITERAL_DATE                    Computed by: ('01/01/95' - f_date)
+
+                  
+================= 
+
+Passed 7 - Insert 
+
+
+                  
+================= 
+
+Passed 7 - Update 
+

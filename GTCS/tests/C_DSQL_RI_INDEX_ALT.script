@@ -1,0 +1,408 @@
+
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ RUN ri_views WHERE_GDB:atlas.gdb
+$ CREATE indexalt.e
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+/* Author: Allen Zhao
+   Date:   Oct-11-93
+   Title:  indexalt.e
+
+   Dependencies: Need to run C_DSQL_RI_INIT first.
+
+   Purpose: RI test suite 
+   
+   Tests are:
+   	Table Constraints:
+   		unique		tab_uniq.e
+   		primary key	tab_prim.e
+   		referential	tab_ref.e     
+   		check const	tab_check.e
+   	
+   	Column Constraints:
+   		unique		col_uniq.e
+   		primary key	col_prim.e
+   		referential	col_ref.e
+   		check const	col_check.e
+   		not null    col_nnull.e
+
+	DDL Modify Operations:
+		alter table add constraint	alt_add.e	
+		alter table drop constraint	alt_drop.e   
+		alter field			field_alt.e
+		alter index			indexalt.e  <----- this test
+		drop field			field_drop.e 
+		drop index			index_drop.e
+		drop table			drop_tab.e   
+		delete trigger			trigger_del.e
+		modify trigger			trigger_mod.e
+
+
+Overview: this test makes sure that new constraints are added correctly. 
+It will:
+
+	CREATE TABLE BOOKS (BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),,.)
+	CREATE INDEX BOOK_IND ON BOOKS (BOOK_ID)   	[should succeed]
+	INSERT records to BOOKS,  some nulls & duplicates for BOOKS
+	SELECT FROM BOOKS,            [verify number of expected records]
+	DROP INDEX BOOK_IND				[should succeed]
+	CREATE UNIQUE INDEX BOOK_UDX ON BOOKS (BOOK_ID) [should fail; can't create]
+						[unique index on nulls, duplicates]
+
+	Note:  With ALTER INDEX only supports ACTIVE/INACTIVE. 
+
+*/
+
+/* Include the SQL Communications Area. */
+EXEC SQL
+	INCLUDE SQLCA;
+
+/* Set up to catch SQL errors. Note: this will require that 
+each routine containing executeable SQL commands has
+an error handling section labeled 'err'.*/
+EXEC SQL
+	WHENEVER SQLERROR GO TO err;
+	
+/* Forward declarations */
+extern int print_views();
+void die_on_error();
+int setup();
+int insert_books();
+int verify();
+int alter_index_active();
+int alter_index_inactive();
+int create_unique_index();
+int strupper();
+int istable();
+
+
+int verbose;
+
+main(argc, argv)
+int argc;
+char *argv[];
+{
+
+        /*--- check if verbose is requested ------ */
+        verbose = FALSE;
+        if (--argc > 0){
+                if (*argv[1] == 'v' || *argv[1] == 'V')
+                        verbose = TRUE;
+        }
+	if (setup()) 		/* create table */
+		exit (1);
+
+	if (create_unique_index())  
+		exit (1);
+
+	if (insert_books() != 5) /* expected 1 of 6 rejected */
+		exit (1);
+
+	if (verify(5))
+		exit (1);
+
+	if (alter_index_inactive()) 	
+		exit (1);
+	
+	if (insert_books() != 6) /* expected all 6 inserted */ 
+		exit (1);
+
+	if (verify(6))
+		exit (1);
+
+	if (!alter_index_active()) /* should fail; BOOK_ID has NULLs & duplicates */
+		exit (1);
+
+	exit (0);
+err:		die_on_error();
+}
+
+
+int setup() {
+
+	if (verbose)
+		printf("entered setup\n");
+
+	if (istable("books")) {
+		if (verbose) 
+			printf("books found... will be dropped\n");
+		
+		EXEC SQL
+			DROP TABLE BOOKS;
+	}
+
+
+	if (verbose)
+		printf("about to create books...\n");
+
+	EXEC SQL
+		DECLARE BOOKS TABLE
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+			 BOOK_AUTH_ID CHAR(11), PRICE FLOAT);
+
+	EXEC SQL
+		CREATE TABLE BOOKS
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+			 BOOK_AUTH_ID CHAR(11), PRICE FLOAT);
+
+	if (verbose)
+		printf("books created successfully.\n");
+
+	return 0;
+err:		die_on_error();
+}
+
+
+int alter_index_active()
+{
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL
+		ALTER INDEX BOOK_IND ACTIVE;
+
+	if (SQLCODE) 
+		got_err = TRUE;
+	
+
+	printf("alter_index_active expected SQLCODE = -803. Got SQLCODE = %d\n", SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+
+	return (got_err);
+err:		die_on_error();
+
+}
+
+int alter_index_inactive()
+{
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+		
+	EXEC SQL
+		ALTER INDEX BOOK_IND INACTIVE;
+
+	if (SQLCODE) 
+		got_err = TRUE;
+
+	printf("alter_index_inactive expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+
+}
+
+
+
+int create_unique_index()
+{
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL
+		CREATE UNIQUE INDEX BOOK_IND ON BOOKS (BOOK_ID)
+
+	if (SQLCODE) 
+		got_err = TRUE;
+	
+
+	printf("create_unique_index expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+
+}
+
+
+int verify(num_books) 
+int num_books;
+{
+	if (verbose)
+		printf("Entering verify...\n");
+
+	if (!(print_books(num_books)))
+		exit(1);
+
+	return (0);
+
+err:		die_on_error();
+}
+
+
+int insert_books() 
+{
+	/* Try to insert 6 books, two of them with the same BOOK_ID and one has a NULL
+	   BOOK_ID.   All of them should be inserted without problems when there is
+	   no constraint on the field BOOK_ID.  
+	*/
+ 
+	EXEC SQL BEGIN DECLARE SECTION;
+	int num_records;
+	double myprice = 15.00;
+	EXEC SQL END DECLARE SECTION;
+				
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+
+	EXEC SQL DELETE FROM BOOKS;
+
+	EXEC SQL 
+	INSERT INTO BOOKS (BOOK_ID, BOOK_NAME, BOOK_AUTH_ID, PRICE)
+		   VALUES ('BU1111','The Busy Executive''s Database Guide',
+			   '172-32-1176', 12.00);
+
+	EXEC SQL
+	INSERT INTO BOOKS (BOOK_ID, BOOK_NAME, BOOK_AUTH_ID, PRICE)
+		VALUES ('BU1111','Cooking with Computers: Surreptitious Balance Sheets',
+ 			'213-46-8915', 15.99);
+	
+	EXEC SQL
+	INSERT INTO BOOKS (BOOK_ID, BOOK_NAME, BOOK_AUTH_ID, PRICE)
+		   VALUES ('BU2075','You Can Combat Computer Stress!',
+			   '238-95-7766', NULL);
+
+	EXEC SQL
+	INSERT INTO BOOKS (BOOK_ID, BOOK_NAME, BOOK_AUTH_ID, PRICE)
+		   VALUES (NULL,'The Battle in the Air','267-41-2394', 11);
+
+	EXEC SQL   /* record should be rejected */
+		INSERT INTO BOOKS VALUES ('BU1032','Silicon Valley Gastronomic Treats',
+			'274-80-9391', 22.00);
+
+	EXEC SQL
+		INSERT INTO BOOKS VALUES ('MC3021','The Gourmet Microwave',
+			'341-22-1782', 25.00);
+
+	EXEC SQL SELECT COUNT(*) INTO :num_records FROM BOOKS;
+
+	printf("Inserted %d records\n", num_records);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	EXEC SQL
+		COMMIT WORK;
+
+	return (num_records);
+
+err:		die_on_error();
+}
+
+int print_books(expected) 
+int expected;
+{
+
+	char book_id[12];
+	char book_name[81];
+	char book_auth_id[12];	
+	int found = 0;
+
+	EXEC SQL
+		DECLARE BOOK_CURSOR CURSOR FOR
+		SELECT book_id, book_name, book_auth_id FROM BOOKS;
+
+	EXEC SQL
+		OPEN BOOK_CURSOR;
+
+	EXEC SQL
+		FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
+
+	while (!SQLCODE) {
+		found++;
+		printf("%s,%s,%s\n", book_id, book_name, book_auth_id);
+		
+		EXEC SQL
+			FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
+	}
+
+	printf("Number found: %d Number expected: %d\n", found, expected);
+	
+	EXEC SQL
+		CLOSE BOOK_CURSOR;
+
+	EXEC SQL
+		COMMIT WORK;
+
+    return (found == expected);
+err:		die_on_error();
+}
+
+
+
+
+int strupper(targ, source) 
+char * targ, * source; 
+{
+	int ii;
+	
+	for (ii=0; *targ++ = toupper(*source++); ii++);
+
+	return ii;
+}
+
+int istable(tname) 
+char * tname; 
+{
+
+	int exists;
+	char *utname;
+
+	if (!tname)
+		return 0;
+		
+	utname = (char *) malloc(strlen(tname)+1);
+
+	strupper(utname, tname);
+	
+	EXEC SQL
+		SELECT COUNT (*)
+		INTO :exists
+		FROM rdb$relations
+		WHERE rdb$relation_name = :utname;
+
+	EXEC SQL
+		ROLLBACK WORK;
+			
+	free(utname);
+
+	return exists;
+err:		
+	free(utname);
+	die_on_error();
+}
+
+void die_on_error()
+
+/* Print out error message and die*/
+{
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status(gds__status);
+	EXEC SQL
+		ROLLBACK WORK;
+
+err:
+	exit (1);
+}
+
+$ GPRE indexalt.e -d WHERE_GDB:atlas.gdb
+$ CC FLAG_CC indexalt.c
+$ LINK FLAG_LINK indexalt pr_views 
+$ RUN indexalt 
+$DROP WHERE_GDB:atlas.gdb
+$ DELETE indexalt*

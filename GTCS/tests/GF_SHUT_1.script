@@ -1,0 +1,7 @@
+
+$GFIX -shut -tran 1 WHERE_GDB:test.gdb
+$ISQL -m -u shut1 -pw shut1 WHERE_GDB:test.gdb
+ exit;
+$GFIX -online WHERE_GDB:test.gdb
+$ISQL -m -u shut1 -pw shut1 WHERE_GDB:test.gdb
+ exit;

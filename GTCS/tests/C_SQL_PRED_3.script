@@ -1,0 +1,147 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sin004.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ Syntax:		[NOT]SINGULAR <subquery>			
+ Description:           Two table join - NOT SINGULAR
+ Tables:                customers, sales (one-to-many relation)
+ Author:		Sam Hakim, Feb 18, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL	WHENEVER SQLERROR GO TO ERR;
+
+BASED_ON CUSTOMERS.CUSTNO	CustNo;
+BASED_ON CUSTOMERS.CUSTOMER	Customer;
+BASED_ON CUSTOMERS.CONTACT	Contact;
+BASED_ON CUSTOMERS.ADDRESS	Address;
+BASED_ON CUSTOMERS.CITY		City;
+BASED_ON CUSTOMERS.STATE	State;
+BASED_ON CUSTOMERS.ZIP_CODE	Zip_Code;
+BASED_ON CUSTOMERS.PHONE_NO	Phone_No;
+BASED_ON CUSTOMERS.ON_HOLD	On_Hold;
+
+char Test[]="SELECT * FROM CUSTOMERS C1 \
+WHERE NOT SINGULAR \
+(SELECT * FROM SALES S1 \
+WHERE S1.CUSTNO = C1.CUSTNO)";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+
+{
+	int verbose;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+		DECLARE CR CURSOR FOR 
+                SELECT * FROM CUSTOMERS C1
+                WHERE NOT SINGULAR
+                (SELECT * FROM SALES S1
+                WHERE S1.CUSTNO = C1.CUSTNO)
+
+	EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City, 
+		:State, :Zip_Code, :Phone_No, :On_Hold;
+		
+	while (SQLCODE == 0){
+		printf ("%ld\t",CustNo);
+		printf ("%s\t",Customer);
+		printf ("%s\n",Contact);
+		printf ("%s\t",Address);
+		printf ("%s\t",City);
+		printf ("%s\t",State);
+		printf ("%s\n",Zip_Code);
+		printf ("%s\t",Phone_No);
+		printf ("%s\n",On_Hold);
+                Underline(80);
+		
+	EXEC SQL
+		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City, 
+		:State, :Zip_Code, :Phone_No, :On_Hold;	
+	}
+	
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e sin004.e
+$ CC FLAG_CC sin004.c
+$ LINK FLAG_LINK sin004 
+$ RUN sin004
+$ CREATE sin004.qli
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+
+select * from customers c1
+where not singular (select * from sales s1 where s1.custno = c1.custno);
+
+for c1 in customers with not unique s1 in sales over custno
+print c1.custno, c1.customer, c1.contact, c1.address, c1.city, c1.state,
+c1.zip_code, c1.phone_no,c1.on_hold;
+
+select * from customers c1
+where 0 = (select count(*) from sales s1 where s1.custno = c1.custno)
+or 1 < (select count(*) from sales s2 where s2.custno = c1.custno);
+
+finish;
+quit;
+$ QLI -n -a sin004.qli
+$ CREATE sin004.sql
+connect WHERE_GDB:sh_test.gdb;
+select * from customers c1
+where not singular (select * from sales s1 where s1.custno = c1.custno);
+select * from customers c1
+where 0 = (select count(*) from sales s1 where s1.custno = c1.custno)
+or 1 < (select count(*) from sales s2 where s2.custno = c1.custno);
+quit;
+$ISQL -i sin004.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sin004* 
+

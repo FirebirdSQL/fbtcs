@@ -1,0 +1,99 @@
+
+$ CREATE doc
+By:          Clare Taylor
+Date:        03/14/94
+Test name:   IDML_C_SUBQ_09         
+Series:      IDML_C_SUBQUERYS          
+Results:     Uses EXISTS in a WHERE clause with a SUBQUERY to do an UPDATE.
+Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
+History:
+3/22/94:     UPDATES w/subquerys can cause different printed results when
+	     the update create duplicate rows and the select does an
+	     order by on the the field w/duplicates.  Because this was
+	     producing different results between machines, I removed the
+	     order by on the select which displays results and put it on
+	     the INSERT statement.  This should force the load to be ordered
+	     and the display select will print results in the same order
+	     regardless of dups.
+Sept. 05, 95: failed sun4, remote.
+Description:
+INSERTS data into one test table and then uses a SUBQUERY to return
+rows that are used for the 'EXISTS' condition.  If EXISTS returns ANY rows,
+all rows in the UPDATE field will be updated.
+
+$ CREATE subq9.e
+/*-------------------------------------------------------------------------
+  Case 8:  UPDATE <table> SET <field> = "string" WHERE EXISTS (subquery)
+---------------------------------------------------------------------------*/
+#include <WHERE_FILES:tcs.h> 
+EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
+EXEC SQL WHENEVER SQLERROR GOTO err;
+EXEC SQL INCLUDE SQLCA;
+
+
+static print_error()
+{
+    if (SQLCODE != 100)
+        printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+}
+main()
+{
+     EXEC SQL SET NAMES ISO8859_1;
+     EXEC SQL CONNECT db;
+
+     EXEC SQL DELETE FROM TEST_TABLE1;
+     EXEC SQL COMMIT;
+     
+     /* the alternative to using rowid to display in the same order was
+	attempting an ORDER BY in the subquery. */
+
+     EXEC SQL
+         INSERT INTO TEST_TABLE1 
+	 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 FROM STRING_TABLE;
+     EXEC SQL COMMIT;
+
+     EXEC SQL
+        UPDATE TEST_TABLE1 SET C_FRANCE =
+	'UPDATED' WHERE EXISTS   
+	   (SELECT C_FRANCE FROM STRING_TABLE
+	       WHERE C_FRANCE  = 'péché');
+
+     EXEC SQL COMMIT RELEASE;
+     exit(0);
+err: print_error();
+}
+
+$ CREATE ver9.sql 
+set names iso8859_1;
+connect "WHERE_GDB:tests.gdb";
+select c_france from string_table where c_france = 'péché';
+SELECT S_ROWID, C_ENUS, C_FRANCE FROM TEST_TABLE1 ORDER BY S_ROWID;
+quit;
+
+$ CREATE subq9.sql 
+set names iso8859_1;
+connect "WHERE_GDB:tests.gdb";
+delete from test_table1;
+commit;
+select * from test_table1;
+
+INSERT INTO TEST_TABLE1 
+    SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 
+    FROM STRING_TABLE;
+select count(*) from test_table1;
+commit;
+UPDATE TEST_TABLE1 SET C_FRANCE =
+   'UPDATED' WHERE EXISTS 
+   (SELECT C_FRANCE FROM STRING_TABLE
+    WHERE C_FRANCE = 'péché');
+commit;
+select S_ROWID, C_ENUS, C_FRANCE from test_table1 ORDER BY S_ROWID;
+
+$ GPRE subq9.e
+$ CC FLAG_CC subq9.c
+$ LINK FLAG_LINK subq9 
+$ RUN subq9
+$ ISQL -i ver9.sql -m
+
+$ ISQL -i subq9.sql -m
+$ DELETE subq9* doc ver9.sql

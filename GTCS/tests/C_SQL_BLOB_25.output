@@ -1,0 +1,11 @@
+Test: 
+ SET A BLOB TO NULL , COMMIT, INSERT DATA INTO THE BLOB 
+------------------------------------------------------
+
+             TEST                ROW
+             NAME                ID
+============================== ======
+
+blob025                             2
+New blob content after it was nullified - blob025
+

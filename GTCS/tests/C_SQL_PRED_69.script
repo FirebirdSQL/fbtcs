@@ -1,0 +1,139 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sta029.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column spec> STARTING [WITH] <value spec>
+                        Case sensitive searches including blob string
+
+ Description:           field of integer (GDML long) starting with a number
+
+                        SELECT SALARY
+                        FROM MANAGEMENT
+                        WHERE SALARY STARTING 1;
+
+ View:                  management
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON EMPLOYEES.SALARY       Salary;
+
+
+char Test[]="SELECT SALARY \
+FROM MANAGEMENT \
+WHERE SALARY STARTING 1";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT SALARY
+                FROM MANAGEMENT
+                WHERE SALARY STARTING 1;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Salary;
+
+        while (SQLCODE == 0){
+
+                Count++;
+                printf("%8.2f\n",(double)(Salary/100));
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :Salary;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e sta029.e
+$ CC FLAG_CC sta029.c
+$ LINK FLAG_LINK sta029 
+$ RUN sta029
+$ CREATE sta029.qli
+
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+SELECT SALARY FROM MANAGEMENT WHERE SALARY STARTING 1;
+FOR management WITH salary STARTING WITH 1 
+PRINT salary;
+SELECT COUNT(*) FROM management WHERE salary STARTING WITH 1;
+FINISH;
+QUIT;
+$ QLI -n -a sta029.qli
+$ CREATE sta029.sql
+CONNECT WHERE_GDB:sh_test.gdb;
+SELECT salary FROM management WHERE salary STARTING 1;
+SELECT COUNT(*) FROM management WHERE salary STARTING WITH 1;
+QUIT;
+$ISQL -i sta029.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sta029* 
+

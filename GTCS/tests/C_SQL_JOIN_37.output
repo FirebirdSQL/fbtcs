@@ -1,0 +1,7 @@
+Test:
+ select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row from (st1 t inner join st2 x on t.s1 = x.s1) where t.s1 is null
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 0
+Use CONNECT or CREATE DATABASE to specify a database

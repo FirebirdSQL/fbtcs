@@ -1,0 +1,143 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE con004.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+
+ Description:           char-field, containing mixture of lower and
+                        upper case char
+
+                        SELECT CUSTNO, CUSTOMER FROM CUSTOMERS
+                        WHERE CUSTOMER CONTAINING 'a'
+                        OR CUSTOMER CONTAINING 'B' ORDER BY CUSTNO;
+
+ Tables:                customers
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON CUSTOMERS.CUSTNO               CustNo;
+BASED_ON CUSTOMERS.CUSTOMER             Customer;
+
+char Test[]="SELECT CUSTNO, CUSTOMER FROM CUSTOMERS \
+WHERE CUSTOMER CONTAINING 'a' \
+OR CUSTOMER CONTAINING 'B' ORDER BY CUSTNO";
+
+void Underline();
+
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT CUSTNO, CUSTOMER FROM CUSTOMERS
+                WHERE CUSTOMER CONTAINING 'a'
+                OR CUSTOMER CONTAINING 'B' ORDER BY CUSTNO;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :CustNo, :Customer;
+
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%d\t",CustNo);
+                printf("%s\n",Customer);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :CustNo, :Customer;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e con004.e
+$ CC FLAG_CC con004.c
+$ LINK FLAG_LINK con004 
+$ RUN con004
+$ CREATE con004.qli
+set semicolon;
+ready WHERE_GDB:sh_test.gdb;
+select custno, customer from customers 
+where customer containing 'a' or customer containing 'B' order by custno;
+
+for s in customers sorted by s.custno with s.customer containing 'a' or s.customer containing 'B' print s.custno, s.customer;
+finish;
+quit;
+$ QLI -n -a con004.qli
+$ CREATE con004.sql
+connect WHERE_GDB:sh_test.gdb;
+select custno, customer from customers 
+where customer containing 'a' or customer containing 'B' order by custno;
+quit;
+$ISQL -i con004.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE con004* 
+

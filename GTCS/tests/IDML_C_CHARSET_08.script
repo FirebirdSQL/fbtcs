@@ -1,0 +1,93 @@
+
+$ CREATE create.sql
+create database "WHERE_GDB:intlemp2.gdb";
+create table EMPLOYEE(
+    emp_no smallint,
+    first_name varchar(15) character set ISO8859_1 collate FR_FR,
+    last_name varchar(20) character set ISO8859_1 collate FR_FR
+);
+COMMIT;
+$ CREATE btest5.e
+/* 
+By:          Clare Taylor
+Date:        08/03/94
+Test name:   IDML_C_CHARSET_08         
+Series:      IDML_C_CHARSET
+Results:     bug_7122 causes half of this test to fail 
+             Executes and does the insert if _CHARSET is used.
+             Fails with translit error if no _CHARSET is used--bug 7122.
+Dependency:  
+History:
+8/3/94:      logged bug 7122 which is the same as test case
+	     IDML_C_CHARSET_06.  These test cases are the
+	     additional proofs that the product has a problem.
+11/10/94:    recode--add db statement, connect and set transaction
+	     per the bug fix which says we must use manual transactions.
+
+16-Feb-2000 JLI:  Added #include <gds.h> for the gds calls.
+Description:
+Tries two simple inserts: one with hard-coded strings
+and _ISO8859_1 and one without the _CHARSET NOTATION.  
+
+   contains  DATABASE statement now: 
+   Compile with:   gpre -m -charset iso8859_1 btest1.e
+                   cc btest1.c -lgds -ldld -o btest
+
+*/
+#include "WHERE_FILES:tcs.h"
+#include "WHERE_FILES:example.h"
+#include <gds.h>
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL WHENEVER SQLERROR GOTO Err;
+EXEC SQL SET DATABASE db = "WHERE_GDB:intlemp2.gdb";
+EXEC SQL INCLUDE SQLCA;
+
+void print_error          PROTO((void));
+
+int main PROTO((void))
+{    
+     char  c;
+
+     printf("\n-----------------------------------------------------------------\n");
+     printf("   INSERTING NEW DATA--using _CHARSET notation so it WORKS.\n\n");
+
+EXEC SQL CONNECT db;
+EXEC SQL SET TRANSACTION;
+     EXEC SQL
+          INSERT INTO employee (emp_no, first_name, last_name)
+          VALUES (555, _ISO8859_1'Bôbbét', _ISO8859_1'Gélsôn');
+
+     printf("\n-----------------------------------------------------------------\n");
+     printf("   INSERTING NEW DATA--NOT using _CHARSET notation--FAILS, bug7122.\n\n");
+     EXEC SQL
+          INSERT INTO employee (emp_no, first_name, last_name)
+          VALUES (666, 'Hôbbét', 'Zélsôn');
+EXEC SQL COMMIT;
+
+     exit(0);
+Err:	
+  print_error();
+}
+void print_error PROTO((void))
+{
+
+if (SQLCODE != 100)
+     printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+     isc_print_sqlerror(SQLCODE, gds__status); 
+     isc_print_status (gds__status);
+exit(1);
+}
+$ CREATE verify2.sql
+set names iso8859_1;
+connect WHERE_GDB:intlemp2.gdb;
+select * from employee;
+quit;
+
+$ ISQL -i create.sql
+$ GPRE -m -charset ISO8859_1 btest5.e
+$ CC FLAG_CC btest5.c
+$ LINK FLAG_LINK btest5 
+$ RUN btest5
+$ ISQL -i verify2.sql -m
+$ DROP WHERE_GDB:intlemp2.gdb
+$ DELETE verify2.sql btest5* create.sql

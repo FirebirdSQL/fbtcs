@@ -1,0 +1,67 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+alter_drop_field expected SQLCODE = 0. Got SQLCODE = 0
+
+
+TABLE_CONSTRAINTS:
+------------------
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+alter_add_field expected SQLCODE = 0. Got SQLCODE = 0
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTHOR_ID_NOT_NULL             ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTHOR_ID_KEY                  ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTHOR_ID_KEY                  ,AUTHORS                        ,AUTHOR_ID                      
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+alter_drop_field expected SQLCODE = -607. Got SQLCODE = -607
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTHOR_ID_NOT_NULL             ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTHOR_ID_KEY                  ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+BOOK_AUTH_ID                   ,BOOKS                          ,FOREIGN KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTHOR_ID_KEY                  ,AUTHORS                        ,AUTHOR_ID                      
+BOOK_AUTH_ID                   ,BOOKS                          ,BOOK_AUTH_ID                   
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+BOOK_AUTH_ID                   ,AUTHOR_ID_KEY                  ,FULL   ,RESTRICT   ,RESTRICT   
+alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = 0
+alter_drop_field expected SQLCODE = 0. Got SQLCODE = 0
+
+
+TABLE_CONSTRAINTS:
+------------------
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------

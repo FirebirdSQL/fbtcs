@@ -1,0 +1,30 @@
+
+/*      Reference Bug   : NONE
+ *      Dependencies    : NONE
+ *      Description     : 
+ *      Expected Result : 
+ */
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbk WHERE_GDB:atlas.gdb
+$ ISQL -e -m WHERE_GDB:atlas.gdb
+set term go;
+create procedure proc_arr (city_in char(25))
+RETURNS (cit char(25), stat char(5), populatio integer, rain_arra blob) as
+begin
+
+        SELECT city, state, population, rain_array
+        FROM cities
+        WHERE CITY = :city_in
+        INTO :cit, :stat, :populatio, :rain_arra;
+
+SUSPEND;
+end
+go
+set term ; go
+commit;
+select * from  proc_arr ("Sacramento");
+show procedures;
+commit;
+quit;
+$ DROP WHERE_GDB:atlas.gdb

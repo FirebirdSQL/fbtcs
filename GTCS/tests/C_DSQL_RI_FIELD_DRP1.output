@@ -1,0 +1,60 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+Create TABLE AUTHORS expected SQLCODE = 0. Got SQLCODE = 0
+
+
+TABLE_CONSTRAINTS:
+------------------
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+Alter TABLE AUTHORS expected SQLCODE = 0. Got SQLCODE = 0
+
+
+TABLE_CONSTRAINTS:
+------------------
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+Create TABLE BOOKS WITH REFERENCE TO AUTHORS
+       expected SQLCODE = 0. Got SQLCODE = 0
+Alter TABLE AUTHORS expected SQLCODE = -607. Got SQLCODE = -607
+
+
+TABLE_CONSTRAINTS:
+------------------
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+Drop TABLE BOOKS expected SQLCODE = 0. Got SQLCODE = 0
+Alter TABLE AUTHORS expected SQLCODE = 0. Got SQLCODE = 0
+
+
+TABLE_CONSTRAINTS:
+------------------
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------

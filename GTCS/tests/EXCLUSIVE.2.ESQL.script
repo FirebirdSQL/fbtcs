@@ -1,0 +1,102 @@
+
+#CREATE COMMENT
+Author: Narayan 
+Date: Mar 18, 1994.
+
+Description: This is a test to test the exclusive lock transactions. 
+It creates tables t1 and t2. Column b of t2 references column b of t1.
+Program A1 locks the table t with an exclusive lock and program A2 tries 
+to insert in table t2. Program A2 has snapshot table stability trans.
+
+The exclusive lock behavior is set using unix sed commands.
+We sed the A.c file to insert isc_tpb_exclusive in its tpb defintion.
+
+$CREATE init.sql
+ create database "WHERE_GDB:test.gdb";
+ create table t1 (
+    a integer, 
+    b integer not null primary key);
+
+ create table t2 (
+    b integer references t1(b), 
+    c integer);
+
+ insert into t1 values (1,2);
+ commit;
+
+$CREATE A1.e
+#include <stdio.h>
+exec sql include sqlca
+
+exec sql set database DB = "WHERE_GDB:test.gdb";
+main(argc, argv)
+int argc;
+char * argv[];
+{
+  
+  if (!qa_mu_init(argc,argv,1)) 
+  {
+    printf("%s : Error ... Exiting\n",argv[0]);
+    qa_mu_cleanup();
+    exit(1);
+  } 
+
+  exec sql connect DB;
+
+  exec sql set transaction reserving t1 for shared read;
+
+  qa_mu_pause();
+
+  exec sql rollback;
+
+  qa_mu_cleanup();
+}
+
+$CREATE A2.e
+#include <stdio.h>
+exec sql include sqlca
+
+exec sql set database DB = "WHERE_GDB:test.gdb";
+main(argc, argv)
+int argc;
+char * argv[];
+{
+ int cnt_t = 0;
+  
+  if (!qa_mu_init(argc,argv,1)) 
+  {
+    printf("%s : Error ... Exiting\n",argv[0]);
+    qa_mu_cleanup();
+    exit(1);
+  } 
+
+  exec sql connect DB;
+
+  exec sql set transaction snapshot table stability;
+
+  exec sql insert into t2 values (2,3);
+  if (SQLCODE) isc_print_status(gds__status);
+
+  exec sql commit;
+
+  qa_mu_cleanup();
+}
+$CREATE show.sql
+connect "WHERE_GDB:test.gdb";
+show table t1;
+show table t2;
+select * from t1;
+select * from t2;
+$ISQL -i init.sql
+$GPRE -e A1.e
+$RUN sed "/isc_tpb_0/s/3};/isc_tpb_exclusive};/" A1.c > A1a.c
+$CC FLAG_CC A1a.c
+$LINK FLAG_LINK_MU A1a
+$GPRE -e A2.e
+$CC FLAG_CC A2.c
+$LINK FLAG_LINK_MU A2
+$RUN WHERE_MU:mu -p A1a -q 20 -l 10 -p A2 -q 20 -l 10
+$ISQL -i show.sql
+$DELETE A1a A1a.c A1a.o A1.e A1.c A1.o A2 A2.e A2.c A2.o init.sql COMMENT
+$DELETE show.sql
+$DROP WHERE_GDB:test.gdb

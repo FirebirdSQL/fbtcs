@@ -1,0 +1,133 @@
+
+$ CREATE comment.txt
+Name: Sudhanshu Kumar
+In this test  transaction takes place trigger trig01 gets fired, 
+event1 is posted in application program 1. trigger2 gets fired 
+application program is waiting for event2 to happen.
+$CREATE event8.sql
+create database "WHERE_GDB:events.gdb";
+create table project  ( PNAME   VARCHAR(15) Not Null,
+                        PNUMBER     INTEGER,
+                        PRIZE        DOUBLE PRECISION);
+
+insert into project values('ProductX',1,22);
+insert into project values('ProductY',2,26);
+commit;
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     DOUBLE PRECISION);
+insert into works_on values (1,1,20);
+commit;
+create table works_on1 (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null);
+insert into works_on1 values (2,2);
+commit;
+
+set term go;
+create trigger trig01 for project 
+active after update position 0
+as 
+declare variable x int;
+begin
+    insert into works_on values (4, 4, new.prize/old.prize);     
+    post_event 'event1';
+end
+go
+create trigger trig02 for works_on 
+active after insert position 1
+as
+declare variable x int;
+begin
+    insert into works_on1 values (8, 8);
+    post_event 'event2';
+end
+go
+set term ; go
+exit;
+$ISQL -I event8.sql -e -sqldialect 1
+$ CREATE foo1.e
+
+DATABASE DB = "WHERE_GDB:events.gdb"
+# include <stdio.h>
+main()
+{
+  EXEC SQL 
+	CONNECT DB;
+  EXEC SQL 
+	SET TRANSACTION;
+  EXEC SQL 
+	EVENT INIT xyz DB ("event1");
+
+  if (isc_status[1])
+        isc_print_status(gds__status);
+
+  EXEC SQL 
+	EVENT WAIT xyz;
+  EXEC SQL 
+	COMMIT WORK;
+
+  if (isc_status[1])
+        isc_print_status(gds__status);
+  else
+        printf ("\nfoo1 done, event (event1) was posted.\n");
+
+ EXEC SQL
+	DISCONNECT DB;
+
+ return 0;
+
+}
+$ GPRE  -n -m foo1.e
+$ CC FLAG_CC foo1.c
+$ LINK FLAG_LINK foo1 
+$ RUN_BG foo1 > foo1.tt1 &
+$ SLEEP 5
+$ CREATE foo2.e
+
+DATABASE DB = "WHERE_GDB:events.gdb"
+ 
+# include <stdio.h>
+main()
+{
+  EXEC SQL
+        CONNECT DB;
+  EXEC SQL
+        SET TRANSACTION;
+  EXEC SQL
+        EVENT INIT xyz DB ("event1");
+
+  if (isc_status[1])
+        isc_print_status(gds__status);
+
+  EXEC SQL
+        EVENT WAIT xyz;
+  EXEC SQL
+        COMMIT WORK;
+
+  if (isc_status[1])
+        isc_print_status(gds__status);
+  else
+        printf ("\nfoo2 done, event (event1) was posted.\n");
+
+ EXEC SQL
+	DISCONNECT DB;
+
+ return 0;
+}
+$ GPRE  -n -m foo2.e
+$ CC FLAG_CC foo2.c
+$ LINK FLAG_LINK foo2 
+$ RUN_BG foo2 > foo2.tt2
+$ SLEEP 5
+$ ISQL -m WHERE_GDB:events.gdb
+update project set prize = prize * 1.05 ;
+commit;
+select * from project;
+select * from works_on;
+select * from works_on1;
+exit;
+$ SLEEP 5
+$ TYPE foo1.tt1
+$ TYPE foo2.tt2
+$ DROP WHERE_GDB:events.gdb
+$ DELETE foo* comment.txt event8.sql 

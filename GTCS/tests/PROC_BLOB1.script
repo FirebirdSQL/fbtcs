@@ -1,0 +1,54 @@
+
+$ ISQL
+create database "WHERE_GDB:emp1.gdb";
+CREATE TABLE job
+(
+    job_code            VARCHAR(25) NOT NULL,
+    job_grade           INTEGER NOT NULL,
+    job_country         VARCHAR(25) NOT NULL,
+    job_title           VARCHAR(25) NOT NULL,
+    min_salary          INTEGER NOT NULL,
+    max_salary          INTEGER NOT NULL,
+    job_requirement     BLOB(400,1),
+    language_req        VARCHAR(15) [5]
+
+);
+INSERT INTO job
+(job_code, job_grade, job_country, job_title, min_salary, max_salary) VALUES
+('PRel',  4, 'USA', 'Public Relations Rep.',      25000,  65000);
+ 
+INSERT INTO job
+(job_code, job_grade, job_country, job_title, min_salary, max_salary) VALUES
+('Mktg',  3, 'USA', 'Marketing Analyst',          40000,  80000);
+ 
+INSERT INTO job
+(job_code, job_grade, job_country, job_title, min_salary, max_salary) VALUES
+('Mktg',  4, 'USA', 'Marketing Analyst',          20000,  50000);
+INSERT INTO job
+(job_code, job_grade, job_country, job_title, min_salary, max_salary) VALUES
+('Eng',   4, 'England', 'Engineer',               20100,  43550) /* pounds */;
+ 
+INSERT INTO job
+(job_code, job_grade, job_country, job_title, min_salary, max_salary) VALUES
+('Eng',   5, 'USA', 'Engineer',                   25000,  35000);
+commit;
+
+
+set term go;
+create procedure proc_array returns (b blob, d blob)
+as
+declare variable c blob;
+   begin
+     select job_requirement from job where min_salary = 25000.00 and job_title ='Engineer'  into :b;
+     c = b;
+     d = b;
+     SUSPEND;
+   end
+go
+commit
+go
+set term ; go
+execute procedure proc_array;
+exit;
+
+$ DROP WHERE_GDB:emp1.gdb

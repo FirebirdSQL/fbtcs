@@ -1,0 +1,9 @@
+Test: 
+ INSERT BLOB subtype -500 (Binary) read from sh_binary.tif 
+---------------------------------------------------------
+Test: 
+ READ BLOB of subtype -500 (binary) and output to sh_binary.bak
+ 	     diff the output and report the outcome Pass/Fail 
+----------------------------------------------------------------------------------------------------------------------
+The blob size is 80384 
+cmp -s outcome: Passed

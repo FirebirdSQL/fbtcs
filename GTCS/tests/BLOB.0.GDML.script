@@ -1,0 +1,54 @@
+
+$CREATE init.sql
+create database "WHERE_GDB:test2.gdb";
+create table t1 (a int not null, b blob);
+$CREATE p1.e
+database db = "WHERE_GDB:test2.gdb";
+#include <stdio.h>
+#include <string.h>
+main()
+{
+	char *sentence = "This is segment number %d\n";
+	int i, j;
+
+	ready;
+	start_transaction;
+
+	j = 0;
+	while ( j < 6 ) 
+	{
+		store c in t1 using
+			c.a = j;
+			create_blob b in c.b;
+			for ( i = 0; i <5; i++)
+			{
+				sprintf(b.segment, sentence, i + j *10);
+				b.length = strlen(b.segment) + 1;
+				put_segment b;
+			}
+			close_blob b;
+		end_store;
+		if ( j % 2 )  commit;
+		else  rollback;
+		start_transaction;
+		j++;
+	}
+	for c in t1
+		open_blob b1 in c.b;
+		get_segment b1;
+		while (! gds__status [1] )
+		{
+			printf("%s", b1.segment);
+			get_segment b1;
+		}
+		close_blob b1;
+		printf("\n");
+	end_for;
+}
+$ISQL -i init.sql	
+$GPRE -m -e p1.e
+$CC FLAG_CC p1.c
+$LINK FLAG_LINK p1 
+$RUN p1
+$DROP WHERE_GDB:test2.gdb
+$DELETE  *.sql p1*

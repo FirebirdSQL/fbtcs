@@ -1,0 +1,196 @@
+
+$ CREATE comments
+By:          Clare Taylor
+Date:        08/03/94
+Test name:   IDML_C_CHARSET_04         
+Series:      IDML_C_CHARSET          
+Dependency:  none
+Results:     Fails with transliteration error.  Bug--not
+	     specific to stored procedures.  Also occurs
+	     when select is used and -charset was used to
+	     compile.  Bug_no:  7095             
+History:
+11/3/94:     bug w/-charset fixed, must use manual transactions.
+	     added them here. 
+11/16/94:    doing local init on NT due to translit error.
+Aug. 30 95:  failing w/db err 4.0B
+25-Aug-98:   vector cleanup:  delete testcmt2 and b1test* instead of *.exe
+
+Series/Test Set Description:
+The next four tests in this series test for the -charset option 
+with and without stored procedures and with insert statements.
+The first in the set builds and loads the database.  The last 
+deletes the database.
+
+The four test cases:
+Charset_04 1: translit error on insert, uses -charset only and
+	      selects from stored proc into host vars.  Then inserts
+	      using host vars into a table.  Fails before AA build,
+	      requies -m and manual code to run.
+Charset_05 2: Translit error on procedure select due to bug 7043
+              uses SET NAMES/CONNECT.  (need to do one w/just the
+	      input parameter)
+Charset_06 3: Select is from the table and insert after select fails 
+	      to work.  uses -charset only.  new bug 7122 filed.
+              No data actually got inserted.
+
+Charset_07 4: Using SET NAMES/CONNECT select from the table.
+              no errors--data gets inserted.
+
+$ CREATE ddlfile.sql 
+CREATE DATABASE 'WHERE_GDB:intlemp.gdb' DEFAULT CHARACTER SET ISO8859_1;
+COMMIT;
+CREATE DOMAIN firstname     AS VARCHAR(15) COLLATE FR_FR;
+CREATE DOMAIN lastname      AS VARCHAR(20) COLLATE FR_FR;
+CREATE DOMAIN empno AS SMALLINT;
+
+CREATE TABLE employee
+(
+    emp_no          EMPNO NOT NULL,
+    first_name      FIRSTNAME NOT NULL,
+    last_name       LASTNAME NOT NULL
+);
+
+SET TERM !!;
+
+CREATE PROCEDURE get_emp_id 
+RETURNS (emp_no SMALLINT, first_name VARCHAR(15) CHARACTER SET ISO8859_1, 
+	 last_name VARCHAR(20) CHARACTER SET ISO8859_1)
+AS
+BEGIN
+        FOR SELECT emp_no, first_name, last_name 
+                FROM employee
+                INTO :emp_no , first_name, last_name 
+        DO
+                SUSPEND;
+END !!
+
+SET TERM ; !!
+COMMIT;
+QUIT;
+
+$ CREATE dmlfile.sql
+SET NAMES ISO8859_1;
+CONNECT WHERE_GDB:intlemp.gdb;
+
+COMMIT;
+INSERT INTO employee (emp_no, first_name, last_name)
+VALUES (1, 'Rôbért', 'Nélsôn');
+INSERT INTO employee (emp_no, first_name, last_name)
+VALUES (2, 'Bruce', 'Nélsôn');
+COMMIT;
+QUIT;
+
+$ CREATE btest1.e
+/* Contains DATABASE statement and CONNECT db so that the -m -charset
+   options will work (11/10/94) modified:
+
+   Compile with:   gpre -m -charset iso8859_1 btest1.e
+                   cc btest1.c -lgds -ldld -o btest
+
+   Inserts data after obtaining the data from a stored procedure.
+   Host variables are used to do the insert.
+
+   Currently a transliteration error occurs on insert.
+
+   Then use:      gpre -d intlemp.gdb btest1.e 
+*/
+# include "WHERE_FILES:tcs.h"
+# include "WHERE_FILES:example.h"
+EXEC SQL INCLUDE SQLDA;
+EXEC SQL WHENEVER SQLERROR GOTO Err;
+EXEC SQL SET DATABASE db = "WHERE_GDB:intlemp.gdb";
+
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL BEGIN DECLARE SECTION;
+     BASED ON EMPLOYEE.EMP_NO       e_empno;      
+     BASED ON EMPLOYEE.FIRST_NAME   e_firstname;
+     BASED ON EMPLOYEE.FIRST_NAME   s_firstname;
+     BASED ON EMPLOYEE.LAST_NAME    e_lastname;
+     BASED ON EMPLOYEE.LAST_NAME    s_lastname;
+EXEC SQL END DECLARE SECTION;
+
+void print_error          PROTO((void));
+
+int main PROTO((void))
+{    
+     printf("--------------------------------------------------------------\n");
+     printf("   PRINTING ALL EMPLOYEES--Using Stored Procedure.\n\n");
+     printf("   (transliteration is FROM ISO to NONE so it should work.\n\n");
+
+/* two lines below added after the -charset operation was setup to use -m */
+EXEC SQL CONNECT db; 
+EXEC SQL SET TRANSACTION;
+     EXEC SQL
+          DECLARE A_SEARCH CURSOR FOR
+          SELECT * FROM GET_EMP_ID;
+     EXEC SQL OPEN A_SEARCH;
+     EXEC SQL FETCH A_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
+ 
+     while (SQLCODE == 0)
+         {
+          printf ("%-10d %-15s %-20s\n", e_empno, e_firstname, e_lastname);
+	  strcpy(s_firstname,e_firstname);
+	  strcpy(s_lastname,e_lastname);
+          EXEC SQL FETCH A_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
+         }
+     EXEC SQL CLOSE A_SEARCH;
+EXEC SQL COMMIT;
+
+     printf("\n--------------------------------------------------------------\n");
+     printf("   INSERTING NEW DATA--using host variables from stored p\n\n");
+EXEC SQL SET TRANSACTION;
+     EXEC SQL
+          INSERT INTO employee (emp_no, first_name, last_name)
+          VALUES (111, :s_firstname,:s_lastname);
+EXEC SQL COMMIT;
+     exit(0);
+Err:
+  print_error();
+}
+void print_error PROTO((void))
+{
+
+if (SQLCODE != 100)
+     printf("\nError: -------------------------------------------------------\n");
+     printf("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+     exit(1);
+}
+$ ISQL -i ddlfile.sql -m
+$ ISQL -i dmlfile.sql -m
+$ GBAK -t WHERE_GDB:intlemp.gdb intlemp.gbk
+$ CREATE testcmt1
+
+----------------------------------------------------------------
+  The program is using a stored procedure for the select.
+  It then attempts an insert using the values returned from the
+  procedure.
+
+  It does NOT use SET NAMES and uses  -charset at compile time.
+  It must use a DATATBASE db=  command and a CONNECT to get the -m
+  -charset option to work.  Should work to select/insert data
+----------------------------------------------------------------
+
+$ CREATE testcmt2
+----------------------------------------------------------------
+  Now compiling with no -charset so we should attach with
+  charset NONE and the insert should fail.
+  Select is fine but the insert should fail.
+----------------------------------------------------------------
+  
+$ TYPE testcmt1
+$ GPRE -m -charset iso8859_1 btest1.e  
+$ CC FLAG_CC btest1.c
+$ LINK FLAG_LINK btest1 
+$ RUN btest1
+$ COPY btest1.e btest2.e
+$ DELETE btest1*
+$ TYPE testcmt2
+$ GPRE btest2.e  
+$ CC FLAG_CC btest2.c
+$ LINK FLAG_LINK btest2 
+$ RUN btest2 > btest2.out
+$ TYPE btest2.out
+$ DROP WHERE_GDB:intlemp.gdb
+$ DELETE ddlfile.sql dmlfile.sql btest2*
+$ DELETE comments testcmt1 testcmt2

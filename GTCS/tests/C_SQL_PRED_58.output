@@ -1,0 +1,64 @@
+Test:
+ SELECT EMPNO, LAST_NAME, FIRST_NAME FROM EMPLOYEES WHERE NAME STARTING WITH 'S'
+--------------------------------------------------------------------------------
+125	Samantha	Mastiff
+--------------------------------------------------------------------------------
+130	Susan	Briard
+--------------------------------------------------------------------------------
+139	Samuel	Pointer
+--------------------------------------------------------------------------------
+146	Sam	Moyed
+--------------------------------------------------------------------------------
+149	Stev	Afgan
+--------------------------------------------------------------------------------
+154	Saynt	Bernard
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 6
+
+ Empno    Last Name    First Name
+====== =============== ==========
+
+   125 Mastiff         Samantha
+   130 Briard          Susan
+   139 Pointer         Samuel
+   146 Moyed           Sam
+   149 Afgan           Stev
+   154 Bernard         Saynt
+
+
+ Empno    Last Name    First Name
+====== =============== ==========
+
+   125 Mastiff         Samantha
+   130 Briard          Susan
+   139 Pointer         Samuel
+   146 Moyed           Sam
+   149 Afgan           Stev
+   154 Bernard         Saynt
+
+
+   COUNT
+===========
+
+          6
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+  EMPNO LAST_NAME       FIRST_NAME 
+======= =============== ========== 
+
+    125 Mastiff         Samantha   
+    130 Briard          Susan      
+    139 Pointer         Samuel     
+    146 Moyed           Sam        
+    149 Afgan           Stev       
+    154 Bernard         Saynt      
+
+
+       COUNT 
+============ 
+
+           6 
+

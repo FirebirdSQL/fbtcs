@@ -1,0 +1,27 @@
+
+/******************************************************************************
+ Test Name:          dsql_except_02
+ Date:               August 1993
+ Expected Results:   error messages for the invalid syntax
+ Series:             dsql_exceptions
+ Dependencies:       dsql_except_setup - to GBAK copy of atlas
+                     dsql_except_cleanup - to remove atlas after use
+ Related Bugs:
+ Description:        Level 0 syntax checking for create / alter / drop
+                     exception - check for appropriate error messages for
+                     invalid statements.
+******************************************************************************/
+$ isql -m WHERE_GDB:atlas.gdb
+create exception noriver "River does not currently exist in Rivers relation";
+create exception nostate "State does not currently exist in State relation";
+create exception noupdate "Update cannot be completed because of errors";
+create exception error "This error message comes from exception handling";
+commit;
+create exception noriver "Duplicate message for noriver";
+commit;
+drop exception noriver;
+drop exception nostate;
+drop exception noupdate;
+drop exception error;
+commit;
+exit;

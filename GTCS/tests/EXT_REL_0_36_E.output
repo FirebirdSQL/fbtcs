@@ -1,0 +1,6 @@
+unsuccessful metadata update
+-Table EXT_TABLE already exists
+Data base error, SQLCODE = -607
+Use CONNECT or CREATE DATABASE to specify a database
+External file: WHERE_GDB_EXTERNAL:(PLATFORM_UPPER)EXTERNAL_DAT:
+FIELD1                          CHAR(10) Nullable 

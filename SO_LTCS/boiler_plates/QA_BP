@@ -1,0 +1,35 @@
+#!/bin/sh
+# *** Modified for V5.0 certification **
+#     Compilers used - SPARCWorks 4.0 (for C, C++, Fortran and Ada - note:
+#                      SC4.0 uses Ada3.0).
+#                    - MicroFocus Cobol 4.0
+#     SPARCWorks 4.0 is installed on jabba - /usr/support/SUNWspro/SC4.0
+#     MicroFocus Cobol is installed on jabba - /apps/lang/cobol
+#     NOTE: ensure jabba:/usr/support is mounted as /usr/support and
+#                  jabba:/apps is mounted as /apps
+#
+#
+# old PATH=./:/solaris7/test/lang/SUNWspro/Ada3.0/bin:/solaris7/test/lang/cobol/bin:/solaris7/test/lang:/apps/lang/solaris/SUNWspro/bin:/usr/ccs/bin:/usr/gds.sogood/bin:/usr/gds.sogood/qa_tools/bin:/usr/gds.`hostname`/bin:/usr/ucb:/usr/ucb/cc:/usr/bin:/usr/interbase/bin:$PATH
+# also old PATH=./:/apps/lang/solaris/SUNWspro/Ada3.0/bin:/apps/lang/solaris/SUNWspro/cobol/bin:/apps/lang/solaris/SUNWsproSC3.0.1/bin:/apps/lang/solaris/SUNWspro/bin:/usr/gds.sogood/bin:/usr/gds.sogood/qa_tools/bin:/usr/gds.`hostname`/bin:/usr/ucb:/usr/bin:/usr/interbase/bin:$PATH
+PATH=./:/usr/support/SUNWspro/SC4.0/bin:/usr/support/SUNWspro/Ada3.0/bin:/apps/lang/cobol/bin:/usr/support/SUNWspro/bin:/apps/lang/solaris/SUNWspro/bin:/usr/ccs/bin:/usr/gds.sogood/bin:/usr/gds.sogood/qa_tools/bin:/usr/gds.`hostname`/bin:/usr/ucb:/usr/bin:/usr/interbase/bin:/usr/gds/bin:$PATH
+COBDIR=/apps/lang/cobol
+ADADIR=/usr/support/SUNWspro/Ada3.0/self
+ADAHOME=/usr/support/SUNWspro/Ada3.0
+SWADAHOME=/usr/support/SUNWspro/Ada3.0
+TMP=/tmp
+LM_LICENSE_FILE=/apps/lang/license_dir/sunpro.lic,1
+LOCAL_HOST=`hostname`:"`pwd`/"
+#old: LD_LIBRARY_PATH=/solaris7/test/lang/SUNWspro/SC3.0.1/lib:/usr/interbase/lib:/lang/cobol/coblib:/solaris7/test/lang/SUNWspro/Ada3.0/lib:/solaris7/test/lang/SUNWspro/Ada3.0/self
+# also old LD_LIBRARY_PATH=/apps/lang/solaris/SUNWspro/SC3.0.1/lib:/usr/interbase/lib:/apps/lang/cobol/coblib:/apps/lang/solaris/SUNWspro/Ada3.0/lib:/apps/lang/solaris/SUNWspro/Ada3.0/self
+LD_LIBRARY_PATH=/usr/support/SUNWspro/SC4.0/lib:/usr/interbase/lib:/apps/lang/cobol/coblib:/usr/support/SUNWspro/Ada3.0/lib:/usr/support/SUNWspro/Ada3.0/self
+export PATH
+export PATH
+export COBDIR
+export ADADIR
+export ADAHOME
+export SWADAHOME
+export TMP
+export LM_LICENSE_FILE
+export LOCAL_HOST
+export LD_LIBRARY_PATH
+umask 000

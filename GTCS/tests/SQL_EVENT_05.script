@@ -1,0 +1,104 @@
+
+$ CREATE comment.txt
+*****************************************************************************
+Name: Sudhanshu Kumar 
+This tests waits for multiple events the difference from previous test update
+is happening only for a row.
+
+History:
+ 
+5-Oct-95	Marco: I changed the Sleep command from sleep 2 to a 
+		sleep 5.  Two (2) seconds was not long enough for the 
+		Windows platform.
+5-Oct-95	DaveS:  And I changed it to 15, 2 wasn't long enough for
+		Solaris either!
+
+*****************************************************************************
+$CREATE event5.sql
+create database "WHERE_GDB:events.gdb";
+create table project  ( PNAME   VARCHAR(15) Not Null,
+                        PNUMBER     INTEGER,
+                        PRIZE        DOUBLE PRECISION);
+
+insert into project values('ProductX',1,22);
+insert into project values('ProductY',2,28);
+insert into project values('ProductZ',3,32);
+commit;
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     DOUBLE PRECISION);
+
+insert into works_on values (1,1,20);
+insert into works_on values (1,2,30);
+insert into works_on values (3,3,40);
+commit;
+
+set term go;
+create trigger trig01 for project 
+active after update position 1
+as 
+declare variable x int;
+begin
+    insert into works_on values (4, 4, new.prize/old.prize);     
+     if (((new.prize/old.prize) >= 1.0) and ((new.prize/old.prize) <= 1.1))
+           then post_event 'event1';
+    if (((new.prize/old.prize) > 1.1) and ((new.prize/old.prize) <= 1.2))
+           then post_event 'event2';
+    if (((new.prize/old.prize) > 1.2) and ((new.prize/old.prize) <= 1.3)) 
+           then post_event 'event3';
+end
+go
+set term ; go
+exit;
+$ISQL -I event5.sql -sqldialect 1 
+$ CREATE foo5.e
+
+# include <stdio.h>
+DATABASE DB = "WHERE_GDB:events.gdb"
+main()
+{
+  EXEC SQL 
+	CONNECT DB;
+  EXEC SQL 
+	SET TRANSACTION;
+  EXEC SQL 
+	EVENT INIT xyz DB ("event1", "event2", "event3");
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+
+  EXEC SQL 
+	EVENT WAIT xyz;
+  EXEC SQL 
+	COMMIT WORK;
+
+  if (isc_status[1])
+        isc_print_status(gds__status);
+  if (gds__events[0] )
+        printf ("\nfoo5 done, event (event1) was posted.\n");
+  if (gds__events[1] )
+        printf ("\nfoo5 done, event (event2) was posted.\n");
+  if (gds__events[2] )
+        printf ("\nfoo5 done, event (event3) was posted.\n");
+
+  EXEC SQL
+	DISCONNECT DB;
+
+ return 0;
+}
+
+$ GPRE  -n -m foo5.e
+$ CC FLAG_CC foo5.c
+$ LINK FLAG_LINK foo5 
+$ RUN_BG foo5 > foo5.tt1 &
+$ SLEEP 5 
+$ ISQL -m WHERE_GDB:events.gdb
+update project set prize = prize * 1.05  where pnumber = 1 ;
+commit;
+select * from project;
+select * from works_on;
+exit;
+$ TYPE foo5.tt1
+$ SLEEP 5
+$ DELETE foo5* comment.txt event5.sql
+$ DROP WHERE_GDB:events.gdb

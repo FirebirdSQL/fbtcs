@@ -1,0 +1,65 @@
+
+$CREATE COMMENT
+*******************************************************************************
+ 
+Test Name:  	EXT_REL_0_36_G
+Test Level:     0
+Series Name:    EXT_LEV_0
+Date:  		July 5, 1994
+Author:  	Scott Van Voris
+Bug: 
+Description:    This is a Level 0 test which is designed to verify that
+		two external tables with the same name cannot be created
+		in the same database.
+
+ 
+Expected Output:        create.gdl:7: table EXT_TABLE already exists
+			Ceasing processing because of errors.
+			I/O error during "open" operation for file "ext_rel_0_36_G.gdb"
+			-No such file or directory
+			Welcome to QLI
+			Query Language Interpreter
+			QLI> QLI> ** QLI error from database "ext_rel_0_36_G.gdb" **
+			 
+			QLI> ** QLI error: no databases are ready **
+ 
+			QLI> QLI> 
+History:
+2-Oct-95:  Mark
+  Removed the Cleanup / Setup comments from the test.
+  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+
+3-Oct-95: Marco
+  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+  by the server in the correct place when accessing data remotely.
+  Also, I removed any referance to DIR external.dat and TYPE external.dat
+  which would also fail when running remotely.
+28-Aug-97: Clare  This test fails oddly when run using the tcsrun.sh
+  scripts. It passes when run alone in TCS.  The failure looks like
+  it is caused by cleanup. It says the external table exists, but then
+  it says no 'procedure EXT_TABLE'. The test doesn't call a procedure
+  or do a show proc, there is no local inits or local tests.  Don't see
+  how this is happening. It is as if the QLI that runs when tcsrun.sh
+  is used is seeing the SHOW ext_table as a show procedure statement.
+  Created 4.5 test using just ISQL to do what the test intended. init 4.5.
+*******************************************************************************
+
+$CREATE create.sql
+CREATE DATABASE "WHERE_GDB:ext_rel_0_36_G.gdb";
+
+CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
+       ( field1 CHAR (10) );
+COMMIT WORK;
+CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
+       ( field1 CHAR (10) );
+quit;
+$CREATE inp.isql
+connect WHERE_GDB:ext_rel_0_36_G.gdb;
+SHOW table ext_table;
+quit;
+
+$ISQL -m -i create.sql
+$ISQL -m -i inp.isql 
+$DROP WHERE_GDB:ext_rel_0_36_G.gdb
+$DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
+$DELETE COMMENT create.sql inp.isql

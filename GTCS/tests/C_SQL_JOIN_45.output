@@ -1,0 +1,33 @@
+    1  st1-1           1  st1-1           1  st1-1           1  st1-1           1  st1-1     
+    2  st1-2           2  st1-2           2  st1-2           2  st1-2           2  st1-2     
+    0  st1-3           0                  0                  0                  0            
+    4  st1-4           4  st1-4           4  st1-4           4  st1-4           4  st1-4     
+    0  st1-5           0                  0                  0                  0            
+   -1  st1-6          -1  st1-6          -1  st1-6          -1  st1-6          -1  st1-6     
+
+
+* Total Records Listed >>> 6
+
+        TABLE         TABLE         TABLE         TABLE         TABLE
+  S1     ROW    S1     ROW    S1     ROW    S1     ROW    S1     ROW
+====== ====== ====== ====== ====== ====== ====== ====== ====== ======
+
+     1 st1-1       1 st1-1       1 st1-1       1 st1-1       1 st1-1 
+     2 st1-2       2 st1-2       2 st1-2       2 st1-2       2 st1-2 
+       st1-3                                                   
+     4 st1-4       4 st1-4       4 st1-4       4 st1-4       4 st1-4 
+       st1-5                                                   
+    -1 st1-6      -1 st1-6      -1 st1-6      -1 st1-6      -1 st1-6 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+     S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW 
+======= ========= ======= ========= ======= ========= ======= ========= ======= ========= 
+
+      1 st1-1           1 st1-1           1 st1-1           1 st1-1           1 st1-1     
+      2 st1-2           2 st1-2           2 st1-2           2 st1-2           2 st1-2     
+ <null> st1-3      <null> <null>     <null> <null>     <null> <null>     <null> <null>    
+      4 st1-4           4 st1-4           4 st1-4           4 st1-4           4 st1-4     
+ <null> st1-5      <null> <null>     <null> <null>     <null> <null>     <null> <null>    
+     -1 st1-6          -1 st1-6          -1 st1-6          -1 st1-6          -1 st1-6     
+

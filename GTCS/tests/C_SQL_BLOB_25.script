@@ -1,0 +1,134 @@
+
+$ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_25.gdb
+$ CREATE blob025.e
+/**********************************************************************
+ Purpose:               Test SQL blob support in InterBase 4.0
+ Description:           SET A BLOB TO NULL , then insert into the same blob.
+ Author:                Sam Hakim, June 16, 93
+ **********************************************************************/
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_blobs_25.gdb";
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL WHENEVER SQLERROR GO TO ERR;
+
+BASED_ON MB1.TEST_NAME      Test_Name;
+BASED_ON MB1.COMMENT        Comment;
+BASED_ON MB1.ROW_ID         Row_Id;
+BASED_ON MB1.B              BlobId1;
+short			    BlobIndNull = -1;
+
+int verbose;
+
+struct Buf{
+    char            *Buffer[5];			/* Buffer vector to store blobs */
+    unsigned short  BufferLen[5];		
+};
+struct Buf M;
+
+char Test[]="SET A BLOB TO NULL , COMMIT, INSERT DATA INTO THE BLOB";
+
+void Underline();
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+short                       i,j,k,l;
+int Count;
+
+    printf("Test: \n %s \n",Test);
+    Underline(strlen(Test));
+    verbose = FALSE;
+    if (--argc > 0){
+        if (*argv[1] == 'v' || *argv[1] == 'V')
+            verbose = TRUE;
+        }
+    M.BufferLen[0] = 80;
+    M.Buffer[0] = (char*) malloc(M.BufferLen[0]);
+
+    /*-----------------------------------------------------------------*/
+
+    READY;              /* Bug 4549 will be fixed in verion G */
+    START_TRANSACTION;
+	
+    EXEC SQL DECLARE TCR CURSOR FOR
+             SELECT TEST_NAME,ROW_ID,B,COMMENT
+             FROM MB1 WHERE ROW_ID =2;
+
+    EXEC SQL OPEN TCR ;
+    EXEC SQL FETCH TCR INTO :Test_Name,:Row_Id,:BlobId1,:Comment;
+
+    strcpy(Test_Name,"blob025");
+    
+
+    EXEC SQL UPDATE MB1 SET TEST_NAME = :Test_Name,B=:BlobId1:BlobIndNull,
+	     COMMENT = "Blob Nullifier" WHERE CURRENT OF TCR;
+    EXEC SQL CLOSE TCR;
+    EXEC SQL COMMIT;
+   
+    /*----------------------------------------------------------------*/ 
+    START_TRANSACTION;
+    EXEC SQL DECLARE TCR2 CURSOR FOR
+             SELECT TEST_NAME,ROW_ID,B,COMMENT
+             FROM MB1 WHERE B IS NULL AND TEST_NAME = 'blob025';
+
+    EXEC SQL OPEN TCR2 ;
+    EXEC SQL FETCH TCR2 INTO :Test_Name,:Row_Id,:BlobId1,:Comment;
+
+    strcpy(M.Buffer[0],"New blob content after it was nullified - blob025");
+    M.BufferLen[0] = strlen(M.Buffer[0]);
+    strcpy(Comment,"New blob inserted by blob025");
+    
+    EXEC SQL DECLARE WBC CURSOR FOR
+	     INSERT BLOB B INTO MB1 MAXIMUM_SEGMENT 80;
+
+    EXEC SQL OPEN WBC INTO :BlobId1;
+    EXEC SQL INSERT CURSOR WBC VALUES (:M.Buffer[0]:M.BufferLen[0]);
+    EXEC SQL CLOSE WBC;
+
+    EXEC SQL UPDATE MB1 SET TEST_NAME = :Test_Name,B=:BlobId1,
+	     COMMENT = :Comment WHERE CURRENT OF TCR2;
+    EXEC SQL CLOSE TCR2;
+    EXEC SQL COMMIT;
+
+FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/***********************************************************
+ * U n d e r l i n e
+ * print an underline
+ ***********************************************************/
+void Underline(i)
+int i;
+{
+int j;
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+}
+
+$ GPRE -e blob025.e
+$ CC FLAG_CC blob025.c
+$ LINK FLAG_LINK blob025 
+$ RUN blob025
+$ CREATE blob025.qli
+ready WHERE_GDB:sh_blobs_25.gdb;
+select test_name, row_id, b from mb1 where test_name = 'blob025';
+finish;
+quit;
+$ QLI -n -a blob025.qli
+$DROP WHERE_GDB:sh_blobs_25.gdb
+$ DELETE blob025*

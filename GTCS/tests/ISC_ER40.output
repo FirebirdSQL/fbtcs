@@ -1,0 +1,9 @@
+Running ER40, invalid transaction handle
+to isc_put_slice
+RC=335544324
+ERROR: Unsuccessful execution caused by an unavailable resource.
+RC=335544332
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+RC=335544332
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+Finished ER40

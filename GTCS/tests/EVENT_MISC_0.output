@@ -1,0 +1,70 @@
+
+================================================================================
+
+		Client MOE will post 335 events
+
+		Client CURLY will post 333 events
+
+		Client LARRY will post 333 events
+
+		Client HARPO will post 333 events
+
+		Client GROUCHO will post 333 events
+
+		Client CHICO will post 333 events
+
+================================================================================
+
+	Asynchronous Event Test V1.2
+
+
+
+	Client MOE created 335 events
+
+	Client MOE sent 335 packets to the server
+
+	The server received 335 packets from client MOE
+
+
+	Client CURLY created 333 events
+
+	Client CURLY sent 333 packets to the server
+
+	The server received 333 packets from client CURLY
+
+
+	Client LARRY created 333 events
+
+	Client LARRY sent 333 packets to the server
+
+	The server received 333 packets from client LARRY
+
+
+	Client HARPO created 333 events
+
+	Client HARPO sent 333 packets to the server
+
+	The server received 333 packets from client HARPO
+
+
+	Client GROUCHO created 333 events
+
+	Client GROUCHO sent 333 packets to the server
+
+	The server received 333 packets from client GROUCHO
+
+
+	Client CHICO created 333 events
+
+	Client CHICO sent 333 packets to the server
+
+	The server received 333 packets from client CHICO
+
+
+	All clients posted a total of 2000 events
+
+
+	Server received a total of 2000 events
+
+================================================================================
+

@@ -1,0 +1,455 @@
+
+$ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_26.gdb
+$ COPY WHERE_FILES:sh_binary.tif sh_binary.tif
+$ CREATE blob026.e
+/**********************************************************************
+ Purpose:               Test SQL blob support in InterBase 4.0
+ Description:           Read a binary file into a blob.
+ Author:                Sam Hakim, June 16, 93
+
+ Note:			The TCS script needs to be a local test on VMS
+			due to the shell script included in this test.
+ History:
+ 12/8/97:clare:  reinit using TCS 5.0 and V5.0 because we get a blob size
+		 diff and we are trying to get k1-4 to pass w/0 fails again.
+		 It may need local inits on other platforms.
+ **********************************************************************/
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_blobs_26.gdb";
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL WHENEVER SQLERROR GO TO ERR;
+
+/* Database Variables */
+BASED_ON ST.TEST_NAME      Test_Name;
+BASED_ON ST.COMMENT        Comment;
+BASED_ON ST.ROW_ID         Row_Id;
+BASED_ON ST.BIN2           BlobId;
+
+/* Global Variables */
+char			   FileName[]="sh_binary.tif";
+int			   DataLen;
+int                        verbose;
+
+/* Function definitions */
+int			   GetDate();
+int			   GetChunk();
+FILE			   *ExampleFile,*OpenFile(),*ExampleOut;
+void                       Underline();
+void			   WriteBlob();
+int			   ReadBlob();
+
+struct Buf{
+    char            *Buffer[2];			/* Buffer vector to store blobs */
+    unsigned short  BufferLen[2];		
+};
+struct Buf M;
+
+char *BigBuffer;
+
+char Test[]="INSERT BLOB subtype -500 (Binary) read from sh_binary.tif";
+
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+short i,j,k,l;
+
+    printf("Test: \n %s \n",Test);
+    Underline(strlen(Test));
+    verbose = FALSE;
+    if (--argc > 0){
+        if (*argv[1] == 'v' || *argv[1] == 'V')
+            verbose = TRUE;
+    }
+
+    M.BufferLen[1] = 512;			/* Work with 64K segment */
+    if ((M.Buffer[1]=(char *) malloc(M.BufferLen[1])) == NULL){
+	printf("Could not allocate memory for M.Buffer\n");
+	exit(1);
+    }
+    
+
+    if ((BigBuffer = (char *) malloc(1024*241)) == NULL){
+	printf("Could not allocate 82K for BigBuffer\n");
+	exit(1);		/* Allocate 82K buffer */
+    }
+
+    /*-----------------------------------------------------------------*/
+
+    READY;              /* Bug 4549 will be fixed in verion G */
+    START_TRANSACTION;
+
+    ExampleFile = OpenFile(FileName,"rb");
+    if (!ExampleFile ) goto FileErr;
+    WriteBlob();
+    strcpy(Test_Name,"blob026");
+    strcpy(Comment,"New blob inserted by blob026");
+
+    EXEC SQL INSERT INTO ST (TEST_NAME,ROW_ID,COMMENT,BIN2)
+             VALUES (:Test_Name,1,:Comment,:BlobId);
+    EXEC SQL COMMIT;
+
+    free(M.Buffer[1]);
+    free(BigBuffer);
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+
+FileErr:
+	printf("File %s open error \n",FileName);
+	exit(1);
+
+}
+/***********************************************************
+ * U n d e r l i n e
+ * print an underline
+ ***********************************************************/
+void Underline(i)
+int i;
+{
+int j;
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+}
+/***********************************************************
+ * Open a file and return True if opened, False otherwise.
+ ***********************************************************/
+FILE *OpenFile(Fn,FMode)
+char *Fn;
+char *FMode;
+{
+
+if (Fn)
+	return(fopen(Fn,FMode));
+else
+	return(0);
+}
+/***********************************************************************
+ * Get data from a file into a single variable.
+ * Rules: fields in the datafile are comma dilimited.
+ ***********************************************************************/
+int GetChunk(Bf,MaxChunk,fp)
+char *Bf;
+int MaxChunk;
+FILE *fp;
+{
+   int Outcome;
+   int c, done;
+   char *nextc;
+   DataLen = 0;
+
+   Outcome = fread (Bf,MaxChunk,1,fp);
+   DataLen = Outcome * MaxChunk;
+
+return(DataLen);
+}
+/***********************************************************************
+ * Read binary stream from a file into Bf.  Return the no. of bytes.
+ ***********************************************************************/
+int GetData(Bf,MaxChunk,fp)
+char *Bf;
+int MaxChunk;
+FILE *fp;
+{
+
+   int c, done;
+   char *nextc;
+   DataLen = 0;
+
+   nextc = Bf;
+   done = FALSE;
+   do {
+        c = fgetc(fp);
+        switch (c) {
+                case EOF:
+                        done = TRUE;
+                        break;
+                default:
+                        *nextc++ = c;
+			DataLen++;
+			if (DataLen >= MaxChunk)
+				done = TRUE;
+        }
+   }while(!done);
+return(DataLen);
+}
+
+/************************************************************
+ * W r i t e B l o b
+ ************************************************************/
+ void WriteBlob()
+ {
+ int i=0;
+    EXEC SQL WHENEVER SQLERROR CONTINUE;
+    EXEC SQL WHENEVER SQLERROR GOTO ERR1;
+
+    EXEC SQL DECLARE WBC CURSOR FOR
+             INSERT BLOB BIN2 INTO ST MAXIMUM_SEGMENT 512;    /* Max unsigned short */
+
+    EXEC SQL OPEN WBC INTO :BlobId;
+    M.BufferLen[1] = GetChunk(M.Buffer[1],M.BufferLen[1],ExampleFile);
+
+    while (M.BufferLen[1]){
+	if (verbose)
+		printf("Loop: %d BufferLen:%d \n",i++,M.BufferLen[1]);
+        EXEC SQL INSERT CURSOR WBC VALUES (:M.Buffer[1]:M.BufferLen[1]);
+    	M.BufferLen[1] = GetChunk(M.Buffer[1],M.BufferLen[1],ExampleFile);
+    }
+    EXEC SQL CLOSE WBC;
+
+ERR1:
+        if (SQLCODE <0){
+        printf("WriteBlob: Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+        EXEC SQL ROLLBACK;
+        }
+
+}
+
+$ GPRE -e -n blob026.e
+$ CC FLAG_CC blob026.c
+$ LINK FLAG_LINK blob026 
+$ RUN blob026
+$ CREATE blob027.e
+/**********************************************************************
+ Purpose:               Test SQL blob support in InterBase 4.0
+ Description:           Read a binary blob, output the blob
+			to a file.  
+ Author:                Sam Hakim, June 16, 93
+ Attention:		This test is part of blob026 and depends on it.
+ **********************************************************************/
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_blobs_26.gdb";
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL WHENEVER SQLERROR GO TO ERR;
+
+/* Database Variables */
+BASED_ON ST.TEST_NAME      Test_Name;
+BASED_ON ST.COMMENT        Comment;
+BASED_ON ST.ROW_ID         Row_Id;
+BASED_ON ST.BIN2           BlobId;
+
+/* Global Variables */
+char			   FileName[]="sh_binary.bak";
+int			   DataLen;
+int                        verbose;
+
+/* Function definitions */
+FILE			   *ExampleFile,*OpenFile(),*ExampleOut;
+void                       Underline();
+void			   StAppend();
+int			   ReadBlob();
+void			   WriteFile();
+void			   ShowImage();
+
+struct Buf{
+    char            *Buffer[2];			/* Buffer vector to store blobs */
+    unsigned short  BufferLen[2];		
+};
+struct Buf M;
+
+char *BigBuffer;
+int BlobSize;
+
+char Test[]="READ BLOB of subtype -500 (binary) and output to sh_binary.bak\n \
+	     diff the output and report the outcome Pass/Fail"; 
+
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+short i,j,k,l;
+
+    printf("Test: \n %s \n",Test);
+    Underline(strlen(Test));
+    verbose = FALSE;
+    if (--argc > 0){
+        if (*argv[1] == 'v' || *argv[1] == 'V')
+            verbose = TRUE;
+    }
+    M.BufferLen[1] = 512;			/* Work with 64K segment */
+    M.Buffer[1]= (char*) malloc(M.BufferLen[1]);
+
+    if ((BigBuffer = (char *) malloc(1024*241)) == NULL){   /* Allocate 500K buffer */
+	printf("Failed to allocate memeory \n");
+	exit(1);
+    }
+
+    /*-----------------------------------------------------------------*/
+
+    EXEC SQL DECLARE TCR CURSOR FOR
+             SELECT COMMENT,BIN2
+             FROM ST WHERE TEST_NAME = 'blob026';
+    EXEC SQL OPEN TCR;
+    EXEC SQL FETCH TCR INTO :Comment,:BlobId;
+
+    BlobSize = ReadBlob(M.Buffer[1],M.BufferLen[1]);
+
+    ExampleOut = OpenFile(FileName,"wb");
+    if (!ExampleOut) goto FileErr; 
+    WriteFile(BigBuffer,BlobSize,ExampleOut);
+    printf("The blob size is %d \n",BlobSize);
+    EXEC SQL CLOSE TCR; 
+
+    free(M.Buffer[1]);
+    free(BigBuffer);
+
+    /* Show the image on my machine using image view */
+    /* ShowImage("imageview sh_binary.bak"); */
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+
+FileErr:
+	printf("File %s open error \n",FileName);
+	exit(1);
+
+}
+/***********************************************************
+ * U n d e r l i n e
+ * print an underline
+ ***********************************************************/
+void Underline(i)
+int i;
+{
+int j;
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+}
+/***********************************************************
+ * Open a file and return True if opened, False otherwise.
+ ***********************************************************/
+FILE *OpenFile(Fn,FMode)
+char *Fn;
+char *FMode;
+{
+
+if (Fn)
+	return(fopen(Fn,FMode));
+else
+	return(0);
+}
+
+/************************************************************
+ * Read a blob into buffer. Return the size of the blob. 
+ ************************************************************/
+ int ReadBlob(Bf,L)
+ char *Bf;
+ int L;
+ {
+ unsigned short Bl;
+ int BSize;
+ int i; 
+
+ EXEC SQL WHENEVER SQLERROR CONTINUE;
+ EXEC SQL WHENEVER SQLERROR GO TO ReadERR;
+
+ BSize = 0;
+ i=0;
+
+ EXEC SQL DECLARE BCR CURSOR FOR
+          READ BLOB BIN2 FROM ST;
+
+ EXEC SQL OPEN BCR USING :BlobId;
+ EXEC SQL FETCH BCR INTO :Bf:Bl;
+
+ while (SQLCODE != 100 || SQLCODE == 101){
+        if (verbose)
+		printf("Loop: %d BufferLen:%d \n",i++,Bl);	
+        StAppend(BigBuffer,BSize,Bf,Bl);
+ 	BSize += Bl;
+        EXEC SQL FETCH BCR INTO :Bf:Bl;
+ }
+ EXEC SQL CLOSE BCR;
+
+ReadERR:
+        if (SQLCODE < 0){
+                printf("Database error, SQLCODE = %d\n",SQLCODE);
+                isc_print_status(gds__status);
+
+        EXEC SQL ROLLBACK;
+        }
+return(BSize);
+}
+
+/*********************************************************************
+ * Write the data and close the file.
+ *********************************************************************/
+void WriteFile(Bf,BSize,fp)
+char *Bf;
+int BSize;
+FILE *fp;
+{
+
+fwrite(Bf,BSize,1,fp);
+fclose (fp);
+}
+/***************************************************
+ * Append Src stream of bytes to Dest starting at St
+ ***************************************************/
+ void StAppend(Dest,S,Src,L)
+ char *Dest;
+ int   S;
+ char *Src;
+ unsigned short L;
+ {
+ char *pDest,*pSrc;
+
+ pDest = Dest;
+ pSrc = Src;
+ 
+ for (;S>0;S--)
+	pDest++;
+
+ for (;L>0;L--){
+	*pDest = *pSrc;
+	pDest++;
+	pSrc++;
+ }
+
+}
+/***************************************************************
+ * Show the image using imageview.  HP ONLY!
+ ***************************************************************/
+ void ShowImage(Cmd)
+ char *Cmd;
+{
+#ifdef hpux
+system(Cmd);
+#endif
+}
+$GPRE -e -n blob027.e
+$CC FLAG_CC blob027.c
+$LINK FLAG_LINK blob027
+$RUN blob027
+$RUN compare_file sh_binary.tif sh_binary.bak
+$ DROP WHERE_GDB:sh_blobs_26.gdb
+$ DELETE blob027* blob026* sh_binary*

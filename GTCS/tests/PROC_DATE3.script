@@ -1,0 +1,61 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure test(a date) RETURNS (x date) as 
+begin
+   x = a;
+   x = x +1;
+SUSPEND;  
+end
+go
+set term ; go
+execute procedure test '29-Dec-78';
+/*execute procedure test "now"; */
+set term go;
+create procedure test1 RETURNS (x date) as
+begin
+   x =  '29-Dec-78' ;
+   x = x+1; 
+   SUSPEND;
+end
+go
+set term ; go
+execute procedure test1;
+set term go;
+create procedure test3 RETURNS (x date) as
+begin
+   x = cast('today' as date) + 1;
+SUSPEND;
+end
+go
+set term ; go
+execute procedure test3 ;
+select * from test3;
+set term go;
+create procedure cast5(a char(12)) RETURNS (b date) as
+begin
+    b = a;
+    b=b+1;
+    SUSPEND;
+end
+go
+set term ; go
+execute procedure cast5 '29-Jan-78';
+/*execute procedure cast5 "today" ;*/
+/*execute procedure cast5 "yesterday";*/
+set term go;
+create procedure cast6 RETURNS (i int) as
+declare variable a date;
+declare variable b date;
+begin
+     a = 'now';
+     b = 'tomorrow';
+     i = b -a;
+    SUSPEND;
+end
+go
+set term ; go
+execute procedure cast6;
+exit;
+$ DROP WHERE_GDB:sp1.gdb

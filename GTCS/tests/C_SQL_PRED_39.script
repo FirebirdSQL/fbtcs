@@ -1,0 +1,145 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE con015.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+
+ Description:           containing null
+
+                        SELECT COUNT(*)
+                        FROM SALES
+                        WHERE SHIPPED IS NULL;
+
+ Tables:                DEPT_BUDGET
+
+ Author:                Sam Hakim, Feb 19, 93
+
+ Note:			GPRE could not pre-precess a statement such as
+			containing null.  This was changed
+			to is null.  This is consitent with GDML
+			representation of containing null.
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+
+EXEC SQL
+        INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+char    Test []="\
+SELECT COUNT(*)\
+FROM SALES \
+WHERE SHIPPED IS NULL";
+
+int             SalesCount;
+void            Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+        printf("\nTest:\n%s\n",Test);
+        Underline(80);
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT COUNT(*)
+                FROM SALES
+                WHERE SHIPPED IS NULL;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :SalesCount;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%d\n",SalesCount);
+
+                EXEC SQL
+                FETCH CR INTO :SalesCount;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e con015.e
+$ CC FLAG_CC con015.c
+$ LINK FLAG_LINK con015 
+$ RUN con015
+$ CREATE con015.qli
+set semicolon;
+ready WHERE_GDB:sh_test.gdb;
+SELECT COUNT(*)
+FROM SALES
+WHERE SHIPPED IS NULL;
+
+PRINT COUNT OF SALES WITH SHIPPED MISSING;
+FINISH;
+QUIT;
+
+$ QLI -n -a con015.qli
+$ CREATE con015.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT COUNT(*)
+FROM SALES
+WHERE SHIPPED IS NULL;
+quit;
+$ISQL -i con015.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE con015* 

@@ -1,0 +1,23 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Database:  "/usr/gds.so-vector1/tester/vector/test.gdb"
+A                               INTEGER Nullable 
+B                               INTEGER Not Null 
+CONSTRAINT INTEG_2:
+  Primary key (B)
+B                               INTEGER Nullable 
+C                               INTEGER Nullable 
+CONSTRAINT INTEG_3:
+  Foreign key (B)    References T1 (B)
+
+           A            B 
+============ ============ 
+
+           1            2 
+
+
+           B            C 
+============ ============ 
+
+           2            3 
+

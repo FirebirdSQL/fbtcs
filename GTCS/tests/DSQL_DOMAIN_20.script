@@ -1,0 +1,69 @@
+
+/*******************************************************************************
+ Test Name:         dsql_domain_20
+ Test Series:       dsql_domains
+ Date:              20-Oct-1993
+ Related bugs:      bug_xxxx  -  have to exit db for changes made to domains 
+                                 to affect data being entered into tables.
+ Comments:          This script will test using the alter domain statement on
+                    domains that are already in use in table definitions.
+/*******************************************************************************
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_20a.sql
+create domain dom20a as smallint 
+ default 30;
+commit;
+show domain dom20a;
+create domain dom20b as integer
+ default 500;
+commit;
+show domain dom20b;
+create domain dom20c as date
+ default '01-27-92';
+commit;
+show domain dom20c;
+create domain dom20d as char(20)
+ default 'DEFAULT';
+commit;
+show domain dom20d;
+create domain dom20e as varchar(25)
+ default 'VARYING DEFAULT';
+commit;
+show domain dom20e;
+create domain dom20f as decimal(6,2)
+ default 4.2;
+commit;
+show domain dom20f;
+create domain dom20g as float
+ default 500.1;
+commit;
+show domain dom20g;
+create domain dom20h as double precision
+ default 1000;
+commit;
+show domain dom20h;
+create table tab20a
+ (fld1 dom20a, fld2 dom20b, fld3 dom20c, fld4 dom20d,
+  fld5 dom20e, fld6 dom20f, fld7 dom20g, fld8 dom20h);
+commit;
+show table tab20a;
+insert into tab20a (fld8) values (5000);
+commit;
+alter domain dom20a
+ drop default;
+commit;
+show domain dom20a;
+commit;
+exit;
+$ CREATE domain_20b.sql
+insert into tab20a (fld8) values (5001);
+commit;
+select * from tab20a;
+rollback;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_20a.sql
+$ isql -m WHERE_GDB:atlas.gdb -i domain_20b.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_20*

@@ -1,0 +1,67 @@
+
+$ CREATE comment.txt
+Name: Sudhanshu Kumar
+This test makes sure that events can be posted through a stored proceudre.
+$CREATE event9.sql
+create database "WHERE_GDB:events.gdb";
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     DOUBLE PRECISION);
+insert into works_on values (1,1,20);
+commit;
+
+set term go;
+create procedure proc1 (i int) as 
+begin
+    insert into works_on values (4, 4, :i);     
+    post_event 'event1';
+end
+go
+set term ; go
+exit;
+$ISQL -I event9.sql -e -sqldialect 1
+$ CREATE foo.e
+
+DATABASE DB = "WHERE_GDB:events.gdb"
+# include <stdio.h>
+main()
+{
+  EXEC SQL 
+	CONNECT DB;
+  EXEC SQL 
+	SET TRANSACTION;
+  EXEC SQL 
+	EVENT INIT xyz DB ("event1");
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+
+  EXEC SQL 
+	EVENT WAIT xyz;
+  EXEC SQL 
+	COMMIT WORK;
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+  else
+        printf ("\nfoo done, event (event1) was posted.\n");
+
+ EXEC SQL
+	DISCONNECT DB;
+
+ return 0;
+}
+$ GPRE  -n -m foo.e
+$ CC FLAG_CC foo.c
+$ LINK FLAG_LINK foo 
+$ RUN_BG foo > foo.tt1 &
+$ SLEEP  5
+$ ISQL -m WHERE_GDB:events.gdb
+execute procedure proc1 5;
+commit;
+select * from works_on;
+exit;
+$ SLEEP  5
+$ TYPE foo.tt1
+$ DELETE foo* comment.txt event9.sql 
+$ DROP WHERE_GDB:events.gdb

@@ -1,0 +1,19 @@
+Test:
+ DELETE FROM CUSTOMERS WHERE CUSTOMER CONTAINING ' 
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 0
+
+   COUNT
+===========
+
+          0
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+       COUNT 
+============ 
+
+           0 
+

@@ -1,0 +1,7 @@
+Running ER19, dsql finish on invalid DB.
+RC=335544344
+ERROR: Unsuccessful execution caused by a system error that precludes
+successful execution of subsequent statements
+BUG: dsql finish on invalid DB.
+BUG: dsql finish on Null DB.
+Finished ER19

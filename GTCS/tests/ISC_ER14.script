@@ -1,0 +1,59 @@
+
+$ CREATE er14.c
+/*
+ *	isc_array_get_slice
+ *
+ *	Pass an invalid database handle.
+ * 
+ *  Test name: er14.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+
+	short	sdl_length;
+	long	len;
+	int		cnt[4];
+	char	sdl_buf[100];
+	ISC_QUAD	array_id;
+	ISC_ARRAY_DESC  desc;
+	short	length,dim;
+	short   kludge = SQL_SHORT;
+
+	LogPrintf("Running ER14, array get slice on invalid DB.\n");
+	LogPrintf("to isc_array_get_slice\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	length=4;
+	dim=1;
+	isc_array_set_desc(status,"PROF_DEPT_BUDGET","QUART_HEAD_COUNT",
+		&kludge,&length,&dim,&desc); 
+
+	if ((rc=isc_array_get_slice(status, &DB, &trans,
+			&array_id, &desc, cnt, &len)) ==0)
+		LogPrintf("BUG: array get slice on invalid DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	if ((rc=isc_array_get_slice(status, &DB, &trans,
+			&array_id, &desc, cnt, &len)) ==0)
+		LogPrintf("BUG: array get slice on Null DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER14\n");
+}
+$ CC FLAG_CC er14.c
+$ LINK FLAG_LINK er14 
+$ RUN er14
+$ DELETE er14*

@@ -1,0 +1,24 @@
+Test:
+ select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row from (st1 t inner join st2 x on t.s1 = x.s1 and t.s2 = x.s2)
+--------------------------------------------------------------------------------
+         1         101        1001  st1-1                1         101  st2-1     
+         2         102        1002  st1-2                2         102  st2-2     
+
+
+* Total Records Listed >>> 2
+
+                      TABLE                TABLE
+  S1     S2     S3     ROW    S1     S2     ROW
+====== ====== ====== ====== ====== ====== ======
+
+     1    101   1001 st1-1       1    101 st2-1 
+     2    102   1002 st1-2       2    102 st2-2 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+     S1      S2      S3 TABLE_ROW      S1      S2 TABLE_ROW 
+======= ======= ======= ========= ======= ======= ========= 
+
+      1     101    1001 st1-1           1     101 st2-1     
+      2     102    1002 st1-2           2     102 st2-2     
+

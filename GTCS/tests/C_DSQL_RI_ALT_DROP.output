@@ -1,0 +1,56 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+BU1032,The Busy Executive's Database Guide,
+BU1033,Cooking with Computers: Surreptitious Balance Sheets,John       
+BU2075,You Can Combat Computer Stress!,Joe        
+,The Gourmet Microwave,John       
+Number expected: 4, number found: 4.
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTH_ID_NOT_NULL               ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_ID_KEY                    ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+BOOK_AUTH_ID                   ,BOOKS                          ,FOREIGN KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_ID_KEY                    ,AUTHORS                        ,AUTHOR_ID                      
+BOOK_AUTH_ID                   ,BOOKS                          ,BOOK_AUTH_ID                   
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+BOOK_AUTH_ID                   ,AUTH_ID_KEY                    ,FULL   ,RESTRICT   ,RESTRICT   
+alter_drop_key expected SQLCODE = -607. Got SQLCODE = -607
+alter_drop_not_null expected SQLCODE = -607, got SQLCODE = -607
+alter_drop_references got SQLCODE = 0
+BU1032,The Busy Executive's Database Guide,
+BU1033,Cooking with Computers: Surreptitious Balance Sheets,John       
+BU2075,You Can Combat Computer Stress!,Joe        
+,The Gourmet Microwave,John       
+BU1032,The Busy Executive's Database Guide,
+BU1033,Cooking with Computers: Surreptitious Balance Sheets,John       
+BU2075,You Can Combat Computer Stress!,Joe        
+,The Gourmet Microwave,John       
+BU3000,The Gourmet Microwave,Fred       
+Number expected: 9, number found: 9.
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTH_ID_NOT_NULL               ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_ID_KEY                    ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_ID_KEY                    ,AUTHORS                        ,AUTHOR_ID                      
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------

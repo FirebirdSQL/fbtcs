@@ -1,0 +1,37 @@
+
+/*
+**  Name:		cf_isql_11
+**  Series:		cf_isql
+**  Meta-Series:
+**  Dependencies:	None
+**  Description:	This test is a level two test case for computed-fields.
+**			
+**			This test checks for defining computed-field using columns
+**			that doesn't exist or not defined before its use.
+**
+**  Expected result:	
+**			
+**  Author:		Ravil A. Desai
+**  Change history:
+**
+*/
+
+$ CREATE cf_test.sql
+create database "WHERE_GDB:cf.gdb";
+
+/*-----------------------------------------*/
+/* Computed field using non-existing field */
+/*-----------------------------------------*/
+create table t0 (a integer, af computed by (b));
+
+/*--------------------------------------------*/
+/* Computed field using not yet defined field */
+/*--------------------------------------------*/
+create table t1 (af computed by (a), a integer);
+
+show tables;
+drop database;
+exit;
+
+$ ISQL -input cf_test.sql
+$ DELETE cf_test.sql

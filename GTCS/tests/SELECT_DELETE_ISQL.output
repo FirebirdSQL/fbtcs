@@ -1,0 +1,58 @@
+SQL> select * from proc;
+
+X      
+====== 
+
+S1     
+S1     
+S2     
+S2     
+S4     
+S4     
+
+SQL> select * from s;
+
+SNO    SNAME                      STATUS CITY            
+====== ==================== ============ =============== 
+
+S3     Blake                          30 Paris           
+S5     Adams                          30 Athens          
+
+SQL> rollback;
+SQL> select * from proc1;
+
+X      
+====== 
+
+S1     
+S1     
+S2     
+S2     
+S4     
+S4     
+
+SQL> select * from s;
+
+SNO    SNAME                      STATUS CITY            
+====== ==================== ============ =============== 
+
+S1     Smith                          20 London          
+S2     Jones                          10 Paris           
+S3     Blake                          30 Paris           
+S5     Adams                          30 Athens          
+
+SQL> rollback;
+SQL> select * from proc2;
+
+X      
+====== 
+
+S1     
+S1     
+S2     
+S2     
+S4     
+S4     
+
+SQL> rollback;
+SQL> exit;

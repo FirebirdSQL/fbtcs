@@ -1,0 +1,15 @@
+Test:
+ INSERT CURSOR <blob-cursor> VALUES (:BUFFER:BUFFERLEN) - Buffer[0]=0
+--------------------------------------------------------------------------------
+
+             TEST                ROW
+             NAME                ID
+============================== ======
+
+blob015                            11
+
+
+blob015                            12
+
+
+

@@ -1,0 +1,79 @@
+
+
+$GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL -sqldialect 3 WHERE_GDB:sp1.gdb
+set term go;
+create procedure cast1(a date) RETURNS (b smallint) as
+begin
+    b = a/2;
+    SUSPEND;
+end
+go
+create procedure cast2(a date) RETURNS (b integer) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast3(a date) RETURNS (b date) as
+begin
+    b = a ;
+    SUSPEND;
+end
+go
+create procedure cast4(a date) RETURNS (b double precision) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast5(a date) RETURNS (b decimal(5,2)) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast6(a date) RETURNS (b float) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast7(a date) RETURNS (b numeric(5,2)) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast8(a date) RETURNS (b blob) as begin
+   b = a;
+   SUSPEND;
+ end
+go
+create procedure cast9(a date) RETURNS (b char(10)) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast10(a date) RETURNS (b varchar(10)) as
+ begin
+   b = a;
+   SUSPEND;
+ end
+go
+
+commit
+go
+set term ; go
+execute procedure cast1 '29-Mar-78';
+execute procedure cast2 '29-Mar-78';
+execute procedure cast3 '29-Mar-78';
+execute procedure cast4 '29-Mar-78';
+execute procedure cast5 '29-Mar-78';
+execute procedure cast6 '29-Mar-78';
+execute procedure cast7 '29-Mar-78';
+execute procedure cast9 '29-Mar-78';
+execute procedure cast10 '29-Mar-78';
+exit;
+$ DROP WHERE_GDB:sp1.gdb

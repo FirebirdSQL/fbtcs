@@ -1,0 +1,19 @@
+Test:
+ SELECT JOB FROM EMPLOYEES WHERE JOB STARTING 'mg' ORDER BY JOB
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 0
+
+   COUNT
+===========
+
+          0
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+       COUNT 
+============ 
+
+           0 
+

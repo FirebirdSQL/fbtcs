@@ -1,0 +1,56 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+----Views after initial table setup:
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTH_ID_NOT_NULL               ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_ID_KEY                    ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+BOOK_AUTH_ID                   ,BOOKS                          ,FOREIGN KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_ID_KEY                    ,AUTHORS                        ,AUTHOR_ID                      
+BOOK_AUTH_ID                   ,BOOKS                          ,BOOK_AUTH_ID                   
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+BOOK_AUTH_ID                   ,AUTH_ID_KEY                    ,FULL   ,RESTRICT   ,RESTRICT   
+drop table expected SQLCODE = -607 Got SQLCODE = -607
+alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = 0
+----Views after referring field is dropped:
+
+
+TABLE_CONSTRAINTS:
+------------------
+AUTH_ID_NOT_NULL               ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_ID_KEY                    ,AUTHORS                        ,PRIMARY KEY,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_ID_KEY                    ,AUTHORS                        ,AUTHOR_ID                      
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------
+drop table expected SQLCODE = 0. Got SQLCODE = 0
+----Views after author table is dropped:
+
+
+TABLE_CONSTRAINTS:
+------------------
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------

@@ -1,0 +1,14 @@
+Use CONNECT or CREATE DATABASE to specify a database
+
+BLOCK_IN                                           
+================================================== 
+
+<null>                                             
+Error handled in block A.                          
+
+
+BLOCK_NO     CHECK_PT 
+======== ============ 
+
+A                   1 
+

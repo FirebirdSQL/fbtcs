@@ -1,0 +1,80 @@
+
+$ CREATE er38.c
+/*
+ *	isc_array_put_slice
+ *
+ *	Pass an invalid transaction handle.
+ * 
+ *  Test name: er38.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+
+int main()
+{
+	extern  char empdb[128];
+
+	isc_db_handle	DB = NULL, DB2 = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	ISC_ARRAY_DESC	desc;
+	long	len;
+	int		cnt[4];
+	ISC_QUAD	array_id;
+	short	length,dim;
+	short	kludge = SQL_SHORT;
+
+	LogPrintf("Running ER38, invalid transaction handle\n");
+	LogPrintf("to isc_array_put_slice\n");
+
+	fill_db_parameter_buffer();
+
+	if (isc_attach_database(status, 0, empdb, &DB, 0, 0L))
+		{ERREXIT(status, rc, err_buf)};
+	isc_print_status(status);
+
+	printf ("1\n");
+
+	if ((rc=isc_start_transaction(status, &trans, 1, &DB2, 0, NULL))==0)
+		LogPrintf("BUG: Bad DB to start trans.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+	printf ("2\n");
+
+        length=4;
+        dim=1;
+/*
+        isc_array_set_desc(status,"PROF_DEPT_BUDGET","QUART_HEAD_COUNT","SQL_SHORT",&length,&dim,&desc);
+*/
+        isc_array_set_desc(status,"PROF_DEPT_BUDGET","QUART_HEAD_COUNT",&kludge,&length,&dim,&desc);
+
+
+	if ((rc=isc_array_put_slice(status, &DB, &trans,&array_id, &desc,
+			 cnt, &len))==0)
+		LogPrintf("BUG: Bad tr handle to array put slice.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+	printf ("3\n");
+
+	trans = NULL;
+	if ((rc=isc_array_put_slice(status, &DB, &trans,&array_id, &desc,
+			 cnt, &len))==0)
+		LogPrintf("BUG: Bad tr handle to array put slice.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+	printf ("4\n");
+
+	if ((rc=isc_detach_database(status, &DB)) !=0)
+		{ERREXIT(status, rc, err_buf)};
+	printf ("5\n");
+
+	LogPrintf("Finished ER38\n");
+}
+$ CC FLAG_CC er38.c
+$ CC FLAG_CC globals.c
+$ LINK FLAG_LINK er38 globals 
+$ RUN er38
+$ DELETE er38*

@@ -1,0 +1,7 @@
+PATH=".;D:/mks/mksnt;D:/Borland/Delphi5/Projects/Bpl;D:/Borland/Delphi5/bin;D:/jdk1.2.2/bin;c:/winnt/system32;$PATH"
+#PATH=".;D:/mks/mksnt;D:/Borland/Delphi5/Projects/Bpl;D:/Borland/Delphi5/bin;D:/jdk1.2.2/bin;c:/winnt/system32;$PATH"
+LIB=".;d:/interbase/sdk/lib;d:/borland/cbuilder4/lib;$LIB"
+TMP=d:/mks/tmp
+CLASSPATH=".;d:/jdk1.2.2/jre/lib/rt.jar;d:/interclient/interclient.jar"
+export CLASSPATH
+export PATH

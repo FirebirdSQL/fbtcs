@@ -1,0 +1,137 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sta013.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:
+
+ Description:           char-field in a view
+
+                        SELECT DEPTNO
+                        FROM DEPT_BUDGET
+                        WHERE DEPTNO STARTING '12';
+
+ Tables:                DEPT_BUDGET
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON DEPARTMENTS.DEPTNO     DeptNo;
+
+
+char Test[]="SELECT DEPTNO \
+FROM DEPT_BUDGET \
+WHERE DEPTNO STARTING '12'";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT DEPTNO
+                FROM DEPT_BUDGET
+                WHERE DEPTNO STARTING '12';
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :DeptNo;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%s\n",DeptNo);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :DeptNo;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e sta013.e
+$ CC FLAG_CC sta013.c
+$ LINK FLAG_LINK sta013 
+$ RUN sta013
+$ CREATE sta013.qli
+
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+SELECT DEPTNO FROM DEPT_BUDGET WHERE DEPTNO STARTING '12';
+for dept_budget with deptno starting with '12' print deptno;
+select count(*) from dept_budget where deptno starting with '12';
+finish;
+quit;
+$ QLI -n -a sta013.qli
+$ CREATE sta013.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT DEPTNO FROM DEPT_BUDGET WHERE DEPTNO STARTING '12';
+select count(*) from dept_budget where deptno starting with '12';
+quit;
+$ISQL -i sta013.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sta013* 

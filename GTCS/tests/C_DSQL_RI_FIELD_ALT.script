@@ -1,0 +1,500 @@
+
+HISTORY:
+
+$ CREATE comment
+8/25/97:  failed w/compile error. logging new bug since syntax
+          shows we should be able to do the DDL in this test.
+          see comments in C_DSQL_RI_ALT_DROP. clare.
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ RUN ri_views WHERE_GDB:atlas.gdb
+$ CREATE fieldalt.e
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+/* Author: Allen Zhao
+   Date:   Oct-11-93
+   Title:  fieldalt.e
+
+   Dependencies: Need to run C_DSQL_RI_INIT first.
+
+   Purpose: RI test suite 
+   
+   Tests are:
+   	Table Constraints:
+   		unique		tab_uniq.e
+   		primary key	tab_prim.e
+   		referential	tab_ref.e     
+   		check const	tab_check.e
+   	
+   	Column Constraints:
+   		unique		col_uniq.e
+   		primary key	col_prim.e
+   		referential	col_ref.e
+   		check const	col_check.e
+   		not null    col_nnull.e
+
+	DDL Modify Operations:
+		alter table add constraint	alt_add.e	
+		alter table drop constraint	alt_drop.e   
+		drop table			drop_tab.e
+		alter field			fieldalt.e  <------ this test
+		drop field			field_drop.e 
+		alter index			index_alt.e
+		drop index			index_drop.e
+		delete trigger			trigger_del.e
+		modify trigger			trigger_mod.e
+
+
+Overview: this test makes sure that new constraints are added correctly. 
+It will:
+
+		CREATE AUTHOURS, BOOKS  with BOOKS referring to AUTHORS 
+		[Verify constraints on AUTHORS, BOOKS]
+		INSERT records into AUTHORS, some nulls, duplicates   
+		SELECT FROM AUTHORS            		[verify expected records]
+		
+		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL  	[should fail]
+		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY  	[should fail]
+		[Verify constraints on AUTHORS]
+
+		ALTER TABLE BOOKS DROP BOOK_AUTH_ID			[should succeed]
+		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL  	[should fail]
+		[Verify constraints on AUTHORS, BOOKS]
+
+		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY  	[should succeed]
+		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL  	[should succeed]
+		[Verify constraints on AUTHORS]
+		
+		INSERT records into AUTHORS, some nulls, duplicates    [duplicates kept]
+		SELECT FROM AUTHORS            		[verify expected records]
+
+
+*/
+
+/* Include the SQL Communications Area. */
+EXEC SQL
+	INCLUDE SQLCA;
+
+/* Set up to catch SQL errors. Note: this will require that 
+each routine containing executeable SQL commands has
+an error handling section labeled 'err'.*/
+EXEC SQL
+	WHENEVER SQLERROR GO TO err;
+	
+/* Forward declarations */
+void die_on_error();
+int setup();
+extern print_views(); 
+int alter_drop_key_constr(); 
+int alter_drop_nnull_constr(); 
+int alter_drop_referring_field();
+int insert_authors();
+int test_it();
+int verify();
+int strupper();
+int istable();
+
+
+int verbose;
+enum flags {errs, works};
+
+main(argc, argv)
+int argc;
+char *argv[];
+{
+
+        /*--- check if verbose is requested ------ */
+        verbose = FALSE;
+        if (--argc > 0){
+                if (*argv[1] == 'v' || *argv[1] == 'V')
+                        verbose = TRUE;
+        }
+	if (setup()) 		/* create table */
+		exit (1);
+
+	if (print_views()) {
+		printf("1st print view\n");
+		exit (1);
+	}
+
+	if (test_it())
+		exit (1);
+
+	exit (0);
+}
+
+
+
+
+int test_it() 
+{
+	if (!insert_authors()) {
+		printf("Exit after error in insert_authors\n");
+		exit (1);
+	}
+
+	if (verify(3))            	/* should keep 3 out 5 */
+		exit (1);
+
+	if (!alter_drop_nnull_constr(errs)) {  /* drop not_null before dropping key; should fail*/
+		printf("exit from !alter_drop_nnull\n");
+		exit (1);
+	}
+
+	if (!alter_drop_key_constr(errs)) {   /* field referenced; should fail */
+		printf("exit from !alter_drop_key\n");
+		exit (1);
+	}
+
+	if (print_views()) {            /* ! used after error occured */
+		printf("2nd print view \n");
+		exit (1);
+	}
+
+	if (alter_drop_referring_field()) {
+		printf("exit from alter_drop_refer\n");
+		exit (1);
+	}
+
+	if (!alter_drop_nnull_constr(errs)) { /* drop not null before key; should fail */
+		printf("exit from !alter_drop_key\n");
+		exit (1);
+	}
+
+	if (print_views()) {           /* ! used after error occured */
+		printf("3rd print view \n");
+		exit (1);
+	}
+
+	if (alter_drop_key_constr(works))  {  /* should succeed */
+		printf("exit from alter_drop_key\n");
+		exit (1);
+	}
+
+	if (alter_drop_nnull_constr(works)) { /* drop not null after key; should succeed */
+		printf("exit from alter_drop_nnull\n");
+		exit (1);
+	}
+
+	if (print_views())  {          
+		printf("4th print view \n");
+		exit (1);
+	}
+
+	if (insert_authors()) 	/* insert the same records again */
+				/* should keep duplicates, reject nulls */
+		exit (1);
+
+	if (verify(7))	
+		exit (1);
+	return 0;
+}
+
+
+int setup() {
+
+	if (verbose)
+		printf("entered setup\n");
+
+	if (istable("books")) {
+		if (verbose) 
+			printf("books found... will be dropped\n");
+		
+		EXEC SQL
+			DROP TABLE BOOKS;
+	}
+
+	if (istable("authors")) {
+		if (verbose) 
+			printf("authors found... will be dropped\n");
+		
+		EXEC SQL
+			DROP TABLE AUTHORS;
+	}
+	if (verbose)
+		printf("about to create authors...\n");
+
+	EXEC SQL
+		DECLARE AUTHORS TABLE
+			(AUTHOR_ID CHAR(11), AUTHOR_NAME CHAR(12))
+	
+	EXEC SQL
+		CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) 
+			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL 
+				CONSTRAINT AUTH_ID_KEY PRIMARY KEY,
+			AUTHOR_NAME CHAR(12))
+
+	if (verbose)
+		printf("authors created\n");
+
+	if (verbose)
+		printf("about to create books...\n");
+
+	EXEC SQL
+		DECLARE BOOKS TABLE
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+			 BOOK_AUTH_ID CHAR(11), PRICE FLOAT);
+
+	EXEC SQL
+		CREATE TABLE BOOKS
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+			 BOOK_AUTH_ID CHAR(11)
+			 CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS, PRICE FLOAT)
+
+	if (verbose)
+		printf("books created successfully.\n");
+
+	return 0;
+err:		die_on_error();
+}
+
+
+int alter_drop_key_constr(flag)
+int flag;
+{
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL   /* should fail if key referenced; else should succeed */
+	   	ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY	 
+
+	if (SQLCODE) 
+		got_err = TRUE;
+
+	if (flag == works)
+		printf ("alter_drop_key_constr expected SQLCODE = 0. "); 
+	else
+		printf ("alter_drop_key_constr expected SQLCODE = -607. "); 
+
+	printf ("Got SQLCODE = %d\n", SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+}
+
+
+int alter_drop_nnull_constr(flag)
+int flag;
+{
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL   /* should fail if key constraint exits; else succeed */
+	   	ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL	 
+
+	if (SQLCODE) 
+		got_err = TRUE;
+
+	if (flag == works)
+		printf ("alter_drop_nnull_constr expected SQLCODE = 0. "); 
+	else
+		printf ("alter_drop_nnull_constr expected SQLCODE = -607. "); 
+
+	printf ("Got SQLCODE = %d\n", SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+}
+
+
+
+int alter_drop_referring_field() {
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+		
+	EXEC SQL   /* should succeed */
+	   	ALTER TABLE BOOKS DROP BOOK_AUTH_ID 
+
+	if (SQLCODE) 
+		got_err = TRUE;
+
+	printf ("alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = %d\n", 
+			SQLCODE);
+
+	EXEC SQL
+		WHENEVER SQLERROR GO TO err;
+
+	return (got_err);
+err:		die_on_error();
+}
+
+
+int verify(num_authors) 
+int num_authors;
+{
+	if (verbose)
+		printf("Entering verify...\n");
+
+	if (!(print_authors(num_authors)))
+		exit(1);
+
+	return (0);
+
+err:		die_on_error();
+}
+
+
+int insert_authors() {
+	int got_err = FALSE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+
+	EXEC SQL
+		INSERT INTO AUTHORS (AUTHOR_ID, AUTHOR_NAME)
+			VALUES ('Joe','Joe Smith');
+
+	EXEC SQL
+		INSERT INTO AUTHORS (AUTHOR_ID, AUTHOR_NAME)
+			VALUES ('John','John Doe');
+
+	EXEC SQL
+		INSERT INTO AUTHORS (AUTHOR_NAME, AUTHOR_ID)
+			VALUES ('Jack Jackson', 'Jack');      /* order switched */
+	EXEC SQL
+		INSERT INTO AUTHORS (AUTHOR_ID, AUTHOR_NAME)
+			VALUES (NULL, 'Joe Smith');
+
+	EXEC SQL
+		INSERT INTO AUTHORS (AUTHOR_ID, AUTHOR_NAME)
+			VALUES ('John','John Doe');
+
+	if (SQLCODE)
+		got_err = TRUE;
+
+	EXEC SQL
+		WHENEVER SQLERROR CONTINUE;
+
+	EXEC SQL
+		COMMIT WORK;
+	
+	if (verbose)
+		printf("Inserted 3 records in authors.\n");
+
+	return (got_err);
+
+
+err:		die_on_error();
+
+}
+
+
+int print_authors(expected) 
+int expected;
+{
+	char author_id[12];
+	char author_name[13];
+	int found = 0;
+
+	EXEC SQL
+		DECLARE AUTHOR_CURSOR CURSOR FOR
+		SELECT author_id, author_name FROM AUTHORS;
+
+	EXEC SQL
+		OPEN AUTHOR_CURSOR;
+
+	if (verbose)
+		printf("Author cursor opened\n");
+
+	EXEC SQL
+		FETCH AUTHOR_CURSOR INTO :author_id, :author_name;
+
+	if (verbose)
+		printf("First time Author cursor fetched\n");
+
+	while (!SQLCODE) {
+		found++;
+		printf("%s,%s\n", author_id, author_name);
+		
+		EXEC SQL
+			FETCH AUTHOR_CURSOR INTO :author_id, :author_name;
+	if (verbose)
+		printf("More Author cursor fetched\n");
+	}
+
+	printf("Number found: %d Number expected: %d\n", found, expected);
+	
+	EXEC SQL
+		CLOSE AUTHOR_CURSOR;
+
+	EXEC SQL
+		COMMIT WORK;
+
+    return (found == expected);
+err:		die_on_error();
+}
+
+
+
+int strupper(targ, source) 
+char * targ, * source; 
+{
+	int ii;
+	
+	for (ii=0; *targ++ = toupper(*source++); ii++);
+
+	return ii;
+}
+
+int istable(tname) 
+char * tname; 
+{
+
+	int exists;
+	char *utname;
+
+	if (!tname)
+		return 0;
+		
+	utname = (char *) malloc(strlen(tname)+1);
+
+	strupper(utname, tname);
+	
+	EXEC SQL
+		SELECT COUNT (*)
+		INTO :exists
+		FROM rdb$relations
+		WHERE rdb$relation_name = :utname;
+
+	EXEC SQL
+		ROLLBACK WORK;
+			
+	free(utname);
+
+	return exists;
+err:		
+	free(utname);
+	die_on_error();
+}
+
+void die_on_error()
+
+/* Print out error message and die*/
+{
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status(gds__status);
+	EXEC SQL
+		ROLLBACK WORK;
+
+err:
+	exit (1);
+}
+
+$ GPRE fieldalt.e -d WHERE_GDB:atlas.gdb
+$ CC FLAG_CC fieldalt.c
+$ LINK FLAG_LINK fieldalt pr_views 
+$ RUN fieldalt 
+$DROP WHERE_GDB:atlas.gdb
+$ DELETE fieldalt*

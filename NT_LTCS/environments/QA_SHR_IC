@@ -1,0 +1,19 @@
+
+::LD ld
+::SECURITY_GDB $SECURITY_GDB
+::LIBRARIES WHERE_FIREBIRD_LIB:gds32_ms.lib
+::LIB_TYPE sharemt
+::FLAG_CC -c -w -DWIN_NT %s -I WHERE_FIREBIRD_INCLUDE: -I WHERE_FBTCS_INCLUDE:
+::FLAG_CXX -c -w -DWIN_NT %s -I WHERE_FIREBIRD_INCLUDE: -I WHERE_FBTCS_INCLUDE:
+::FLAG_CC2 %s -I/usr/interbase/include -I. -lgdslib -ldl  
+::FLAG_CC_MACHINE -mt -w -c -I/usr/interbase/include -I. -I/usr/gds/QA_files %s -DOLARIS
+::FLAG_CC_MACHINE2 -mt -w -c -I/usr/interbase/include -I. -I/usr/gds/QA_files %s -SOLARIS
+::FLAG_CC_UDF -O -pic -I/usr/interbase/include -I. -c %s
+::FLAG_UDF_NEW -assert pure-text -o
+::FLAG_UDF_LINK -assert pure-text %s -o %s
+::FLAG_LINK  %s -lmsvcrt -lmingw32 -lkernel32 -lcrtdll WHERE_FIREBIRD_LIB:gds32_ms.lib -o %s.exe
+::FLAG_JAVAC
+::FLAG_JAVA  
+::FLAG_ISQL -user sysdba -password masterkey
+::FLAG_GBAK -user sysdba -password masterkey
+::FLAG_GSEC -user sysdba -password masterkey

@@ -1,0 +1,24 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Test:
+ select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row from ((((st1 a left outer join st2 b on a.s1 = b.s1) left outer join st3 c on b.s1 = c.s1) left outer join st4 d on c.s1 = d.s1) left outer join st5 e on d.s1 = e.s1) order by a.table_row ascending
+--------------------------------------------------------------------------------
+    1  st1-1           1  st2-1           1  st3-1           1  st4-1           1  st5-1     
+    1  st1-1           1  st2-1           1  st3-1           1  st4-1           1  st5-2     
+    2  st1-2           2  st2-2           2  st3-2           2  st4-2           2  st5-3     
+    2  st1-2           2  st2-2           2  st3-2           2  st4-2           2  st5-4     
+   -1  st1-3          -1  st2-3          -1  st3-3          -1  st4-3          -1  st5-5     
+  -11  unique      <null><null><null><null><null><null><null><null>
+
+* Total Records Listed >>> 6
+
+        TABLE         TABLE         TABLE         TABLE         TABLE
+  S1     ROW    S1     ROW    S1     ROW    S1     ROW    S1     ROW
+====== ====== ====== ====== ====== ====== ====== ====== ====== ======
+
+     1 st1-1       1 st2-1       1 st3-1       1 st4-1       1 st5-1 
+     1 st1-1       1 st2-1       1 st3-1       1 st4-1       1 st5-2 
+     2 st1-2       2 st2-2       2 st3-2       2 st4-2       2 st5-3 
+     2 st1-2       2 st2-2       2 st3-2       2 st4-2       2 st5-4 
+    -1 st1-3      -1 st2-3      -1 st3-3      -1 st4-3      -1 st5-5 
+   -11 unique                                                  
+

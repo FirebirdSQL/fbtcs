@@ -1,0 +1,46 @@
+
+$ CREATE er41.c
+/*
+ *	isc_prepare_transaction
+ *
+ *	Pass an invalid transaction handle.
+ * 
+ *  Test name: er41.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+
+int main()
+{
+	isc_db_handle	DB = NULL;
+	isc_tr_handle	trans = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+
+	LogPrintf("Running ER41, invalid transaction handle\n");
+	LogPrintf("to isc_prepare_transaction\n");
+
+	if ((rc=isc_start_transaction(status, &trans, 1, &DB,0, NULL))==0)
+		LogPrintf("BUG: No DB to start trans.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_prepare_transaction(status, &trans)) ==0)
+		LogPrintf("BUG: Bad tr handle to prepare trans.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	trans = NULL;
+	if ((rc=isc_prepare_transaction(status, &trans)) ==0)
+		LogPrintf("BUG: Bad tr handle to prepare trans.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER41\n");
+}
+$ CC FLAG_CC er41.c
+$ LINK FLAG_LINK er41 
+$ RUN er41
+$ DELETE er41*

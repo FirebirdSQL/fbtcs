@@ -1,0 +1,65 @@
+
+/*******************************************************************************
+ Test Name:       dsql_domain_14
+ Series Name:     dsql_domains
+ Date:            18-October-1993
+ Related Bugs:    
+ Comment:         This script will utilize the datatype, default and not null
+                  clauses in the create domain statement. A table is then 
+                  created using the domain definitions and data added to the 
+                  table with missing fields being supplied by the domain 
+                  defaults.
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_14.sql
+create domain dom14a as smallint
+ default 0 not null;
+show domain dom14a;
+create domain dom14b as integer
+ default 500 not null;
+show domain dom14b;
+create domain dom14c as date
+ default '01-27-92' not null;
+show domain dom14c;
+create domain dom14d as char(20)
+ default 'DEFAULT' not null;
+show domain dom14d;
+create domain dom14e as varchar(25)
+ default 'VARYING DEFAULT' not null;
+show domain dom14e;
+create domain dom14f as decimal(6,2)
+ default 4.2 not null;
+show domain dom14f;
+create domain dom14g as float
+ default 500.1 not null;
+show domain dom14g;
+create domain dom14h as double precision
+ default 1000 not null;
+show domain dom14h;
+create table tab14a
+ (fld1 dom14a, fld2 dom14b, fld3 dom14c, fld4 dom14d,
+  fld5 dom14e, fld6 dom14f, fld7 dom14g, fld8 dom14h);
+show table tab14a;
+insert into tab14a (fld1) values (100);
+commit;
+insert into tab14a (fld2) values (200);
+commit;
+insert into tab14a (fld3) values ('12/12/57');
+commit;
+insert into tab14a (fld4) values ('20 characters xxxxxx');
+commit;
+insert into tab14a (fld5) values ('25 varying characters xxx');
+commit;
+insert into tab14a (fld6) values (2500);
+commit;
+insert into tab14a (fld7) values (10000);
+commit;
+insert into tab14a (fld8) values (200000);
+commit;
+select * from tab14a;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_14.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_14.sql

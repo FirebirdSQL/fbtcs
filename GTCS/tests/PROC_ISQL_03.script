@@ -1,0 +1,25 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure proc3  RETURNS (a varchar(5), c integer) as
+begin
+   select  pno, qty from sp where qty > 300 and pno = 'P5'
+     into :a,  :c;
+   SUSPEND;
+end
+go
+set term ; go
+set echo;
+EXECUTE PROCEDURE PROC3; 
+SELECT  * FROM PROC3;
+SELECT MAX(A) FROM PROC3;
+SELECT C FROM PROC3;
+SELECT  * FROM PROC3 ORDER BY A;
+SELECT A, AVG(C) FROM PROC3 GROUP BY A HAVING AVG(C) > 350;
+SELECT A, AVG(C) FROM PROC3 GROUP BY A ;
+SELECT A , C FROM PROC3
+        WHERE C = (SELECT AVG(C) FROM PROC3);
+exit;
+$DROP WHERE_GDB:sp1.gdb
+

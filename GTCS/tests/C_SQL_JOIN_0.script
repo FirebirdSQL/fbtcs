@@ -1,0 +1,722 @@
+
+$ CREATE doc
+history:
+12Oct95:  changed test to gbak into current dir because the .gbk file
+          in WHERE_FILES gets owned by its maker--which was R+D--and
+          the file perms prevent QA from accessing the .gbk file again.
+          For now I am leaving a gbak to WHERE_FILES too because several
+          bugs use it.  If we set umask to 000 before we run this test  
+          the db gets created w/full rw perm.      
+29Apr97:  Linda Wahler created 4.5 version.  4.2 version has two gbak -t
+	  statements right at the end of the test.  4.0 version had only
+	  one.  We were getting an error, no permission to open 
+	  WHERE_GDB:sh_join.gbk, so deleted the gbak -t statement that
+	  created it.
+28-Aug98: added doc file to the 'DELETE' statement. (changed by stsikin)
+$ CREATE sh_join.gdl
+define database "WHERE_GDB:sh_join.gdb"
+	page_size 1024;
+
+/*----- My def. for join tests ----*/
+define field test_name char[30];
+define field c1 char [3];
+define field c10 char [10];
+define field c255 char [255];
+define field table_row char [6];
+
+define field v1 varying [3];
+define field v10 varying [10];
+define field v255 varying [255];
+define field v2000 varying [2000];
+ 
+define field d1 double;
+define field d2 double;
+define field d3 double;
+
+define field l1 long;
+define field l2 long;
+define field l3 long;
+define field lscale long 
+	scale -2 
+	edit_string "$$$,$$$,999.99";
+
+define field s1 short;
+define field s2 short;
+define field s3 short;
+define field sscale short 
+	scale -1
+	edit_string "999";
+
+define field f1 float;
+define field f2 float;
+define field f3 float;
+
+define field dt1 date;
+define field dt2 date;
+define field dt3 date;
+
+
+define field arr char[5](2);
+
+define field blob_field blob segment_length 40 sub_type text;
+
+define relation ct1
+c1		position 0,
+c10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation ct2
+c1		position 0,
+c10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation ct3
+c1		position 0,
+c10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation ct4
+c1		position 0,
+c10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation ct5
+c1		position 0,
+c10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation ct_null
+c1		position 0,
+c10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+
+/*--- var char tables ---*/
+define relation vt1
+v1		position 0,
+v10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation vt2
+v1		position 0,
+v10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation vt3
+v1		position 0,
+v10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation vt4
+v1		position 0,
+v10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation vt5
+v1		position 0,
+v10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+define relation vt_null
+v1		position 0,
+v10		position 1,
+test_name	position 2,
+table_row	position 3;
+
+/*---- Double ----*/
+define relation dt1
+d1		position 0,
+d2		position 1,
+d3		position 2,
+test_name	position 3,
+table_row	position 4;
+
+define relation dt2
+d1		position 0,
+d2		position 1,
+d3		position 2,
+test_name	position 3,
+table_row	position 4;
+/*---- Long ----*/
+define relation lt1
+l1		position 0,
+l2		position 1,
+l3		position 2,
+lscale		position 3,
+test_name	position 4,
+table_row	position 5;
+
+define relation lt2
+l1		position 0,
+l2		position 1,
+l3		position 2,
+lscale		position 3,
+test_name	position 4,
+table_row	position 5;
+/*--- short ----*/
+define relation st1
+s1		position 0,
+s2		position 1,
+s3		position 2,
+sscale		position 3,
+comp_s		computed by (s1 * s2) position 4,
+test_name	position 5,
+table_row	position 6;
+
+define relation st2
+s1		position 0,
+s2		position 1,
+s3		position 2,
+sscale		position 3,
+comp_s		computed by (s1 * s2) position 4,
+test_name	position 5,
+table_row	position 6;
+
+define relation st3
+s1		position 0,
+s2		position 1,
+s3		position 2,
+sscale		position 3,
+comp_s		computed by (s1 * s2) position 4,
+test_name	position 5,
+table_row	position 6;
+
+define relation st4
+s1		position 0,
+s2		position 1,
+s3		position 2,
+sscale		position 3,
+comp_s		computed by (s1 * s2) position 4,
+test_name	position 5,
+table_row	position 6;
+
+define relation st5
+s1		position 0,
+s2		position 1,
+s3		position 2,
+sscale		position 3,
+comp_s		computed by (s1 * s2) position 4,
+test_name	position 5,
+table_row	position 6;
+
+/*---- Float ---*/
+define relation ft1
+f1		position 0,
+f2		position 1,
+f3		position 2,
+f4		computed by (f1 * f2) position 3,
+test_name	position 4,
+table_row	position 5;
+
+define relation ft2
+f1		position 0,
+f2		position 1,
+f3		position 2,
+test_name	position 3,
+table_row	position 4;
+
+/*---- Date ----*/
+define relation dt_table1
+dt1		position 0,
+dt2		position 1,
+dt3		position 2,
+test_name	position 3,
+table_row	position 4;
+
+define relation dt_table2
+dt1		position 0,
+dt2		position 1,
+dt3		position 2,
+test_name	position 3,
+table_row	position 4;
+
+
+define relation mixed1
+c10		position 0,
+v10		position 1,
+d1		position 2,
+f1		position 3,
+s1		position 4,
+l1		position 5,
+comp_s1		computed by (s1 *2) 	position 6 ,
+arr		position 7,
+blob_field	position 8,
+dt1		position 9,
+comp_dt1	position 10 computed by ('today'),
+test_name	position 11,
+table_row	position 12;
+
+define relation mixed2
+c10		position 0,
+v10		position 1,
+d1		position 2,
+f1		position 3,
+s1		position 4,
+l1		position 5,
+comp_s2		computed by (s1 *2) position 6 ,
+arr		position 7,
+blob_field	position 8,
+dt1		position 9,
+comp_date2	position 10 computed by ('today'),
+test_name	position 11,
+table_row	position 12;
+
+/*--- big key ---*/
+define relation bigkey1
+c255		position 0,
+v255		position 1,
+v2000		position 2,
+test_name	position 3,
+table_row	position 4;
+
+$ GDEF sh_join.gdl
+$ CREATE JLoader.e
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_join.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL	WHENEVER SQLERROR GO TO ERR;
+
+void Load_Char();
+void Load_VChar();
+void Load_Short();
+/*
+void Load_Long();
+void Load_Double();
+void Load_Float();
+*/
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+
+{
+	int verbose;
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+
+Load_Char();
+Load_VChar();
+Load_Short();
+/*
+Load_Long();
+Load_Float();
+Load_Double();
+*/
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+void Load_Char()
+{
+
+EXEC SQL    WHENEVER SQLERROR CONTINUE;
+EXEC SQL    WHENEVER SQLERROR GO TO CErr;
+
+/* Table 1 */
+  EXEC SQL
+    INSERT INTO ct1 VALUES ('a-1','c10-1','Loader','ct1-1');
+  EXEC SQL
+    INSERT INTO ct1 VALUES ('a-2','c10-2','Loader','ct1-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO ct1 VALUES (NULL,'c10-3','Loader','ct1-3');
+  EXEC SQL
+    INSERT INTO ct1 VALUES ('a-4',NULL,'Loader','ct1-4');
+  EXEC SQL
+    INSERT INTO ct1 VALUES (NULL,NULL,'Loader','ct1-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO ct1 VALUES ('1','unique-1','Loader','ct1-6');
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO ct2 VALUES ('a-1','c10-1','Loader','ct2-1');
+  EXEC SQL
+    INSERT INTO ct2 VALUES ('a-2','c10-2','Loader','ct2-2');
+
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO ct2 VALUES (NULL,'c10-3','Loader','ct2-3');
+  EXEC SQL
+    INSERT INTO ct2 VALUES ('a-4',NULL,'Loader','ct2-4');
+  EXEC SQL
+    INSERT INTO ct2 VALUES (NULL,NULL,'Loader','ct2-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO ct2 VALUES ('2','unique-2','Loader','ct2-6');
+
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO ct3 VALUES ('a-1','c10-1','Loader','ct3-1');
+  EXEC SQL
+    INSERT INTO ct3 VALUES ('a-2','c10-2','Loader','ct3-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO ct3 VALUES (NULL,'c10-3','Loader','ct3-3');
+  EXEC SQL
+    INSERT INTO ct3 VALUES ('a-4',NULL,'Loader','ct3-4');
+  EXEC SQL
+    INSERT INTO ct3 VALUES (NULL,NULL,'Loader','ct3-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO ct3 VALUES ('3','unique-3','Loader','ct3-6');
+
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO ct4 VALUES ('a-1','c10-1','Loader','ct4-1');
+  EXEC SQL
+    INSERT INTO ct4 VALUES ('a-2','c10-2','Loader','ct4-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO ct4 VALUES (NULL,'c10-3','Loader','ct4-3');
+  EXEC SQL
+    INSERT INTO ct4 VALUES ('a-4',NULL,'Loader','ct4-4');
+  EXEC SQL
+    INSERT INTO ct4 VALUES (NULL,NULL,'Loader','ct4-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO ct4 VALUES ('4','unique-4','Loader','ct4-6');
+
+
+/*----------------------------------------------------------------------*/
+/*--- One to many relation-ship table ----*/
+  EXEC SQL
+    INSERT INTO ct5 VALUES ('a-1','c10-1','Loader','ct5-1');
+  EXEC SQL
+    INSERT INTO ct5 VALUES ('a-1','c10-1','Loader','ct5-2');
+
+  EXEC SQL
+    INSERT INTO ct5 VALUES ('a-2','c10-2','Loader','ct5-3');
+  EXEC SQL
+    INSERT INTO ct5 VALUES ('a-2','c10-2','Loader','ct5-4');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO ct5 VALUES (NULL,'c10-3','Loader','ct5-5');
+  EXEC SQL
+    INSERT INTO ct5 VALUES ('a-4',NULL,'Loader','ct5-6');
+  EXEC SQL
+    INSERT INTO ct5 VALUES (NULL,NULL,'Loader','ct5-7');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO ct5 VALUES ('5','unique-5','Loader','ct5-8');
+
+EXEC SQL
+    COMMIT;
+
+CErr:
+    if(SQLCODE <0){
+
+        printf("Module Load_Char: Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+    }
+}
+/**********************************************************
+ * Load Varying Char table vt1-5                          *
+ **********************************************************/
+void Load_VChar()
+{
+
+EXEC SQL    WHENEVER SQLERROR CONTINUE;
+EXEC SQL    WHENEVER SQLERROR GO TO VErr;
+
+/* Table 1 */
+  EXEC SQL
+    INSERT INTO vt1 VALUES ('v-1','c10-1','Loader','vt1-1');
+  EXEC SQL
+    INSERT INTO vt1 VALUES ('v-2','v10-2','Loader','vt1-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO vt1 VALUES (NULL,'v10-3','Loader','vt1-3');
+  EXEC SQL
+    INSERT INTO vt1 VALUES ('v-4',NULL,'Loader','vt1-4');
+  EXEC SQL
+    INSERT INTO vt1 VALUES (NULL,NULL,'Loader','vt1-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO vt1 VALUES ('1','unique-1','Loader','vt1-6');
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO vt2 VALUES ('v-1','v10-1','Loader','vt2-1');
+  EXEC SQL
+    INSERT INTO vt2 VALUES ('v-2','v10-2','Loader','vt2-2');
+
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO vt2 VALUES (NULL,'v10-3','Loader','vt2-3');
+  EXEC SQL
+    INSERT INTO vt2 VALUES ('v-4',NULL,'Loader','vt2-4');
+  EXEC SQL
+    INSERT INTO vt2 VALUES (NULL,NULL,'Loader','vt2-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO vt2 VALUES ('2','unique-2','Loader','vt2-6');
+
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO vt3 VALUES ('v-1','v10-1','Loader','vt3-1');
+  EXEC SQL
+    INSERT INTO vt3 VALUES ('v-2','v10-2','Loader','vt3-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO vt3 VALUES (NULL,'v10-3','Loader','vt3-3');
+  EXEC SQL
+    INSERT INTO vt3 VALUES ('v-4',NULL,'Loader','vt3-4');
+  EXEC SQL
+    INSERT INTO vt3 VALUES (NULL,NULL,'Loader','vt3-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO vt3 VALUES ('3','unique-3','Loader','vt3-6');
+
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO vt4 VALUES ('a','v10-1','Loader','vt4-1');
+  EXEC SQL
+    INSERT INTO vt4 VALUES ('a','v10-2','Loader','vt4-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO vt4 VALUES (NULL,'v10-3','Loader','vt4-3');
+  EXEC SQL
+    INSERT INTO vt4 VALUES ('v-4',NULL,'Loader','vt4-4');
+  EXEC SQL
+    INSERT INTO vt4 VALUES (NULL,NULL,'Loader','vt4-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO vt4 VALUES ('4','unique-4','Loader','vt4-6');
+
+
+/*----------------------------------------------------------------------*/
+/*--- One to many relation-ship table ----*/
+  EXEC SQL
+    INSERT INTO vt5 VALUES ('v-1','v10-1','Loader','vt5-1');
+  EXEC SQL
+    INSERT INTO vt5 VALUES ('v-1','v10-1','Loader','vt5-2');
+
+  EXEC SQL
+    INSERT INTO vt5 VALUES ('v-2','v10-2','Loader','vt5-3');
+  EXEC SQL
+    INSERT INTO vt5 VALUES ('v-2','v10-2','Loader','vt5-4');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO vt5 VALUES (NULL,'v10-3','Loader','vt5-5');
+  EXEC SQL
+    INSERT INTO vt5 VALUES ('v-4',NULL,'Loader','vt5-6');
+  EXEC SQL
+    INSERT INTO vt5 VALUES (NULL,NULL,'Loader','vt5-7');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO vt5 VALUES ('5','unique-5','Loader','vt5-8');
+
+EXEC SQL
+    COMMIT;
+
+VErr:
+    if(SQLCODE <0){
+
+        printf("Module Load_VChar: Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+    }
+}
+
+/**********************************************************
+ * Load st1-5 tables with numeric data of type short      *
+ **********************************************************/
+void Load_Short()
+{
+
+EXEC SQL    WHENEVER SQLERROR CONTINUE;
+EXEC SQL    WHENEVER SQLERROR GO TO SErr;
+
+/* Table 1 */
+  EXEC SQL
+    INSERT INTO st1 (s1,s2,s3,sscale,test_name,table_row) VALUES (1,101,1001,001,'Loader','st1-1');
+  EXEC SQL
+    INSERT INTO st1 (s1,s2,s3,sscale,test_name,table_row) VALUES (2,102,1002,002,'Loader','st1-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO st1 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,103,1003,003,'Loader','st1-3');
+  EXEC SQL
+    INSERT INTO st1 (s1,s2,s3,sscale,test_name,table_row) VALUES (4,NULL,1004,004,'Loader','st1-4');
+  EXEC SQL
+    INSERT INTO st1 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,NULL,NULL,NULL,'Loader','st1-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO st1 (s1,s2,s3,sscale,test_name,table_row) VALUES (-1,-101,-1001,-1,'Loader','st1-6');
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO st2 (s1,s2,s3,sscale,test_name,table_row) VALUES (1,101,1001,001,'Loader','st2-1');
+  EXEC SQL
+    INSERT INTO st2 (s1,s2,s3,sscale,test_name,table_row) VALUES (2,102,1002,002,'Loader','st2-2');
+
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO st2 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,103,1003,003,'Loader','st2-3');
+  EXEC SQL
+    INSERT INTO st2 (s1,s2,s3,sscale,test_name,table_row) VALUES (4,NULL,1004,004,'Loader','st2-4');
+  EXEC SQL
+    INSERT INTO st2 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,NULL,NULL,NULL,'Loader','st2-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO st2 (s1,s2,s3,sscale,test_name,table_row) VALUES (-2,-102,-1002,-2,'Loader','st2-6');
+
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO st3 (s1,s2,s3,sscale,test_name,table_row) VALUES (1,101,1001,001,'Loader','st3-1');
+  EXEC SQL
+    INSERT INTO st3 (s1,s2,s3,sscale,test_name,table_row) VALUES (2,102,1002,002,'Loader','st3-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO st3 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,103,1003,003,'Loader','st3-3');
+  EXEC SQL
+    INSERT INTO st3 (s1,s2,s3,sscale,test_name,table_row) VALUES (4,NULL,1004,004,'Loader','st3-4');
+  EXEC SQL
+    INSERT INTO st3 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,NULL,NULL,NULL,'Loader','st3-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO st3 (s1,s2,s3,sscale,test_name,table_row) VALUES (-3,-103,-1003,-3,'Loader','st3-6');
+
+
+/*----------------------------------------------------------------------*/
+
+  EXEC SQL
+    INSERT INTO st4 (s1,s2,s3,sscale,test_name,table_row) VALUES (1,101,1001,001,'Loader','st4-1');
+  EXEC SQL
+    INSERT INTO st4 (s1,s2,s3,sscale,test_name,table_row) VALUES (2,102,1002,002,'Loader','st4-2');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO st4 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,103,1003,003,'Loader','st4-3');
+  EXEC SQL
+    INSERT INTO st4 (s1,s2,s3,sscale,test_name,table_row) VALUES (4,NULL,1004,004,'Loader','st4-4');
+  EXEC SQL
+    INSERT INTO st4 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,NULL,NULL,NULL,'Loader','st4-5');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO st4 (s1,s2,s3,sscale,test_name,table_row) VALUES (-4,-104,-1004,-4,'Loader','st4-6');
+
+
+/*----------------------------------------------------------------------*/
+/*--- One to many relation-ship table ----*/
+  EXEC SQL
+    INSERT INTO st5 (s1,s2,s3,sscale,test_name,table_row) VALUES (1,101,1001,001,'Loader','st5-1');
+  EXEC SQL
+    INSERT INTO st5 (s1,s2,s3,sscale,test_name,table_row) VALUES (1,101,1001,001,'Loader','st5-2');
+
+  EXEC SQL
+    INSERT INTO st5 (s1,s2,s3,sscale,test_name,table_row) VALUES (2,102,1002,002,'Loader','st5-3');
+  EXEC SQL
+    INSERT INTO st5 (s1,s2,s3,sscale,test_name,table_row) VALUES (2,102,1002,002,'Loader','st5-4');
+/* Nulls */
+
+  EXEC SQL
+    INSERT INTO st5 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,103,1003,003,'Loader','st5-5');
+  EXEC SQL
+    INSERT INTO st5 (s1,s2,s3,sscale,test_name,table_row) VALUES (4,NULL,1004,004,'Loader','st5-6');
+  EXEC SQL
+    INSERT INTO st5 (s1,s2,s3,sscale,test_name,table_row) VALUES (NULL,NULL,NULL,NULL,'Loader','st5-7');
+
+/* unique row */
+ EXEC SQL
+    INSERT INTO st5 (s1,s2,s3,sscale,test_name,table_row) VALUES (-5,-105,-1005,-5,'Loader','st5-8');
+
+EXEC SQL
+    COMMIT;
+
+SErr:
+    if(SQLCODE <0){
+
+        printf("Module Load_Short: Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+    }
+}
+$ GPRE -e JLoader.e
+$ CC FLAG_CC JLoader.c
+$ LINK FLAG_LINK JLoader 
+$ RUN JLoader
+$ CREATE JLoader.qli
+ready WHERE_GDB:sh_join.gdb;
+select * from st1 order by table_row;
+select * from st2 order by table_row;
+select * from st3 order by table_row;
+select * from st4 order by table_row;
+select * from st5 order by table_row;
+select * from ct1 order by table_row;
+select * from ct2 order by table_row;
+select * from ct3 order by table_row;
+select * from ct4 order by table_row;
+select * from ct5 order by table_row;
+finish;
+quit;
+$ QLI -n -a JLoader.qli
+$ GBAK -t WHERE_GDB:sh_join.gdb sh_join.gbk
+$DROP WHERE_GDB:sh_join.gdb
+$ DELETE JLoader*  sh_join.* doc

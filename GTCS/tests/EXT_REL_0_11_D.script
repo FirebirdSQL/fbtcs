@@ -1,0 +1,64 @@
+
+$CREATE COMMENT
+*******************************************************************************
+ 
+Test Name:  	EXT_REL_0_11_D
+Test Level:     0
+Series Name:    EXT_LEV_0
+Date:  		June 29, 1994
+Author:  	Scott Van Voris
+Bug: 
+ 
+Description:    This is a Level 0 test which is designed to verify the 
+		syntax to create an external relation with a fixed-length
+		datatype is working properly.
+
+                In order to verify the external relation was really 
+                created, a tuple is inserted into the relation, and the 
+                value in the relation retreived via a query.
+ 
+Expected Output: Error condition due to the product not being able to convert
+                 from an array to a CHAR.  CHAR data is the only data allowed
+		 in an external table which, apparently, Scott did not
+		 understand at the time these tests were created. (clare)
+History:
+15-May-95: test was not initialized. Trying to init gives err about blob
+	   when there is no blob field.  (updated Expected output)
+History:
+2-Oct-95:  Mark
+  Removed the Cleanup / Setup comments from the test.
+  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+
+3-Oct-95: Marco
+  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+  by the server in the correct place when accessing data remotely.
+  Also, I removed any referance to DIR external.dat and TYPE external.dat
+  which would also fail when running remotely.
+
+14-Oct-00: Frank Schlottmann-Goedde
+  replaced double with single quotes where necessary to run with version 6.x
+
+*******************************************************************************
+
+$CREATE isql.in
+
+CREATE DATABASE 'WHERE_GDB:ext_rel_0_11_D.gdb';
+
+CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
+        (field1 SMALLINT[4]) ;
+ 
+$CREATE isql2.in
+
+CONNECT 'WHERE_GDB:ext_rel_0_11_D.gdb';
+INSERT INTO ext_table (field1) VALUES (12);
+SELECT * FROM ext_table;
+
+$ISQL -input isql.in
+$ISQL -input isql2.in
+$ CREATE errcmt
+********************  15-May-95: conversion error is proper result
+
+$ TYPE errcmt
+$DROP WHERE_GDB:ext_rel_0_11_D.gdb
+$DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
+$DELETE COMMENT errcmt isql.in isql2.in

@@ -1,0 +1,28 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+books created successfully.
+Inserted 3 records
+BU1032,The Busy Executive's Database Guide,172-32-1176
+BU1111,Cooking with Computers: Surreptitious Balance Sheets,213-46-8915
+MC3021,The Gourmet Microwave,341-22-1782
+Number found: 3 Number expected: 3
+
+
+TABLE_CONSTRAINTS:
+------------------
+INTEG_1                        ,BOOKS                          ,NOT NULL   ,NO ,NO 
+REQ_INPUT2                     ,BOOKS                          ,NOT NULL   ,NO ,NO 
+REQ_INPUT                      ,BOOKS                          ,NOT NULL   ,NO ,NO 
+INTEG_2                        ,BOOKS                          ,UNIQUE     ,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+INTEG_2                        ,BOOKS                          ,BOOK_ID                        
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------

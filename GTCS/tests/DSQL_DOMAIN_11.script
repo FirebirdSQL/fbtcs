@@ -1,0 +1,84 @@
+
+/*******************************************************************************
+ Test Name:   dsql_domain_11
+ Series Name: dsql_domains
+ Date:        11-October-1993
+ Comments:    This script will test level 0 syntax for SQL drop domain statement
+ History:     Cloning test for 6.0. Changing "dec(25,10)" domain definition
+              to "dec(18,10)". (stsikin, 10-Dec-1998)
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_11a.sql
+create domain dom11a_1 as smallint;
+show domain dom11a_1;
+create domain dom11a_2 as numeric(3,1);
+show domain dom11a_2;
+create domain dom11b_1 as integer;
+show domain dom11b_1;
+create domain dom11b_2 as int;
+show domain dom11b_2;
+create domain dom11b_3 as numeric;
+show domain dom11b_3;
+create domain dom11b_4 as numeric(6,2);
+show domain dom11b_4;
+create domain dom11c as date;
+show domain dom11c;
+create domain dom11d_1 as char(20);
+show domain dom11d_1;
+create domain dom11d_2 as character(99);
+show domain dom11d_2;
+create domain dom11e_1 as varchar(25);
+show domain dom11e_1;
+create domain dom11e_2 as character varying(100);
+show domain dom11e_2;
+create domain dom11e_3 as char varying(2);
+show domain dom11e_3;
+create domain dom11f_1 as decimal(6,2);
+show domain dom11f_1;
+create domain dom11f_2 as dec(18,10);
+show domain dom11f_2;
+create domain dom11g_1 as float;
+show domain dom11g_1;
+create domain dom11g_2 as long float;
+show domain dom11g_2;
+create domain dom11g_3 as real;
+show domain dom11g_3;
+create domain dom11h as double precision;
+show domain dom11h;
+create domain dom11i_1 as blob;
+show domain dom11i_1;
+create domain dom11i_2 as blob(60,1);
+show domain dom11i_2;
+drop domain dom11a_1;
+drop domain dom11a_2;
+drop domain dom11b_1;
+drop domain dom11b_2;
+drop domain dom11b_3;
+drop domain dom11b_4;
+drop domain dom11c;
+drop domain dom11d_1;
+drop domain dom11d_2;
+drop domain dom11e_1;
+drop domain dom11e_2;
+drop domain dom11e_3;
+drop domain dom11f_1;
+drop domain dom11f_2;
+drop domain dom11g_1;
+drop domain dom11g_2;
+drop domain dom11g_3;
+drop domain dom11h;
+drop domain dom11i_1;
+drop domain dom11i_2;
+exit;
+/*******************************************************************************
+ attempt drops that will cause error messages.
+*******************************************************************************/
+$ CREATE domain_11b.sql
+drop domain rubbish;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_11a.sql
+$ isql -m WHERE_GDB:atlas.gdb -i domain_11b.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_11*

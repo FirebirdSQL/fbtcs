@@ -1,0 +1,114 @@
+Use CONNECT or CREATE DATABASE to specify a database
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+D                               TIMESTAMP Nullable 
+DC                              Computed by: (d)
+
+                  
+================= 
+
+Passed 1 - Insert 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+
+                  
+================= 
+
+Passed 1 - Update 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+D                               TIMESTAMP Nullable 
+DC                              Computed by: (d + 1)
+
+                  
+================= 
+
+Passed 2 - Insert 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+
+                  
+================= 
+
+Passed 2 - Update 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+D                               TIMESTAMP Nullable 
+DC                              Computed by: (d - 1)
+
+                  
+================= 
+
+Passed 3 - Insert 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+
+                  
+================= 
+
+Passed 3 - Update 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+D                               TIMESTAMP Nullable 
+DC                              Computed by: ('today')
+
+                  
+================= 
+
+Passed 4 - Insert 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+
+                  
+================= 
+
+Passed 4 - Update 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+-SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+D                               TIMESTAMP Nullable 
+DC                              Computed by: (cast('today' as date) + 1 )
+
+                  
+================= 
+
+Passed 5 - Insert 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+
+                  
+================= 
+
+Passed 5 - Update 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+-SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+D_START                         TIMESTAMP Nullable 
+D_END                           TIMESTAMP Nullable 
+DATE_DIFF                       Computed by: (d_end - d_start)
+
+                  
+================= 
+
+Passed 6 - Insert 
+
+SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+
+                  
+================= 
+
+Passed 6 - Update 
+

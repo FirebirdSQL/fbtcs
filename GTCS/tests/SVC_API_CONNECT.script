@@ -1,0 +1,57 @@
+$CREATE svc_api_connect.cpp
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ibase.h>
+
+int main(int argc, char* argv[]){
+	char	*user = "SYSDBA";
+	char	*pass = "masterkey";
+
+	ISC_STATUS	status [20];
+	isc_svc_handle	svc_handle = NULL;
+	char	svc_name[32];
+	char	spb_buff[128];
+	char	*spb = spb_buff;
+	char	*x;
+	USHORT	spblen;
+
+	*spb++ = isc_spb_version;
+	*spb++ = isc_spb_current_version;
+
+	*spb++ = isc_spb_user_name;
+	*spb++ = strlen (user);
+
+	for (x = user; *x;)
+		*spb++ = *x++;
+
+	*spb++ = isc_spb_password;
+	*spb++ = strlen (pass);
+	for (x = pass; *x;)
+		*spb++ = *x++;
+
+	sprintf (svc_name, "WHERE_SERVICE_MGR:");              // Local
+	spblen = spb - spb_buff;
+
+	if (isc_service_attach(status, 0, svc_name, &svc_handle, spblen, spb_buff))
+	{
+		isc_print_status (status);
+		exit (1);
+	}
+	else
+		printf("Service manager attached OK\n");
+
+	if (isc_service_detach(status, &svc_handle))
+	{
+		isc_print_status (status);
+		exit (1);
+	}
+	else
+		printf("Service manager detached OK\n");
+}
+$ CXX FLAG_CXX svc_api_connect.cpp
+$ LINK FLAG_LINK svc_api_connect
+$ RUN svc_api_connect > svc_api_connect.res
+$ TYPE svc_api_connect.res
+$ DELETE svc_api_connect.*

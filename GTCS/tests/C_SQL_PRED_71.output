@@ -1,0 +1,335 @@
+Test:
+ SELECT NAME FROM EMPLOYEES WHERE NAME STARTING WITH FIRST_NAME ORDER BY NAME
+--------------------------------------------------------------------------------
+Alan Collie
+--------------------------------------------------------------------------------
+Alex Springer
+--------------------------------------------------------------------------------
+Alexandra  Poochkin
+--------------------------------------------------------------------------------
+Alice Spaniel
+--------------------------------------------------------------------------------
+Ann Otterhound
+--------------------------------------------------------------------------------
+Brenda Setter
+--------------------------------------------------------------------------------
+Chantal Bowzer
+--------------------------------------------------------------------------------
+Chau Chow
+--------------------------------------------------------------------------------
+Dal Mation
+--------------------------------------------------------------------------------
+Dave Affenpinscher
+--------------------------------------------------------------------------------
+David Dingo
+--------------------------------------------------------------------------------
+Diane Pekinese
+--------------------------------------------------------------------------------
+Dimitri Saluki
+--------------------------------------------------------------------------------
+Donald Barbet
+--------------------------------------------------------------------------------
+Edward Retriever
+--------------------------------------------------------------------------------
+Edwin Dalmation
+--------------------------------------------------------------------------------
+Elayne Schnauzer
+--------------------------------------------------------------------------------
+Emily Dachshund
+--------------------------------------------------------------------------------
+Eric Labrador
+--------------------------------------------------------------------------------
+Felix Pomeranian
+--------------------------------------------------------------------------------
+Fox Terrier
+--------------------------------------------------------------------------------
+George Beagle
+--------------------------------------------------------------------------------
+Germain Shepherd
+--------------------------------------------------------------------------------
+Glen Shepherd
+--------------------------------------------------------------------------------
+Greta Pyrenees
+--------------------------------------------------------------------------------
+Harold Shepherd
+--------------------------------------------------------------------------------
+Harvey Cocker
+--------------------------------------------------------------------------------
+Hermione Basset
+--------------------------------------------------------------------------------
+Howard Lurcher
+--------------------------------------------------------------------------------
+Irish Terrier
+--------------------------------------------------------------------------------
+James Whippet
+--------------------------------------------------------------------------------
+Jeannette Pug
+--------------------------------------------------------------------------------
+Jeff Mutt
+--------------------------------------------------------------------------------
+Jessie Borzoi
+--------------------------------------------------------------------------------
+Karl Schnauzer
+--------------------------------------------------------------------------------
+Kelly Spitz
+--------------------------------------------------------------------------------
+Lamont Collie
+--------------------------------------------------------------------------------
+Lauren Sheltie
+--------------------------------------------------------------------------------
+Lhasa Apso
+--------------------------------------------------------------------------------
+Lisa Keeshond
+--------------------------------------------------------------------------------
+Maud Chow
+--------------------------------------------------------------------------------
+Newt Foundland
+--------------------------------------------------------------------------------
+Pinky Nese
+--------------------------------------------------------------------------------
+Ralph Weimaraner
+--------------------------------------------------------------------------------
+Richard Turnspit
+--------------------------------------------------------------------------------
+Robert Springer
+--------------------------------------------------------------------------------
+Ronald Griffon
+--------------------------------------------------------------------------------
+Sam Moyed
+--------------------------------------------------------------------------------
+Samantha Mastiff
+--------------------------------------------------------------------------------
+Samuel Pointer
+--------------------------------------------------------------------------------
+Saynt Bernard
+--------------------------------------------------------------------------------
+Stev Afgan
+--------------------------------------------------------------------------------
+Susan Briard
+--------------------------------------------------------------------------------
+Terrel Terrier
+--------------------------------------------------------------------------------
+Theodore Samoyed
+--------------------------------------------------------------------------------
+Thomas Poodle
+--------------------------------------------------------------------------------
+Virginia Boxer
+--------------------------------------------------------------------------------
+Walter Bluetick
+--------------------------------------------------------------------------------
+William Pitt-Bull
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 59
+
+           Name
+==========================
+
+Alan Collie
+Alex Springer
+Alexandra  Poochkin
+Alice Spaniel
+Ann Otterhound
+Brenda Setter
+Chantal Bowzer
+Chau Chow
+Dal Mation
+Dave Affenpinscher
+David Dingo
+Diane Pekinese
+Dimitri Saluki
+Donald Barbet
+Edward Retriever
+Edwin Dalmation
+Elayne Schnauzer
+Emily Dachshund
+Eric Labrador
+Felix Pomeranian
+Fox Terrier
+George Beagle
+Germain Shepherd
+Glen Shepherd
+Greta Pyrenees
+Harold Shepherd
+Harvey Cocker
+Hermione Basset
+Howard Lurcher
+Irish Terrier
+James Whippet
+Jeannette Pug
+Jeff Mutt
+Jessie Borzoi
+Karl Schnauzer
+Kelly Spitz
+Lamont Collie
+Lauren Sheltie
+Lhasa Apso
+Lisa Keeshond
+Maud Chow
+Newt Foundland
+Pinky Nese
+Ralph Weimaraner
+Richard Turnspit
+Robert Springer
+Ronald Griffon
+Sam Moyed
+Samantha Mastiff
+Samuel Pointer
+Saynt Bernard
+Stev Afgan
+Susan Briard
+Terrel Terrier
+Theodore Samoyed
+Thomas Poodle
+Virginia Boxer
+Walter Bluetick
+William Pitt-Bull
+
+
+           Name
+==========================
+
+Alan Collie
+Alex Springer
+Alexandra  Poochkin
+Alice Spaniel
+Ann Otterhound
+Brenda Setter
+Chantal Bowzer
+Chau Chow
+Dal Mation
+Dave Affenpinscher
+David Dingo
+Diane Pekinese
+Dimitri Saluki
+Donald Barbet
+Edward Retriever
+Edwin Dalmation
+Elayne Schnauzer
+Emily Dachshund
+Eric Labrador
+Felix Pomeranian
+Fox Terrier
+George Beagle
+Germain Shepherd
+Glen Shepherd
+Greta Pyrenees
+Harold Shepherd
+Harvey Cocker
+Hermione Basset
+Howard Lurcher
+Irish Terrier
+James Whippet
+Jeannette Pug
+Jeff Mutt
+Jessie Borzoi
+Karl Schnauzer
+Kelly Spitz
+Lamont Collie
+Lauren Sheltie
+Lhasa Apso
+Lisa Keeshond
+Maud Chow
+Newt Foundland
+Pinky Nese
+Ralph Weimaraner
+Richard Turnspit
+Robert Springer
+Ronald Griffon
+Sam Moyed
+Samantha Mastiff
+Samuel Pointer
+Saynt Bernard
+Stev Afgan
+Susan Briard
+Terrel Terrier
+Theodore Samoyed
+Thomas Poodle
+Virginia Boxer
+Walter Bluetick
+William Pitt-Bull
+
+
+   COUNT
+===========
+
+         59
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+NAME                       
+========================== 
+
+Alan Collie                
+Alex Springer              
+Alexandra  Poochkin        
+Alice Spaniel              
+Ann Otterhound             
+Brenda Setter              
+Chantal Bowzer             
+Chau Chow                  
+Dal Mation                 
+Dave Affenpinscher         
+David Dingo                
+Diane Pekinese             
+Dimitri Saluki             
+Donald Barbet              
+Edward Retriever           
+Edwin Dalmation            
+Elayne Schnauzer           
+Emily Dachshund            
+Eric Labrador              
+Felix Pomeranian           
+
+NAME                       
+========================== 
+Fox Terrier                
+George Beagle              
+Germain Shepherd           
+Glen Shepherd              
+Greta Pyrenees             
+Harold Shepherd            
+Harvey Cocker              
+Hermione Basset            
+Howard Lurcher             
+Irish Terrier              
+James Whippet              
+Jeannette Pug              
+Jeff Mutt                  
+Jessie Borzoi              
+Karl Schnauzer             
+Kelly Spitz                
+Lamont Collie              
+Lauren Sheltie             
+Lhasa Apso                 
+Lisa Keeshond              
+
+NAME                       
+========================== 
+Maud Chow                  
+Newt Foundland             
+Pinky Nese                 
+Ralph Weimaraner           
+Richard Turnspit           
+Robert Springer            
+Ronald Griffon             
+Sam Moyed                  
+Samantha Mastiff           
+Samuel Pointer             
+Saynt Bernard              
+Stev Afgan                 
+Susan Briard               
+Terrel Terrier             
+Theodore Samoyed           
+Thomas Poodle              
+Virginia Boxer             
+Walter Bluetick            
+William Pitt-Bull          
+
+
+       COUNT 
+============ 
+
+          59 
+

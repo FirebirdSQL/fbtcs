@@ -1,0 +1,77 @@
+Test:
+ SELECT * FROM CUSTOMERS C1 WHERE NOT SINGULAR (SELECT * FROM SALES S1 WHERE S1.CUSTNO = C1.CUSTNO)
+--------------------------------------------------------------------------------
+114	1st Canine Bank	George McClellan
+1342 Massachusetts Avenue	Boston	MA	02113
+6179291622	
+--------------------------------------------------------------------------------
+103	The Groton Company	Phil Sheridan
+Great Road	Groton	MA	01450
+5086436627	
+--------------------------------------------------------------------------------
+109	Czbrynik Meat Packer	George Meade
+3 Meat Market	Green Bay	WI	54305
+4142983288	
+--------------------------------------------------------------------------------
+
+
+Custno         Customer                   Contact              Zip
+====== ========================= =========================    =====
+
+   114 1st Canine Bank           George McClellan
+1342 Massachusetts Avenue      Boston                    MA   02113
+(617) 929-1622 
+   103 The Groton Company        Phil Sheridan
+Great Road                     Groton                    MA   01450
+(508) 643-6627 
+   109 Czbrynik Meat Packer      George Meade
+3 Meat Market                  Green Bay                 WI   54305
+(414) 298-3288 
+
+
+
+Custno         Customer                   Contact              Zip
+====== ========================= =========================    =====
+
+   114 1st Canine Bank           George McClellan
+1342 Massachusetts Avenue      Boston                    MA   02113
+(617) 929-1622 
+   103 The Groton Company        Phil Sheridan
+Great Road                     Groton                    MA   01450
+(508) 643-6627 
+   109 Czbrynik Meat Packer      George Meade
+3 Meat Market                  Green Bay                 WI   54305
+(414) 298-3288 
+
+
+
+Custno         Customer                   Contact              Zip
+====== ========================= =========================    =====
+
+   114 1st Canine Bank           George McClellan
+1342 Massachusetts Avenue      Boston                    MA   02113
+(617) 929-1622 
+   103 The Groton Company        Phil Sheridan
+Great Road                     Groton                    MA   01450
+(508) 643-6627 
+   109 Czbrynik Meat Packer      George Meade
+3 Meat Market                  Green Bay                 WI   54305
+(414) 298-3288 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+ CUSTNO CUSTOMER                  CONTACT                   ADDRESS                        CITY                      STATE  ZIP_CODE PHONE_NO   ON_HOLD 
+======= ========================= ========================= ============================== ========================= ====== ======== ========== ======= 
+
+    114 1st Canine Bank           George McClellan          1342 Massachusetts Avenue      Boston                    MA     02113    6179291622 <null>  
+    103 The Groton Company        Phil Sheridan             Great Road                     Groton                    MA     01450    5086436627 <null>  
+    109 Czbrynik Meat Packer      George Meade              3 Meat Market                  Green Bay                 WI     54305    4142983288 <null>  
+
+
+ CUSTNO CUSTOMER                  CONTACT                   ADDRESS                        CITY                      STATE  ZIP_CODE PHONE_NO   ON_HOLD 
+======= ========================= ========================= ============================== ========================= ====== ======== ========== ======= 
+
+    114 1st Canine Bank           George McClellan          1342 Massachusetts Avenue      Boston                    MA     02113    6179291622 <null>  
+    103 The Groton Company        Phil Sheridan             Great Road                     Groton                    MA     01450    5086436627 <null>  
+    109 Czbrynik Meat Packer      George Meade              3 Meat Market                  Green Bay                 WI     54305    4142983288 <null>  
+

@@ -1,0 +1,41 @@
+::LD gcc
+::WHERE_BIN /usr/apc/firebird/bin
+::WHERE_EXAMPLES /usr/apc/firebird/examples
+::WHERE_EXAMPLES_40 ./tests/sov3v4files
+::WHERE_EXAMPLES_50 ./tests/sov5files
+::WHERE_FILES ./tests
+::WHERE_GSEC /usr/apc/firebird
+::WHERE_GSEC_REMOTE $(TCS:WHERE_GSEC_REMOTE)
+::WHERE_HELP /usr/apc/firebird/help
+::WHERE_INCLUDE /usr/apc/firebird/include
+::WHERE_INCLUDE2 /sys/ins
+::WHERE_INCLUDE3 /usr/apc/firebird/include
+::WHERE_MU ./bin
+::WHERE_UDF $(TCS:WHERE_UDF)
+::WHERE_DEV /usr/gds/dev
+::WHERE_SUNDISK shakim2:/usr/gds.shakim2/shakim/tests
+::WHERE_SMALL_GBK WHERE_EXAMPLES_40:employee.gbk
+::WHERE_BIG_GBK perform:/array.1/rcurry/tpc_c/tpc_c.gbk
+::LIBRARIES
+::SERVICE_MGR $(TCS:SERVICE_MGR)
+::LIB_TYPE share
+::FLAG_CC_MACHINE -w -c -fwritable-strings -I. -I./tests -I/usr/apc/firebird/include %s -DSINIXZ 
+::FLAG_CC_MACHINE2 -w -c -fwritable-strings -I. -I/usr/apc/firebird/include %s -DSINIXZ
+::FLAG_CC -I. -I./tests -I/usr/apc/firebird/include -w -c -fwritable-strings %s -DIINUX
+::FLAG_CC2 -I/usr/apc/firebird/include -I. -w -c -fwritable-strings %s
+::FLAG_CC_UDFN -traditional -w -c -O -fPIC -mno-fp-ret-in-387 -fwritable-strings %s
+::FLAG_CC_UDF -w -O -fPIC -I/usr/apc/firebird/include -mno-fp-ret-in-387 -c -fwritable-strings %s
+::FLAG_CXX -w -c -fwritable-strings -I. -I./tests %s -DSINIXZ
+::FLAG_LINK %s -o %s -lgds -ldl -lcrypt -lsocket -lnsl -lgen -lresolv
+::FLAG_LINK_MU %s -o %s -lgds -ldl -L./bin -lmu -lcrypt -lsocket -lnsl -lgen -lresolv
+::FLAG_CXX_LINK %s -o %s -lgds -ldl -lcrypt -lsocket -lnsl -lgen -lresolv
+::FLAG_UDF_NEW -o 
+::FLAG_UDF_LINK -shared %s -o %s.udf
+::FLAG_UDF_LINK2 -shared -lgds %s -o %s.udf
+::FLAG_COB -x
+::FLAG_COB_LINK %s -o %s -lgds -ldl -lcrypt -lsocket -lnsl -lgen -lresolv
+::FLAG_PAS -c
+::FLAG_FOR -w -c
+::FLAG_ADA
+::FLAG_ADA_LINK %s -o %s -lgds -ldl -lcrypt -lsocket -lnsl -lgen -lresolv
+::FLAG_BAS

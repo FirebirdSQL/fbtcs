@@ -1,0 +1,229 @@
+seminar:	Introduction   		talk:	Transactions   
+filtered test in GDML:
+	        You can start  a  transaction  with  a  START_TRANSACTION
+	     statement, or you can allow gpre to start one automatically.
+	     For simple programs, allowing  gpre  to  start  transactions
+	     removes  one  statement  from  the program and makes it that
+	     much simpler.  You can even allow gpre to start transactions
+	     automatically  for moderately complex program where you want
+	     different statements to execute in separate transactions.
+	
+	        However, for more serious  programs,  you  will  want  to
+	     start transactions explicitly  for several reasons.
+	
+	         First,  the  START  TRANSACTION  and  COMMIT  statements
+	            indicate  logical starting and stopping points in the
+	            program, and make its flow more clear.
+	
+	         Second, unless you start  transactions  explicitly,  the
+	            preprocessor  must  generate  code  before  every DML
+	            statement to check that the database is attached  and
+	            the  transaction  started.   Handling those functions
+	            explicitly  reduces  the  size  of  the  preprocessed
+	            program.
+	
+	         Third, on  the  START  TRANSACTION  statement,  you  can
+	            specify  some options like reserved relations or high
+	            consistency  mode   that   are   not   available   in
+	            automatically generated transactions.
+	
+	        Whether you choose to let gpre start transactions  or  do
+	     it  yourself, the transaction environment allows you unusual
+	     control over the effects of your program.  By using separate
+	     named transactions, you can group statements into autonomous
+	     units and commit or rollback the  units  individually.   You
+	     can  update  related records with certainty that all changes
+	     will be made at once.  The code to undo a group  of  changes
+	     consists  of  ROLLBACK statement; your program does not need
+	     to remember what changes it made or contain any mechanism to
+	     deal  with  its own failures.  Should your program terminate
+	     without   completion,   its   changes   are   rolled    back
+	     automatically.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+unfiltered test in GDML:
+	.in +5
+	.ti +3
+	You can start a transaction with a START_TRANSACTION statement, or
+	you can allow gpre to start one automatically.  For simple programs,
+	allowing gpre to start transactions removes one statement from the
+	program and makes it that much simpler.  You can even allow gpre
+	to start transactions automatically for moderately complex
+	program where you want different statements to execute in separate
+	transactions. 
+	.sp 
+	.ti +3
+	However, for more serious programs, you will want to start transactions
+	explicitly  for several reasons.  
+	.in +7
+	.ti -3
+	.sp
+	First, the START TRANSACTION and
+	COMMIT statements indicate logical starting and stopping points in
+	the program, and make its flow more clear.  
+	.sp
+	.ti -3
+	Second, unless you start
+	transactions explicitly, the preprocessor must generate code before
+	every DML statement to check that the database is attached and the
+	transaction started.  Handling those functions explicitly reduces
+	the size of the preprocessed program.   
+	.sp
+	.ti -3
+	Third, on the START TRANSACTION
+	statement, you can specify some
+	options like reserved relations or high consistency mode that are not
+	available in automatically generated transactions.
+	.in -7
+	.sp
+	.ti +3
+	Whether you choose to let gpre start transactions or do it yourself,
+	the transaction environment allows you unusual control over the effects
+	of your program.  By using separate named transactions, you can group
+	statements into autonomous units and commit or rollback the units
+	individually.  You can update related records with certainty that
+	all changes will be made at once.  The code to undo a group of changes
+	consists of ROLLBACK statement; your program does not need to remember
+	what changes it made or contain any mechanism to deal with its own
+	failures.  Should your program terminate without completion, its
+	changes are rolled back automatically.
+
+seminar:	Introduction   		talk:	Transactions   
+filtered test in SQL:
+	        You can start  a  transaction  with  a  START_TRANSACTION
+	     statement, or you can allow gpre to start one automatically.
+	     For simple programs, allowing  gpre  to  start  transactions
+	     removes  one  statement  from  the program and makes it that
+	     much simpler.  You can even allow gpre to start transactions
+	     automatically  for moderately complex program where you want
+	     different statements to execute in separate transactions.
+	
+	        However, for more serious  programs,  you  will  want  to
+	     start transactions explicitly  for several reasons.
+	
+	         First,  the  START  TRANSACTION  and  COMMIT  statements
+	            indicate  logical starting and stopping points in the
+	            program, and make its flow more clear.
+	
+	         Second, unless you start  transactions  explicitly,  the
+	            preprocessor  must  generate  code  before  every DML
+	            statement to check that the database is attached  and
+	            the  transaction  started.   Handling those functions
+	            explicitly  reduces  the  size  of  the  preprocessed
+	            program.
+	
+	         Third, on  the  START  TRANSACTION  statement,  you  can
+	            specify  some options like reserved relations or high
+	            consistency  mode   that   are   not   available   in
+	            automatically generated transactions.
+	
+	        Whether you choose to let gpre start transactions  or  do
+	     it  yourself, the transaction environment allows you unusual
+	     control over the effects of your program.  By using separate
+	     named transactions, you can group statements into autonomous
+	     units and commit or rollback the  units  individually.   You
+	     can  update  related records with certainty that all changes
+	     will be made at once.  The code to undo a group  of  changes
+	     consists  of  ROLLBACK statement; your program does not need
+	     to remember what changes it made or contain any mechanism to
+	     deal  with  its own failures.  Should your program terminate
+	     without   completion,   its   changes   are   rolled    back
+	     automatically.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+unfiltered test in SQL:
+	.in +5
+	.ti +3
+	You can start a transaction with a START_TRANSACTION statement, or
+	you can allow gpre to start one automatically.  For simple programs,
+	allowing gpre to start transactions removes one statement from the
+	program and makes it that much simpler.  You can even allow gpre
+	to start transactions automatically for moderately complex
+	program where you want different statements to execute in separate
+	transactions. 
+	.sp 
+	.ti +3
+	However, for more serious programs, you will want to start transactions
+	explicitly  for several reasons.  
+	.in +7
+	.ti -3
+	.sp
+	First, the START TRANSACTION and
+	COMMIT statements indicate logical starting and stopping points in
+	the program, and make its flow more clear.  
+	.sp
+	.ti -3
+	Second, unless you start
+	transactions explicitly, the preprocessor must generate code before
+	every DML statement to check that the database is attached and the
+	transaction started.  Handling those functions explicitly reduces
+	the size of the preprocessed program.   
+	.sp
+	.ti -3
+	Third, on the START TRANSACTION
+	statement, you can specify some
+	options like reserved relations or high consistency mode that are not
+	available in automatically generated transactions.
+	.in -7
+	.sp
+	.ti +3
+	Whether you choose to let gpre start transactions or do it yourself,
+	the transaction environment allows you unusual control over the effects
+	of your program.  By using separate named transactions, you can group
+	statements into autonomous units and commit or rollback the units
+	individually.  You can update related records with certainty that
+	all changes will be made at once.  The code to undo a group of changes
+	consists of ROLLBACK statement; your program does not need to remember
+	what changes it made or contain any mechanism to deal with its own
+	failures.  Should your program terminate without completion, its
+	changes are rolled back automatically.

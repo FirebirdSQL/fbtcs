@@ -1,0 +1,21 @@
+
+--------------------------------------------------------------
+   PRINTING ALL EMPLOYEES--Using Select and 8-bit data
+
+   (Transliteration is FROM ISO to NONE) BOTH WORK, CORRECT.
+
+1          Rôbért          Nélsôn              
+2          Bruce           Nélsôn              
+
+--------------------------------------------------------------
+INSERTING NEW DATA, ID: 333, Bruce, Nélsôn: did it get inserted?...using SELECT
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+ EMP_NO FIRST_NAME      LAST_NAME            
+======= =============== ==================== 
+
+      1 Rôbért          Nélsôn               
+      2 Bruce           Nélsôn               
+    333 Bruce           Nélsôn               
+

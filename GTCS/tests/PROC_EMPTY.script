@@ -1,0 +1,33 @@
+
+$ ISQL
+create database "WHERE_GDB:foo.gdb";
+create table foo (i integer);
+set term go;
+create procedure p as
+begin
+end
+go
+create procedure p1 (i int) as
+begin
+end
+go
+create procedure p2 returns (j int) as
+begin
+end
+go
+create procedure p3 as
+declare variable a int;
+begin
+end
+go
+create procedure p4 as
+begin
+  begin
+  end
+end
+go
+exit
+go
+
+$ DROP WHERE_GDB:foo.gdb
+

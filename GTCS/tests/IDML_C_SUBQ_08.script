@@ -1,0 +1,130 @@
+
+$ CREATE doc
+By:          Clare Taylor
+Date:        03/14/94
+Test name:   IDML_C_SUBQ_08         
+Series:      IDML_C_SUBQUERYS          
+Results:     Uses IN in a WHERE clause with a SUBQUERY to do an UPDATE.
+Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
+History:
+3/21/94:     This test fails on NLM, but the failure is not valid.  The
+	     results are displayed in a different order going from Unix
+	     to NLM, but there is no SQL standard that says duplicates
+	     have to be in some sort of order--the rows must be reversed
+	     in the actual storage on NLM so they appear reversed in the
+	     select results--the results are anoying but not incorrect:
+	     NLM:                                   Unix
+	     -------------------------------------------------------
+              C_ENUS       C_FRANCE field |  C_ENUS        C_FRANCE
+			    ORDER BY this |
+             -------------------------------------------------------
+before update: péché        péché         |  péché          same
+               vice versa   vice versa    |  vice versa
+             ------------------------------------------------------
+after update: vice versa    UPDATED       |  péché          UPDATED
+              péché         UPDATED       |  vice versa     UPDATED
+             ------------------------------------------------------
+
+3/22/94:    Modified the series to use a ROWID field in the STRING_TABLE
+	    so that these tables may be loaded, updated and then forced to
+	    display in the same order every time by using ORDER BY rowid.
+
+4/14/94:    modified to use set names which changes results in P.
+            see the notes in other tests.
+
+Description:
+INSERTS data into one test table and then uses a SUBQUERY to return
+rows that are used for the 'IN' condition.  Rows that are IN the rows
+returned by the subquery will be UPDATED from the other test table.
+The subquery also uses a > condition.  Currently works as expected.
+
+$ CREATE subq8.e
+/*-------------------------------------------------------------------------
+  Case 7:  UPDATE <table> SET <field> = "string" WHERE <field> IN (subquery)
+---------------------------------------------------------------------------*/
+#include <WHERE_FILES:tcs.h>
+EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
+EXEC SQL WHENEVER SQLERROR GOTO err;
+EXEC SQL INCLUDE SQLCA;
+
+
+static print_error()
+{
+    if (SQLCODE != 100)
+        printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+}
+main()
+{
+     EXEC SQL SET NAMES ISO8859_1; /* must be iso since the matching
+				      field is iso or we need _charset */
+     EXEC SQL CONNECT db;
+
+     EXEC SQL DELETE FROM TEST_TABLE1;
+     EXEC SQL COMMIT;
+ 
+     EXEC SQL
+         INSERT INTO TEST_TABLE1 
+	 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 FROM STRING_TABLE;
+     EXEC SQL COMMIT;
+
+     /* in other DB products, this would produce an 'ambiguous column'
+	error since both string_table and test table use the same field names*/
+
+     EXEC SQL
+        UPDATE TEST_TABLE1 SET C_FRANCE =
+	'UPDATED' WHERE C_FRANCE IN
+	   (SELECT C_FRANCE FROM STRING_TABLE
+	       WHERE C_FRANCE  >= 'péché');
+
+     EXEC SQL COMMIT RELEASE;
+     exit(0);
+err: print_error();
+}
+
+$ CREATE ver8.sql 
+set names iso8859_1;
+connect "WHERE_GDB:tests.gdb";
+select s_rowid, c_france from string_table
+  where c_france >= 'péché' order by s_rowid;
+select s_rowid, c_enus, c_france from test_table1 order by s_rowid;
+commit;
+quit;
+
+$ CREATE subq8.sql 
+set names iso8859_1;
+connect "WHERE_GDB:tests.gdb";
+delete from test_table1;
+commit;
+select count(*) from test_table1;
+
+INSERT INTO TEST_TABLE1 
+    SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 
+    FROM STRING_TABLE;
+
+select s_rowid, c_enus, c_france from test_table1 order by s_rowid;
+commit;
+set names dos437;
+connect "WHERE_GDB:tests.gdb";
+select s_rowid, c_437_25 from test_table1 order by s_rowid;
+
+commit;
+set names iso8859_1;
+connect "WHERE_GDB:tests.gdb";
+
+UPDATE TEST_TABLE1 SET C_FRANCE =
+   'UPDATED' WHERE C_FRANCE IN
+   (SELECT C_FRANCE FROM STRING_TABLE
+    WHERE C_FRANCE  >= 'péché');
+commit;
+select s_rowid, c_france from string_table
+  where c_france >= 'péché' order by s_rowid;
+select s_rowid, c_enus, c_france from test_table1 order by s_rowid;
+
+$ GPRE subq8.e
+$ CC FLAG_CC subq8.c
+$ LINK FLAG_LINK subq8 
+$ RUN subq8
+$ ISQL -i ver8.sql -m
+
+$ ISQL -i subq8.sql -m
+$ DELETE subq8* doc ver8.sql

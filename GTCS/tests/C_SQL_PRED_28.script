@@ -1,0 +1,145 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE con002.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+
+ Description:           char-field, containing string
+
+                        SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB
+                        FROM SALES S1
+                        WHERE S1.PONUMB CONTAINING '8902'
+                        ORDER BY S1.CUSTNO ASCENDING;
+
+ Tables:                sales
+
+ Author:		Sam Hakim, Feb 18, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON SALES.CUSTNO           CustNo;
+BASED_ON SALES.TOTAL_VALUE      Total_Value;
+BASED_ON SALES.PONUMB           PoNumb;
+
+char Test[]="SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB \
+FROM SALES S1 WHERE S1.PONUMB CONTAINING '8902' ORDER BY S1.CUSTNO ASCENDING";
+
+void Underline();
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n%s\n",Test);
+        Underline(80);
+
+
+        EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB
+                FROM SALES S1
+                WHERE S1.PONUMB CONTAINING '8902'
+                ORDER BY S1.CUSTNO ASCENDING;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :CustNo, :Total_Value,:PoNumb;
+
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%d\t",CustNo);
+                printf("%8.2f\t",(double)(Total_Value));
+                printf("%s\n",PoNumb);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :CustNo, :Total_Value,:PoNumb;
+
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e con002.e
+$ CC FLAG_CC con002.c
+$ LINK FLAG_LINK con002 
+$ RUN con002
+$ CREATE con002.qli
+set semicolon;
+ready WHERE_GDB:sh_test.gdb;
+select s1.custno, s1.total_value, s1.ponumb from sales s1 
+where s1.ponumb containing '8902' order by s1.custno ascending;
+for s1 in sales sorted by s1.custno with s1.ponumb containing '8902'
+print s1.custno, s1.total_value, s1.ponumb;
+finish;
+quit;
+$ QLI -n -a con002.qli
+$ CREATE con002.sql
+connect WHERE_GDB:sh_test.gdb;
+select s1.custno, s1.total_value, s1.ponumb from sales s1 
+where s1.ponumb containing '8902' order by s1.custno ascending;
+quit;
+$ISQL -i con002.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE con002* 

@@ -1,0 +1,1473 @@
+
+$ CREATE doc
+Series:   EVENT_MISC    
+Test:     EVENT_MISC_0  (new V4.5 version to see if bug exists)
+History:
+May 7, 97: clare: trying to see if the problem exists in SS
+Aug 28, 97: bsriram: test does not pass only on an SMP Solaris 2.5 Box.
+                     Passes with IB5.0 DEV and Beta1 kits on all uni-processor
+                     machines. The SERVER_RELATION is not getting updated 
+                     for each event sent by the clients.
+Dec 2, 1997:clare:This was still failing because TCS was picking
+            up an old local 4.0 test rather than the new 4.5 test.  I 
+            had to delete the hp local test and local init for 4.0 to
+            force the 4.5 global test to run against the new 4.5 solaris
+            global init. Reported problem to dmitri.  HP now passes
+            with the SO init record.  Whatever bugs there were seem to
+            be fixed: 5540, the status is still open, I believe.
+$ GBAK -r WHERE_FILES:asyn_evnts.gbk WHERE_GDB:asyn_evnts.gdb
+$ CREATE event_custom.h
+
+/*
+ *	MODULE NAME:	event_custom.h
+ *	DESCRIPTION:	Header file for the asynchronous event test application
+ *     
+ */
+
+/* Constants */
+
+#define TRUE			1
+#define FALSE			0
+
+#define DEFAULT_NUM_EVENTS	2000
+#define VERSION			"V1.2"
+#define MAX_CLIENTS		6
+#define IO_RETRY		20
+
+/* Universally needed includes */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <gds.h>
+
+/* Platform dependent */
+
+/* VMS */
+#ifdef VMS
+#    define fork		vfork
+#    define CLOSE_PIPE		;
+#    define ERROR		44
+#else
+#    define CLOSE_PIPE		if (close(pipe_fd[*client_count][1]) == -1) \
+				    perror("Couldn't close WRITE pipe");
+#    define ERROR		1
+#endif
+
+#define CHECK_STATUS    if (isc_status[1]) isc_print_status(isc_status);
+
+/* Function prototypes */
+
+extern void init_server(char **,short);
+
+extern void parse_server_args(int,char *[],int *,short *);
+
+extern void create_client(int *,long [MAX_CLIENTS][2], int, char[]);
+
+extern void packet_handler(long[],long [MAX_CLIENTS][2], short);
+
+extern int  update_server_relation(long[], short);
+
+extern void event_handler(char *,short,char *);
+
+extern void finish_packets(long [MAX_CLIENTS][2],short);
+
+extern int  report_events(char *,int,short);
+
+extern void parse_client_args(int,char *[],int *,int *,char *);
+
+/* Macros */
+
+#define UPPER(c)	((c) >= 'a' && (c) <= 'z' ? (c) & 0x5F : (c))
+
+/*------------------------------------------------------------------------*/
+$ CREATE event_server.e
+
+
+/*
+ * PROGRAM: Asynchronous Event Server
+ * MODULE: 	event_server.e
+ * DESCRIPTION: This program will express interest in an asynchronous
+ * 		event, initialize the EVENTS.GDB database, create
+ *			several clients which will update a relation causing
+ *			a trigger/event to fire and the server will handle
+ * 		the events as they arrive.  At the end of the program,
+ *			a report is generated to verify that all events posted
+ * 		by each client were received by the server.
+ *
+ */
+
+/* Include the required header files */
+
+#include <ctype.h>
+#include <time.h>
+#include <errno.h>
+
+#ifdef WIN_NT
+#include <windows.h>
+#else
+#include <signal.h>
+#include <sys/wait.h>
+#endif
+
+/* Include the CLIENT_SERVER definitions */
+
+#include "event_custom.h"
+
+/* Global variables */
+
+int event = 0; 
+
+#ifdef WIN_NT
+HANDLE  pids[MAX_CLIENTS];
+#endif
+
+
+/* extern  int errno; */
+
+char	*client_names[] =
+			{"MOE","CURLY","LARRY","HARPO","GROUCHO","CHICO"};
+
+/* Interbase required for SQL */
+
+EXEC SQL
+    SET DATABASE DB = "WHERE_GDB:asyn_evnts.gdb";
+
+EXEC SQL
+	INCLUDE SQLCA;
+
+EXEC SQL
+	BEGIN DECLARE SECTION;
+
+EXEC SQL
+	END   DECLARE SECTION;
+
+/*---------------------------------------------------------------------------*/
+
+main(int argc, char* argv[])
+
+//	int	argc;
+//	char	*argv[];
+
+{
+/****************************************************************************
+ *
+ *		m a i n		( e v e n t _ s e r v e r )
+ *
+ ***************************************************************************/
+
+    short	length,more_clients = TRUE,verbose = FALSE;
+
+    int		num_events,client_count = 0, loop_count, stat, i, total=0;
+    long        pipe_fd[MAX_CLIENTS][2];
+
+    long	count_array[MAX_CLIENTS],event_id;
+
+    char	*event_buffer,*result_buffer,*start_time;
+			
+/*--------------------------------------------------------------------------*/
+
+/* Ready the database and express interest in asynchronous events */
+
+
+    EXEC SQL
+        CONNECT DB;
+
+    EXEC SQL
+        SET TRANSACTION;
+
+/* Parse the command line */
+
+    parse_server_args(argc,argv,&num_events,&verbose);
+
+/* Queue events */
+
+    length = isc_event_block(&event_buffer,&result_buffer,MAX_CLIENTS,
+			"MOE","CURLY","LARRY","HARPO","GROUCHO","CHICO");
+    isc_que_events(isc_status,&DB,&event_id,length,event_buffer,
+			event_handler,result_buffer);
+    CHECK_STATUS;
+
+/* Ignore death-of-a-child signal */
+
+#ifndef WIN_NT
+    signal(SIGCLD,SIG_IGN);
+#endif
+
+/* Initialize the database */
+
+    init_server(&start_time,verbose);
+
+/* Create a client via FORK() and EXEC() */
+
+/*    create_client(&client_count,
+		  pipe_fd,
+		  num_events,
+		  client_names[client_count]);
+*/
+
+
+
+/* Start LOOP_COUNT at NUM_EVENTS and continue looping until LOOP_COUNT
+   reaches 0. */
+
+    for ( loop_count = num_events ; loop_count > 0; ) {
+
+/* If an event has occurred then reset the event flag, get the event counts,
+   handle any PACKETS in the PIPELINES from the CLIENTS and update the
+   database with the number of events the SERVER has received */
+
+	if (!event) 
+            {
+#ifdef WIN_NT
+            Sleep(5000);
+#else
+            sleep(5);
+#endif
+            }      
+
+       else {
+	    event--; 
+
+	    isc_event_counts(count_array,length,
+              event_buffer,result_buffer);
+
+	    loop_count -= update_server_relation(count_array,verbose);
+	    packet_handler(count_array,pipe_fd,verbose);
+	    isc_que_events(isc_status,&DB,&event_id,length,event_buffer,
+						event_handler,result_buffer);
+	    CHECK_STATUS;
+
+	}
+
+	if (client_count < MAX_CLIENTS) {
+
+	    create_client(&client_count,
+			  pipe_fd,
+			  num_events,
+			  client_names[client_count]);
+
+	}
+      
+
+    }
+
+/* Get any remaining packets from the PIPES and update the database */
+
+    finish_packets(pipe_fd,verbose);
+
+
+/* Cancel interest in the events, print the report and return stat = TRUE if
+   the server received the same number of events posted by the clients else
+   return FALSE */
+
+    isc_cancel_events(isc_status,&DB,&event_id);
+    CHECK_STATUS;
+
+    stat = report_events(start_time,num_events,verbose);
+
+    EXEC SQL
+        COMMIT RELEASE; 
+    
+    exit(stat);
+
+}
+
+/*---------------------------------------------------------------------------*/
+
+void init_server(char** start_time,short verbose)
+{
+/****************************************************************************
+ *
+ *		i n i t _ s e r v e r
+ *
+ ****************************************************************************
+ *
+ * Functional description
+ *	Get the START_TIME of the test and initialize the CLIENT, SERVER and
+ * PACKET relations.
+ *
+ ***************************************************************************/
+
+    int bintim,i;
+
+/*---------------------------------------------------------------------------*/
+
+/* Get the START_TIME, print the heading and initialize the relations in the
+   EVENTS.GDB database */
+
+    time(&bintim);
+    *start_time = ctime(&bintim);
+
+    fprintf(stdout,"\n");
+    for (i = 0; i < 80; i++)
+	fprintf(stdout,"=");
+    fprintf(stdout,"\n\n");
+
+    if (verbose)
+	fprintf(stdout,"\tDeleting all tuples from the CLIENT_RELATION...\n");
+    EXEC SQL
+	DELETE FROM CLIENT_RELATION;
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tDeleting all tuples from the SERVER_RELATION...\n");
+    EXEC SQL
+	DELETE FROM SERVER_RELATION;
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tDeleting all tuples from the PACKET_RELATION...\n");
+    EXEC SQL
+	DELETE FROM PACKET_RELATION;
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tAdding client MOE to the CLIENT_RELATION...\n");
+    EXEC SQL
+	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
+			     VALUES ('MOE',0);
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tAdding client CURLY to the CLIENT_RELATION...\n");
+    EXEC SQL
+	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
+			     VALUES ('CURLY',0);
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tAdding client LARRY to the CLIENT_RELATION...\n");
+    EXEC SQL
+	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
+			     VALUES ('LARRY',0);
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tAdding client HARPO to the CLIENT_RELATION...\n");
+    EXEC SQL
+	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
+			     VALUES ('HARPO',0);
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tAdding client GROUCHO to the CLIENT_RELATION...\n");
+
+    EXEC SQL
+	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
+			     VALUES ('GROUCHO',0);
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tAdding client CHICO to the CLIENT_RELATION...\n");
+    EXEC SQL
+	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
+			     VALUES ('CHICO',0);
+    CHECK_STATUS;
+
+    if (verbose)
+	fprintf(stdout,"\n\tInitializing the SERVER_RELATION...\n\n");
+
+    do {
+
+       EXEC SQL
+           INSERT INTO SERVER_RELATION (SERVER_EVENT_COUNT)
+			     VALUES (0);
+
+       if ( isc_status[1] == isc_deadlock )
+          {
+           EXEC SQL
+               ROLLBACK;
+      
+           EXEC SQL
+               SET TRANSACTION;
+
+           continue;
+         }
+       else
+         {
+
+          if ( isc_status[1] )
+      
+          isc_print_status(isc_status);
+ 
+
+          break;
+         }
+
+      } while (1) ;
+
+       EXEC SQL
+           COMMIT;
+
+       CHECK_STATUS;
+
+       EXEC SQL
+           SET TRANSACTION;
+}
+
+/*--------------------------------------------------------------------------*/
+
+void parse_server_args(int argc, char* argv[], int* num_events, short* verbose)
+{
+/****************************************************************************
+ *
+ *		p a r s e _ s e r v e r _ a r g s
+ *
+ ****************************************************************************
+ *
+ * Functional description
+ * Parse the parameters passed into the program from the command line.
+ * Possible parameters are: -z (to print the program version)
+ *					-i NUM_EVENTS
+ *					-v print verbose messages
+ *
+ ***************************************************************************/
+
+    char	*arg_ptr,**end_args,num_event_string[8];
+    int		sw_bad;
+
+/*---------------------------------------------------------------------------*/
+
+/* Parse the arguments, print the version if appropriate and modify the value
+   of NUM_EVENTS if the user has passed a value for -I on the command line */
+
+    *num_events = DEFAULT_NUM_EVENTS;
+
+    end_args = argv + argc;
+
+    for (++argv; argv < end_args; ) {
+
+	arg_ptr = *argv++;
+	sw_bad  = FALSE;
+	if (*arg_ptr != '-')
+	    sw_bad = TRUE;
+	else
+	    switch (UPPER(arg_ptr[1])) {
+
+		case 'I':
+		    strcpy(num_event_string,*argv++);
+		    *num_events = atoi(num_event_string);
+		    break;
+
+		case 'V':
+		    *verbose = TRUE;
+		    break;
+
+		case 'Z':
+		    fprintf(stdout,"\n\tAsynchronous Test Version %s\n\n",
+								    VERSION);
+		    isc_version(&DB,NULL,NULL);
+		    CHECK_STATUS;
+		    if (argc == 2)
+			exit(TRUE);
+		    break;
+
+		default :
+		    sw_bad = TRUE;
+
+	    }
+
+	if (sw_bad) {
+
+	    fprintf(stdout,"Invalid option \"%s\". Valid options are:\n",
+								arg_ptr);
+	    fprintf(stdout,"\t-I\tEvent iterations\n");
+	    fprintf(stdout,"\t-Z\tProgram version\n");
+	    fprintf(stdout,"\t-V\tVerbose messages\n");
+	    exit(FALSE);
+
+	}
+
+    }
+
+}
+
+/*---------------------------------------------------------------------------*/
+
+void create_client(int* client_count,long pipe_fd[MAX_CLIENTS][2], int num_events,
+					char client_name[])
+
+//    int		*client_count,num_events;
+//    long        pipe_fd[MAX_CLIENTS][2];
+//    char	client_name[];
+
+{
+/*****************************************************************************
+ *
+ *		c r e a t e _ c l i e n t
+ *
+ *****************************************************************************
+ *
+ * Functional description
+ *	Divide the number of events to create among each client, FORK and
+ * EXEC the EVENT_CLIENT.  Pass the pipe number, the number of events
+ *	that the client should create and the client name into the client
+ * using ARGV.
+ *
+ ****************************************************************************/
+
+	int	client_events;
+	int	extra_events;
+	int	pid;
+	char	fd_str[300],event_str[8];
+
+#ifdef WIN_NT
+
+        SECURITY_ATTRIBUTES     attr;
+        STARTUPINFO             si;
+        PROCESS_INFORMATION     pi;
+        HANDLE                  pipe_write, pipe_read;
+        SECURITY_DESCRIPTOR     descriptor;
+
+
+#endif
+
+/*---------------------------------------------------------------------------*/
+
+/* Sleep 1 second, open a pipe and store the pipe fildes in PIPE_FD array */
+
+   client_events = num_events / MAX_CLIENTS;
+   extra_events  = num_events % MAX_CLIENTS;
+
+         
+#ifdef WIN_NT
+
+        Sleep( 1 * 1000 );
+
+
+if (!InitializeSecurityDescriptor(&descriptor, SECURITY_DESCRIPTOR_REVISION))
+     {
+      fprintf(stdout,"Error : Init. Sec. Descriptor Failed, Error Code %d \n",
+              GetLastError() );
+     }
+ 
+if (!SetSecurityDescriptorDacl(&descriptor, FALSE, NULL, FALSE))
+     {
+      fprintf(stdout,"Error : Set Sec. Descriptor Failed, Error Code %d \n",
+              GetLastError() );
+     }
+
+
+attr.nLength = sizeof (SECURITY_ATTRIBUTES);
+attr.bInheritHandle = TRUE;
+attr.lpSecurityDescriptor = &descriptor;
+
+
+if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 )) 
+    {
+      fprintf(stdout,"Create pipe failed\n");
+    }
+
+    pipe_fd[*client_count][0] = pipe_write;
+    pipe_fd[*client_count][1] = pipe_read;
+	
+    if (*client_count != 0)
+	sprintf(event_str,"%d",client_events);
+    else
+	sprintf(event_str,"%d",client_events+extra_events);
+   
+    sprintf(fd_str,"%s %d %s %s %s ", 
+              "event_client.exe", pipe_fd[*client_count][1], event_str,
+              client_name, NULL);
+
+    si.cb = sizeof(STARTUPINFO);
+    si.lpReserved = NULL;
+    si.lpDesktop = NULL;
+    si.lpTitle = NULL;
+    si.dwFlags = 0;
+    si.cbReserved2 = 0;
+    si.lpReserved2 = NULL;
+ 
+  if ( ! CreateProcess(NULL, fd_str, NULL,
+         NULL, TRUE, NORMAL_PRIORITY_CLASS ,
+         NULL, NULL, &si, &pi))
+     {
+      fprintf(stdout,"Error : CreateProcess Failed, Error Code %d \n",
+              GetLastError() );
+     }
+
+
+     pids[*client_count] = pi.hProcess;
+
+#else
+	sleep(1);
+
+	if (pipe(pipe_fd[*client_count]) == -1)
+		perror("pipe");
+
+/* Convert the number of events to a string */
+
+	if (*client_count != 0)
+
+		sprintf(event_str,"%d",client_events);
+
+	else
+
+		sprintf(event_str,"%d",client_events+extra_events);
+
+/* Fork a child and if successful, EXEC the EVENT_CLIENT for the child */
+
+
+
+
+	pid = fork();
+	switch (pid) {
+		case -1: perror("vfork");
+			 break;
+		case  0: sprintf(fd_str,"%d",pipe_fd[*client_count][1]);
+			 execl("./event_client","event_client",
+					fd_str,event_str,client_name,NULL);
+			 break;
+	}
+
+	CLOSE_PIPE;
+
+#endif
+
+/*  This was move to work on NT */
+
+    if (*client_count != 0)
+       fprintf(stdout,"\t\tClient %s will post %d events\n\n",
+					client_name,client_events);
+    else
+       fprintf(stdout,"\t\tClient %s will post %d events\n\n",
+			client_name, client_events + extra_events);
+   
+	
+    (*client_count)++;
+}
+
+/*---------------------------------------------------------------------------*/
+
+void packet_handler(long count_array[], long pipe_fd[MAX_CLIENTS][2] , short verbose)
+
+//    long	count_array[];
+//    long        pipe_fd[MAX_CLIENTS][2];
+//    short	verbose;
+
+{
+/****************************************************************************
+ *
+ *		p a c k e t _ h a n d l e r
+ *
+ ****************************************************************************
+ *
+ * Functional description
+ * Read from each PIPE_FD[CLIENT_NUM] COUNT_ARRAY[CLIENT_NUM] times.  In
+ *	other words, each CLIENT will post an event and write a PACKET into
+ * it's pipe.  Each PACKET is read from the pipe and inserted into the
+ * PACKET_RELATION.
+ *
+ ****************************************************************************/
+
+    static short	first=TRUE;
+	   char		packet[15],err_buf[80];
+	   int		client_num,packet_num,n,i,size=sizeof(packet);
+#ifdef WIN_NT
+           int          outsize;
+#endif
+
+/*--------------------------------------------------------------------------*/
+
+/* Skip the events the first time through since the initial call to
+   ISC_QUE_EVENTS causes each element of COUNT_ARRAY to be set to 1 */
+
+    if (first) {
+        first = FALSE;
+
+	for (client_num = 0; client_num < MAX_CLIENTS; client_num++)
+	    count_array[client_num] = 0;
+     
+        return;
+
+    }
+
+/* Read all of each CLIENT'S PACKETS in order and insert them into the
+   PACKET_RELATION */
+
+    for ( client_num = 0; client_num < MAX_CLIENTS; client_num++ ) {
+
+      for ( packet_num = 0;
+			packet_num < count_array[client_num]; packet_num++ ) {
+
+
+#ifdef WIN_NT
+
+        for ( i = 0; i < IO_RETRY; i++ ) 
+         {
+         if (!PeekNamedPipe((HANDLE) pipe_fd[client_num][0],NULL,
+             0,NULL, &outsize, NULL))
+            {
+             i = IO_RETRY;
+            }
+
+        if ( outsize )
+          {
+           i = IO_RETRY;
+          
+           if (ReadFile( (HANDLE)pipe_fd[client_num][0],packet,size,&outsize,NULL))
+            {
+            EXEC SQL
+	      INSERT INTO PACKET_RELATION
+	             (CLIENT_NAME,PACKET_TEXT,PACKET_DATE)
+	      VALUES (:client_names[client_num],:packet,'NOW');
+	    CHECK_STATUS;
+
+            }
+         }
+        else
+          Sleep(3000);
+
+        }
+
+#else
+
+       for ( i = 0; i < IO_RETRY; i++ ) {
+
+
+       if ((n = read(pipe_fd[client_num][0],packet,size)) == size) {
+
+		    EXEC SQL
+			INSERT INTO PACKET_RELATION
+				   (CLIENT_NAME,PACKET_TEXT,PACKET_DATE)
+			    VALUES (:client_names[client_num],:packet,'NOW');
+		    CHECK_STATUS;
+		    break;
+
+		}	/* END IF READ */
+
+/* Else read didn't finish and the error is something other than interrupt */
+
+		else if ((n == -1) && (errno != EINTR)) {
+
+		    sprintf(err_buf,"error on pipe read");
+		    perror(err_buf);
+
+		}	/* END ELSE ERROR */
+
+	    }		/* END FOR IO_RETRY LOOP */
+#endif
+
+	}		/* END FOR PACKET LOOP */
+
+	if (verbose)
+	    fprintf(stdout,"\tReceived %d packets from client %s\n\n",
+					packet_num,client_names[client_num]);
+        EXEC SQL
+   	    COMMIT;
+
+	CHECK_STATUS;
+	
+        EXEC SQL
+            SET TRANSACTION;
+
+    }			/* END FOR CLIENT LOOP */
+
+}
+
+/*--------------------------------------------------------------------------*/
+
+int update_server_relation(long count_array[], short verbose)
+
+//    long	count_array[];
+//    short	verbose;
+
+{
+/****************************************************************************
+ *
+ *		u p d a t e _ s e r v e r _ r e l a t i o n
+ *
+ ****************************************************************************
+ *
+ * Functional description
+ * Update the SERVER_RELATION with the values in COUNT_ARRAY.
+ *
+ ***************************************************************************/
+
+    static int	first = TRUE;
+	   int	i,total_events = 0;
+
+/*--------------------------------------------------------------------------*/
+
+/* Skip the first time through since every element in the COUNT_ARRAY has
+
+   been initialized to 1 event even though no events have occurred.  This
+   is because ISC_QUE_EVENTS calls EVENT_HANDLER on the initial call to
+   ISC_QUE_EVENTS */
+
+    if (!first) {
+
+/* Loop through the COUNT_ARRAY and update the SERVER_RELATION with the event
+   counts */
+
+	for (i = 0,total_events = 0; i < MAX_CLIENTS;
+			total_events += count_array[i],i++)
+
+	    if (count_array[i]) {
+
+		EXEC SQL
+		    UPDATE SERVER_RELATION
+		    SET SERVER_EVENT_COUNT =
+					SERVER_EVENT_COUNT + :count_array[i];
+
+
+               if ( isc_status[1] == isc_deadlock )
+                  {
+ 
+                   EXEC SQL
+                       ROLLBACK;
+
+                   EXEC SQL
+                       SET TRANSACTION; 
+
+                   i--;
+                   continue;
+                  }
+               else
+                   if ( isc_status[1] ) 
+                      isc_print_status(isc_status);
+
+
+               EXEC SQL
+                   COMMIT
+
+               CHECK_STATUS;
+
+               EXEC SQL
+                   SET TRANSACTION;
+	    }
+
+    }
+
+    else
+	first = FALSE;
+
+    if (verbose)
+	fprintf(stdout,"\tReceived %d event%c from all clients\n\n",
+				total_events,(total_events > 1) ? 's' : ' ');
+
+    return(total_events);
+
+}
+
+/*---------------------------------------------------------------------------*/
+
+void event_handler(char* result_buffer, short length, char* updated_buffer)
+
+//    char  *result_buffer,*updated_buffer;
+//    short length;
+
+{
+/****************************************************************************
+ *
+ *		e v e n t _ h a n d l e r
+ *
+ ****************************************************************************
+ *
+ * Functional description
+ *	This is the AST routine queued by ISC_QUE_EVENTS and copies the
+ * number of events that have been posted into COUNT_ARRAY.
+ *
+ ***************************************************************************/
+
+    event++;
+    while(length--)
+	*result_buffer++ = *updated_buffer++;
+
+}
+
+/*-------------------------------------------------------------------------*/
+
+int report_events(char* start_time, int num_events, short verbose)
+
+//    int		num_events;
+//    char	*start_time;
+//    short	verbose;
+
+{
+/****************************************************************************
+ *
+ *		r e p o r t _ e v e n t s
+ *
+ ****************************************************************************
+ *
+ * Functional description
+ *	Print the report and verify that the number of events posted by each
+ * CLIENT was received by the server.  If all events are accounted for,
+ * return TRUE, else print an error message and return ERROR.
+ *
+ ***************************************************************************/
+
+    int		client_num,client_event_count,client_total_events = 0;
+    int		server_event_count,packet_count,bintim,i;
+    char	*finish_time;
+    short	stat = TRUE;
+
+/*--------------------------------------------------------------------------*/
+
+/* Print the report heading, start and finish times and print the number of
+   events each CLIENT posted */
+
+    for (i = 0; i < 80; i++)
+	fprintf(stdout,"=");
+    fprintf(stdout,"\n");
+
+    fprintf(stdout,"\n\tAsynchronous Event Test %s\n\n",VERSION);
+
+    if (verbose) {
+
+	fprintf(stdout,"\tTest started at:  %s",start_time);
+	time(&bintim);
+	finish_time = ctime(&bintim);
+	fprintf(stdout,"\tTest finished at: %s",finish_time);
+
+    }
+
+    for (client_num = 0; client_num < MAX_CLIENTS; client_num++) {
+
+	client_event_count = 0;
+	packet_count = 0;
+
+        
+
+	EXEC SQL
+	    SELECT CLIENT_EVENT_COUNT
+		INTO :client_event_count
+		FROM CLIENT_RELATION
+		WHERE CLIENT_NAME = :client_names[client_num];
+
+        if ( isc_status[1] == isc_deadlock )
+           {
+            EXEC SQL
+                ROLLBACK;
+      
+            client_num--;
+       
+            EXEC SQL
+                SET TRANSACTION;
+
+            continue;
+           }
+        else
+
+          if ( isc_status[1] )
+             isc_print_status(isc_status);
+            
+
+	fprintf(stdout,"\n\n\tClient %s created %d events\n",
+				client_names[client_num],client_event_count);
+
+	EXEC SQL
+	    SELECT COUNT(CLIENT_NAME)
+		INTO :packet_count
+		FROM PACKET_RELATION
+		WHERE CLIENT_NAME = :client_names[client_num];
+
+        if ( isc_status[1] == isc_deadlock )
+           {
+            EXEC SQL
+                ROLLBACK;
+      
+            client_num--;
+       
+            EXEC SQL
+                SET TRANSACTION;
+
+            continue;
+           }
+        else
+          if ( isc_status[1] )
+             isc_print_status(isc_status);
+
+	fprintf(stdout,"\n\tClient %s sent %d packets to the server\n",
+				client_names[client_num],client_event_count);
+	fprintf(stdout,"\n\tThe server received %d packets from client %s\n",
+				packet_count,client_names[client_num]);
+	if (packet_count != client_event_count)
+	    stat = ERROR;
+
+	client_total_events = client_total_events + client_event_count;
+    }
+
+/* Print the total number of events that all CLIENTS posted */
+
+    fprintf(stdout,"\n\n\tAll clients posted a total of %d events\n",
+							client_total_events);
+
+/* Print the number of events received by the SERVER */
+
+
+    do {
+
+    EXEC SQL
+	SELECT SERVER_EVENT_COUNT
+	    INTO :server_event_count
+	    FROM SERVER_RELATION;
+
+
+    if ( isc_status[1] == isc_deadlock )
+       {
+        EXEC SQL
+            ROLLBACK;
+      
+        EXEC SQL
+            SET TRANSACTION;
+
+        continue;
+       }
+    else
+       {
+
+        if ( isc_status[1] )
+           isc_print_status(isc_status);
+
+        break;
+       }
+
+    } while (1) ;
+
+    EXEC SQL
+        COMMIT;
+
+    fprintf(stdout,"\n\n\tServer received a total of %d events\n\n",
+							server_event_count);
+
+    if (server_event_count != client_total_events)
+	stat = ERROR;
+
+/* Print the report footer */
+
+    for (i = 0; i < 80; i++)
+	fprintf(stdout,"=");
+    fprintf(stdout,"\n\n");
+
+    return(stat);
+
+}
+
+/*--------------------------------------------------------------------------*/
+
+void finish_packets(long pipe_fd[MAX_CLIENTS][2], short verbose)
+
+//    long	pipe_fd[MAX_CLIENTS][2];
+//    short	verbose;
+
+{
+/****************************************************************************
+ *
+ *		f i n i s h _ p a c k e t s
+ *
+ ****************************************************************************
+ *
+ * Functional description
+ * Read from each PIPE_FD[CLIENT_NUM] until no more packets can be read.
+ *	In other words, the CLIENT has closed the PIPE and there are no more
+ * PACKETS in the PIPE.  Each PACKET read from the pipe is inserted into
+ * the PACKET_RELATION.
+ *
+ ****************************************************************************/
+
+	   int		client_num,packet_num;
+	   char		packet[15];
+#ifdef WIN_NT
+           int          outsize= 0;
+#endif
+
+/*--------------------------------------------------------------------------*/
+
+/* Read all of each CLIENT'S PACKETS in order and insert them into the
+   PACKET_RELATION */
+
+#ifdef WIN_NT
+
+   WaitForMultipleObjects( MAX_CLIENTS, pids, TRUE, INFINITE);
+
+#endif
+
+    for ( client_num = 0; client_num < MAX_CLIENTS; client_num++ ) {
+    
+
+#ifdef WIN_NT
+
+       packet_num = 0;
+
+
+      outsize = 1;
+
+      while ( outsize )
+       {
+           if ( PeekNamedPipe((HANDLE) pipe_fd[client_num][0],NULL,
+             0,NULL, &outsize, NULL))
+           {
+
+            if ( outsize )
+             {
+                
+                ReadFile((HANDLE) pipe_fd[client_num][0],packet,
+                      sizeof(packet), &outsize,NULL) ;
+
+              do {
+
+                EXEC SQL
+                    INSERT INTO PACKET_RELATION
+    	                 (CLIENT_NAME,PACKET_TEXT,PACKET_DATE)
+	                 VALUES (:client_names[client_num],:packet,'NOW');
+
+
+                if ( isc_status[1] == isc_deadlock )
+                   {
+                    EXEC SQL
+                        ROLLBACK;
+      
+                    EXEC SQL
+                        SET TRANSACTION;
+
+                    continue;
+                   }
+                else
+                   {
+
+                   if ( isc_status[1] )
+      
+                      isc_print_status(isc_status);
+ 
+                   break;
+                   } 
+
+                packet_num++;
+
+               } while (1) ; 
+
+                EXEC SQL
+                    COMMIT;
+
+
+                EXEC SQL
+                    SET TRANSACTION;
+             }
+           }
+         else
+          {
+            Sleep(2000);
+          }
+        }
+#else
+	for ( packet_num = 0;
+		read(pipe_fd[client_num][0],packet,sizeof(packet)) > 0 ; )
+             {
+
+               do {
+		 EXEC SQL
+		      INSERT INTO PACKET_RELATION
+		       		  (CLIENT_NAME,PACKET_TEXT,PACKET_DATE)
+			   VALUES (:client_names[client_num],:packet,'NOW');
+
+
+                 if ( isc_status[1] == isc_deadlock )
+                    {
+                     EXEC SQL
+                         ROLLBACK;
+      
+                     EXEC SQL
+                         SET TRANSACTION;
+
+                     continue;
+                    }
+                 else
+                    {
+
+                    if ( isc_status[1] )
+      
+                       isc_print_status(isc_status);
+ 
+                    break;
+                    }
+
+                 } while(1) ;
+
+                 EXEC SQL
+                     COMMIT;
+  
+                 EXEC SQL
+                     SET TRANSACTION;
+
+                 packet_num++;
+
+	     }
+#endif
+
+	 if (verbose) 
+	    fprintf(stdout,
+		"\n\tFinished with %d additional packets from client %s\n\n",
+					packet_num,client_names[client_num]);
+
+    }
+
+}
+
+/*---------------------------------------------------------------------------*/
+$ CREATE event_client.e
+
+/*
+ * PROGRAM: Asynchronous Event Client
+ * MODULE: 	event_client.e
+ * DESCRIPTION: This program will read from ARGV the number of events
+ * 		to create then drop into a loop to post the events.
+ *
+ */
+
+/* Include the CLIENT_SERVER custom definitions		*/
+
+#include "event_custom.h"
+
+#ifdef WIN_NT
+#include <windows.h>;
+#endif
+
+/* Interbase required for SQL				*/
+
+EXEC SQL
+    SET DATABASE DB = "WHERE_GDB:asyn_evnts.gdb";
+
+EXEC SQL
+	INCLUDE SQLCA;
+
+EXEC SQL
+	BEGIN DECLARE SECTION;
+
+EXEC SQL
+	END   DECLARE SECTION;
+
+/*--------------------------------------------------------------------------*/
+
+main(int argc, char* argv[])
+
+//    int  argc;
+//    char *argv[];
+
+{
+/****************************************************************************
+ *
+ *		m a i n		( e v e n t _ c l i e n t )
+ *
+ ****************************************************************************/
+
+    char	packet[15],client_name[10],events[5],buf[80];
+
+    int		client_pipe,num_events,loop_count,i,nwrite,
+		size = sizeof(packet);
+#ifdef WIN_NT
+    int         outsize;
+#endif
+
+/*--------------------------------------------------------------------------*/
+
+/* Parse the arguments from the EXEC call (pseudo command line) */
+
+    parse_client_args(argc,argv,&client_pipe,&num_events,client_name);
+
+
+/* Ready the EVENTS.GDB database */
+
+    EXEC SQL
+        CONNECT DB;
+
+    EXEC SQL
+        SET TRANSACTION;
+
+/* Create NUM_EVENTS events */
+
+    for ( loop_count = 0; loop_count < num_events; loop_count++ )
+     {
+
+/* Update the CLIENT_RELATION which fires a trigger to post an event */
+
+	EXEC SQL
+	    UPDATE CLIENT_RELATION
+		SET CLIENT_EVENT_COUNT = :loop_count + 1
+		WHERE CLIENT_NAME = :client_name;
+
+
+         if ( isc_status[1] == isc_deadlock )
+            {
+             EXEC SQL
+                 ROLLBACK;
+ 
+             EXEC SQL
+                 SET TRANSACTION;
+
+             loop_count--;
+             continue;
+            }
+         else
+           if ( isc_status[1] )
+              isc_print_status(isc_status);
+  
+/* Commit the transaction */
+
+	EXEC SQL
+            COMMIT;
+
+        EXEC SQL 
+	    SET TRANSACTION;
+
+/* Create a PACKET of the form: 	"MOE_100" */
+
+	strcpy(packet,client_name);
+	sprintf(events,"%d",loop_count+1);
+	strcat(packet,events);
+
+/* Continue attempting to write on pipe until not interrupted */
+
+
+
+/* Write the PACKET into the pipe for the SERVER to read and insert into the
+   PACKET_RELATION */
+
+#ifdef WIN_NT
+
+         if (!WriteFile((HANDLE)client_pipe,packet,size,&outsize,NULL))
+            {
+             fprintf(stdout,"Error : WriteFile failed, Error Code %d \n",
+                    GetLastError() );
+            }
+         else 
+            {
+                Sleep( 5000 );
+            }
+#else
+
+    for ( i = 0; i < IO_RETRY; i++ ) {
+
+    if ((nwrite = write(client_pipe,packet,size)) == size) {
+
+		sleep(5);
+
+		break;
+
+	    }
+
+	    else if ((nwrite == -1) && (errno != EINTR)) {
+
+		sprintf(buf,"**%s failed WRITE on PIPE %d of packet %s**\n",
+					client_name,client_pipe,packet);
+		perror(buf);
+
+	    }
+
+	}
+#endif
+
+
+    }
+
+/* Synchronize with the server by waiting 4 minutes */
+
+#ifdef WIN_NT
+
+   
+/*    Sleep ( 24 * 1000 ); */
+
+
+	if (!CloseHandle ((HANDLE)client_pipe))
+	{
+		sprintf(buf,"**%s failed on CLOSE of PIPE %d**\n",
+				client_name,client_pipe); 
+		fflush(buf);
+	}
+					
+#else
+
+ /*   sleep(240); */
+
+    if (close(client_pipe) == -1) {
+
+	sprintf(buf,"**%s failed on CLOSE of PIPE %d**\n",
+					client_name,client_pipe);
+	perror(buf);
+
+    }
+#endif
+
+    EXEC SQL
+        COMMIT RELEASE;
+
+    exit(TRUE);
+
+}
+
+/*---------------------------------------------------------------------------*/
+
+void parse_client_args(
+		int argc,
+		char* argv[],
+		int* client_pipe,
+		int* num_events,
+		char* client_name)
+
+//    int		argc,*client_pipe,*num_events;
+//    char	*argv[],*client_name;
+
+{
+/*****************************************************************************
+ *
+ *		p a r s e _ c l i e n t _ a r g s
+ *
+ *****************************************************************************
+ *
+ * Functional description
+ * Parse the parameters passed into the program from the EXEC system call.
+ * Parameters will be:  - CLIENT_PIPE number for writing PACKETS
+ *			     - NUM_EVENTS which is the number of events to post
+ *			     - CLIENT_NAME which is the name of this client
+ *
+ ****************************************************************************/
+
+    *client_pipe = atoi(argv[1]);
+    *num_events = atoi(argv[2]);
+    strcpy(client_name,argv[3]);
+
+}    
+
+/*---------------------------------------------------------------------------*/
+$ CREATE delay.c
+#ifdef WIN_NT
+#include <windows.h>
+#endif
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+main(int argc, char* argv[])
+//int argc;
+//char *argv[];
+{
+  int delay;
+  if (argc > 1)
+    sscanf(argv[1], "%d", &delay);
+  else
+    delay = 5;
+#ifdef WIN_NT
+  Sleep(delay * 1000);
+#else
+  sleep(delay);
+#endif
+  exit(0);
+}
+$ CC FLAG_CC delay
+$ LINK FLAG_LINK delay 
+$ GPRE -e -n -m event_client.e 
+$ CC FLAG_CC event_client.c
+$ LINK FLAG_LINK event_client 
+$ GPRE -e -n -m event_server.e 
+$ CC FLAG_CC event_server.c
+$ LINK FLAG_LINK event_server 
+$ RUN event_server 
+$ DELETE event_custom.h
+$ DELETE event_server* 
+$ DELETE event_client* 
+$ RUN delay 60
+$ DROP WHERE_GDB:asyn_evnts.gdb
+$ DELETE delay* doc

@@ -1,0 +1,2 @@
+LIB=".;d:/interbase/sdk/lib;d:/bc5/lib;$LIB"
+TMP=d:/mks/tmp

@@ -1,0 +1,37 @@
+#!/bin/sh
+# *** Modified for V6.0 certification **
+#    27-Jan-1999: dsmirnov: Modified for 6.0 vectors
+#     Now using SUNspro 5.1 link to netapp to use 4.2 compiler
+#     Compilers used - SPARCWorks 4.0 (for C, C++, Fortran and Ada - note:
+#                      SC4.0 uses Ada3.0).
+#                    - MicroFocus Cobol 4.0
+#     SPARCWorks 4.0 is installed on jabba - /usr/support/SUNWspro/SC4.0
+#     MicroFocus Cobol is installed on jabba - /apps/lang/cobol
+#     NOTE: ensure jabba:/usr/support is mounted as /usr/support and
+#                  jabba:/apps is mounted as /apps
+#
+# 23-Aug-1999: bsriram: removed /usr/gds/bin from the PATH since 
+#             it was resolving drop_gdb from that directory instead 
+#             of the particular O.S's drop_gdb.
+#
+PATH=./:/usr/support/SUNWspro/Ada3.0/bin:/netapp/apps/lang/cobol/bin:/netapp/apps/lang/workshop/5.1/SUNWspro/bin:/usr/ccs/bin:/netapp/apps/isc/bin:/usr/ucb:/usr/bin:/usr/interbase/bin:$PATH
+COBDIR=/netapp/apps/lang/cobol
+ADADIR=/usr/support/SUNWspro/Ada3.0/self
+ADAHOME=/usr/support/SUNWspro/Ada3.0
+SWADAHOME=/usr/support/SUNWspro/Ada3.0
+TMP=/tmp
+LM_LICENSE_FILE=/etc/opt/licenses/licenses_combined
+#LM_LICENSE_FILE=/licenses/lang/license_dir/sunpro.lic,1
+LOCAL_HOST=`hostname`:"`pwd`/"
+LD_LIBRARY_PATH=/usr/lib:/usr/interbase/lib:/netapp/apps/isc/lib:.:/netapp/apps/lang/cbol/coblib:/usr/support/SUNWspro/Ada3.0/lib:/usr/support/SUNWspro/Ada3.0/self
+export PATH
+export PATH
+export COBDIR
+export ADADIR
+export ADAHOME
+export SWADAHOME
+export TMP
+export LM_LICENSE_FILE
+export LOCAL_HOST
+export LD_LIBRARY_PATH
+umask 000

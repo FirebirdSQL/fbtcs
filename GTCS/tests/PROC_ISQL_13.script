@@ -1,0 +1,25 @@
+
+$GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure proc15 RETURNS (a integer) as
+begin
+  for select status from s UNION
+  select weight from p
+  into :a
+ do SUSPEND;
+end
+go
+set term ; go
+set echo;
+EXECUTE PROCEDURE PROC15 ;
+SELECT * FROM PROC15;
+SELECT MAX(A) FROM PROC15;
+SELECT A FROM PROC15;
+SELECT A FROM PROC15 ORDER BY A;
+SELECT A, AVG(A) FROM PROC15 GROUP BY A HAVING AVG(A) > 20;
+SELECT A, AVG(A) FROM PROC15 GROUP BY A ;
+SELECT A  FROM PROC15
+        WHERE A > (SELECT AVG(A) FROM PROC15);
+exit;
+$ DROP WHERE_GDB:sp1.gdb 

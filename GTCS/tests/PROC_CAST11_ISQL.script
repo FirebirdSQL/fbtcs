@@ -1,0 +1,42 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+create table t (i int, j int);
+insert into t values (1, 1);
+commit;
+select * from t;
+set term go;
+create procedure p1 returns (x char(1)) as
+begin
+ select i from t into :x;
+ suspend;
+end
+go
+set term ; go
+select * from p1;
+create table t1 (i int, j int);
+insert into t1 values (10001, 1);
+commit;
+set term go;
+create procedure p2 returns (x char(1)) as
+begin
+ select i from t1 into :x;
+ suspend;
+end
+go
+set term ; go
+select * from p2;
+create table t2 (i int, j int);
+insert into t2 values (10001, 1);
+commit;
+set term go;
+create procedure p3 returns (x char(10)) as
+begin
+ select i from t2 into :x;
+ suspend;
+end
+go
+set term ; go
+select * from p3;
+$ DROP WHERE_GDB:sp1.gdb
+$ DELETE sp1.gbk sp1.sql

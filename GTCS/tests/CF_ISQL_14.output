@@ -1,0 +1,24 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -151
+
+attempted update of read-only column
+Statement failed, SQLCODE = -151
+
+attempted update of read-only column
+Statement failed, SQLCODE = -804
+
+Dynamic SQL Error
+-SQL error code = -804
+-Count of read-write columns does not equal count of values
+
+           A                    AF 
+============ ===================== 
+
+          10                    30 
+
+
+           A                    AF 
+============ ===================== 
+
+          10                    30 
+

@@ -1,0 +1,87 @@
+
+/*******************************************************************************
+ Test Name:         dsql_domain_22
+ Test Series:       dsql_domains
+ Date:              20-Oct-1993
+ Related bugs:      bug_xxxx  -  have to exit db for changes made to domains 
+                                 to affect data being entered into tables.
+ Comments:          This script will test for error conditions when using the 
+                    alter domain statement on domains that are already in use 
+                    in table definitions, with domain defaults and check 
+                    constraints.
+/*******************************************************************************
+HISTORY:
+2001-Aug-27 Neil McCalden 
+Expected output updated to reflect fix for:
+[ firebird-Bugs-448062 ] ALTER DOMAIN leaves CONSTRAINT word
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_22a.sql
+create domain dom20a as smallint 
+ default 0
+ check (value >= 0 and value < 100);
+commit;
+show domain dom20a;
+create domain dom20b as integer
+ default 500
+ check (value >= 500);
+commit;
+show domain dom20b;
+create domain dom20c as date
+ check (value >= 'today');
+commit;
+show domain dom20c;
+create domain dom20d as char(20)
+ check (value in (select river from rivers));
+commit;
+show domain dom20d;
+create domain dom20e as varchar(25)
+ default 'VARYING DEFAULT';
+commit;
+show domain dom20e;
+create domain dom20f as decimal(6,2)
+ default 4.2
+ check (value > 0);
+commit;
+show domain dom20f;
+create domain dom20g as float
+ default 500.1
+ check (value < 50000.00);
+commit;
+show domain dom20g;
+create domain dom20h as double precision
+ default 1000
+ not null;
+commit;
+show domain dom20h;
+create table tab20a
+ (fld1 dom20a, fld2 dom20b, fld3 dom20c, fld4 dom20d,
+  fld5 dom20e, fld6 dom20f, fld7 dom20g, fld8 dom20h);
+commit;
+show table tab20a;
+insert into tab20a (fld3, fld4) values ('01/01/2050', 'Sacramento');
+commit;
+alter domain dom20a
+ drop default;
+alter domain dom20a
+ drop constraint;
+commit;
+alter domain dom20a
+ add constraint check (value > 100);
+commit;
+show domain dom20a;
+commit;
+exit;
+$ CREATE domain_22b.sql
+show domain dom20a;
+insert into tab20a (fld1) values (0);
+commit;
+rollback;
+insert into tab20a (fld1, fld3, fld8) values (200, '01/01/2050', null);
+select * from tab20a;
+rollback;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_22a.sql
+$ isql -m WHERE_GDB:atlas.gdb -i domain_22b.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_22*

@@ -1,0 +1,70 @@
+
+$CREATE COMMENT
+Author: Narayan 
+Date: Mar 17, 1994.
+
+Description: This is a test to test the auto-commit behavior of IB. 
+It creates table t,u & v. Creates an after insert trigger on table t
+that also inserts into u and v. It inserts a value into t so the 
+trigger causes the inserts into u and V. One of these inserts (caused
+by the trigger) fails.
+None of the inserts should be (auto)committed to the db.
+
+The auto-commit behavior is set using unix sed commands.
+We sed the A.c file to insert isc_autocommit in its tpb defintion.
+
+
+
+$CREATE init.sql
+  create database "WHERE_GDB:ac2_test.gdb";
+  create table t (a integer);
+  create table u (b integer);
+  create table v (c integer);
+  create unique index uni_ind on v (c);
+  commit;
+  connect "WHERE_GDB:ac2_test.gdb";
+  set term go;
+  create trigger trig_ins for t active after insert position 0 as
+  begin 
+    insert into u values (new.a*10);
+    insert into v values (new.a*100);
+  end go
+  set term ;go
+
+  insert into v values (1000);
+  commit;
+
+$CREATE A.e
+#include <stdio.h>
+exec sql include salca
+
+exec sql set database DB = "WHERE_GDB:ac2_test.gdb";
+
+main()
+{
+  exec sql connect DB;
+
+  exec sql set transaction;
+
+  exec sql insert into t values (10);
+
+  if (SQLCODE) isc_print_status(gds__status);
+
+  exec sql commit;
+}
+
+$CREATE show.sql
+ connect "WHERE_GDB:ac2_test.gdb";
+ select * from t;
+ select * from u;
+ select * from v;
+$ISQL -i init.sql
+$GPRE -e A.e
+$RUN sed "/isc_tpb_0 \[/s/\[.\] = {1,/\[\] = {1, isc_tpb_autocommit,/" A.c > A1.c
+$RUN sed "/isc_start_transaction /s/4/5/" A1.c > A2.c
+$CC FLAG_CC A2.c
+$LINK FLAG_LINK A2 
+$RUN A2
+$ISQL -i show.sql
+$DELETE COMMENT init.sql show.sql A.* A1.* A2.*
+$DROP WHERE_GDB:ac2_test.gdb

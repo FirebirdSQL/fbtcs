@@ -1,0 +1,100 @@
+
+$ CREATE doc
+By:          Clare Taylor
+Date:        03/14/94
+Test name:   IDML_C_SUBQ_04         
+Series:      IDML_C_SUBQUERYS          
+Results:     Populates the DUPLICATE table using a SELECT * subquery 
+Dependency:  Requires database build in test IDML_C_SUBQ_02
+History:
+
+Description:
+In Embedded SQL and in ISQL (dynamic):
+Tests the INSERT statement using a SELECT * subquery.
+Verification is done using ISQL and a specific query.  If we use 
+select * the display in ISQL is so bad that we can not easily tell
+if the select is correct.  I inserted one string into all rows so
+selecting C_DEFAULT shows that string in the first row selected.
+The remainder of the rows are null and this is correct.
+
+Set NAMES seems to have no affect on the SUBQUERY INSERT behavior.
+Ad Hoc tests show that changing SET NAMES to DOS437 or DOS850 do not
+cause different results.  Data, in P, is not auto transliterated on
+insert.  SUBQUERY INSERTS insert the same data as the data stored in
+the orig. table.
+$ CREATE subq4.e
+/*-------------------------------------------------------------------
+  Case:  2  INSERT INTO DUPLICATE  SELECT * FROM STRING_TABLE
+---------------------------------------------------------------------*/
+#include <WHERE_FILES:tcs.h>
+EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
+EXEC SQL WHENEVER SQLERROR GOTO err;
+EXEC SQL INCLUDE SQLCA;
+
+
+static print_error()
+{
+    if (SQLCODE != 100)
+        printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+}
+main()
+{
+     EXEC SQL SET NAMES ISO8859_1;  /* field to field insert doesn't seem
+				       to require set names */
+     EXEC SQL CONNECT db;
+     EXEC SQL DELETE FROM DUPLICATE;
+     EXEC SQL COMMIT;
+
+     EXEC SQL 
+       INSERT INTO DUPLICATE SELECT * FROM STRING_TABLE;
+     EXEC SQL COMMIT;
+
+     EXEC SQL COMMIT RELEASE;
+     exit(0);
+err: print_error();
+}
+$ CREATE verify1.sql
+set names iso8859_1;
+connect "WHERE_GDB:tests.gdb";
+select C_ENUS, C_FRANCE from string_table; 
+select C_ENUS, C_FRANCE from duplicate;
+quit;
+
+$ CREATE verify2.sql
+set names DOS437;   
+connect "WHERE_GDB:tests.gdb";
+select C_437_25 from string_table;
+select C_437_25 from duplicate;
+quit;
+
+$ CREATE verify3.sql
+set names DOS850;
+connect "WHERE_GDB:tests.gdb";
+select C_850_25 from string_table;
+select C_850_25 from duplicate;
+quit;
+
+$ CREATE subq4.sql
+connect "WHERE_GDB:tests.gdb";
+delete from duplicate;
+commit;
+select count(*) from duplicate;
+INSERT INTO DUPLICATE   
+     SELECT * FROM STRING_TABLE;
+select count(*) from duplicate;
+commit;
+quit;
+
+$ GPRE subq4.e
+$ CC FLAG_CC subq4.c
+$ LINK FLAG_LINK subq4 
+$ RUN subq4
+$ ISQL -i verify1.sql -m
+$ ISQL -i verify2.sql -m
+$ ISQL -i verify3.sql -m
+$ ISQL -i subq4.sql -m
+$ ISQL -i verify1.sql -m
+$ ISQL -i verify2.sql -m
+$ ISQL -i verify3.sql -m
+$ DELETE subq4* doc
+$ DELETE verify1.sql verify2.sql verify3.sql

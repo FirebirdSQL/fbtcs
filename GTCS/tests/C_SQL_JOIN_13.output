@@ -1,0 +1,36 @@
+Test:
+ select x.c1,x.c10,x.table_row,y.c1,y.c10,y.table_row ,z.c1,z.c10,z.table_row from (ct1 x left join ct2 y on x.c1 = y.c1) left join ct3 z on z.c1 = y.c1
+--------------------------------------------------------------------------------
+a-1       c10-1     ct1-1     a-1       c10-1     ct2-1     a-1       c10-1     ct3-1     
+a-2       c10-2     ct1-2     a-2       c10-2     ct2-2     a-2       c10-2     ct3-2     
+          c10-3     ct1-3                                                                 
+a-4                 ct1-4     a-4                 ct2-4     a-4                 ct3-4     
+                    ct1-5                                                                 
+1         unique-1  ct1-6                                                                 
+
+
+* Total Records Listed >>> 6
+
+                TABLE                 TABLE                 TABLE
+C1      C10      ROW  C1      C10      ROW  C1      C10      ROW
+=== ========== ====== === ========== ====== === ========== ======
+
+a-1 c10-1      ct1-1  a-1 c10-1      ct2-1  a-1 c10-1      ct3-1 
+a-2 c10-2      ct1-2  a-2 c10-2      ct2-2  a-2 c10-2      ct3-2 
+    c10-3      ct1-3                                       
+a-4            ct1-4  a-4            ct2-4  a-4            ct3-4 
+               ct1-5                                       
+1   unique-1   ct1-6                                       
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C1     C10        TABLE_ROW C1     C10        TABLE_ROW C1     C10        TABLE_ROW 
+====== ========== ========= ====== ========== ========= ====== ========== ========= 
+
+a-1    c10-1      ct1-1     a-1    c10-1      ct2-1     a-1    c10-1      ct3-1     
+a-2    c10-2      ct1-2     a-2    c10-2      ct2-2     a-2    c10-2      ct3-2     
+<null> c10-3      ct1-3     <null> <null>     <null>    <null> <null>     <null>    
+a-4    <null>     ct1-4     a-4    <null>     ct2-4     a-4    <null>     ct3-4     
+<null> <null>     ct1-5     <null> <null>     <null>    <null> <null>     <null>    
+1      unique-1   ct1-6     <null> <null>     <null>    <null> <null>     <null>    
+

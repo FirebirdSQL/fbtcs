@@ -1,0 +1,44 @@
+Test:
+ SELECT PROJ_NO FROM PROJECTS WHERE PROJ_DESC CONTAINING 'platform' AND PROJ_DESC NOT CONTAINING 'DEC'
+--------------------------------------------------------------------------------
+HH300
+--------------------------------------------------------------------------------
+FJ300
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 2
+
+* Using GDML to print blob 
+HH300
+Porting our software to the Howard Hues
+platform.  All interfaces should be 
+available across the plaform.
+
+FJ300
+Porting our software to the Fujima
+platform.  All interfaces should be 
+available across the plaform.
+
+
+Project No
+==========
+
+ HH-3.00
+ FJ-3.00
+
+
+Project No
+==========
+
+ HH-3.00
+ FJ-3.00
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+PROJ_NO 
+======= 
+
+HH300   
+FJ300   
+

@@ -1,0 +1,24 @@
+Test:
+ select x.c1,x.c10,x.table_row,y.c1,y.c10,y.table_row,z.c1,z.c10,z.table_row,z.test_name from (ct1 x right join ct2 y on x.c1 = y.c1) right join ct3 z on z.c1 = x.c1 where 1 = (select s1 from st1 where z.test_name = st1.test_name and st1.table_row = 'st1-1') order by x.table_row ascending
+--------------------------------------------------------------------------------
+a-1     c10-1        ct1-1        a-1     c10-1        ct2-1        a-1     c10-1        ct3-1        Loader                        
+a-2     c10-2        ct1-2        a-2     c10-2        ct2-2        a-2     c10-2        ct3-2        Loader                        
+a-4                  ct1-4        a-4                  ct2-4        a-4                  ct3-4        Loader                        
+                                                                    3       unique-3     ct3-6        Loader                        
+                                                                            c10-3        ct3-3        Loader                        
+                                                                                         ct3-5        Loader                        
+
+
+* Total Records Listed >>> 6
+
+                TABLE                 TABLE                 TABLE              TEST
+C1      C10      ROW  C1      C10      ROW  C1      C10      ROW               NAME
+=== ========== ====== === ========== ====== === ========== ====== ==============================
+
+a-1 c10-1      ct1-1  a-1 c10-1      ct2-1  a-1 c10-1      ct3-1  Loader                        
+a-2 c10-2      ct1-2  a-2 c10-2      ct2-2  a-2 c10-2      ct3-2  Loader                        
+a-4            ct1-4  a-4            ct2-4  a-4            ct3-4  Loader                        
+                                            3   unique-3   ct3-6  Loader                        
+                                                c10-3      ct3-3  Loader                        
+                                                           ct3-5  Loader                        
+

@@ -1,0 +1,2 @@
+LIB=".;e:/interbase/sdk/lib;e:/borland/cbuilder4/lib;$LIB"
+TMP=e:/mks/tmp

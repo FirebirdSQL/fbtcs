@@ -1,0 +1,10 @@
+#
+# environment variables defition
+#
+LD ld
+LIBRARIES
+LIB_TYPE pipe
+FLAG_CXX -w -c %s
+FLAG_CC -w -DSOLARIS -I/usr/interbase/include -I. -c -Itests %s 
+FLAG_LINK %s -o %s -lgds -lsocket -lnsl -ldl
+FLAG_LINK_MU %s -o %s -lgds -lsocket -lnsl -ldl -L/usr/gds.sogood/qa_tools/lib -lmu -lthread

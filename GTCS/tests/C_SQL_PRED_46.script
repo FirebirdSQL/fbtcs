@@ -1,0 +1,139 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE con032.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+
+ Description:           varchar numeric field - long -  containing number
+
+                        SELECT SALARY
+                        FROM MANAGEMENT
+                        WHERE SALARY CONTAINING 1;
+
+ View:                  management
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON EMPLOYEES.SALARY       Salary;
+
+
+char Test[]="SELECT SALARY \
+FROM MANAGEMENT \
+WHERE SALARY CONTAINING 1";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT SALARY
+                FROM MANAGEMENT
+                WHERE SALARY CONTAINING 1;
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Salary;
+
+        while (SQLCODE == 0){
+
+                Count++;
+                printf("%8.2f\n",(double)(Salary/100));
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :Salary;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e con032.e
+$ CC FLAG_CC con032.c
+$ LINK FLAG_LINK con032 
+$ RUN con032
+$ CREATE con032.qli
+SET SEMICOLON;
+ready WHERE_GDB:sh_test.gdb;
+SELECT SALARY
+FROM MANAGEMENT
+WHERE SALARY CONTAINING 1;
+
+FOR M IN MANAGEMENT WITH SALARY CONTAINING 1 PRINT SALARY;
+finish;
+quit;
+$ QLI -n -a con032.qli
+$ CREATE con032.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT SALARY
+FROM MANAGEMENT
+WHERE SALARY CONTAINING 1;
+quit;
+$ISQL -i con032.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE con032* 

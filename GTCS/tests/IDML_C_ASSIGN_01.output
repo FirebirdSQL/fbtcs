@@ -1,0 +1,46 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+SIMPLE INSERT INTO A DOS 437 field by selecting 7-bit data from a
+DOS850 field.  Should always work.
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  
+========================= 
+
+O                         
+
+SIMPLE INSERT INTO A DOS 437 and 850 field by selecting valid 8-bit
+data from a DOS850 field--the cent symbol.  The data was
+loaded into the DOS850 field without the _charset notation
+with set names = iso.  It appears as garbage on display for both
+fields.
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  C_850_25                  
+========================= ========================= 
+
+O                         <null>                    
+›                         ›                         
+
+
+C_437_25                  C_850_25                  
+========================= ========================= 
+
+O                         <null>                    
+›                         ›                         
+
+SIMPLE INSERT INTO A DOS 437 field by selecting valid 8-bit
+data from a DOS850 field--the cent symbol.  This data was
+loaded into the DOS850 field using _DOS850"¢".
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  C_850_25                  
+========================= ========================= 
+
+O                         <null>                    
+›                         ›                         
+¢                         ¢                         
+

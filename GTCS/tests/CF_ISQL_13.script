@@ -1,0 +1,61 @@
+
+/*
+**  Name:		cf_isql_13
+**  Series:		cf_isql
+**  Meta-Series:
+**  Dependencies:	None
+**  Description:	This test is a level two test case for computed-fields.
+**			
+**			This test checks the behaviour of computed-field when
+**			the column referenced in it is dropped.
+**
+**  Expected result:	
+**			
+**  Author:		Ravil A. Desai
+**  Change history:
+**  			 cloned for V6.x FSG 16.Oct:00
+*/
+
+$ CREATE cf_test.sql
+create database "WHERE_GDB:cf.gdb";
+
+/*---------------------------------------------*/
+/* Create a table with computed field.         */
+/*---------------------------------------------*/
+create table t0 (a integer, af computed by (a*3));
+insert into t0(a) values(10);
+
+/*---------------------------------------------*/
+/* Create a table with nested computed field.  */
+/*---------------------------------------------*/
+create table t1 (a integer, af computed by (a*4), afaf computed by (af*5));
+insert into t1(a) values(11);
+
+exit;
+$ ISQL -input cf_test.sql
+
+$ CREATE cf_test.sql
+connect "WHERE_GDB:cf.gdb";
+
+/*---------------------------------------------------------------------*/
+/* Now alter table and drop the field which is used in computed field. */
+/* It shouldn't allow you to drop the field.                           */
+/*---------------------------------------------------------------------*/
+alter table t0 drop a;
+show table t0;
+select * from t0;
+
+/*---------------------------------------------------------------------*/
+/* Now alter table and drop the computed field which is used in other  */
+/* computed field.                                                     */ 
+/* It shouldn't allow you to drop the field.                           */
+/*---------------------------------------------------------------------*/
+alter table t1 drop af;
+show table t1;
+select * from t1;
+
+drop database;
+exit;
+$ ISQL -input cf_test.sql
+
+$ DELETE cf_test.sql

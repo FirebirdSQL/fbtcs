@@ -1,0 +1,22 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure  proc_select_insert3 as
+declare variable t varchar(5);
+begin
+    for select sno from s where sno NOT IN
+    (select sno from sp) into :t do
+    begin
+      insert into sp(sno) values (:t);
+      SUSPEND;
+    end
+end
+go
+set term ; go
+set echo;
+select * from sp;
+EXECUTE PROCEDURE PROC_SELECT_INSERT3 ;
+select * from sp;
+exit;
+$ DROP WHERE_GDB:sp1.gdb 

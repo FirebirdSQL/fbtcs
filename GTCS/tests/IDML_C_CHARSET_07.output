@@ -1,0 +1,18 @@
+
+---------------------------------------------------------------------
+   PRINTING ALL EMPLOYEES--Using Select statement, SET NAMES/CONNECT
+
+1          Rôbért          Nélsôn              
+2          Bruce           Nélsôn              
+
+--------------------------------------------------------------
+ INSERTING NEW DATA--using host variables which were loaded by SELECT--works. 
+Use CONNECT or CREATE DATABASE to specify a database
+
+ EMP_NO FIRST_NAME      LAST_NAME            
+======= =============== ==================== 
+
+      1 Rôbért          Nélsôn               
+      2 Bruce           Nélsôn               
+    444 Bruce           Nélsôn               
+

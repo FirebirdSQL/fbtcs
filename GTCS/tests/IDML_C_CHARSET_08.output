@@ -1,0 +1,17 @@
+Use CONNECT or CREATE DATABASE to specify a database
+
+-----------------------------------------------------------------
+   INSERTING NEW DATA--using _CHARSET notation so it WORKS.
+
+
+-----------------------------------------------------------------
+   INSERTING NEW DATA--NOT using _CHARSET notation--FAILS, bug7122.
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+ EMP_NO FIRST_NAME      LAST_NAME            
+======= =============== ==================== 
+
+    555 Bôbbét          Gélsôn               
+    666 Hôbbét          Zélsôn               
+

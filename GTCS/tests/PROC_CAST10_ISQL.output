@@ -1,0 +1,78 @@
+
+      B 
+======= 
+     50 
+
+Statement failed, SQLCODE = -413
+
+conversion error from string "x"
+
+           B 
+============ 
+       10000 
+
+Statement failed, SQLCODE = -413
+
+conversion error from string "x"
+
+             B 
+============== 
+     10000.000 
+
+Statement failed, SQLCODE = -413
+
+conversion error from string "x"
+
+                      B 
+======================= 
+      10000.00000000000 
+
+Statement failed, SQLCODE = -413
+
+conversion error from string "abc"
+
+           B 
+============ 
+    10000.00 
+
+Statement failed, SQLCODE = -413
+
+conversion error from string "abc"
+
+          B 
+=========== 
+1992-03-12  
+
+
+          B 
+=========== 
+1992-03-12  
+
+
+           B 
+============ 
+    21000.98 
+
+Statement failed, SQLCODE = -413
+
+conversion error from string "abc"
+
+B          
+========== 
+100        
+
+
+B          
+========== 
+abc        
+
+
+B          
+========== 
+100        
+
+
+B          
+========== 
+abc        
+

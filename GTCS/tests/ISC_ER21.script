@@ -1,0 +1,42 @@
+
+$ CREATE er21.c
+/*
+ *	isc_wait_for_event  NOT supported on PC.
+ *
+ *	Pass an invalid database handle.
+ * 
+ *  Test name: er21.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle 	DB = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	short	len;
+	char	event_buf[100], rbuf[100];
+
+	LogPrintf("Running ER21, invalid DB to wait for event.\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_wait_for_event(status, &DB, len, event_buf, rbuf))==0)
+		LogPrintf("BUG: Bad DB to wait for event\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	if ((rc=isc_wait_for_event(status, &DB, len, event_buf, rbuf))==0)
+		LogPrintf("BUG: Bad DB to wait for event\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+	LogPrintf("Finished ER21\n");
+}
+$ CC FLAG_CC er21.c
+$ LINK FLAG_LINK er21 
+$ RUN er21
+$ DELETE er21*

@@ -1,0 +1,284 @@
+
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ RUN ri_views WHERE_GDB:atlas.gdb
+
+$ CREATE fieldrop.e
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+/* Author: B.Sriram
+   Date:   16-JUL-1995
+   Title:  fieldrop.e  TCS TEST NAME:  c_dsql_ri_field_drp1
+
+   Dependencies: Need to run C_DSQL_RI_INIT first.
+   
+   Purpose: RI test suite 
+   History:
+          This test is written to correct C_DSQL_RI_FIELD_DROP test.
+	The C_DSQL_RI_FIELD_DROP test was doing lots of COMMIT RELEASE's
+      	which, in the case of a REMOTE test was detaching from the
+	INET_SERVER. This resulted in 'inet_server' cache not being
+	in sync.
+	
+	  This test does the whole operation in only ONE transaction.
+	
+   Tests are:
+   	Table Constraints:
+   		unique		tab_uniq.e
+   		primary key	tab_prim.e
+   		referential	tab_ref.e     
+   		check const	tab_check.e
+   	
+   	Column Constraints:
+   		unique		col_uniq.e
+   		primary key	col_prim.e
+   		referential	col_ref.e
+   		check const	col_check.e
+   		not null    col_nnull.e
+
+	DDL Modify Operations:
+		alter table add constraint	alt_add.e	
+		alter table drop constraint	alt_drop.e   
+		drop table			drop_tab.e
+		alter field			field_alt.e
+		drop field			fieldrop.e <------- this test
+		alter index			index_alt.e
+		drop index			index_drop.e
+		delete trigger			trigger_del.e
+		modify trigger			trigger_mod.e
+
+
+Overview: this test makes sure that new constraints are added correctly. 
+	
+It will:
+	CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11), AUTHOR_NAME VARCHAR(50))
+	ALTER TABLE AUTHORS DROP AUTHOR_ID     			[should succeed] 
+	[Verify fiels for AUTHORS]
+
+	ALTER TABLE AUTHORS ADD AUTHOR_ID with constraints   	[should succeed] 
+
+	CREATE TABLE BOOKS (BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+		BOOK_AUTH_ID CHAR(11) CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)
+	[Verify constraints on AUTHORS and BOOKS]
+
+	ALTER TABLE AUTHORS DROP AUTHOR_ID      	[field referenced, should fail]
+	[Verify constraints on AUTHORS]
+
+	ALTER TABLE BOOKS DROP BOOK_AUTH_ID			[should succeed]
+	ALTER TABLE AUTHORS DROP AUTHOR_ID      		[should succeed]
+	[Verify constraints on AUTHORS]
+
+	
+
+*/
+
+/* Include the SQL Communications Area. */
+EXEC SQL
+	INCLUDE SQLCA;
+
+/* Set up to catch SQL errors. Note: this will require that 
+each routine containing executeable SQL commands has
+an error handling section labeled 'err'.*/
+EXEC SQL
+	WHENEVER SQLERROR GO TO err;
+	
+/* Forward declarations */
+void die_on_error();
+extern print_views(); 
+int strupper();
+int istable();
+
+int verbose;
+
+main(argc, argv)
+int argc;
+char *argv[];
+{
+
+        /* Get database name */
+        if (--argc > 0){
+                /* Connect to database */
+                EXEC SQL SET DATABASE DB1 = "WHERE_GDB:atlas.gdb";
+                EXEC SQL CONNECT :argv[1] AS DB1;
+                EXEC SQL SET TRANSACTION USING DB1;
+        } else {
+                printf ("Usage: %s <database_filename> [v]\n", argv[0]);
+                exit(1);
+        }
+
+        /*--- check if verbose is requested ------ */
+        verbose = FALSE;
+        if (--argc > 0){
+                if (*argv[2] == 'v' || *argv[2] == 'V')
+                        verbose = TRUE;
+        }
+
+        if (istable("books")) {
+                if (verbose)
+                        printf("books found... will be dropped\n");
+                EXEC SQL DROP TABLE BOOKS;
+        }
+
+        if (istable("authors")) {
+                if (verbose)
+                        printf("authors found... will be dropped\n");
+                EXEC SQL DROP TABLE AUTHORS;
+        }
+
+        EXEC SQL WHENEVER SQLERROR CONTINUE;
+
+        /* create authors table only */
+        if (verbose)
+                printf("Creating AUTHORS table\n");
+        EXEC SQL
+                DECLARE AUTHORS TABLE
+                        (AUTHOR_ID CHAR(11), AUTHOR_NAME CHAR(12));
+        EXEC SQL
+                CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11)
+                        CONSTRAINT AUTH_ID_NOT_NULL NOT NULL
+                                CONSTRAINT AUTH_ID_KEY PRIMARY KEY,
+                        AUTHOR_NAME CHAR(12));
+        printf ("Create TABLE AUTHORS expected SQLCODE = 0. Got SQLCODE = %d\n",
+
+                        SQLCODE);
+
+
+        /* Alter table AUTHORS only
+           i.e. Drop the field and create it again.
+           should work, since there are no REFERENCES to it.
+        */
+        if (verbose)
+                printf("Altering AUTHORS table\n");
+        EXEC SQL
+                ALTER TABLE AUTHORS DROP AUTHOR_ID ;
+
+        print_views();
+
+        EXEC SQL   /* should work */
+                ALTER TABLE AUTHORS ADD AUTHOR_ID CHAR (11)
+                                CONSTRAINT AUTHOR_ID_NOT_NULL NOT NULL
+                                CONSTRAINT AUTHOR_ID_KEY PRIMARY KEY;
+        printf ("Alter TABLE AUTHORS expected SQLCODE = 0. Got SQLCODE = %d\n",
+                        SQLCODE);
+
+        print_views();
+
+        /* create books table only */
+        if (verbose)
+                printf("Creating BOOKS table\n");
+        EXEC SQL
+                DECLARE BOOKS TABLE
+                        (BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+                         BOOK_AUTH_ID CHAR(11));
+        EXEC SQL
+                CREATE TABLE BOOKS
+                        (BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
+                         BOOK_AUTH_ID CHAR(11)
+                         CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS);
+        printf ("Create TABLE BOOKS WITH REFERENCE TO AUTHORS\n");
+        printf ("       expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
+
+
+        /* Alter table AUTHORS only
+           i.e. Drop the AUTHOR_ID field.
+           should NOT work, since BOOKS table REFERs to it.
+        */
+        if (verbose)
+                printf("Altering AUTHORS table with BOOKS REFERENCE \n");
+        EXEC SQL
+                ALTER TABLE AUTHORS DROP AUTHOR_ID ;
+        printf ("Alter TABLE AUTHORS expected SQLCODE = -607. Got SQLCODE = %d\n",
+                        SQLCODE);
+
+        print_views();
+
+        /* Drop BOOK_AUTH_ID field from BOOKS table. */
+        if (verbose)
+                printf("Dropping Books table field BOOK_AUTH_ID \n");
+        EXEC SQL   /* should succeed */
+                ALTER TABLE BOOKS DROP BOOK_AUTH_ID ;
+        printf ("Drop TABLE BOOKS expected SQLCODE = 0. Got SQLCODE = %d\n",
+                        SQLCODE);
+
+
+        /* Alter table AUTHORS only
+           i.e. Drop the AUTHOR_ID field.
+           should work, since there is no REFERENCing to it now.
+        */
+        if (verbose)
+                printf("Altering AUTHORS table with no REFERENCE \n");
+        EXEC SQL
+                ALTER TABLE AUTHORS DROP AUTHOR_ID ;
+        printf ("Alter TABLE AUTHORS expected SQLCODE = 0. Got SQLCODE = %d\n",
+                        SQLCODE);
+
+        print_views();
+
+        EXEC SQL DISCONNECT ALL ;
+
+	exit (0);
+err:  die_on_error();
+}
+
+int strupper(targ, source) 
+char * targ, * source; 
+{
+	int ii;
+	
+	for (ii=0; *targ++ = toupper(*source++); ii++);
+
+	return ii;
+}
+
+int istable(tname) 
+char * tname; 
+{
+
+	int exists;
+	char *utname;
+
+	if (!tname)
+		return 0;
+		
+	utname = (char *) malloc(strlen(tname)+1);
+
+	strupper(utname, tname);
+	
+	EXEC SQL
+		SELECT COUNT (*)
+		INTO :exists
+		FROM rdb$relations
+		WHERE rdb$relation_name = :utname;
+
+	free(utname);
+
+	return exists;
+err:		
+	free(utname);
+	die_on_error();
+}
+
+void die_on_error()
+
+/* Print out error message and die*/
+{
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
+	isc_print_status(gds__status);
+	EXEC SQL
+		ROLLBACK WORK;
+
+err:
+       EXEC SQL
+	DISCONNECT ALL;
+	exit (1);
+}
+
+$ GPRE -m fieldrop.e 
+$ CC FLAG_CC fieldrop.c
+$ LINK FLAG_LINK fieldrop pr_views 
+$ RUN fieldrop WHERE_GDB:atlas.gdb
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE fieldrop*

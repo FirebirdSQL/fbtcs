@@ -1,0 +1,178 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE con033.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+
+ Description:           date-field containing number
+
+                        SELECT CUSTNO, TOTAL_VALUE, SHIPPED
+                        FROM SALES
+                        WHERE SHIPPED CONTAINING 'Jul';
+
+ Table:                 sales
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON SALES.CUSTNO           CustNo;
+BASED_ON SALES.TOTAL_VALUE      Total_Value;
+BASED_ON SALES.SHIPPED          Shipped;
+
+static char             *months [] ={
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec"
+};
+
+void ToDate();
+char AlphaDate[13];                     
+struct tm UxTime;
+
+
+char Test[]="SELECT CUSTNO, TOTAL_VALUE, SHIPPED \
+FROM SALES \
+WHERE SHIPPED CONTAINING 'Jul'";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT CUSTNO, TOTAL_VALUE, SHIPPED
+                FROM SALES
+                WHERE SHIPPED CONTAINING 'Jul';
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :CustNo,:Total_Value,:Shipped;
+
+        while (SQLCODE == 0){
+
+                Count++;
+                ToDate(&Shipped);
+
+                printf("%d\t",CustNo);
+                printf("%8.2f\t",(double)(Total_Value));
+                printf("%s\n",AlphaDate);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :CustNo,:Total_Value,:Shipped;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+
+/****************************************************************
+ * Convert Interbase date to character string date
+ ****************************************************************
+*/
+void ToDate(InDate)
+GDS__QUAD *InDate;
+{
+                isc_decode_date (InDate, &UxTime);
+                sprintf (AlphaDate, "%2d-%s-%4d ", UxTime.tm_mday,
+	 	months[UxTime.tm_mon], UxTime.tm_year + 1900);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e con033.e
+$ CC FLAG_CC con033.c
+$ LINK FLAG_LINK con033 
+$ RUN con033
+$ CREATE con033.qli
+SET SEMICOLON;
+ready WHERE_GDB:sh_test.gdb;
+SELECT CUSTNO, TOTAL_VALUE, SHIPPED
+FROM SALES
+WHERE SHIPPED CONTAINING 'Jul';
+
+FOR S IN SALES WITH SHIPPED CONTAINING 'Jul' PRINT S.CUSTNO,
+S.TOTAL_VALUE, S.SHIPPED;
+finish;
+quit;
+$ QLI -n -a con033.qli
+$ CREATE con033.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT CUSTNO, TOTAL_VALUE, SHIPPED
+FROM SALES
+WHERE SHIPPED CONTAINING 'Jul';
+quit;
+$ISQL -i con033.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE con033* 

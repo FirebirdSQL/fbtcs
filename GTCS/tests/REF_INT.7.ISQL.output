@@ -1,0 +1,10 @@
+Use CONNECT or CREATE DATABASE to specify a database
+SQL> alter index dept_key inactive;
+Statement failed, SQLCODE = -607
+
+unsuccessful metadata update
+-MODIFY RDB$INDICESS failed
+-action cancelled by trigger (2) to preserve data integrity
+-Cannot deactivate index used by an Integrity Constraint
+SQL> commit;
+SQL> insert into employee values (11, 'e11', 1);

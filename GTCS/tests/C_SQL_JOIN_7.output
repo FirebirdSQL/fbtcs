@@ -1,0 +1,27 @@
+Test:
+ select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row from ct1 t1 inner join ct2 t2 on t1.c1 = t2.c1
+--------------------------------------------------------------------------------
+a-1       c10-1     ct1-1     a-1       c10-1     ct2-1     
+a-2       c10-2     ct1-2     a-2       c10-2     ct2-2     
+a-4                 ct1-4     a-4                 ct2-4     
+
+
+* Total Records Listed >>> 3
+
+                TABLE                 TABLE
+C1      C10      ROW  C1      C10      ROW
+=== ========== ====== === ========== ======
+
+a-1 c10-1      ct1-1  a-1 c10-1      ct2-1 
+a-2 c10-2      ct1-2  a-2 c10-2      ct2-2 
+a-4            ct1-4  a-4            ct2-4 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C1     C10        TABLE_ROW C1     C10        TABLE_ROW 
+====== ========== ========= ====== ========== ========= 
+
+a-1    c10-1      ct1-1     a-1    c10-1      ct2-1     
+a-2    c10-2      ct1-2     a-2    c10-2      ct2-2     
+a-4    <null>     ct1-4     a-4    <null>     ct2-4     
+

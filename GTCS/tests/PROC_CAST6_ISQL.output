@@ -1,0 +1,112 @@
+SQL> set term go;
+SQL> create procedure cast1(a decimal(5,2)) RETURNS (b smallint) as
+CON> begin
+CON>     b = a/2;
+CON>     SUSPEND;
+CON> end
+CON> go
+SQL> create procedure cast2(a decimal(5,2)) RETURNS (b integer) as
+CON> begin
+CON>     b = a * 100;
+CON>     SUSPEND;
+CON> end
+CON> go
+SQL> create procedure cast3(a decimal(5,2)) RETURNS (b float) as
+CON> begin
+CON>     b = a * 100;
+CON>     SUSPEND;
+CON> end
+CON> go
+SQL> create procedure cast4(a decimal(5,2)) RETURNS (b double precision) as
+CON> begin
+CON>     b = a * 100;
+CON>     SUSPEND;
+CON> end
+CON> go
+SQL> create procedure cast5(a decimal(5,2)) RETURNS (b decimal(5,2)) as
+CON> begin
+CON>     b = a * 100;
+CON>     SUSPEND;
+CON> end
+CON> go
+SQL> create procedure cast6(a decimal(10,0)) RETURNS (b date) as
+CON> begin
+CON>     b = a;
+CON>     SUSPEND;
+CON> end
+CON> go
+SQL> create procedure cast7(a decimal(5,2)) RETURNS (b numeric(5,2)) as
+CON> begin
+CON>     b = a;
+CON>     SUSPEND;
+CON> end
+CON> go
+SQL> create procedure cast8(a decimal(5,2)) RETURNS (b char(10)) as
+CON> begin
+CON>     b = a;
+CON>     SUSPEND;
+CON> end
+CON> go
+SQL> create procedure cast9(a decimal(5,2)) RETURNS (b varchar(10)) as
+CON>  begin
+CON>    b = a;
+CON>    SUSPEND;
+CON>  end
+CON> go
+SQL> 
+SQL> commit
+CON> go
+SQL> set term ; go
+SQL> execute procedure cast1 100.98;
+
+      B 
+======= 
+     50 
+
+SQL> execute procedure cast2 100.98;
+
+           B 
+============ 
+       10098 
+
+SQL> execute procedure cast3 100.98;
+
+             B 
+============== 
+     10098.000 
+
+SQL> execute procedure cast4 100.98;
+
+                      B 
+======================= 
+      10098.00000000000 
+
+SQL> execute procedure cast5 100.98;
+
+           B 
+============ 
+    10098.00 
+
+SQL> execute procedure cast6 100.98;
+Statement failed, SQLCODE = -413
+
+conversion error from string "101"
+SQL> execute procedure cast7 100.98;
+
+           B 
+============ 
+      100.98 
+
+SQL> execute procedure cast8 100.98;
+
+B          
+========== 
+100.98     
+
+SQL> execute procedure cast9 100.98;
+
+B          
+========== 
+100.98     
+
+SQL> exit;

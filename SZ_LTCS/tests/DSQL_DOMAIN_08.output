@@ -1,0 +1,30 @@
+Database:  /user1/build/SINIX-Z/tcs-1.0/tcs/scripts/atlas.gdb
+SQL> SQL> SQL> DOM08A_1                        SMALLINT Nullable
+SQL> SQL> CON> CON> CON> Statement failed, SQLCODE = -104
+
+Dynamic SQL Error
+-SQL error code = -104
+-Token unknown - line 4, char 17
+-not
+SQL> SQL> DOM08A_1                        SMALLINT Nullable
+SQL> SQL> SQL> DOM08A_2                        NUMERIC(3, 1) Nullable
+SQL> SQL> SQL> DOM08B_1                        INTEGER Nullable
+SQL> SQL> SQL> DOM08B_2                        INTEGER Nullable
+SQL> SQL> SQL> DOM08B_3                        NUMERIC(9, 0) Nullable
+SQL> SQL> SQL> DOM08B_4                        NUMERIC(6, 2) Nullable
+SQL> SQL warning code = 301
+-DATE data type is now called TIMESTAMP
+SQL> SQL> DOM08C                          TIMESTAMP Nullable
+SQL> SQL> SQL> DOM08D_1                        CHAR(20) Nullable
+SQL> SQL> SQL> DOM08D_2                        CHAR(99) Nullable
+SQL> SQL> SQL> DOM08E_1                        VARCHAR(25) Nullable
+SQL> SQL> SQL> DOM08E_2                        VARCHAR(100) Nullable
+SQL> SQL> SQL> DOM08E_3                        VARCHAR(2) Nullable
+SQL> SQL> SQL> DOM08F_1                        DECIMAL(6, 2) Nullable
+SQL> SQL> SQL> DOM08G_1                        FLOAT Nullable
+SQL> SQL> SQL> DOM08G_2                        DOUBLE PRECISION Nullable
+SQL> SQL> SQL> DOM08G_3                        FLOAT Nullable
+SQL> SQL> SQL> DOM08H                          DOUBLE PRECISION Nullable
+SQL> SQL> SQL> DOM08I_1                        BLOB segment 80, subtype UNKNOWN Nullable
+SQL> SQL> SQL> DOM08I_2                        BLOB segment 60, subtype TEXT Nullable
+SQL> 

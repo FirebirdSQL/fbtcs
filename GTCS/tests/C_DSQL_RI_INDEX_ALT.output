@@ -1,0 +1,23 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+create_unique_index expected SQLCODE = 0. Got SQLCODE = 0
+Inserted 5 records
+BU1111,The Busy Executive's Database Guide,172-32-1176
+BU2075,You Can Combat Computer Stress!,238-95-7766
+,The Battle in the Air,267-41-2394
+BU1032,Silicon Valley Gastronomic Treats,274-80-9391
+MC3021,The Gourmet Microwave,341-22-1782
+Number found: 5 Number expected: 5
+alter_index_inactive expected SQLCODE = 0. Got SQLCODE = 0
+Inserted 6 records
+BU1111,The Busy Executive's Database Guide,172-32-1176
+BU1111,Cooking with Computers: Surreptitious Balance Sheets,213-46-8915
+BU2075,You Can Combat Computer Stress!,238-95-7766
+,The Battle in the Air,267-41-2394
+BU1032,Silicon Valley Gastronomic Treats,274-80-9391
+MC3021,The Gourmet Microwave,341-22-1782
+Number found: 6 Number expected: 6
+alter_index_active expected SQLCODE = -803. Got SQLCODE = -803

@@ -1,0 +1,4 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+External file: WHERE_GDB_EXTERNAL:(PLATFORM_UPPER)EXTERNAL_DAT:
+FIELD1                          VARCHAR(10) Nullable 

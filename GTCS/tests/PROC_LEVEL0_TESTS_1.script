@@ -1,0 +1,23 @@
+
+$ISQL -m 
+/* This script checks wheather procedure names are case sensitive or not.*/
+create database "WHERE_GDB:foo.gdb";
+set echo;
+set term go;
+create procedure abc RETURNS( x varchar(2)) as
+begin
+  x = 'Q';
+  SUSPEND;
+end
+go
+create procedure ABC RETURNS( x varchar(2)) as
+begin
+  x = 'Q';
+  SUSPEND;
+end
+go
+
+set term ; go
+show proc;
+
+$ DROP WHERE_GDB:foo.gdb

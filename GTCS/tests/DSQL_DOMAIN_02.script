@@ -1,0 +1,118 @@
+
+/*******************************************************************************
+ Test Name:   dsql_domain_02
+ Series Name: dsql_domains
+ Date:        4-October_1993
+ Comments:    This script will test level 0 syntax of the SQL create domain
+              statement using datatype and default clauses.
+ Associated Bugs: bug_5106 contains illegal cases that were not correctly
+                  generating error messages.
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_02.sql
+create domain dom02a1 as smallint
+ default 0;
+commit;
+show domain dom02a1;
+create domain dom02b1 as integer
+ default 0;
+commit;
+show domain dom02b1;
+create domain dom02d1 as char(30)
+ default 0;
+commit;
+show domain dom02d1;
+create domain dom02e1 as varchar(4)
+ default 0;
+commit;
+show domain dom02e1;
+create domain dom02f1 as decimal(10,1)
+ default 0;
+commit;
+show domain dom02f1;
+create domain dom02g1 as float
+ default 0;
+commit;
+show domain dom02g1;
+create domain dom02h1 as double precision
+ default 0;
+commit;
+show domain dom02h1;
+create domain dom02d2 as char(30)
+ default 'def';
+commit;
+show domain dom02d2;
+create domain dom02e2 as varchar(4)
+ default 'def';
+commit;
+show domain dom02e2;
+create domain dom02c3_1 as date
+ default '27-JAN-1992';
+commit;
+show domain dom02c3_1;
+create domain dom02c3_2 as date
+ default 'today';
+commit;
+show domain dom02c3_2;
+create domain dom02c3_3 as date
+ default '01/27/92';
+commit;
+show domain dom02c3_3;
+create domain dom02d3 as char(30)
+ default '28-OCT-1990';
+commit;
+show domain dom02d3;
+create domain dom02e3 as varchar(8)
+ default '09/01/82';
+commit;
+show domain dom02e3;
+create domain dom02j as smallint
+ default null;
+commit;
+show domain dom02j;
+create domain dom02k as integer
+ default null;
+commit;
+show domain dom02k;
+create domain dom02l as date
+ default null;
+commit;
+show domain dom02l;
+create domain dom02m as char(2)
+ default null;
+commit;
+show domain dom02m;
+create domain dom02n as varchar(15)
+ default null;
+commit;
+show domain dom02n;
+create domain dom02o as decimal(4,1)
+ default null;
+commit;
+show domain dom02o;
+create domain dom02p as float
+ default null;
+commit;
+show domain dom02p;
+create domain dom02q as double precision
+ default null;
+commit;
+show domain dom02q;
+create domain dom02r as blob
+ default null;
+commit;
+show domain dom02r;
+create domain dom02v as char(15)
+ default user;
+commit;
+show domain dom02v;
+create domain dom02w as varchar(60)
+ default user;
+commit;
+show domain dom02w;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_02.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_02.sql

@@ -1,0 +1,92 @@
+Database "WHERE_GDB:index.gdb" readied as QLI_0
+    DATA_TABLE1
+	Index IDX1_1 (unique)
+            FLD1
+	Index IDX1_2
+            FLD1
+	Index IDX1_3 (descending)
+            FLD1
+	Index IDX1_4
+            FLD1
+
+
+ FLD1            FLD2
+====== =========================
+
+     1 one
+     2 two
+     3 three
+
+
+ FLD1            FLD2
+====== =========================
+
+     3 three
+     2 two
+     1 one
+
+
+ FLD1            FLD2
+====== =========================
+
+     1 one
+     2 two
+     3 three
+
+Use CONNECT or CREATE DATABASE to specify a database
+IDX1_1 UNIQUE INDEX ON DATA_TABLE1(FLD1) 
+IDX1_2 INDEX ON DATA_TABLE1(FLD1) 
+IDX1_3 DESCENDING INDEX ON DATA_TABLE1(FLD1) 
+IDX1_4 INDEX ON DATA_TABLE1(FLD1) 
+IDX2_1 UNIQUE INDEX ON DATA_TABLE2(FLD1) 
+IDX2_2 INDEX ON DATA_TABLE2(FLD1) 
+IDX2_3 DESCENDING INDEX ON DATA_TABLE2(FLD1) 
+IDX2_4 INDEX ON DATA_TABLE2(FLD1) 
+
+   FLD1 FLD2                      
+======= ========================= 
+
+      1 one                       
+      2 two                       
+      3 three                     
+
+
+   FLD1 FLD2                      
+======= ========================= 
+
+      3 three                     
+      2 two                       
+      1 one                       
+
+
+   FLD1 FLD2                      
+======= ========================= 
+
+      1 one                       
+      2 two                       
+      3 three                     
+
+
+        FLD1 FLD2       
+============ ========== 
+
+           1 one        
+           2 two        
+           3 three      
+
+
+        FLD1 FLD2       
+============ ========== 
+
+           3 three      
+           2 two        
+           1 one        
+
+
+        FLD1 FLD2       
+============ ========== 
+
+           1 one        
+           2 two        
+           3 three      
+

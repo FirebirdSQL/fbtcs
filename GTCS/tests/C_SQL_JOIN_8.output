@@ -1,0 +1,45 @@
+Test:
+ select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row from ct1 t1 full join ct2 t2 on t1.c1 = t2.c1
+--------------------------------------------------------------------------------
+a-1       c10-1     ct1-1     a-1       c10-1     ct2-1     
+a-2       c10-2     ct1-2     a-2       c10-2     ct2-2     
+                                        c10-3     ct2-3     
+a-4                 ct1-4     a-4                 ct2-4     
+                                                  ct2-5     
+                              2         unique-2  ct2-6     
+          c10-3     ct1-3                                   
+                    ct1-5                                   
+1         unique-1  ct1-6                                   
+
+
+* Total Records Listed >>> 9
+
+                TABLE                 TABLE
+C1      C10      ROW  C1      C10      ROW
+=== ========== ====== === ========== ======
+
+a-1 c10-1      ct1-1  a-1 c10-1      ct2-1 
+a-2 c10-2      ct1-2  a-2 c10-2      ct2-2 
+                          c10-3      ct2-3 
+a-4            ct1-4  a-4            ct2-4 
+                                     ct2-5 
+                      2   unique-2   ct2-6 
+    c10-3      ct1-3                 
+               ct1-5                 
+1   unique-1   ct1-6                 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C1     C10        TABLE_ROW C1     C10        TABLE_ROW 
+====== ========== ========= ====== ========== ========= 
+
+a-1    c10-1      ct1-1     a-1    c10-1      ct2-1     
+a-2    c10-2      ct1-2     a-2    c10-2      ct2-2     
+<null> <null>     <null>    <null> c10-3      ct2-3     
+a-4    <null>     ct1-4     a-4    <null>     ct2-4     
+<null> <null>     <null>    <null> <null>     ct2-5     
+<null> <null>     <null>    2      unique-2   ct2-6     
+<null> c10-3      ct1-3     <null> <null>     <null>    
+<null> <null>     ct1-5     <null> <null>     <null>    
+1      unique-1   ct1-6     <null> <null>     <null>    
+

@@ -1,0 +1,31 @@
+
+/*
+**  Name:		cf_isql_15
+**  Series:		cf_isql
+**  Meta-Series:
+**  Dependencies:	None
+**  Description:	This test is a level two test case for computed-fields.
+**			
+**			This test checks the behaviour of computed-field defined
+**			using non-existing UDF.
+**
+**  Expected result:	The create table definition should fail.
+**			
+**  Author:		Ravil A. Desai
+**  Change history:
+**
+*/
+
+$ CREATE cf_test.sql
+create database "WHERE_GDB:cf.gdb";
+
+/*-----------------------------------------------------------------------------*/
+/* Create a table with computed field which is defined using non-existing UDF. */
+/*-----------------------------------------------------------------------------*/
+create table t0 (a integer, af computed by (non_exist_udf(a)));
+
+drop database;
+exit;
+$ ISQL -input cf_test.sql
+
+$ DELETE cf_test.sql

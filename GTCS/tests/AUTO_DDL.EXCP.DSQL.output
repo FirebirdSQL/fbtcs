@@ -1,0 +1,16 @@
+Use CONNECT or CREATE DATABASE to specify a database
+unsuccessful metadata update
+-DEFINE EXCEPTION failed
+-attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
+unsuccessful metadata update
+-cannot delete
+-EXCEPTION FAIL_MSG
+-there are 1 dependencies
+unsuccessful metadata update
+-DEFINE EXCEPTION failed
+-attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -836
+
+exception 1
+-THIS IS AN EXCEPTION !!

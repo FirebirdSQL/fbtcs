@@ -1,0 +1,76 @@
+
+HISTORY:
+2001-Oct-04 Neil McCalden 
+Update query to pass improved field ambiguity tests in Firebird.
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas_join_1.gdb
+$ CREATE join001.e
+
+/*
+ Out join example 2.9.1 page 64
+ 
+*/
+
+
+DATABASE atlas = FILENAME "WHERE_GDB:atlas_join_1.gdb";
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+BASED_ON CITIES.CITY		City;
+BASED_ON STATES.STATE_NAME	State_Name;
+
+short StateFlag;
+
+
+EXEC SQL
+	INCLUDE SQLCA;
+
+
+main()
+{
+
+EXEC SQL
+	DECLARE C CURSOR FOR
+	SELECT C.CITY, S.STATE_NAME  
+	FROM CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE;
+	
+EXEC SQL
+	OPEN C;
+
+
+printf("City \t\t\t State\n");
+printf("---- \t\t\t ------\n");
+
+do{
+	EXEC SQL FETCH C INTO :City, :State_Name:StateFlag;
+	if (!SQLCODE){
+		if (StateFlag)
+			strcpy(State_Name,"- NULL -");
+		printf ("%-20s ",City);
+		printf (" %-20s\n", State_Name);
+	}
+}while (SQLCODE == 0);
+
+EXEC SQL CLOSE C;
+
+printf("... End of example 2.9.1 \n");
+}
+$ GPRE -e join001.e
+$ CC FLAG_CC join001.c
+$ LINK FLAG_LINK join001 
+$ RUN join001
+$ CREATE join001.qli
+ready WHERE_GDB:atlas_join_1.gdb;
+set semicolon;
+set columns 100;
+SELECT C.CITY, S.STATE FROM CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE;
+finish;
+quit;
+$ QLI -n -a join001.qli
+$ CREATE join001.sql
+connect WHERE_GDB:atlas_join_1.gdb;
+SELECT C.CITY, S.STATE FROM CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE;
+quit;
+$ISQL -i join001.sql
+$DROP WHERE_GDB:atlas_join_1.gdb
+$ DELETE join001*

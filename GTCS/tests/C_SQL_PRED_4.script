@@ -1,0 +1,198 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sin005.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ Syntax:		[NOT]SINGULAR <subquery>			
+ Description:           Two table join - SINGULAR
+ Tables:                sales, customers (many-to-one relationship)
+ expected:		16 rows.
+ Author:		Sam Hakim, Feb 18, 93
+ Bug 5294:		GPRE generates bad code for FETCH on NT
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL	WHENEVER SQLERROR GO TO ERR;
+EXEC SQL	WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON SALES.CUSTNO         Custno;
+BASED_ON SALES.PONUMB         Ponumb;
+BASED_ON SALES.AGED           Aged;
+BASED_ON SALES.SALES_REP      Sales_rep;
+BASED_ON SALES.ORDER_DATE     Order_date;
+BASED_ON SALES.TOTAL_VALUE    Total_value;
+BASED_ON SALES.DATE_NEEDED    Date_needed;
+BASED_ON SALES.ORDER_STATUS   Order_status;
+BASED_ON SALES.PAID           Paid;
+BASED_ON SALES.SHIPPED        Shipped;
+BASED_ON SALES.WARRANTY	      Warranty;
+
+static char             *months [] ={
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec"
+};
+
+void ToDate();
+char AlphaDate[13];                     
+struct tm UxTime;
+
+char Test[]="SELECT * FROM SALES S1 \
+WHERE SINGULAR \
+(SELECT * \
+FROM CUSTOMERS C1 \
+WHERE C1.CUSTNO =S1.CUSTNO)";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT Custno, Ponumb, Aged, Sales_rep, Order_date,
+                Total_value, Date_needed, Order_status, Paid, Shipped, Warranty
+		FROM SALES S1
+                WHERE SINGULAR
+                (SELECT *
+                FROM CUSTOMERS C1
+                WHERE C1.CUSTNO =S1.CUSTNO);
+
+	EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Custno,:Ponumb,:Aged,:Sales_rep,:Order_date,
+                :Total_value,:Date_needed,:Order_status,:Paid,:Shipped,:Warranty;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf ("%ld\t",Custno);
+                printf ("%s\t",Ponumb);
+                printf ("%ld\t",Sales_rep);
+                ToDate(&Order_date);
+                printf ("%s\t",AlphaDate);
+                printf("%8.2f\t", (double)(Total_value));
+                ToDate(&Date_needed);
+                printf ("%s\t",AlphaDate);
+                printf ("%s\t",Order_status);
+                printf ("%s\t",Paid);
+                ToDate(&Shipped);
+                printf ("%s\t",AlphaDate);
+	/* do not print aged because it is calculated 'today' - shipped 
+                printf ("%ld\t",Aged); */
+		ToDate(&Warranty);
+		printf("%s\n",AlphaDate);
+                Underline(80);
+		
+                EXEC SQL
+                FETCH CR INTO :Custno,:Ponumb,:Aged,:Sales_rep,:Order_date,
+                :Total_value,:Date_needed,:Order_status,:Paid,:Shipped,:Warranty;
+	}
+	
+NOMORE:
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+
+/****************************************************************
+ * Convert Interbase date to character string date
+ ****************************************************************
+*/
+void ToDate(InDate)
+GDS__QUAD *InDate;
+{
+                isc_decode_date (InDate, &UxTime);
+                sprintf (AlphaDate, "%2d-%s-%4d ", UxTime.tm_mday,
+	 	months[UxTime.tm_mon], UxTime.tm_year + 1900);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e sin005.e
+$ CC FLAG_CC sin005.c
+$ LINK FLAG_LINK sin005 
+$ RUN sin005
+$ CREATE sin005.qli
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+
+select * from sales s1 where not singular 
+(select * from customers c1 where c1.custno =s1.custno);
+
+for s1 in sales with not unique c1 in customers over custno
+print s1.custno, s1.ponumb,s1.sales_rep, s1.order_date, s1.total_value, s1.date_needed,
+s1.order_status, s1.paid,s1.shipped,s1.aged,s1.warranty;
+
+select * from sales s1 where 0 =
+(select count(*) from customers c1 where c1.custno =s1.custno)
+or 1 < (select count(*) from customers c2 where c2.custno =s1.custno);
+
+finish;
+quit;
+$ QLI -n -a sin005.qli
+$ CREATE sin005.sql
+connect WHERE_GDB:sh_test.gdb;
+select * from sales s1 where not singular 
+(select * from customers c1 where c1.custno =s1.custno);
+select * from sales s1 where 0 =
+(select count(*) from customers c1 where c1.custno =s1.custno)
+or 1 < (select count(*) from customers c2 where c2.custno =s1.custno);
+quit;
+$ISQL -i sin005.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sin005* 
+

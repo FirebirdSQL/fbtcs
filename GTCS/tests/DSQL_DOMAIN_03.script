@@ -1,0 +1,52 @@
+
+/*******************************************************************************
+ Test Name:   dsql_domain_03
+ Series Name: dsql_domains
+ Date:        5-October-1993
+ Comments:    This script will test level 0 syntax for create domain using
+              datatype and the not null constraint.
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_03.sql
+create domain dom03a as smallint
+ not null;
+commit;
+show domain dom03a;
+create domain dom03b as integer
+ not null;
+commit;
+show domain dom03b;
+create domain dom03c as date
+ not null;
+commit;
+show domain dom03c;
+create domain dom03d as char(20)
+ not null;
+commit;
+show domain dom03d;
+create domain dom03e as varchar(25)
+ not null;
+commit;
+show domain dom03e;
+create domain dom03f as decimal(6,2)
+ not null;
+commit;
+show domain dom03f;
+create domain dom03g as float
+ not null;
+commit;
+show domain dom03g;
+create domain dom03h as double precision
+ not null;
+commit;
+show domain dom03h;
+create domain dom03i as blob
+ not null;
+commit;
+show domain dom03i;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_03.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_03.sql

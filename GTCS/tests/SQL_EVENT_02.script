@@ -1,0 +1,81 @@
+
+$ CREATE comment.txt
+Name: Sudhnashu Kumar
+This test has a before update trigger which is fired first then upddate stmt
+is executed, then at commit time event is poted to application program.  
+$CREATE event2.sql
+create database "WHERE_GDB:events1.gdb";
+create table project  ( PNAME   VARCHAR(15) Not Null,
+                        PNUMBER     INTEGER);
+
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     INTEGER);
+
+insert into project values('ProductX',1);
+insert into project values('ProductY',2);
+insert into project values('ProductZ',3);
+
+insert into works_on values(1,1,1);
+insert into works_on values(2,2,2);
+insert into works_on values(3,3,3);
+
+set term go;
+create trigger trig01 for project
+active after update position 1
+as begin
+post_event 'abc';
+if (new.pnumber < 100) then
+  update works_on 
+   set pnumber =  new.pnumber 
+    where  pnumber = old.pnumber; 
+end
+go
+set term ; go
+exit;
+$ISQL -I event2.sql -sqldialect 1
+$ CREATE foo2.e
+#include <stdio.h>
+DATABASE DB = "WHERE_GDB:events1.gdb"
+main()
+{
+  EXEC SQL 
+	CONNECT DB;
+  EXEC SQL 
+	SET TRANSACTION;
+  EXEC SQL 
+	EVENT INIT xyz DB ("abc") ;
+
+  if (isc_status[1])
+	isc_print_status(gds__status);
+
+  EXEC SQL 
+	EVENT WAIT xyz;
+  EXEC SQL 
+	COMMIT WORK;
+
+  if (isc_status[1])
+	isc_print_status(isc_status);
+  else
+	printf ("\nfoo2 done, event (abc) was posted.\n");
+
+ EXEC SQL
+	DISCONNECT DB;
+ return 0;
+}
+
+$ GPRE  -n -m foo2.e
+$ CC FLAG_CC foo2.c
+$ LINK FLAG_LINK foo2 
+$ RUN_BG foo2 > foo2.tt1 &
+$ SLEEP 5
+$ ISQL -m WHERE_GDB:events1.gdb
+update project set pnumber = 22 where pnumber = 2;
+commit;
+select * from project;
+select * from works_on;
+exit;
+$ SLEEP 5
+$ TYPE foo2.tt1
+$ DROP WHERE_GDB:events1.gdb
+$ DELETE foo2* comment.txt event2.sql

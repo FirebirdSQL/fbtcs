@@ -1,0 +1,107 @@
+
+$ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_16.gdb
+$ CREATE blob016.e
+/**********************************************************************
+ Purpose:               Test SQL blob support in InterBase 4.0
+ Description:           INSERT CURSOR VALUES (NULL); 
+ Author:                Sam Hakim, June 7, 93
+ **********************************************************************/
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+EXEC SQL SET DATABASE DB = "WHERE_GDB:sh_blobs_16.gdb";
+EXEC SQL	INCLUDE SQLCA;
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+
+BASED_ON MB1.TEST_NAME      Test_Name;
+BASED_ON MB1.COMMENT        Comment;
+BASED_ON MB1.ROW_ID         Row_Id;
+BASED_ON MB1.B512           BlobId;
+
+
+struct Buf{
+    char            Buffer[1024];
+    unsigned short  BufferLen;
+};
+struct Buf M;
+
+char Test[]="INSERT INTO MB1 (TEST_NAME,ROW_ID,B512) VALUES (:Test_Name,16,NULL)";
+
+void Underline();
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+short                       i,j,k,l;
+int verbose;
+
+    verbose = FALSE;
+    if (--argc > 0){
+        if (*argv[1] == 'v' || *argv[1] == 'V')
+            verbose = TRUE;
+        }
+    EXEC SQL CONNECT DB;
+
+    M.Buffer[0] = 0;
+    M.BufferLen = strlen(M.Buffer);
+    
+    strcpy(Test_Name,"blob016");
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+	/* We don't have to necessairly  open a blob cursor.  But
+           we did to see if it causes an problem not inserting anything into it */
+    EXEC SQL
+    DECLARE BCW CURSOR FOR
+    INSERT BLOB B512 INTO MB1 MAXIMUM_SEGMENT 512;
+
+    EXEC SQL OPEN BCW INTO :BlobId;
+
+
+    EXEC SQL
+        CLOSE BCW; 
+    EXEC SQL
+        INSERT INTO MB1 (TEST_NAME,ROW_ID,B512) VALUES (:Test_Name,16,NULL);
+    EXEC SQL COMMIT;
+
+FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/************************************************************
+ * Draw an underline
+ ************************************************************/
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e blob016.e
+$ CC FLAG_CC blob016.c
+$ LINK FLAG_LINK blob016 
+$ RUN blob016
+$ CREATE blob016.qli
+ready WHERE_GDB:sh_blobs_16.gdb;
+select test_name, row_id, b512 from mb1 where test_name = 'blob016' and b512 is null;
+finish;
+quit;
+$ QLI -n -a blob016.qli
+$DROP WHERE_GDB:sh_blobs_16.gdb
+$ DELETE blob016*

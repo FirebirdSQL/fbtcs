@@ -1,0 +1,7 @@
+Welcome to QLI
+Query Language Interpreter
+QLI> QLI> QLI> QLI>     EXT_TABLE
+        FIELD1            varying text, length 10
+    Stored in external file WHERE_GDB_EXTERNAL:external.dat
+
+QLI> QLI> 

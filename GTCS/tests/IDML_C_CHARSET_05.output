@@ -1,0 +1,20 @@
+--------------------------------------------------------------
+   PRINTING ALL EMPLOYEES--Using Stored Procedure with SET NAMES/CONNECT.
+
+   (When bug_7043 is fixed it will work: using set names causes select from stored procedure to fail.
+
+1          Rôbért          Nélsôn              
+2          Bruce           Nélsôn              
+
+--------------------------------------------------------------
+   INSERTING NEW DATA--using host variables loaded from stored procedure
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+ EMP_NO FIRST_NAME      LAST_NAME            
+======= =============== ==================== 
+
+      1 Rôbért          Nélsôn               
+      2 Bruce           Nélsôn               
+    222 Bruce           Nélsôn               
+

@@ -1,0 +1,94 @@
+
+$ CREATE doc
+By:          Clare Taylor
+Date:        03/22/94
+Test name:   IDML_C_SUBQ_11         
+Series:      IDML_C_SUBQUERYS          
+Results:     Syntax error for the GROUP BY w/COLLATE in a SUBQUERY.                     
+Dependency:  Requires tests.gdb database from IDML_C_SUBQ_02
+History:
+
+Description:
+Attempts to INSERT data in sorted order through the use of an GROUP BY with
+a COLLATE clause in a SUBQUERY.  SQL II Dates book shows that a SUBQUERY may 
+contain a GROUP BY and a group by allows a COLLATE clause. (Pg. 284, Dates
+on the SQL II standard.)
+
+
+$ CREATE doc_s11 
+The following test is for legal syntax and produce ordered results using a
+simple select on TABLE 1 after an insert using a SUBQUERY w/GROUP BY COLLATE FR_FR;
+
+It does.  The query on TABLE 2 is the result of the same insert without the 
+GROUP BY--it does not appear sorted.
+
+The final test is done in ISQL and produces the error at the end of the results.
+ISQL does not support the GROUP BY COLLATE used in this way.
+
+$ CREATE subq11.e 
+/*-------------------------------------------------------------------------
+  Case 10:  INSERT <table> SET <field> = "string" WHERE (subquery w/group by)
+---------------------------------------------------------------------------*/
+#include <WHERE_FILES:tcs.h>
+EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
+EXEC SQL WHENEVER SQLERROR GOTO err;
+EXEC SQL INCLUDE SQLCA;
+
+
+static print_error()
+{
+    if (SQLCODE != 100)
+        printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+}
+main()
+{
+     EXEC SQL CONNECT db;
+
+     EXEC SQL DELETE FROM TEST_TABLE2;
+     EXEC SQL DELETE FROM TEST_TABLE1;
+     EXEC SQL COMMIT;
+     
+     printf("\nAttempting an insert using a SUBQUERY with GROUP BY COLLATE FR_FR--works.\n\n");
+     EXEC SQL
+         INSERT INTO TEST_TABLE1 
+	 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 FROM STRING_TABLE 
+	 GROUP BY C_FRANCE COLLATE FR_FR;   
+     EXEC SQL COMMIT;
+
+     EXEC SQL
+         INSERT INTO TEST_TABLE2 
+	 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 FROM STRING_TABLE;
+     EXEC SQL COMMIT;
+
+     EXEC SQL COMMIT RELEASE;
+     exit(0);
+err: print_error();
+}
+$ CREATE ver11.sql 
+connect "WHERE_GDB:tests.gdb";
+SELECT ' table 1: ', C_ENUS, C_FRANCE, C_437_25 FROM TEST_TABLE1;
+SELECT ' table 2: ', C_ENUS, C_FRANCE, C_437_25 FROM TEST_TABLE2;
+quit;
+
+$ CREATE subq11.sql 
+connect "WHERE_GDB:tests.gdb";
+delete from test_table1;
+COMMIT;
+
+INSERT INTO TEST_TABLE1 
+    SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 
+    FROM STRING_TABLE GROUP BY C_FRANCE COLLATE FR_FR; 
+COMMIT;
+
+SELECT 'Simple select after INSERT w/GROUP BY: ',C_ENUS, C_FRANCE, C_437_25 
+    FROM test_table1;
+QUIT;
+$ TYPE doc_s11
+$ GPRE subq11.e
+$ CC FLAG_CC subq11.c
+$ LINK FLAG_LINK subq11 
+$ RUN subq11
+$ ISQL -i ver11.sql -m
+$ ISQL -i subq11.sql -m
+
+$ DELETE doc_s11 subq11* doc ver11.sql

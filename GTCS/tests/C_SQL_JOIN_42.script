@@ -1,0 +1,175 @@
+
+$ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_42.gdb
+$ CREATE join042.e
+
+/**********************************************************************
+ Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
+ Description:           Outer join with Nested correlated queries.
+ Author:                Sam Hakim, June 1, 93
+ Bug 5414 WHERE column > ALL not returning correct result
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_join_42.gdb";
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON st1.s1     t1s1;
+BASED_ON st1.s2     t1s2;
+BASED_ON st1.comp_s t1comp_s;
+BASED_ON st1.table_row   t1table_row;
+
+BASED_ON st2.s1     t2s1;
+BASED_ON st2.s2     t2s2;
+BASED_ON st2.comp_s t2comp_s;
+BASED_ON st2.table_row   t2table_row;
+
+char Test[]="\
+select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row \
+from (st1 t left outer join st2 x on t.s1 = x.s1) \
+where t.s1 > ALL \
+(select (y.s1+1-6) from st1 y where y.s1 is not null and y.s3 in \
+(select z.s3 from st3 z where z.s3 is not null)) \
+order by t.table_row ascending";
+
+void Underline();
+
+main()
+{
+	
+    int Count;
+	Count = 0;
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+
+    EXEC SQL
+        DECLARE CR CURSOR FOR
+        select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
+        from (st1 t left outer join st2 x on t.s1 = x.s1) where t.s1 > ALL
+        (select (y.s1+1-6) from st1 y  
+	where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
+        order by t.table_row ascending;
+
+        EXEC SQL
+		OPEN CR;
+		
+    EXEC SQL    FETCH CR INTO :t1s1,:t1s2,:t1comp_s,:t1table_row,
+                :t2s1,:t2s2,:t2comp_s,:t2table_row;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%10d  ",t1s1);
+                printf("%10d  ",t1s2);
+                printf("%10d  ",t1comp_s);
+                printf("%-10s  ",t1table_row);
+
+                printf("%10d  ",t2s1);
+                printf("%10d  ",t2s2);
+                printf("%10d  ",t2comp_s);
+                printf("%-10s\n",t2table_row);
+
+                EXEC SQL
+                FETCH CR INTO :t1s1,:t1s2,:t1comp_s,:t1table_row,
+                :t2s1,:t2s2,:t2comp_s,:t2table_row;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e join042.e
+$ CC FLAG_CC join042.c
+$ LINK FLAG_LINK join042 
+$ RUN join042
+$ CREATE join042.sql
+select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
+from (st1 t left outer join st2 x on t.s1 = x.s1)
+where t.s1 > ALL
+(select (y.s1+1-6) from st1 y 
+where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
+order by t.table_row ascending;
+
+exit;
+$ CREATE join042x.sql
+/* using max is sub-query */
+select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
+from (st1 t left outer join st2 x on t.s1 = x.s1) where t.s1 >
+(select max(y.s1+1-6) from st1 y
+where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
+order by t.table_row ascending;
+
+exit;
+$ ISQL -e WHERE_GDB:sh_join_42.gdb -i join042.sql
+$ CREATE join042.qli
+ready WHERE_GDB:sh_join_42.gdb;
+set semicolon;
+set columns 100;
+
+/* select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
+from (st1 t left outer join st2 x on t.s1 = x.s1)
+where t.s1 > ALL
+(select (y.s1+1-6) from st1 y 
+where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
+order by t.table_row ascending;
+*/
+select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
+from (st1 t left outer join st2 x on t.s1 = x.s1)
+where t.s1 > ALL
+(select (y.s1+1-6) from st1 y
+where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
+order by t.table_row ascending;
+finish;
+quit;
+/* The qli query will not be run because it is unsupported 
+   The result given in QLI is incorrect */
+# QLI -n -a join042.qli
+$ CREATE join042.sql
+connect WHERE_GDB:sh_join_42.gdb;
+select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
+from (st1 t left outer join st2 x on t.s1 = x.s1)
+where t.s1 > ALL
+(select (y.s1+1-6) from st1 y
+where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
+order by t.table_row ascending;
+quit;
+$ISQL -i join042.sql
+$DROP WHERE_GDB:sh_join_42.gdb
+$ DELETE join042* 

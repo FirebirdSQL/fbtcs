@@ -1,0 +1,15 @@
+invalid database handle (no active connection)
+Running ER37, invalid transaction handle
+to isc_array_get_slice
+attach ok
+RC=335544324
+ERROR: Unsuccessful execution caused by an unavailable resource.
+start txn ok
+RC=335544332
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+get_slice ok
+RC=335544332
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+get_slice null trans ok
+detach ok
+Finished ER37

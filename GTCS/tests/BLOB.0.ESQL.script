@@ -1,0 +1,69 @@
+
+$CREATE init.sql
+create database "WHERE_GDB:test1.gdb";
+create table t1 (a int not null, b blob);
+$CREATE p1.e
+exec sql include sqlca;
+exec sql set schema db = "WHERE_GDB:test1.gdb";
+#include <stdio.h>
+#include <string.h>
+char buffer[80];
+main(argc, argv)
+int argc;
+char *argv[];
+{
+	char  cont, segment[80];
+	int segment_len, buffer_len;
+	short t1_ind;
+	char *sentence="This is segment number %d\n";
+	int i, j;
+
+	GDS__QUAD t1_blob;
+	exec sql connect db;
+	exec sql set transaction;
+	j = 0;
+	while (j< 6)
+	{
+		exec sql declare c cursor for insert blob b into t1;
+		exec sql open c into  :t1_blob;
+		for ( i = 0; i< 5; i++)
+		{	
+		sprintf(segment, sentence, i+j*10);
+		segment_len = strlen(segment);
+		exec sql insert cursor c values (:segment INDICATOR :segment_len);
+		}
+		exec sql close c;
+		exec sql insert into t1 values (:j, :t1_blob);
+		if (j % 2) exec sql commit;
+		else exec sql rollback;
+		exec sql set transaction;
+		j++;
+	}
+	exec sql set transaction;
+	exec sql declare c1 cursor for select b from t1;
+	exec sql open c1;
+	exec sql fetch c1 into :t1_blob:t1_ind;
+	while (!SQLCODE)
+	{
+		exec sql declare c2 cursor for read blob b from t1;
+		exec sql open c2 using :t1_blob;
+		exec sql fetch c2 into :buffer indicator :buffer_len;
+		while (!SQLCODE || SQLCODE == 101)
+		{
+			printf("%s", buffer);
+			exec sql fetch c2 into :buffer indicator :buffer_len;
+		}
+		exec sql close c2;
+		exec sql fetch c1 into :t1_blob:t1_ind;
+	}
+	exec sql commit;
+}
+	
+
+$ISQL -i init.sql
+$GPRE -m -e p1.e
+$CC FLAG_CC p1.c
+$LINK FLAG_LINK p1 
+$RUN p1
+$DROP WHERE_GDB:test1.gdb
+$DELETE -f  p1* init.sql

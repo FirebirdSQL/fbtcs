@@ -1,0 +1,46 @@
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_ISO      
+======= ========== 
+
+     11 Ó          
+     33 ç          
+      2 ó          
+     22 ¢          
+      4 µ          
+     44 æ          
+     55 Ø          
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_850      
+======= ========== 
+
+     11 Ë          
+     33 þ          
+      2 ó          
+     22 ó          
+      4 µ          
+     44 µ          
+     55 Ï          
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+T_ROWID T_UNI                          
+======= ============================== 
+
+     11 <null>                         
+     33 <null>                         
+      2 <null>                         
+     22 <null>                         
+      4 <null>                         
+     44 <null>                         
+     55 <null>                         
+
+bug 6671, 6002 prevents this from running --we get errs that say
+    T2 does not exist when it does.  I changed all OCTET references
+    to ISO references to initialize the test with something besides
+    error messages.  Changing the test back to OCTETS, but leaving
+    this bad init.  When the bug is fixed, reinit this test w/OCTET
+    results.

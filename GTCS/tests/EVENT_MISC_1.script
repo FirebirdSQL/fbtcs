@@ -1,0 +1,268 @@
+
+$CREATE event_mgr.e
+/*---------------------------------------------------------------------------*/
+/*                        EVENTS  TEST  MANAGER                              */ 
+/*---------------------------------------------------------------------------*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef WIN_NT
+#include <windows.h>
+#endif
+
+#define ISC_EVENTS  gds__events 
+
+char *event_names [] = { "DG", "DEC", "HP", "IBM", "SUN" };
+
+#include <stdio.h>
+
+#ifdef VMS
+#include <processes.h>
+#define fork vfork
+#endif
+
+#define TRUE 1
+#define FALSE 0
+#define ERROR -1
+#define UPDATE_INTERVAL 10
+#define SLACK_TIME 150 
+#define number_of_stocks 5
+
+DATABASE STOCKS_DB = COMPILETIME "stocks.gdb" RUNTIME db_name; 
+
+char db_name[256];
+
+main(argc,argv) 
+int argc;
+char ** argv;
+{
+
+#ifdef WIN_NT
+
+  PROCESS_INFORMATION pi;
+  STARTUPINFO si;
+
+#endif
+
+
+
+  int pstatus, post_event_pid, i;
+  double old_prices[number_of_stocks];
+  short post_events;
+  
+  if ( argv[1] )
+          strcpy(db_name, argv[1]);
+  else
+          strcpy(db_name, "stocks.gdb");
+
+  READY STOCKS_DB;
+
+  EVENT_INIT PRICE_CHANGE ( "DG", "DEC", "HP", "IBM", "SUN" );
+
+  START_TRANSACTION;
+
+  for (i=0;i<number_of_stocks;i++)
+    {
+     FOR S IN STOCKS WITH S.COMPANY = event_names[i]
+	old_prices[i]=S.PRICE;
+     END_FOR;
+    }
+
+ /* Fork a process that updates the database hence posting the event*/
+
+#ifdef WIN_NT
+
+    si.cb = sizeof(STARTUPINFO);
+    si.lpReserved = NULL;
+    si.lpDesktop = NULL;
+    si.lpTitle = NULL;
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
+    si.cbReserved2 = 0;
+    si.lpReserved2 = NULL; 
+   
+  if ( ! CreateProcess("post_events.exe", db_name, NULL,
+         NULL, FALSE, CREATE_NEW_CONSOLE | NORMAL_PRIORITY_CLASS,
+         NULL, NULL, &si, &pi))
+     {
+      fprintf(stderr,"Error : Fork System Call Failed"); 
+     }
+
+  if (WaitForSingleObject(pi.hProcess, INFINITE) == WAIT_FAILED)
+      printf("Wait failed for process '%x', Error Code %d \n",
+             pi.hProcess, GetLastError());    
+#else    
+  switch(post_event_pid = fork())
+    {
+     case 0 :  execl("post_events","post_events", (char *)db_name, 
+                      (char *)NULL);
+	       break;
+     case -1:  perror("Error : Fork System Call Failed");
+               break;
+    }
+
+  while(wait(&pstatus) != post_event_pid); 
+#endif
+
+    post_events = number_of_stocks;	
+
+  while(post_events)
+    {		
+     if (post_events)
+       {
+        EVENT_WAIT PRICE_CHANGE;
+
+	COMMIT;
+
+	START_TRANSACTION;
+
+	for (i=0;i<number_of_stocks;i++) 
+          {
+	   if (ISC_EVENTS[i]) 
+	     {
+	      FOR S IN STOCKS WITH S.COMPANY = event_names[i]
+		STORE E IN EVENTSLOG
+		strcpy(E.COMPANY, S.COMPANY);
+		E.OLD_PRICE = old_prices[i];
+		E.NEW_PRICE = S.PRICE;
+	  	post_events --;
+		END_STORE;
+		old_prices[i]=S.PRICE;
+		END_FOR;
+	     }
+	  }
+	}
+      }
+    COMMIT;
+    START_TRANSACTION;
+    printf("COMPANY       OLD_PRICE        NEW_PRICE\n");
+    FOR E IN EVENTSLOG
+     printf("%s    %-9.3f        %-9.3f\n",E.COMPANY,E.OLD_PRICE,E.NEW_PRICE);
+    END_FOR;
+    COMMIT;
+    FINISH STOCKS_DB;
+}
+$CREATE post_events.e
+/* This program updates the stock values in the database hence posting the 
+   event 
+*/
+
+#include <stdio.h>
+
+#ifdef WIN_NT
+#include <windows.h>
+#endif
+
+#define NUMBER_OF_STOCKS 5
+#define DELTA_STOCK_PRICE 2.00
+
+char *company_name [] = {"DG", "DEC", "HP", "IBM", "SUN" };
+
+DATABASE DB = COMPILETIME "stocks.gdb" RUNTIME db_name;
+
+char db_name[256];
+
+main(argc, argv)
+int argc;
+char **argv;
+{
+	unsigned short stocks_to_update,delta_change;
+
+	stocks_to_update = NUMBER_OF_STOCKS;
+	delta_change = DELTA_STOCK_PRICE;	
+
+        if ( argv[1] )
+             strcpy(db_name, argv[1]);
+        else
+             strcpy(db_name, "stocks.gdb");
+
+
+
+	READY DB;
+	START_TRANSACTION;
+
+	while (stocks_to_update)	
+	{
+
+          
+	
+		EXEC SQL 
+			UPDATE STOCKS SET PRICE = PRICE - :delta_change
+			WHERE COMPANY = :company_name[stocks_to_update-1];
+		EXEC SQL COMMIT;
+#ifdef WIN_NT
+                Sleep( 5000 );
+#else
+		sleep(5);
+#endif
+		stocks_to_update --;
+	}
+	EXEC SQL COMMIT RELEASE;
+}
+$CREATE stocks.gdl
+
+define database "stocks.gdb"
+	page_size 1024;
+
+
+/*	Global Field Definitions	*/
+
+define field COMPANY char [10];
+define field NEW_PRICE float;
+define field OLD_PRICE float;
+define field PRICE float
+	edit_string "$$$9.999";
+
+
+/*	Relation Definitions	*/
+
+
+define relation EVENTSLOG
+    COMPANY	position 1,
+    OLD_PRICE	position 2,
+    NEW_PRICE	position 3;
+
+define relation STOCKS
+    COMPANY	position 1,
+    PRICE	position 2
+	edit_string "$$$9.999";
+
+
+/*	Generator Definitions	*/
+
+
+define generator STOCKS;
+
+/*	Trigger Definitions	*/
+
+
+
+define trigger STOCKS$MODIFY for STOCKS
+	pre modify 0:
+if new.price != old.price 
+	then post new.company;
+
+	end_trigger;
+$GDEF -r stocks.gdl
+$CREATE input.sql
+connect stocks.gdb;
+insert into stocks ( company, price) values ( "DG", 55.50);
+insert into stocks ( company, price) values ( "DEC", 122.00);
+insert into stocks ( company, price) values ( "IBM", 145.00);
+insert into stocks ( company, price) values ( "HP", 85.00 );
+insert into stocks ( company, price) values ( "SUN", 55.75);
+commit;
+exit;
+
+$ISQL -i input.sql
+$GPRE -e -n post_events
+$GPRE -e -n event_mgr
+$CC FLAG_CC post_events
+$CC FLAG_CC event_mgr
+$LINK FLAG_LINK post_events 
+$LINK FLAG_LINK event_mgr 
+$RUN event_mgr
+$DELETE event_mgr* post_events* input.sql stocks.gdl stocks.gdb
+
+

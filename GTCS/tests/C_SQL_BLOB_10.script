@@ -1,0 +1,171 @@
+
+$ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_10.gdb
+$ CREATE blob010.e
+/**********************************************************************
+ Purpose:               Test SQL blob  support in InterBase 4.0
+ Description:           FETCH blobcursor - NULL blob (never been touched)
+ Author:                Sam Hakim, June 7, 93
+ ***********************************************************************
+*/
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_blobs_10.gdb";
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL WHENEVER SQLERROR GO TO ERR;
+
+BASED_ON MB1.TEST_NAME      Test_Name;
+BASED_ON MB1.COMMENT        Comment;
+BASED_ON MB1.ROW_ID         Row_Id;
+BASED_ON MB1.B256	    BlobId;
+
+short                       i,j,k,l;
+short			    FullFetch,PartialFetch;
+int 			    verbose;
+
+struct Buf{
+    char            Buffer[128];
+    unsigned short  BufferLen,SOB;
+};
+struct Buf M;
+
+char Test[]="FETCH BCR INTO :M.Buffer:M.BufferLen   (NULL blob)";
+
+void Underline();
+void EmptyBuffer();
+void FetchType();
+
+
+main(argc,argv)
+int	argc;
+char	*argv[];
+{
+	
+    int 	Count;
+    
+    verbose = FALSE;
+    if (--argc > 0){
+        if (*argv[1] == 'v' || *argv[1] == 'V')
+             verbose = TRUE;
+        }
+
+    Count = 0;
+    FullFetch = PartialFetch = 0;
+    
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+    M.SOB = sizeof(M.Buffer);
+
+    EXEC SQL
+        INSERT INTO MB1 (TEST_NAME,ROW_ID,COMMENT) VALUES ("blob010",10,"10th row");
+    EXEC SQL
+	COMMIT;
+
+    EXEC SQL DECLARE TCR CURSOR FOR
+             SELECT ROW_ID, B256, COMMENT
+             FROM MB1 WHERE ROW_ID =10;
+
+    EXEC SQL OPEN TCR ;
+
+    EXEC SQL DECLARE BCR CURSOR FOR
+             READ BLOB B256 FROM MB1 MAXIMUM_SEGMENT 128;
+
+    EXEC SQL FETCH TCR INTO :Row_Id,:BlobId,:Comment;
+
+    while (!SQLCODE){
+        printf ("Row_id: %d Comment: %s \n",Row_Id,Comment);
+
+        EXEC SQL OPEN BCR USING :BlobId;
+    	EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
+	FetchType();
+	if (verbose)
+             printf("SQLCODE = %ld, BufferLen = %d, BlobId: %ld %ld \n",
+	             SQLCODE,M.BufferLen,BlobId.gds_quad_high,BlobId.gds_quad_low);
+	
+
+        while (SQLCODE != 100){	
+		 
+            printf ("%*.*s\n",M.BufferLen,M.BufferLen,M.Buffer);
+	    
+            while (SQLCODE == 101){
+                EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
+		FetchType();
+                printf ("%*.*s\n", M.BufferLen,M.BufferLen,M.Buffer);
+
+            }
+    	    EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
+	    FetchType();
+        }
+	printf("\n");
+        EXEC SQL CLOSE BCR;
+	if(verbose)
+	      printf("\n FullFetches = %d, Partial Fetches = %d \n",
+                      FullFetch,PartialFetch);
+        EXEC SQL FETCH TCR INTO :Row_Id,:BlobId,:Comment;
+    }
+    printf("...Done\n");
+	EXEC SQL CLOSE TCR;
+	
+FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/***********************************************************
+ * U n d e r l i n e
+ * print an underline
+ ***********************************************************/
+void Underline(i)
+int i;
+{
+int j;
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+}
+/***********************************************************
+ * EmptyBuffer 
+ * print an underline
+ ***********************************************************/
+void EmptyBuffer(Bf,L)
+char *Bf;
+unsigned short L;
+{
+	for (;L;L--)
+		*Bf++ = ' ';
+}
+/***********************************************************
+ * FetchType
+ * Check SQLCODE, update FullFetch/PartialFetch count. 
+ ***********************************************************/
+void FetchType()
+{
+if (SQLCODE == 101){
+	PartialFetch++;
+	if (verbose)
+	printf ("Partial Fetch=%d \n",PartialFetch);
+}
+
+if (SQLCODE == 0){
+	FullFetch++;
+	if (verbose)
+	printf ("Full Fetch=%d \n",FullFetch);
+}
+}
+
+$ GPRE -e blob010.e
+$ CC FLAG_CC blob010.c
+$ LINK FLAG_LINK blob010 
+$ RUN blob010
+$DROP WHERE_GDB:sh_blobs_10.gdb
+$ DELETE blob010*

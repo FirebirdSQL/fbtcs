@@ -1,0 +1,120 @@
+
+$ CREATE doc
+  depends on idml_c_assign_1 for the db build/load. Currently part of
+  charset series.
+
+$ CREATE assign2.e
+/*-------------------------------------------------------------------------
+  Case 1:    INSERT 8-bit data into an international field by selecting it
+	     from a field of a different character set.
+             SELECT the results.
+---------------------------------------------------------------------------*/
+#include "WHERE_FILES:tcs.h"
+EXEC SQL DATABASE db = "WHERE_GDB:assign.gdb";
+EXEC SQL WHENEVER SQLERROR GOTO err;
+EXEC SQL INCLUDE SQLCA;
+
+EXEC SQL BEGIN DECLARE SECTION
+     BASED ON TEST_TABLE1.S_ROWID   s_rowid;
+     BASED ON TEST_TABLE1.C_437_25  p_437;  
+     BASED ON DUPLICATE.C_850_25    p_850;  
+EXEC SQL END DECLARE SECTION
+
+sql_select()
+{
+char  error_string[23];
+short row_found;
+
+row_found = 0;
+EXEC SQL SET TRANSACTION;
+    EXEC SQL
+         DECLARE C_142 CURSOR FOR 
+         SELECT S_ROWID, C_437_25 FROM TEST_TABLE1;
+
+    EXEC SQL OPEN C_142;
+    while (SQLCODE != 100)
+	{
+         EXEC SQL FETCH C_142 INTO :s_rowid, :p_437;  
+         if (SQLCODE == 100) break;
+         printf("Found string: %d , %s\n", s_rowid,p_437);
+        }
+EXEC SQL CLOSE C_142;
+EXEC SQL COMMIT;
+return;
+err: print_error();
+}
+static print_error()
+{
+    if (SQLCODE != 100)
+        printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
+    exit(1);
+}
+main(argc, argv)
+int     argc;
+char    *argv[];
+{
+     char    *setnames_param = "NONE";   
+
+     if (argc > 1) 
+	 {
+	 setnames_param = argv[1];
+         }
+
+     EXEC SQL SET NAMES :setnames_param;
+     EXEC SQL CONNECT db;
+
+EXEC SQL SET TRANSACTION;
+     EXEC SQL DELETE FROM TEST_TABLE1;
+EXEC SQL COMMIT;
+
+     printf("\nEmbedded INSERT FROM A DOS850 FIELD TO A DOS437 and DOS850 FIELD. SET NAMES is: %s\n\n",setnames_param); 
+
+EXEC SQL SET TRANSACTION;
+     EXEC SQL
+         INSERT INTO TEST_TABLE1 (C_437_25, C_850_25)
+	 SELECT C_850_25, C_850_25 FROM STRING_TABLE WHERE S_ROWID = 100;
+     EXEC SQL
+         INSERT INTO TEST_TABLE1 (C_437_25, C_850_25)
+	 SELECT C_850_25, C_850_25 FROM STRING_TABLE WHERE S_ROWID = 2;
+     EXEC SQL
+         INSERT INTO TEST_TABLE1 (C_437_25, C_850_25)
+	 SELECT C_850_25, C_850_25 FROM STRING_TABLE WHERE S_ROWID = 22;
+
+EXEC SQL COMMIT;
+     sql_select();
+
+     exit(0);
+err: print_error();
+}
+$ CREATE ver1.sql
+set names ISO8859_1;
+connect WHERE_GDB:assign.gdb;
+select c_437_25,c_850_25 from test_table1;
+QUIT;
+
+$ GPRE -m assign2.e
+$ CC FLAG_CC assign2.c
+$ LINK FLAG_LINK assign2 
+
+$ CREATE doc2
+  Using SET NAMES NONE.
+  The following test is for embedded field assignment between 
+  international fields of dissimilar character sets.  The insert
+  is done in embedded with set names ISO, DOS437 and DOS850.  A
+  select is done in embedded using the same set names.
+
+  An ISQL verification is then done to attempt to determine it
+  the embedded set names was affecting the insert or not.
+
+$ TYPE doc2
+$ RUN assign2
+$ ISQL -i ver1.sql -m
+
+$ RUN assign2 ISO8859_1
+$ ISQL -i ver1.sql -m
+$ RUN assign2 DOS850
+$ ISQL -i ver1.sql -m
+$ RUN assign2 DOS437
+$ ISQL -i ver1.sql -m
+
+$ DELETE assign2* doc doc2 ver1.sql 

@@ -1,0 +1,50 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go; 
+create procedure proc RETURNS (x varchar(5)) as
+begin
+   for select sno from sp into :x
+   do
+    begin 
+     SUSPEND;
+     delete from s where sno = :x;
+    end
+end
+go
+set term ; go
+set term go;  
+create procedure proc1 RETURNS (x varchar(5)) as 
+begin 
+   for select sno from sp into :x 
+   do 
+    begin  
+     SUSPEND; 
+    end    
+     delete from s where sno = :x;
+end 
+go 
+set term ; go 
+set term go;   
+create procedure proc2 RETURNS (x varchar(5)) as  
+begin  
+   for select sno from sp into :x  
+   do  
+    begin   
+     delete from s where sno = :x;
+     SUSPEND;  
+    end     
+end  
+go  
+set term ; go  
+set echo;
+select * from proc;
+select * from s;
+rollback;
+select * from proc1;
+select * from s;
+rollback;
+select * from proc2;
+rollback;
+exit;
+$DROP WHERE_GDB:sp1.gdb

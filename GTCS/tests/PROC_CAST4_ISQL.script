@@ -1,0 +1,99 @@
+
+$CREATE comment
+/*      Reference Bug   : NONE
+ *      Dependencies    : sp1.gbk
+ *      Description     : 
+ *      Expected Result : 
+	History:
+	24-May-95        clare. failing remote.  Was probably initialized on
+			 hp and sun does a different dec representation?
+                         Yes, this passes on HP.  The remote was running to
+			 Sun.
+	 < conversion error from string "10.23"
+         ---------------------------------------------
+	 > conversion error from string "10.230000000000000426326"
+	 ++++++++++++++++++++++++++++++++++++++++++++++++++
+24-Feb-97: failing as shown above for NevaStone build 59--no local
+       access.  I am doing a local init for now. clare
+May 6, 1997: clare: was failing on V4.5 because it was using the NT
+       4.2 init record and because meyer had created a local init w/
+       a db not found error. Removed the local init and got the result
+       above on HPUX 10.20--a diff due to the string length.  Did a 
+       global init on HP so other platforms will need local inits.
+Aug 4, 98: clare: failing again due to using the wrong init. It has only
+       a local 4.0 init so it is picking up a global before the local.
+       doing a 5.5 local init. 
+$GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL -sqldialect 3 -e -m WHERE_GDB:sp1.gdb
+set term go;
+create procedure cast1(a double precision) RETURNS (b smallint) as
+begin
+    b = a/2;
+    SUSPEND;
+end
+go
+create procedure cast2(a double precision) RETURNS (b integer) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast3(a double precision) RETURNS (b float) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast4(a double precision) RETURNS (b double precision) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast5(a double precision) RETURNS (b decimal(5,2)) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast6(a double precision) RETURNS (b date) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast7(a double precision) RETURNS (b numeric(5,2)) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast8(a double precision) RETURNS (b char(10)) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast9(a double precision) RETURNS (b varchar(10)) as
+ begin
+   b = a;
+   SUSPEND;
+ end
+go
+
+commit
+go
+set term ; go
+execute procedure cast1 100;
+execute procedure cast2 100;
+execute procedure cast3 100;
+execute procedure cast4 100;
+execute procedure cast5 100;
+execute procedure cast6 10.23;
+execute procedure cast7 100;
+execute procedure cast8 100.98;
+execute procedure cast9 100.98;
+
+exit;
+$DROP WHERE_GDB:sp1.gdb
+$DELETE comment

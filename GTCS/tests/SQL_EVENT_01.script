@@ -1,0 +1,107 @@
+
+$ CREATE cmt
+This test was corrupted sometime late June 14 when someone was
+attempting to view the test after a rs command.  The corruption
+occurred on millions which was running the vectored run.  Morgan
+did a kill -9 on a process and shortly after that entered TCS
+and tried to run again.  This gave a blob not found error.  The
+next time he got into TCS there was a fortran test in this test.
+The blob id for the test must have gotten assigned a random? blobid
+from the db.  I had been running the test outside TCS so had saved
+all the scripts and am restoring the test.
+this was the old tcs.script.  I think I got the test reconstructed:
+
+isql<tcs.data0
+cat >  foo1.e<tcs.data1
+gpre -n -m foo1.e
+cc -w -c -I/usr/gds/tests foo1.c
+cc foo1.o  -o foo1 -lgds
+foo1 > foo1.tt1 &<tcs.data2
+sleep 2
+isql -m ./events.gdb<tcs.data3
+sleep 2
+cat < foo1.tt1
+drop_gdb ./events.gdb
+rm -f foo1*
+
+$ CREATE create.sql
+create database "WHERE_GDB:events.gdb";
+create table project  ( PNAME   VARCHAR(15) Not Null,
+                        PNUMBER     INTEGER);
+
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     INTEGER);
+
+insert into project values('ProductX',1);
+insert into project values('ProductY',2);
+insert into project values('ProductZ',3);
+
+insert into works_on values (1, 1, 1);
+insert into works_on values (2,2,2);
+insert into works_on values (3,3,3);
+
+set term go;
+create trigger trig01 for project
+active before update position 1
+as begin
+  post_event 'abc';
+  insert into works_on values (new.pnumber, new.pnumber, new.pnumber);
+end
+go
+set term ; go
+
+exit;
+$ISQL -I create.sql -sqldialect 1
+$ CREATE foo1.e
+#include <stdio.h>
+/* This program had no semi colon after this statment and
+   was using the GDML DATABASE statement.  On Solaris2/3, this
+   caused gpre to hang when executed outside TCS.  The test still
+   fails on these machines w/the lock manager error. */
+
+EXEC SQL SET DATABASE DB = "WHERE_GDB:events.gdb";
+
+main()
+{
+	EXEC SQL 
+		CONNECT DB;
+	EXEC SQL 
+		SET TRANSACTION;
+	EXEC SQL 
+		EVENT INIT xyz DB ("abc") ;
+
+	if (isc_status[1])
+		isc_print_status(isc_status);
+
+	EXEC SQL 
+		EVENT WAIT xyz;
+	EXEC SQL
+		COMMIT WORK;  /* do we need commit release? */
+
+	if (isc_status[1])
+		isc_print_status(isc_status);
+	else
+		printf("\nfoo1 done, event (abc) was posted.\n");
+
+	EXEC SQL 
+	DISCONNECT DB;
+
+	exit(0);
+}
+
+$ GPRE -n -m foo1.e
+$ CC FLAG_CC foo1.c
+$ LINK FLAG_LINK foo1 
+$ RUN_BG foo1 > foo1.tt1 &
+$ SLEEP 5
+$ ISQL -m WHERE_GDB:events.gdb
+update project set pnumber = 11 where pnumber = 1;
+commit;
+select * from project;
+select * from works_on;
+exit;
+$ SLEEP 5
+$ TYPE foo1.tt1
+$ DROP WHERE_GDB:events.gdb
+$ DELETE foo1* cmt create.sql

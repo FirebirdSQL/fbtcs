@@ -1,0 +1,77 @@
+SQL> EXECUTE PROCEDURE PROC10;
+
+A      B                 C 
+====== ====== ============ 
+S1     P1              300 
+
+SQL> SELECT * FROM PROC10;
+
+A      B                 C 
+====== ====== ============ 
+
+S1     P1              300 
+S1     P3              400 
+S2     P1              300 
+S2     P2              400 
+S4     P4              300 
+S4     P5              400 
+
+SQL> SELECT MAX(C) FROM PROC10;
+
+         MAX 
+============ 
+
+         400 
+
+SQL> SELECT A FROM PROC10;
+
+A      
+====== 
+
+S1     
+S1     
+S2     
+S2     
+S4     
+S4     
+
+SQL> SELECT * FROM PROC10 ORDER BY C;
+
+A      B                 C 
+====== ====== ============ 
+
+S1     P1              300 
+S2     P1              300 
+S4     P4              300 
+S2     P2              400 
+S1     P3              400 
+S4     P5              400 
+
+SQL> SELECT A, AVG(C) FROM PROC10 GROUP BY A HAVING AVG(C) > 300;
+
+A                        AVG 
+====== ===================== 
+
+S1                       350 
+S2                       350 
+S4                       350 
+
+SQL> SELECT A, AVG(C) FROM PROC10 GROUP BY A ;
+
+A                        AVG 
+====== ===================== 
+
+S1                       350 
+S2                       350 
+S4                       350 
+
+SQL> SELECT A, C FROM PROC10
+CON>         WHERE C < (SELECT AVG(C) FROM PROC10);
+
+A                 C 
+====== ============ 
+
+S1              300 
+S2              300 
+S4              300 
+

@@ -1,0 +1,71 @@
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_08.sql
+create domain dom08a_1 as smallint;
+commit;
+show domain dom08a_1;
+
+/* the next statement should fail */
+
+alter domain dom08a_1 
+ add constraint not null;
+commit;
+show domain dom08a_1;
+create domain dom08a_2 as numeric(3,1);
+commit;
+show domain dom08a_2;
+create domain dom08b_1 as integer;
+commit;
+show domain dom08b_1;
+create domain dom08b_2 as int;
+commit;
+show domain dom08b_2;
+create domain dom08b_3 as numeric;
+commit;
+show domain dom08b_3;
+create domain dom08b_4 as numeric(6,2);
+commit;
+show domain dom08b_4;
+create domain dom08c as date;
+commit;
+show domain dom08c;
+create domain dom08d_1 as char(20);
+commit;
+show domain dom08d_1;
+create domain dom08d_2 as character(99);
+commit;
+show domain dom08d_2;
+create domain dom08e_1 as varchar(25);
+commit;
+show domain dom08e_1;
+create domain dom08e_2 as character varying(100);
+commit;
+show domain dom08e_2;
+create domain dom08e_3 as char varying(2);
+commit;
+show domain dom08e_3;
+create domain dom08f_1 as decimal(6,2);
+commit;
+show domain dom08f_1;
+create domain dom08g_1 as float;
+commit;
+show domain dom08g_1;
+create domain dom08g_2 as long float;
+commit;
+show domain dom08g_2;
+create domain dom08g_3 as real;
+commit;
+show domain dom08g_3;
+create domain dom08h as double precision;
+commit;
+show domain dom08h;
+create domain dom08i_1 as blob;
+commit;
+show domain dom08i_1;
+create domain dom08i_2 as blob(60,1);
+commit;
+show domain dom08i_2;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_08.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_08.sql

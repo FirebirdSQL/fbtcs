@@ -1,0 +1,242 @@
+Test:
+ SELECT * FROM CUSTOMERS C1 WHERE SINGULAR (SELECT * FROM CUSTOMERS C2 WHERE C1.PHONE_NO = C2.PHONE_NO)
+--------------------------------------------------------------------------------
+114	1st Canine Bank	George McClellan
+1342 Massachusetts Avenue	Boston	MA	02113
+6179291622	
+--------------------------------------------------------------------------------
+100	Thomas Novelty Co.	George Thomas
+101 Tremont St	Boston	MA	02108
+6179291181	
+--------------------------------------------------------------------------------
+101	Scott Bros Auto Care	Winfield Scott
+109 Bittersweet Lane	Randolph	MA	02368
+6179632219	*
+--------------------------------------------------------------------------------
+102	JL Music Corp	Ambrose Burnside
+7801 Escanaba Ave S	Chicago	IL	60649
+3123429982	
+--------------------------------------------------------------------------------
+103	The Groton Company	Phil Sheridan
+Great Road	Groton	MA	01450
+5086436627	
+--------------------------------------------------------------------------------
+104	Pope & Saunders Ltd	John Pope
+1172 Seminole Drive	Apalachiola	FL	32320
+3052983744	*
+--------------------------------------------------------------------------------
+105	1st Litonian Bank	Joe Hooker
+PO Box 6000, Teutonia Sta	Milwaukee	WI	53206
+4142320000	
+--------------------------------------------------------------------------------
+106	The Bike Mart	Sam Grant
+499 Hamlin Avenue	Chicago	IL	60624
+3123828888	
+--------------------------------------------------------------------------------
+107	Haus auf Pizza	Bill Sherman
+1234 Main Street	New Haven	CT	06508
+2039187728	
+--------------------------------------------------------------------------------
+108	Carbone Machine Tools	Fritz Siegal
+902 Bedford Street	Burlington	MA	01803
+6177271181	
+--------------------------------------------------------------------------------
+109	Czbrynik Meat Packer	George Meade
+3 Meat Market	Green Bay	WI	54305
+4142983288	
+--------------------------------------------------------------------------------
+110	Sporting Life Health Bars	George Custer
+1302 Wawona Street	San Francisco	CA	94116
+4152092283	
+--------------------------------------------------------------------------------
+112	LOM Incorporated	Don Carlos Buell
+1812 Dearborn Street	Detroit	MI	48209
+3132320900	
+--------------------------------------------------------------------------------
+113	Nature's Food Co-op	John Logan
+Harvard Square	Cambridge	MA	02139
+6172839229	
+--------------------------------------------------------------------------------
+
+
+Custno         Customer                   Contact              Zip
+====== ========================= =========================    =====
+
+   114 1st Canine Bank           George McClellan
+1342 Massachusetts Avenue      Boston                    MA   02113
+(617) 929-1622 
+   100 Thomas Novelty Co.        George Thomas
+101 Tremont St                 Boston                    MA   02108
+(617) 929-1181 
+   101 Scott Bros Auto Care      Winfield Scott
+109 Bittersweet Lane           Randolph                  MA   02368
+(617) 963-2219 *
+   102 JL Music Corp             Ambrose Burnside
+7801 Escanaba Ave S            Chicago                   IL   60649
+(312) 342-9982 
+   103 The Groton Company        Phil Sheridan
+Great Road                     Groton                    MA   01450
+(508) 643-6627 
+   104 Pope & Saunders Ltd       John Pope
+1172 Seminole Drive            Apalachiola               FL   32320
+(305) 298-3744 *
+   105 1st Litonian Bank         Joe Hooker
+PO Box 6000, Teutonia Sta      Milwaukee                 WI   53206
+(414) 232-0000 
+   106 The Bike Mart             Sam Grant
+499 Hamlin Avenue              Chicago                   IL   60624
+(312) 382-8888 
+   107 Haus auf Pizza            Bill Sherman
+1234 Main Street               New Haven                 CT   06508
+(203) 918-7728 
+   108 Carbone Machine Tools     Fritz Siegal
+902 Bedford Street             Burlington                MA   01803
+(617) 727-1181 
+   109 Czbrynik Meat Packer      George Meade
+3 Meat Market                  Green Bay                 WI   54305
+(414) 298-3288 
+   110 Sporting Life Health Bars George Custer
+1302 Wawona Street             San Francisco             CA   94116
+(415) 209-2283 
+   112 LOM Incorporated          Don Carlos Buell
+1812 Dearborn Street           Detroit                   MI   48209
+(313) 232-0900 
+   113 Nature's Food Co-op       John Logan
+Harvard Square                 Cambridge                 MA   02139
+(617) 283-9229 
+
+
+
+Custno         Customer                   Contact              Zip
+====== ========================= =========================    =====
+
+   114 1st Canine Bank           George McClellan
+1342 Massachusetts Avenue      Boston                    MA   02113
+(617) 929-1622 
+   100 Thomas Novelty Co.        George Thomas
+101 Tremont St                 Boston                    MA   02108
+(617) 929-1181 
+   101 Scott Bros Auto Care      Winfield Scott
+109 Bittersweet Lane           Randolph                  MA   02368
+(617) 963-2219 *
+   102 JL Music Corp             Ambrose Burnside
+7801 Escanaba Ave S            Chicago                   IL   60649
+(312) 342-9982 
+   103 The Groton Company        Phil Sheridan
+Great Road                     Groton                    MA   01450
+(508) 643-6627 
+   104 Pope & Saunders Ltd       John Pope
+1172 Seminole Drive            Apalachiola               FL   32320
+(305) 298-3744 *
+   105 1st Litonian Bank         Joe Hooker
+PO Box 6000, Teutonia Sta      Milwaukee                 WI   53206
+(414) 232-0000 
+   106 The Bike Mart             Sam Grant
+499 Hamlin Avenue              Chicago                   IL   60624
+(312) 382-8888 
+   107 Haus auf Pizza            Bill Sherman
+1234 Main Street               New Haven                 CT   06508
+(203) 918-7728 
+   108 Carbone Machine Tools     Fritz Siegal
+902 Bedford Street             Burlington                MA   01803
+(617) 727-1181 
+   109 Czbrynik Meat Packer      George Meade
+3 Meat Market                  Green Bay                 WI   54305
+(414) 298-3288 
+   110 Sporting Life Health Bars George Custer
+1302 Wawona Street             San Francisco             CA   94116
+(415) 209-2283 
+   112 LOM Incorporated          Don Carlos Buell
+1812 Dearborn Street           Detroit                   MI   48209
+(313) 232-0900 
+   113 Nature's Food Co-op       John Logan
+Harvard Square                 Cambridge                 MA   02139
+(617) 283-9229 
+
+
+
+Custno         Customer                   Contact              Zip
+====== ========================= =========================    =====
+
+   114 1st Canine Bank           George McClellan
+1342 Massachusetts Avenue      Boston                    MA   02113
+(617) 929-1622 
+   100 Thomas Novelty Co.        George Thomas
+101 Tremont St                 Boston                    MA   02108
+(617) 929-1181 
+   101 Scott Bros Auto Care      Winfield Scott
+109 Bittersweet Lane           Randolph                  MA   02368
+(617) 963-2219 *
+   102 JL Music Corp             Ambrose Burnside
+7801 Escanaba Ave S            Chicago                   IL   60649
+(312) 342-9982 
+   103 The Groton Company        Phil Sheridan
+Great Road                     Groton                    MA   01450
+(508) 643-6627 
+   104 Pope & Saunders Ltd       John Pope
+1172 Seminole Drive            Apalachiola               FL   32320
+(305) 298-3744 *
+   105 1st Litonian Bank         Joe Hooker
+PO Box 6000, Teutonia Sta      Milwaukee                 WI   53206
+(414) 232-0000 
+   106 The Bike Mart             Sam Grant
+499 Hamlin Avenue              Chicago                   IL   60624
+(312) 382-8888 
+   107 Haus auf Pizza            Bill Sherman
+1234 Main Street               New Haven                 CT   06508
+(203) 918-7728 
+   108 Carbone Machine Tools     Fritz Siegal
+902 Bedford Street             Burlington                MA   01803
+(617) 727-1181 
+   109 Czbrynik Meat Packer      George Meade
+3 Meat Market                  Green Bay                 WI   54305
+(414) 298-3288 
+   110 Sporting Life Health Bars George Custer
+1302 Wawona Street             San Francisco             CA   94116
+(415) 209-2283 
+   112 LOM Incorporated          Don Carlos Buell
+1812 Dearborn Street           Detroit                   MI   48209
+(313) 232-0900 
+   113 Nature's Food Co-op       John Logan
+Harvard Square                 Cambridge                 MA   02139
+(617) 283-9229 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+ CUSTNO CUSTOMER                  CONTACT                   ADDRESS                        CITY                      STATE  ZIP_CODE PHONE_NO   ON_HOLD 
+======= ========================= ========================= ============================== ========================= ====== ======== ========== ======= 
+
+    114 1st Canine Bank           George McClellan          1342 Massachusetts Avenue      Boston                    MA     02113    6179291622 <null>  
+    100 Thomas Novelty Co.        George Thomas             101 Tremont St                 Boston                    MA     02108    6179291181 <null>  
+    101 Scott Bros Auto Care      Winfield Scott            109 Bittersweet Lane           Randolph                  MA     02368    6179632219 *       
+    102 JL Music Corp             Ambrose Burnside          7801 Escanaba Ave S            Chicago                   IL     60649    3123429982 <null>  
+    103 The Groton Company        Phil Sheridan             Great Road                     Groton                    MA     01450    5086436627 <null>  
+    104 Pope & Saunders Ltd       John Pope                 1172 Seminole Drive            Apalachiola               FL     32320    3052983744 *       
+    105 1st Litonian Bank         Joe Hooker                PO Box 6000, Teutonia Sta      Milwaukee                 WI     53206    4142320000 <null>  
+    106 The Bike Mart             Sam Grant                 499 Hamlin Avenue              Chicago                   IL     60624    3123828888 <null>  
+    107 Haus auf Pizza            Bill Sherman              1234 Main Street               New Haven                 CT     06508    2039187728 <null>  
+    108 Carbone Machine Tools     Fritz Siegal              902 Bedford Street             Burlington                MA     01803    6177271181 <null>  
+    109 Czbrynik Meat Packer      George Meade              3 Meat Market                  Green Bay                 WI     54305    4142983288 <null>  
+    110 Sporting Life Health Bars George Custer             1302 Wawona Street             San Francisco             CA     94116    4152092283 <null>  
+    112 LOM Incorporated          Don Carlos Buell          1812 Dearborn Street           Detroit                   MI     48209    3132320900 <null>  
+    113 Nature's Food Co-op       John Logan                Harvard Square                 Cambridge                 MA     02139    6172839229 <null>  
+
+
+ CUSTNO CUSTOMER                  CONTACT                   ADDRESS                        CITY                      STATE  ZIP_CODE PHONE_NO   ON_HOLD 
+======= ========================= ========================= ============================== ========================= ====== ======== ========== ======= 
+
+    114 1st Canine Bank           George McClellan          1342 Massachusetts Avenue      Boston                    MA     02113    6179291622 <null>  
+    100 Thomas Novelty Co.        George Thomas             101 Tremont St                 Boston                    MA     02108    6179291181 <null>  
+    101 Scott Bros Auto Care      Winfield Scott            109 Bittersweet Lane           Randolph                  MA     02368    6179632219 *       
+    102 JL Music Corp             Ambrose Burnside          7801 Escanaba Ave S            Chicago                   IL     60649    3123429982 <null>  
+    103 The Groton Company        Phil Sheridan             Great Road                     Groton                    MA     01450    5086436627 <null>  
+    104 Pope & Saunders Ltd       John Pope                 1172 Seminole Drive            Apalachiola               FL     32320    3052983744 *       
+    105 1st Litonian Bank         Joe Hooker                PO Box 6000, Teutonia Sta      Milwaukee                 WI     53206    4142320000 <null>  
+    106 The Bike Mart             Sam Grant                 499 Hamlin Avenue              Chicago                   IL     60624    3123828888 <null>  
+    107 Haus auf Pizza            Bill Sherman              1234 Main Street               New Haven                 CT     06508    2039187728 <null>  
+    108 Carbone Machine Tools     Fritz Siegal              902 Bedford Street             Burlington                MA     01803    6177271181 <null>  
+    109 Czbrynik Meat Packer      George Meade              3 Meat Market                  Green Bay                 WI     54305    4142983288 <null>  
+    110 Sporting Life Health Bars George Custer             1302 Wawona Street             San Francisco             CA     94116    4152092283 <null>  
+    112 LOM Incorporated          Don Carlos Buell          1812 Dearborn Street           Detroit                   MI     48209    3132320900 <null>  
+    113 Nature's Food Co-op       John Logan                Harvard Square                 Cambridge                 MA     02139    6172839229 <null>  
+

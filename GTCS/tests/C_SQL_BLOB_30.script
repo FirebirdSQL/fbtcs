@@ -1,0 +1,112 @@
+
+$ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_30.gdb
+$ CREATE blob091.e
+/**********************************************************************
+ Purpose:               Test SQL blob support in InterBase 4.0
+ Description:           DECLARE BLOB CURSOR - Not a blob field 
+ Author:                Sam Hakim, June 13, 93
+
+ Expected result:	(E) blob019.e:56: Field COMMENT is not a blob
+			(E) blob019.e:59: expected cursor, encountered "BCW"
+			(E) blob019.e:65: expected cursor, encountered "BCW"
+			(E) blob019.e:71: expected cursor, encountered "BCW"
+  			4 errors, no warnings
+ **********************************************************************/
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_blobs_30.gdb";
+EXEC SQL	INCLUDE SQLCA;
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+
+BASED_ON MB1.TEST_NAME      Test_Name;
+BASED_ON MB1.COMMENT        Comment;
+BASED_ON MB1.ROW_ID         Row_Id;
+BASED_ON MB1.B512           BlobId;
+
+int verbose;
+
+struct Buf{
+    char            *Buffer;
+    unsigned short  BufferLen;
+};
+struct Buf M;
+
+char Test[]="Error Trapping: Not a blob field";
+
+void Underline();
+void CreateLine();
+void EmptyBuffer();
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+short                       i,j,k,l;
+int Count;
+
+    verbose = FALSE;
+    if (--argc > 0){
+        if (*argv[1] == 'v' || *argv[1] == 'V')
+            verbose = TRUE;
+        }
+
+    READY;              /* Bug 4549 will be fixed in verion G */
+   
+    strcpy(Test_Name,"blob019");
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+
+    M.BufferLen = 8;
+    M.Buffer = malloc(M.BufferLen);
+
+    EXEC SQL DECLARE BCW CURSOR FOR INSERT BLOB COMMENT INTO MB1;
+
+    START_TRANSACTION;  			/* and these lines should be deleted */
+    EXEC SQL OPEN BCW USING :BlobId;      	/* This will change in G to INTO */
+
+    for (i=1; i<5; i++){
+        sprintf (M.Buffer,"Line: %d>",i);
+        EXEC SQL
+            INSERT CURSOR BCW VALUES (:M.Buffer:M.BufferLen);
+	if (verbose)
+	      printf("SQLCODE %d, BufferLen %d \n",SQLCODE,M.BufferLen);
+    }
+    EXEC SQL
+        CLOSE BCW;
+    EXEC SQL
+        INSERT INTO MB1 (TEST_NAME,ROW_ID,COMMENT) VALUES (:Test_Name,:j,:BlobId);
+    EXEC SQL COMMIT;
+
+FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/************************************************************
+ * Draw an underline
+ ************************************************************/
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e blob091.e
+$DROP WHERE_GDB:sh_blobs_30.gdb
+$ DELETE blob091*

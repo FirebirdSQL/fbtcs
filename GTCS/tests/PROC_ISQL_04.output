@@ -1,0 +1,51 @@
+SQL> EXECUTE PROCEDURE PROC5 ;
+
+A      B                 C 
+====== ====== ============ 
+Red    P6               19 
+
+SQL> SELECT  * FROM PROC5;
+
+A      B                 C 
+====== ====== ============ 
+
+Red    P6               19 
+
+SQL> SELECT MAX(A) FROM PROC5;
+
+MAX    
+====== 
+
+Red    
+
+SQL> SELECT  C FROM PROC5;
+
+           C 
+============ 
+
+          19 
+
+SQL> SELECT A,C FROM PROC5 ORDER BY A;
+
+A                 C 
+====== ============ 
+
+Red              19 
+
+SQL> SELECT A, AVG(C) FROM PROC5 GROUP BY A HAVING AVG(C) > 35;
+SQL> SELECT A, AVG(C) FROM PROC5 GROUP BY A ;
+
+A                        AVG 
+====== ===================== 
+
+Red                       19 
+
+SQL> SELECT A , C FROM PROC5
+CON> WHERE C = (SELECT AVG(C) FROM PROC5);
+
+A                 C 
+====== ============ 
+
+Red              19 
+
+SQL> exit;

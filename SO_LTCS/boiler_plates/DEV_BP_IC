@@ -1,0 +1,24 @@
+#!/bin/sh
+PATH=./:/solaris7/test/lang/SUNWspro/Ada3.0/bin:/solaris7/test/lang/cobol/bin:/laris7/test/lang:/apps/lang/solaris/SUNWspro/bin:/usr/ccs/bin:/usr/gds.sogood/i:/usr/gds.sogood/qa_tools/bin:/usr/gds.`hostname`/bin:/usr/ucb:/usr/bin:/usr/inerbase/bin:/usr/local/java/bin:$PATH
+COBDIR=/solaris7/test/lang/cobol
+#    apparently not needed for ada on solaris
+ADADIR=/solaris7/test/lang/SUNWspro/Ada3.0/self
+#    old setting: ADADIR=/apps/lang/solaris/SUNWspro/Ada2.1.1/self
+#    new env vars for ada on solaris
+ADAHOME=/solaris7/test/lang/SUNWspro/Ada3.0
+SWADAHOME=/solaris7/test/lang/SUNWspro/Ada3.0
+TMP=/tmp
+LM_LICENSE_FILE=/apps/lang/license_dir/sunpro.lic,1
+LOCAL_HOST=`hostname`:"`pwd`/"
+LD_LIBRARY_PATH=/solaris7/test/lang/SUNWspro/SC3.0.1/lib:/usr/interbase/lib:/soris7/test/lang/cobol/coblib:/solaris7/test/lang/SUNWspro/Ada3.0/lib:/solaris7/et/lang/SUNWspro/Ada3.0/self
+CLASSPATH=.:/usr/local/java/lib/classes.zip:./packages
+export PATH
+export COBDIR
+export ADADIR
+export ADAHOME
+export SWADAHOME
+export TMP
+export LM_LICENSE_FILE
+export LOCAL_HOST
+export LD_LIBRARY_PATH
+export CLASSPATH

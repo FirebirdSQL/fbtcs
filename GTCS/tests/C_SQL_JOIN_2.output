@@ -1,0 +1,30 @@
+City 			 State
+---- 			 ------
+Santa Fe              New Mexico          
+San Juan              - NULL -            
+San Antonio           Texas               
+San Diego             California          
+San Francisco         California          
+... End of example 2.9.1 
+
+                                    STATE
+          CITY                      NAME
+========================= =========================
+
+Santa Fe                  New Mexico
+San Juan                  
+San Antonio               Texas
+San Diego                 California
+San Francisco             California
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+CITY                      STATE_NAME                
+========================= ========================= 
+
+Santa Fe                  New Mexico                
+San Juan                  <null>                    
+San Antonio               Texas                     
+San Diego                 California                
+San Francisco             California                
+

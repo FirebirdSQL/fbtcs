@@ -1,0 +1,29 @@
+Starting to update metadata.
+View TABLE_CONSTRAINTS created ok.
+View REFERENTIAL_CONSTRAINTS created ok.
+View CHECK_CONSTRAINTS created ok.
+View CONSTRAINTS_COLUMN_USAGE created ok.
+BU1032,The Busy Executive's Database Guide,172-32-1176
+BU1111,Cooking with Computers: Surreptitious Balance Sheets,213-46-8915
+BU2075,You Can Combat Computer Stress!,238-95-7766
+BU7832,Straight Talk About Computers,267-41-2394
+MC3021,The Gourmet Microwave,341-22-1782
+Number expected: 5, number found: 5.
+
+
+TABLE_CONSTRAINTS:
+------------------
+INTEG_1                        ,BOOKS                          ,NOT NULL   ,NO ,NO 
+INTEG_2                        ,BOOKS                          ,UNIQUE     ,NO ,NO 
+INTEG_3                        ,AUTHORS                        ,NOT NULL   ,NO ,NO 
+AUTH_NAME_UNIQ_6789012345678901,AUTHORS                        ,UNIQUE     ,NO ,NO 
+
+
+CONSTRAINTS_COLUMN_USAGE:
+-------------------------
+AUTH_NAME_UNIQ_6789012345678901,AUTHORS                        ,AUTH_ID                        
+INTEG_2                        ,BOOKS                          ,BOOK_ID                        
+
+
+REFERENTIAL_CONSTRAINTS:
+------------------------

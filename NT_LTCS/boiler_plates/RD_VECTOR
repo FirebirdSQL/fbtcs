@@ -1,0 +1,7 @@
+LIB=".;d:/interbase/lib;d:/bc5/lib:$LIB"
+TMP=d:/temp
+TEMP=d:/temp
+export TEMP
+export TMP
+export LIB
+

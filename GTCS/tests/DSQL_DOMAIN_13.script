@@ -1,0 +1,82 @@
+
+/*******************************************************************************
+ Test Name:   dsql_domain_13
+ Series Name: dsql_domains
+ Date:        18-Oct-1993
+ Comment:     This script will test level 1 syntax checking for create domain
+              statement using datatype and default clauses. The domains are then 
+              used to create a table where column defaults are also specified.
+              Data is then inserted into the table allowing the missing fields 
+              to be supplied by the column defaults (where specified) and the 
+              domain defaults (where no column default exists).
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_13.sql
+create domain dom13a1 as smallint
+ default 0;
+create domain dom13b1 as integer
+ default 0;
+create domain dom13c1 as date
+ default '01/01/93';
+create domain dom13d1 as varchar(4)
+ default null;
+create domain dom13e1 as char(30)
+ default 'generic username';
+create domain dom13f1 as decimal(10,1)
+ default 0;
+create domain dom13g1 as float
+ default 0;
+create domain dom13h1 as double precision
+ default null;
+create table tab13a 
+ (fld1 dom13a1 default 500,        fld2 dom13b1 default 500,
+  fld3 dom13c1 default '12/12/57', fld4 dom13d1 default 'TEST',
+  fld5 dom13e1 default null,       fld6 dom13f1 default 500.0,
+  fld7 dom13g1 default 500,        fld8 dom13h1 default 500);
+show table tab13a;
+insert into tab13a (fld1) values (100);
+commit;
+insert into tab13a (fld2) values (200);
+commit;
+insert into tab13a (fld3) values ('01/27/92');
+commit;
+insert into tab13a (fld4) values ('TEST');
+commit;
+insert into tab13a (fld5) values ('Testing insert to field 4 xxxx');
+commit;
+insert into tab13a (fld6) values (999999999.9);
+commit;
+insert into tab13a (fld7) values (50.02);
+commit;
+insert into tab13a (fld8) values (10000);
+commit;
+select * from tab13a;
+create table tab13b 
+ (fld1 dom13a1 default 500,        fld2 dom13a1,
+  fld3 dom13c1 default '12/12/57', fld4 dom13c1,
+  fld5 dom13e1 default null,       fld6 dom13e1,
+  fld7 dom13g1 default 500,        fld8 dom13g1);
+show table tab13b;
+insert into tab13b (fld1) values (100);
+commit;
+insert into tab13b (fld2) values (200);
+commit;
+insert into tab13b (fld3) values ('01/27/92');
+commit;
+insert into tab13b (fld4) values ('08/02/66');
+commit;
+insert into tab13b (fld5) values ('Testing insert to field 4 xxxx');
+commit;
+insert into tab13b (fld6) values ('X');
+commit;
+insert into tab13b (fld7) values (50.02);
+commit;
+insert into tab13b (fld8) values (10000);
+commit;
+select * from tab13b;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_13.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_13.sql

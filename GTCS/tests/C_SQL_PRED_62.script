@@ -1,0 +1,155 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE sta020.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ 
+ Syntax:                <column spec> STARTING [WITH] <value spec>
+                        Case sensitive searches including blob string
+
+ Description:           blob-field NOT STARTING WITH a single char
+
+                        SELECT PROJ_NO
+                        FROM PROJECTS
+                        WHERE PROJ_DESC NOT STARTING WITH 'a';
+
+ Tables:                projects
+
+ Author:                Sam Hakim, Feb 19, 93
+
+ Note:                  GDML will be used to print blobs as SQL blob support
+                        was not available at this time this test was written.
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON PROJECTS.PROJ_NO       Proj_No;
+
+
+char Test[]="SELECT PROJ_NO \
+FROM PROJECTS \
+WHERE PROJ_DESC NOT STARTING WITH 'a'";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                        SELECT PROJ_NO
+                        FROM PROJECTS
+                        WHERE PROJ_DESC NOT STARTING WITH 'a';
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Proj_No;
+
+        while (SQLCODE == 0){
+
+                Count++;
+                printf("%s\n",Proj_No);
+                Underline(80);
+
+                EXEC SQL
+                FETCH CR INTO :Proj_No;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+
+        printf("\n* Using GDML to print blob \n");
+
+        for p in projects with p.proj_desc not starting with 'a'
+                printf("%s\n",p.proj_no);
+                for pb in p.proj_desc
+                        pb.segment[pb.length] = '\0';
+                        printf ("%s", pb.segment);
+                end_for;
+                printf("\n");
+                Underline(80);
+        end_for;
+
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+
+
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e sta020.e
+$ CC FLAG_CC sta020.c
+$ LINK FLAG_LINK sta020 
+$ RUN sta020
+$ CREATE sta020.qli
+
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+SELECT PROJ_NO FROM PROJECTS WHERE PROJ_DESC NOT STARTING WITH 'a';
+for projects with proj_desc not starting with 'a' print proj_no;
+select count(*) from projects where proj_desc not starting with 'a';
+finish;
+quit;
+$ QLI -n -a sta020.qli
+$ CREATE sta020.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT PROJ_NO FROM PROJECTS WHERE PROJ_DESC NOT STARTING WITH 'a';
+select count(*) from projects where proj_desc not starting with 'a';
+quit;
+$ISQL -i sta020.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE sta020* 

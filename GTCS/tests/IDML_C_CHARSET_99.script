@@ -1,0 +1,4 @@
+
+$ DROP WHERE_GDB:charset.gdb
+$ DROP WHERE_GDB:assign.gdb
+$ DELETE intlemp.gbk

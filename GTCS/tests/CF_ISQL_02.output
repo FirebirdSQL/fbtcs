@@ -1,0 +1,211 @@
+Use CONNECT or CREATE DATABASE to specify a database
+I                               SMALLINT Nullable 
+J                               Computed by: (i)
+
+                     
+==================== 
+
+Passed 1(s) - Insert 
+
+
+                     
+==================== 
+
+Passed 1(s) - Update 
+
+I                               SMALLINT Nullable 
+J                               Computed by: (i+i)
+
+                     
+==================== 
+
+Passed 2(s) - Insert 
+
+
+                     
+==================== 
+
+Passed 2(s) - Update 
+
+I                               SMALLINT Nullable 
+J                               Computed by: (i+i)
+
+                     
+==================== 
+
+Passed 3(s) - Insert 
+
+
+                     
+==================== 
+
+Passed 3(s) - Update 
+
+I                               DECIMAL(15, 2) Nullable 
+J                               Computed by: (i)
+
+                     
+==================== 
+
+Passed 1(d) - Insert 
+
+
+                     
+==================== 
+
+Passed 1(d) - Update 
+
+I                               DECIMAL(15, 2) Nullable 
+J                               Computed by: (i+i)
+
+                     
+==================== 
+
+Passed 2(d) - Insert 
+
+
+                     
+==================== 
+
+Passed 2(d) - Update 
+
+I                               DECIMAL(15, 2) Nullable 
+J                               Computed by: (i+i)
+
+                     
+==================== 
+
+Passed 3(d) - Insert 
+
+
+                     
+==================== 
+
+Passed 3(d) - Update 
+
+I                               NUMERIC(15, 2) Nullable 
+J                               Computed by: (i)
+
+                     
+==================== 
+
+Passed 1(n) - Insert 
+
+
+                     
+==================== 
+
+Passed 1(n) - Update 
+
+I                               NUMERIC(15, 2) Nullable 
+J                               Computed by: (i+i)
+
+                     
+==================== 
+
+Passed 2(n) - Insert 
+
+
+                     
+==================== 
+
+Passed 2(n) - Update 
+
+I                               NUMERIC(15, 2) Nullable 
+J                               Computed by: (i+i)
+
+                     
+==================== 
+
+Passed 3(n) - Insert 
+
+
+                     
+==================== 
+
+Passed 3(n) - Update 
+
+I                               FLOAT Nullable 
+J                               Computed by: (i)
+
+                     
+==================== 
+
+Passed 1(f) - Insert 
+
+
+                     
+==================== 
+
+Passed 1(f) - Update 
+
+I                               FLOAT Nullable 
+J                               Computed by: (i+i)
+
+                     
+==================== 
+
+Passed 2(f) - Insert 
+
+
+                     
+==================== 
+
+Passed 2(f) - Update 
+
+I                               FLOAT Nullable 
+J                               Computed by: (i+i)
+
+                     
+==================== 
+
+Passed 3(f) - Insert 
+
+
+                     
+==================== 
+
+Passed 3(f) - Update 
+
+I                               DOUBLE PRECISION Nullable 
+J                               Computed by: (i)
+
+                      
+===================== 
+
+Passed 1(dp) - Insert 
+
+
+                      
+===================== 
+
+Passed 1(dp) - Update 
+
+I                               DOUBLE PRECISION Nullable 
+J                               Computed by: (i+i)
+
+                      
+===================== 
+
+Passed 2(dp) - Insert 
+
+
+                      
+===================== 
+
+Passed 2(dp) - Update 
+
+I                               DOUBLE PRECISION Nullable 
+J                               Computed by: (i+i)
+
+                      
+===================== 
+
+Passed 3(dp) - Insert 
+
+
+                      
+===================== 
+
+Passed 3(dp) - Update 
+

@@ -1,0 +1,119 @@
+
+$ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_27.gdb
+$ CREATE join027.e
+
+/**********************************************************************
+ Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
+ Description:           Aggregates MIN, MAX, AVG, & SUM
+ Author:                Sam Hakim, June 1, 93
+ Note:			SSCALE column has a scale of -1.
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_join_27.gdb";
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON st1.s1     Mins1,Maxs1,Sums1;
+float			Avgs1;
+char Test[]="\
+select min(x.s1),max(x.s2),avg(y.s3), sum(y.sscale) \
+from (st5 x left join st1 y on x.s2 = y.s2)";
+
+void Underline();
+
+main()
+{
+	
+    int Count;
+	Count = 0;
+    printf ("Test:\n %s\n",Test);
+    Underline(80);
+
+    EXEC SQL
+                DECLARE CR CURSOR FOR
+                select min(x.s1),max(x.s2),avg(y.s3), sum(y.sscale)
+                from (st5 x left join st1 y on x.s2 = y.s2);
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Mins1,:Maxs1,:Avgs1,:Sums1;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%5d  ",Mins1);
+                printf("%5d  ",Maxs1);
+                printf("%5.2f  ",Avgs1);
+                printf("%5.2f\n",(double)(Sums1/10));
+
+                EXEC SQL
+                FETCH CR INTO :Mins1,:Maxs1,:Avgs1,:Sums1;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+$ GPRE -e join027.e
+$ CC FLAG_CC join027.c
+$ LINK FLAG_LINK join027 
+$ RUN join027
+$ CREATE join027.qli
+ready WHERE_GDB:sh_join_27.gdb;
+set semicolon;
+set columns 100;
+
+/* qli core dumps */
+select min(x.s1),max(x.s2),avg(y.s3), sum(y.sscale)
+from (st5 x left join st1 y on x.s2 = y.s2);
+finish;
+quit;
+$ QLI -n -a join027.qli
+$ CREATE join027.sql
+connect WHERE_GDB:sh_join_27.gdb;
+select min(x.s1),max(x.s2),avg(y.s3), sum(y.sscale)
+from (st5 x left join st1 y on x.s2 = y.s2);
+quit;
+$ISQL -i join027.sql
+$DROP WHERE_GDB:sh_join_27.gdb
+$ DELETE join027* 

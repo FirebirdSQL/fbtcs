@@ -1,0 +1,9 @@
+Use CONNECT or CREATE DATABASE to specify a database
+attempt to store duplicate value (visible to active transactions) in unique index "UNI_IND"
+Use CONNECT or CREATE DATABASE to specify a database
+
+           C 
+============ 
+
+        1000 
+

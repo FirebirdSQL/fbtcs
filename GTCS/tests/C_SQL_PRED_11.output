@@ -1,0 +1,41 @@
+Test:
+ SELECT T1.SALES_REP, SUM(T1.TOTAL_VALUE) FROM SALES T1 WHERE SINGULAR (SELECT * FROM SALES T2 WHERE T2.SALES_REP = T1.SALES_REP AND T2.TOTAL_VALUE > (SELECT AVG(T3.TOTAL_VALUE) FROM SALES T3 WHERE T3.SALES_REP = 137)) GROUP BY T1.SALES_REP ORDER BY T1.SALES_REP DESCENDING
+--------------------------------------------------------------------------------
+137	141000.00
+--------------------------------------------------------------------------------
+125	151500.00
+--------------------------------------------------------------------------------
+
+
+* Total Records Listed >>> 2
+
+ Sales
+  Rep      TOTAL
+====== =============
+
+   137   $141,000.00
+   125   $151,500.00
+
+
+ Sales
+  Rep      TOTAL
+====== =============
+
+   137   $141,000.00
+   125   $151,500.00
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+SALES_REP          SUM 
+========= ============ 
+
+      137       141000 
+      125       151500 
+
+
+SALES_REP          SUM 
+========= ============ 
+
+      137       141000 
+      125       151500 
+

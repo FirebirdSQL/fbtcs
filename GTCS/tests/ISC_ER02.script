@@ -1,0 +1,43 @@
+
+$ CREATE er2.c
+
+/*
+ *	isc_dsql_allocate_statement
+ *
+ *	Pass an invalid database handle.
+ * 
+ *  Test name: er2.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+int main()
+{
+	isc_db_handle	DB = NULL;
+        isc_stmt_handle	stmt = NULL;
+	ISC_STATUS 	rc, status[20];
+        char		err_buf[128];
+
+	LogPrintf("Running ER2, invalid db handle to alloc_stmt\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_dsql_allocate_statement(status, &DB, &stmt)) ==0)
+		LogPrintf("BUG: invalid DB on alloc stmt.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	if ((rc=isc_dsql_allocate_statement(status, &DB, &stmt)) ==0)
+		LogPrintf("BUG: Null DB on alloc stmt.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER2\n");
+}
+$ CC FLAG_CC er2.c
+$ LINK FLAG_LINK er2 
+$ RUN er2
+$ DELETE er2*

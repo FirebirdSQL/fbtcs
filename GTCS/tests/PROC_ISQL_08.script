@@ -1,0 +1,23 @@
+
+$ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure proc10  RETURNS (a char(5), b char(5), c integer) as
+begin
+  for select *  from sp
+     into  :a, :b, :c
+  do  SUSPEND;
+end
+go
+set term ; go
+set echo;
+EXECUTE PROCEDURE PROC10;
+SELECT * FROM PROC10;
+SELECT MAX(C) FROM PROC10;
+SELECT A FROM PROC10;
+SELECT * FROM PROC10 ORDER BY C;
+SELECT A, AVG(C) FROM PROC10 GROUP BY A HAVING AVG(C) > 300;
+SELECT A, AVG(C) FROM PROC10 GROUP BY A ;
+SELECT A, C FROM PROC10
+        WHERE C < (SELECT AVG(C) FROM PROC10);
+$ DROP WHERE_GDB:sp1.gdb 

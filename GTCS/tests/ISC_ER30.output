@@ -1,0 +1,9 @@
+Running ER30, invalid transaction handle
+to isc_dsql_prepare
+RC=335544324
+ERROR: Unsuccessful execution caused by an unavailable resource.
+RC=335544569
+ERROR: Undefined name
+RC=335544569
+ERROR: Undefined name
+Finished ER30

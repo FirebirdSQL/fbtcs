@@ -1,0 +1,5 @@
+(E) sin091.e:74: expected right parenthesis, encountered "ORDER"
+(E) sin091.e:78: expected <cursor name>, encountered "CR"
+(E) sin091.e:81: expected <cursor name>, encountered "CR"
+(E) sin091.e:97: expected <cursor name>, encountered "CR"
+  4 errors, no warnings

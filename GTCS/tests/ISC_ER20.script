@@ -1,0 +1,55 @@
+
+$ CREATE er20.c
+/*
+ *	isc_que_events
+ *
+ *	Pass an invalid database handle.
+ * 
+ *  Test name: er20.c  
+ *  Created by: Marina Meyer  
+ *  Date created: April 1994
+ */
+
+#include "WHERE_FILES:isc_test.h"
+
+static	void ast();
+int main()
+{
+	isc_db_handle 	DB = NULL;
+	ISC_STATUS 	rc, status[20];
+	char		err_buf[128];
+	long	event_id;
+	short	len;
+	char	event_buf[100], rbuf[100];
+
+	LogPrintf("Running ER20, que events on invalid DB.\n");
+
+	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	if ((rc=isc_que_events(status, &DB, &event_id, len,
+			event_buf, ast, rbuf)) ==0)
+		LogPrintf("BUG: que events on invalid DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	DB = NULL;
+	if ((rc=isc_que_events(status, &DB, &event_id, len,
+			event_buf, ast, rbuf)) ==0)
+		LogPrintf("BUG: que events on Null DB.\n");
+        else
+		{ERRCONTINUE(status, rc, err_buf)};
+
+	LogPrintf("Finished ER20\n");
+}
+
+void static
+ast()
+{
+	LogPrintf("Event Call_Back Function\n");
+        return;
+}
+$ CC FLAG_CC er20.c
+$ LINK FLAG_LINK er20 
+$ RUN er20
+$ DELETE er20*

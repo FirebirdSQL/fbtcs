@@ -1,0 +1,97 @@
+
+/*******************************************************************************
+ Test Name:   dsql_domain_06
+ Series Name: dsql_domains
+ Date:        7-October-1993
+ Comments:    This script will test level 0 syntax for alter domain with the 
+              drop default and set default clauses.
+*******************************************************************************/
+HISTORY:
+
+$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ CREATE domain_06.sql
+create domain dom06a1 as smallint
+ default 0;
+show domain dom06a1;
+alter domain dom06a1
+ drop default;
+show domain dom06a1;
+alter domain dom06a1
+ set default 5000;
+show domain dom06a1;
+create domain dom06b1 as integer
+ default 0;
+show domain dom06b1;
+alter domain dom06b1
+ drop default;
+show domain dom06b1;
+alter domain dom06b1
+ set default -200;
+show domain dom06b1;
+create domain dom06c1 as date
+ default '12-12-57';
+show domain dom06c1;
+alter domain dom06c1
+ drop default;
+show domain dom06c1;
+alter domain dom06c1
+ set default '01/27/92';
+show domain dom06c1;
+create domain dom06d1 as char(30)
+ default user;
+show domain dom06d1;
+alter domain dom06d1
+ drop default;
+show domain dom06d1;
+alter domain dom06d1
+ set default 'New default of 30 characters x';
+show domain dom06d1;
+create domain dom06e1 as varchar(4)
+ default 'TEST';
+show domain dom06e1;
+alter domain dom06e1
+ drop default;
+show domain dom06e1;
+alter domain dom06e1
+ set default 'def';
+show domain dom06e1;
+create domain dom06f1 as decimal(10,1)
+ default 300.1;
+show domain dom06f1;
+alter domain dom06f1
+ drop default;
+show domain dom06f1;
+alter domain dom06f1
+ set default null;
+show domain dom06f1;
+create domain dom06g1 as float
+ default 2.2;
+show domain dom06g1;
+alter domain dom06g1
+ drop default;
+show domain dom06g1;
+alter domain dom06g1
+ set default 55.55;
+show domain dom06g1;
+create domain dom06h1 as double precision
+ default 0;
+show domain dom06h1;
+alter domain dom06h1
+ drop default;
+show domain dom06h1;
+alter domain dom06h1
+ set default -100;
+show domain dom06h1;
+create domain dom06i1 as blob
+ default null;
+show domain dom06i1;
+alter domain dom06i1
+ drop default;
+show domain dom06i1;
+alter domain dom06i1
+ set default 'default blob';
+show domain dom06i1;
+exit;
+$ isql -m WHERE_GDB:atlas.gdb -i domain_06.sql
+$ DROP WHERE_GDB:atlas.gdb
+$ DELETE domain_06.sql

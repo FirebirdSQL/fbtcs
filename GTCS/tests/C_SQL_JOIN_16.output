@@ -1,0 +1,27 @@
+Test:
+ qli core dumps with this one - fixe will appear in G 
+ select sum(y.s1), y.s1 from (st1 x left join st5 y on x.s1 = y.s1) group by y.s1 having sum(y.s1) > 1 order by y.s1 ascending
+--------------------------------------------------------------------------------
+2     1
+4     2
+4     4
+
+
+* Total Records Listed >>> 3
+
+   TOTAL      S1
+=========== ======
+
+          2      1
+          4      2
+          4      4
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+         SUM      S1 
+============ ======= 
+
+           2       1 
+           4       2 
+           4       4 
+

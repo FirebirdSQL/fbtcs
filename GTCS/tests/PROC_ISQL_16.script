@@ -1,0 +1,18 @@
+
+$GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
+$ ISQL WHERE_GDB:sp1.gdb
+set term go;
+create procedure proc_insert (a char(5), b char(20), c char(6), d smallint, e char(15)) as
+begin
+insert into p values (:a, :b, :c, :d, :e);
+SUSPEND;
+end
+go
+set term ; go
+set echo;
+select * from p;
+EXECUTE PROCEDURE PROC_INSERT 'P15',NULL , 'Pink', NULL, 'Hoboken';
+INSERT INTO P VALUES ('P16', NULL, NULL, NULL, 'Varanasi');
+select * from p;
+exit;
+$ DROP WHERE_GDB:sp1.gdb 

@@ -1,0 +1,62 @@
+
+$CREATE COMMENT
+*******************************************************************************
+ 
+Test Name:  	EXT_REL_0_4_G
+Test Level: 	0
+Series Name:	EXT_LEV_0
+Date:  		July 1, 1994
+Author:  	Scott Van Voris
+Bug: 
+ 
+Description:    This is a Level 0 test which is designed to verify that 
+		the syntax to create an external relation is working properly.
+		In order to verify that the external relation was really 
+		created, a tuple is inserted into the relation, and the 
+		value in the external file displayed.
+ 
+Expected Output:	Welcome to QLI
+			Query Language Interpreter
+			QLI> QLI> QLI> QLI> 
+			  FIELD1
+			===========
+ 
+			 1000000000
+ 
+			QLI> QLI>
+History:
+
+2-Oct-95:  Mark
+  Removed the Cleanup / Setup comments from the test.
+  Also, added WHERE_GDB and RUN drop_gdb to the tests.
+
+3-Oct-95: Marco
+  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+  by the server in the correct place when accessing data remotely.
+  Also, I removed any referance to DIR external.dat and TYPE external.dat
+  which would also fail when running remotely.
+
+16-Mar-98: Prasad
+ Added WHERE_GDB_EXTERNAL as prefix to external.dat while deleting
+ else the following test fails.
+
+*******************************************************************************
+
+$CREATE create.gdl
+
+DEFINE DATABASE "WHERE_GDB:ext_rel_0_4_G.gdb";
+
+DEFINE RELATION ext_table EXTERNAL_FILE "WHERE_GDB_EXTERNAL:external.dat"
+       field1 long;
+
+$CREATE qli.in
+
+READY "WHERE_GDB:ext_rel_0_4_G.gdb";
+INSERT INTO ext_table (field1) VALUES (1000000000);
+SELECT * FROM ext_table;
+
+$GDEF create.gdl
+$QLI < qli.in
+$DROP WHERE_GDB:ext_rel_0_4_G.gdb
+$DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
+$DELETE COMMENT create.gdl qli.in

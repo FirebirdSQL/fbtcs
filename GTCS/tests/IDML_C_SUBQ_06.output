@@ -1,0 +1,48 @@
+(W) subq6.e:16: SET NAMES requires -manual switch to gpre.
+No errors, 1 warning
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  
+========================= 
+
+péché                     
+cæsium                    
+Aalborg                   
+aïeul                     
+caennais                  
+vice versa                
+
+
+C_437_25                  
+========================= 
+
+Aalborg                   
+aïeul                     
+caennais                  
+cæsium                    
+péché                     
+vice versa                
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+C_437_25                  
+========================= 
+
+péché                     
+cæsium                    
+Aalborg                   
+aïeul                     
+caennais                  
+vice versa                
+
+
+C_ENUS                    C_FRANCE                  C_437_25                  
+========================= ========================= ========================= 
+
+<null>                    <null>                    Aalborg                   
+<null>                    <null>                    aïeul                     
+<null>                    <null>                    caennais                  
+<null>                    <null>                    cæsium                    
+<null>                    <null>                    péché                     
+<null>                    <null>                    vice versa                
+

@@ -1,0 +1,33 @@
+Test:
+  SELECT V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO, COUNT(*) FROM HEAD_DEPT V1 WHERE SINGULAR (SELECT * FROM DEPT_BUDGET V2, FULLEMP V3, EMPSAL V4 WHERE V2.DEPTNO= V1.DEPTNO AND V2.DEPARTMENT = V3.DEPARTMENT AND V3.EMPNO = V4.EMPNO) GROUP BY V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO ORDER BY V1.DEPTNO)
+--------------------------------------------------------------------------------
+000	Corporate Headquarters   	120	1
+--------------------------------------------------
+
+
+* Total Records Listed >>> 1
+
+Deptno        Department          Mgrno    COUNT
+====== ========================= ====== ===========
+
+ 000   Corporate Headquarters       120           1
+
+
+Deptno        Department          Mgrno    COUNT
+====== ========================= ====== ===========
+
+ 000   Corporate Headquarters       120           1
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+DEPTNO DEPARTMENT                  MGRNO        COUNT 
+====== ========================= ======= ============ 
+
+000    Corporate Headquarters        120            1 
+
+
+DEPTNO DEPARTMENT                  MGRNO        COUNT 
+====== ========================= ======= ============ 
+
+000    Corporate Headquarters        120            1 
+

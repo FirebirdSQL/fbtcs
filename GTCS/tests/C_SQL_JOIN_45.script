@@ -1,0 +1,176 @@
+
+$ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_45.gdb
+$ CREATE join045.e
+/**********************************************************************
+ Purpose:               Test SQL OUTER JOIN support in InterBase 4.0
+ Description:           15 table joins - reflexive join on the same table
+ Author:                Sam Hakim, June 1, 93
+        left outer join st1 c on b.s1 = c.s1) left outer join st1 d on c.s1 = d.s1)
+        left outer join st1 e on d.s1 = e.s1) left outer join st1 f on f.s1 = e.s1)
+        left outer join st1 g on g.s1 = f.s1) left outer join st1 h on h.s1 = g.s1)
+        left outer join st1 i on i.s1 = h.s1) left outer join st1 j on j.s1 = i.s1)
+        left outer join st1 k on k.s1 = j.s1) left outer join st1 l on l.s1 = k.s1)
+        left outer join st1 m on m.s1 = l.s1) left outer join st1 n on n.s1 = m.s1)
+        left outer join st1 o on o.s1 = n.s1) order by a.table_row ascending;
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = "WHERE_GDB:sh_join_45.gdb";
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON st1.s1     t1s1;
+BASED_ON st1.table_row   t1table_row;
+
+BASED_ON st2.s1     t2s1;
+BASED_ON st2.table_row   t2table_row;
+
+BASED_ON st3.s1     t3s1;
+BASED_ON st3.table_row   t3table_row;
+
+BASED_ON st4.s1     t4s1;
+BASED_ON st4.table_row   t4table_row;
+
+BASED_ON st5.s1     t5s1;
+BASED_ON st5.table_row   t5table_row;
+char Test[] = " ";
+/*
+char Test[]="\
+select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row \
+from ((((st1 a inner outer join st1 b on a.s1 = b.s2)  left outer join st1 c on b.s1 = c.s1) left outer join \
+st1 d on c.s1 = d.s1) left outer join st1 e on d.s1 = e.s1) left outer join st1 f on f.s1 = e.s1) left outer join st1 g on g.s1 = f.s1)\
+left outer join st1 h on h.s1 = g.s1) left outer join st1 i on i.s1 = h.s1) left outer join st1 j on j.s1 = i.s1) left outer join st1 k on k.s1 = j.s1)\
+left outer join st1 l on l.s1 = k.s1) left outer join st1 m on m.s1 = l.s1) left outer join st1 n on n.s1 = m.s1) left outer join st1 o on o.s1 = n.s1)\
+order by a.table_row ascending";
+*/
+
+void Underline();
+
+main()
+{
+	
+    int Count;
+    Count = 0;
+    EXEC SQL
+        DECLARE CR CURSOR FOR
+        select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row
+        from (((((((((((((((st1 a left outer join st1 b on a.s1 = b.s1) 
+	left outer join st1 c on b.s1 = c.s1) left outer join st1 d on c.s1 = d.s1) 
+	left outer join st1 e on d.s1 = e.s1) left outer join st1 f on f.s1 = e.s1)
+	left outer join st1 g on g.s1 = f.s1) left outer join st1 h on h.s1 = g.s1)
+	left outer join st1 k on k.s1 = g.s1) left outer join st1 l on l.s1 = k.s1)
+	left outer join st1 m on m.s1 = l.s1) left outer join st1 n on n.s1 = m.s1)
+	left outer join st1 o on o.s1 = n.s1) left outer join st1 p on p.s1 = o.s1)
+	left outer join st1 q on q.s1 = p.s1) left outer join st1 r on r.s1 = q.s1)
+	order by a.table_row ascending;
+
+        EXEC SQL
+		OPEN CR;
+		
+    EXEC SQL    FETCH CR INTO
+                :t1s1,:t1table_row,
+                :t2s1,:t2table_row,
+                :t3s1,:t3table_row,
+                :t4s1,:t4table_row,
+                :t5s1,:t5table_row;
+
+        while (SQLCODE == 0){
+		Count++;
+
+                printf("%5d  ",t1s1);
+                printf("%-10s  ",t1table_row);
+                printf("%5d  ",t2s1);
+                printf("%-10s  ",t2table_row);
+                printf("%5d  ",t3s1);
+                printf("%-10s  ",t3table_row);
+                printf("%5d  ",t4s1);
+                printf("%-10s  ",t4table_row);
+                printf("%5d  ",t5s1);
+                printf("%-10s\n",t5table_row);
+
+                EXEC SQL FETCH CR INTO
+                :t1s1,:t1table_row,
+                :t2s1,:t2table_row,
+                :t3s1,:t3table_row,
+                :t4s1,:t4table_row,
+                :t5s1,:t5table_row;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e join045.e
+$ CC FLAG_CC join045.c
+$ LINK FLAG_LINK join045 
+$ RUN join045
+$ CREATE join045.qli
+ready WHERE_GDB:sh_join_45.gdb;
+set semicolon;
+select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row
+from (((((((((((((((st1 a left outer join st1 b on a.s1 = b.s1)
+left outer join st1 c on b.s1 = c.s1) left outer join st1 d on c.s1 = d.s1)
+left outer join st1 e on d.s1 = e.s1) left outer join st1 f on f.s1 = e.s1)
+left outer join st1 g on g.s1 = f.s1) left outer join st1 h on h.s1 = g.s1)
+left outer join st1 k on k.s1 = g.s1) left outer join st1 l on l.s1 = k.s1)
+left outer join st1 m on m.s1 = l.s1) left outer join st1 n on n.s1 = m.s1)
+left outer join st1 o on o.s1 = n.s1) left outer join st1 p on p.s1 = o.s1)
+left outer join st1 q on q.s1 = p.s1) left outer join st1 r on r.s1 = q.s1)
+order by a.table_row ascending;
+finish;
+quit;
+$ QLI -n -a join045.qli
+$ CREATE join045.sql
+connect WHERE_GDB:sh_join_45.gdb;
+select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row
+from (((((((((((((((st1 a left outer join st1 b on a.s1 = b.s1)
+left outer join st1 c on b.s1 = c.s1) left outer join st1 d on c.s1 = d.s1)
+left outer join st1 e on d.s1 = e.s1) left outer join st1 f on f.s1 = e.s1)
+left outer join st1 g on g.s1 = f.s1) left outer join st1 h on h.s1 = g.s1)
+left outer join st1 k on k.s1 = g.s1) left outer join st1 l on l.s1 = k.s1)
+left outer join st1 m on m.s1 = l.s1) left outer join st1 n on n.s1 = m.s1)
+left outer join st1 o on o.s1 = n.s1) left outer join st1 p on p.s1 = o.s1)
+left outer join st1 q on q.s1 = p.s1) left outer join st1 r on r.s1 = q.s1)
+order by a.table_row ascending;
+quit;
+$ISQL -i join045.sql
+$DROP WHERE_GDB:sh_join_45.gdb
+$ DELETE join045* 

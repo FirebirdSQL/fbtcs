@@ -1,0 +1,8 @@
+
+Above stmt should work...just DDL in ESQL
+Below are 2 inserts.  Both produce expected errors.
+
+********************************  blob conversion error is proper result
+
+conversion error from string "BLOB"
+Data base error, SQLCODE = -413

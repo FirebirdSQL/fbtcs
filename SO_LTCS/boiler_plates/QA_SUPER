@@ -1,0 +1,35 @@
+#!/bin/sh
+# TCS BOILERPLATE: QA_SUPER
+#  For use with Solaris SUPERSERVER
+# NOTE NOTE NOTE
+# Changes to this boilerplate must be echoed into RUN_DEV
+# 1995-May-2 David Schnepper
+# Changed to use workshop/SUNWspro/bin (compiler version 4.2) ahead of
+# SUNWspro/bin (for any other old tools that haven't be upgraded).
+#          1997-Oct-10 Chris Jewell
+# Added umask 000, which seems to have been inadvertantly dropped in
+# some previous edit.  1997-Oct-27 Chris Jewell
+#
+INTERBASE=/usr/interbase
+# Start with something sane in the path, before adding test-run stuff
+PATH=/usr/bin:/usr/local/bin:/usr/gds/sbin:/usr/gds/bin
+# Now prepend where to find the old CC, and standard developer stuff
+PATH=/apps/lang/solaris/SUNWspro/bin:/usr/ccs/bin:$PATH
+# Now prepend where to find the new cc
+PATH=.:$INTERBASE/bin:/apps/lang/solaris/workshop/SUNWspro/bin:$PATH
+LM_LICENSE_FILE=/apps/lang/license_dir/sunpro.lic,1
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+GDS_SERVER=/usr/interbase/bin/gds_pipe
+GDS_BRIDGE=/usr/interbase/bin/gds_pipe5
+TMP=./
+COBDIR=/usr/gds/cobol
+export COBDIR
+export PATH
+export LM_LICENSE_FILE
+export LD_LIBRARY_PATH
+export GDS_SERVER
+export GDS_BRIDGE
+export INTERBASE
+export TMP
+umask 000
+# end - TCS BOILERPLATE: RUN_DEV_SUPER

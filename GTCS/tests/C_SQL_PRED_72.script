@@ -1,0 +1,139 @@
+
+$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ CREATE con038.e
+/**********************************************************************
+ Purpose:		Test predicates support in InterBase SQL 4.0
+ Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
+ Description:           UPDATE ... where field containing <value>
+			UPDATE CUSTOMERS SET ZIP_CODE=99999 
+			WHERE CUSTOMER CONTAINING "'";
+
+ Author:                Sam Hakim, Feb 19, 93
+ ***********************************************************************
+*/
+
+#include <stdio.h>
+#include "WHERE_FILES:sh_test.h"
+
+DATABASE DB = 'WHERE_GDB:sh_test.gdb';
+EXEC SQL	INCLUDE SQLCA;
+
+EXEC SQL
+        WHENEVER SQLERROR GO TO ERR;
+
+EXEC SQL
+        WHENEVER NOT FOUND GO TO NOMORE;
+
+BASED_ON CUSTOMERS.CUSTOMER     Name;
+BASED_ON CUSTOMERS.ZIP_CODE		Zip;
+
+
+
+char Test[]="UPDATE CUSTOMERS \
+SET ZIP_CODE='99999'  \
+WHERE CUSTOMER CONTAINING ' ";
+
+void Underline();
+
+main(argc, argv)
+int argc;
+char *argv[];
+
+{
+	
+	int verbose, Count;
+	Count = 0;
+
+	/*--- check if verbose is requested ------ */
+	verbose = FALSE;
+	if (--argc > 0){	
+		if (*argv[1] == 'v' || *argv[1] == 'V')
+			verbose = TRUE;
+	}
+        printf("Test:\n %s\n",Test);
+        Underline(80);
+	EXEC SQL
+		UPDATE CUSTOMERS
+		SET ZIP_CODE = '99999'
+		WHERE CUSTOMER CONTAINING "'";
+
+	EXEC SQL
+		COMMIT;
+
+	EXEC SQL
+                DECLARE CR CURSOR FOR
+                SELECT CUSTOMER, ZIP_CODE
+                FROM CUSTOMERS
+                WHERE ZIP_CODE = '99999';
+
+        EXEC SQL
+		OPEN CR;
+		
+	EXEC SQL
+                FETCH CR INTO :Name,:Zip;
+
+        while (SQLCODE == 0){
+
+                Count++;
+                printf("%s %s\n",Name,Zip);
+                Underline(80);
+
+                EXEC SQL
+                        FETCH CR INTO :Name,:Zip;
+        }
+	
+NOMORE:
+        EXEC SQL
+                CLOSE CR;
+
+	printf("\n\n* Total Records Listed >>> %d\n",Count);
+
+	EXEC SQL
+		COMMIT RELEASE;
+	FINISH;
+
+
+exit(0);
+
+ERR:
+	printf("Database error, SQLCODE = %d\n",SQLCODE);
+        isc_print_status(gds__status);
+
+	EXEC SQL
+		ROLLBACK RELEASE;
+	FINISH;
+
+	exit(1);
+}
+/*--- print and underline of width i */
+
+void Underline(i)
+int i;
+{
+int j;
+
+for (j=0;j<i;j++)
+	printf("-");
+printf("\n");
+
+}
+
+$ GPRE -e con038.e
+$ CC FLAG_CC con038.c
+$ LINK FLAG_LINK con038 
+$ RUN con038
+$ CREATE con038.qli
+ready WHERE_GDB:sh_test.gdb;
+set semicolon;
+select customer,zip from customers
+where customer containing "'";
+finish;
+quit;
+$ QLI -n -a con038.qli
+$ CREATE con038.sql
+connect WHERE_GDB:sh_test.gdb;
+SELECT customer,zip_code FROM customers WHERE customer CONTAINING "'";
+quit;
+$ISQL -i con038.sql
+$DROP WHERE_GDB:sh_test.gdb
+$ DELETE con038* 
