@@ -125,10 +125,10 @@ It is important to understand that the symbols defined here and those in environ
 </ul>
 <p>the runtcs syntax are:</p>
 <ul>
-<li>runtcs test_type test_name [FIREBIRD root dir]</li>
+<li>runtcs test_type test_name</li>
 </ul>
-<p>The FIREBIRD argument is only needed if the FIREBIRD environment variable is not set.</p>
-<p>The tool produces to kind of outputs<p>
+<p>The FIREBIRD, ISC_USER and ISC_PASSWORD environment variables must be set.</p>
+<p>The tool produces two kind of outputs<p>
 <ul>
 <li>To the stdout the tests names and the final results.</li>
 <li>To the output directory two/three files for each test (if tcs have the -s option) :</li>
@@ -282,9 +282,9 @@ It is important to understand that the symbols defined here and those in environ
 <td>fix_isc</td>
 </tr>
 <tr>
-<td>GJRN</td>
-<td>invoke gjrn</td>
-<td>gjrn</td>
+<td>GSTAT</td>
+<td>invoke gstat</td>
+<td>gstat</td>
 <td>fix_isc</td>
 </tr>
 <tr>

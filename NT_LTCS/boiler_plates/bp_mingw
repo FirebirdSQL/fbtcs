@@ -1,3 +1,5 @@
 @echo off
-set PATH=.;c:\mingw\bin;c:\msys\1.0\bin;c:\opt\firebird_15\bin;
+set PATH=.;c:\mingw\bin;c:\msys\1.0\bin;WHERE_FIREBIRD_BIN:
+:: There is a problem with path env variable in MinGW
+:: because it uses ":" instead of ";" as path separator 
 ::set PATH=EXECUTABLE_PATH:
