@@ -41,7 +41,7 @@
 #include "tcs_proto.h"
 
 #ifndef DARWIN
-#include <gds.h>
+#include <ibase.h>
 #else
 #include <Firebird/ibase.h>
 #endif

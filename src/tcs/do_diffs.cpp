@@ -26,7 +26,7 @@
 #include <string.h>
 #include <stdlib.h>
 #ifndef DARWIN
-#include <gds.h>
+#include <ibase.h>
 #else
 #include <Firebird/ibase.h>
 #endif
