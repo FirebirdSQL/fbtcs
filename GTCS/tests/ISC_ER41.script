@@ -19,26 +19,26 @@ int main()
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
-	LogPrintf("Running ER41, invalid transaction handle\n");
-	LogPrintf("to isc_prepare_transaction\n");
+	printf("Running ER41, invalid transaction handle\n");
+	printf("to isc_prepare_transaction\n");
 
 	if ((rc=isc_start_transaction(status, &trans, 1, &DB,0, NULL))==0)
-		LogPrintf("BUG: No DB to start trans.\n");
+		printf("BUG: No DB to start trans.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_prepare_transaction(status, &trans)) ==0)
-		LogPrintf("BUG: Bad tr handle to prepare trans.\n");
+		printf("BUG: Bad tr handle to prepare trans.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	trans = NULL;
 	if ((rc=isc_prepare_transaction(status, &trans)) ==0)
-		LogPrintf("BUG: Bad tr handle to prepare trans.\n");
+		printf("BUG: Bad tr handle to prepare trans.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER41\n");
+	printf("Finished ER41\n");
 }
 $ CC FLAG_CC er41.c
 $ LINK FLAG_LINK er41 

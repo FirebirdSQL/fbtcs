@@ -4,7 +4,6 @@ HISTORY:
 
 $ GBAK -r WHERE_EXAMPLES_40:atlas.gbk WHERE_GDB:atlas.gdb
 $ISQL atlas.gdb -i WHERE_EXAMPLES:/v5/ib_udf.sql
-$ COPY WHERE_FILES:sh_test.h sh_test.h
 $ CREATE udfgrp.e
 /**********************************************************************
  Purpose:		Test group by a udf function 
@@ -22,7 +21,6 @@ $ CREATE udfgrp.e
 */
 
 #include <stdio.h>
-#include "sh_test.h"
 
 DATABASE DB = 'WHERE_GDB:atlas.gdb';
 EXEC SQL	INCLUDE SQLCA;
@@ -46,16 +44,7 @@ int argc;
 char *argv[];
 
 {
-	
-	int verbose, Count;
-	Count = 0;
-
-	/*--- check if verbose is requested ------ */
-	verbose = FALSE;
-	if (--argc > 0){	
-		if (*argv[1] == 'v' || *argv[1] == 'V')
-			verbose = TRUE;
-	}
+	int Count = 0;
         printf("Test:\n %s\n",Test);
         Underline(80);
 	EXEC SQL

@@ -29,7 +29,9 @@ $ CREATE subq11.e
 /*-------------------------------------------------------------------------
   Case 10:  INSERT <table> SET <field> = "string" WHERE (subquery w/group by)
 ---------------------------------------------------------------------------*/
-#include <WHERE_FILES:tcs.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
 EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;

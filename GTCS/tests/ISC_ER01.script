@@ -22,7 +22,7 @@ int main()
 	ISC_STATUS      rc, status[20];
 	char            err_buf[128];
 
-	LogPrintf("Running ER1, invalid db handle to attach\n");
+	printf("Running ER1, invalid db handle to attach\n");
 
 
 	/* 1. Pass an invalid database handle. */
@@ -39,7 +39,7 @@ int main()
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER1\n");
+	printf("Finished ER1\n");
 }
 
 $ CC FLAG_CC er1.c

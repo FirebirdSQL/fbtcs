@@ -24,7 +24,7 @@ select_exp   : SELECT ...
 	                        the 'select' above.
 	        group_clause
 
-(W) subq10.e:17: SET NAMES requires -manual switch to gpre.
+(W) subq10.e:19: SET NAMES requires -manual switch to gpre.
 No errors, 1 warning
 
 Program attempting Embedded INSERTw/SUBQUERY and ORDER BY--works!

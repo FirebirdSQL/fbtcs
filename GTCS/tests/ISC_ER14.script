@@ -27,8 +27,8 @@ int main()
 	short	length,dim;
 	short   kludge = SQL_SHORT;
 
-	LogPrintf("Running ER14, array get slice on invalid DB.\n");
-	LogPrintf("to isc_array_get_slice\n");
+	printf("Running ER14, array get slice on invalid DB.\n");
+	printf("to isc_array_get_slice\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
@@ -40,18 +40,18 @@ int main()
 
 	if ((rc=isc_array_get_slice(status, &DB, &trans,
 			&array_id, &desc, cnt, &len)) ==0)
-		LogPrintf("BUG: array get slice on invalid DB.\n");
+		printf("BUG: array get slice on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_array_get_slice(status, &DB, &trans,
 			&array_id, &desc, cnt, &len)) ==0)
-		LogPrintf("BUG: array get slice on Null DB.\n");
+		printf("BUG: array get slice on Null DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER14\n");
+	printf("Finished ER14\n");
 }
 $ CC FLAG_CC er14.c
 $ LINK FLAG_LINK er14 

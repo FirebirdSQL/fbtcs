@@ -27,7 +27,7 @@ int main()
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
-	LogPrintf("Running ER18, start multiple on invalid DB.\n");
+	printf("Running ER18, start multiple on invalid DB.\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
@@ -35,7 +35,7 @@ int main()
 	teb_vec[0].dbb_ptr = &DB;
 
 	if ((rc=isc_start_multiple(status, &trans, 1, teb_vec)) ==0)
-		LogPrintf("BUG: start multiple on invalid DB.\n");
+		printf("BUG: start multiple on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
@@ -43,11 +43,11 @@ int main()
 	teb_vec[0].dbb_ptr = &DB;
 
 	if ((rc=isc_start_multiple(status, &trans, 1, teb_vec)) ==0)
-		LogPrintf("BUG: start multiple on Null DB.\n");
+		printf("BUG: start multiple on Null DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER18\n");
+	printf("Finished ER18\n");
 }
 $ CC FLAG_CC er18.c
 $ LINK FLAG_LINK er18 

@@ -56,7 +56,9 @@ SELECT '          = ≈ÏÕŒ∆√«‰:',ROW,COMP FROM JA WHERE COMP = '≈ÏÕŒ∆√«‰';
 QUIT;
 
 $ CREATE f1.e
-#include "WHERE_FILES:tcs.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #ifndef DARWIN
 #include <ibase.h>
 #else

@@ -27,8 +27,8 @@ int main()
 	short	sdl_length;
 	char	sdl_buf[100];
 
-	LogPrintf("Running ER39, invalid transaction handle\n");
-	LogPrintf("to isc_get_slice\n");
+	printf("Running ER39, invalid transaction handle\n");
+	printf("to isc_get_slice\n");
 
 	fill_db_parameter_buffer();
 
@@ -36,27 +36,27 @@ int main()
 		{ERREXIT(status, rc, err_buf)};
 
 	if ((rc=isc_start_transaction(status, &trans, 1, &DB2, 0, NULL))==0)
-		LogPrintf("BUG: Bad DB to start trans.\n");
+		printf("BUG: Bad DB to start trans.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_get_slice(status, &DB, &trans, &array_id,
 			sdl_length, sdl_buf, 0, 0, sizeof(cnt), cnt, &len))==0)
-		LogPrintf("BUG: Bad tr handle to get slice.\n");
+		printf("BUG: Bad tr handle to get slice.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	trans = NULL;
 	if ((rc=isc_get_slice(status, &DB, &trans, &array_id,
 			sdl_length, sdl_buf, 0, 0, sizeof(cnt), cnt, &len))==0)
-		LogPrintf("BUG: Bad tr handle to get slice.\n");
+		printf("BUG: Bad tr handle to get slice.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_detach_database(status, &DB)) !=0)
 		{ERREXIT(status, rc, err_buf)};
 
-	LogPrintf("Finished ER39\n");
+	printf("Finished ER39\n");
 }
 $ CC FLAG_CC er39.c
 $ CC FLAG_CC globals.c

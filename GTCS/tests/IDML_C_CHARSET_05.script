@@ -27,8 +27,9 @@ $ CREATE btest2.e
 
 16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
 */
-#include "WHERE_FILES:tcs.h"
-#include "WHERE_FILES:example.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #ifndef DARWIN
 #include <ibase.h>
 #else
@@ -48,9 +49,9 @@ EXEC SQL BEGIN DECLARE SECTION;
      BASED ON EMPLOYEE.LAST_NAME    s_lastname;
 EXEC SQL END DECLARE SECTION;
 
-void print_error          PROTO((void));
+void print_error();
 
-int main PROTO((void))
+int main(int argc, char* argv)
 {    
      char  c;
 
@@ -89,7 +90,7 @@ Err:
   print_error();
 }
 
-void print_error PROTO((void))
+void print_error()
 {
 if (SQLCODE != 100)
      printf ("Error: ---------------------------------------------\n");
@@ -98,6 +99,7 @@ if (SQLCODE != 100)
      isc_print_status (gds__status);
 exit(1);
 }
+
 $ CREATE verify.sql
 set names iso8859_1;
 connect WHERE_GDB:intlemp_05.gdb;

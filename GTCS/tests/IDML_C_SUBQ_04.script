@@ -26,7 +26,9 @@ $ CREATE subq4.e
 /*-------------------------------------------------------------------
   Case:  2  INSERT INTO DUPLICATE  SELECT * FROM STRING_TABLE
 ---------------------------------------------------------------------*/
-#include <WHERE_FILES:tcs.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
 EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;

@@ -22,26 +22,26 @@ int main()
 	int		len;
 	char		bpb[32];
 
-	LogPrintf("Running ER7, invalid db handle\n");
-	LogPrintf("to isc_create_blob2\n");
+	printf("Running ER7, invalid db handle\n");
+	printf("to isc_create_blob2\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_create_blob2(status, &DB, &trans,
 			&blob_handle, &blob_id, len, bpb)) ==0)
-		LogPrintf("BUG: create blob2 on invalid DB.\n");
+		printf("BUG: create blob2 on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_create_blob2(status, &DB, &trans,
 			&blob_handle, &blob_id, len, bpb)) ==0)
-		LogPrintf("BUG: create blob2 on Null DB.\n");
+		printf("BUG: create blob2 on Null DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER7\n");
+	printf("Finished ER7\n");
 }
 $ CC FLAG_CC er7.c
 $ LINK FLAG_LINK er7 

@@ -23,33 +23,22 @@ $ CREATE globals.c
 #include <stdio.h>
 #include <string.h>
 
-#undef _Windows
-
 typedef struct vary512 {
 	short vary_length;
 	char vary_string[513];
 	} VARY512;
 
-#ifndef _Windows
 #ifndef DARWIN
 #include <ibase.h>
 #else
 #include <Firebird/ibase.h>
 #endif
-#define LogPrintf printf
-void print_varfield();
-void print_sqlda();
-void fill_db_parameter_buffer();
-void osri_print_status();
-void interprete_stmt_info();
-#else
-#include "globals.h"
+
 void print_varfield(VARY512*);
 void print_sqlda(XSQLDA ISC_FAR*);
 void fill_db_parameter_buffer(void);
 void osri_print_status(char*, ISC_STATUS*);
 void interprete_stmt_info(isc_stmt_handle, char*);
-#endif
 
 char   db_param[255];
 char   *pdb_param = db_param;
@@ -64,28 +53,14 @@ char	empdb[128];
 static char     count_info [] = { isc_info_sql_records };
  
 
-#ifdef _Windows
-void fill_db_parameter_buffer(void)
-#else
 void fill_db_parameter_buffer()
-#endif
 {
 
-#ifdef _Windows
    strcpy(empdb,"WHERE_GDB:employee.gdb");
-#else
-   strcpy(empdb,"WHERE_GDB:employee.gdb");
-#endif
 }
 
 
-#ifdef _Windows
 void osri_print_status(char *msg_string, ISC_STATUS *status)
-#else
-void osri_print_status(msg_string, status)
-char  *msg_string; 
-ISC_STATUS *status;
-#endif
 {
 
   int   i, j;
@@ -93,18 +68,18 @@ ISC_STATUS *status;
   char  output_str[255];
   char  *p;
 
-  LogPrintf("%s\n", msg_string);
-  LogPrintf("*** Status Vector ****\n");
+  printf("%s\n", msg_string);
+  printf("*** Status Vector ****\n");
 
   for (i = 0; i < status_size; ) {
 	 for (j = 0, p = output_str;
 			(j < 5 && i < status_size);
 			j++, p += strlen(p), i++)
 		sprintf(p, "[%2d]: %ld ", i, status[i]);
-	 LogPrintf("%s\n", output_str);
+	 printf("%s\n", output_str);
   }
 
-  LogPrintf("%s, sqlcode = %d\n", msg_string, isc_sqlcode(status));
+  printf("%s, sqlcode = %d\n", msg_string, isc_sqlcode(status));
   isc_print_status(status);
   isc_print_sqlerror (isc_sqlcode(status), status); 
 }
@@ -115,109 +90,93 @@ ISC_STATUS *status;
 **-----------------------------------------------------------------
 */
 
-#ifdef _Windows
 void print_sqlda(XSQLDA ISC_FAR *sqlda)
-#else
-void print_sqlda(sqlda)
-XSQLDA ISC_FAR *sqlda;
-#endif
 {
 	short i;
 
-	LogPrintf("******* SQLDA *******\n");
-	LogPrintf("Version: %d, NameField: %s, ByteCount: %d\n",
+	printf("******* SQLDA *******\n");
+	printf("Version: %d, NameField: %s, ByteCount: %d\n",
 		sqlda->version, sqlda->sqldaid, sqlda->sqldabc);
-	LogPrintf("No.Fields alloc: %d, Actual No.Fields: %d\n",
+	printf("No.Fields alloc: %d, Actual No.Fields: %d\n",
 		sqlda->sqln, sqlda->sqld);
 	for (i = 0; i < sqlda->sqld; i++) {
-	    LogPrintf("Field Number :%d\tLength: %d\tType: ", i+1,
+	    printf("Field Number :%d\tLength: %d\tType: ", i+1,
 		 sqlda->sqlvar[i].sqllen);
 	    switch (sqlda->sqlvar[i].sqltype) {
 		case SQL_TEXT+1:
-			LogPrintf("TEXT\n");
-			LogPrintf("Data:%s\n",(char *)(sqlda->sqlvar[i].sqldata));
+			printf("TEXT\n");
+			printf("Data:%s\n",(char *)(sqlda->sqlvar[i].sqldata));
 			break;
 		case SQL_VARYING+1:
-			LogPrintf("VARYING\n");
+			printf("VARYING\n");
 			print_varfield((VARY512 *)((char *)(sqlda->sqlvar[i].sqldata))); 
-			LogPrintf("\n");
+			printf("\n");
 			break;
 		case SQL_SHORT+1:
-			LogPrintf("SHORT\n");
-			LogPrintf("Data:%d\n",*((short *)(sqlda->sqlvar[i].sqldata)));
+			printf("SHORT\n");
+			printf("Data:%d\n",*((short *)(sqlda->sqlvar[i].sqldata)));
 			break;
 		case SQL_LONG+1:
-			LogPrintf("LONG\n");
-			LogPrintf("Data:%d\n",*((long *)(sqlda->sqlvar[i].sqldata)));
+			printf("LONG\n");
+			printf("Data:%d\n",*((long *)(sqlda->sqlvar[i].sqldata)));
 			break;
 		case SQL_FLOAT+1:
-			LogPrintf("FLOAT\n");
-			LogPrintf("Data:%f\n",*((float *)(sqlda->sqlvar[i].sqldata)));
+			printf("FLOAT\n");
+			printf("Data:%f\n",*((float *)(sqlda->sqlvar[i].sqldata)));
 			break;
 		case SQL_DOUBLE+1:
-			LogPrintf("DOUBLE\n");
-			LogPrintf("Data:%f\n",*((double *)(sqlda->sqlvar[i].sqldata)));
+			printf("DOUBLE\n");
+			printf("Data:%f\n",*((double *)(sqlda->sqlvar[i].sqldata)));
 			break;
 		case SQL_D_FLOAT+1:
-			LogPrintf("D_FLOAT\n");
-			LogPrintf("Data:%f\n",*((double *)(sqlda->sqlvar[i].sqldata)));
+			printf("D_FLOAT\n");
+			printf("Data:%f\n",*((double *)(sqlda->sqlvar[i].sqldata)));
 			break;
 		case SQL_DATE+1:
-			LogPrintf("DATE\n");
-			LogPrintf("Data Address:%s\n",sqlda->sqlvar[i].sqldata);
+			printf("DATE\n");
+			printf("Data Address:%s\n",sqlda->sqlvar[i].sqldata);
 			break;
 		case SQL_BLOB+1:
-			LogPrintf("BLOB\n");
-			LogPrintf("Data Address:%s\n",sqlda->sqlvar[i].sqldata);
+			printf("BLOB\n");
+			printf("Data Address:%s\n",sqlda->sqlvar[i].sqldata);
 			break;
 		case SQL_ARRAY+1:
-			LogPrintf("ARRAY\n");
-			LogPrintf("Data Address:%s\n",sqlda->sqlvar[i].sqldata);
+			printf("ARRAY\n");
+			printf("Data Address:%s\n",sqlda->sqlvar[i].sqldata);
 			break;
 		default:
-			LogPrintf("Unkowned\n");
-			LogPrintf("Data Address:%s\n",sqlda->sqlvar[i].sqldata);
+			printf("Unkowned\n");
+			printf("Data Address:%s\n",sqlda->sqlvar[i].sqldata);
 	    }
-	    LogPrintf("\tScale: %d\tSubType: %d\n",sqlda->sqlvar[i].sqlscale, 
+	    printf("\tScale: %d\tSubType: %d\n",sqlda->sqlvar[i].sqlscale, 
 			sqlda->sqlvar[i].sqlsubtype);
 
-	    LogPrintf("Indicator: %d\tColName Len: %d\tColName: %s\n",
+	    printf("Indicator: %d\tColName Len: %d\tColName: %s\n",
 			*((short *)(sqlda->sqlvar[i].sqlind)), sqlda->sqlvar[i].sqlname_length,
 			sqlda->sqlvar[i].sqlname);
-	    LogPrintf("RelName Len: %d\tRelName: %s\n",
+	    printf("RelName Len: %d\tRelName: %s\n",
 			sqlda->sqlvar[i].relname_length, sqlda->sqlvar[i].relname);
 
-	    LogPrintf("OwnName Len: %d\tOwnName: %s\n",
+	    printf("OwnName Len: %d\tOwnName: %s\n",
 			sqlda->sqlvar[i].ownname_length, sqlda->sqlvar[i].ownname);
 
-	    LogPrintf("AliaseName Len: %d\tAliaseName: %s\n",
+	    printf("AliaseName Len: %d\tAliaseName: %s\n",
 			sqlda->sqlvar[i].aliasname_length, sqlda->sqlvar[i].aliasname);
 	}
 }
 
 
-#ifdef _Windows
 void print_varfield(VARY512 *varfield)
-#else
-void print_varfield(varfield)
-VARY512 *varfield;
-#endif
 {
 	if (!varfield)
 		return;
 	varfield->vary_string[varfield->vary_length] = '\0';    
-	LogPrintf("%s", varfield->vary_string);
+	printf("%s", varfield->vary_string);
 }
 
 
 
-#ifdef _Windows
 void interprete_stmt_info(isc_stmt_handle stmt, char *info_buffer)
-#else
-void interprete_stmt_info(stmt, info_buffer)
-isc_stmt_handle stmt;
-char *info_buffer;
-#endif
 {
 	char count_type, count_is, *p;
 	char  count_buffer[33];
@@ -267,7 +226,7 @@ char *info_buffer;
 		}
 
 		/* we assume that we did get a match */
-		LogPrintf ( "Rows affected:  %d\n", count);
+		printf ( "Rows affected:  %d\n", count);
 	}
 	return;
 }

@@ -18,7 +18,7 @@ int main()
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
-	LogPrintf("Running ER16, start trans. on invalid DB.\n");
+	printf("Running ER16, start trans. on invalid DB.\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
@@ -34,7 +34,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER16\n");
+	printf("Finished ER16\n");
 }
 $ CC FLAG_CC er16.c
 $ LINK FLAG_LINK er16 

@@ -22,8 +22,8 @@ int main()
 	char		err_buf[128];
 	ISC_ARRAY_DESC	desc;
 
-	LogPrintf("Running ER36, invalid transaction handle\n");
-	LogPrintf("to isc_array_lookup_desc\n");
+	printf("Running ER36, invalid transaction handle\n");
+	printf("to isc_array_lookup_desc\n");
 
 	fill_db_parameter_buffer();
 
@@ -31,27 +31,27 @@ int main()
 		{ERREXIT(status, rc, err_buf)};
 
 	if ((rc=isc_start_transaction(status, &trans, 1, &DB2, 0, NULL))==0)
-		LogPrintf("BUG: Bad DB to start trans.\n");
+		printf("BUG: Bad DB to start trans.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_array_lookup_desc(status, &DB, &trans,
 			"JOB", "JOB_REQUIREMENT", &desc)) ==0)
-		LogPrintf("BUG: Bad tr handle to array lookup desc.\n");
+		printf("BUG: Bad tr handle to array lookup desc.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	trans = NULL;
 	if ((rc=isc_array_lookup_desc(status, &DB, &trans,
 			"JOB", "JOB_REQUIREMENT", &desc)) ==0)
-		LogPrintf("BUG: Bad tr handle to array lookup desc.\n");
+		printf("BUG: Bad tr handle to array lookup desc.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_detach_database(status, &DB)) !=0)
 		{ERREXIT(status, rc, err_buf)};
 
-	LogPrintf("Finished ER36\n");
+	printf("Finished ER36\n");
 }
 $ CC FLAG_CC er36.c
 $ CC FLAG_CC globals.c

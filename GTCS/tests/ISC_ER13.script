@@ -24,26 +24,26 @@ int main()
 	char	sdl_buf[100];
 	ISC_QUAD	array_id;
 
-	LogPrintf("Running ER13, invalid db handle\n");
-	LogPrintf("to isc_putt_slice\n");
+	printf("Running ER13, invalid db handle\n");
+	printf("to isc_putt_slice\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_put_slice(status, &DB, &trans,&array_id, sdl_length,
 			sdl_buf, 0, 0L, sizeof(cnt), cnt)) ==0)
-		LogPrintf("BUG: put slice on invalid DB.\n");
+		printf("BUG: put slice on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_put_slice(status, &DB, &trans,&array_id, sdl_length,
 			sdl_buf, 0, 0L, sizeof(cnt), cnt)) ==0)
-		LogPrintf("BUG: put slice on Null DB.\n");
+		printf("BUG: put slice on Null DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER13\n");
+	printf("Finished ER13\n");
 }
 $ CC FLAG_CC er13.c
 $ LINK FLAG_LINK er13 

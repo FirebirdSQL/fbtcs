@@ -20,24 +20,24 @@ int main()
 	ISC_QUAD	blob_id;
 	isc_blob_handle	blob_handle = NULL;
 
-	LogPrintf("Running ER8, invalid db handle\n");
-	LogPrintf("to isc_open_blob\n");
+	printf("Running ER8, invalid db handle\n");
+	printf("to isc_open_blob\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_open_blob(status, &DB, &trans,&blob_handle, &blob_id))==0)
-		LogPrintf("BUG: open blob on invalid DB.\n");
+		printf("BUG: open blob on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_open_blob(status, &DB, &trans,&blob_handle, &blob_id))==0)
-		LogPrintf("BUG: open blob on invalid DB.\n");
+		printf("BUG: open blob on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER8\n");
+	printf("Finished ER8\n");
 }
 $ CC FLAG_CC er8.c
 $ LINK FLAG_LINK er8 

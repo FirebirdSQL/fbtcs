@@ -18,7 +18,9 @@ $ CREATE subq6.e
 /*--------------------------------------------------------------------
   Case 5:  INSERT INTO <table>...SELECT ...WHERE a.field1=b.field1
 ----------------------------------------------------------------------*/
-#include <WHERE_FILES:tcs.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
 EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;

@@ -25,7 +25,9 @@ $ CREATE subq9.e
 /*-------------------------------------------------------------------------
   Case 8:  UPDATE <table> SET <field> = "string" WHERE EXISTS (subquery)
 ---------------------------------------------------------------------------*/
-#include <WHERE_FILES:tcs.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
 EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;

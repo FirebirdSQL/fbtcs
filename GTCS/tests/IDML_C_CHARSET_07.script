@@ -12,8 +12,9 @@ Case 4:
    Select is w/select stmt into host vars and insert
    succeeds. ISQL querys the results to verify insert.
 */
-#include "WHERE_FILES:tcs.h"
-#include "WHERE_FILES:example.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #ifndef DARWIN
 #include <ibase.h>
 #else
@@ -33,9 +34,9 @@ EXEC SQL BEGIN DECLARE SECTION;
      BASED ON EMPLOYEE.LAST_NAME    s_lastname;
 EXEC SQL END DECLARE SECTION;
 
-void print_error          PROTO((void));
+void print_error();
 
-int main PROTO((void))
+int main(int argc, char* argv)
 {    
      int   user_choice, i;
      char  c;
@@ -76,7 +77,8 @@ Err:
   print_error();
   return;
 }
-void print_error PROTO((void))
+
+void print_error()
 {
 
 if (SQLCODE != 100)

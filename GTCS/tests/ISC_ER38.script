@@ -27,8 +27,8 @@ int main()
 	short	length,dim;
 	short	kludge = SQL_SHORT;
 
-	LogPrintf("Running ER38, invalid transaction handle\n");
-	LogPrintf("to isc_array_put_slice\n");
+	printf("Running ER38, invalid transaction handle\n");
+	printf("to isc_array_put_slice\n");
 
 	fill_db_parameter_buffer();
 
@@ -39,7 +39,7 @@ int main()
 	printf ("1\n");
 
 	if ((rc=isc_start_transaction(status, &trans, 1, &DB2, 0, NULL))==0)
-		LogPrintf("BUG: Bad DB to start trans.\n");
+		printf("BUG: Bad DB to start trans.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 	printf ("2\n");
@@ -54,7 +54,7 @@ int main()
 
 	if ((rc=isc_array_put_slice(status, &DB, &trans,&array_id, &desc,
 			 cnt, &len))==0)
-		LogPrintf("BUG: Bad tr handle to array put slice.\n");
+		printf("BUG: Bad tr handle to array put slice.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 	printf ("3\n");
@@ -62,7 +62,7 @@ int main()
 	trans = NULL;
 	if ((rc=isc_array_put_slice(status, &DB, &trans,&array_id, &desc,
 			 cnt, &len))==0)
-		LogPrintf("BUG: Bad tr handle to array put slice.\n");
+		printf("BUG: Bad tr handle to array put slice.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 	printf ("4\n");
@@ -71,7 +71,7 @@ int main()
 		{ERREXIT(status, rc, err_buf)};
 	printf ("5\n");
 
-	LogPrintf("Finished ER38\n");
+	printf("Finished ER38\n");
 }
 $ CC FLAG_CC er38.c
 $ CC FLAG_CC globals.c

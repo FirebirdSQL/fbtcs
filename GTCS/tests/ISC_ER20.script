@@ -22,31 +22,31 @@ int main()
 	short	len;
 	char	event_buf[100], rbuf[100];
 
-	LogPrintf("Running ER20, que events on invalid DB.\n");
+	printf("Running ER20, que events on invalid DB.\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_que_events(status, &DB, &event_id, len,
 			event_buf, ast, rbuf)) ==0)
-		LogPrintf("BUG: que events on invalid DB.\n");
+		printf("BUG: que events on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_que_events(status, &DB, &event_id, len,
 			event_buf, ast, rbuf)) ==0)
-		LogPrintf("BUG: que events on Null DB.\n");
+		printf("BUG: que events on Null DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER20\n");
+	printf("Finished ER20\n");
 }
 
 void static
 ast()
 {
-	LogPrintf("Event Call_Back Function\n");
+	printf("Event Call_Back Function\n");
         return;
 }
 $ CC FLAG_CC er20.c

@@ -1,6 +1,6 @@
-(W) subq3.e:91: SET NAMES requires -manual switch to gpre.
-(W) subq3.e:99: SET NAMES requires -manual switch to gpre.
-(W) subq3.e:99: Supersedes runtime character set for database WHERE_GDB:tests.gdb
+(W) subq3.e:93: SET NAMES requires -manual switch to gpre.
+(W) subq3.e:101: SET NAMES requires -manual switch to gpre.
+(W) subq3.e:101: Supersedes runtime character set for database WHERE_GDB:tests.gdb
 No errors,   3 warnings
 ISO SET NAMES, SELECT ISO FIELDS INSERTED BY THE SUBQUERY:
 

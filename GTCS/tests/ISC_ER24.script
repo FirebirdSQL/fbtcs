@@ -23,25 +23,25 @@ int main()
 	char tinfo[32];
 
 
-	LogPrintf("Running ER24, Bad tr handle to trans. info.\n");
+	printf("Running ER24, Bad tr handle to trans. info.\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_transaction_info(status, &trans, sizeof(titems), titems,
 			sizeof(tinfo), tinfo)) ==0)
-		LogPrintf("BUG: Bad tr handle to trans. info.\n");
+		printf("BUG: Bad tr handle to trans. info.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	trans = NULL;
 	if ((rc=isc_transaction_info(status, &trans, sizeof(titems), titems,
 			sizeof(tinfo), tinfo)) ==0)
-		LogPrintf("BUG: Bad tr handle to trans. info.\n");
+		printf("BUG: Bad tr handle to trans. info.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER24\n");
+	printf("Finished ER24\n");
 }
 $ CC FLAG_CC er24.c
 $ LINK FLAG_LINK er24

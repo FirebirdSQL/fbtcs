@@ -43,8 +43,9 @@ $ CREATE btest3.e
 	    option is not being used.  It should be quite legal to select
 	    into host variables which are then inserted into the table.
 */
-#include "WHERE_FILES:tcs.h"
-#include "WHERE_FILES:example.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #ifndef DARWIN
 #include <ibase.h>
 #else
@@ -63,9 +64,9 @@ EXEC SQL BEGIN DECLARE SECTION;
      BASED ON EMPLOYEE.LAST_NAME    s_lastname;
 EXEC SQL END DECLARE SECTION;
 
-void print_error          PROTO((void));
+void print_error();
 
-int main PROTO((void))
+int main (int argc, char* argv)
 {    
      char  c;
 
@@ -103,7 +104,8 @@ EXEC SQL COMMIT;
 Err:
   print_error();
 }
-void print_error PROTO((void))
+
+void print_error()
 {
 if (SQLCODE != 100)
      printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
@@ -111,6 +113,7 @@ if (SQLCODE != 100)
      isc_print_status (gds__status);
 exit(1);
 }
+
 $ GPRE -m -charset iso8859_1 btest3.e
 $ CC FLAG_CC btest3.c
 $ LINK FLAG_LINK btest3 

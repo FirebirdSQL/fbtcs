@@ -27,7 +27,9 @@ $ CREATE subq7.e
 /*--------------------------------------------------------------------
   Case 6:  DELETE FROM <table>... WHERE a.field1 IN (subquery w/ < )
 ----------------------------------------------------------------------*/
-#include <WHERE_FILES:tcs.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
 EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;

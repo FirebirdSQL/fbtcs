@@ -22,26 +22,26 @@ int main()
 
 	char	info_buf[32];
 
-	LogPrintf("Running ER17, db info on invalid DB.\n");
-	LogPrintf("to isc_database_info\n");
+	printf("Running ER17, db info on invalid DB.\n");
+	printf("to isc_database_info\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_database_info(status, &DB, sizeof(ilist), ilist,
 			sizeof(info_buf), info_buf)) ==0)
-		LogPrintf("BUG: database info on invalid DB.\n");
+		printf("BUG: database info on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_database_info(status, &DB, sizeof(ilist), ilist,
 			sizeof(info_buf), info_buf)) ==0)
-		LogPrintf("BUG: database info on Null DB.\n");
+		printf("BUG: database info on Null DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER17\n");
+	printf("Finished ER17\n");
 }
 $ CC FLAG_CC er17.c
 $ LINK FLAG_LINK er17 

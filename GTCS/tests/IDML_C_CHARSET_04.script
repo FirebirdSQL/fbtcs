@@ -95,8 +95,9 @@ $ CREATE btest1.e
 
    Then use:      gpre -d intlemp.gdb btest1.e 
 */
-# include "WHERE_FILES:tcs.h"
-# include "WHERE_FILES:example.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 EXEC SQL INCLUDE SQLDA;
 EXEC SQL WHENEVER SQLERROR GOTO Err;
 EXEC SQL SET DATABASE db = "WHERE_GDB:intlemp.gdb";
@@ -110,9 +111,9 @@ EXEC SQL BEGIN DECLARE SECTION;
      BASED ON EMPLOYEE.LAST_NAME    s_lastname;
 EXEC SQL END DECLARE SECTION;
 
-void print_error          PROTO((void));
+void print_error();
 
-int main PROTO((void))
+int main (int argc, char* argv[])
 {    
      printf("--------------------------------------------------------------\n");
      printf("   PRINTING ALL EMPLOYEES--Using Stored Procedure.\n\n");
@@ -148,7 +149,8 @@ EXEC SQL COMMIT;
 Err:
   print_error();
 }
-void print_error PROTO((void))
+
+void print_error()
 {
 
 if (SQLCODE != 100)

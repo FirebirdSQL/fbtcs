@@ -23,8 +23,8 @@ int main()
 	char		err_buf[128];
 	char	*s = "update department set budget = 0";
 
-	LogPrintf("Running ER30, invalid transaction handle\n");
-	LogPrintf("to isc_dsql_prepare\n");
+	printf("Running ER30, invalid transaction handle\n");
+	printf("to isc_dsql_prepare\n");
 
 	fill_db_parameter_buffer();
 
@@ -35,18 +35,18 @@ int main()
 		{ERREXIT(status, rc, err_buf)};
 
 	if ((rc=isc_start_transaction(status, &trans, 1, &DB2, 0, NULL))==0)
-		LogPrintf("BUG: Bad DB to start trans.\n");
+		printf("BUG: Bad DB to start trans.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_dsql_prepare(status, &trans, &stmt,0, s, 1, 0))==0)
-		LogPrintf("BUG: Bad tr handle to prepare stmt.\n");
+		printf("BUG: Bad tr handle to prepare stmt.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	trans = NULL;
 	if ((rc=isc_dsql_prepare(status, &trans, &stmt,0, s, 1, 0))==0)
-		LogPrintf("BUG: Bad tr handle to prepare stmt.\n");
+		printf("BUG: Bad tr handle to prepare stmt.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
@@ -56,7 +56,7 @@ int main()
 	if ((rc=isc_detach_database(status, &DB)) !=0)
 		{ERREXIT(status, rc, err_buf)};
 
-	LogPrintf("Finished ER30\n");
+	printf("Finished ER30\n");
 }
 $ CC FLAG_CC er30.c
 $ CC FLAG_CC globals.c

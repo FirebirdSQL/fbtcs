@@ -18,23 +18,23 @@ int main()
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
-	LogPrintf("Running ER19, dsql finish on invalid DB.\n");
+	printf("Running ER19, dsql finish on invalid DB.\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_dsql_finish(&DB)) ==0)
-		LogPrintf("BUG: dsql finish on invalid DB.\n");
+		printf("BUG: dsql finish on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_dsql_finish(&DB)) ==0)
-		LogPrintf("BUG: dsql finish on Null DB.\n");
+		printf("BUG: dsql finish on Null DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER19\n");
+	printf("Finished ER19\n");
 }
 $ CC FLAG_CC er19.c
 $ LINK FLAG_LINK er19 

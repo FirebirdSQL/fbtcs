@@ -19,24 +19,24 @@ int main()
 	char		err_buf[128];
 	long	event_id;
 
-	LogPrintf("Running ER22, invalid db handle\n");
-	LogPrintf("to isc_cancel_events\n");
+	printf("Running ER22, invalid db handle\n");
+	printf("to isc_cancel_events\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_cancel_events(status, &DB, &event_id))==0)
-		LogPrintf("BUG: Bad DB to cancal event\n");
+		printf("BUG: Bad DB to cancal event\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_cancel_events(status, &DB, &event_id))==0)
-		LogPrintf("BUG: Bad DB to cancal event\n");
+		printf("BUG: Bad DB to cancal event\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER22\n");
+	printf("Finished ER22\n");
 }
 $ CC FLAG_CC er22.c
 $ LINK FLAG_LINK er22 

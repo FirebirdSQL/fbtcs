@@ -34,8 +34,9 @@ and _ISO8859_1 and one without the _CHARSET NOTATION.
                    cc btest1.c -lgds -ldld -o btest
 
 */
-#include "WHERE_FILES:tcs.h"
-#include "WHERE_FILES:example.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #ifndef DARWIN
 #include <ibase.h>
 #else
@@ -46,9 +47,9 @@ EXEC SQL WHENEVER SQLERROR GOTO Err;
 EXEC SQL SET DATABASE db = "WHERE_GDB:intlemp2.gdb";
 EXEC SQL INCLUDE SQLCA;
 
-void print_error          PROTO((void));
+void print_error();
 
-int main PROTO((void))
+int main (int argc, char* argv[])
 {    
      char  c;
 
@@ -72,7 +73,8 @@ EXEC SQL COMMIT;
 Err:	
   print_error();
 }
-void print_error PROTO((void))
+
+void print_error()
 {
 
 if (SQLCODE != 100)

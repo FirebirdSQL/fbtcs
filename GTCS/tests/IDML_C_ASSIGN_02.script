@@ -9,7 +9,9 @@ $ CREATE assign2.e
 	     from a field of a different character set.
              SELECT the results.
 ---------------------------------------------------------------------------*/
-#include "WHERE_FILES:tcs.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 EXEC SQL DATABASE db = "WHERE_GDB:assign.gdb";
 EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;

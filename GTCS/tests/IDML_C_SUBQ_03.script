@@ -16,8 +16,7 @@ History:
 	     all 7 rows returned.  T-build can't translit the 437 field
 	     to iso when it was loaded using iso...do some qli scripts
 	     to try to see if its a bug.
-6/7/94:      adding WHERE_FILES:tcs.h and  to GPRE stuff. 
-	     adding -m option to ISQL stuff.
+6/7/94:      adding -m option to ISQL stuff.
 
  /* Build S allowed this:
     EXEC SQL
@@ -34,7 +33,9 @@ $ CREATE subq3.e
 /*-------------------------------------------------------------------
   Case:  1  INSERT INTO TEST_TABLE SELECT [subset] FROM STRING_TABLE
 ---------------------------------------------------------------------*/
-#include <WHERE_FILES:tcs.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 EXEC SQL DATABASE db = "WHERE_GDB:tests.gdb";
 EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;

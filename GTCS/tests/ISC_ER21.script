@@ -19,22 +19,22 @@ int main()
 	short	len;
 	char	event_buf[100], rbuf[100];
 
-	LogPrintf("Running ER21, invalid DB to wait for event.\n");
+	printf("Running ER21, invalid DB to wait for event.\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_wait_for_event(status, &DB, len, event_buf, rbuf))==0)
-		LogPrintf("BUG: Bad DB to wait for event\n");
+		printf("BUG: Bad DB to wait for event\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_wait_for_event(status, &DB, len, event_buf, rbuf))==0)
-		LogPrintf("BUG: Bad DB to wait for event\n");
+		printf("BUG: Bad DB to wait for event\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
-	LogPrintf("Finished ER21\n");
+	printf("Finished ER21\n");
 }
 $ CC FLAG_CC er21.c
 $ LINK FLAG_LINK er21 

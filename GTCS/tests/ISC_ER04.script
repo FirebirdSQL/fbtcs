@@ -19,24 +19,24 @@ int main()
 	char		err_buf[128];
 	char	*buf = "update x set y = 0";
 
-	LogPrintf("Running ER4, invalid db handle\n");
-	LogPrintf("to isc_execute_immediate\n");
+	printf("Running ER4, invalid db handle\n");
+	printf("to isc_execute_immediate\n");
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	if ((rc=isc_dsql_execute_immediate(status, &DB, &trans,0, buf, 1, 0L))==0)
-		LogPrintf("BUG: execute_immed on invalid DB.\n");
+		printf("BUG: execute_immed on invalid DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
 	DB = NULL;
 	if ((rc=isc_dsql_execute_immediate(status, &DB, &trans,0, buf, 1, 0L))==0)
-		LogPrintf("BUG: execute_immed on Null DB.\n");
+		printf("BUG: execute_immed on Null DB.\n");
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	LogPrintf("Finished ER4\n");
+	printf("Finished ER4\n");
 }
 $ CC FLAG_CC er4.c
 $ LINK FLAG_LINK er4 
