@@ -47,29 +47,9 @@ $ CREATE event_custom.h
 #include <stdio.h>
 #include <errno.h>
 
-/* Platform dependent */
+const int ERRORV	= 1;
 
-/* VMS */
-#ifdef VMS
-#	define fork		vfork
-#	define CLOSE_PIPE		;
-#	define ERRORV		44
-#else
-#	define CLOSE_PIPE		if (close(pipe_fd[*client_count][1]) == -1) \
-					perror("Couldn't close WRITE pipe");
-#	define ERRORV		1
-#endif
-
-/* Standard status */
-#ifdef NODOLLAR
-#	define CHECK_STATUS	if (gds__status[1]) isc_print_status(gds__status);
-#	define gds_status		gds__status
-#	define GDS_VERSION		gds__version
-#else
-#	define CHECK_STATUS	if (gds__status[1]) isc_print_status(gds__status);
-#	define gds_status	  gds__status
-#	define GDS_VERSION	 gds__version
-#endif
+#	define CHECK_STATUS	if (isc_status[1]) isc_print_status(isc_status);
 
 #ifndef WIN_NT
 #define HANDLE long
@@ -184,25 +164,25 @@ int main (int argc, char* argv[])
 			
 /*--------------------------------------------------------------------------*/
 
-// Ready the database and express interest in asynchronous events
+/* Ready the database and express interest in asynchronous events */
 
 	READY DB;
 	CHECK_STATUS;
 	START_TRANSACTION;
 
-// Parse the command line
+/* Parse the command line */
 
 	parse_server_args(argc,argv,&num_events,&verbose);
 
-// Queue events
+/* Queue events */
 
 	length = isc_event_block(&event_buffer,&result_buffer,MAX_CLIENTS,
 			"MOE","CURLY","LARRY","HARPO","GROUCHO","CHICO");
-	isc_que_events(gds_status,&DB,&event_id,length,event_buffer,
+	isc_que_events(isc_status,&DB,&event_id,length,event_buffer,
 			(isc_callback)event_handler,result_buffer);
 	CHECK_STATUS;
 
-// Ignore death-of-a-child signal
+/* Ignore death-of-a-child signal */
 
 #ifndef WIN_NT
 #ifndef DARWIN
@@ -212,11 +192,11 @@ int main (int argc, char* argv[])
 #endif
 #endif
 
-// Initialize the database 
+/* Initialize the database */
 
 	init_server(&start_time,verbose);
 
-// Create a client via FORK() and EXEC() 
+/* Create a client via FORK() and EXEC() */
 
 /*	create_client(&client_count,
 		  pipe_fd,
@@ -226,14 +206,14 @@ int main (int argc, char* argv[])
 
 
 
-// Start LOOP_COUNT at NUM_EVENTS and continue looping until LOOP_COUNT
-// reaches 0.
+/* Start LOOP_COUNT at NUM_EVENTS and continue looping until LOOP_COUNT */
+/* reaches 0.*/
 
 	for ( loop_count = num_events ; loop_count > 0; ) {
 
-// If an event has occurred then reset the event flag, get the event counts,
-// handle any PACKETS in the PIPELINES from the CLIENTS and update the
-// database with the number of events the SERVER has received 
+/* If an event has occurred then reset the event flag, get the event counts, */
+/* handle any PACKETS in the PIPELINES from the CLIENTS and update the */
+/* database with the number of events the SERVER has received */
 
 		if (!event) 
 		{
@@ -252,7 +232,7 @@ int main (int argc, char* argv[])
 	
 			loop_count -= update_server_relation(count_array,verbose);
 			packet_handler(count_array,pipe_fd,verbose);
-			isc_que_events(gds_status,&DB,&event_id,length,event_buffer,
+			isc_que_events(isc_status,&DB,&event_id,length,event_buffer,
 						(isc_callback)event_handler,result_buffer);
 			CHECK_STATUS;
 
@@ -266,16 +246,16 @@ int main (int argc, char* argv[])
 		}
 	}
 
-// Get any remaining packets from the PIPES and update the database
+/* Get any remaining packets from the PIPES and update the database */
 
 	finish_packets(pipe_fd,verbose);
 
 
-// Cancel interest in the events, print the report and return stat = TRUE if
-// the server received the same number of events posted by the clients else
-// return FALSE
+/* Cancel interest in the events, print the report and return stat = TRUE if */
+/* the server received the same number of events posted by the clients else */
+/* return FALSE */
 
-	isc_cancel_events(gds_status,&DB,&event_id);
+	isc_cancel_events(isc_status,&DB,&event_id);
 	CHECK_STATUS;
 
 	stat = report_events(start_time,num_events,verbose);
@@ -469,7 +449,7 @@ void parse_server_args(
 			case 'Z':
 				fprintf(stdout,"\n\tAsynchronous Test Version %s\n\n",
 					VERSION);
-				GDS_VERSION(&DB,NULL,NULL);
+				gds__version(&DB,NULL,NULL);
 				CHECK_STATUS;
 				if (argc == 2)
 				exit(TRUE);
@@ -601,7 +581,7 @@ void create_client(
 	if (pipe(pipe_fd[*client_count]) == -1)
 		perror("pipe");
 
-// Convert the number of events to a string 
+/* Convert the number of events to a string  */
 
 	if (*client_count != 0)
 
@@ -611,7 +591,7 @@ void create_client(
 
 		sprintf(event_str,"%d",client_events+extra_events);
 
-// Fork a child and if successful, EXEC the EVENT_CLIENT for the child
+/* Fork a child and if successful, EXEC the EVENT_CLIENT for the child */
 
 	pid = fork();
 	switch (pid) {
@@ -622,11 +602,12 @@ void create_client(
 					fd_str,event_str,client_name,NULL);
 			 break;
 	}
-	CLOSE_PIPE;
+	if (close(pipe_fd[*client_count][1]) == -1)
+		perror("Couldn't close WRITE pipe");
 
 #endif
 
-//  This was move to work on NT 
+/*  This was move to work on NT */
 
 	if (*client_count != 0)
 	   fprintf(stdout,"\t\tClient %s will post %d events\n\n",
@@ -737,21 +718,21 @@ void packet_handler(
 					CHECK_STATUS;
 					break;
 
-				}	// END IF READ 
+				}	/* END IF READ */
 
-// Else read didn't finish and the error is something other than interrupt
+/* Else read didn't finish and the error is something other than interrupt */
 
 				else if ((n == -1) && (errno != EINTR)) {
 
 					sprintf(err_buf,"error on pipe read");
 					perror(err_buf);
 
-				}	// END ELSE ERROR
+				}	/* END ELSE ERROR */
 
-			}	// END FOR IO_RETRY LOOP
+			}	/* END FOR IO_RETRY LOOP */
 #endif
 
-		}	// END FOR PACKET LOOP
+		}	/* END FOR PACKET LOOP */
 
 		if (verbose) {
 			fprintf(stdout,"\tReceived %d packets from client %s\n\n",
@@ -1132,18 +1113,18 @@ main(int argc,char* argv[])
 	parse_client_args(argc,argv,&client_pipe,&num_events,client_name);
 
 
-// Ready the EVENTS.GDB database
+/* Ready the EVENTS.GDB database */
 
 	READY DB;
 	CHECK_STATUS;
 	START_TRANSACTION;
 
-// Create NUM_EVENTS events
+/* Create NUM_EVENTS events */
 
 	for ( loop_count = 0; loop_count < num_events; loop_count++ )
 	{
 
-// Update the CLIENT_RELATION which fires a trigger to post an event
+/* Update the CLIENT_RELATION which fires a trigger to post an event */
 
 		EXEC SQL
 			UPDATE CLIENT_RELATION
@@ -1152,16 +1133,16 @@ main(int argc,char* argv[])
 		CHECK_STATUS;
 
 
-// Create a PACKET of the form: 	"MOE_100"
+/* Create a PACKET of the form: 	"MOE_100" */
 	
 		strcpy(packet,client_name);
 		sprintf(events,"%d",loop_count+1);
 		strcat(packet,events);
 
-// Continue attempting to write on pipe until not interrupted
+/* Continue attempting to write on pipe until not interrupted */
 
-// Write the PACKET into the pipe for the SERVER to read and insert into the
-// PACKET_RELATION 
+/* Write the PACKET into the pipe for the SERVER to read and insert into the */
+/* PACKET_RELATION */
 
 #ifdef WIN_NT
 
@@ -1269,7 +1250,7 @@ $ LINK FLAG_LINK event_client
 $ GPRE -e event_server.e -d WHERE_GDB:asyn.gdb
 $ CC FLAG_CC event_server.c
 $ LINK FLAG_LINK event_server 
-$ RUN event_server -V
+$ RUN event_server
 $ SLEEP 5
 $ DELETE event_custom.h
 $ DELETE event_server* 
