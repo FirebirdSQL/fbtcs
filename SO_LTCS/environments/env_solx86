@@ -1,0 +1,19 @@
+#
+# Environment symbols definition
+#
+# Dollar Verbs definition
+#
+ve CC=gcc
+ve CXX=g++
+ve DELETE=rm
+ve LINK=gcc
+ve MAKE=gmake
+ve RUN=
+ve RUN_BG=
+ve SH=sh
+#
+# Template symbols 
+#
+te FLAG_CC -c -w -Wall -DSOLARIS %s -I WHERE_FIREBIRD_INCLUDE: -I WHERE_FBTCS_INCLUDE:
+te FLAG_CXX -c -w -Wall -DDOLARIS %s -I WHERE_FIREBIRD_INCLUDE: -I WHERE_FBTCS_INCLUDE:
+te FLAG_LINK %s -lstdc++ -lthread -lsocket -lnsl WHERE_FIREBIRD_LIB:libfbclient.so -o %s

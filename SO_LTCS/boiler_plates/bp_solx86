@@ -1,0 +1,4 @@
+PATH=EXECUTABLE_PATH::.:/bin:/usr/bin:/usr/local/firebird/bin:/usr/local/gcc/bin:$PATH:
+LD_LIBRARY_PATH=/usr/lib:/usr/local/firebird/lib:/usr/local/firebird/intl:$LD_LIBRARY_PATH
+export PATH
+export LD_LIBRARY_PATH
