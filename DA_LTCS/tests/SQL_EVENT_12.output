@@ -1,0 +1,26 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLCODE = -206
+
+Dynamic SQL Error
+-SQL error code = -206
+-Column unknown
+-OLD.PNUMBER
+-At line 4, column 26.
+Database:  WHERE_GDB:events.gdb
+
+PNAME                PNUMBER 
+=============== ============ 
+
+ProductX                   1 
+ProductY                   2 
+ProductZ                   3 
+ProductA                   4 
+
+
+         SSN      PNUMBER        HOURS 
+============ ============ ============ 
+
+           1            1            1 
+           2            2            2 
+           3            3            3 
+

@@ -33,8 +33,13 @@
 #ifdef MINGW
 #include<io.h>
 #endif
+
 #ifndef JRD_IBASE_H
+#ifndef DARWIN
 #include <ibase.h>
+#else
+#include <Firebird/ibase.h>
+#endif
 #endif
 
 #include "tcs.h"

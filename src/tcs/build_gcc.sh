@@ -57,6 +57,13 @@ case `uname -s` in
 		LIBS="-lstdc++"
 		CLIENTLIB="$FIREBIRD/lib/libfbclient.so"
 		;;
+	Darwin)	
+		exeext=
+		ext=darwin
+		CFLAGS="-ggdb -Wall -Wno-parentheses -DDARWIN"
+		LIBS=
+		CLIENTLIB="-framework Firebird"
+		;;
 	MINGW32*)
 		exeext=.exe
 		ext=mingw

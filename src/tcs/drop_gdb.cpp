@@ -23,7 +23,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifndef DARWIN
 #include <ibase.h>
+#else
+#include <Firebird/ibase.h>
+#endif
+
 #ifdef WIN_NT
 #include <windows.h>
 #else

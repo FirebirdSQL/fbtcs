@@ -1,0 +1,58 @@
+Database:  WHERE_GDB:sp1.gdb
+EXECUTE PROCEDURE PROC3; 
+
+A                 C 
+====== ============ 
+P5              400 
+
+SELECT  * FROM PROC3;
+
+A                 C 
+====== ============ 
+
+P5              400 
+
+SELECT MAX(A) FROM PROC3;
+
+MAX    
+====== 
+
+P5     
+
+SELECT C FROM PROC3;
+
+           C 
+============ 
+
+         400 
+
+SELECT  * FROM PROC3 ORDER BY A;
+
+A                 C 
+====== ============ 
+
+P5              400 
+
+SELECT A, AVG(C) FROM PROC3 GROUP BY A HAVING AVG(C) > 350;
+
+A                        AVG 
+====== ===================== 
+
+P5                       400 
+
+SELECT A, AVG(C) FROM PROC3 GROUP BY A ;
+
+A                        AVG 
+====== ===================== 
+
+P5                       400 
+
+SELECT A , C FROM PROC3
+        WHERE C = (SELECT AVG(C) FROM PROC3);
+
+A                 C 
+====== ============ 
+
+P5              400 
+
+exit;

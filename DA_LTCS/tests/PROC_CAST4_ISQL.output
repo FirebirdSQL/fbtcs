@@ -1,0 +1,112 @@
+Database:  WHERE_GDB:sp1.gdb
+set term go;
+create procedure cast1(a double precision) RETURNS (b smallint) as
+begin
+    b = a/2;
+    SUSPEND;
+end
+go
+create procedure cast2(a double precision) RETURNS (b integer) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast3(a double precision) RETURNS (b float) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast4(a double precision) RETURNS (b double precision) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast5(a double precision) RETURNS (b decimal(5,2)) as
+begin
+    b = a * 100;
+    SUSPEND;
+end
+go
+create procedure cast6(a double precision) RETURNS (b date) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast7(a double precision) RETURNS (b numeric(5,2)) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast8(a double precision) RETURNS (b char(10)) as
+begin
+    b = a;
+    SUSPEND;
+end
+go
+create procedure cast9(a double precision) RETURNS (b varchar(10)) as
+ begin
+   b = a;
+   SUSPEND;
+ end
+go
+commit
+go
+set term ; go
+execute procedure cast1 100;
+
+      B 
+======= 
+     50 
+
+execute procedure cast2 100;
+
+           B 
+============ 
+       10000 
+
+execute procedure cast3 100;
+
+             B 
+============== 
+     10000.000 
+
+execute procedure cast4 100;
+
+                      B 
+======================= 
+      10000.00000000000 
+
+execute procedure cast5 100;
+
+           B 
+============ 
+    10000.00 
+
+execute procedure cast6 10.23;
+Statement failed, SQLCODE = -413
+
+conversion error from string "10.23000000000000     "
+execute procedure cast7 100;
+
+           B 
+============ 
+      100.00 
+
+execute procedure cast8 100.98;
+
+B          
+========== 
+100.98000  
+
+execute procedure cast9 100.98;
+
+B          
+========== 
+100.98000  
+
+exit;

@@ -1,0 +1,15 @@
+Database:  WHERE_GDB:sp1.gdb
+Statement failed, SQLCODE = -104
+
+Dynamic SQL Error
+-SQL error code = -104
+-Token unknown - line 3, char 22
+-;
+
+           X 
+============ 
+
+           1 
+           2 
+           3 
+

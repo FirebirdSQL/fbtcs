@@ -1,0 +1,20 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Database:  WHERE_GDB:events1.gdb
+
+PNAME                PNUMBER 
+=============== ============ 
+
+ProductX                   1 
+ProductY                  22 
+ProductZ                   3 
+
+
+         SSN      PNUMBER        HOURS 
+============ ============ ============ 
+
+           1            1            1 
+           2           22            2 
+           3            3            3 
+
+
+foo2 done, event (abc) was posted.

@@ -1,0 +1,4 @@
+PATH=EXECUTABLE_PATH::.:/bin:/usr/bin:$PATH:
+LD_LIBRARY_PATH=/usr/lib:$LD_LIBRARY_PATH
+export PATH
+export LD_LIBRARY_PATH

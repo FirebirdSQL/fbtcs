@@ -187,7 +187,11 @@ main(int argc, char* argv[])
 /* Ignore death-of-a-child signal */
 
 #ifndef WIN_NT
+#ifndef DARWIN
     signal(SIGCLD,SIG_IGN);
+#else
+    signal(SIGCHLD,SIG_IGN);
+#endif
 #endif
 
 /* Initialize the database */

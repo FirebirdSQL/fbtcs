@@ -1,0 +1,66 @@
+Use CONNECT or CREATE DATABASE to specify a database
+create database "WHERE_GDB:events.gdb";
+create table project  ( PNAME   VARCHAR(15) Not Null,
+                        PNUMBER     INTEGER,
+                        PRIZE        DOUBLE PRECISION);
+insert into project values('ProductX',1,22);
+insert into project values('ProductY',2,26);
+commit;
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     DOUBLE PRECISION);
+insert into works_on values (1,1,20);
+commit;
+create table works_on1 (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null);
+insert into works_on1 values (2,2);
+commit;
+set term go;
+create trigger trig01 for project 
+active after update position 0
+as 
+declare variable x int;
+begin
+    insert into works_on values (4, 4, new.prize/old.prize);     
+    post_event 'event1';
+end
+go
+create trigger trig02 for works_on 
+active after insert position 1
+as
+declare variable x int;
+begin
+    insert into works_on1 values (8, 8);
+    post_event 'event2';
+end
+go
+set term ; go
+exit;
+Database:  WHERE_GDB:events.gdb
+
+PNAME                PNUMBER                   PRIZE 
+=============== ============ ======================= 
+
+ProductX                   1       23.10000000000000 
+ProductY                   2       27.30000000000000 
+
+
+         SSN      PNUMBER                   HOURS 
+============ ============ ======================= 
+
+           1            1       20.00000000000000 
+           4            4       1.050000000000000 
+           4            4       1.050000000000000 
+
+
+         SSN      PNUMBER 
+============ ============ 
+
+           2            2 
+           8            8 
+           8            8 
+
+
+foo1 done, event (event1) was posted.
+
+foo2 done, event (event1) was posted.

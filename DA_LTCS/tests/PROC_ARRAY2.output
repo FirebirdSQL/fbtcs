@@ -1,0 +1,34 @@
+Database:  WHERE_GDB:atlas.gdb
+set term go;
+create procedure proc_arr (city_in char(25))
+RETURNS (cit char(25), stat char(5), populatio integer, rain_arra blob) as
+begin
+
+        SELECT city, state, population, rain_array
+        FROM cities
+        WHERE CITY = :city_in
+        INTO :cit, :stat, :populatio, :rain_arra;
+
+SUSPEND;
+end
+go
+set term ; go
+commit;
+select * from  proc_arr ("Sacramento");
+
+CIT                       STAT      POPULATIO         RAIN_ARRA 
+========================= ====== ============ ================= 
+
+Sacramento                CA           275741             81:e8 
+==============================================================================
+RAIN_ARRA:  
+BLOB display set to subtype 1. This BLOB: subtype = 0
+
+==============================================================================
+
+show procedures;
+Procedure Name                    Dependency, Type
+================================= ======================================
+PROC_ARR                          CITIES, Table
+commit;
+quit;

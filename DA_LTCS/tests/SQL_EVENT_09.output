@@ -1,0 +1,26 @@
+Use CONNECT or CREATE DATABASE to specify a database
+create database "WHERE_GDB:events.gdb";
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     DOUBLE PRECISION);
+insert into works_on values (1,1,20);
+commit;
+set term go;
+create procedure proc1 (i int) as 
+begin
+    insert into works_on values (4, 4, :i);
+    post_event 'event1';
+end
+go
+set term ; go
+exit;
+Database:  WHERE_GDB:events.gdb
+
+         SSN      PNUMBER                   HOURS 
+============ ============ ======================= 
+
+           1            1       20.00000000000000 
+           4            4       5.000000000000000 
+
+
+foo done, event (event1) was posted.

@@ -39,7 +39,12 @@
 #endif
 #include "tcs.h"
 #include "tcs_proto.h"
+
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/ibase.h>
+#endif
 
 static int process_command(char* in_line, char* result);
 static int process_defn(char* in_line);

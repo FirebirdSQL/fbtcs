@@ -1,0 +1,21 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Database:  WHERE_GDB:events.gdb
+
+PNAME                PNUMBER                   PRIZE 
+=============== ============ ======================= 
+
+ProductX                   1       23.10000000000000 
+ProductY                   2       27.30000000000000 
+
+
+         SSN      PNUMBER                   HOURS 
+============ ============ ======================= 
+
+           1            1       20.00000000000000 
+           4            4       1.050000000000000 
+           4            4       1.050000000000000 
+
+
+foo1 done, event (event1) was posted.
+
+foo2 done, event (event1) was posted.

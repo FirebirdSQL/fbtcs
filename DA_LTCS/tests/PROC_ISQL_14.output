@@ -1,0 +1,68 @@
+Database:  WHERE_GDB:sp1.gdb
+EXECUTE PROCEDURE PROC16 ;
+
+A                               B 
+==================== ============ 
+Nut                            12 
+
+SELECT * FROM PROC16;
+
+A                               B 
+==================== ============ 
+
+Nut                            12 
+Screw                          14 
+Cam                            12 
+
+SELECT MAX(B) FROM PROC16;
+
+         MAX 
+============ 
+
+          14 
+
+SELECT  B FROM PROC16;
+
+           B 
+============ 
+
+          12 
+          14 
+          12 
+
+SELECT A,B FROM PROC16 ORDER BY A;
+
+A                               B 
+==================== ============ 
+
+Cam                            12 
+Nut                            12 
+Screw                          14 
+
+SELECT A, AVG(B) FROM PROC16 GROUP BY A HAVING AVG(B) > 10;
+
+A                                      AVG 
+==================== ===================== 
+
+Cam                                     12 
+Nut                                     12 
+Screw                                   14 
+
+SELECT A, AVG(B) FROM PROC16 GROUP BY A ;
+
+A                                      AVG 
+==================== ===================== 
+
+Cam                                     12 
+Nut                                     12 
+Screw                                   14 
+
+SELECT A , B FROM PROC16
+        WHERE B > (SELECT AVG(B) FROM PROC16);
+
+A                               B 
+==================== ============ 
+
+Screw                          14 
+
+exit;

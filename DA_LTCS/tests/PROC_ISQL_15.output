@@ -1,0 +1,32 @@
+Database:  WHERE_GDB:sp1.gdb
+set term go;
+create procedure proc_insert (a char(5), b char(20), c char(6), d smallint, e char(15)) as
+begin
+insert into p values (:a, :b, :c, :d, :e);
+SUSPEND; end
+go
+set term ; go
+set echo;
+
+PNO    PNAME                COLOR        WEIGHT CITY            
+====== ==================== ====== ============ =============== 
+
+P1     Nut                  Red              12 London          
+P2     Bolt                 Green            17 Paris           
+P3     Screw                Blue             17 Rome            
+P4     Screw                Red              14 London          
+P5     Cam                  Blue             12 Paris           
+P6     Cog                  Red              19 London          
+
+
+PNO    PNAME                COLOR        WEIGHT CITY            
+====== ==================== ====== ============ =============== 
+
+P1     Nut                  Red              12 London          
+P2     Bolt                 Green            17 Paris           
+P3     Screw                Blue             17 Rome            
+P4     Screw                Red              14 London          
+P5     Cam                  Blue             12 Paris           
+P6     Cog                  Red              19 London          
+P7     Widget               Pink             23 Hoboken         
+

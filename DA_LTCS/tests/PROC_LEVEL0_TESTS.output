@@ -1,0 +1,38 @@
+Use CONNECT or CREATE DATABASE to specify a database
+/* This script checks how long a procedure name can be. */
+set term go;
+create procedure pabcdefghijklmnopqrstuvwxyzabcd  RETURNS (a int) as
+begin
+   a = 10;
+   SUSPEND;
+end
+go
+create procedure qabcdefghijklmnopqrstuvwxyzabcde  RETURNS (a int) as
+begin
+   a = 10;
+   SUSPEND;
+end
+go
+Statement failed, SQLCODE = -607
+
+unsuccessful metadata update
+-Name longer than database column size
+set term ; go
+show proc;
+Procedure Name                    Dependency, Type
+================================= ======================================
+PABCDEFGHIJKLMNOPQRSTUVWXYZABCD   
+execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
+
+           A 
+============ 
+          10 
+
+execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
+Statement failed, SQLCODE = -204
+
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-QABCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+exit;

@@ -1,0 +1,5 @@
+Use CONNECT or CREATE DATABASE to specify a database
+alter table employee
+ drop constraint ref_key;
+alter table department
+ drop constraint dept_key;

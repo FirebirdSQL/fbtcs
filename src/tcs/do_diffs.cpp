@@ -25,14 +25,18 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/ibase.h>
+#endif
 #include "do_diffs.h"
 
 #if (defined WIN_NT)
 #include <io.h>
 #include <stdlib.h>
 #else
-#ifndef LINUX
+#if !defined(LINUX) && !defined(DARWIN)
 extern char	*sys_errlist[];
 extern int	sys_nerr;
 #endif

@@ -1,0 +1,14 @@
+Use CONNECT or CREATE DATABASE to specify a database
+alter index ref_key inactive;
+Statement failed, SQLCODE = -607
+
+unsuccessful metadata update
+-MODIFY RDB$INDICESS failed
+-action cancelled by trigger (3) to preserve data integrity
+-Cannot deactivate primary index
+commit;
+insert into employee values (11, 'e11', 1);
+insert into employee values (12, 'e12', 234);
+Statement failed, SQLCODE = -530
+
+violation of FOREIGN KEY constraint "REF_KEY" on table "EMPLOYEE"

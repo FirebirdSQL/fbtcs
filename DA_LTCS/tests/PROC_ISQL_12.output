@@ -1,0 +1,56 @@
+Database:  WHERE_GDB:sp1.gdb
+EXECUTE PROCEDURE PROC14;
+
+A                                B 
+===================== ============ 
+Bolt                            17 
+
+SELECT  * FROM PROC14;
+
+A                                B 
+===================== ============ 
+
+Bolt                            17 
+Cog                             19 
+
+SELECT MAX(B) FROM PROC14;
+
+         MAX 
+============ 
+
+          19 
+
+SELECT  B FROM PROC14;
+
+           B 
+============ 
+
+          17 
+          19 
+
+SELECT A,B FROM PROC14 ORDER BY B;
+
+A                                B 
+===================== ============ 
+
+Bolt                            17 
+Cog                             19 
+
+SELECT A, AVG(B) FROM PROC14 GROUP BY A HAVING AVG(B) > 350;
+SELECT A, AVG(B) FROM PROC14 GROUP BY A ;
+
+A                                       AVG 
+===================== ===================== 
+
+Bolt                                     17 
+Cog                                      19 
+
+SELECT A , B FROM PROC14
+        WHERE B > (SELECT AVG(B) FROM PROC14);
+
+A                                B 
+===================== ============ 
+
+Cog                             19 
+
+exit;

@@ -1,0 +1,8 @@
+Use CONNECT or CREATE DATABASE to specify a database
+drop index dept_key;
+Statement failed, SQLCODE = -607
+
+unsuccessful metadata update
+-ERASE RDB$INDICES failed
+-action cancelled by trigger (1) to preserve data integrity
+-Cannot delete index used by an Integrity Constraint

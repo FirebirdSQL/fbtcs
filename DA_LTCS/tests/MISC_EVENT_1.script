@@ -1,0 +1,4 @@
+$CREATE comment.txt
+This test locks in linux, so it is replaced with an empty one
+
+$DELETE comment.txt

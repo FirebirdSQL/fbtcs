@@ -36,7 +36,11 @@
 #include<io.h>
 #include<process.h>
 #endif
+#ifndef DARWIN
 #include <ibase.h>
+#else
+#include <Firebird/ibase.h>
+#endif
 #include "tcs.h"
 #include "do_diffs_proto.h"
 #include "trns_proto.h"

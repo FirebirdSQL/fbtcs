@@ -1,0 +1,19 @@
+#
+# Environment symbols definition
+#
+# Dollar Verbs definition
+#
+ve CC=gcc
+ve CXX=g++
+ve DELETE=rm
+ve LINK=g++
+ve MAKE=make
+ve RUN=
+ve RUN_BG=
+ve SH=sh
+#
+# Template symbols 
+#
+te FLAG_CC -c -w -Wall -DDARWIN %s -I WHERE_FBTCS_INCLUDE:
+te FLAG_CXX -c -w -Wall -DDARWIN %s -I WHERE_FBTCS_INCLUDE:
+te FLAG_LINK %s -framework Firebird -o %s
