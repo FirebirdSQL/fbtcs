@@ -52,10 +52,12 @@ int main(int argc, char* argv[]){
 	if (isc_service_attach (status, 0, svc_name, &svc_handle, spblen, spb_buff))
 	{
 		fprintf(stderr, "error connecting to service manager\n");
+		fflush(stderr);
 		isc_print_status (status);
 		exit (1);
 	}
 	printf("connected to service manager OK\n");
+	fflush(stdout);
 
 	// Set up the spb for starting the backup service 
 
@@ -84,13 +86,15 @@ int main(int argc, char* argv[]){
 		ISC_STATUS* vector = status;
 		fprintf(stderr, "Unable to start service:\n");
 		while(isc_interprete (respbuf, &vector))
-		fprintf(stderr, "ERROR: %s\n", respbuf);
+			fprintf(stderr, "ERROR: %s\n", respbuf);
 		fprintf(stderr, "End of errors\n");
+		fflush(stderr);
 		isc_service_detach (status, &svc_handle);
 		exit(1);
 	}
 
 	printf("service started OK\n");
+	fflush(stdout);
 	// Seeing the results
 
 	do {
@@ -104,7 +108,8 @@ int main(int argc, char* argv[]){
 		{
 			isc_print_status(status);
 			isc_service_detach(status, &svc_handle);
-			fprintf(stderr, "wrong response\n");
+			printf("wrong response\n");
+			fflush(stdout);
 			exit(1);
 		}
 //		printf("reading response\n");
@@ -125,6 +130,7 @@ int main(int argc, char* argv[]){
 					printf ("Format error ... <%d>\n", *p);
 				else
 					printf ("Output completed\n");
+				fflush(stdout);
 				break;
 			}
 
@@ -135,6 +141,7 @@ int main(int argc, char* argv[]){
 			for (chTmp = 0; chTmp < len; chTmp++)
 				printf("%c",p[chTmp]);
 			printf("\n");
+			fflush(stdout);
 
 			// Since we only requested one item this time, we should be at the end of 
 			// the buffer terminated by isc_info_end after moving the pointer past the
@@ -144,6 +151,7 @@ int main(int argc, char* argv[]){
 			if (*p != isc_info_truncated && *p != isc_info_end)
 			{
 				printf("Format error ... encountered <%d>\n", *p);
+				fflush(stdout);
 				break;
 			}
 		}
@@ -155,7 +163,6 @@ int main(int argc, char* argv[]){
 
 $ CXX FLAG_CXX svc_api_backup.cpp
 $ LINK FLAG_LINK svc_api_backup
-$ RUN svc_api_backup > svc_api_backup.res
-$ TYPE svc_api_backup.res
+$ RUN svc_api_backup
 $ DROP WHERE_GDB:employee.gdb
 $ DELETE svc_api_backup.*

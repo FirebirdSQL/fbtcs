@@ -150,7 +150,6 @@ int main(int argc, char* argv[]){
 
 $ CXX FLAG_CXX svc_api_check_db.cpp
 $ LINK FLAG_LINK svc_api_check_db
-$ RUN svc_api_check_db > svc_api_check_db.res
-$ TYPE svc_api_check_db.res
+$ RUN svc_api_check_db
 $ DROP WHERE_GDB:employee.gdb
 $ DELETE svc_api_check_db.*

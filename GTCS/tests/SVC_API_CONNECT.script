@@ -52,6 +52,5 @@ int main(int argc, char* argv[]){
 }
 $ CXX FLAG_CXX svc_api_connect.cpp
 $ LINK FLAG_LINK svc_api_connect
-$ RUN svc_api_connect > svc_api_connect.res
-$ TYPE svc_api_connect.res
+$ RUN svc_api_connect
 $ DELETE svc_api_connect.*
