@@ -22,45 +22,45 @@ char db_name[128];
 */
 static  char    db_items[]=
         {
-/*          gds__info_reads,
-          gds__info_writes,
-          gds__info_fetches,
-          gds__info_marks,
-          gds__info_page_size,
-          gds__info_num_buffers,
-          gds__info_num_wal_buffers,
-          gds__info_wal_buffer_size,
-          gds__info_wal_ckpt_length,
-          gds__info_wal_cur_ckpt_interval,
-          gds__info_wal_grpc_wait_usecs,
-          gds__info_wal_num_io,
-          gds__info_wal_avg_io_size,
-          gds__info_wal_num_commits,
-          gds__info_wal_avg_grpc_size,
-          gds__info_current_memory,
-          gds__info_max_memory,
-          gds__info_attachment_id,
-          gds__info_ods_version,
-          gds__info_ods_minor_version,
-          gds__info_allocation,
-          gds__info_sweep_interval,
-          gds__info_read_seq_count,
-          gds__info_read_idx_count,
-          gds__info_update_count,
-          gds__info_insert_count,
-          gds__info_delete_count,
-          gds__info_backout_count,
-          gds__info_purge_count,
-          gds__info_expunge_count,
-          gds__info_implementation,
-          gds__info_base_level,
-          gds__info_version,
+/*          isc_info_reads,
+          isc_info_writes,
+          isc_info_fetches,
+          isc_info_marks,
+          isc_info_page_size,
+          isc_info_num_buffers,
+          isc_info_num_wal_buffers,
+          isc_info_wal_buffer_size,
+          isc_info_wal_ckpt_length,
+          isc_info_wal_cur_ckpt_interval,
+          isc_info_wal_grpc_wait_usecs,
+          isc_info_wal_num_io,
+          isc_info_wal_avg_io_size,
+          isc_info_wal_num_commits,
+          isc_info_wal_avg_grpc_size,
+          isc_info_current_memory,
+          isc_info_max_memory,
+          isc_info_attachment_id,
+          isc_info_ods_version,
+          isc_info_ods_minor_version,
+          isc_info_allocation,
+          isc_info_sweep_interval,
+          isc_info_read_seq_count,
+          isc_info_read_idx_count,
+          isc_info_update_count,
+          isc_info_insert_count,
+          isc_info_delete_count,
+          isc_info_backout_count,
+          isc_info_purge_count,
+          isc_info_expunge_count,
+          isc_info_implementation,
+          isc_info_base_level,
+          isc_info_version,
 */
-          gds__info_no_reserve,  
+          isc_info_no_reserve,  
 /*
-          gds__info_limbo,
+          isc_info_limbo,
 */
-          gds__info_end
+          isc_info_end
         }; 
  
 static show_dbb_parameters (dbh)
@@ -79,7 +79,7 @@ if (gds__database_info (stsvec, &dbh, sizeof (db_items), db_items,
 	isc_print_status( stsvec );
 
 
-for (d = buffer; *d != gds__info_end; )
+for (d = buffer; *d != isc_info_end; )
     {
     value_out = 0;
     item = *d++;
@@ -87,182 +87,182 @@ for (d = buffer; *d != gds__info_end; )
     d += 2;
     switch (item)
 	{
-        case gds__info_end:
+        case isc_info_end:
             break;
 
-        case gds__info_reads:
+        case isc_info_reads:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of reads = %d \n", value_out);
             break;
  
-        case gds__info_writes:
+        case isc_info_writes:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of writes = %d \n", value_out);
             break;
  
-        case gds__info_fetches:
+        case isc_info_fetches:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of fetchs = %d \n", value_out);
             break;
  
-        case gds__info_marks:
+        case isc_info_marks:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of marks = %d \n", value_out);
             break;
  
-        case gds__info_page_size:
+        case isc_info_page_size:
 	    value_out = isc_vax_integer (d, length);
             printf("Pages size = %d \n", value_out);
             break;
  
-        case gds__info_num_buffers: 
+        case isc_info_num_buffers: 
 	    value_out = isc_vax_integer (d, length);
             printf("Number of buffers = %d\n", value_out);
             break;
  
-        case gds__info_num_wal_buffers:  
+        case isc_info_num_wal_buffers:  
 	    value_out = isc_vax_integer (d, length);
             printf("Number of wal buffers = %d \n", value_out);
             break;
 
-        case gds__info_wal_buffer_size:  
+        case isc_info_wal_buffer_size:  
 	    value_out = isc_vax_integer (d, length);
             printf("Wal buffer size = %d \n", value_out);
             break;
 
-        case gds__info_wal_ckpt_length:
+        case isc_info_wal_ckpt_length:
 	    value_out = isc_vax_integer (d, length);
             printf("Max check point interval = %d \n", value_out);
             break;
 
-        case gds__info_wal_cur_ckpt_interval:
+        case isc_info_wal_cur_ckpt_interval:
 	    value_out = isc_vax_integer (d, length);
             printf("Current check point interval = %d \n", value_out);
             break;
 
-        case gds__info_wal_grpc_wait_usecs:
+        case isc_info_wal_grpc_wait_usecs:
 	    value_out = isc_vax_integer (d, length);
             printf("Wal group commit wait = %d \n", value_out);
             break;
 
-        case gds__info_wal_num_io:
+        case isc_info_wal_num_io:
 	    value_out = isc_vax_integer (d, length);
             printf("Wal number of i\/o = %d \n", value_out);
             break;
 
-        case gds__info_wal_avg_io_size:
+        case isc_info_wal_avg_io_size:
 	    value_out = isc_vax_integer (d, length);
             printf("Wal average i\/o size = %d \n", value_out);
             break;
 
-        case gds__info_wal_num_commits:   
+        case isc_info_wal_num_commits:   
 	    value_out = isc_vax_integer (d, length);
             printf("Wal number of commits = %d \n", value_out);
             break;
 
-        case gds__info_wal_avg_grpc_size: 
+        case isc_info_wal_avg_grpc_size: 
 	    value_out = isc_vax_integer (d, length);
             printf("Wal average group commit size = %d \n", value_out);
             break;
 
-        case gds__info_current_memory:
+        case isc_info_current_memory:
 	    value_out = isc_vax_integer (d, length);
             printf("Current memory size = %d \n", value_out);
             break;
  
-        case gds__info_max_memory:
+        case isc_info_max_memory:
 	    value_out = isc_vax_integer (d, length);
             printf("Max memory size = %d \n", value_out);
             break;
  
-        case gds__info_attachment_id:
+        case isc_info_attachment_id:
 	    value_out = isc_vax_integer (d, length);
             printf("DB attachment id = %d \n", value_out);
             break;
  
-        case gds__info_ods_version:
+        case isc_info_ods_version:
 	    value_out = isc_vax_integer (d, length);
             printf("ODS version = %d \n", value_out);
             break;
  
-        case gds__info_ods_minor_version:
+        case isc_info_ods_minor_version:
 	    value_out = isc_vax_integer (d, length);
             printf("Minor ODS version = %d \n", value_out);
             break;
  
-        case gds__info_allocation:
+        case isc_info_allocation:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of DB pages allocated = %d \n", value_out);
             break;
  
-        case gds__info_sweep_interval:
+        case isc_info_sweep_interval:
 	    value_out = isc_vax_integer (d, length);
             printf("Sweep interval = %d \n", value_out);
             break;
  
-        case gds__info_read_seq_count:
+        case isc_info_read_seq_count:
 	    value_out = isc_vax_integer (d, length);
             printf("Reads sequential count = %d \n", value_out);
             break;
  
-        case gds__info_read_idx_count:
+        case isc_info_read_idx_count:
 	    value_out = isc_vax_integer (d, length);
             printf("Reads via index count = %d \n", value_out);
             break;
  
-        case gds__info_update_count:
+        case isc_info_update_count:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of updates = %d \n", value_out);
             break;
  
-        case gds__info_insert_count:
+        case isc_info_insert_count:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of inserts = %d \n", value_out);
             break;
  
-        case gds__info_delete_count:
+        case isc_info_delete_count:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of deletes = %d \n", value_out);
             break;
  
-        case gds__info_backout_count:
+        case isc_info_backout_count:
 	    value_out = isc_vax_integer (d, length);
             printf("Backout count = %d \n", value_out);
             break;
  
-        case gds__info_purge_count:
+        case isc_info_purge_count:
 	    value_out = isc_vax_integer (d, length);
             printf("Purge count = %d \n", value_out);
             break;
  
-        case gds__info_expunge_count:
+        case isc_info_expunge_count:
 	    value_out = isc_vax_integer (d, length);
             printf("Expunge count = %d \n", value_out);
             break;
  
-        case gds__info_implementation:
+        case isc_info_implementation:
 	    value_out = isc_vax_integer (d, length);
             printf("Implementation = %d \n", value_out);
             break;
  
-        case gds__info_base_level:
+        case isc_info_base_level:
 	    value_out = isc_vax_integer (d, length);
             printf("Base level = %d \n", value_out);
             break;
  
-        case gds__info_version:
+        case isc_info_version:
 	    value_out = isc_vax_integer (d, length);
             printf("Info version number = %d \n", value_out);
             break;
 
-        case gds__info_no_reserve:
+        case isc_info_no_reserve:
             value_out = isc_vax_integer (d, length);
             printf("No reserve = %d \n", value_out  );
             if ( value_out != 1 )
             printf("Currently this always returns zero \n");
             break;
  
-        case gds__info_limbo:
+        case isc_info_limbo:
 	    value_out = isc_vax_integer (d, length);
             printf("Transaction in limbo = %d \n", value_out);
             break;

@@ -18,7 +18,7 @@ int argc;
 char *argv[];
 {
 	XSQLDA *insqlda, *outsqlda;
-	GDS__QUAD to_blob;
+	GDS_QUAD to_blob;
 	char buffer[80];
 	char user_status[20];
 	char  segment[80];
@@ -117,7 +117,7 @@ char *argv[];
 		{
 			blobret = isc_get_segment(user_status, &to_blob_handle, &length, 
 										sizeof(buffer), buffer); 
-			if (blobret == gds__segstr_eof)
+			if (blobret == isc_segstr_eof)
 			{
 				isc_close_blob (user_status, &to_blob_handle);
 				break;
