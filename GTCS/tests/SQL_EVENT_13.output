@@ -2,17 +2,17 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 ================================================================================
 
-		Client MOE will post 335 events
+		Client MOE will post 20 events
 
-		Client CURLY will post 333 events
+		Client CURLY will post 16 events
 
-		Client LARRY will post 333 events
+		Client LARRY will post 16 events
 
-		Client HARPO will post 333 events
+		Client HARPO will post 16 events
 
-		Client GROUCHO will post 333 events
+		Client GROUCHO will post 16 events
 
-		Client CHICO will post 333 events
+		Client CHICO will post 16 events
 
 ================================================================================
 
@@ -20,52 +20,52 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 
 
-	Client MOE created 335 events
+	Client MOE created 20 events
 
-	Client MOE sent 335 packets to the server
+	Client MOE sent 20 packets to the server
 
-	The server received 335 packets from client MOE
-
-
-	Client CURLY created 333 events
-
-	Client CURLY sent 333 packets to the server
-
-	The server received 333 packets from client CURLY
+	The server received 20 packets from client MOE
 
 
-	Client LARRY created 333 events
+	Client CURLY created 16 events
 
-	Client LARRY sent 333 packets to the server
+	Client CURLY sent 16 packets to the server
 
-	The server received 333 packets from client LARRY
-
-
-	Client HARPO created 333 events
-
-	Client HARPO sent 333 packets to the server
-
-	The server received 333 packets from client HARPO
+	The server received 16 packets from client CURLY
 
 
-	Client GROUCHO created 333 events
+	Client LARRY created 16 events
 
-	Client GROUCHO sent 333 packets to the server
+	Client LARRY sent 16 packets to the server
 
-	The server received 333 packets from client GROUCHO
-
-
-	Client CHICO created 333 events
-
-	Client CHICO sent 333 packets to the server
-
-	The server received 333 packets from client CHICO
+	The server received 16 packets from client LARRY
 
 
-	All clients posted a total of 2000 events
+	Client HARPO created 16 events
+
+	Client HARPO sent 16 packets to the server
+
+	The server received 16 packets from client HARPO
 
 
-	Server received a total of 2000 events
+	Client GROUCHO created 16 events
+
+	Client GROUCHO sent 16 packets to the server
+
+	The server received 16 packets from client GROUCHO
+
+
+	Client CHICO created 16 events
+
+	Client CHICO sent 16 packets to the server
+
+	The server received 16 packets from client CHICO
+
+
+	All clients posted a total of 100 events
+
+
+	Server received a total of 100 events
 
 ================================================================================
 
