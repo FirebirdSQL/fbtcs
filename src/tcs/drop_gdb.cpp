@@ -156,7 +156,7 @@ int main(int argc, char **argv, char **envp)
 
 		/* extract the version into global variables */
 		version = 0;
-		isc_version(&db_handle, get_version, 0);
+		isc_version(&db_handle,( void(*)()) get_version, 0);
 		if (version == 0) {
 			printf("ERROR: no version information for '%s'\n", arDatabases[iCntr]);
 			fflush(stdout);

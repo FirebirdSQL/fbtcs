@@ -78,6 +78,21 @@ case `uname -s` in
 		LIBS="-lmsvcrt -lws2_32"
 		CLIENTLIB="$FIREBIRD/lib/fbclient_ms.lib"
 		;;
+	Solaris*)	
+		exeext=
+		ext=Solaris
+		CFLAGS="-ggdb -Wall -Wno-parentheses -DSOLARIS"
+		LIBS="-lstdc++ -lthread -lsocket -lnsl"
+		CLIENTLIB="$FIREBIRD/lib/libfbclient.so"
+		;;
+	SunOS*)	
+		exeext=
+		ext=solx86
+		CFLAGS="-ggdb -Wall -Wno-parentheses -DSOLARIS"
+		LIBS="-lstdc++ -lthread -lsocket -lnsl"
+		CLIENTLIB="$FIREBIRD/lib/libfbclient.so"
+		;;
+
 #  *)       exit 1;;
 esac
 
