@@ -748,7 +748,7 @@ static int set_config(char *rfn)
 	}
 
 	printf("Reading configuration file \"%s\"...\n", TCS_CONFIG);
-	buffer = read_file(rfp);
+	buffer = read_file(rfp, true);
 	// apply handle_sys_env
 	buffer = handle_sys_env(buffer);
 	// Get lines
@@ -979,7 +979,7 @@ static int set_env(char *name)
 
 	FILE* pFile = fopen(lEnvFile,"rb");
 	if (pFile != NULL){
-		buffer = read_file(pFile);
+		buffer = read_file(pFile, true);
 		buffer = handle_where_gdb(buffer);
 		EXEC_process_env(buffer,name);
 		free(buffer);
@@ -993,7 +993,7 @@ static int set_env(char *name)
 	return false;
 }
 
-char* read_file(FILE* pFile){
+char* read_file(FILE* pFile, bool addnl){
 	/**************************************
 	 *
 	 *	r e a d _ f i l e
@@ -1010,12 +1010,19 @@ char* read_file(FILE* pFile){
 	lSize = ftell(pFile);
 	rewind(pFile);
 
-	char* buffer = (char*) malloc (lSize+1);
+	int bufsiz = lSize+1;
+	if (addnl)
+		bufsiz++;
+
+	char* buffer = (char*) malloc(bufsiz);
 	if (buffer == NULL)
 		exit (2);
 
-	fread (buffer,1,lSize,pFile);
-	buffer[lSize] = '\0';
+	fread(buffer,1,lSize,pFile);
+	if (addnl)
+		buffer[bufsiz-2] = '\n';
+	buffer[bufsiz-1] = '\0';
+
 	fclose(pFile);
 	//
 	// Replace WIN_NT \r
@@ -1023,7 +1030,7 @@ char* read_file(FILE* pFile){
 	int offset = 0;
 	int pos = 0;
 
-	while (pos < lSize - offset)
+	while (pos < (bufsiz-1) - offset)
 	{
 		if (buffer[pos+offset] == 0x0D)
 			offset++;
@@ -1078,7 +1085,7 @@ static int test_one(char *string)
 	char * buffer;
 	pFile = fopen(testFileName,"rb");
 	if (pFile != NULL){
-		buffer = read_file(pFile);
+		buffer = read_file(pFile, true);
 		buffer = handle_where_gdb(buffer);
 
 		result = EXEC_test(test_name+1, buffer, &file_count, boilerplate_name);
@@ -1096,7 +1103,7 @@ static int test_one(char *string)
 		char *buffer;
 		pFile = fopen(testFileName,"rb");
 		if (pFile!=NULL){
-			buffer = read_file(pFile);
+			buffer = read_file(pFile, true);
 			buffer = handle_where_gdb(buffer);
 			result = EXEC_test(test_name+1, buffer, &file_count, boilerplate_name);
 			free (buffer);

@@ -29,7 +29,7 @@ $ CREATE event_custom.h
 #define TRUE			1
 #define FALSE			0
 
-#define DEFAULT_NUM_EVENTS	2000
+#define DEFAULT_NUM_EVENTS	100
 #define VERSION			"V1.2"
 #define MAX_CLIENTS		6
 #define IO_RETRY		20
@@ -44,38 +44,29 @@ $ CREATE event_custom.h
 
 /* Platform dependent */
 
-/* VMS */
-#ifdef VMS
-#    define fork		vfork
-#    define CLOSE_PIPE		;
-#    define ERROR		44
-#else
-#    define CLOSE_PIPE		if (close(pipe_fd[*client_count][1]) == -1) \
-				    perror("Couldn't close WRITE pipe");
-#    define ERROR		1
-#endif
+const int ERRORV = 1;
 
 #define CHECK_STATUS    if (isc_status[1]) isc_print_status(isc_status);
 
 /* Function prototypes */
 
-extern void init_server(char **,short);
+void init_server(char **,short);
 
-extern void parse_server_args(int,char *[],int *,short *);
+void parse_server_args(int,char *[],int *,short *);
 
-extern void create_client(int *,long [MAX_CLIENTS][2], int, char[]);
+void create_client(int *,long [MAX_CLIENTS][2], int, char[]);
 
-extern void packet_handler(long[],long [MAX_CLIENTS][2], short);
+void packet_handler(long[],long [MAX_CLIENTS][2], short);
 
-extern int  update_server_relation(long[], short);
+int  update_server_relation(long[], short);
 
-extern void event_handler(char *,short,char *);
+void event_handler(char *,short,char *);
 
-extern void finish_packets(long [MAX_CLIENTS][2],short);
+void finish_packets(long [MAX_CLIENTS][2],short);
 
-extern int  report_events(char *,int,short);
+int  report_events(char *,int,short);
 
-extern void parse_client_args(int,char *[],int *,int *,char *);
+void parse_client_args(int,char *[],int *,int *,char *);
 
 /* Macros */
 
@@ -622,7 +613,8 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 			 break;
 	}
 
-	CLOSE_PIPE;
+	if (close(pipe_fd[*client_count][1]) == -1)
+		perror("Couldn't close WRITE pipe");
 
 #endif
 
@@ -986,7 +978,7 @@ int report_events(char* start_time, int num_events, short verbose)
 	fprintf(stdout,"\n\tThe server received %d packets from client %s\n",
 				packet_count,client_names[client_num]);
 	if (packet_count != client_event_count)
-	    stat = ERROR;
+	    stat = ERRORV;
 
 	client_total_events = client_total_events + client_event_count;
     }
@@ -1035,7 +1027,7 @@ int report_events(char* start_time, int num_events, short verbose)
 							server_event_count);
 
     if (server_event_count != client_total_events)
-	stat = ERROR;
+	stat = ERRORV;
 
 /* Print the report footer */
 
@@ -1456,8 +1448,8 @@ main(int argc, char* argv[])
 #endif
   exit(0);
 }
-$ CC FLAG_CC delay
-$ LINK FLAG_LINK delay 
+# CC FLAG_CC delay.c
+# LINK FLAG_LINK delay
 $ GPRE -e -n -m event_client.e 
 $ CC FLAG_CC event_client.c
 $ LINK FLAG_LINK event_client 
@@ -1468,6 +1460,6 @@ $ RUN event_server
 $ DELETE event_custom.h
 $ DELETE event_server* 
 $ DELETE event_client* 
-$ RUN delay 60
+$ SLEEP 10
 $ DROP WHERE_GDB:asyn_evnts.gdb
 $ DELETE delay* doc

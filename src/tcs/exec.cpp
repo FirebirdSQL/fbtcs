@@ -252,7 +252,7 @@ TEST_RESULT EXEC_test(char *test_name,
 
 	if (pFile != NULL){
 		count++;
-		buffer = read_file(pFile);
+		buffer = read_file(pFile, false);
 		// Process output with handle_where_gdb
 		buffer = handle_where_gdb(buffer);
 		//
@@ -521,7 +521,7 @@ static int run_text(char *script,
 	char *buffer;
 
 	if (pFile != NULL){
-		buffer = read_file(pFile);
+		buffer = read_file(pFile, true);
 		buffer = handle_where_gdb(buffer);
 		if (fprintf(script_file,"%s\n",buffer) == EOF) {
 			print_error("IO error on write to \"%s\"\n", script_file_name,0,0);

@@ -17,11 +17,6 @@ char *event_names [] = { "DG", "DEC", "HP", "IBM", "SUN" };
 
 #include <stdio.h>
 
-#ifdef VMS
-#include <processes.h>
-#define fork vfork
-#endif
-
 #define TRUE 1
 #define FALSE 0
 #define ERROR -1
@@ -258,11 +253,12 @@ exit;
 $ISQL -i input.sql
 $GPRE -e -n post_events
 $GPRE -e -n event_mgr
-$CC FLAG_CC post_events
-$CC FLAG_CC event_mgr
+$CC FLAG_CC post_events.c
+$CC FLAG_CC event_mgr.c
 $LINK FLAG_LINK post_events 
 $LINK FLAG_LINK event_mgr 
 $RUN event_mgr
+$SLEEP 5
 $DELETE event_mgr* post_events* input.sql stocks.gdl stocks.gdb
 
 
