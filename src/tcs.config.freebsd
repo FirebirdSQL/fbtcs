@@ -1,0 +1,32 @@
+#
+# This is tcs configuration file. 
+# It contains symbol definitions which could be used in the test scripts and outputs
+# and parameters for the tcs run.
+#
+# To reference environment variables use the pattern $(TCS:
+#
+# Symbols section (it must be before the parameters section)
+#
+ss WHERE_GDB=localhost:$(TCS:FBTCS)/temp/
+ss WHERE_GDB_EXTERNAL=$(TCS:FBTCS)/temp/
+ss WHERE_EXAMPLES=$(TCS:FIREBIRD)/UDF/
+ss WHERE_FILES=$(TCS:FBTCS)/test-files/
+ss WHERE_FIREBIRD_INCLUDE=$(TCS:FIREBIRD)/include/
+ss WHERE_FIREBIRD_LIB=$(TCS:FIREBIRD)/lib/
+ss WHERE_FBTCS_INCLUDE=$(TCS:FBTCS)/src/tcs/
+ss WHERE_SERVICE_MGR=localhost:service_mgr
+ss EXTERNAL_DAT=external.dat
+#
+# Parameters section
+#
+# sl platform dependent tests directory (LTCS)
+# sg platform independent tests directory (GTCS)
+# so output directory
+# sb boilerplate
+# se environment
+#
+sl $(TCS:FBTCS)/LI_LTCS
+sg $(TCS:FBTCS)/GTCS
+so $(TCS:FBTCS)/output
+sb bp_freebsd
+se env_freebsd
