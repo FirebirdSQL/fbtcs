@@ -40,6 +40,3 @@ Use CONNECT or CREATE DATABASE to specify a database
 --------------------------------------------------------------
    INSERTING NEW DATA--using host variables from stored p
 
-
-Error: -------------------------------------------------------
-DATABASE ERROR, SQLCODE = -802 

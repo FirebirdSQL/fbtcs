@@ -1,12 +1,12 @@
 Test:
  select distinct x.s1,x.s2,y.s1,y.s2 from (st5 x left join st1 y on x.s2 = y.s2)
 --------------------------------------------------------------------------------
+    0      0      0      0
+    0    103      0    103
    -5   -105      0      0
     1    101      1    101
     2    102      2    102
     4      0      0      0
-    0    103      0    103
-    0      0      0      0
 
 
 * Total Records Listed >>> 6
@@ -14,22 +14,22 @@ Test:
   S1     S2     S1     S2
 ====== ====== ====== ======
 
+                     
+          103           103
     -5   -105        
      1    101      1    101
      2    102      2    102
      4               
-          103           103
-                     
 
 Use CONNECT or CREATE DATABASE to specify a database
 
      S1      S2      S1      S2 
 ======= ======= ======= ======= 
 
+ <null>  <null>  <null>  <null> 
+ <null>     103  <null>     103 
      -5    -105  <null>  <null> 
       1     101       1     101 
       2     102       2     102 
       4  <null>  <null>  <null> 
- <null>     103  <null>     103 
- <null>  <null>  <null>  <null> 
 

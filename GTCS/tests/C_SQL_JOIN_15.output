@@ -1,11 +1,11 @@
 Test:
  select sum(x.s1), x.s1 from (st5 x left join st2 y on x.s1 = y.s1) group by x.s1
 --------------------------------------------------------------------------------
+0     0
 -5     -5
 2     1
 4     2
 4     4
-0     0
 
 
 * Total Records Listed >>> 5
@@ -13,20 +13,20 @@ Test:
    TOTAL      S1
 =========== ======
 
+            
          -5     -5
           2      1
           4      2
           4      4
-            
 
 Use CONNECT or CREATE DATABASE to specify a database
 
          SUM      S1 
 ============ ======= 
 
+      <null>  <null> 
           -5      -5 
            2       1 
            4       2 
            4       4 
-      <null>  <null> 
 

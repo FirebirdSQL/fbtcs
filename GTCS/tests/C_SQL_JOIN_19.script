@@ -1,3 +1,4 @@
+23-Apr-04 Changed the order of nulls according to SQL standard
 
 $ GBAK -r WHERE_FILES:sh_join.gbk WHERE_GDB:sh_join_19.gdb
 $ CREATE join019.e

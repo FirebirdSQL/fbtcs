@@ -15,6 +15,7 @@ History:
 11/16/94:    doing local init on NT due to translit error.
 Aug. 30 95:  failing w/db err 4.0B
 25-Aug-98:   vector cleanup:  delete testcmt2 and b1test* instead of *.exe
+23-Apr-04:   Changed NONE charset
 
 Series/Test Set Description:
 The next four tests in this series test for the -charset option 
