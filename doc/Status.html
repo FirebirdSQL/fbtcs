@@ -14,6 +14,8 @@
 <h3>1.-General issues</h3>
 <p>Sometimes FB fails to drop a database due to object in use. The tests was modified in the 
 first fbtcs version to avoid cascade failures, to achieve that database name reuse should be avoided.</p>
+<p>To avoid the drop database failure, the drop_gdb program try several times to drop the database until it fails.</p>
+
 <h3>2.- Series status</h3>
 
 <blockquote>
@@ -179,9 +181,7 @@ first fbtcs version to avoid cascade failures, to achieve that database name reu
 <td>PROC_CAST9_ISQL<br>
 - Different error<br>
 PROC_DATE3<br>
-- Don't allow some values seems to be a bug.<br>
-PROC_POWER<br>
-- Difference in output<br>
+- Pending.<br>
 PROC_EMPTY<br>
 - Don't throw error on empty procedure.
 </td>
@@ -215,4 +215,16 @@ SVC_API_RESTORE<br> (exception catch fails in burp.cpp:1166)-</td>
 </blockquote>
 
 </ul>
+
+<h3>3.- Tests with platform dependent results.</h3>
+
+<p>There are still 5 tests with platform dependent results<p>
+<ul>
+<li>IDML_C_CHARSET_01</li>
+<li>IDML_C_CHARSET_02</li>
+<li>IDML_C_SUBQ_02</li>
+<li>IDML_C_SUBQ_04</li>
+<li>PROC_POWER</li>
+</ul>
+
 
