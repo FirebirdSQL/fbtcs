@@ -168,7 +168,5 @@ int main(int argc, char* argv[]){
 $ CXX FLAG_CXX svc_api_restore.cpp
 $ LINK FLAG_LINK svc_api_restore
 $ RUN svc_api_restore
-$ DELETE svc_api_restore.* WHERE_GDB_EXTERNAL:employee.gbk
+$ DELETE svc_api_restore.* 
 $ DROP WHERE_GDB:employee.gdb
-
-
