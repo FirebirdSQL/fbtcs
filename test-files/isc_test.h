@@ -4,14 +4,21 @@
 #ifndef IMP
 #include <stdlib.h>
 #endif
+
+#ifndef DARWIN
 #include <malloc.h>
+#endif
 
 #ifndef NULL
 #define NULL 0
 #endif
 
 #ifndef _Windows
+#ifndef DARWIN
 #include <ibase.h>
+#else
+#include <Firebird/ibase.h>
+#endif
 #define LogPrintf printf
 extern void fill_db_parameter_buffer();
 #else
