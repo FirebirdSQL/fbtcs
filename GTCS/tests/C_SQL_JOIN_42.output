@@ -10,7 +10,7 @@ Test:
 SQL> select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
 CON> from (st1 t left outer join st2 x on t.s1 = x.s1)
 CON> where t.s1 > ALL
-CON> (select (y.s1+1-6) from st1 y 
+CON> (select (y.s1+1-6) from st1 y
 CON> where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
 CON> order by t.table_row ascending;
 

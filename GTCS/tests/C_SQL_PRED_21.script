@@ -267,7 +267,7 @@ order by v2.deptno;
 finish;
 quit;
 $ QLI -n -a sin026.qli
->> sin026.sql
+>> sin026a.sql
 
 select v2.deptno, v2.department, v2.mgrno, v2.budget
 from dept_budget v2
@@ -290,8 +290,8 @@ and t1.total_value >
 order by v2.deptno;
 
 quit;
-$ ISQL -m WHERE_GDB:sh_test.gdb -i sin026.sql
->> sin026.sql
+$ ISQL -m WHERE_GDB:sh_test.gdb -i sin026a.sql
+>> sin026b.sql
 connect WHERE_GDB:sh_test.gdb;
 select v2.deptno, v2.department, v2.mgrno, v2.budget
 from dept_budget v2
@@ -313,6 +313,6 @@ and t1.total_value >
 (select min(t2.total_value) from sales t2 where t2.sales_rep = 100))
 order by v2.deptno;
 quit;
-$ISQL -m -i sin026.sql
+$ISQL -m -i sin026b.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin026* 

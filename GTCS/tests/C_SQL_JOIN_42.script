@@ -52,7 +52,7 @@ main()
         DECLARE CR CURSOR FOR
         select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
         from (st1 t left outer join st2 x on t.s1 = x.s1) where t.s1 > ALL
-        (select (y.s1+1-6) from st1 y  
+        (select (y.s1+1-6) from st1 y
 	where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
         order by t.table_row ascending;
 
@@ -118,16 +118,16 @@ $ GPRE -e join042.e
 $ CC FLAG_CC join042.c
 $ LINK FLAG_LINK join042 
 $ RUN join042
->> join042.sql
+>> join042a.sql
 select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
 from (st1 t left outer join st2 x on t.s1 = x.s1)
 where t.s1 > ALL
-(select (y.s1+1-6) from st1 y 
+(select (y.s1+1-6) from st1 y
 where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
 order by t.table_row ascending;
 
 exit;
->> join042x.sql
+>> join042b.sql
 /* using max is sub-query */
 select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
 from (st1 t left outer join st2 x on t.s1 = x.s1) where t.s1 >
@@ -136,7 +136,7 @@ where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not nul
 order by t.table_row ascending;
 
 exit;
-$ ISQL -m -e WHERE_GDB:sh_join_42.gdb -i join042.sql
+$ ISQL -m -e WHERE_GDB:sh_join_42.gdb -i join042a.sql
 >> join042.qli
 ready WHERE_GDB:sh_join_42.gdb;
 set semicolon;
@@ -160,7 +160,7 @@ quit;
 /* The qli query will not be run because it is unsupported 
    The result given in QLI is incorrect */
 # QLI -n -a join042.qli
->> join042.sql
+>> join042c.sql
 connect WHERE_GDB:sh_join_42.gdb;
 select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
 from (st1 t left outer join st2 x on t.s1 = x.s1)
@@ -169,6 +169,6 @@ where t.s1 > ALL
 where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
 order by t.table_row ascending;
 quit;
-$ISQL -m -i join042.sql
+$ISQL -m -i join042c.sql
 $DROP WHERE_GDB:sh_join_42.gdb
 $ DELETE join042* 
