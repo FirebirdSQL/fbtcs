@@ -1,13 +1,14 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_4.gdb
-$ CREATE blob004.e
+$ CREATE blob004.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT BLOB INTO TABLE MAXIMUM_SEGMENT 
  Author:                Sam Hakim, June 7, 93
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_4.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -30,21 +31,19 @@ struct Buf M;
 
 char Test[]="DECLARE BCW CURSOR FOR INSERT BLOB B256 INTO MB1 MAXIMUM_SEGMENT 256";
 
-void Underline();
-void CreateLine();
-void Append();
+void Underline(int);
+void Append(char s[], char t[]);
+void CreateLine(char Bf[]);
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc,char* argv[])
 {
     int Count;
-    int verbose;
+    bool verbose;
 
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
@@ -85,7 +84,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -96,8 +95,7 @@ ERR:
 /************************************************************
  * Draw and underline
  ************************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -109,8 +107,7 @@ printf("\n");
 /************************************************************
  * Append t to s
  ************************************************************/
-void Append(s,t)
-char s[], t[];
+void Append(char s[], char t[])
 {
     int i,j;
     i = j = 0;
@@ -122,8 +119,7 @@ char s[], t[];
 /************************************************************
  * Create a new line for the blob content.
  ************************************************************/
-void CreateLine(Bf)
-char Bf[];
+void CreateLine(char Bf[])
 {
 char            TempBuf[4];
 short		i;
@@ -135,8 +131,8 @@ short		i;
 	}
 }
 
-$ GPRE -e blob004.e
-$ CC FLAG_CC blob004.c
+$ GPRE -e blob004.epp
+$ CXX FLAG_CXX blob004.cpp
 $ LINK FLAG_LINK blob004 
 $ RUN blob004
 $ CREATE blob004.qli

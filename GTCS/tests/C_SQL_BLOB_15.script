@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_15.gdb
-$ CREATE blob015.e
+$ CREATE blob015.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT CURSOR - Buffer is empty (Buffer[0]='\0' 
@@ -8,8 +8,8 @@ $ CREATE blob015.e
  Mods:			Commented out strings.h.  Not needed on NT.
  **********************************************************************/
 #include <stdio.h>
-/* #include <strings.h> */
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_15.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -30,19 +30,17 @@ struct Buf M;
 
 char Test[]="INSERT CURSOR <blob-cursor> VALUES (:BUFFER:BUFFERLEN) - Buffer[0]=0";
 
-void Underline();
+void Underline(int);
 
-main(argc,argv)
-int argc;
-char *argv[];
+main(int argc, char* argv[])
 {
 short                       i,j,k,l;
-int verbose;
+bool verbose;
 
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
@@ -82,7 +80,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -93,8 +91,7 @@ ERR:
 /************************************************************
  * Draw an underline
  ************************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -104,8 +101,8 @@ printf("\n");
 
 }
 
-$ GPRE -e blob015.e
-$ CC FLAG_CC blob015.c
+$ GPRE -e blob015.epp
+$ CXX FLAG_CXX blob015.cpp
 $ LINK FLAG_LINK blob015 
 $ RUN blob015
 $ CREATE blob015.qli

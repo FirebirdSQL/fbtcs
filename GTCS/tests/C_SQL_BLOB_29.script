@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_29.gdb
-$ CREATE blob090.e
+$ CREATE blob090.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT CURSOR - No <length> specified 
@@ -8,7 +8,8 @@ $ CREATE blob090.e
  Author:                Sam Hakim, June 7, 93
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_29.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -31,21 +32,19 @@ struct Buf M;
 
 char Test[]="INSERT CURSOR BCW VALUES (:M.Buffer)";
 
-void Underline();
-void CreateLine();
-void Append();
+void Underline(int);
+void CreateLine(char Bf[]);
+void Append(char s[], char t[]);
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char* argv[])
 {
     int Count;
-    int verbose;
+    bool verbose;
 
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
@@ -85,7 +84,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -96,8 +95,7 @@ ERR:
 /************************************************************
  * Draw an underline
  ************************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -109,8 +107,7 @@ printf("\n");
 /************************************************************
  * Append t to s
  ************************************************************/
-void Append(s,t)
-char s[], t[];
+void Append(char s[], char t[])
 {
     int i,j;
     i = j = 0;
@@ -122,8 +119,7 @@ char s[], t[];
 /************************************************************
  * Create a new line for the blob content.
  ************************************************************/
-void CreateLine(Bf)
-char Bf[];
+void CreateLine(char Bf[])
 {
 char            TempBuf[4];
 short		i;
@@ -134,6 +130,7 @@ short		i;
         Append(Bf,TempBuf);
 	}
 }
-$ GPRE -e blob090.e
+
+$ GPRE -e blob090.epp
 $DROP WHERE_GDB:sh_blobs_29.gdb
 $ DELETE blob090*

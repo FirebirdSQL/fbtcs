@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_8.gdb
-$ CREATE blob008.e
+$ CREATE blob008.epp
 /**********************************************************************
  Purpose:               Test SQL blob  support in InterBase 4.0
  Description:           FETCH blobcursor - Buffer size = segment_len in db
@@ -8,7 +8,7 @@ $ CREATE blob008.e
  ***********************************************************************
 */
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_8.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -19,10 +19,10 @@ EXEC SQL
 BASED_ON MB1.COMMENT        Comment;
 BASED_ON MB1.ROW_ID         Row_Id;
 
-GDS__QUAD                   BlobId;
+GDS_QUAD                   BlobId;
 short                       i,j,k,l;
 short			    FullFetch,PartialFetch;
-int 			    verbose;
+bool			    verbose;
 
 struct Buf{
     char            Buffer[256];
@@ -32,21 +32,19 @@ struct Buf M;
 
 char Test[]="FETCH BCR INTO :M.Buffer:M.BufferLen (Buffer size = segment_len)";
 
-void Underline();
-void EmptyBuffer();
+void Underline(int);
+void EmptyBuffer(char *Bf,unsigned short L);
 void FetchType();
 
-main(argc,argv)
-int	argc;
-char	*argv[];
+int main(int argc,char* argv[])
 {
 	
     int 	Count;
     
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-             verbose = TRUE;
+             verbose = true;
         }
 
     Count = 0;
@@ -106,7 +104,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -118,8 +116,7 @@ ERR:
  * U n d e r l i n e
  * print an underline
  ***********************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 for (j=0;j<i;j++)
@@ -130,9 +127,7 @@ printf("\n");
  * EmptyBuffer 
  * print an underline
  ***********************************************************/
-void EmptyBuffer(Bf,L)
-char *Bf;
-unsigned short L;
+void EmptyBuffer(char *Bf,unsigned short L)
 {
 	for (;L;L--)
 		*Bf++ = ' ';
@@ -156,8 +151,8 @@ if (SQLCODE == 0){
 }
 }
 
-$ GPRE -e blob008.e
-$ CC FLAG_CC blob008.c
+$ GPRE -e blob008.epp
+$ CXX FLAG_CXX blob008.cpp
 $ LINK FLAG_LINK blob008 
 $ RUN blob008
 $DROP WHERE_GDB:sh_blobs_8.gdb

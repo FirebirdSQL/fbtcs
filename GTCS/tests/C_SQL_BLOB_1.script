@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_1.gdb
-$ CREATE blob001.e
+$ CREATE blob001.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           READ BLOB FROM TABLE 
@@ -14,7 +14,7 @@ $ CREATE blob001.e
 */
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_1.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -25,7 +25,7 @@ EXEC SQL
 BASED_ON MB1.COMMENT        Comment;
 BASED_ON MB1.ROW_ID         Row_Id;
 
-GDS__QUAD       BlobId;
+GDS_QUAD       BlobId;
 char            TempBuf[4];
 short		i,j,k,l;
 int		verbose;
@@ -39,10 +39,10 @@ struct Buf M;
 char Test[]="\
 DECLARE TCR CURSOR FOR SELECT ROW_ID, B256, COMMENT FROM MB1 WHERE ROW_ID <3 ";
 
-void Underline();
-void Append();
+void Underline(int);
+void Append(char s[], char t[]);
 
-main()
+int main(int argc, char* argv[])
 {
 	
     int Count;
@@ -94,7 +94,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -105,8 +105,7 @@ ERR:
 /************************************************************
  * Draw and underline
  ************************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -118,8 +117,7 @@ printf("\n");
 /************************************************************
  * Append t to s
  ************************************************************/
-void Append(s,t)
-char s[], t[];
+void Append(char s[], char t[])
 {
     int i,j;
     i = j = 0;
@@ -129,8 +127,8 @@ char s[], t[];
         ;
 }
 
-$ GPRE -e blob001.e
-$ CC FLAG_CC blob001.c
+$ GPRE -e blob001.epp
+$ CXX FLAG_CXX blob001.cpp
 $ LINK FLAG_LINK blob001 
 $ RUN blob001
 $DROP WHERE_GDB:sh_blobs_1.gdb

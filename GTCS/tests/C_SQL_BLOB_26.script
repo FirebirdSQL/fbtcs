@@ -1,7 +1,7 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_26.gdb
 $ COPY WHERE_FILES:sh_binary.tif sh_binary.tif
-$ CREATE blob026.e
+$ CREATE blob026.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Read a binary file into a blob.
@@ -15,7 +15,8 @@ $ CREATE blob026.e
 		 It may need local inits on other platforms.
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_26.gdb";
 EXEC SQL INCLUDE SQLCA;
@@ -33,12 +34,13 @@ int			   DataLen;
 int                        verbose;
 
 /* Function definitions */
-int			   GetDate();
-int			   GetChunk();
-FILE			   *ExampleFile,*OpenFile(),*ExampleOut;
-void                       Underline();
-void			   WriteBlob();
-int			   ReadBlob();
+FILE *ExampleFile,*ExampleOut;
+int GetData(char *Bf, int MaxChunk, FILE *fp);
+int GetChunk(char *Bf, int MaxChunk, FILE *fp);
+FILE *OpenFile(char *Fn, char *FMode);
+void Underline(int i);
+void WriteBlob();
+int ReadBlob();
 
 struct Buf{
     char            *Buffer[2];			/* Buffer vector to store blobs */
@@ -51,18 +53,16 @@ char *BigBuffer;
 char Test[]="INSERT BLOB subtype -500 (Binary) read from sh_binary.tif";
 
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char* argv[])
 {
 short i,j,k,l;
 
     printf("Test: \n %s \n",Test);
     Underline(strlen(Test));
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
     }
 
     M.BufferLen[1] = 512;			/* Work with 64K segment */
@@ -100,7 +100,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -117,8 +117,7 @@ FileErr:
  * U n d e r l i n e
  * print an underline
  ***********************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 for (j=0;j<i;j++)
@@ -128,9 +127,7 @@ printf("\n");
 /***********************************************************
  * Open a file and return True if opened, False otherwise.
  ***********************************************************/
-FILE *OpenFile(Fn,FMode)
-char *Fn;
-char *FMode;
+FILE *OpenFile(char *Fn, char *FMode)
 {
 
 if (Fn)
@@ -142,10 +139,7 @@ else
  * Get data from a file into a single variable.
  * Rules: fields in the datafile are comma dilimited.
  ***********************************************************************/
-int GetChunk(Bf,MaxChunk,fp)
-char *Bf;
-int MaxChunk;
-FILE *fp;
+int GetChunk(char *Bf, int MaxChunk, FILE *fp)
 {
    int Outcome;
    int c, done;
@@ -160,29 +154,27 @@ return(DataLen);
 /***********************************************************************
  * Read binary stream from a file into Bf.  Return the no. of bytes.
  ***********************************************************************/
-int GetData(Bf,MaxChunk,fp)
-char *Bf;
-int MaxChunk;
-FILE *fp;
+int GetData(char *Bf, int MaxChunk, FILE *fp)
 {
 
-   int c, done;
+   int c;
+   bool done;
    char *nextc;
    DataLen = 0;
 
    nextc = Bf;
-   done = FALSE;
+   done = false;
    do {
         c = fgetc(fp);
         switch (c) {
                 case EOF:
-                        done = TRUE;
+                        done = true;
                         break;
                 default:
                         *nextc++ = c;
 			DataLen++;
 			if (DataLen >= MaxChunk)
-				done = TRUE;
+				done = true;
         }
    }while(!done);
 return(DataLen);
@@ -214,17 +206,17 @@ return(DataLen);
 ERR1:
         if (SQLCODE <0){
         printf("WriteBlob: Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
         EXEC SQL ROLLBACK;
         }
 
 }
 
-$ GPRE -e -n blob026.e
-$ CC FLAG_CC blob026.c
+$ GPRE -e -n blob026.epp
+$ CXX FLAG_CXX blob026.cpp
 $ LINK FLAG_LINK blob026 
 $ RUN blob026
-$ CREATE blob027.e
+$ CREATE blob027.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Read a binary blob, output the blob
@@ -233,7 +225,8 @@ $ CREATE blob027.e
  Attention:		This test is part of blob026 and depends on it.
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_26.gdb";
 EXEC SQL INCLUDE SQLCA;
@@ -251,12 +244,13 @@ int			   DataLen;
 int                        verbose;
 
 /* Function definitions */
-FILE			   *ExampleFile,*OpenFile(),*ExampleOut;
-void                       Underline();
-void			   StAppend();
-int			   ReadBlob();
-void			   WriteFile();
-void			   ShowImage();
+FILE *ExampleFile,*ExampleOut;
+FILE *OpenFile(char *Fn, char *FMode);
+void Underline(int i);
+void StAppend(char *Dest, int S, char *Src, unsigned short L);
+int ReadBlob(char *Bf, int L);
+void WriteFile(char *Bf, int BSize, FILE *fp);
+void ShowImage(char* Cmd);
 
 struct Buf{
     char            *Buffer[2];			/* Buffer vector to store blobs */
@@ -271,18 +265,16 @@ char Test[]="READ BLOB of subtype -500 (binary) and output to sh_binary.bak\n \
 	     diff the output and report the outcome Pass/Fail"; 
 
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char* argv[])
 {
 short i,j,k,l;
 
     printf("Test: \n %s \n",Test);
     Underline(strlen(Test));
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
     }
     M.BufferLen[1] = 512;			/* Work with 64K segment */
     M.Buffer[1]= (char*) malloc(M.BufferLen[1]);
@@ -319,7 +311,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -336,8 +328,7 @@ FileErr:
  * U n d e r l i n e
  * print an underline
  ***********************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 for (j=0;j<i;j++)
@@ -347,9 +338,7 @@ printf("\n");
 /***********************************************************
  * Open a file and return True if opened, False otherwise.
  ***********************************************************/
-FILE *OpenFile(Fn,FMode)
-char *Fn;
-char *FMode;
+FILE *OpenFile(char *Fn, char *FMode)
 {
 
 if (Fn)
@@ -361,10 +350,8 @@ else
 /************************************************************
  * Read a blob into buffer. Return the size of the blob. 
  ************************************************************/
- int ReadBlob(Bf,L)
- char *Bf;
- int L;
- {
+int ReadBlob(char *Bf, int L)
+{
  unsigned short Bl;
  int BSize;
  int i; 
@@ -393,7 +380,7 @@ else
 ReadERR:
         if (SQLCODE < 0){
                 printf("Database error, SQLCODE = %d\n",SQLCODE);
-                isc_print_status(gds__status);
+                isc_print_status(gds_status);
 
         EXEC SQL ROLLBACK;
         }
@@ -403,10 +390,7 @@ return(BSize);
 /*********************************************************************
  * Write the data and close the file.
  *********************************************************************/
-void WriteFile(Bf,BSize,fp)
-char *Bf;
-int BSize;
-FILE *fp;
+void WriteFile(char *Bf, int BSize, FILE *fp)
 {
 
 fwrite(Bf,BSize,1,fp);
@@ -415,12 +399,8 @@ fclose (fp);
 /***************************************************
  * Append Src stream of bytes to Dest starting at St
  ***************************************************/
- void StAppend(Dest,S,Src,L)
- char *Dest;
- int   S;
- char *Src;
- unsigned short L;
- {
+void StAppend(char *Dest, int S, char *Src, unsigned short L)
+{
  char *pDest,*pSrc;
 
  pDest = Dest;
@@ -439,15 +419,15 @@ fclose (fp);
 /***************************************************************
  * Show the image using imageview.  HP ONLY!
  ***************************************************************/
- void ShowImage(Cmd)
- char *Cmd;
+void ShowImage(char *Cmd)
 {
 #ifdef hpux
 system(Cmd);
 #endif
 }
-$GPRE -e -n blob027.e
-$CC FLAG_CC blob027.c
+
+$GPRE -e -n blob027.epp
+$CXX FLAG_CXX blob027.cpp
 $LINK FLAG_LINK blob027
 $RUN blob027
 $RUN compare_file sh_binary.tif sh_binary.bak

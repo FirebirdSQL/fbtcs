@@ -1,13 +1,14 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_25.gdb
-$ CREATE blob025.e
+$ CREATE blob025.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           SET A BLOB TO NULL , then insert into the same blob.
  Author:                Sam Hakim, June 16, 93
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_25.gdb";
 EXEC SQL INCLUDE SQLCA;
@@ -19,7 +20,7 @@ BASED_ON MB1.ROW_ID         Row_Id;
 BASED_ON MB1.B              BlobId1;
 short			    BlobIndNull = -1;
 
-int verbose;
+bool verbose;
 
 struct Buf{
     char            *Buffer[5];			/* Buffer vector to store blobs */
@@ -29,21 +30,19 @@ struct Buf M;
 
 char Test[]="SET A BLOB TO NULL , COMMIT, INSERT DATA INTO THE BLOB";
 
-void Underline();
+void Underline(int);
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char* argv[])
 {
 short                       i,j,k,l;
 int Count;
 
     printf("Test: \n %s \n",Test);
     Underline(strlen(Test));
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
         }
     M.BufferLen[0] = 80;
     M.Buffer[0] = (char*) malloc(M.BufferLen[0]);
@@ -99,7 +98,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -111,8 +110,7 @@ ERR:
  * U n d e r l i n e
  * print an underline
  ***********************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 for (j=0;j<i;j++)
@@ -120,8 +118,8 @@ for (j=0;j<i;j++)
 printf("\n");
 }
 
-$ GPRE -e blob025.e
-$ CC FLAG_CC blob025.c
+$ GPRE -e blob025.epp
+$ CXX FLAG_CXX blob025.cpp
 $ LINK FLAG_LINK blob025 
 $ RUN blob025
 $ CREATE blob025.qli

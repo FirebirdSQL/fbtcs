@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_24.gdb
-$ CREATE blob024.e
+$ CREATE blob024.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Mass update - no table cursor.
@@ -9,7 +9,8 @@ $ CREATE blob024.e
  Author:                Sam Hakim, June 16, 93
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_24.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -21,11 +22,11 @@ BASED_ON MB1.COMMENT        Comment;
 BASED_ON MB1.ROW_ID         Row_Id;
 BASED_ON MB1.B              BlobId1;
 
-int verbose;
+bool verbose;
 
 struct Buf{
-    char            *Buffer[5];			
-    unsigned short  BufferLen[5];		
+    char            *Buffer[5];
+    unsigned short  BufferLen[5];
 };
 struct Buf M;
 
@@ -33,21 +34,19 @@ char Test[]="EXEC SQL UPDATE MB1 \
 SET TEST_NAME = :Test_Name, ROW_ID = :Row_Id+100, B = :BlobId1,\
 COMMENT = 'Mass Blob Update - single update statement'"; 
 
-void Underline();
-void UpdateBlob();
-void WriteBlob();
+void Underline(int);
+void UpdateBlob(char *Bf, short L, char *AppString);
+void WriteBlob(char *Bf, short L);
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char* argv[])
 {
 short                       i,j,k,l;
 int Count;
 
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
@@ -79,7 +78,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -93,11 +92,8 @@ ERR:
  * buffer. Will append AppString to the buffer and then
  * writes the blob out.
  ************************************************************/
- void UpdateBlob(Bf,L,AppString)
- char *Bf;
- short L;
- char *AppString;
- {
+void UpdateBlob(char *Bf, short L, char *AppString)
+{
  unsigned short Bl;
  int BlobSize;
  char *BigBuffer;
@@ -132,7 +128,7 @@ ERR:
 ERR:
 	if (SQLCODE < 0){
 		printf("Database error, SQLCODE = %d\n",SQLCODE);
-        	isc_print_status(gds__status);
+        	isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -144,8 +140,7 @@ ERR:
  * U n d e r l i n e
  * print an underline
  ***********************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 for (j=0;j<i;j++)
@@ -155,10 +150,8 @@ printf("\n");
 /************************************************************
  * W r i t e B l o b
  ************************************************************/
- void WriteBlob(Bf,L)
- char *Bf;
- short L;
- {
+void WriteBlob(char *Bf, short L)
+{
 
     EXEC SQL WHENEVER SQLERROR CONTINUE;
     EXEC SQL WHENEVER SQLERROR GOTO ERR1;
@@ -172,14 +165,14 @@ printf("\n");
 ERR1:
 	if (SQLCODE <0){
         printf("WriteBlob: Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 	EXEC SQL ROLLBACK;
 	}
 
 }
 
-$ GPRE -e blob024.e
-$ CC FLAG_CC blob024.c
+$ GPRE -e blob024.epp
+$ CXX FLAG_CXX blob024.cpp
 $ LINK FLAG_LINK blob024 
 $ RUN blob024
 $ CREATE blob024.qli

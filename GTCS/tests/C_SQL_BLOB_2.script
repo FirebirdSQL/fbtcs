@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_2.gdb
-$ CREATE blob002.e
+$ CREATE blob002.epp
 /**********************************************************************
  Purpose:               Test SQL blob  support in InterBase 4.0
  Description:           MAXIMUM_SEGMENT keyword in the declare
@@ -8,7 +8,7 @@ $ CREATE blob002.e
  ***********************************************************************
 */
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_2.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -19,7 +19,7 @@ EXEC SQL
 BASED_ON MB1.COMMENT        Comment;
 BASED_ON MB1.ROW_ID         Row_Id;
 
-GDS__QUAD                   BlobId;
+GDS_QUAD                   BlobId;
 short                       i,j,k,l;
 
 struct Buf{
@@ -33,21 +33,19 @@ DECLARE TCR CURSOR FOR \
 SELECT ROW_ID, B256, COMMENT \
 FROM MB1 WHERE ROW_ID <3 MAXIMUM_SEGMENT :M.SOB";
 
-void Underline();
+void Underline(int);
 
-main(argc,argv)
-int	argc;
-char	*argv[];
+main(int argc,char* argv[])
 {
 	
     int 	Count;
     short	FullFetch,PartialFetch;
-    int verbose;
+    bool verbose;
     
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-             verbose = TRUE;
+             verbose = true;
         }
 
     Count = 0;
@@ -107,7 +105,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -119,8 +117,7 @@ ERR:
  * U n d e r l i n e
  * print an underline
  ***********************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 for (j=0;j<i;j++)
@@ -128,8 +125,8 @@ for (j=0;j<i;j++)
 printf("\n");
 }
 
-$ GPRE -e blob002.e
-$ CC FLAG_CC blob002.c
+$ GPRE -e blob002.epp
+$ CXX FLAG_CXX blob002.cpp
 $ LINK FLAG_LINK blob002 
 $ RUN blob002
 $DROP WHERE_GDB:sh_blobs_2.gdb

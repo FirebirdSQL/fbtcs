@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_28.gdb
-$ CREATE blob028a.e
+$ CREATE blob028a.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Create a view in the blob table 
@@ -20,27 +20,26 @@ log which means the data changed since we did the certification.  I am
 reinitializing.
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_28.gdb";
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL WHENEVER SQLERROR GO TO ERR;
 
-int verbose;
+bool verbose;
 
 char Test[]="CREATE VIEW VMB1 (TEST,ROW,BHALFK,DESC) \
 AS (SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1)";
 
-void Underline();
+void Underline(int);
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char* argv[])
 {
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
         }
 
    
@@ -56,7 +55,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -67,8 +66,7 @@ ERR:
 /************************************************************
  * Draw and underline
  ************************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -77,8 +75,8 @@ for (j=0;j<i;j++)
 printf("\n");
 }
 
-$ GPRE -e blob028a.e
-$ CC FLAG_CC blob028a.c
+$ GPRE -e blob028a.epp
+$ CXX FLAG_CXX blob028a.cpp
 $ LINK FLAG_LINK blob028a 
 $ RUN blob028a
 $ CREATE blob028a.qli
@@ -87,14 +85,15 @@ show relation vmb1;
 finish;
 quit;
 $ QLI -n -a blob028a.qli
-$ CREATE blob028.e
+$ CREATE blob028.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Inserting a blob through a view on a table. 
  Author:                Sam Hakim, June 20, 93
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_28.gdb";
 EXEC SQL INCLUDE SQLCA;
@@ -105,7 +104,7 @@ BASED_ON VMB1.DESC        Comment;
 BASED_ON VMB1.ROW         Row_Id;
 BASED_ON VMB1.BHALFK      BlobId;
 
-int verbose;
+bool verbose;
 
 struct Buf{
     char            Buffer[50];
@@ -116,21 +115,19 @@ struct Buf M;
 char Test[]=" INSERT INTO VMB1 (TEST,ROW,BHALFK,DESC) \
 VALUES (:Test_Name,:j,:BlobId,'Inserting blobs through views')";
 
-void Underline();
-void CreateLine();
-void EmptyBuffer();
+void Underline(int);
+void CreateLine(char Bf[], int L);
+void EmptyBuffer(char *Bf, int L);
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char* argv[])
 {
 short                       i,j,k,l;
 int Count;
 
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
         }
 
    
@@ -175,7 +172,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -186,8 +183,7 @@ ERR:
 /************************************************************
  * Draw and underline
  ************************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -200,9 +196,7 @@ printf("\n");
  * EmptyBuffer
  * print an underline
  ***********************************************************/
-void EmptyBuffer(Bf,L)
-char *Bf;
-int L;
+void EmptyBuffer(char *Bf, int L)
 {
 char *s;
 for (s=Bf;L;L--)
@@ -211,9 +205,7 @@ for (s=Bf;L;L--)
 /************************************************************
  * Create a new line for the blob content.
  ************************************************************/
-void CreateLine(Bf,L)
-char Bf[];
-int L;
+void CreateLine(char Bf[], int L)
 {
 char      TempBuf[4],*s;
 int	  i,j,t,k;
@@ -232,8 +224,8 @@ if (verbose)
 	printf("%s\n",Bf);
 }
 
-$ GPRE -e blob028.e
-$ CC FLAG_CC blob028.c
+$ GPRE -e blob028.epp
+$ CXX FLAG_CXX blob028.cpp
 $ LINK FLAG_LINK blob028 
 $ RUN blob028
 $ CREATE blob028.qli

@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_14.gdb
-$ CREATE blob014.e
+$ CREATE blob014.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           INSERT CURSOR - Bufferlen = 0 
@@ -8,8 +8,8 @@ $ CREATE blob014.e
  Mods:			Commented out strings.h. Not needed on NT
  **********************************************************************/
 #include <stdio.h>
-/* #include <strings.h> */
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_14.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -21,7 +21,7 @@ BASED_ON MB1.COMMENT        Comment;
 BASED_ON MB1.ROW_ID         Row_Id;
 BASED_ON MB1.B512           BlobId;
 
-int verbose;
+bool verbose;
 
 struct Buf{
     char            Buffer[50];
@@ -31,21 +31,19 @@ struct Buf M;
 
 char Test[]="INSERT BLOB-CURSOR VALUES (Buffer:BufferLen) - BufferLen=0";
 
-void Underline();
-void CreateLine();
-void EmptyBuffer();
+void Underline(int);
+void CreateLine(char[], int);
+void EmptyBuffer(char*, int);
 
-main(argc,argv)
-int argc;
-char *argv[];
+main(int argc, char* argv[])
 {
 short                       i,j,k,l;
 int Count;
 
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
@@ -92,7 +90,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -103,8 +101,7 @@ ERR:
 /************************************************************
  * Draw and underline
  ************************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -117,9 +114,7 @@ printf("\n");
  * EmptyBuffer
  * print an underline
  ***********************************************************/
-void EmptyBuffer(Bf,L)
-char *Bf;
-int L;
+void EmptyBuffer(char* Bf, int L)
 {
 char *s;
 for (s=Bf;L;L--)
@@ -128,9 +123,7 @@ for (s=Bf;L;L--)
 /************************************************************
  * Create a new line for the blob content.
  ************************************************************/
-void CreateLine(Bf,L)
-char Bf[];
-int L;
+void CreateLine(char Bf[],int L)
 {
 char      TempBuf[4],*s;
 int	  i,j,t,k;
@@ -149,8 +142,8 @@ if (verbose)
 	printf("%s\n",Bf);
 }
 
-$ GPRE -e blob014.e
-$ CC FLAG_CC blob014.c
+$ GPRE -e blob014.epp
+$ CXX FLAG_CXX blob014.cpp
 $ LINK FLAG_LINK blob014 
 $ RUN blob014
 $DROP WHERE_GDB:sh_blobs_14.gdb

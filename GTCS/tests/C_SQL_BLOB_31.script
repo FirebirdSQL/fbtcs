@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_31.gdb
-$ CREATE blob031.e
+$ CREATE blob031.epp
 /**********************************************************************
  Purpose:               Test SQL blob  support in InterBase 4.0
  Description:           BASED_ON relation.blob-field-name.SEGMENT keyword
@@ -10,7 +10,8 @@ $ CREATE blob031.e
  Author:                Sam Hakim, July 1, 93
  **********************************************************************/
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_31.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -31,22 +32,20 @@ struct Buf M;
 
 char Test[]="FETCH BCR INTO :M.Buffer";
 
-void Underline();
-void EmptyBuffer();
+void Underline(int i);
+void EmptyBuffer(char *Bf, unsigned short L);
 
-main(argc,argv)
-int	argc;
-char	*argv[];
+int main(int argc, char* argv[])
 {
 	
     int 	Count;
     short	FullFetch,PartialFetch;
-    int verbose;
+    bool verbose;
     
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-             verbose = TRUE;
+             verbose = true;
         }
 
     Count = 0;
@@ -111,7 +110,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -123,8 +122,7 @@ ERR:
  * U n d e r l i n e
  * print an underline
  ***********************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 for (j=0;j<i;j++)
@@ -135,15 +133,14 @@ printf("\n");
  * EmptyBuffer 
  * print an underline
  ***********************************************************/
-void EmptyBuffer(Bf,L)
-char *Bf;
-unsigned short L;
+void EmptyBuffer(char *Bf, unsigned short L)
 {
 	for (;L;L--)
 		*Bf++ = ' ';
 }
-$ GPRE -e blob031.e
-$ CC FLAG_CC blob031.c
+
+$ GPRE -e blob031.epp
+$ CXX FLAG_CXX blob031.cpp
 $ LINK FLAG_LINK blob031 
 $ RUN blob031
 $DROP WHERE_GDB:sh_blobs_31.gdb

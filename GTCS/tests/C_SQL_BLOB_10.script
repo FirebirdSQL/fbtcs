@@ -1,6 +1,6 @@
 
 $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_10.gdb
-$ CREATE blob010.e
+$ CREATE blob010.epp
 /**********************************************************************
  Purpose:               Test SQL blob  support in InterBase 4.0
  Description:           FETCH blobcursor - NULL blob (never been touched)
@@ -8,7 +8,7 @@ $ CREATE blob010.e
  ***********************************************************************
 */
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
 
 DATABASE DB = "WHERE_GDB:sh_blobs_10.gdb";
 EXEC SQL	INCLUDE SQLCA;
@@ -22,7 +22,7 @@ BASED_ON MB1.B256	    BlobId;
 
 short                       i,j,k,l;
 short			    FullFetch,PartialFetch;
-int 			    verbose;
+bool			    verbose;
 
 struct Buf{
     char            Buffer[128];
@@ -32,22 +32,20 @@ struct Buf M;
 
 char Test[]="FETCH BCR INTO :M.Buffer:M.BufferLen   (NULL blob)";
 
-void Underline();
-void EmptyBuffer();
+void Underline(int);
+void EmptyBuffer(char* Bf, unsigned short L);
 void FetchType();
 
 
-main(argc,argv)
-int	argc;
-char	*argv[];
+main(int argc,char* argv[])
 {
 	
     int 	Count;
     
-    verbose = FALSE;
+    verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-             verbose = TRUE;
+             verbose = true;
         }
 
     Count = 0;
@@ -113,7 +111,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -125,8 +123,7 @@ ERR:
  * U n d e r l i n e
  * print an underline
  ***********************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 for (j=0;j<i;j++)
@@ -137,9 +134,7 @@ printf("\n");
  * EmptyBuffer 
  * print an underline
  ***********************************************************/
-void EmptyBuffer(Bf,L)
-char *Bf;
-unsigned short L;
+void EmptyBuffer(char* Bf, unsigned short L)
 {
 	for (;L;L--)
 		*Bf++ = ' ';
@@ -163,8 +158,8 @@ if (SQLCODE == 0){
 }
 }
 
-$ GPRE -e blob010.e
-$ CC FLAG_CC blob010.c
+$ GPRE -e blob010.epp
+$ CXX FLAG_CXX blob010.cpp
 $ LINK FLAG_LINK blob010 
 $ RUN blob010
 $DROP WHERE_GDB:sh_blobs_10.gdb

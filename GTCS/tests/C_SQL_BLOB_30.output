@@ -1,5 +1,5 @@
-(E) blob091.e:61: column COMMENT is not a BLOB
-(E) blob091.e:64: expected <cursor name>, encountered "BCW"
-(E) blob091.e:69: expected <cursor name>, encountered "BCW"
-(E) blob091.e:74: expected <cursor name>, encountered "BCW"
+(E) blob091.epp:58: column COMMENT is not a BLOB
+(E) blob091.epp:61: expected <cursor name>, encountered "BCW"
+(E) blob091.epp:66: expected <cursor name>, encountered "BCW"
+(E) blob091.epp:71: expected <cursor name>, encountered "BCW"
   4 errors, no warnings
