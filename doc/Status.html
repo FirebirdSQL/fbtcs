@@ -19,13 +19,16 @@ first fbtcs version to avoid cascade failures, to achieve that database name reu
 <blockquote>
 <table border="1" cellpadding="3" width="80%" valign="top">
 <tr valign="top" bgcolor="#FFCC33">
-<td>SERIES</td>
-<td>Global</td>
-<td>MinGW</td>
-<td>MSVC6</td>
+<td width="20%">SERIES</td>
+<td width="20%">Global</td>
+<td width="20%">MSVC6 SS</td>
+<td width="20%">MinGW SS</td>
+<td width="20%">Linux SS</td>
+</tr>
 <tr valign="top">
 <td>CF_ISQL</td>
 <td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -34,10 +37,12 @@ first fbtcs version to avoid cascade failures, to achieve that database name reu
 <td>OK</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>ISC_ARRBLOB_CK</td>
 <td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -46,10 +51,12 @@ first fbtcs version to avoid cascade failures, to achieve that database name reu
 <td>DSQL_DOMAIN_08<br>- Different column number (parser)</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>DSQL_EXCEPTIONS</td>
 <td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -59,11 +66,13 @@ first fbtcs version to avoid cascade failures, to achieve that database name reu
 - waits undefinitely</td>
 <td>-</td>
 <td>-</td>
+<td>Failure in semaphore (server terminated abnormally)</td>
 </tr>
 <tr valign="top">
 <td>C_SQL_BLOB</td>
 <td>C_SQL_BLOB_26<br>
 - blob size differs</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -72,10 +81,12 @@ first fbtcs version to avoid cascade failures, to achieve that database name reu
 <td>OK</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>V4_AUTO_COMMIT</td>
 <td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -84,20 +95,19 @@ first fbtcs version to avoid cascade failures, to achieve that database name reu
 <td>Pending</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>IDML_C_CHARSET</td>
-<td>IDML_C_CHARSET_01<br>
-IDML_C_CHARSET_02<br>
-- different unknown character</td>
+<td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
 <tr valign="top">
 <td>IDML_C_SUBQUERYS</td>
-<td>IDML_C_SUBQ_02<br>
-IDML_C_SUBQ_04<br>
-- different unknown character</td>
+<td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -106,10 +116,12 @@ IDML_C_SUBQ_04<br>
 <td>Pending</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>EXT_LEV_0</td>
 <td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -118,10 +130,12 @@ IDML_C_SUBQ_04<br>
 <td>OK</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>QA_PROC_IES_ERR</td>
 <td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -130,10 +144,12 @@ IDML_C_SUBQ_04<br>
 <td>OK</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>RICH_FLD_GEN_V40</td>
 <td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -143,16 +159,19 @@ IDML_C_SUBQ_04<br>
 - object is in use</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>V4_AUTO_DDL_DSQL</td>
 <td>OK</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>V4_TRANS_BLOB</td>
 <td>OK</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -169,16 +188,12 @@ PROC_EMPTY<br>
 </td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 <tr valign="top">
 <td>FB_SQL</td>
 <td>OK</td>
 <td>-</td>
-<td>-</td>
-</tr>
-<tr valign="top">
-<td>SVC_API</td>
-<td>OK</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -187,6 +202,14 @@ PROC_EMPTY<br>
 <td>OK</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+</tr>
+<tr valign="top">
+<td>SVC_API</td>
+<td>OK</td>
+<td>-</td>
+<td>Fails in BACKUP & RESTORE (exception catch fails in burp.cpp:1166)-</td>
+<td>Fails in RESTORE</td>
 </tr>
 </table>
 </blockquote>
