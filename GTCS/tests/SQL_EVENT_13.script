@@ -80,7 +80,7 @@ $ CREATE event_custom.h
 
 void init_server(char **,short);
 
-void parse_server_args(int,char *[],int *,short *);
+void parse_server_args(int,char *[],int *,short);
 
 void create_client(int *, HANDLE[MAX_CLIENTS][2],int,char *);
 
@@ -176,11 +176,7 @@ int main (int argc, char* argv[])
 
 	int		num_events,client_count = 0, loop_count, stat, i, total=0;
 
-#ifdef WIN_NT
 	HANDLE	pipe_fd[MAX_CLIENTS][2];
-#else
-	long	pipe_fd[MAX_CLIENTS][2];
-#endif
 
 	long	count_array[MAX_CLIENTS],event_id;
 
@@ -485,11 +481,7 @@ void parse_server_args(
 
 void create_client(
 	int		*client_count,
-#ifdef WIN_NT
 	HANDLE	pipe_fd[MAX_CLIENTS][2],
-#else
-	long	pipe_fd[MAX_CLIENTS][2],
-#endif
 	int		num_events,
 	char	client_name[])
 
@@ -636,11 +628,7 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 
 void packet_handler(
 		long	count_array[],
-#ifdef WIN_NT
 		HANDLE	pipe_fd[MAX_CLIENTS][2],
-#else
-		long	pipe_fd[MAX_CLIENTS][2],
-#endif
 		short	verbose
 		)
 
@@ -763,7 +751,7 @@ void packet_handler(
 /*--------------------------------------------------------------------------*/
 
 int update_server_relation(
-	long	count_array[],
+	int		count_array[],
 	short	verbose)
 {
 /****************************************************************************
@@ -958,11 +946,7 @@ int report_events(
 /*--------------------------------------------------------------------------*/
 
 void finish_packets(
-#ifdef WIN_NT
 		HANDLE pipe_fd[MAX_CLIENTS][2],
-#else
-		long pipe_fd[MAX_CLIENTS][2],
-#endif
 		short	verbose)
 
 {
@@ -1106,14 +1090,9 @@ main(int argc,char* argv[])
 
 	char	packet[15],client_name[10],events[5],buf[80];
 
-#ifdef WIN_NT
-	HANDLE
-#else
-	int
-#endif
-	client_pipe;
-	int		 num_events,loop_count,i,nwrite,
-		size = sizeof(packet);
+	HANDLE	client_pipe;
+	int		num_events,loop_count,i,nwrite;
+	int		size = sizeof(packet);
 #ifdef WIN_NT
 	int		 outsize;
 #endif
@@ -1240,11 +1219,7 @@ main(int argc,char* argv[])
 void parse_client_args(
 		int		argc,
 		char	*argv[],
-#ifdef WIN_NT
 		LPHANDLE	client_pipe,
-#else
-		int		 *client_pipe,
-#endif
 		int* num_events,
 		char* client_name)
 
