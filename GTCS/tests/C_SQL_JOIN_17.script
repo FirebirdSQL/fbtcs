@@ -45,6 +45,7 @@ main()
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
+    fflush(stdout);
     Underline(80);
 
     EXEC SQL
@@ -56,7 +57,7 @@ main()
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :t1c1,:t1c10,:t1table_row,
                 :t2c1,:t2c10,:t2table_row,
@@ -76,6 +77,7 @@ main()
                 printf("%-10s  ",t3c1);
                 printf("%-10s  ",t3c10);
                 printf("%-10s\n",t3table_row);
+		fflush(stdout);
 
                 EXEC SQL
                 FETCH CR INTO :t1c1,:t1c10,:t1table_row, 
@@ -90,6 +92,7 @@ NOMORE:
                 CLOSE CR;
 
 	printf("\n\n* Total Records Listed >>> %d\n",Count);
+	fflush(stdout);
 
 	EXEC SQL
 		COMMIT RELEASE;
@@ -100,6 +103,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
+	fflush(stdout);
         isc_print_status(gds__status);
 
 	EXEC SQL
@@ -146,4 +150,4 @@ order by x.c1 ascending;
 quit;
 $ISQL -m -i join017.sql
 $DROP WHERE_GDB:sh_join_17.gdb
-$ DELETE join017* 
+$ DELETE join017*
