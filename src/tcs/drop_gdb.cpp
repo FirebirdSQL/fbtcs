@@ -50,7 +50,7 @@ char fake_it = 0;
 char username = 0;
 char password = 0;
 
-void get_version(char *format, char *arg);
+void get_version(void *format, const char *arg);
 
 int main(int argc, char **argv, char **envp)
 {
@@ -156,7 +156,7 @@ int main(int argc, char **argv, char **envp)
 
 		/* extract the version into global variables */
 		version = 0;
-		isc_version(&db_handle, (void(*)(void*,const char*)) get_version, 0);
+		isc_version(&db_handle, get_version, 0);
 		if (version == 0) {
 			printf("ERROR: no version information for '%s'\n", arDatabases[iCntr]);
 			fflush(stdout);
@@ -212,7 +212,7 @@ int main(int argc, char **argv, char **envp)
 	return 0;
 }
 
-void get_version(char *format, char *arg)
+void get_version(void *format, const char *arg)
 /*
  * This funtion parses the version string information, and returns
  * machine (O.S) string and InterBase version number calculated from the
