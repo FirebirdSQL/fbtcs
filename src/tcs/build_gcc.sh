@@ -30,7 +30,7 @@ if [ "$1" = "" ]; then
 	if [ "$FIREBIRD" = "" ]; then
 		echo "FIREBIRD not defined."
 		echo "If environment variable is not set "
-		echo "the first argument for build_mingw.sh if the value of FIREBIRD"
+		echo "the first argument for `basename $0` if the value of FIREBIRD"
 		exit
 	fi
 else
@@ -40,15 +40,15 @@ fi
 echo "FIREBIRD=$FIREBIRD"
 
 #
-#´Get system type
+# Get system type
 #
 case `uname -s` in
 	SINIX-Z) 
 		exeext=
 		ext=sinixz
-		CFLAGS="-ggdb -Wall -Wno-parentheses -DSINIZ"
-		LIBS="-lstdc++"
-		CLIENTLIB="$FIREBIRD/lib/libfbclient.so"
+		CFLAGS="-ggdb -Wall -Wno-parentheses -DSINIXZ"
+		LIBS="-lsocket -lnsl"
+		CLIENTLIB="$FIREBIRD/lib/libfbembed.so"
 		;;
 	Linux)	
 		exeext=

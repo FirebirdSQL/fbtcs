@@ -20,7 +20,7 @@ if [ "$3" = "" ]; then
 	if [ "$FIREBIRD" = "" ]; then
 		echo "FIREBIRD not defined."
 		echo "If environment variable is not set "
-		echo "the third argument for build_mingw.sh if the value of FIREBIRD"
+		echo "the third argument for `basename $0` is the value of FIREBIRD"
 		exit
 	fi
 else

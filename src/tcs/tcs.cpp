@@ -477,7 +477,7 @@ static int parse_main_options(char *p)
 			printf ("\t-x\tPrint this description.\n");
 			break;
 		}
-		*p++;
+		p++;
 	}
 	return true;
 }
@@ -554,7 +554,8 @@ static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *
 
 			// Assign the top of the range if the range is being processed
 
-			( range ) && (*second = atoi( previous ));
+			if ( range )
+				*second = atoi( previous );
 
 			*current++ = 0;               // Zero out comma and increment c
 			break;
@@ -581,7 +582,8 @@ static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *
 				// to the calling function no test in the series will be called
 				// NOTE:  This is for the case "rs c_exam 1,-3" -- where '-3'
 				// should be ignored.
-				( !(*first) ) && ( *first = *second );
+				if ( !(*first) )
+					*first = *second;
 
 				continue;
 			}
@@ -660,7 +662,8 @@ static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *
 
 	else if( current != NULL && *current == '\0' && *first)
 	{
-		( *previous != '\0' ) && ( range ) && (*second = atoi( previous ));
+		if (( *previous != '\0' ) && ( range ))
+			*second = atoi( previous );
 		return false;
 	}
 

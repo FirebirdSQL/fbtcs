@@ -71,7 +71,7 @@ $FIREBIRD/bin/gsec -add shut2    -pw shut2
 # series nist3
 # series procs_qa_bugs, test bug_6015
 $FIREBIRD/bin/gsec -delete qatest
-$FIREBIRD/bin/gsec -add qatest             -pw qatest
+$FIREBIRD/bin/gsec -add qatest   -pw qatest
 
 
 if [ $? != 0 ]; then

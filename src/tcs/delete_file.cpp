@@ -11,6 +11,13 @@
 #ifdef MINGW 
 #include <io.h> // unlink
 #endif
+
+#ifdef SINIXZ
+extern "C" {
+extern int gethostname(char *name, size_t len);
+}
+#endif
+
 void remove_local(char*);
 void remove_remote(char*, char*);
 
@@ -20,7 +27,7 @@ void remove_remote(char*, char*);
 int main(int argc, char* argv[]){
 
 	char* arg;
-	*argv++;
+	argv++; /* Skip command name */
 	if (argc < 4)
 	{
 		printf("delete_file need at least 3 parameters\n");
