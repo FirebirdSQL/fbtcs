@@ -36,7 +36,11 @@ typedef struct vary512 {
 	} VARY512;
 
 #ifndef _Windows
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 #define LogPrintf printf
 void print_varfield();
 void print_sqlda();

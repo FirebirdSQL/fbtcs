@@ -45,7 +45,11 @@ $ CREATE btest3.e
 */
 #include "WHERE_FILES:tcs.h"
 #include "WHERE_FILES:example.h"
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL WHENEVER SQLERROR GOTO Err;
 EXEC SQL SET DATABASE db = "WHERE_GDB:intlemp_06.gdb";

@@ -5,7 +5,11 @@ $CREATE db_info.e
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 
 DATABASE DB = COMPILETIME FILENAME 'WHERE_GDB:atlas.gdb' RUNTIME db_name;
 

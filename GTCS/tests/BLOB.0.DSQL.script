@@ -5,7 +5,11 @@ create table t1 (a int not null, b blob);
 $CREATE p1.e
 #include <stdio.h>
 #include <string.h>
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 exec sql include sqlca;
 exec sql set database db = "WHERE_GDB:test3.gdb";
 

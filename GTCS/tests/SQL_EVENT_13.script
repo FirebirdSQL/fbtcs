@@ -102,7 +102,11 @@ $ CREATE event_server.e
 #include <ctype.h>
 #include <time.h>
 #include <errno.h>
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 
 #ifdef WIN_NT
 #include <windows.h>

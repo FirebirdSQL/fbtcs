@@ -40,7 +40,11 @@ $ CREATE event_custom.h
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 
 /* Platform dependent */
 

@@ -4,7 +4,11 @@ $CREATE svc_api_check_db.cpp
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 
 #define RESPBUF 1024
 

@@ -57,7 +57,11 @@ QUIT;
 
 $ CREATE f1.e
 #include "WHERE_FILES:tcs.h"
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 EXEC SQL WHENEVER SQLERROR GOTO ERR;
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL SET DATABASE dbfoo = "WHERE_GDB:sundb.gdb";

@@ -14,7 +14,11 @@ Case 4:
 */
 #include "WHERE_FILES:tcs.h"
 #include "WHERE_FILES:example.h"
+#ifndef DARWIN
 #include <gds.h>
+#else
+#include <Firebird/gds.h>
+#endif
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL WHENEVER SQLERROR GOTO Err;
 
