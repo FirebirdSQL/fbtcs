@@ -10,6 +10,12 @@ exec sql whenever sqlerror goto err;
 
 #ifdef WIN_NT
 #include "windows.h" // NULL definition
+#else
+#include <stdlib.h>
+#include <stdio.h>
+#endif
+#ifndef NULL
+#define NULL 0
 #endif
 
 int main(int argc, char* argv[])
