@@ -1,0 +1,64 @@
+Use CONNECT or CREATE DATABASE to specify a database
+SQL> 
+SQL> CREATE DATABASE 'WHERE_GDB:cf_18.fdb' DEFAULT CHARACTER SET ISO8859_1;
+SQL> 
+SQL> /*******************************************************************************
+-->  * Selected metadata objects
+-->  * -------------------------
+-->  * Extracted at 29-10-2003 15:55:26
+-->  ******************************************************************************/
+CON> 
+CON> /*******************************************************************************
+-->  * Generators
+-->  * ----------
+-->  * Extracted at 29-10-2003 15:55:26
+-->  ******************************************************************************/
+CON> 
+CON> CREATE GENERATOR GEN_TEST1;
+SQL> 
+SQL> /*******************************************************************************
+-->  * Tables
+-->  * ------
+-->  * Extracted at 29-10-2003 15:55:26
+-->  ******************************************************************************/
+CON> 
+CON> CREATE TABLE TEST1
+CON> (
+CON>   ID                      INTEGER,
+CON>   LEEG                    INTEGER,
+CON>   VOORNAAM                VARCHAR(100)  COLLATE ISO8859_1,
+CON>   ACHTERNAAM              VARCHAR(100)  COLLATE ISO8859_1
+CON> );
+SQL> 
+SQL> /*******************************************************************************
+-->  * Indices
+-->  * -------
+-->  * Extracted at 29-10-2003 15:55:26
+-->  ******************************************************************************/
+CON> 
+CON> CREATE ASC INDEX I_TEST1_AN_ASC ON TEST1 (ACHTERNAAM);
+SQL> 
+SQL> CREATE UNIQUE ASC INDEX I_TEST1_ID_ASC ON TEST1 (ID);
+SQL> 
+SQL> CREATE ASC INDEX I_TEST1_LEEG_ASC ON TEST1 (LEEG);
+SQL> 
+SQL> CREATE ASC INDEX I_TEST1_VN_ASC ON TEST1 (VOORNAAM);
+SQL> 
+SQL> Use CONNECT or CREATE DATABASE to specify a database
+SQL> 
+SQL> SET NAMES ISO8859_1;
+SQL> CONNECT 'WHERE_GDB:cf_18.fdb';
+SQL> 
+SQL> SET NAMES ISO8859_1;
+SQL> SET ECHO ON;
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (1, NULL, 'Kelly  ', '126 bytes Lusttttttttttttttttttttttttttttttt');
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (2, NULL, 'Short  ', '');
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (3, NULL, 'Silke  ', '127 bytes Alttttttttttttttttttttttttttttttttt');
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (4, NULL, 'Short  ', '');
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (5, NULL, 'Seweryn', '128 bytes Schaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (6, NULL, 'Short  ', '');
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (7, NULL, 'Arjen  ', '129 bytes Draaiorgellllllllllllllllllllllllllll');
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (8, NULL, 'Short  ', '');
+SQL> INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (9, NULL, 'Jasper ', 'Janssen');
+SQL> 
+SQL> 
