@@ -88,7 +88,7 @@ select * from project;
 exit;
 $ SLEEP 5
 $ TYPE foo4.tt1
-$ RUN_BG foo4 > foo4.tt2
+$ RUN_BG foo4 > foo4.tt2 &
 $ SLEEP 5
 $ ISQL -m WHERE_GDB:events.gdb
 update project set prize = prize * 1.16;
@@ -97,7 +97,7 @@ select * from project;
 exit;
 $ SLEEP 5
 $ TYPE foo4.tt2
-$ RUN_BG foo4 > foo4.tt3
+$ RUN_BG foo4 > foo4.tt3 &
 $ SLEEP 5
 $ ISQL -m WHERE_GDB:events.gdb
 update project set prize = prize * 1.25;

@@ -117,7 +117,7 @@ main()
 $ GPRE  -n -m foo2.e
 $ CC FLAG_CC foo2.c
 $ LINK FLAG_LINK foo2 
-$ RUN_BG foo2 > foo2.tt2
+$ RUN_BG foo2 > foo2.tt2 &
 $ SLEEP 5
 $ ISQL -m WHERE_GDB:events.gdb
 update project set prize = prize * 1.05 ;

@@ -76,7 +76,7 @@ select * from works_on;
 quit;
 $ SLEEP 5
 $ TYPE foo3.tt1 
-$ RUN_BG foo3 > foo3.tt2
+$ RUN_BG foo3 > foo3.tt2 &
 $ SLEEP 5
 $ ISQL 
 connect "WHERE_GDB:events.gdb" ;

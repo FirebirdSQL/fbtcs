@@ -80,13 +80,13 @@ $ CREATE event_custom.h
 
 void init_server(char**, short);
 
-void parse_server_args(int, char*[], int*,short);
+void parse_server_args(int, char*[], int*, short*);
 
 void create_client(int *, HANDLE[MAX_CLIENTS][2], int, char *);
 
 void packet_handler(long[], HANDLE[MAX_CLIENTS][2], short);
 
-int update_server_relation(int[], short);
+int update_server_relation(long[], short);
 
 int  event_handler(char *, short, char *);
 
@@ -184,17 +184,17 @@ int main (int argc, char* argv[])
 			
 /*--------------------------------------------------------------------------*/
 
-/* Ready the database and express interest in asynchronous events */
+// Ready the database and express interest in asynchronous events
 
 	READY DB;
 	CHECK_STATUS;
 	START_TRANSACTION;
 
-/* Parse the command line */
+// Parse the command line
 
 	parse_server_args(argc,argv,&num_events,&verbose);
 
-/* Queue events */
+// Queue events
 
 	length = isc_event_block(&event_buffer,&result_buffer,MAX_CLIENTS,
 			"MOE","CURLY","LARRY","HARPO","GROUCHO","CHICO");
@@ -202,7 +202,7 @@ int main (int argc, char* argv[])
 			(isc_callback)event_handler,result_buffer);
 	CHECK_STATUS;
 
-/* Ignore death-of-a-child signal */
+// Ignore death-of-a-child signal
 
 #ifndef WIN_NT
 #ifndef DARWIN
@@ -212,11 +212,11 @@ int main (int argc, char* argv[])
 #endif
 #endif
 
-/* Initialize the database */
+// Initialize the database 
 
 	init_server(&start_time,verbose);
 
-/* Create a client via FORK() and EXEC() */
+// Create a client via FORK() and EXEC() 
 
 /*	create_client(&client_count,
 		  pipe_fd,
@@ -226,58 +226,54 @@ int main (int argc, char* argv[])
 
 
 
-/* Start LOOP_COUNT at NUM_EVENTS and continue looping until LOOP_COUNT
-   reaches 0. */
+// Start LOOP_COUNT at NUM_EVENTS and continue looping until LOOP_COUNT
+// reaches 0.
 
 	for ( loop_count = num_events ; loop_count > 0; ) {
 
-/* If an event has occurred then reset the event flag, get the event counts,
-   handle any PACKETS in the PIPELINES from the CLIENTS and update the
-   database with the number of events the SERVER has received */
+// If an event has occurred then reset the event flag, get the event counts,
+// handle any PACKETS in the PIPELINES from the CLIENTS and update the
+// database with the number of events the SERVER has received 
 
-	if (!event) 
-			{
+		if (!event) 
+		{
 #ifdef WIN_NT
 			Sleep(5000);
 #else
 			sleep(5);
 #endif
-			}	  
+		}	  
 
-	   else {
-		event--; 
+		else {
+			event--; 
 
-		isc_event_counts(count_array,length,
-			  event_buffer,result_buffer);
-
-		loop_count -= update_server_relation(count_array,verbose);
-		packet_handler(count_array,pipe_fd,verbose);
-		isc_que_events(gds_status,&DB,&event_id,length,event_buffer,
+			isc_event_counts(count_array,length,
+					  event_buffer,result_buffer);
+	
+			loop_count -= update_server_relation(count_array,verbose);
+			packet_handler(count_array,pipe_fd,verbose);
+			isc_que_events(gds_status,&DB,&event_id,length,event_buffer,
 						(isc_callback)event_handler,result_buffer);
-		CHECK_STATUS;
+			CHECK_STATUS;
 
+		}
+
+		if (client_count < MAX_CLIENTS) {
+
+			create_client(&client_count, pipe_fd, num_events,
+					client_names[client_count]);
+
+		}
 	}
 
-	if (client_count < MAX_CLIENTS) {
-
-		create_client(&client_count,
-			  pipe_fd,
-			  num_events,
-			  client_names[client_count]);
-
-	}
-	  
-
-	}
-
-/* Get any remaining packets from the PIPES and update the database */
+// Get any remaining packets from the PIPES and update the database
 
 	finish_packets(pipe_fd,verbose);
 
 
-/* Cancel interest in the events, print the report and return stat = TRUE if
-   the server received the same number of events posted by the clients else
-   return FALSE */
+// Cancel interest in the events, print the report and return stat = TRUE if
+// the server received the same number of events posted by the clients else
+// return FALSE
 
 	isc_cancel_events(gds_status,&DB,&event_id);
 	CHECK_STATUS;
@@ -321,70 +317,92 @@ void init_server(
 	for (i = 0; i < 80; i++)
 	fprintf(stdout,"=");
 	fprintf(stdout,"\n\n");
+	fflush(stdout);
 
-	if (verbose)
-	fprintf(stdout,"\tDeleting all tuples from the CLIENT_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\tDeleting all tuples from the CLIENT_RELATION...\n");
+		fflush(stdout);
+	}
+
 	EXEC SQL
 	DELETE FROM CLIENT_RELATION;
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tDeleting all tuples from the SERVER_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tDeleting all tuples from the SERVER_RELATION...\n");
+		fflush(stdout);
+	}
 	EXEC SQL
 	DELETE FROM SERVER_RELATION;
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tDeleting all tuples from the PACKET_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tDeleting all tuples from the PACKET_RELATION...\n");
+		fflush(stdout);
+	}
 	EXEC SQL
 	DELETE FROM PACKET_RELATION;
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tAdding client MOE to the CLIENT_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tAdding client MOE to the CLIENT_RELATION...\n");
+		fflush(stdout);
+	}
 	EXEC SQL
 	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
 				 VALUES ('MOE',0);
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tAdding client CURLY to the CLIENT_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tAdding client CURLY to the CLIENT_RELATION...\n");
+		fflush(stdout);
+	}
 	EXEC SQL
 	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
 				 VALUES ('CURLY',0);
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tAdding client LARRY to the CLIENT_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tAdding client LARRY to the CLIENT_RELATION...\n");
+		fflush(stdout);
+	}
 	EXEC SQL
 	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
 				 VALUES ('LARRY',0);
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tAdding client HARPO to the CLIENT_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tAdding client HARPO to the CLIENT_RELATION...\n");
+		fflush(stdout);
+	}
 	EXEC SQL
 	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
 				 VALUES ('HARPO',0);
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tAdding client GROUCHO to the CLIENT_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tAdding client GROUCHO to the CLIENT_RELATION...\n");
+		fflush(stdout);
+	}
 
 	EXEC SQL
 	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
 				 VALUES ('GROUCHO',0);
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tAdding client CHICO to the CLIENT_RELATION...\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tAdding client CHICO to the CLIENT_RELATION...\n");
+		fflush(stdout);
+	}
 	EXEC SQL
 	INSERT INTO CLIENT_RELATION (CLIENT_NAME,CLIENT_EVENT_COUNT)
 				 VALUES ('CHICO',0);
 	CHECK_STATUS;
 
-	if (verbose)
-	fprintf(stdout,"\n\tInitializing the SERVER_RELATION...\n\n");
+	if (verbose) {
+		fprintf(stdout,"\n\tInitializing the SERVER_RELATION...\n\n");
+		fflush(stdout);
+	}
 	EXEC SQL
 	INSERT INTO SERVER_RELATION (SERVER_EVENT_COUNT)
 				 VALUES (0);
@@ -402,7 +420,7 @@ void parse_server_args(
 		int argc,
 		char *argv[],
 		int* num_events,
-		short verbose)
+		short* verbose)
 {
 /****************************************************************************
  *
@@ -432,46 +450,45 @@ void parse_server_args(
 
 	for (++argv; argv < end_args; ) {
 
-	arg_ptr = *argv++;
-	sw_bad  = FALSE;
-	if (*arg_ptr != '-')
-		sw_bad = TRUE;
-	else
-		switch (UPPER(arg_ptr[1])) {
-
-		case 'I':
-			strcpy(num_event_string,*argv++);
-			*num_events = atoi(num_event_string);
-			break;
-
-		case 'V':
-			verbose = TRUE;
-			break;
-
-		case 'Z':
-			fprintf(stdout,"\n\tAsynchronous Test Version %s\n\n",
-									VERSION);
-			GDS_VERSION(&DB,NULL,NULL);
-			CHECK_STATUS;
-			if (argc == 2)
-			exit(TRUE);
-			break;
-
-		default :
+		arg_ptr = *argv++;
+		sw_bad  = FALSE;
+		if (*arg_ptr != '-')
 			sw_bad = TRUE;
+		else
+			switch (UPPER(arg_ptr[1])) {
 
-		}
+			case 'I':
+				strcpy(num_event_string,*argv++);
+				*num_events = atoi(num_event_string);
+				break;
 
-	if (sw_bad) {
+			case 'V':
+				*verbose = TRUE;
+				break;
 
-		fprintf(stdout,"Invalid option \"%s\". Valid options are:\n",
+			case 'Z':
+				fprintf(stdout,"\n\tAsynchronous Test Version %s\n\n",
+					VERSION);
+				GDS_VERSION(&DB,NULL,NULL);
+				CHECK_STATUS;
+				if (argc == 2)
+				exit(TRUE);
+				break;
+
+			default :
+				sw_bad = TRUE;
+
+			}
+
+		if (sw_bad) {
+
+			fprintf(stdout,"Invalid option \"%s\". Valid options are:\n",
 								arg_ptr);
-		fprintf(stdout,"\t-I\tEvent iterations\n");
-		fprintf(stdout,"\t-Z\tProgram version\n");
-		fprintf(stdout,"\t-V\tVerbose messages\n");
-		exit(FALSE);
-
-	}
+			fprintf(stdout,"\t-I\tEvent iterations\n");
+			fprintf(stdout,"\t-Z\tProgram version\n");
+			fprintf(stdout,"\t-V\tVerbose messages\n");
+			exit(FALSE);
+		}
 
 	}
 
@@ -520,28 +537,29 @@ void create_client(
 
 /* Sleep 1 second, open a pipe and store the pipe fildes in PIPE_FD array */
 
-   client_events = num_events / MAX_CLIENTS;
-   extra_events  = num_events % MAX_CLIENTS;
+   	client_events = num_events / MAX_CLIENTS;
+   	extra_events  = num_events % MAX_CLIENTS;
 
 		 
 #ifdef WIN_NT
 
-		Sleep( 1 * 1000 );
+	Sleep( 1 * 1000 );
 
-   if (!InitializeSecurityDescriptor(&descriptor, SECURITY_DESCRIPTOR_REVISION))
+   	if (!InitializeSecurityDescriptor(&descriptor, SECURITY_DESCRIPTOR_REVISION))
 
-   if (!SetSecurityDescriptorDacl(&descriptor, FALSE, NULL, FALSE))
-
-
-
-attr.nLength = sizeof (SECURITY_ATTRIBUTES);
-attr.bInheritHandle = TRUE;
-attr.lpSecurityDescriptor = &descriptor;
+   	if (!SetSecurityDescriptorDacl(&descriptor, FALSE, NULL, FALSE))
 
 
-if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 )) 
+
+	attr.nLength = sizeof (SECURITY_ATTRIBUTES);
+	attr.bInheritHandle = TRUE;
+	attr.lpSecurityDescriptor = &descriptor;
+
+
+	if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 )) 
 	{
-	  fprintf(stdout,"Create pipe failed\n");
+	  	fprintf(stdout,"Create pipe failed\n");
+		fflush(stdout);
 	}
 
 	pipe_fd[*client_count][0] = pipe_write;
@@ -564,16 +582,18 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 	si.cbReserved2 = 0;
 	si.lpReserved2 = NULL;
  
-  if ( ! CreateProcess("event_client.exe", fd_str, NULL,
+  	if ( ! CreateProcess("event_client.exe", fd_str, NULL,
 		 NULL, TRUE, NORMAL_PRIORITY_CLASS ,
 		 NULL, NULL, &si, &pi))
-	 {
-	  fprintf(stdout,"Error : CreateProcess Failed, Error Code %d \n",
+	{
+		fprintf(stdout,"Error : CreateProcess Failed, Error Code %d \n",
 			  GetLastError() );
-	 }
+		fflush(stdout);
+	
+	}
 
 
-	 pids[*client_count] = pi.hProcess;
+	pids[*client_count] = pi.hProcess;
 
 #else
 	sleep(1);
@@ -581,7 +601,7 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 	if (pipe(pipe_fd[*client_count]) == -1)
 		perror("pipe");
 
-/* Convert the number of events to a string */
+// Convert the number of events to a string 
 
 	if (*client_count != 0)
 
@@ -591,10 +611,7 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 
 		sprintf(event_str,"%d",client_events+extra_events);
 
-/* Fork a child and if successful, EXEC the EVENT_CLIENT for the child */
-
-
-
+// Fork a child and if successful, EXEC the EVENT_CLIENT for the child
 
 	pid = fork();
 	switch (pid) {
@@ -605,12 +622,11 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 					fd_str,event_str,client_name,NULL);
 			 break;
 	}
-
 	CLOSE_PIPE;
 
 #endif
 
-/*  This was move to work on NT */
+//  This was move to work on NT 
 
 	if (*client_count != 0)
 	   fprintf(stdout,"\t\tClient %s will post %d events\n\n",
@@ -618,7 +634,7 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 	else
 	   fprintf(stdout,"\t\tClient %s will post %d events\n\n",
 			client_name, client_events + extra_events);
-   
+  	fflush(stdout); 
 	
 
 	(*client_count)++;
@@ -674,75 +690,78 @@ void packet_handler(
 
 	for ( client_num = 0; client_num < MAX_CLIENTS; client_num++ ) {
 
-	  for ( packet_num = 0;
+	  	for ( packet_num = 0;
 			packet_num < count_array[client_num]; packet_num++ ) {
 
 
 #ifdef WIN_NT
 
-		for ( i = 0; i < IO_RETRY; i++ ) 
-		 {
-		 if (!PeekNamedPipe((HANDLE) pipe_fd[client_num][0],NULL,
-			 0,NULL, &outsize, NULL))
-			{
-			 i = IO_RETRY;
-			}
+			for ( i = 0; i < IO_RETRY; i++ ) 
+		 	{
+		 		if (!PeekNamedPipe((HANDLE) pipe_fd[client_num][0],NULL,
+			 				0,NULL, &outsize, NULL))
+				{
+			 		i = IO_RETRY;
+				}
 
-		if ( outsize )
-		  {
-		   i = IO_RETRY;
+				if ( outsize )
+		  		{
+		   			i = IO_RETRY;
 		  
-		   if (ReadFile(pipe_fd[client_num][0],packet,size,&outsize,NULL))
-			{
-			EXEC SQL
-		  INSERT INTO PACKET_RELATION
-				 (CLIENT_NAME,PACKET_TEXT,PACKET_DATE)
-		  VALUES (:client_names[client_num],:packet,'NOW');
-		CHECK_STATUS;
+		   			if (ReadFile(pipe_fd[client_num][0],packet,size,&outsize,NULL))
+					{
+						EXEC SQL
+							INSERT INTO PACKET_RELATION
+				 			(CLIENT_NAME,PACKET_TEXT,PACKET_DATE)
+		 					VALUES (:client_names[client_num],:packet,'NOW');
+						CHECK_STATUS;
+
+					}
+		 		}
+				else
+		  			Sleep(3000);
 
 			}
-		 }
-		else
-		  Sleep(3000);
-
-		}
 
 #else
 
-	   for ( i = 0; i < IO_RETRY; i++ ) {
+			for ( i = 0; i < IO_RETRY; i++ ) {
 
 
-	   if ((n = read(pipe_fd[client_num][0],packet,size)) == size) {
+	   			if ((n = read(pipe_fd[client_num][0],packet,size)) == size) {
 
-			EXEC SQL
-			INSERT INTO PACKET_RELATION
-				   (CLIENT_NAME,PACKET_TEXT,PACKET_DATE)
-				VALUES (:client_names[client_num],:packet,'NOW');
-			CHECK_STATUS;
-			break;
+					EXEC SQL
+						INSERT INTO PACKET_RELATION
+						(CLIENT_NAME,PACKET_TEXT,PACKET_DATE)
+						VALUES (:client_names[client_num],:packet,'NOW');
+					CHECK_STATUS;
+					break;
 
-		}	/* END IF READ */
+				}	// END IF READ 
 
-/* Else read didn't finish and the error is something other than interrupt */
+// Else read didn't finish and the error is something other than interrupt
 
-		else if ((n == -1) && (errno != EINTR)) {
+				else if ((n == -1) && (errno != EINTR)) {
 
-			sprintf(err_buf,"error on pipe read");
-			perror(err_buf);
+					sprintf(err_buf,"error on pipe read");
+					perror(err_buf);
 
-		}	/* END ELSE ERROR */
+				}	// END ELSE ERROR
 
-		}		/* END FOR IO_RETRY LOOP */
+			}	// END FOR IO_RETRY LOOP
 #endif
 
-	}		/* END FOR PACKET LOOP */
+		}	// END FOR PACKET LOOP
 
-	if (verbose)
-		fprintf(stdout,"\tReceived %d packets from client %s\n\n",
+		if (verbose) {
+			fprintf(stdout,"\tReceived %d packets from client %s\n\n",
 					packet_num,client_names[client_num]);
-	COMMIT;
-	CHECK_STATUS;
-	START_TRANSACTION;
+			fflush(stdout);
+		}
+
+		COMMIT;
+		CHECK_STATUS;
+		START_TRANSACTION;
 
 	}			/* END FOR CLIENT LOOP */
 
@@ -803,9 +822,11 @@ int update_server_relation(
 	else
 	first = FALSE;
 
-	if (verbose)
-	fprintf(stdout,"\tReceived %d event%c from all clients\n\n",
+	if (verbose) {
+		fprintf(stdout,"\tReceived %d event%c from all clients\n\n",
 				total_events,(total_events > 1) ? 's' : ' ');
+		fflush(stdout);
+	}
 
 	return(total_events);
 
@@ -872,45 +893,47 @@ int report_events(
 	fprintf(stdout,"\n");
 
 	fprintf(stdout,"\n\tAsynchronous Event Test %s\n\n",VERSION);
+	fflush(stdout);
 
 	if (verbose) {
-
-	fprintf(stdout,"\tTest started at:  %s",start_time);
-	time(&bintim);
-	finish_time = ctime(&bintim);
-	fprintf(stdout,"\tTest finished at: %s",finish_time);
-
+		fprintf(stdout,"\tTest started at:  %s",start_time);
+		time(&bintim);
+		finish_time = ctime(&bintim);
+		fprintf(stdout,"\tTest finished at: %s",finish_time);
+		fflush(stdout);
 	}
 
 	for (client_num = 0; client_num < MAX_CLIENTS; client_num++) {
 
-	client_event_count = 0;
-	packet_count = 0;
+		client_event_count = 0;
+		packet_count = 0;
 
-	EXEC SQL
-		SELECT CLIENT_EVENT_COUNT
-		INTO :client_event_count
-		FROM CLIENT_RELATION
-		WHERE CLIENT_NAME = :client_names[client_num];
-	CHECK_STATUS;
+		EXEC SQL
+			SELECT CLIENT_EVENT_COUNT
+			INTO :client_event_count
+			FROM CLIENT_RELATION
+			WHERE CLIENT_NAME = :client_names[client_num];
+		CHECK_STATUS;
 
-	fprintf(stdout,"\n\n\tClient %s created %d events\n",
+		fprintf(stdout,"\n\n\tClient %s created %d events\n",
 				client_names[client_num],client_event_count);
-	client_total_events = client_total_events + client_event_count;
+		fflush(stdout);
+		client_total_events = client_total_events + client_event_count;
 
-	EXEC SQL
-		SELECT COUNT(CLIENT_NAME)
-		INTO :packet_count
-		FROM PACKET_RELATION
-		WHERE CLIENT_NAME = :client_names[client_num];
-	CHECK_STATUS;
+		EXEC SQL
+			SELECT COUNT(CLIENT_NAME)
+			INTO :packet_count
+			FROM PACKET_RELATION
+			WHERE CLIENT_NAME = :client_names[client_num];
+		CHECK_STATUS;
 
-	fprintf(stdout,"\n\tClient %s sent %d packets to the server\n",
-				client_names[client_num],client_event_count);
-	fprintf(stdout,"\n\tThe server received %d packets from client %s\n",
-				packet_count,client_names[client_num]);
-	if (packet_count != client_event_count)
-		stat = ERRORV;
+		fprintf(stdout,"\n\tClient %s sent %d packets to the server\n",
+					client_names[client_num],client_event_count);
+		fprintf(stdout,"\n\tThe server received %d packets from client %s\n",
+					packet_count,client_names[client_num]);
+		fflush(stdout);
+		if (packet_count != client_event_count)
+			stat = ERRORV;
 
 	}
 
@@ -918,6 +941,7 @@ int report_events(
 
 	fprintf(stdout,"\n\n\tAll clients posted a total of %d events\n",
 							client_total_events);
+	fflush(stdout);
 
 /* Print the number of events received by the SERVER */
 
@@ -929,6 +953,7 @@ int report_events(
 
 	fprintf(stdout,"\n\n\tServer received a total of %d events\n\n",
 							server_event_count);
+	fflush(stdout);
 
 	if (server_event_count != client_total_events)
 	stat = ERRORV;
@@ -936,8 +961,9 @@ int report_events(
 /* Print the report footer */
 
 	for (i = 0; i < 80; i++)
-	fprintf(stdout,"=");
+		fprintf(stdout,"=");
 	fprintf(stdout,"\n\n");
+	fflush(stdout);
 
 	return(stat);
 
@@ -1034,10 +1060,12 @@ void finish_packets(
 		 }
 #endif
 
-	 if (verbose) 
+	if (verbose) {
 		fprintf(stdout,
 		"\n\tFinished with %d additional packets from client %s\n\n",
 					packet_num,client_names[client_num]);
+		fflush(stdout);
+	}
 	COMMIT;
 	CHECK_STATUS;
 	START_TRANSACTION;
@@ -1104,45 +1132,44 @@ main(int argc,char* argv[])
 	parse_client_args(argc,argv,&client_pipe,&num_events,client_name);
 
 
-/* Ready the EVENTS.GDB database */
+// Ready the EVENTS.GDB database
 
 	READY DB;
 	CHECK_STATUS;
 	START_TRANSACTION;
 
-/* Create NUM_EVENTS events */
+// Create NUM_EVENTS events
 
 	for ( loop_count = 0; loop_count < num_events; loop_count++ )
-	 {
+	{
 
-/* Update the CLIENT_RELATION which fires a trigger to post an event */
+// Update the CLIENT_RELATION which fires a trigger to post an event
 
-	EXEC SQL
-		UPDATE CLIENT_RELATION
-		SET CLIENT_EVENT_COUNT = :loop_count + 1
-		WHERE CLIENT_NAME = :client_name;
-	CHECK_STATUS;
-
-
-/* Create a PACKET of the form: 	"MOE_100" */
-
-	strcpy(packet,client_name);
-	sprintf(events,"%d",loop_count+1);
-	strcat(packet,events);
-
-/* Continue attempting to write on pipe until not interrupted */
+		EXEC SQL
+			UPDATE CLIENT_RELATION
+			SET CLIENT_EVENT_COUNT = :loop_count + 1
+			WHERE CLIENT_NAME = :client_name;
+		CHECK_STATUS;
 
 
+// Create a PACKET of the form: 	"MOE_100"
+	
+		strcpy(packet,client_name);
+		sprintf(events,"%d",loop_count+1);
+		strcat(packet,events);
 
-/* Write the PACKET into the pipe for the SERVER to read and insert into the
-   PACKET_RELATION */
+// Continue attempting to write on pipe until not interrupted
+
+// Write the PACKET into the pipe for the SERVER to read and insert into the
+// PACKET_RELATION 
 
 #ifdef WIN_NT
 
 		if (!WriteFile(client_pipe,packet,size,&outsize,NULL))
 		{
 			fprintf(stdout,"Error : WriteFile failed, Error Code %d \n",
-					GetLastError() );
+	 				GetLastError() );
+			fflush(stdout);
 		}
 		else
 		{
@@ -1150,32 +1177,25 @@ main(int argc,char* argv[])
 		}
 #else
 
-	for ( i = 0; i < IO_RETRY; i++ ) {
+		for ( i = 0; i < IO_RETRY; i++ ) {
 
-	if ((nwrite = write(client_pipe,packet,size)) == size) {
-
-		sleep(5);
-
-		break;
-
-		}
-
-	else if ((nwrite == -1) && (errno != EINTR)) {
-
-		sprintf(buf,"**%s failed WRITE on PIPE %d of packet %s**\n",
+			if ((nwrite = write(client_pipe,packet,size)) == size) {
+				sleep(5);
+				break;
+			}
+			else if ((nwrite == -1) && (errno != EINTR)) {
+				sprintf(buf,"**%s failed WRITE on PIPE %d of packet %s**\n",
 					client_name,client_pipe,packet);
-		perror(buf);
-
+				perror(buf);
+			}
 		}
-
-	}
 #endif
 
 /* Commit the transaction */
 
-	COMMIT;
-	CHECK_STATUS;
-	START_TRANSACTION;
+		COMMIT;
+		CHECK_STATUS;
+		START_TRANSACTION;
 
 	}
 
@@ -1187,23 +1207,21 @@ main(int argc,char* argv[])
 /*	Sleep ( 24 * 1000 ); */
 
 
-   if (!CloseHandle (client_pipe))
-	  {
-	sprintf(buf,"**%s failed on CLOSE of PIPE %d**\n",
+   	if (!CloseHandle (client_pipe))
+  	{
+		sprintf(buf,"**%s failed on CLOSE of PIPE %d**\n",
 				client_name,client_pipe); 
 		fflush(buf);
-	  }
+	}
 					
 #else
 
  /*   sleep(240); */
 
 	if (close(client_pipe) == -1) {
-
-	sprintf(buf,"**%s failed on CLOSE of PIPE %d**\n",
+		sprintf(buf,"**%s failed on CLOSE of PIPE %d**\n",
 					client_name,client_pipe);
-	perror(buf);
-
+		perror(buf);
 	}
 #endif
 
@@ -1251,7 +1269,7 @@ $ LINK FLAG_LINK event_client
 $ GPRE -e event_server.e -d WHERE_GDB:asyn.gdb
 $ CC FLAG_CC event_server.c
 $ LINK FLAG_LINK event_server 
-$ RUN event_server
+$ RUN event_server -V
 $ SLEEP 5
 $ DELETE event_custom.h
 $ DELETE event_server* 
