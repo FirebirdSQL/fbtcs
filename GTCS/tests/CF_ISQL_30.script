@@ -1,0 +1,53 @@
+#
+# bug in devel-list 
+# reported 01-Aug-2003 by Guenther Klement
+#
+
+>> cf_isql_30a.sql
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_30.fdb';
+CREATE TABLE netztab (object1 varchar(2), object2 varchar(10));
+
+>> cf_isql_30.e
+
+#include <stdio.h>
+EXEC SQL INCLUDE SQLCA;
+
+char err_buff[512];
+
+int main()
+{
+	EXEC SQL WHENEVER SQLERROR GOTO errorlabel;
+
+	EXEC SQL CONNECT TO 'WHERE_GDB:cf_isql_30.fdb' USER 'sysdba' PASSWORD 'masterkey' ;
+
+	/* open default transaction */
+	EXEC SQL SET TRANSACTION NO WAIT READ COMMITTED RECORD_VERSION;
+
+/* this will crash classic server on exit within cleanup_database() */
+/*static doesn't help*/ 
+	char* temp = "SELECT * FROM netztab WHERE object2 = 'dummy'" ;
+	EXEC SQL PREPARE SQL_STMT_1 FROM :temp;
+/* end dangours code */
+
+	if (gds__trans)
+		EXEC SQL COMMIT WORK ;
+
+	EXEC SQL DISCONNECT DEFAULT;
+	printf("Done\n");
+	return 0;
+
+errorlabel:
+	printf("Error %d\n", SQLCODE );
+	isc_sql_interprete(SQLCODE, err_buff, sizeof(err_buff));
+	puts( err_buff );
+	return 1;
+}
+
+$ISQL -m -i cf_isql_30a.sql
+$GPRE cf_isql_30.e -d WHERE_GDB:cf_isql_30.fdb
+$CC FLAG_CC cf_isql_30.c
+$LINK FLAG_LINK cf_isql_30
+$RUN cf_isql_30
+$DROP WHERE_GDB:cf_isql_30.fdb
+$DELETE cf_isql_30*

@@ -1,0 +1,61 @@
+#
+# bug #961543 Server Crash ISO8859_1 and DE_DE
+#
+
+>> cf_isql_33.sql
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_33.fdb' USER 'SYSDBA' PASSWORD 'masterkey' DEFAULT CHARACTER SET ISO8859_1;
+
+set echo;
+
+CREATE TABLE SNIPPETS (
+CODE VARCHAR(4000) COLLATE DE_DE
+);
+
+SET TERM ^;
+
+/* ... and insert the following text (w/o begin/end) in a record: */
+
+
+insert into snippets values('
+function JsShowZeroFilled(inValue) {
+if(inValue > 9) {
+return inValue;
+} else {
+return ''0'' + inValue;
+}
+}
+
+
+
+
+function JsGetWochentagname(wochentag,wochentagtyp,langcode) {
+var wochentagname;
+
+
+array_DE = new Array("SO,Son.,Sonntag", "MO,Mon.,Montag",
+"DI,Di.,Dienstag", "MI,Mi.,Mittwoch",
+"DO,Don.,Donnerstag","FR,Fr.,Freitag", "SA,Sam.,Samstag");
+array_EN = new Array("SU,Su.,Sunday", "MO,Mon.,Monday",
+"TU,Tu.,Tuesday", "WE,We.,Wednesday", "DO,Th.,Thursday",
+"FR,Fr.,Friday", "SA,Sa.,Saturday");
+
+
+if (langcode.toUpperCase() == ''DE'') {
+array_wochentagname = array_DE[wochentag].split('','');
+wochentagname = array_wochentagname[wochentagtyp-1];
+} else {
+array_wochentagname = array_EN[wochentag].split('','');
+wochentagname = array_wochentagname[wochentagtyp-1];
+}
+return wochentagname;
+}
+')^
+
+SET TERM ; ^
+
+SELECT CODE FROM SNIPPETS GROUP BY CODE;
+
+$ISQL -m -i cf_isql_33.sql
+$DROP WHERE_GDB:cf_isql_33.fdb
+$DELETE cf_isql_33*

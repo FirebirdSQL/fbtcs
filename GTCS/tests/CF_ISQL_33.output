@@ -1,0 +1,90 @@
+Use CONNECT or CREATE DATABASE to specify a database
+SQL> 
+SQL> CREATE TABLE SNIPPETS (
+CON> CODE VARCHAR(4000) COLLATE DE_DE
+CON> );
+SQL> 
+SQL> SET TERM ^;
+SQL> 
+SQL> /* ... and insert the following text (w/o begin/end) in a record: */
+CON> 
+CON> 
+CON> insert into snippets values('
+CON> function JsShowZeroFilled(inValue) {
+CON> if(inValue > 9) {
+CON> return inValue;
+CON> } else {
+CON> return ''0'' + inValue;
+CON> }
+CON> }
+CON> 
+CON> 
+CON> 
+CON> 
+CON> function JsGetWochentagname(wochentag,wochentagtyp,langcode) {
+CON> var wochentagname;
+CON> 
+CON> 
+CON> array_DE = new Array("SO,Son.,Sonntag", "MO,Mon.,Montag",
+CON> "DI,Di.,Dienstag", "MI,Mi.,Mittwoch",
+CON> "DO,Don.,Donnerstag","FR,Fr.,Freitag", "SA,Sam.,Samstag");
+CON> array_EN = new Array("SU,Su.,Sunday", "MO,Mon.,Monday",
+CON> "TU,Tu.,Tuesday", "WE,We.,Wednesday", "DO,Th.,Thursday",
+CON> "FR,Fr.,Friday", "SA,Sa.,Saturday");
+CON> 
+CON> 
+CON> if (langcode.toUpperCase() == ''DE'') {
+CON> array_wochentagname = array_DE[wochentag].split('','');
+CON> wochentagname = array_wochentagname[wochentagtyp-1];
+CON> } else {
+CON> array_wochentagname = array_EN[wochentag].split('','');
+CON> wochentagname = array_wochentagname[wochentagtyp-1];
+CON> }
+CON> return wochentagname;
+CON> }
+CON> ')^
+SQL> 
+SQL> SET TERM ; ^
+SQL> 
+SQL> SELECT CODE FROM SNIPPETS GROUP BY CODE;
+
+CODE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+=============================================================================== 
+
+
+function JsShowZeroFilled(inValue) {
+if(inValue > 9) {
+return inValue;
+} else {
+return '0' + inValue;
+}
+}
+
+
+
+
+function JsGetWochentagname(wochentag,wochentagtyp,langcode) {
+var wochentagname;
+
+
+array_DE = new Array("SO,Son.,Sonntag", "MO,Mon.,Montag",
+"DI,Di.,Dienstag", "MI,Mi.,Mittwoch",
+"DO,Don.,Donnerstag","FR,Fr.,Freitag", "SA,Sam.,Samstag");
+array_EN = new Array("SU,Su.,Sunday", "MO,Mon.,Monday",
+"TU,Tu.,Tuesday", "WE,We.,Wednesday", "DO,Th.,Thursday",
+"FR,Fr.,Friday", "SA,Sa.,Saturday");
+
+
+if (langcode.toUpperCase() == 'DE') {
+array_wochentagname = array_DE[wochentag].split(',');
+wochentagname = array_wochentagname[wochentagtyp-1];
+} else {
+array_wochentagname = array_EN[wochentag].split(',');
+wochentagname = array_wochentagname[wochentagtyp-1];
+}
+return wochentagname;
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> 
+SQL> 

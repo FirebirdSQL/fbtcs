@@ -1,0 +1,82 @@
+#
+# Bug #582425 DB crashes if trigger BU deletes own row
+#
+>> cf_isql_28.sql
+
+set echo;
+
+/*
+Attention: This test crashes the database.
+Error 'internal gds software consistency check (wrong record length (183))'
+will be raised
+The database can't be used anymore without having it fixed before!
+*/
+
+/* Step 1: DDL */
+
+SET SQL DIALECT 3;
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_28.fdb';
+
+CREATE TABLE TEST (ID INTEGER NOT NULL);
+
+COMMIT WORK;
+SET AUTODDL OFF;
+SET TERM ^ ;
+
+CREATE TRIGGER TEST_BU FOR TEST
+ACTIVE BEFORE UPDATE POSITION 0
+AS
+BEGIN
+delete from TEST where id=old.id;
+END ^
+
+COMMIT WORK ^
+SET TERM ; ^
+
+
+/* Step 2: DML */
+
+insert into TEST values (1);
+insert into TEST values (2);
+insert into TEST values (3);
+insert into TEST values (4);
+insert into TEST values (5);
+insert into TEST values (6);
+commit;
+
+/* fine so far */
+/* fail with commit or rollback */
+
+update TEST set id=-1 where id=1;
+commit;
+
+delete from TEST;
+
+>> cf_isql_28b.sql
+connect 'WHERE_GDB:cf_isql_28.fdb';
+
+set echo;
+
+insert into TEST values (1);
+insert into TEST values (2);
+insert into TEST values (3);
+insert into TEST values (4);
+insert into TEST values (5);
+insert into TEST values (6);
+commit;
+
+update TEST set id=-1 where id=1;
+rollback;
+/* error */
+
+quit;
+>> cf_isql_28c.sql
+connect 'WHERE_GDB:cf_isql_28.fdb';
+select * from test;
+
+$ISQL -m -i cf_isql_28.sql
+$ISQL -m -i cf_isql_28b.sql
+$ISQL -m -i cf_isql_28c.sql
+$DROP WHERE_GDB:cf_isql_28.fdb
+$DELETE cf_isql_28*

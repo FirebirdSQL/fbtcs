@@ -1,0 +1,81 @@
+Use CONNECT or CREATE DATABASE to specify a database
+SQL> 
+SQL> /*
+--> Attention: This test crashes the database.
+--> Error 'internal gds software consistency check (wrong record length (183))'
+--> will be raised
+--> The database can't be used anymore without having it fixed before!
+--> */
+CON> 
+CON> /* Step 1: DDL */
+CON> 
+CON> SET SQL DIALECT 3;
+SQL> 
+SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_28.fdb';
+SQL> 
+SQL> CREATE TABLE TEST (ID INTEGER NOT NULL);
+SQL> 
+SQL> COMMIT WORK;
+SQL> SET AUTODDL OFF;
+SQL> SET TERM ^ ;
+SQL> 
+SQL> CREATE TRIGGER TEST_BU FOR TEST
+CON> ACTIVE BEFORE UPDATE POSITION 0
+CON> AS
+CON> BEGIN
+CON> delete from TEST where id=old.id;
+CON> END ^
+SQL> 
+SQL> COMMIT WORK ^
+SQL> SET TERM ; ^
+SQL> 
+SQL> 
+SQL> /* Step 2: DML */
+CON> 
+CON> insert into TEST values (1);
+SQL> insert into TEST values (2);
+SQL> insert into TEST values (3);
+SQL> insert into TEST values (4);
+SQL> insert into TEST values (5);
+SQL> insert into TEST values (6);
+SQL> commit;
+SQL> 
+SQL> /* fine so far */
+CON> /* fail with commit or rollback */
+CON> 
+CON> update TEST set id=-1 where id=1;
+SQL> commit;
+SQL> 
+SQL> delete from TEST;
+SQL> 
+SQL> Use CONNECT or CREATE DATABASE to specify a database
+SQL> 
+SQL> insert into TEST values (1);
+SQL> insert into TEST values (2);
+SQL> insert into TEST values (3);
+SQL> insert into TEST values (4);
+SQL> insert into TEST values (5);
+SQL> insert into TEST values (6);
+SQL> commit;
+SQL> 
+SQL> update TEST set id=-1 where id=1;
+SQL> rollback;
+Statement failed, SQLCODE = -902
+
+internal gds software consistency check (can't continue after bugcheck)
+SQL> /* error */
+CON> 
+CON> quit;
+Use CONNECT or CREATE DATABASE to specify a database
+
+          ID 
+============ 
+Statement failed, SQLCODE = -902
+
+internal gds software consistency check (wrong record length (183))
+Statement failed, SQLCODE = -902
+
+internal gds software consistency check (can't continue after bugcheck)
+Statement failed, SQLCODE = -902
+
+internal gds software consistency check (can't continue after bugcheck)

@@ -1,0 +1,62 @@
+#
+# Division by 0 corrupt database
+#
+#
+>> cf_isql_29a.sql
+
+set echo;
+
+SET SQL DIALECT 3;
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_29.fdb';
+
+SET TERM ^ ;
+
+CREATE PROCEDURE SPX_Aux_TEST (Par1 BIGINT) RETURNS (Ret1 BIGINT)
+AS
+DECLARE VARIABLE Lok1 BIGINT ;
+DECLARE VARIABLE iTmpVar Integer;
+BEGIN
+/* === Kern - Source */
+/* START */
+BEGIN
+Lok1=2;
+iTmpVar = 1/0;
+WHEN ANY DO BEGIN
+EXCEPTION;
+END
+END
+/* END */
+/* === Kern-Source */
+END^
+
+SET TERM ; ^
+commit;
+
+>> cf_isql_29b.sql
+
+CREATE OR ALTER PROCEDURE SPX_Aux_TEST (Par1 BIGINT) RETURNS (Ret1 BIGINT)
+AS
+DECLARE VARIABLE Lok1 BIGINT ;
+DECLARE VARIABLE iTmpVar Integer;
+BEGIN
+  BEGIN
+    Lok1=2;
+    iTmpVar = 1/0;
+  END
+END
+
+
+>> cf_isql_29c.sql
+
+connect 'WHERE_GDB:cf_isql_29.fdb';
+set echo on;
+
+EXECUTE PROCEDURE SPX_AUX_TEST (1);
+EXECUTE PROCEDURE SPX_AUX_TEST (1);
+EXECUTE PROCEDURE SPX_AUX_TEST (1);
+
+$ISQL -m -i cf_isql_29a.sql
+$ISQL -m -i cf_isql_29c.sql
+$DROP WHERE_GDB:cf_isql_29.fdb
+$DELETE cf_isql_29*
