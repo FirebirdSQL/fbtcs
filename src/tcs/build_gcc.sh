@@ -54,7 +54,7 @@ case `uname -s` in
 		exeext=
 		ext=linux
 		CFLAGS="-ggdb -Wall -Wno-parentheses -DLINUX"
-		LIBS="-lstdc++"
+		LIBS="-lstdc++ -lpthread"
 		CLIENTLIB="$FIREBIRD/lib/libfbclient.so"
 		;;
 	Darwin)	
