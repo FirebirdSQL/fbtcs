@@ -24,7 +24,6 @@ $ CREATE con015.e
 */
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
 
 DATABASE DB = 'WHERE_GDB:sh_test.gdb';
 
@@ -50,17 +49,10 @@ char *argv[];
 
 {
 	
-	int verbose, Count;
-	Count = 0;
+	int Count = 0;
         printf("\nTest:\n%s\n",Test);
         Underline(80);
 
-	/*--- check if verbose is requested ------ */
-	verbose = FALSE;
-	if (--argc > 0){	
-		if (*argv[1] == 'v' || *argv[1] == 'V')
-			verbose = TRUE;
-	}
 	EXEC SQL
                 DECLARE CR CURSOR FOR
                 SELECT COUNT(*)

@@ -12,7 +12,6 @@ $ CREATE sin003.e
 */
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
 
 DATABASE DB = 'WHERE_GDB:sh_test.gdb';
 EXEC SQL	INCLUDE SQLCA;
@@ -43,15 +42,6 @@ char *argv[];
 
 
 {
-	
-	int verbose;
-
-	/*--- check if verbose is requested ------ */
-	verbose = FALSE;
-	if (--argc > 0){	
-		if (*argv[1] == 'v' || *argv[1] == 'V')
-			verbose = TRUE;
-	}
         printf("Test:\n %s\n",Test);
         Underline(80);
 	EXEC SQL
