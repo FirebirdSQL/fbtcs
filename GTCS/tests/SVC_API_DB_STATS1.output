@@ -4,9 +4,7 @@ querying service
 reading response
  querying service
 reading response
-Database "d:/proyectos/firebird/fbtcs/temp/employee.gdb" querying service
-reading response
- querying service
+Database "WHERE_GDB_EXTERNAL:employee.gdb" querying service
 reading response
 Database header page information: querying service
 reading response
@@ -18,7 +16,7 @@ reading response
 reading response
 	Page size		1024 querying service
 reading response
-	ODS version		11.0 querying service
+	ODS version		11.0 type 0200 querying service
 reading response
 	Oldest transaction	1 querying service
 reading response
@@ -42,8 +40,6 @@ reading response
 reading response
 	Next header page	0 querying service
 reading response
-	Clumplet End		102 querying service
-reading response
 	Database dialect	1 querying service
 reading response
  querying service
@@ -60,9 +56,7 @@ reading response
 reading response
 Database file sequence: querying service
 reading response
-File d:/proyectos/firebird/fbtcs/temp/employee.gdb is the only file querying service
-reading response
- querying service
+File WHERE_GDB_EXTERNAL:employee.gdb is the only file querying service
 reading response
 Database log page information: querying service
 reading response
@@ -70,19 +64,15 @@ reading response
 reading response
 	Next log page:	0 querying service
 reading response
-	Clumplet End	0 querying service
-reading response
 	*END* querying service
 reading response
  querying service
 reading response
 Analyzing database pages ... querying service
 reading response
- querying service
-reading response
 COUNTRY (128) querying service
 reading response
-    Primary pointer page: 293, Index root page: 294 querying service
+    Primary pointer page: 294, Index root page: 295 querying service
 reading response
     Data pages: 1, data page slots: 1, average fill: 61% querying service
 reading response
@@ -102,7 +92,7 @@ reading response
 reading response
 CUSTOMER (133) querying service
 reading response
-    Primary pointer page: 304, Index root page: 305 querying service
+    Primary pointer page: 305, Index root page: 306 querying service
 reading response
     Data pages: 3, data page slots: 3, average fill: 72% querying service
 reading response
@@ -122,7 +112,7 @@ reading response
 reading response
 DEPARTMENT (130) querying service
 reading response
-    Primary pointer page: 297, Index root page: 298 querying service
+    Primary pointer page: 298, Index root page: 299 querying service
 reading response
     Data pages: 3, data page slots: 3, average fill: 61% querying service
 reading response
@@ -142,7 +132,7 @@ reading response
 reading response
 EMPLOYEE (131) querying service
 reading response
-    Primary pointer page: 299, Index root page: 300 querying service
+    Primary pointer page: 300, Index root page: 301 querying service
 reading response
     Data pages: 5, data page slots: 5, average fill: 69% querying service
 reading response
@@ -162,7 +152,7 @@ reading response
 reading response
 EMPLOYEE_PROJECT (135) querying service
 reading response
-    Primary pointer page: 308, Index root page: 309 querying service
+    Primary pointer page: 309, Index root page: 310 querying service
 reading response
     Data pages: 2, data page slots: 2, average fill: 41% querying service
 reading response
@@ -182,7 +172,7 @@ reading response
 reading response
 JOB (129) querying service
 reading response
-    Primary pointer page: 295, Index root page: 296 querying service
+    Primary pointer page: 296, Index root page: 297 querying service
 reading response
     Data pages: 10, data page slots: 10, average fill: 88% querying service
 reading response
@@ -202,7 +192,7 @@ reading response
 reading response
 PROJECT (132) querying service
 reading response
-    Primary pointer page: 302, Index root page: 303 querying service
+    Primary pointer page: 303, Index root page: 304 querying service
 reading response
     Data pages: 2, data page slots: 2, average fill: 58% querying service
 reading response
@@ -222,7 +212,7 @@ reading response
 reading response
 PROJ_DEPT_BUDGET (136) querying service
 reading response
-    Primary pointer page: 310, Index root page: 311 querying service
+    Primary pointer page: 311, Index root page: 312 querying service
 reading response
     Data pages: 4, data page slots: 4, average fill: 80% querying service
 reading response
@@ -242,7 +232,7 @@ reading response
 reading response
 SALARY_HISTORY (137) querying service
 reading response
-    Primary pointer page: 312, Index root page: 313 querying service
+    Primary pointer page: 313, Index root page: 314 querying service
 reading response
     Data pages: 4, data page slots: 4, average fill: 59% querying service
 reading response
@@ -262,7 +252,7 @@ reading response
 reading response
 SALES (134) querying service
 reading response
-    Primary pointer page: 306, Index root page: 307 querying service
+    Primary pointer page: 307, Index root page: 308 querying service
 reading response
     Data pages: 4, data page slots: 4, average fill: 69% querying service
 reading response
