@@ -81,7 +81,7 @@ fi
 
 echo test type : $1
 echo test name : $2
-mkdir -p ../temp
-mkdir -p ../output
+mkdir -p ../temp   2>/dev/null
+mkdir -p ../output 2>/dev/null
 
 ./tcs $1 $2
