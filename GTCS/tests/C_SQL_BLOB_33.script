@@ -8,6 +8,10 @@ exec sql set database db = "WHERE_GDB:blob33.gdb";
 exec sql include sqlca;
 exec sql whenever sqlerror goto err;
 
+#ifdef WIN_NT
+#include "windows.h" // NULL definition
+#endif
+
 main()
 {
 exec sql connect db;
