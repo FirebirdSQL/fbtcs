@@ -3,7 +3,7 @@ $ CREATE blob33.sql
 create database "WHERE_GDB:blob33.gdb";
 quit;
 $ ISQL -m -i blob33.sql
-$ CREATE blob33x.e
+$ CREATE blob33x.epp
 exec sql set database db = "WHERE_GDB:blob33.gdb";
 exec sql include sqlca;
 exec sql whenever sqlerror goto err;
@@ -12,7 +12,7 @@ exec sql whenever sqlerror goto err;
 #include "windows.h" // NULL definition
 #endif
 
-main()
+int main(int argc, char* argv[])
 {
 exec sql connect db;
 
@@ -23,16 +23,16 @@ exit(0);
 
 err:
 	exec sql whenever sqlerror continue;
-	isc_print_status (gds__status);
+	isc_print_status (gds_status);
 	exec sql rollback;
 	exec sql disconnect all;
 	exit(1);
 }
-$ GPRE -e -n blob33x.e
-$ CC FLAG_CC blob33x.c
+$ GPRE -e -n blob33x.epp
+$ CXX FLAG_CXX blob33x.cpp
 $ LINK FLAG_LINK blob33x 
 $ RUN blob33x
-$ CREATE blob33.e
+$ CREATE blob33.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
 
@@ -47,8 +47,8 @@ $ CREATE blob33.e
  Bug 5198.
  **********************************************************************/
 #include <stdio.h>
-#include <string.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
 
 EXEC SQL SET DATABASE DB = "WHERE_GDB:blob33.gdb";
 EXEC SQL INCLUDE SQLCA;
@@ -69,37 +69,35 @@ int verbose,DumpRecs;
 
 char Test[]="Populating the blob database, please wait...\n";
 
-void Underline();
-void CreateSegment();
-void EmptyBuffer();
-void ErrTrap();
+void Underline(int i);
+void CreateSegment(char *pBuffer, unsigned short L, int LineNo);
+void EmptyBuffer(char *Bf, unsigned short L);
+void ErrTrap(char ModuleName[30]);
 
-GDS__QUAD WriteBlob1();
-GDS__QUAD WriteBlob2();
-GDS__QUAD WriteBlob3();
+GDS_QUAD WriteBlob1(unsigned short L, char *Bf, GDS_QUAD BlobId);
+GDS_QUAD WriteBlob2(unsigned short L, char *Bf, GDS_QUAD BlobId);
+GDS_QUAD WriteBlob3(unsigned short L, char *Bf, GDS_QUAD BlobId);
 
 void ReadRecords();
-void ReadBlob1();
-void ReadBlob2();
-void ReadBlob3();
+void ReadBlob1(unsigned short L);
+void ReadBlob2(unsigned short L);
+void ReadBlob3(int L);
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc,char* argv[])
 {
 short                       i,j,k,l;
 int Count;
 
-    verbose = DumpRecs = FALSE;
+    verbose = DumpRecs = false;
 
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
-            verbose = TRUE;
+            verbose = true;
     }
 
     if (--argc > 0){
 	if (*argv[2] == 'd' || *argv[2] == 'D')
-		DumpRecs = TRUE;
+		DumpRecs = true;
     }
 
     EXEC SQL CONNECT DB;
@@ -113,10 +111,8 @@ int Count;
     for (j=1; j<3; j++){
 
 	b32k_id = WriteBlob1(sizeof(b32k_segment), b32k_segment, b32k_id);
-	b40k_id = WriteBlob2(sizeof(b40k_segment), b40k_segment, b40k_id);  
-
-	b64k_id = WriteBlob3(sizeof(b64k_segment)-1, b64k_segment, b64k_id); 
-
+	b40k_id = WriteBlob2(sizeof(b40k_segment), b40k_segment, b40k_id);
+	b64k_id = WriteBlob3(sizeof(b64k_segment)-1, b64k_segment, b64k_id);
     	EXEC SQL INSERT INTO big_blob (TEST_NAME,ROW_ID,B32K,B40K,B64K) 
 		VALUES (:Test_Name,:j,:b32k_id,:b40k_id,:b64k_id); 
 
@@ -142,8 +138,7 @@ ERR:
 /************************************************************
  * Draw and underline
  ************************************************************/
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -156,9 +151,7 @@ printf("\n");
  * EmptyBuffer
  * print an underline
  ***********************************************************/
-void EmptyBuffer(Bf,L)
-char *Bf;
-unsigned short L;
+void EmptyBuffer(char *Bf, unsigned short L)
 {
 char *s;
 for (s=Bf;L;L--)
@@ -167,10 +160,7 @@ for (s=Bf;L;L--)
 /************************************************************
  * Create a line with numbers stuffed in a char string. 
  ************************************************************/
-void CreateSegment(pBuffer,L,LineNo)
-char *pBuffer;
-unsigned short L;
-int LineNo;
+void CreateSegment(char *pBuffer, unsigned short L, int LineNo)
 {
 char      TempBuf[8], *pBf;
 int	  i,j;
@@ -201,10 +191,7 @@ if (verbose)
 /*******************************************************************
  * Write the blob to the database.
  *******************************************************************/
-GDS__QUAD WriteBlob1(L,Bf, BlobId)
-unsigned short L;
-char *Bf;
-GDS__QUAD BlobId;
+GDS_QUAD WriteBlob1(unsigned short L, char *Bf, GDS_QUAD BlobId)
 {
 
 unsigned short BfLen;
@@ -235,10 +222,7 @@ return (BlobId);
 /*******************************************************************
  * Write the blob to the database.
  *******************************************************************/
-GDS__QUAD WriteBlob2(L,Bf, BlobId)
-unsigned short L;
-char *Bf;
-GDS__QUAD BlobId;
+GDS_QUAD WriteBlob2(unsigned short L, char *Bf, GDS_QUAD BlobId)
 {
 unsigned short BfLen;
 int i;
@@ -270,10 +254,7 @@ return(BlobId);
 /*******************************************************************
  * Write the blob to the database.
  *******************************************************************/
-GDS__QUAD WriteBlob3(L, Bf, BlobId)
-unsigned short L;
-char *Bf;
-GDS__QUAD BlobId;
+GDS_QUAD WriteBlob3(unsigned short L, char *Bf, GDS_QUAD BlobId)
 {
 
 unsigned short BfLen;
@@ -340,7 +321,7 @@ ReadERR:
 EXEC SQL WHENEVER SQLERROR CONTINUE;
 	if (SQLCODE<0){
         	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        	isc_print_status(gds__status);
+        	isc_print_status(gds_status);
 	}
 
 }
@@ -348,8 +329,7 @@ EXEC SQL WHENEVER SQLERROR CONTINUE;
 /**************************************************************
  * Read blobs from the table.
  **************************************************************/
-void ReadBlob1(L)
-unsigned short L;
+void ReadBlob1(unsigned short L)
 {
 char *Bf;
 unsigned short Bl;
@@ -377,8 +357,7 @@ free(Bf);
 /**************************************************************
  * Read blobs from the table.
  **************************************************************/
-void ReadBlob2(L)
-unsigned short L;
+void ReadBlob2(unsigned short L)
 {
 char *Bf;
 unsigned short Bl;
@@ -406,7 +385,7 @@ free(Bf);
 /**************************************************************
  * Read blobs from the table.
  **************************************************************/
-void ReadBlob3(L)
+void ReadBlob3(int L)
 {
 char *Bf;
 unsigned short Bl;
@@ -432,15 +411,14 @@ EXEC SQL CLOSE BCR3;
 free(Bf);
 }
 
-void ErrTrap(ModuleName)
-char ModuleName[30];
+void ErrTrap(char ModuleName[30])
 {
 
 EXEC SQL WHENEVER SQLERROR CONTINUE;
 
 if (SQLCODE<0){
 	printf("Module: %s Database error, SQLCODE = %d\n",ModuleName,SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL ROLLBACK RELEASE;
 	EXEC SQL DISCONNECT ALL;
@@ -448,8 +426,8 @@ if (SQLCODE<0){
 
 }
 
-$ GPRE -e -n blob33.e
-$ CC FLAG_CC blob33.c
+$ GPRE -e -n blob33.epp
+$ CXX FLAG_CXX blob33.cpp
 $ LINK FLAG_LINK blob33 
 $ RUN blob33
 $ DROP WHERE_GDB:blob33.gdb
