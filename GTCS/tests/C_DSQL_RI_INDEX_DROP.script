@@ -3,9 +3,11 @@ HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE indxdrop.e
+$ CREATE indxdrop.epp
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
+#include <ctype.h>
 
 /* Author: Allen Zhao
    Date:   Oct-12-93
@@ -69,27 +71,26 @@ EXEC SQL
 extern int print_views();
 void die_on_error();
 int setup();
+int verify(int);
 int insert_books();
-int verify();
-int drop_index();
-int delete_books();
-int create_unique_index();
-int strupper();
-int istable();
+int print_books(int);
+bool drop_index();
+bool delete_books();
+bool create_unique_index();
+int strupper(char*, char*);
+int istable(char*);
 
 
-int verbose;
+bool verbose;
 
-main(argc, argv)
-int argc;
-char *argv[];
+main(int argc, char* argv[])
 {
 
         /*--- check if verbose is requested ------ */
-        verbose = FALSE;
+        verbose = false;
         if (--argc > 0){
                 if (*argv[1] == 'v' || *argv[1] == 'V')
-                        verbose = TRUE;
+                        verbose = true;
         }
 	if (setup()) 		/* create table */
 		exit (1);
@@ -157,9 +158,9 @@ err:		die_on_error();
 }
 
 
-int delete_books()
+bool delete_books()
 {
-	int got_err = FALSE;
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -168,7 +169,7 @@ int delete_books()
 		DELETE FROM BOOKS;	
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 	
 
 	printf("delete_books expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
@@ -183,9 +184,9 @@ err:		die_on_error();
 
 
 
-int create_unique_index()
+bool create_unique_index()
 {
-	int got_err = FALSE;
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -194,7 +195,7 @@ int create_unique_index()
 		CREATE UNIQUE INDEX BOOK_IND ON BOOKS (BOOK_ID)
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 	
 
 	printf("create_unique_index expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
@@ -208,9 +209,9 @@ err:		die_on_error();
 }
 
 
-int drop_index()
+bool drop_index()
 {
-	int got_err = FALSE;
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -219,7 +220,7 @@ int drop_index()
 		DROP INDEX BOOK_IND
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 	
 
 	printf("drop_index expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
@@ -231,8 +232,7 @@ int drop_index()
 err:		die_on_error();
 }
 
-int verify(num_books) 
-int num_books;
+int verify(int num_books) 
 {
 	if (verbose)
 		printf("Entering verify...\n");
@@ -305,8 +305,7 @@ int insert_books()
 err:		die_on_error();
 }
 
-int print_books(expected) 
-int expected;
+int print_books(int expected) 
 {
 
 	char book_id[12];
@@ -347,8 +346,7 @@ err:		die_on_error();
 
 
 
-int strupper(targ, source) 
-char * targ, * source; 
+int strupper(char* targ, char* source) 
 {
 	int ii;
 	
@@ -357,8 +355,7 @@ char * targ, * source;
 	return ii;
 }
 
-int istable(tname) 
-char * tname; 
+int istable(char* tname) 
 {
 
 	int exists;
@@ -393,7 +390,7 @@ void die_on_error()
 /* Print out error message and die*/
 {
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
-	isc_print_status(gds__status);
+	isc_print_status(gds_status);
 	EXEC SQL
 		ROLLBACK WORK;
 
@@ -401,8 +398,8 @@ err:
 	exit (1);
 }
 
-$ GPRE indxdrop.e -d WHERE_GDB:atlas.gdb
-$ CC FLAG_CC indxdrop.c
+$ GPRE indxdrop.epp -d WHERE_GDB:atlas.gdb
+$ CXX FLAG_CXX indxdrop.cpp
 $ LINK FLAG_LINK indxdrop pr_views 
 $ RUN indxdrop
 $DROP WHERE_GDB:atlas.gdb

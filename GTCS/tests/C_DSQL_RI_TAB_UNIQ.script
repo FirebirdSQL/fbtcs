@@ -3,10 +3,12 @@ HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE tab_uniq.e
+$ CREATE tab_uniq.epp
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
+#include <ctype.h>
 
 /* Author: Michael Shulman
    Date:   1-Feb-93
@@ -47,23 +49,21 @@ void die_on_error();
 int setup();
 int verify();
 int insert_books();
-int print_books();
-int print_views();
-int strupper();
-int istable();
+int print_books(int);
+extern int print_views();
+int strupper(char*, char*);
+int istable(char*);
 
-int verbose;
+bool verbose;
 
-main(argc, argv)
-int argc;
-char *argv[];
+main(int argc, char* argv[])
 {
 
         /*--- check if verbose is requested ------ */
-        verbose = FALSE;
+        verbose = false;
         if (--argc > 0){
                 if (*argv[1] == 'v' || *argv[1] == 'V')
-                        verbose = TRUE;
+                        verbose = true;
         }
 	if (setup()) 
 		exit (1);
@@ -193,8 +193,7 @@ int insert_books() {
 err:		die_on_error();
 }
 
-int print_books(num_expected)
-int num_expected;
+int print_books(int num_expected)
 {
 
 	char book_id[12];
@@ -232,8 +231,7 @@ int num_expected;
 err:		die_on_error();
 }
 
-int strupper(targ, source) 
-char * targ, * source;
+int strupper(char* targ, char* source) 
 {
 	int ii;
 	
@@ -242,8 +240,7 @@ char * targ, * source;
 	return ii;
 }
 
-int istable(tname)
-char * tname;
+int istable(char* tname)
 {
 	int exists;
 	char *utname;
@@ -277,7 +274,7 @@ void die_on_error()
 /* Print out error message and die*/
 {
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
-	isc_print_status(gds__status);
+	isc_print_status(gds_status);
 	EXEC SQL
 		ROLLBACK WORK;
 err:
@@ -285,8 +282,8 @@ err:
 }
 
 
-$ GPRE tab_uniq.e -d WHERE_GDB:atlas.gdb
-$ CC FLAG_CC tab_uniq.c
+$ GPRE tab_uniq.epp -d WHERE_GDB:atlas.gdb
+$ CXX FLAG_CXX tab_uniq.cpp
 $ LINK FLAG_LINK tab_uniq pr_views 
 $ RUN tab_uniq
 $DROP WHERE_GDB:atlas.gdb

@@ -3,9 +3,12 @@ HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$CREATE alt_add.e
+$CREATE alt_add.epp
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <time.h>
+#include <cstdlib>
+#include <cstring>
+#include <ctype.h>
 
 /* Author: Michael Shulman
    Date:   02-Apr-93
@@ -65,28 +68,26 @@ EXEC SQL
 /* Forward declarations */
 void die_on_error();
 int setup();
-int verify();
+int verify(int);
 int insert_books();
-int print_books();
-extern print_views();
-int alter_add_unique();
+int print_books(int);
+extern int print_views();
+bool alter_add_uniq();
 int delete_all();
-int strupper();
-int istable();
+int strupper(char*, char*);
+int istable(char*);
 
 
-int verbose;
+bool verbose;
 
-main(argc, argv)
-int argc;
-char *argv[];
+main(int argc, char* argv[])
 {
 
         /*--- check if verbose is requested ------ */
-        verbose = FALSE;
+        verbose = false;
         if (--argc > 0){
                 if (*argv[1] == 'v' || *argv[1] == 'V')
-                        verbose = TRUE;
+                        verbose = true;
         }
 	if (setup()) 		/* create table */
 		exit (1);
@@ -151,8 +152,7 @@ int setup() {
 err:		die_on_error();
 }
 
-int verify(num_recs) 
-int num_recs;
+int verify(int num_recs) 
 {
 	if (verbose)
 		printf("Entering verify...\n");
@@ -201,8 +201,7 @@ int insert_books() {
 err:		die_on_error();
 }
 
-int print_books(num_expected) 
-int num_expected;
+int print_books(int num_expected) 
 {
 
 	char book_id[12];
@@ -240,8 +239,8 @@ int num_expected;
 err:		die_on_error();
 }
 
-int alter_add_uniq() {
-	int got_err = FALSE;
+bool alter_add_uniq() {
+	int got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -250,7 +249,7 @@ int alter_add_uniq() {
 		ALTER TABLE BOOKS ADD UNIQUE (BOOK_ID);
 
 	if (SQLCODE) {
-		got_err = TRUE;
+		got_err = true;
 		printf ("alter_add_uniq got SQLCODE = %d\n", SQLCODE);
 	}
 
@@ -273,8 +272,7 @@ int delete_all() {
 err:		die_on_error();
 }
 
-int strupper(targ, source) 
-char * targ, * source;
+int strupper(char* targ, char* source) 
 {
 	int ii;
 	
@@ -283,8 +281,7 @@ char * targ, * source;
 	return ii;
 }
 
-int istable(tname) 
-char * tname;
+int istable(char* tname) 
 {
 
 	int exists;
@@ -319,16 +316,16 @@ void die_on_error()
 /* Print out error message and die*/
 {
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
-	isc_print_status(gds__status);
+	isc_print_status(gds_status);
 	EXEC SQL
 		ROLLBACK WORK;
 
 err:
 	exit (1);
 }
-$ GPRE alt_add.e -d WHERE_GDB:atlas.gdb
-$ CC FLAG_CC alt_add.c
+$ GPRE alt_add.epp -d WHERE_GDB:atlas.gdb
+$ CXX FLAG_CXX alt_add.cpp
 $ LINK FLAG_LINK alt_add pr_views 
 $ RUN alt_add
 $DROP WHERE_GDB:atlas.gdb
-$ DELETE alt_add*
+$DELETE alt_add*

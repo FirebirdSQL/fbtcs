@@ -2,8 +2,10 @@
 HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
-$ CREATE ri_views.e
+$ CREATE ri_views.epp
 #include <stdio.h>
+#include <cstdlib>
+#include <cstring>
 /* Build views for RI */
 /* Include the SQL Communications Area. */
 EXEC SQL
@@ -22,12 +24,10 @@ char	db_name[128];
 
 /* Forward declarations */
 static void print_error();
-int istable(); 
+int istable(char*); 
 
 
-main (argc, argv)
-    int		argc;
-    char	*argv[];
+main (int argc, char* argv[])
 {
 
 /* Get database name */
@@ -156,8 +156,7 @@ err:		print_error();
 	exit (1);
 }
 
-int istable(tname)
-char* tname;
+int istable(char* tname)
 {
 	int exists;
 
@@ -183,23 +182,27 @@ static void print_error()
 /* Print out error message */
 {
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
-	isc_print_status(gds__status);
+	isc_print_status(gds_status);
 }
-$ GPRE ri_views.e -e
-$ CC FLAG_CC ri_views.c
-$ LINK FLAG_LINK ri_views 
+$ GPRE ri_views.epp -e
+$ CXX FLAG_CXX ri_views.cpp
+$ LINK FLAG_LINK ri_views
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE pv1.e
+$ CREATE pv1.epp
 /* pr_views.e 
    6/2/93 by mshulman
    prints out the contents of the system views
 */
-
+#include <cstdlib>
+#include <cstdio>
 /* Include the SQL Communications Area. */
 EXEC SQL
 	INCLUDE SQLCA;
 
-extern die_on_error();
+extern void die_on_error();
+int print_TABLE_CONSTRAINTS();
+int print_CONSTRAINTS_COLUMN_USAGE();
+int print_REFERENTIAL_CONSTRAINTS();
 
 int print_views() {
 	if (print_TABLE_CONSTRAINTS())
@@ -331,9 +334,12 @@ int print_REFERENTIAL_CONSTRAINTS() {
 err:		die_on_error();
 }
 
-$ GPRE pv1.e -d WHERE_GDB:atlas.gdb
-$ RUN sed "s/gds_[_,$]database/isc_db1/g" pv1.c > pv2.c
-$ RUN sed "s/gds_[_,$]trans/isc_tr1/g" pv2.c > pr_views.c
-$ CC FLAG_CC pr_views.c
+$ GPRE pv1.epp -d WHERE_GDB:atlas.gdb
+$ RUN sed "s/gds_database/isc_db/g" pv1.cpp > pv2.cpp
+$ RUN sed "s/gds_trans/isc_tr/g" pv2.cpp > pv3.cpp
+$ RUN sed "s/isc_status/isc_st/g" pv3.cpp > pv4.cpp
+$ RUN sed "s/isc_array_length/isc_al/g" pv4.cpp > pv5.cpp
+$ RUN sed "s/SQLCODE/SQLC/g" pv5.cpp > pr_views.cpp
+$CXX FLAG_CXX pr_views.cpp
 $DROP WHERE_GDB:atlas.gdb
-$ DELETE pv*.*
+$DELETE pv*.*

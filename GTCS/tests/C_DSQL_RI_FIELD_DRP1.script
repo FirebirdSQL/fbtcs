@@ -4,9 +4,11 @@ HISTORY:
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
 
-$ CREATE fieldrop.e
+$ CREATE fieldrop.epp
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
+#include <ctype.h>
 
 /* Author: B.Sriram
    Date:   16-JUL-1995
@@ -86,15 +88,13 @@ EXEC SQL
 	
 /* Forward declarations */
 void die_on_error();
-extern print_views(); 
-int strupper();
-int istable();
+extern int print_views(); 
+int strupper(char*, char*);
+int istable(char*);
 
-int verbose;
+bool verbose;
 
-main(argc, argv)
-int argc;
-char *argv[];
+main(int argc, char* argv[])
 {
 
         /* Get database name */
@@ -109,10 +109,10 @@ char *argv[];
         }
 
         /*--- check if verbose is requested ------ */
-        verbose = FALSE;
+        verbose = false;
         if (--argc > 0){
                 if (*argv[2] == 'v' || *argv[2] == 'V')
-                        verbose = TRUE;
+                        verbose = true;
         }
 
         if (istable("books")) {
@@ -222,8 +222,7 @@ char *argv[];
 err:  die_on_error();
 }
 
-int strupper(targ, source) 
-char * targ, * source; 
+int strupper(char* targ, char* source) 
 {
 	int ii;
 	
@@ -232,8 +231,7 @@ char * targ, * source;
 	return ii;
 }
 
-int istable(tname) 
-char * tname; 
+int istable(char* tname) 
 {
 
 	int exists;
@@ -266,7 +264,7 @@ void die_on_error()
 {
 	EXEC SQL WHENEVER SQLERROR CONTINUE;
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
-	isc_print_status(gds__status);
+	isc_print_status(gds_status);
 	EXEC SQL
 		ROLLBACK WORK;
 
@@ -276,8 +274,8 @@ err:
 	exit (1);
 }
 
-$ GPRE -m fieldrop.e 
-$ CC FLAG_CC fieldrop.c
+$ GPRE -m fieldrop.epp
+$ CXX FLAG_CXX fieldrop.cpp
 $ LINK FLAG_LINK fieldrop pr_views 
 $ RUN fieldrop WHERE_GDB:atlas.gdb
 $ DROP WHERE_GDB:atlas.gdb

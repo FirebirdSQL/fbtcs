@@ -7,9 +7,11 @@ $ CREATE comment
           see comments in C_DSQL_RI_ALT_DROP. clare.
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE fieldalt.e
+$ CREATE fieldalt.epp
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
+#include <ctype.h>
 
 /* Author: Allen Zhao
    Date:   Oct-11-93
@@ -84,30 +86,29 @@ EXEC SQL
 /* Forward declarations */
 void die_on_error();
 int setup();
-extern print_views(); 
-int alter_drop_key_constr(); 
-int alter_drop_nnull_constr(); 
-int alter_drop_referring_field();
-int insert_authors();
+extern int print_views(); 
+bool alter_drop_key_constr(int); 
+bool alter_drop_nnull_constr(int); 
+bool alter_drop_referring_field();
+bool insert_authors();
 int test_it();
-int verify();
-int strupper();
-int istable();
+int verify(int);
+int print_authors(int);
+int strupper(char*, char*);
+int istable(char*);
 
 
-int verbose;
+bool verbose;
 enum flags {errs, works};
 
-main(argc, argv)
-int argc;
-char *argv[];
+main(int argc, char* argv[])
 {
 
         /*--- check if verbose is requested ------ */
-        verbose = FALSE;
+        verbose = false;
         if (--argc > 0){
                 if (*argv[1] == 'v' || *argv[1] == 'V')
-                        verbose = TRUE;
+                        verbose = true;
         }
 	if (setup()) 		/* create table */
 		exit (1);
@@ -249,10 +250,9 @@ err:		die_on_error();
 }
 
 
-int alter_drop_key_constr(flag)
-int flag;
+bool alter_drop_key_constr(int flag)
 {
-	int got_err = FALSE;
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -261,7 +261,7 @@ int flag;
 	   	ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY	 
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 
 	if (flag == works)
 		printf ("alter_drop_key_constr expected SQLCODE = 0. "); 
@@ -278,10 +278,9 @@ err:		die_on_error();
 }
 
 
-int alter_drop_nnull_constr(flag)
-int flag;
+bool alter_drop_nnull_constr(int flag)
 {
-	int got_err = FALSE;
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -290,7 +289,7 @@ int flag;
 	   	ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL	 
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 
 	if (flag == works)
 		printf ("alter_drop_nnull_constr expected SQLCODE = 0. "); 
@@ -308,8 +307,8 @@ err:		die_on_error();
 
 
 
-int alter_drop_referring_field() {
-	int got_err = FALSE;
+bool alter_drop_referring_field() {
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -318,7 +317,7 @@ int alter_drop_referring_field() {
 	   	ALTER TABLE BOOKS DROP BOOK_AUTH_ID 
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 
 	printf ("alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = %d\n", 
 			SQLCODE);
@@ -331,8 +330,7 @@ err:		die_on_error();
 }
 
 
-int verify(num_authors) 
-int num_authors;
+int verify(int num_authors) 
 {
 	if (verbose)
 		printf("Entering verify...\n");
@@ -346,8 +344,8 @@ err:		die_on_error();
 }
 
 
-int insert_authors() {
-	int got_err = FALSE;
+bool insert_authors() {
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -372,7 +370,7 @@ int insert_authors() {
 			VALUES ('John','John Doe');
 
 	if (SQLCODE)
-		got_err = TRUE;
+		got_err = true;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -391,8 +389,7 @@ err:		die_on_error();
 }
 
 
-int print_authors(expected) 
-int expected;
+int print_authors(int expected) 
 {
 	char author_id[12];
 	char author_name[13];
@@ -438,8 +435,7 @@ err:		die_on_error();
 
 
 
-int strupper(targ, source) 
-char * targ, * source; 
+int strupper(char* targ, char* source) 
 {
 	int ii;
 	
@@ -448,8 +444,7 @@ char * targ, * source;
 	return ii;
 }
 
-int istable(tname) 
-char * tname; 
+int istable(char* tname) 
 {
 
 	int exists;
@@ -484,7 +479,7 @@ void die_on_error()
 /* Print out error message and die*/
 {
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
-	isc_print_status(gds__status);
+	isc_print_status(gds_status);
 	EXEC SQL
 		ROLLBACK WORK;
 
@@ -492,8 +487,8 @@ err:
 	exit (1);
 }
 
-$ GPRE fieldalt.e -d WHERE_GDB:atlas.gdb
-$ CC FLAG_CC fieldalt.c
+$ GPRE fieldalt.epp -d WHERE_GDB:atlas.gdb
+$ CXX FLAG_CXX fieldalt.cpp
 $ LINK FLAG_LINK fieldalt pr_views 
 $ RUN fieldalt 
 $DROP WHERE_GDB:atlas.gdb

@@ -3,9 +3,11 @@ HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
-$ CREATE indexalt.e
+$ CREATE indexalt.epp
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <cstdlib>
+#include <cstring>
+#include <ctype.h>
 
 /* Author: Allen Zhao
    Date:   Oct-11-93
@@ -71,26 +73,25 @@ extern int print_views();
 void die_on_error();
 int setup();
 int insert_books();
-int verify();
-int alter_index_active();
-int alter_index_inactive();
-int create_unique_index();
-int strupper();
-int istable();
+int verify(int);
+bool alter_index_active();
+bool alter_index_inactive();
+bool create_unique_index();
+int print_books(int);
+int strupper(char*, char*);
+int istable(char*);
 
 
-int verbose;
+bool verbose;
 
-main(argc, argv)
-int argc;
-char *argv[];
+main(int argc, char* argv[])
 {
 
         /*--- check if verbose is requested ------ */
-        verbose = FALSE;
+        verbose = false;
         if (--argc > 0){
                 if (*argv[1] == 'v' || *argv[1] == 'V')
-                        verbose = TRUE;
+                        verbose = true;
         }
 	if (setup()) 		/* create table */
 		exit (1);
@@ -156,9 +157,9 @@ err:		die_on_error();
 }
 
 
-int alter_index_active()
+bool alter_index_active()
 {
-	int got_err = FALSE;
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -167,7 +168,7 @@ int alter_index_active()
 		ALTER INDEX BOOK_IND ACTIVE;
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 	
 
 	printf("alter_index_active expected SQLCODE = -803. Got SQLCODE = %d\n", SQLCODE);
@@ -180,9 +181,9 @@ err:		die_on_error();
 
 }
 
-int alter_index_inactive()
+bool alter_index_inactive()
 {
-	int got_err = FALSE;
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
@@ -191,7 +192,7 @@ int alter_index_inactive()
 		ALTER INDEX BOOK_IND INACTIVE;
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 
 	printf("alter_index_inactive expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
 
@@ -205,9 +206,9 @@ err:		die_on_error();
 
 
 
-int create_unique_index()
+bool create_unique_index()
 {
-	int got_err = FALSE;
+	bool got_err = false;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
@@ -216,7 +217,7 @@ int create_unique_index()
 		CREATE UNIQUE INDEX BOOK_IND ON BOOKS (BOOK_ID)
 
 	if (SQLCODE) 
-		got_err = TRUE;
+		got_err = true;
 	
 
 	printf("create_unique_index expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
@@ -230,8 +231,7 @@ err:		die_on_error();
 }
 
 
-int verify(num_books) 
-int num_books;
+int verify(int num_books) 
 {
 	if (verbose)
 		printf("Entering verify...\n");
@@ -304,8 +304,7 @@ int insert_books()
 err:		die_on_error();
 }
 
-int print_books(expected) 
-int expected;
+int print_books(int expected) 
 {
 
 	char book_id[12];
@@ -346,8 +345,7 @@ err:		die_on_error();
 
 
 
-int strupper(targ, source) 
-char * targ, * source; 
+int strupper(char* targ, char* source) 
 {
 	int ii;
 	
@@ -356,8 +354,7 @@ char * targ, * source;
 	return ii;
 }
 
-int istable(tname) 
-char * tname; 
+int istable(char* tname) 
 {
 
 	int exists;
@@ -392,7 +389,7 @@ void die_on_error()
 /* Print out error message and die*/
 {
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
-	isc_print_status(gds__status);
+	isc_print_status(gds_status);
 	EXEC SQL
 		ROLLBACK WORK;
 
@@ -400,8 +397,8 @@ err:
 	exit (1);
 }
 
-$ GPRE indexalt.e -d WHERE_GDB:atlas.gdb
-$ CC FLAG_CC indexalt.c
+$ GPRE indexalt.epp -d WHERE_GDB:atlas.gdb
+$ CXX FLAG_CXX indexalt.cpp
 $ LINK FLAG_LINK indexalt pr_views 
 $ RUN indexalt 
 $DROP WHERE_GDB:atlas.gdb

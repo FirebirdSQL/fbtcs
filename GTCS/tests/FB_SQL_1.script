@@ -4,7 +4,7 @@ HISTORY:
 
 $ GBAK -r WHERE_FILES:atlas.gbk WHERE_GDB:atlas.gdb
 $ISQL -m WHERE_GDB:atlas.gdb -i WHERE_EXAMPLES:ib_udf.sql
-$ CREATE udfgrp.e
+$ CREATE udfgrp.epp
 /**********************************************************************
  Purpose:		Test group by a udf function 
  
@@ -21,7 +21,8 @@ $ CREATE udfgrp.e
 */
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
+#include <time.h>
+#include <cstdlib>
 
 DATABASE DB = 'WHERE_GDB:atlas.gdb';
 EXEC SQL	INCLUDE SQLCA;
@@ -38,22 +39,20 @@ char Test[]="select substr(first_name,1,2) ,count(*) \
 from mayors \
 group by substr(first_name,1,2)";
 
-void Underline();
+void Underline(int);
 
-main(argc, argv)
-int argc;
-char *argv[];
-
+int main(int argc, char* argv[])
 {
 	
-	int verbose, Count;
+	bool verbose;
+	int Count;
 	Count = 0;
 
 	/*--- check if verbose is requested ------ */
-	verbose = FALSE;
+	verbose = false;
 	if (--argc > 0){	
 		if (*argv[1] == 'v' || *argv[1] == 'V')
-			verbose = TRUE;
+			verbose = true;
 	}
         printf("Test:\n %s\n",Test);
         Underline(80);
@@ -97,7 +96,7 @@ exit(0);
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
-        isc_print_status(gds__status);
+        isc_print_status(gds_status);
 
 	EXEC SQL
 		ROLLBACK RELEASE;
@@ -107,8 +106,7 @@ ERR:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -117,8 +115,8 @@ for (j=0;j<i;j++)
 printf("\n");
 
 }
-$ GPRE -e udfgrp.e
-$ CC FLAG_CC udfgrp.c
+$ GPRE -e udfgrp.epp
+$ CXX FLAG_CXX udfgrp.cpp
 $ LINK FLAG_LINK udfgrp 
 $ RUN udfgrp
 
@@ -159,6 +157,6 @@ quit;
 $ISQL -m -i udfgrp4.sql
 
 $DROP WHERE_GDB:atlas.gdb
-$ DELETE grpview.sql udfgrp*
+$DELETE grpview.sql udfgrp*
 
 
