@@ -1,0 +1,1043 @@
+connected to service manager OK
+service started OK
+querying service
+reading response
+ querying service
+reading response
+Database "d:/proyectos/firebird/fbtcs/temp/employee.gdb" querying service
+reading response
+ querying service
+reading response
+Database header page information: querying service
+reading response
+	Flags			0 querying service
+reading response
+	Checksum		12345 querying service
+reading response
+	Generation		25 querying service
+reading response
+	Page size		1024 querying service
+reading response
+	ODS version		11.0 querying service
+reading response
+	Oldest transaction	1 querying service
+reading response
+	Oldest active		2 querying service
+reading response
+	Oldest snapshot		1 querying service
+reading response
+	Next transaction	19 querying service
+reading response
+	Bumped transaction	1 querying service
+reading response
+	Sequence number		0 querying service
+reading response
+	Next attachment ID	0 querying service
+reading response
+	Implementation ID	16 querying service
+reading response
+	Shadow count		0 querying service
+reading response
+	Page buffers		0 querying service
+reading response
+	Next header page	0 querying service
+reading response
+	Clumplet End		102 querying service
+reading response
+	Database dialect	1 querying service
+reading response
+ querying service
+reading response
+    Variable header data: querying service
+reading response
+	Sweep interval:		20000 querying service
+reading response
+	*END* querying service
+reading response
+ querying service
+reading response
+ querying service
+reading response
+Database file sequence: querying service
+reading response
+File d:/proyectos/firebird/fbtcs/temp/employee.gdb is the only file querying service
+reading response
+ querying service
+reading response
+Database log page information: querying service
+reading response
+	Log flags:	0 querying service
+reading response
+	Next log page:	0 querying service
+reading response
+	Clumplet End	0 querying service
+reading response
+	*END* querying service
+reading response
+ querying service
+reading response
+Analyzing database pages ... querying service
+reading response
+ querying service
+reading response
+COUNTRY (128) querying service
+reading response
+    Primary pointer page: 293, Index root page: 294 querying service
+reading response
+    Data pages: 1, data page slots: 1, average fill: 61% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 0 querying service
+reading response
+	40 - 59% = 0 querying service
+reading response
+	60 - 79% = 1 querying service
+reading response
+	80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY1 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 14 querying service
+reading response
+	Average data length: 6.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+CUSTOMER (133) querying service
+reading response
+    Primary pointer page: 304, Index root page: 305 querying service
+reading response
+    Data pages: 3, data page slots: 3, average fill: 72% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 0 querying service
+reading response
+	40 - 59% = 1 querying service
+reading response
+	60 - 79% = 1 querying service
+reading response
+	80 - 99% = 1 querying service
+reading response
+ querying service
+reading response
+    Index CUSTNAMEX (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 15 querying service
+reading response
+	Average data length: 15.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index CUSTREGION (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 15 querying service
+reading response
+	Average data length: 17.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN23 (3) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 15 querying service
+reading response
+	Average data length: 4.00, total dup: 4, max dup: 4 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY22 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 15 querying service
+reading response
+	Average data length: 1.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+DEPARTMENT (130) querying service
+reading response
+    Primary pointer page: 297, Index root page: 298 querying service
+reading response
+    Data pages: 3, data page slots: 3, average fill: 61% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 1 querying service
+reading response
+	40 - 59% = 0 querying service
+reading response
+	60 - 79% = 2 querying service
+reading response
+	80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index BUDGETX (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+reading response
+	Average data length: 2.00, total dup: 7, max dup: 3 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$4 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+reading response
+	Average data length: 13.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN10 (4) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+reading response
+	Average data length: 1.00, total dup: 3, max dup: 3 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN6 (3) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+reading response
+	Average data length: 0.00, total dup: 13, max dup: 4 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY5 (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+reading response
+	Average data length: 1.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+EMPLOYEE (131) querying service
+reading response
+    Primary pointer page: 299, Index root page: 300 querying service
+reading response
+    Data pages: 5, data page slots: 5, average fill: 69% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 0 querying service
+reading response
+	40 - 59% = 1 querying service
+reading response
+	60 - 79% = 4 querying service
+reading response
+	80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index NAMEX (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 42 querying service
+reading response
+	Average data length: 15.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 1 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN8 (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 42 querying service
+reading response
+	Average data length: 0.00, total dup: 23, max dup: 4 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN9 (3) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 42 querying service
+reading response
+	Average data length: 6.00, total dup: 15, max dup: 4 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 1 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY7 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 42 querying service
+reading response
+	Average data length: 1.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+EMPLOYEE_PROJECT (135) querying service
+reading response
+    Primary pointer page: 308, Index root page: 309 querying service
+reading response
+    Data pages: 2, data page slots: 2, average fill: 41% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 1 querying service
+reading response
+	40 - 59% = 1 querying service
+reading response
+	60 - 79% = 0 querying service
+reading response
+	80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN15 (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 28 querying service
+reading response
+	Average data length: 1.00, total dup: 6, max dup: 2 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN16 (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 28 querying service
+reading response
+	Average data length: 0.00, total dup: 23, max dup: 9 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY14 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 28 querying service
+reading response
+	Average data length: 9.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+JOB (129) querying service
+reading response
+    Primary pointer page: 295, Index root page: 296 querying service
+reading response
+    Data pages: 10, data page slots: 10, average fill: 88% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 0 querying service
+reading response
+	40 - 59% = 0 querying service
+reading response
+	60 - 79% = 1 querying service
+reading response
+	80 - 99% = 9 querying service
+reading response
+ querying service
+reading response
+    Index MAXSALX (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 31 querying service
+reading response
+	Average data length: 4.00, total dup: 5, max dup: 1 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index MINSALX (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 31 querying service
+reading response
+	Average data length: 4.00, total dup: 7, max dup: 2 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN3 (3) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 31 querying service
+reading response
+	Average data length: 1.00, total dup: 24, max dup: 20 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY2 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 31 querying service
+reading response
+	Average data length: 10.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 1 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+PROJECT (132) querying service
+reading response
+    Primary pointer page: 302, Index root page: 303 querying service
+reading response
+    Data pages: 2, data page slots: 2, average fill: 58% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 1 querying service
+reading response
+	40 - 59% = 0 querying service
+reading response
+	60 - 79% = 0 querying service
+reading response
+	80 - 99% = 1 querying service
+reading response
+ querying service
+reading response
+    Index PRODTYPEX (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 6 querying service
+reading response
+	Average data length: 22.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$11 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 6 querying service
+reading response
+	Average data length: 13.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN13 (3) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 6 querying service
+reading response
+	Average data length: 1.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY12 (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 6 querying service
+reading response
+	Average data length: 4.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+PROJ_DEPT_BUDGET (136) querying service
+reading response
+    Primary pointer page: 310, Index root page: 311 querying service
+reading response
+    Data pages: 4, data page slots: 4, average fill: 80% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 0 querying service
+reading response
+	40 - 59% = 1 querying service
+reading response
+	60 - 79% = 0 querying service
+reading response
+	80 - 99% = 3 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN18 (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 24 querying service
+reading response
+	Average data length: 0.00, total dup: 15, max dup: 5 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN19 (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 24 querying service
+reading response
+	Average data length: 1.00, total dup: 19, max dup: 8 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY17 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 24 querying service
+reading response
+	Average data length: 6.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+SALARY_HISTORY (137) querying service
+reading response
+    Primary pointer page: 312, Index root page: 313 querying service
+reading response
+    Data pages: 4, data page slots: 4, average fill: 59% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 1 querying service
+reading response
+	40 - 59% = 0 querying service
+reading response
+	60 - 79% = 3 querying service
+reading response
+	80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index CHANGEX (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 49 querying service
+reading response
+	Average data length: 0.00, total dup: 46, max dup: 21 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN21 (3) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 49 querying service
+reading response
+	Average data length: 0.00, total dup: 16, max dup: 2 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY20 (0) querying service
+reading response
+	Depth: 2, leaf buckets: 2, nodes: 49 querying service
+reading response
+	Average data length: 18.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 1 querying service
+reading response
+ querying service
+reading response
+    Index UPDATERX (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 49 querying service
+reading response
+	Average data length: 0.00, total dup: 46, max dup: 28 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+SALES (134) querying service
+reading response
+    Primary pointer page: 306, Index root page: 307 querying service
+reading response
+    Data pages: 4, data page slots: 4, average fill: 69% querying service
+reading response
+    Fill distribution: querying service
+reading response
+	 0 - 19% = 0 querying service
+reading response
+	20 - 39% = 0 querying service
+reading response
+	40 - 59% = 1 querying service
+reading response
+	60 - 79% = 3 querying service
+reading response
+	80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index NEEDX (1) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+reading response
+	Average data length: 2.00, total dup: 11, max dup: 6 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index QTYX (3) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+reading response
+	Average data length: 1.00, total dup: 11, max dup: 3 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN25 (4) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+reading response
+	Average data length: 0.00, total dup: 18, max dup: 4 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$FOREIGN26 (5) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+reading response
+	Average data length: 0.00, total dup: 25, max dup: 7 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index RDB$PRIMARY24 (0) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+reading response
+	Average data length: 4.00, total dup: 0, max dup: 0 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 0 querying service
+reading response
+	    20 - 39% = 1 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+    Index SALESTATX (2) querying service
+reading response
+	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+reading response
+	Average data length: 0.00, total dup: 27, max dup: 14 querying service
+reading response
+	Fill distribution: querying service
+reading response
+	     0 - 19% = 1 querying service
+reading response
+	    20 - 39% = 0 querying service
+reading response
+	    40 - 59% = 0 querying service
+reading response
+	    60 - 79% = 0 querying service
+reading response
+	    80 - 99% = 0 querying service
+reading response
+ querying service
+reading response
+Output completed

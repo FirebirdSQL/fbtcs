@@ -1,0 +1,4 @@
+$GBAK -r WHERE_FILES:employee.gbk WHERE_GDB_EXTERNAL:employee.gdb
+$GSTAT -d -n WHERE_GDB_EXTERNAL:employee.gdb
+$DROP WHERE_GDB_EXTERNAL:employee.gdb
+

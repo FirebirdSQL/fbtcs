@@ -1,0 +1,161 @@
+$GBAK -r WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
+>> svc_api_db_stats.cpp
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#ifndef DARWIN
+#include <ibase.h>
+#else
+#include <Firebird/ibase.h>
+#endif
+
+#define RESPBUF 1024
+
+int main(int argc, char* argv[]){
+	char	*user = "SYSDBA";
+	char	*pass = "masterkey";
+	char	*dbname = "WHERE_GDB_EXTERNAL:employee.gdb";
+	ISC_STATUS	status [20];
+	isc_svc_handle svc_handle = NULL;
+	char	svc_name[RESPBUF];
+	char	spb_buff[RESPBUF];
+	char	thd_buff[RESPBUF];
+	char	respbuf[RESPBUF];
+	char	*p = respbuf;
+	char	*spb = spb_buff;
+	char	*thd = thd_buff;
+	char	*x;
+	short	spblen;
+	char	thdlen;
+	char sendbuf[] = {isc_info_svc_line};
+//	ISC_STATUS loc_status[20];
+//	ISC_STATUS *stat = loc_status;
+
+	// Set up the spb for connecting to the services manager.
+	// in this example, we will connect to the server running
+	// on the local machine.
+
+	*spb++ = isc_spb_version;
+	*spb++ = isc_spb_current_version;
+
+	*spb++ = isc_spb_user_name;
+	*spb++ = strlen (user);
+	strcpy (spb, user);
+	spb += strlen(user);
+
+	*spb++ = isc_spb_password;
+	*spb++ = strlen (pass);
+	strcpy (spb, pass);
+	spb += strlen (pass);
+
+	sprintf (svc_name, "WHERE_SERVICE_MGR:");
+
+	spblen = spb - spb_buff;
+
+	if (isc_service_attach (status, 0, svc_name, &svc_handle, spblen, spb_buff))
+	{
+		fprintf(stderr, "error connecting to service manager\n");
+		isc_print_status (status);
+		exit (1);
+	}
+	printf("connected to service manager OK\n");
+
+	// Set up the spb for starting the backup service 
+
+	*thd++ = isc_action_svc_db_stats;
+
+	// Add the database name to the buffer
+	*thd++ = isc_spb_dbname;
+	ADD_SPB_LENGTH(thd, strlen(dbname))
+	strcpy (thd, dbname);
+	thd += strlen (dbname);
+
+	// argument to specify restore options
+	*thd++ = isc_spb_options;
+	unsigned long options = isc_spb_sts_db_log | isc_spb_sts_nocreation ;
+//				isc_spb_sts_data_pages | isc_spb_sts_hdr_pages | isc_spb_sts_db_log 
+//				| isc_spb_sts_idx_pages | isc_spb_sts_sys_relations;
+	ADD_SPB_NUMERIC(thd, options);
+
+	thdlen = thd - thd_buff;
+
+	// Start the service and process any errors that may be returned
+	if (isc_service_start(status, &svc_handle, NULL, thdlen, thd_buff))
+	{
+		ISC_STATUS* vector = status;
+		printf ("Unable to start service:\n");
+		while (isc_interprete (respbuf, &vector))
+			printf ("ERROR: %s\n", respbuf);
+		printf ("End of errors\n");
+		isc_service_detach (status, &svc_handle);
+		exit(1);
+	}
+
+	printf("service started OK\n");
+	// Seeing the results
+
+	do {
+
+		printf("querying service\n");
+		// Add isc_info_svc_line to the send buffer for the query
+
+		// Issue the query
+		if (isc_service_query (status, &svc_handle, NULL, 0, NULL,
+							   sizeof (sendbuf), sendbuf, RESPBUF, respbuf))
+		{
+			isc_print_status (status);
+			isc_service_detach (status, &svc_handle);
+			printf("wrong response\n");
+			exit(1);
+		}
+		printf("reading response\n");
+
+		// If the query is successful,  start processing the return buffer
+		x = p = respbuf;
+		if (*p++ == isc_info_svc_line)
+		{
+
+			// Get the length of the data being returned */
+			USHORT len = (ISC_USHORT)isc_vax_integer(p, sizeof(ISC_USHORT));
+			p += sizeof (ISC_USHORT);
+
+			// If there is no length, then we should be done .. let's check
+			if (!len)
+			{
+				if (*p != isc_info_end)
+					printf ("Format error ... <%d>\n", *p);
+				else
+					printf ("Output completed\n");
+				break;
+			}
+
+			// There is a length for the data, so to be different, let's print
+			// it out character by character
+			USHORT chTmp = 0;
+
+			for (chTmp = 0; chTmp < len; chTmp++)
+				printf("%c",p[chTmp]);
+
+			// Since we only requested one item this time, we should be at the end of 
+			// the buffer terminated by isc_info_end after moving the pointer past the
+			// data we just printed out
+
+			p += len;
+			if (*p != isc_info_truncated && *p != isc_info_end)
+			{
+				printf ("Format error ... encountered <%d>\n", *p);
+				break;
+			}
+		}
+	}
+	while (*x == isc_info_svc_line);
+
+	isc_service_detach(status, &svc_handle);
+}
+
+$ CXX FLAG_CXX svc_api_db_stats.cpp
+$ LINK FLAG_LINK svc_api_db_stats
+$ RUN svc_api_db_stats
+$ DROP WHERE_GDB:employee.gdb
+$ DELETE svc_api_db_stats.*

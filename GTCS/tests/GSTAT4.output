@@ -1,0 +1,26 @@
+
+Database "d:/proyectos/firebird/fbtcs/temp/employee.gdb"
+
+Database header page information:
+	Flags			0
+	Checksum		12345
+	Generation		25
+	Page size		1024
+	ODS version		11.0
+	Oldest transaction	1
+	Oldest active		2
+	Oldest snapshot		1
+	Next transaction	19
+	Bumped transaction	1
+	Sequence number		0
+	Next attachment ID	0
+	Implementation ID	16
+	Shadow count		0
+	Page buffers		0
+	Next header page	0
+	Clumplet End		102
+	Database dialect	1
+
+    Variable header data:
+	Sweep interval:		20000
+	*END*
