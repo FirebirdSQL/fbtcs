@@ -47,5 +47,7 @@ AND j.field2 = (SELECT MAX(x.field2) FROM test2 x);
 
 $ISQL -m -i cf_isql_24a.sql
 $ISQL -m -i cf_isql_24b.sql
+$ISQL -m -i cf_isql_24b.sql
+$ISQL -m -i cf_isql_24b.sql
 $DROP WHERE_GDB:cf_isql_24.fdb
 $DELETE cf_isql_24*

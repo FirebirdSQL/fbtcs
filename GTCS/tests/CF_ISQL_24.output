@@ -12,4 +12,30 @@ CON> AND j.field2 = (SELECT MAX(x.field2) FROM test2 x);
            2           20            2           40 
 
 SQL> 
+SQL> Use CONNECT or CREATE DATABASE to specify a database
+SQL> connect 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_24.fdb';
+SQL> SELECT *
+CON> FROM test1 i, test2 j
+CON> WHERE i.keyfield = j.keyfield
+CON> AND j.field2 = (SELECT MAX(x.field2) FROM test2 x);
+
+    KEYFIELD       FIELD1     KEYFIELD       FIELD2 
+============ ============ ============ ============ 
+
+           2           20            2           40 
+
+SQL> 
+SQL> Use CONNECT or CREATE DATABASE to specify a database
+SQL> connect 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_24.fdb';
+SQL> SELECT *
+CON> FROM test1 i, test2 j
+CON> WHERE i.keyfield = j.keyfield
+CON> AND j.field2 = (SELECT MAX(x.field2) FROM test2 x);
+
+    KEYFIELD       FIELD1     KEYFIELD       FIELD2 
+============ ============ ============ ============ 
+
+           2           20            2           40 
+
+SQL> 
 SQL> 
