@@ -11,7 +11,6 @@ begin
 end
 go
 set term ; go
-set term ; go
 set echo;
 EXECUTE PROCEDURE PROC6 ;
 SELECT  * FROM PROC6;
