@@ -24,9 +24,6 @@ cl tcs.cpp exec.cpp trns.cpp do_diffs.cpp /D "WIN_NT" /I "%FIREBIRD%/include/" /
 @echo building drop_gdb.exe
 cl drop_gdb.cpp /D "WIN_NT" /I "%FIREBIRD%/include/" %FIREBIRD%\lib\fbclient_ms.lib /nologo >> build.log
 @echo.
-@echo building diffs.exe
-cl diffs.cpp do_diffs.cpp /D "WIN_NT" /I "%FIREBIRD%/include/" /nologo >> build.log
-@echo.
 @echo building create_file.exe
 cl create_file.cpp /D "WIN_NT" /I "%FIREBIRD%/include/" /nologo >> build.log
 @echo.
@@ -49,7 +46,6 @@ move /Y compare_file.exe ..\..\bin\
 move /Y copy_file.exe ..\..\bin\
 move /Y create_file.exe ..\..\bin\
 move /Y delete_file.exe ..\..\bin\
-move /Y diffs.exe ..\..\bin\
 move /Y drop_gdb.exe ..\..\bin\
 move /Y sleep_sec.exe ..\..\bin\
 move /Y tcs.exe ..\..\bin\

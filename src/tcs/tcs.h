@@ -27,15 +27,9 @@
 #include <ctype.h>
 #include <signal.h>
 
-//#define NULL_STR(s)             (!(s) || !*(s))
-
-//#define NOT_NULL(s)             ((s) && *(s))
-
-
 typedef long	STATUS;
 
 // externing the entry points
-
 
 const int CMD			= 1;	// line type for commands
 const int SYMDFN		= 2;	// line type for symbol definitions
@@ -44,13 +38,9 @@ const int REGTXT		= 4;	// line type for regular text
 const int COMML			= 5;	// line type for comment
 const int BUFSIZE		= 1024;	/* max input line length */
 
-
-
 // Miscellaneous constants
-//static const char* MISSING_ARG	= "-";
 static const int MAX_LINE		= 80;
 static const int MAX_UPPER		= 32000;
-
 
 // Test result codes
 
@@ -69,8 +59,6 @@ typedef enum test_result {
 
 } TEST_RESULT;
 
-
-
 const int NUM_RESULTS = unknown_result + 1;
 
 typedef unsigned short USHORT;
@@ -82,23 +70,8 @@ const int gds__dpb_user_name		= 28;
 const int gds__dpb_password			= 29;
 
 
-#if (defined(_MSC_VER) && defined(WIN32)) || (defined(__BORLANDC__) && defined(__WIN32__))
-#define CLIB_ROUTINE    __cdecl
-#endif
-
-#ifndef CLIB_ROUTINE
-#define CLIB_ROUTINE
-#endif
-
-#define UPPER(c)                (((c) >= 'a' && (c)<= 'z') ? (c) - 'a' + 'A' : (c))
-
-#ifndef MAX
-#define MAX(a,b)                (((a) > (b)) ? (a) : (b))
-#endif
-
-#ifndef MIN
-#define MIN(a,b)                (((a) < (b)) ? (a) : (b))
-#endif
-
+inline char UPPER(char c){
+	return (((c) >= 'a' && (c)<= 'z') ? (c) - 'a' + 'A' : (c));
+}
 
 

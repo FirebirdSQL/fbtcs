@@ -26,7 +26,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <gds.h>
-#include "diffs.h"
+#include "do_diffs.h"
 
 #if (defined WIN_NT)
 #include <io.h>
