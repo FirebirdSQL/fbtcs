@@ -1,0 +1,430 @@
+Use CONNECT or CREATE DATABASE to specify a database
+SQL> 
+SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_26.fdb';
+SQL> 
+SQL> CREATE TABLE DRZAVA(
+CON> 	POZIVNIBROJDRZAVE VARCHAR(4) NOT NULL,
+CON> 	NAZIVDRZAVE VARCHAR(20),
+CON> 	GRUPA INTEGER NOT NULL,
+CON> 	PRIMARY KEY(POZIVNIBROJDRZAVE)
+CON> );
+SQL> 
+SQL> CREATE TABLE LOG (
+CON> 	BROJ VARCHAR(25) NOT NULL,
+CON> 	POCETAK TIMESTAMP NOT NULL,
+CON> 	TRAJANJE INTEGER NOT NULL,
+CON> 	LOKAL INTEGER,
+CON> 	LINIJA INTEGER,
+CON> 	CENA NUMERIC(8,2) NOT NULL
+CON> );
+SQL> 
+SQL> CREATE TABLE LOKAL(
+CON> 	BROJLOKALA INTEGER NOT NULL,
+CON> 	NAZIVLOKALA VARCHAR(25) NOT NULL,
+CON> 	PRIMARY KEY(BROJLOKALA)
+CON> );
+SQL> 
+SQL> CREATE TABLE MESNI(
+CON> 	PTT CHAR(5) NOT NULL,
+CON> 	LOKALNIPREFIX VARCHAR(5) NOT NULL,
+CON> 	PRIMARY KEY (PTT,LOKALNIPREFIX)
+CON> );
+SQL> 
+SQL> CREATE TABLE MREZA(
+CON> 	BROJMREZE VARCHAR(4) NOT NULL,
+CON> 	POZIVNIBROJ VARCHAR(4) NOT NULL,
+CON> 	ZONA INTEGER NOT NULL,
+CON> 	PRIMARY KEY (BROJMREZE,POZIVNIBROJ)
+CON> );
+SQL> 
+SQL> CREATE TABLE VrstaRT(
+CON> 	SifraVRT char(7) NOT NULL,
+CON> 	NazivVRT varchar(30) NOT NULL,
+CON> 	JM varchar(6),
+CON> 	PRIMARY KEY (SifraVRT)
+CON> );
+SQL> 
+SQL> CREATE TABLE Poslovnica(
+CON> 	SifraPoslovnice char(2) NOT NULL,
+CON> 	NazivPoslovnice varchar(18) NOT NULL,
+CON> 	PRIMARY KEY(SifraPoslovnice)
+CON> );
+SQL> 
+SQL> CREATE TABLE RezijskiTrosak(
+CON> 	RedniBroj integer NOT NULL,
+CON> 	DatumTroska timestamp NOT NULL,
+CON> 	SifraPoslovnice char(2) NOT NULL 
+CON> 		REFERENCES Poslovnica (SifraPoslovnice) ON UPDATE CASCADE,
+CON> 	SifraVRT char(7) NOT NULL
+CON> 		REFERENCES VrstaRT(SifraVRT) ON UPDATE CASCADE,
+CON> 	Kolicina decimal(8,2),
+CON> 	Iznos decimal(8,2) NOT NULL,
+CON> 	PRIMARY KEY (RedniBroj)
+CON> );
+SQL> 
+SQL> CREATE GENERATOR GEN_RT_ID;
+SQL> SET GENERATOR GEN_RT_ID TO 0;
+SQL> 
+SQL> CREATE TABLE VrstaMT(
+CON> 	SifraVMT char(7) NOT NULL,
+CON> 	NazivVMT varchar(30) NOT NULL,
+CON> 	DefaultJM varchar(6),
+CON> 	PRIMARY KEY(SifraVMT)
+CON> );
+SQL> 
+SQL> CREATE TABLE Roba(
+CON> 	SifraRobe char(6) NOT NULL,
+CON> 	VrstaRobe char(7) NOT NULL 
+CON> 		REFERENCES VrstaMT (SifraVMT) ON UPDATE CASCADE,
+CON> 	NazivRobe varchar(30) NOT NULL,
+CON> 	JM varchar(6) NOT NULL,
+CON> 	BarCode varchar(50),
+CON> 	Pakovanje integer,
+CON> 	Napomena varchar(100),
+CON> 	PRIMARY KEY(SifraRobe)
+CON> );
+SQL> 
+SQL> CREATE TABLE Mesto(
+CON> 	PTT char(5) NOT NULL,
+CON> 	NazivMesta varchar(40) NOT NULL,
+CON> 	PozivniBroj char(4),
+CON> 	PRIMARY KEY(PTT)
+CON> );
+SQL> 
+SQL> CREATE TABLE Komitent(
+CON> 	SifraKomitenta integer NOT NULL,
+CON> 	Naziv varchar(25) NOT NULL ,
+CON> 	PTT char(5) NOT NULL 
+CON> 		REFERENCES Mesto(PTT) ON UPDATE CASCADE,
+CON> 	Napomena varchar(100),
+CON> 	Owner char(8),
+CON> 	PRIMARY KEY(SifraKomitenta)
+CON> );
+SQL> 
+SQL> CREATE GENERATOR GEN_Komitent_ID;
+SQL> SET GENERATOR GEN_Komitent_ID TO 0;
+SQL> 
+SQL> CREATE TABLE VrstaDetalja(
+CON> 	SifraVD integer NOT NULL,
+CON> 	OpisVD varchar(15),
+CON> 	Telefon char(1),
+CON> 	CHECK (telefon is null or telefon = 'D' or telefon ='Z'),
+CON> 	PRIMARY KEY(SifraVD)
+CON> );
+SQL> 
+SQL> CREATE GENERATOR GEN_VrstaDetalja_ID;
+SQL> SET GENERATOR GEN_VrstaDetalja_ID TO 0;
+SQL> 
+SQL> CREATE TABLE KomitentDetaljno (
+CON> 	SifraKD integer NOT NULL,
+CON> 	SifraKomitenta integer NOT NULL 
+CON> 		REFERENCES Komitent (SifraKomitenta) ON UPDATE CASCADE ON DELETE CASCADE,
+CON> 	SifraVD integer NOT NULL
+CON> 		REFERENCES VrstaDetalja (SifraVD) ON UPDATE CASCADE,
+CON> 	Podatak varchar(40) NOT NULL,
+CON> 	CistBroj varchar(25),
+CON> 	PRIMARY KEY(SifraKD)
+CON> );
+SQL> 
+SQL> CREATE GENERATOR GEN_KOMITENTDETALJNO_ID;
+SQL> SET GENERATOR GEN_KOMITENTDETALJNO_ID TO 0;
+SQL> 
+SQL> CREATE TABLE Prijem(
+CON> 	BRDOK integer NOT NULL,
+CON> 	DatumUlaza timestamp NOT NULL,
+CON> 	SifraKomitenta integer 
+CON> 		REFERENCES Komitent(SifraKomitenta) ON UPDATE CASCADE,
+CON> 	PRIMARY KEY(BRDOK)
+CON> );
+SQL> 
+SQL> CREATE GENERATOR GEN_PRIJ_ID;
+SQL> SET GENERATOR GEN_PRIJ_ID TO 0;
+SQL> 
+SQL> CREATE TABLE Prijemst(
+CON> 	BRDOK integer NOT NULL 
+CON> 		REFERENCES Prijem(BRDOK) ON UPDATE CASCADE ON DELETE CASCADE,
+CON> 	SifraRobe char(6) NOT NULL 
+CON> 		REFERENCES ROBA(SifraRobe) ON UPDATE CASCADE,
+CON> 	Kolicina decimal(8,2) NOT NULL,
+CON> 	Cena decimal(8,2) NOT NULL,
+CON> 	PRIMARY KEY (BRDOK,SifraRobe)
+CON> );
+SQL> 
+SQL> CREATE TABLE Alokacija(
+CON> 	Brdok integer NOT NULL,
+CON> 	Datum timestamp NOT NULL,
+CON> 	SifraPoslovnice char(2) NOT NULL
+CON> 		REFERENCES Poslovnica (SifraPoslovnice) ON UPDATE CASCADE,
+CON> 	PRIMARY KEY (Brdok)
+CON> );
+SQL> 
+SQL> CREATE GENERATOR GEN_ALOK_ID;
+SQL> SET GENERATOR GEN_ALOK_ID TO 1;
+SQL> 
+SQL> CREATE TABLE Alokacijast(
+CON> 	Brdok integer NOT NULL 
+CON> 		REFERENCES Alokacija(BRDOK) ON UPDATE CASCADE ON DELETE CASCADE,
+CON> 	SifraRobe char(6) NOT NULL 
+CON> 		REFERENCES ROBA(SifraRobe) ON UPDATE CASCADE,
+CON> 	Kolicina decimal(8,2) NOT NULL,
+CON> 	Cena decimal(8,2) NOT NULL,
+CON> 	PRIMARY KEY (Brdok,SifraRobe)
+CON> );
+SQL> 
+SQL> CREATE TABLE VrstaGoriva(
+CON> 	SifraVrsteGoriva Integer NOT NULL,
+CON> 	NazivVrsteGoriva varchar(10) NOT NULL,
+CON> 	PRIMARY KEY(SifraVrsteGoriva)
+CON> );
+SQL> 
+SQL> 
+SQL> CREATE TABLE VrstaVozila(
+CON> 	SifraVrste char(2) NOT NULL,
+CON> 	NazivVrste varchar(18) NOT NULL,
+CON> 	PRIMARY KEY(SifraVrste)
+CON> );
+SQL> 
+SQL> CREATE TABLE Vozilo(
+CON> 	SifraVozila char(12) NOT NULL,
+CON> 	SifraVrste char(2) NOT NULL
+CON> 		REFERENCES VrstaVozila (SifraVrste) ON UPDATE CASCADE,
+CON> 	RegBroj char(10),
+CON> 	Marka char(10),
+CON> 	Tip char(20),
+CON> 	BrojSasije char(25),
+CON> 	BrojMotora char(25),
+CON> 	PrvaRegistracija timestamp,
+CON> 	SnagaMotora decimal(10,2),
+CON> 	Zapremina integer,
+CON> 	Nosivost integer,
+CON> 	MestaZaSedenje char(4),
+CON> 	Karoserija char(25),
+CON> 	Boja char(20),
+CON> 	BrojOsovina char(1),
+CON> 	RokPPAparata timestamp,
+CON> 	PRIMARY KEY(SifraVozila)
+CON> );
+SQL> 
+SQL> CREATE TABLE Vozac(
+CON> 	SifraVozaca integer NOT NULL,
+CON> 	Ime char(25) NOT NULL,
+CON> 	Kategorije char(5) NOT NULL,
+CON> 	DatumVazenjaDozvole Timestamp,
+CON> 	PRIMARY KEY(SifraVozaca)
+CON> );
+SQL> 
+SQL> CREATE TABLE SipanjeGoriva(
+CON> 	SifraSG integer NOT NULL,
+CON> 	Datum Timestamp NOT NULL,
+CON> 	SifraVozila char(12) NOT NULL
+CON> 		REFERENCES Vozilo(SifraVozila) ON UPDATE CASCADE,
+CON> 	SifraVozaca integer NOT NULL 
+CON> 		REFERENCES Vozac(SifraVozaca) ON UPDATE CASCADE,
+CON> 	SifraVrsteGoriva integer NOT NULL
+CON> 		REFERENCES VrstaGoriva (SifraVrsteGoriva) ON UPDATE CASCADE,
+CON> 	SifraPoslovnice char(2) NOT NULL
+CON> 		REFERENCES Poslovnica (SifraPoslovnice) ON UPDATE CASCADE,
+CON> 	KMsat decimal(9,1),
+CON> 	Kolicina decimal(10, 2) NOT NULL,
+CON> 	Cena decimal(8,2) NOT NULL,
+CON> 	PunDoCepa char(1),
+CON> 	CHECK (PunDoCepa = 'N' or PunDoCepa = 'D'),
+CON> 	PRIMARY KEY (SifraSG)
+CON> );
+SQL> 
+SQL> CREATE GENERATOR GEN_GORIVO_ID;
+SQL> SET GENERATOR GEN_GORIVO_ID TO 1;
+SQL> 
+SQL> CREATE TABLE Popravka(
+CON> 	Datum Timestamp NOT NULL,
+CON> 	SifraVozila char(12) NOT NULL 
+CON> 		REFERENCES Vozilo(SifraVozila) ON UPDATE CASCADE,
+CON> 	SifraVozaca integer NOT NULL
+CON> 		REFERENCES Vozac(SifraVozaca) ON UPDATE CASCADE,
+CON> 	SifraPoslovnice char(2) NOT NULL
+CON> 		REFERENCES Poslovnica (SifraPoslovnice) ON UPDATE CASCADE,
+CON> 	Iznos decimal(12,2) NOT NULL,
+CON> 	Opis varchar(200),
+CON> 	PRIMARY KEY(Datum,SifraVozila)
+CON> );
+SQL> 
+SQL> CREATE TABLE Registracija(
+CON> 	Datum Timestamp NOT NULL,
+CON> 	SifraVozila char(12) NOT NULL 
+CON> 		REFERENCES Vozilo(SifraVozila) ON UPDATE CASCADE,
+CON> 	CenaTehnickog decimal(12,2),
+CON> 	CenaOsiguranja decimal(12,2),
+CON> 	OstaliTroskovi decimal(12,2),
+CON> 	SifraPoslovnice char(2) NOT NULL 
+CON> 		REFERENCES Poslovnica (SifraPoslovnice) ON UPDATE CASCADE,
+CON> 	PRIMARY KEY(Datum,SifraVozila)
+CON> );
+SQL> 
+SQL> CREATE TABLE DUMMY(
+CON> 	foobar integer NOT NULL primary key,
+CON> 	check (foobar = 1)
+CON> );
+SQL> 
+SQL> INSERT INTO dummy VALUES(1);
+SQL> 
+SQL> 
+SQL> /* then, I create few views to make summary report
+--> */
+CON> 
+CON> CREATE VIEW APROMET(DATUM, SO, VRSTA,IZNOS) AS
+CON> 	select 
+CON> 	rt.datumtroska,
+CON> 	SIFRAPOSLOVNICE, 
+CON> 	cast(vrt.nazivvrt as varchar(30)),
+CON> 	cast(rt.iznos as numeric(18, 2))
+CON> 	from rezijskitrosak rt 
+CON> 	left join VRSTART vrt on rt.sifravrt = vrt.sifravrt
+CON> 
+CON> 	union all
+CON> 
+CON> 	SELECT 
+CON> 	AL.DATUM, 
+CON> 	SIFRAPOSLOVNICE, 
+CON> 	cast('KancMat'as varchar(30)),
+CON> 	cast(sum(alst.kolicina * alst.cena) as numeric(18, 2))
+CON> 	FROM ALOKACIJAST ALST
+CON> 	LEFT JOIN ALOKACIJA AL ON ALST.brdok=AL.brdok 
+CON> 	LEFT JOIN ROBA R ON ALST.sifrarobe = R.sifrarobe
+CON> 	WHERE R.vrstarobe = 'KM'
+CON> 	GROUP BY AL.DATUM, SIFRAPOSLOVNICE
+CON> 
+CON> 	union all
+CON> 
+CON> 	SELECT 
+CON> 	AL.DATUM,
+CON> 	SIFRAPOSLOVNICE, 
+CON> 	cast ('Hemikalije' as varchar(30)),
+CON> 	cast(sum(alst.kolicina * alst.cena) as numeric(18, 2))
+CON> 	FROM ALOKACIJAST ALST
+CON> 	LEFT JOIN ALOKACIJA AL ON ALST.brdok=AL.brdok
+CON> 	LEFT JOIN ROBA R ON ALST.sifrarobe = R.sifrarobe
+CON> 	WHERE R.vrstarobe = 'HE'
+CON> 	GROUP BY AL.DATUM, SIFRAPOSLOVNICE
+CON> 
+CON> 	union all
+CON> 
+CON> 	SELECT
+CON> 	AL.DATUM,
+CON> 	SIFRAPOSLOVNICE,
+CON> 	cast('Prehrana' as varchar(30)),
+CON> 	cast(sum(alst.kolicina * alst.cena) as numeric(18, 2))
+CON> 	FROM ALOKACIJAST ALST
+CON> 	LEFT JOIN ALOKACIJA AL ON ALST.brdok=AL.brdok
+CON> 	LEFT JOIN ROBA R ON ALST.sifrarobe = R.sifrarobe
+CON> 	WHERE R.vrstarobe = 'HR'
+CON> 	GROUP BY AL.DATUM, SIFRAPOSLOVNICE
+CON> 
+CON> 	union all
+CON> 
+CON> 	SELECT
+CON> 	pp.datum,
+CON> 	SIFRAPOSLOVNICE, 
+CON> 	cast('Popravke' as varchar(30)),
+CON> 	cast(sum(iznos) as numeric(18,2))
+CON> 	FROM popravka pp
+CON> 	GROUP BY pp.DATUM, SIFRAPOSLOVNICE
+CON> 
+CON> 	union all
+CON> 
+CON> 	SELECT
+CON> 	rg.datum,
+CON> 	SIFRAPOSLOVNICE,
+CON> 	cast('Registracije' as varchar(30)),
+CON> 	cast(sum(cenatehnickog + cenaosiguranja+ostalitroskovi) as numeric(18,2))
+CON> 	FROM registracija rg
+CON> 	GROUP BY rg.DATUM, SIFRAPOSLOVNICE
+CON> 
+CON> 	union all
+CON> 
+CON> 	SELECT
+CON> 	sg.datum,
+CON> 	SIFRAPOSLOVNICE,
+CON> 	cast('Gorivo' as varchar(30)), 
+CON> 	cast(sum(kolicina * cena) as numeric(18,2))
+CON> 	FROM sipanjegoriva sg
+CON> 	GROUP BY
+CON> 	sg.DATUM, SIFRAPOSLOVNICE
+CON> 	;
+SQL> 
+SQL> 
+SQL> CREATE VIEW VV(VRSTA) AS
+CON> 	select distinct vrsta from apromet a;
+SQL> 
+SQL> Use CONNECT or CREATE DATABASE to specify a database
+SQL> 
+SQL> SELECT vv.VRSTA,
+CON> (select sum(ap.iznos)
+CON> from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=1),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=2),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=3),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=4),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=5),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=6),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=7),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=8),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=9),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=10),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=11),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta =
+CON> vv.vrsta
+CON> and
+CON> extract(month from ap.datum)=12),
+CON> (select
+CON> sum(ap.iznos) from apromet ap where ap.vrsta
+CON> =
+CON> vv.vrsta)
+CON> FROM vv;
+Statement failed, SQLCODE = -204
+
+Too many Contexts of Relation/Procedure/Views. Maximum allowed is 127
+SQL> 
+SQL> 
