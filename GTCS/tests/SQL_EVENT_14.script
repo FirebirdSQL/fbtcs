@@ -118,11 +118,11 @@ main()
   if (isc_status[1])
         isc_print_status(isc_status);
 
-  if (gds__events[0] )
+  if (isc_events[0] )
         printf ("\nevent (event1) was posted.\n");
-  if (gds__events[1] )
+  if (isc_events[1] )
         printf ("\nevent (event2) was posted.\n");
-  if (gds__events[2] )
+  if (isc_events[2] )
         printf ("\nevent (event3) was posted.\n");
 
   EXEC SQL 
@@ -130,21 +130,21 @@ main()
   EXEC SQL 
 	COMMIT WORK;
 
-  if (gds__events[0] )
+  if (isc_events[0] )
         printf ("\nevent (event4) was posted.\n");
-  if (gds__events[1] )
+  if (isc_events[1] )
         printf ("\nevent (event5) was posted.\n");
-  if (gds__events[2] )
+  if (isc_events[2] )
         printf ("\nevent (event6) was posted.\n");
-  if (gds__events[3] )
+  if (isc_events[3] )
         printf ("\nevent (event7) was posted.\n");
-  if (gds__events[4] )
+  if (isc_events[4] )
         printf ("\nevent (event8) was posted.\n");
-  if (gds__events[5] )
+  if (isc_events[5] )
         printf ("\nevent (event9) was posted.\n");
-  if (gds__events[6] )
+  if (isc_events[6] )
         printf ("\nevent (event10) was posted.\n");
-  if (gds__events[7] )
+  if (isc_events[7] )
         printf ("\nevent (event11) was posted.\n");
 
   EXEC SQL

@@ -11,8 +11,6 @@
 #include <windows.h>
 #endif
 
-#define ISC_EVENTS  gds__events 
-
 char *event_names [] = { "DG", "DEC", "HP", "IBM", "SUN" };
 
 #include <stdio.h>
@@ -114,7 +112,7 @@ char ** argv;
 
 	for (i=0;i<number_of_stocks;i++) 
           {
-	   if (ISC_EVENTS[i]) 
+	   if (isc_events[i]) 
 	     {
 	      FOR S IN STOCKS WITH S.COMPANY = event_names[i]
 		STORE E IN EVENTSLOG

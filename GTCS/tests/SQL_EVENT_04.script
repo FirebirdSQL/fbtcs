@@ -65,11 +65,11 @@ main()
 
   if (isc_status[1])
         isc_print_status(gds__status);
-  if (gds__events[0] )
+  if (isc_events[0] )
         printf ("\nfoo4 done, event (event1) was posted.\n");
-  if (gds__events[1] )
+  if (isc_events[1] )
         printf ("\nfoo4 done, event (event2) was posted.\n");
-  if (gds__events[2] )
+  if (isc_events[2] )
         printf ("\nfoo4 done, event (event3) was posted.\n");
 
   EXEC SQL
