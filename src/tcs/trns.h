@@ -139,11 +139,11 @@ static char *link_ext[] = {
 
 // PTSL Command lookup table
 static struct ptl_cmd {
-	SCHAR	*ptsl_cmds;
-	SCHAR	*cmd_replacemt;
+	char	*ptsl_cmds;
+	char	*cmd_replacemt;
 	int		(*fixup)(char*, char*, int);
 	int		language;
-	SCHAR	*ptsl_cmd_text;
+	char	*ptsl_cmd_text;
 } ptl_lookup[] = {
 	{"ADA",			NULL,				fix_compile,	LANG_ADA, "\t\tInvokes ada compiler"},
 	{"ADA_LINK",	NULL,				fix_link,		0, "\tInvokes ada linker"},

@@ -45,7 +45,7 @@ const char* FOPEN_READ_TYPE		= "r";
 const char* FOPEN_WRITE_TYPE	= "w";
 
 static bool		check_match(LINE *line1, LINE *line2, SLONG min, SLONG linesleft);
-static ULONG	hash (SCHAR *str);
+static ULONG	hash (char *str);
 static LINE		*read_file(FILE *fileptr, FILE_BLK_PTR *fileblock);
 static void		print_lines(FILE *outfile, LINE *lines1, LINE *lines2, SLONG end1,
 							SLONG end2);
@@ -240,7 +240,7 @@ static void do_diff (FILE *outfile, LINE *line1, LINE *line2, SLONG linecount1,
 			print_lines(outfile, line1, line2, linecount1 - i, (SLONG) 0);
 }
 
-static ULONG hash (SCHAR *str)
+static ULONG hash (char *str)
 {
 	/**************************************
 	 *
@@ -253,7 +253,7 @@ static ULONG hash (SCHAR *str)
 	 *  	get stringlength and hashvalue 
 	 **************************************/
 	ULONG	chksum;
-	SCHAR 	*s;
+	char 	*s;
 
 	//--- Compute checksum of string ---
 	for ( chksum = 0, s = str ; *s ; chksum ^= *s++ )
@@ -277,7 +277,7 @@ static void print_lines (FILE *outfile, LINE *lines1, LINE *lines2, SLONG end1,
 	 **************************************/
 	bool bSeparator = false;
 	SLONG nType ;
-	SCHAR range1[32], range2[32];
+	char range1[32], range2[32];
 
 	if (!end2)
 		nType = DELETE ;
@@ -411,7 +411,7 @@ static LINE *read_file (FILE *fileptr, FILE_BLK_PTR *fileblock)
 	thisline = (*fileblock)->line_ptr;
 	for (i = 1;linecount--; i++) {
 		thisline->addr = (char*) bufptr;
-		thisline->hash = hash ((SCHAR*) bufptr);
+		thisline->hash = hash ((char*) bufptr);
 		thisline->linenum = i;
 		while (*bufptr++)
 			;

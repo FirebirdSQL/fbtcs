@@ -521,7 +521,7 @@ static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *
 		{
 			*current++ = 0;
 
-			// Ignore multiple commas...or junk SCHARs
+			// Ignore multiple commas...or junk chars
 
 			if( !isdigit( *previous ) && !(*previous) )
 			{
@@ -569,7 +569,7 @@ static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *
 			if( !isdigit( *previous ) && current != start )
 			{
 
-				// Skip the dash and set previous to the following SCHAR.
+				// Skip the dash and set previous to the following char.
 				previous = ++current;
 
 				// Set first to the max which is in second so that when we return
@@ -587,12 +587,12 @@ static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *
 			else if ( current == start )
 			{
 				*first = 0;
-				previous = ++current; // Set previous to SCHAR after dash
+				previous = ++current; // Set previous to char after dash
 				range = true;	// Set range flag
 			}
 
 			// Anything else must be the beginning of a range, so assign
-			// first and set previous pointing to the SCHAR after the dash.
+			// first and set previous pointing to the char after the dash.
 
 			else
 			{
@@ -610,14 +610,14 @@ static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *
 		current++;	// Increment current for the next iteration
 	}
 
-	// If current is NULL SCHAR then we are at the end of the line so
+	// If current is NULL char then we are at the end of the line so
 	// if first is zero then do appropriate thing for last arg
 
 	if( current != NULL && *current == '\0' && !(*first))
 	{
 
-		// If previous is NULL and previous is not the first SCHAR then
-		// last SCHARs are garbage so ignore by setting break_flag so
+		// If previous is NULL and previous is not the first char then
+		// last chars are garbage so ignore by setting break_flag so
 		// will jump out of loop in calling function.
 
 		if ( !(*previous) && previous != start )
@@ -680,7 +680,7 @@ void print_error(char *string, char *a, char *b, char *c)
 	 *	in a standard format.
 	 *
 	 **************************************/
-	SCHAR buf[160];
+	char buf[160];
 
 	fflush(stdout);
 	sprintf(buf, "\n**** %s:  %s\n", TCS_NAME, string);
@@ -705,7 +705,7 @@ static int set_boilerplate(char *string)
 	// Search the local DB to see if the boilerplate with name ==
 	// string exists.
 
-	SCHAR lBPList[128];
+	char lBPList[128];
 	sprintf(lBPList,"%s/%s/%s",lBaseDir,"boiler_plates",string);
 	FILE* fl = fopen(lBPList,"r");
 	if (fl != NULL){
@@ -784,7 +784,7 @@ static int set_config(char *rfn)
 /*
 		*cmd = 0;
 
-		// Loop through SCHARs in a line
+		// Loop through chars in a line
 		USHORT cmd_idx;
 		for (cmd_idx = 0; line_buf[line_idx] != '\0' && line_buf[line_idx] != '\n';
 			line_idx++, cmd_idx )
@@ -973,9 +973,9 @@ static int set_env(char *name)
 	 *
 	 **************************************/
 	// Search local DB for environment with name
-	SCHAR lEnvFile[128];
+	char lEnvFile[128];
 	sprintf(lEnvFile,"%s/%s/%s",lBaseDir,"environments",name);
-	SCHAR* buffer;
+	char* buffer;
 
 	FILE* pFile = fopen(lEnvFile,"rb");
 	if (pFile != NULL){
@@ -1071,7 +1071,7 @@ static int test_one(char *string)
 
 	// Execute the main file -- search for the test with name == 
 	// string
-	SCHAR testFileName[128];
+	char testFileName[128];
 
 	sprintf(testFileName,"%s/tests/%s.script",lBaseDir,test_name+1);
 	FILE * pFile;
@@ -1138,8 +1138,8 @@ static int test_meta_series(char *string, char *start)
 	 *	Run through a list of series
 	 *                          
 	 **************************************/
-	SCHAR gSeriesList[128];
-	SCHAR lSeriesList[128];
+	char gSeriesList[128];
+	char lSeriesList[128];
 	sprintf(gSeriesList,"%s/series/list",gBaseDir);
 	sprintf(lSeriesList,"%s/series/list",lBaseDir);
 
@@ -1158,8 +1158,8 @@ static int test_meta_series(char *string, char *start)
 	// check the local DB -- will normally be zero unless using
 	// the '-n' command line option.
 
-	SCHAR metaName[128];
-	SCHAR serieName[128];
+	char metaName[128];
+	char serieName[128];
 	int ret;
 	sprintf(metaName,"%s",string);
 	printf("metaseries %s\n",metaName);
@@ -1167,7 +1167,7 @@ static int test_meta_series(char *string, char *start)
 
 	if (ms_count <= 0)
 	{
-		SCHAR lSerieList[128];
+		char lSerieList[128];
 		// Get series local list 
 		sprintf(lSerieList,"%s/meta_series/%s.list",lBaseDir,metaName);
 		FILE* lTests = fopen(lSerieList,"r");
@@ -1202,7 +1202,7 @@ static int test_meta_series(char *string, char *start)
 	{
 		total = ms_count;
 		// Get series global list 
-		SCHAR gSerieList[128];
+		char gSerieList[128];
 		sprintf(gSerieList,"%s/meta_series/%s.list",gBaseDir,metaName);
 		FILE* gTests = fopen(gSerieList,"r");
 		int order;
@@ -1251,8 +1251,8 @@ static int test_series(char *string, char *start)
 	 *	Run a series of tests.
 	 *
 	 **************************************/
-	SCHAR gSeriesList[128];
-	SCHAR lSeriesList[128];
+	char gSeriesList[128];
+	char lSeriesList[128];
 	sprintf(gSeriesList,"%s/series/list",gBaseDir);
 	sprintf(lSeriesList,"%s/series/list",lBaseDir);
 
@@ -1310,13 +1310,13 @@ static int test_series(char *string, char *start)
 		// through series for each test that is greater than first and
 		// less than second (determined by arguments passed in and parsed.)
 
-		SCHAR serieName[128];
-		SCHAR testName[128];
+		char serieName[128];
+		char testName[128];
 		int ret;
 		sprintf(serieName,"%s",string);
 		if (s_count <= 0)
 		{
-			SCHAR lSerieList[128];
+			char lSerieList[128];
 			// Get series local list 
 			sprintf(lSerieList,"%s/series/%s.list",lBaseDir,serieName);
 			FILE* lTests = fopen(lSerieList,"r");
@@ -1358,7 +1358,7 @@ static int test_series(char *string, char *start)
 		{
 			total = s_count;
 			// Get series local list 
-			SCHAR gSerieList[128];
+			char gSerieList[128];
 			sprintf(gSerieList,"%s/series/%s.list",gBaseDir,serieName);
 			FILE* gTests = fopen(gSerieList,"r");
 			int order;

@@ -71,8 +71,8 @@ const int MAXRPCLN		= 256;	// Max length of replacement field
 // Entry for symbol definition
 struct defn
 {
-	SCHAR ident[MAXIDLEN];
-	SCHAR replacement[MAXRPCLN];
+	char ident[MAXIDLEN];
+	char replacement[MAXRPCLN];
 };
 
 // include the proper file for translation of system-specific commands
@@ -196,7 +196,7 @@ static int addstr(char *wrd, char **bufr, char delim)
 	 *
 	 * Functional description
 	 *       add a word to a linebuffer, bumping pointers
-	 *       end the line with the caller's choice of SCHARs
+	 *       end the line with the caller's choice of chars
 	 *
 	 **************************************/
 	char    *bptr;
@@ -262,7 +262,7 @@ static int fix_compile(char *line, char *result, int lang)
 
 	//  loop through the line...
 
-	while ((tok = (SCHAR *)mytokget(&posn, " \t\n\r")))
+	while ((tok = (char *)mytokget(&posn, " \t\n\r")))
 	{
 		disp_upcase(tok, upc);
 		dptr = lookup_defn(upc);
@@ -433,7 +433,7 @@ static int fix_link(char *line, char *bufr, int lang)
 
 	//  Loop through each token on the line.
 
-	while ((tok = (SCHAR *)mytokget(&posn, " \t\n\r")))
+	while ((tok = (char *)mytokget(&posn, " \t\n\r")))
 	{
 		disp_upcase(tok, upc);
 		dptr = lookup_defn(upc);
@@ -545,7 +545,7 @@ static int handle_filename(char *name)
 	 * Functional description
 	 *        squish filename for picky systems
 	 *        a filename (the part before the extension
-	 *        is SSHORTened to 8 SCHARs with no '_'
+	 *        is SSHORTened to 8 char with no '_'
 	 *
 	 *        On VMS, convert .eftn suffixes to .efor
 	 *        and .ftn to .for
@@ -796,7 +796,7 @@ static int handle_path(char *tok, char *wrd, char *word2, char **result)
 
 	resultptr = *result;
 
-	//  skip SCHARs common in #include statements
+	//  skip char common in #include statements
 
 	while ((*tok == '"') || (*tok == '<') || (*tok == '\'') || (*tok == '\\'))
 		tok++;

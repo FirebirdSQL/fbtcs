@@ -63,9 +63,9 @@ extern char*	oBaseDir;
 
 // Static declarations
 
-static int script_parse(SCHAR*, FILE*, USHORT*);
+static int script_parse(char*, FILE*, USHORT*);
 static int execute_script(char*, char*);
-static int run_text(SCHAR*, char*, char*, ULONG*, int*, char*);
+static int run_text(char*, char*, char*, ULONG*, int*, char*);
 static int compare_files(char*, char*, SSHORT);
 static TEST_RESULT compare_initialized_file(char*, char*, char*, SSHORT);
 static int next_line(FILE*, char*, USHORT);
@@ -97,7 +97,7 @@ static struct pita nuisances [] =
 };
 */
 
-int EXEC_process_env(SCHAR *script, char *name)
+int EXEC_process_env(char *script, char *name)
 {
 /**************************************
  *
@@ -172,7 +172,7 @@ static int set_dollar_verb(char *verb, char *def)
 
 
 TEST_RESULT EXEC_test(char *test_name,
-						SCHAR *script,
+						char *script,
 						int *file_count,
 						char* boilerplate_name)
 {
@@ -217,8 +217,8 @@ TEST_RESULT EXEC_test(char *test_name,
 	//  output with the the initialization.
 
 	USHORT count = 0;
-	SCHAR test_output_name[128];
-	SCHAR compare_file_name[128];
+	char test_output_name[128];
+	char compare_file_name[128];
 	FILE * pFile;
 	FILE * compare_file;
 	char * buffer;
@@ -399,7 +399,7 @@ static TEST_RESULT compare_initialized_file(char *compare_file,
 	 **************************************/
 	USHORT			result;
 	TEST_RESULT		test_result;
-	SCHAR			diff_file[128];
+	char			diff_file[128];
 
 	sprintf(diff_file,"%s/%s.diff", oBaseDir, test_name);
 	test_result = passed;
@@ -482,7 +482,7 @@ static int next_line (FILE *file, char *buffer, USHORT buff_len)
 }
 
 
-static int run_text(SCHAR *script,
+static int run_text(char *script,
 					char *script_file_name,
 					char *output_file_name,
 					ULONG *run_time,
@@ -515,10 +515,10 @@ static int run_text(SCHAR *script,
 	}
 
 	//  Dump boilerplate, if any, into script file
-	SCHAR lBPList[128];
+	char lBPList[128];
 	sprintf(lBPList,"%s/%s/%s",lBaseDir,"boiler_plates",boilerplate_name);
 	FILE* pFile = fopen(lBPList,"rb");
-	SCHAR *buffer;
+	char *buffer;
 
 	if (pFile != NULL){
 		buffer = read_file(pFile);
@@ -574,7 +574,7 @@ static int run_text(SCHAR *script,
 }
 
 
-static int script_parse(SCHAR *script, FILE *script_file, USHORT *n)
+static int script_parse(char *script, FILE *script_file, USHORT *n)
 {
 	/**************************************
 	 *
@@ -619,9 +619,9 @@ static int script_parse(SCHAR *script, FILE *script_file, USHORT *n)
 		{
 
 			//  If we hit a new line character or we max out on the buffer
-			//  size, then stop moving SCHAR's into ch and exit the loop.
+			//  size, then stop moving char's into ch and exit the loop.
 
-			if (((*buff++ = (SCHAR)ch) == '\n') || (!--count))
+			if (((*buff++ = (char)ch) == '\n') || (!--count))
 				break;
 			ch = script[pos++];
 		}
