@@ -1,0 +1,56 @@
+BRS 04-Nov-2003
+
+Added this test to verify isql comments
+
+$CREATE cf_isql_19.sql
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_19.fdb';
+
+-- I am a comment
+
+/* BEGIN */
+-- I am a comment
+select * from rdb$database;
+/* END */
+
+/* BEGIN */
+-- comment with unclosed 'quoted string
+select * from rdb$database;
+/* END */
+
+/* BEGIN */
+-- comment with unclosed "quoted string
+select * from rdb$database;
+/* END */
+
+/* BEGIN */
+-- I am a comment;
+select * from rdb$database;
+/* END */
+
+/* BEGIN with unclosed "quoted */
+-- I am a comment;
+select * from rdb$database;
+/* END */
+
+select * /*
+comment
+*/
+from rdb$database;
+
+select * 
+/* comment */
+from rdb$database;
+
+select * 
+-- comment
+from rdb$database;
+
+/*
+Comment
+*/ select * from rdb$database;
+
+
+$ISQL -m -e -i cf_isql_19.sql
+$DROP WHERE_GDB:cf_isql_19.fdb
+$DELETE cf_isql_19.sql
