@@ -62,11 +62,11 @@ first fbtcs version to avoid cascade failures, to achieve that database name reu
 </tr>
 <tr valign="top">
 <td>SQL_EVENTS</td>
+<td>OK</td>
+<td>-</td>
+<td>-</td>
 <td>SQL_EVENT_13 (commented)<br>
 - waits undefinitely</td>
-<td>-</td>
-<td>-</td>
-<td>Failure in semaphore (server terminated abnormally)</td>
 </tr>
 <tr valign="top">
 <td>C_SQL_BLOB</td>
@@ -208,8 +208,9 @@ PROC_EMPTY<br>
 <td>SVC_API</td>
 <td>OK</td>
 <td>-</td>
-<td>Fails in BACKUP & RESTORE (exception catch fails in burp.cpp:1166)-</td>
-<td>Fails in RESTORE</td>
+<td>SVC_API_BACKUP<br>
+SVC_API_RESTORE<br> (exception catch fails in burp.cpp:1166)-</td>
+<td>SVC_API_RESTORE<br> (fatal lock manager error(semop acquire) errno = 2/4)</td>
 </tr>
 </table>
 </blockquote>
