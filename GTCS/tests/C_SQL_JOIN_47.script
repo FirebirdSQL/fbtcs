@@ -50,7 +50,6 @@ $ CREATE bug6164.e
 */
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
 
 DATABASE DB = "WHERE_GDB:bug6164.gdb";
 EXEC SQL	INCLUDE SQLCA;

@@ -10,7 +10,6 @@ $ CREATE join021.e
 */
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
 
 DATABASE DB = "WHERE_GDB:sh_join_21.gdb";
 EXEC SQL	INCLUDE SQLCA;

@@ -284,7 +284,6 @@ $ GDEF sh_join.gdl
 $ CREATE JLoader.e
 
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
 
 DATABASE DB = 'WHERE_GDB:sh_join.gdb';
 EXEC SQL	INCLUDE SQLCA;
@@ -306,13 +305,6 @@ char *argv[];
 
 
 {
-	int verbose;
-	verbose = FALSE;
-	if (--argc > 0){	
-		if (*argv[1] == 'v' || *argv[1] == 'V')
-			verbose = TRUE;
-	}
-
 Load_Char();
 Load_VChar();
 Load_Short();

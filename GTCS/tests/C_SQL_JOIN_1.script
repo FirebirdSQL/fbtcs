@@ -14,7 +14,6 @@ $ CREATE join001.e
 
 DATABASE atlas = FILENAME "WHERE_GDB:atlas_join_1.gdb";
 #include <stdio.h>
-#include "WHERE_FILES:sh_test.h"
 
 BASED_ON CITIES.CITY		City;
 BASED_ON STATES.STATE_NAME	State_Name;
