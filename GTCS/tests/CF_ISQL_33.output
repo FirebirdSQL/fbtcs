@@ -7,9 +7,9 @@ SQL>
 SQL> SET TERM ^;
 SQL> 
 SQL> /* ... and insert the following text (w/o begin/end) in a record: */
-CON> 
-CON> 
-CON> insert into snippets values('
+SQL> 
+SQL> 
+SQL> insert into snippets values('
 CON> function JsShowZeroFilled(inValue) {
 CON> if(inValue > 9) {
 CON> return inValue;

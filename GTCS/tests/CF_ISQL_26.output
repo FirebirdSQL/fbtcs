@@ -270,8 +270,8 @@ SQL>
 SQL> 
 SQL> /* then, I create few views to make summary report
 --> */
-CON> 
-CON> CREATE VIEW APROMET(DATUM, SO, VRSTA,IZNOS) AS
+SQL> 
+SQL> CREATE VIEW APROMET(DATUM, SO, VRSTA,IZNOS) AS
 CON> 	select 
 CON> 	rt.datumtroska,
 CON> 	SIFRAPOSLOVNICE, 
@@ -424,7 +424,6 @@ CON> =
 CON> vv.vrsta)
 CON> FROM vv;
 Statement failed, SQLCODE = -204
-
 Too many Contexts of Relation/Procedure/Views. Maximum allowed is 127
 SQL> 
 SQL> 

@@ -4,14 +4,13 @@ SQL> show domain dom08a_1;
 DOM08A_1                        SMALLINT Nullable
 SQL> 
 SQL> /* the next statement should fail */
-CON> 
-CON> alter domain dom08a_1 
+SQL> 
+SQL> alter domain dom08a_1 
 CON>  add constraint not null;
 Statement failed, SQLCODE = -104
-
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 4, char 17
+-Token unknown - line 2, char 17
 -not
 SQL> commit;
 SQL> show domain dom08a_1;

@@ -2,7 +2,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
 SQL> SET SQL DIALECT 3;
 SQL> 
-SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_29.fdb';
+SQL> CREATE DATABASE 'localhost:c:/proyectos/firebird/fbtcs/temp/cf_isql_29.fdb';
 SQL> 
 SQL> SET TERM ^ ;
 SQL> 
@@ -31,15 +31,18 @@ SQL> Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
 SQL> EXECUTE PROCEDURE SPX_AUX_TEST (1);
 Statement failed, SQLCODE = -802
-
 arithmetic exception, numeric overflow, or string truncation
+-At procedure 'SPX_AUX_TEST'
+-At procedure 'SPX_AUX_TEST'
 SQL> EXECUTE PROCEDURE SPX_AUX_TEST (1);
 Statement failed, SQLCODE = -802
-
 arithmetic exception, numeric overflow, or string truncation
+-At procedure 'SPX_AUX_TEST'
+-At procedure 'SPX_AUX_TEST'
 SQL> EXECUTE PROCEDURE SPX_AUX_TEST (1);
 Statement failed, SQLCODE = -802
-
 arithmetic exception, numeric overflow, or string truncation
+-At procedure 'SPX_AUX_TEST'
+-At procedure 'SPX_AUX_TEST'
 SQL> 
 SQL> 

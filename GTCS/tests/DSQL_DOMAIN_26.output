@@ -21,11 +21,9 @@ DOM20G                          FLOAT Nullable
 DOM20H                          DOUBLE PRECISION Not Null
                                 default 1000
 Statement failed, SQLCODE = -607
-
 unsuccessful metadata update
 -column DOM20A is used in table TAB26A (local name FLD1) and cannot be dropped
 Statement failed, SQLCODE = -607
-
 unsuccessful metadata update
 -column DOM20B is used in table TAB26A (local name FLD2) and cannot be dropped
 DOM20A                          SMALLINT Nullable

@@ -21,7 +21,6 @@ DOM11H                          DOUBLE PRECISION Nullable
 DOM11I_1                        BLOB segment 80, subtype UNKNOWN Nullable
 DOM11I_2                        BLOB segment 60, subtype TEXT Nullable
 Statement failed, SQLCODE = -607
-
 unsuccessful metadata update
 -Column not found
  

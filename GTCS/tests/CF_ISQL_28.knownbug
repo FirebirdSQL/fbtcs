@@ -6,10 +6,10 @@ SQL> /*
 --> will be raised
 --> The database can't be used anymore without having it fixed before!
 --> */
-CON> 
-CON> /* Step 1: DDL */
-CON> 
-CON> SET SQL DIALECT 3;
+SQL> 
+SQL> /* Step 1: DDL */
+SQL> 
+SQL> SET SQL DIALECT 3;
 SQL> 
 SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_28.fdb';
 SQL> 
@@ -31,8 +31,8 @@ SQL> SET TERM ; ^
 SQL> 
 SQL> 
 SQL> /* Step 2: DML */
-CON> 
-CON> insert into TEST values (1);
+SQL> 
+SQL> insert into TEST values (1);
 SQL> insert into TEST values (2);
 SQL> insert into TEST values (3);
 SQL> insert into TEST values (4);
@@ -41,9 +41,9 @@ SQL> insert into TEST values (6);
 SQL> commit;
 SQL> 
 SQL> /* fine so far */
-CON> /* fail with commit or rollback */
-CON> 
-CON> update TEST set id=-1 where id=1;
+SQL> /* fail with commit or rollback */
+SQL> 
+SQL> update TEST set id=-1 where id=1;
 SQL> commit;
 SQL> 
 SQL> delete from TEST;
@@ -61,21 +61,17 @@ SQL>
 SQL> update TEST set id=-1 where id=1;
 SQL> rollback;
 Statement failed, SQLCODE = -902
-
 internal gds software consistency check (can't continue after bugcheck)
 SQL> /* error */
-CON> 
-CON> quit;
+SQL> 
+SQL> quit;
 Use CONNECT or CREATE DATABASE to specify a database
 
           ID 
 ============ 
 Statement failed, SQLCODE = -902
-
 internal gds software consistency check (wrong record length (183))
 Statement failed, SQLCODE = -902
-
 internal gds software consistency check (can't continue after bugcheck)
 Statement failed, SQLCODE = -902
-
 internal gds software consistency check (can't continue after bugcheck)

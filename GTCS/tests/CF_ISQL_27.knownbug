@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
-SQL> CREATE DATABASE 'localhost:d:/proyectos/firebird/fbtcs/temp/cf_isql_27.fdb';
+SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_27.fdb';
 SQL> 
 SQL> CREATE GENERATOR GEN_TEST1;
 SQL> SET GENERATOR GEN_TEST1 TO 0;
@@ -38,8 +38,8 @@ SQL>
 SQL> Use CONNECT or CREATE DATABASE to specify a database
 SQL> execute procedure rpl$generator_values;
 Statement failed, SQLCODE = -904
-
 Variable type (position 0) in EXECUTE STATEMENT 'select gen_id(GEN_TEST1        ' INTO does not match returned column type
+-At procedure 'RPL$GENERATOR_VALUES'
 SQL> 
 SQL> 
 SQL> 

@@ -3,8 +3,8 @@ SQL>
 SQL> -- I am a comment
 SQL> 
 SQL> /* BEGIN */
-CON> -- I am a comment
-CON> select * from rdb$database;
+SQL> -- I am a comment
+SQL> select * from rdb$database;
 
   RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
 ================= =============== =============================== =============================== 
@@ -12,10 +12,10 @@ CON> select * from rdb$database;
            <null>             128 <null>                          NONE                            
 
 SQL> /* END */
-CON> 
-CON> /* BEGIN */
-CON> -- comment with unclosed 'quoted string
-CON> select * from rdb$database;
+SQL> 
+SQL> /* BEGIN */
+SQL> -- comment with unclosed 'quoted string
+SQL> select * from rdb$database;
 
   RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
 ================= =============== =============================== =============================== 
@@ -23,10 +23,10 @@ CON> select * from rdb$database;
            <null>             128 <null>                          NONE                            
 
 SQL> /* END */
-CON> 
-CON> /* BEGIN */
-CON> -- comment with unclosed "quoted string
-CON> select * from rdb$database;
+SQL> 
+SQL> /* BEGIN */
+SQL> -- comment with unclosed "quoted string
+SQL> select * from rdb$database;
 
   RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
 ================= =============== =============================== =============================== 
@@ -34,10 +34,10 @@ CON> select * from rdb$database;
            <null>             128 <null>                          NONE                            
 
 SQL> /* END */
-CON> 
-CON> /* BEGIN */
-CON> -- I am a comment;
-CON> select * from rdb$database;
+SQL> 
+SQL> /* BEGIN */
+SQL> -- I am a comment;
+SQL> select * from rdb$database;
 
   RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
 ================= =============== =============================== =============================== 
@@ -45,10 +45,10 @@ CON> select * from rdb$database;
            <null>             128 <null>                          NONE                            
 
 SQL> /* END */
-CON> 
-CON> /* BEGIN with unclosed "quoted */
-CON> -- I am a comment;
-CON> select * from rdb$database;
+SQL> 
+SQL> /* BEGIN with unclosed "quoted */
+SQL> -- I am a comment;
+SQL> select * from rdb$database;
 
   RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
 ================= =============== =============================== =============================== 
@@ -56,8 +56,8 @@ CON> select * from rdb$database;
            <null>             128 <null>                          NONE                            
 
 SQL> /* END */
-CON> 
-CON> select * /*
+SQL> 
+SQL> select * /*
 --> comment
 --> */
 CON> from rdb$database;

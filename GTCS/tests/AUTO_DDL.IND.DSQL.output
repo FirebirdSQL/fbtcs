@@ -5,10 +5,8 @@ unsuccessful metadata update
 Use CONNECT or CREATE DATABASE to specify a database
 T_IND UNIQUE INDEX ON T(B) 
 Statement failed, SQLCODE = -803
-
 attempt to store duplicate value (visible to active transactions) in unique index "T_IND"
 Statement failed, SQLCODE = -803
-
 attempt to store duplicate value (visible to active transactions) in unique index "T_IND"
 
            A            B 

@@ -4,7 +4,7 @@ View REFERENTIAL_CONSTRAINTS created ok.
 View CHECK_CONSTRAINTS created ok.
 View CONSTRAINTS_COLUMN_USAGE created ok.
 unsuccessful metadata update
--object AUTHORS is in use 
+-object AUTHORS is in use
 alter_drop_field expected SQLCODE = 0. Got SQLCODE = 0
 
 

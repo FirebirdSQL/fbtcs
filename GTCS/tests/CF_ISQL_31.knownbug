@@ -24,29 +24,14 @@ SQL>
 SQL> 
 SQL> ALTER TABLE MITEMS_EXPIRY
 CON>   ADD QOH COMPUTED BY (COALESCE((SELECT SUM(QOH) FROM MITEMS_EXPIRY_WAREHOUSES),0));
-Statement failed, SQLCODE = -901
-
-** DSQL error: INTERNAL: Assertion failure:  File: ../src/dsql/ddl.cpp Line: 785
- **
-
 SQL> 
 SQL> 
 SQL> ALTER TABLE MITEMS
 CON>   ADD QOH COMPUTED BY (COALESCE((SELECT SUM(QOH) FROM MITEMS_EXPIRY),0));
-Statement failed, SQLCODE = -203
-
-Dynamic SQL Error
--SQL error code = -203
--Inappropriate self-reference of column
 SQL> 
 SQL> 
 SQL> ALTER TABLE ITEMS
 CON>   ADD QOH COMPUTED BY (COALESCE((SELECT SUM(QOH) FROM MITEMS),0));
-Statement failed, SQLCODE = -203
-
-Dynamic SQL Error
--SQL error code = -203
--Inappropriate self-reference of column
 SQL> 
 SQL> SET TERM ^;
 SQL> 
@@ -77,6 +62,7 @@ SQL>
 SQL> SHOW TABLE ITEMS;
 UID                             (DM_ID) BIGINT Not Null 
 DESCRIPTION                     VARCHAR(80) Nullable 
+QOH                             Computed by: (COALESCE((SELECT SUM(QOH) FROM MITEMS),0))
 CONSTRAINT INTEG_1:
   Primary key (UID)
 
@@ -87,14 +73,9 @@ SQL>
 SQL> SELECT
 CON>   QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH
 CON> FROM ITEMS;
-Statement failed, SQLCODE = -206
-
-Dynamic SQL Error
--SQL error code = -206
--Column unknown
--QOH
--At line 2, column 3.
+Statement failed, SQLCODE = -204
+Too many Contexts of Relation/Procedure/Views. Maximum allowed is 127
 SQL> 
 SQL> DROP DATABASE;
 SQL> 
-SQL> ERROR: can't attach to 'WHERE_GDB:cf_isql_31.fdb'
+SQL> ERROR: can't attach to 'localhost:c:/proyectos/firebird/fbtcs/temp/cf_isql_31.fdb'
