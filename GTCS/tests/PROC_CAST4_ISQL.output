@@ -89,8 +89,8 @@ SQL> execute procedure cast5 100;
 
 SQL> execute procedure cast6 10.23;
 Statement failed, SQLCODE = -413
-
 conversion error from string "10.23000000000000     "
+-At procedure 'CAST6'
 SQL> execute procedure cast7 100;
 
            B 

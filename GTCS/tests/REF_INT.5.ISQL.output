@@ -1,7 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> alter index dept_key inactive;
 Statement failed, SQLCODE = -607
-
 unsuccessful metadata update
 -MODIFY RDB$INDICESS failed
 -action cancelled by trigger (2) to preserve data integrity
@@ -9,7 +8,6 @@ unsuccessful metadata update
 SQL> commit;
 SQL> insert into department values (1, 'hello');
 Statement failed, SQLCODE = -803
-
 violation of PRIMARY or UNIQUE KEY constraint "DEPT_KEY" on table "DEPARTMENT"
 SQL> commit;
 SQL> select * from department;
@@ -21,3 +19,4 @@ DEPT_NO DEPT_NAME
 2       d2                   
 3       d3                   
 
+SQL> 

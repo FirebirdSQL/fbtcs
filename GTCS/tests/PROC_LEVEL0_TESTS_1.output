@@ -13,7 +13,6 @@ CON>   SUSPEND;
 CON> end
 CON> go
 Statement failed, SQLCODE = -607
-
 unsuccessful metadata update
 -Procedure ABC already exists
 SQL> 

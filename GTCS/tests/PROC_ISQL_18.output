@@ -50,7 +50,6 @@ S4     P5              400
 
 SQL> select * from proc_select_insert;
 Statement failed, SQLCODE = -84
-
 Dynamic SQL Error
 -SQL error code = -84
 -procedure PROC_SELECT_INSERT does not return any values

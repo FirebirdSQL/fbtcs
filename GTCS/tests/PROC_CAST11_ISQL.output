@@ -14,8 +14,8 @@ X
 X      
 ====== 
 Statement failed, SQLCODE = -413
-
 conversion error from string "10001"
+-At procedure 'P2'
 
 X          
 ========== 

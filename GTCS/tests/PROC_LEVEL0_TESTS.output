@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> /* This script checks how long a procedure name can be. */
-CON> set term go;
+SQL> set term go;
 SQL> create procedure pabcdefghijklmnopqrstuvwxyzabcd  RETURNS (a int) as
 CON> begin
 CON>    a = 10;
@@ -15,7 +15,6 @@ CON>    SUSPEND;
 CON> end
 CON> go
 Statement failed, SQLCODE = -607
-
 unsuccessful metadata update
 -Name longer than database column size
 SQL> 
@@ -32,7 +31,6 @@ SQL> execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
 
 SQL> execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
 Statement failed, SQLCODE = -204
-
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown

@@ -4,66 +4,65 @@
      50 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc       "
+-At procedure 'CAST1'
 
            B 
 ============ 
        10000 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc       "
+-At procedure 'CAST2'
 
              B 
 ============== 
      10000.000 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc       "
+-At procedure 'CAST3'
 
                       B 
 ======================= 
       10000.00000000000 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc       "
+-At procedure 'CAST4'
 
            B 
 ============ 
     10000.00 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc       "
+-At procedure 'CAST5'
 
           B 
 =========== 
 1992-03-12  
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc       "
+-At procedure 'CAST6'
 Statement failed, SQLCODE = -206
-
 Dynamic SQL Error
 -SQL error code = -206
 -Column unknown
 -ABC
 -At line 1, column 25.
 Statement failed, SQLCODE = -413
-
 conversion error from string "100       "
+-At procedure 'CAST6'
 
            B 
 ============ 
       100.00 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc       "
+-At procedure 'CAST7'
 
 B          
 ========== 

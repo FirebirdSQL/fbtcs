@@ -4,40 +4,40 @@
      50 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "x"
+-At procedure 'CAST1'
 
            B 
 ============ 
        10000 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "x"
+-At procedure 'CAST2'
 
              B 
 ============== 
      10000.000 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "x"
+-At procedure 'CAST3'
 
                       B 
 ======================= 
       10000.00000000000 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc"
+-At procedure 'CAST4'
 
            B 
 ============ 
     10000.00 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc"
+-At procedure 'CAST5'
 
           B 
 =========== 
@@ -54,8 +54,8 @@ conversion error from string "abc"
     21000.98 
 
 Statement failed, SQLCODE = -413
-
 conversion error from string "abc"
+-At procedure 'CAST7'
 
 B          
 ========== 

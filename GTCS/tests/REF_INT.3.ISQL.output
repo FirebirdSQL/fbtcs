@@ -1,7 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> drop index dept_key;
 Statement failed, SQLCODE = -607
-
 unsuccessful metadata update
 -ERASE RDB$INDICES failed
 -action cancelled by trigger (1) to preserve data integrity

@@ -1,31 +1,25 @@
 Statement failed, SQLCODE = -607
-
 Dynamic SQL Error
 -SQL error code = -607
 -Array/BLOB/DATE data types not allowed in arithmetic
 Statement failed, SQLCODE = -607
-
 Dynamic SQL Error
 -SQL error code = -607
 -Array/BLOB/DATE data types not allowed in arithmetic
 Statement failed, SQLCODE = -607
-
 Dynamic SQL Error
 -SQL error code = -607
 -Array/BLOB/DATE data types not allowed in arithmetic
 Statement failed, SQLCODE = -607
-
 Dynamic SQL Error
 -SQL error code = -607
 -Array/BLOB/DATE data types not allowed in arithmetic
 Statement failed, SQLCODE = -204
-
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST1
 Statement failed, SQLCODE = -204
-
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
@@ -36,23 +30,21 @@ Dynamic SQL Error
 1978-03-29  
 
 Statement failed, SQLCODE = -204
-
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST4
 Statement failed, SQLCODE = -204
-
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST5
 Statement failed, SQLCODE = -413
-
 conversion error from string "1978-03-29"
+-At procedure 'CAST6'
 Statement failed, SQLCODE = -413
-
 conversion error from string "1978-03-29"
+-At procedure 'CAST7'
 
 B          
 ========== 

@@ -1,7 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> alter index dept_key inactive;
 Statement failed, SQLCODE = -607
-
 unsuccessful metadata update
 -MODIFY RDB$INDICESS failed
 -action cancelled by trigger (2) to preserve data integrity
@@ -9,5 +8,5 @@ unsuccessful metadata update
 SQL> commit;
 SQL> insert into employee values (11, 'e11', 34);
 Statement failed, SQLCODE = -530
-
 violation of FOREIGN KEY constraint "REF_KEY" on table "EMPLOYEE"
+SQL> 
