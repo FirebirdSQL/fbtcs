@@ -1,5 +1,5 @@
 
-$ ISQL
+$ ISQL -m 
 create database "WHERE_GDB:foo.gdb";
 create table foo (i integer);
 set term go;

@@ -141,7 +141,7 @@ WHERE NAME STARTING WITH FIRST_NAME ORDER BY NAME;
 select count(*) from employees where name starting with
 first_name;
 quit;
-$ISQL -i sta037.sql
+$ISQL -m -i sta037.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta037* 
 

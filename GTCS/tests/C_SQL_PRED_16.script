@@ -189,7 +189,7 @@ v2 where v2.department = v1.department);
 select * from dept_budget v1 where 1 =  (select count(*) from fullemp
 v2 where v2.department = v1.department); 
 quit;
-$ISQL -i sin020.sql
+$ISQL -m -i sin020.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin020* 
 

@@ -141,15 +141,15 @@ connect "WHERE_GDB:charset.gdb";
   select t_rowid, t_uni from T2 where t_rowid = 33;
 quit;
 # TYPE v1
-$ ISQL -i v1.sql
+$ ISQL -m -i v1.sql
 # TYPE v2
-$ ISQL -i v2.sql
+$ ISQL -m -i v2.sql
 # TYPE v2a
-# ISQL -i v2a.sql
+# ISQL -m -i v2a.sql
 # TYPE v3
-$ ISQL -i v3.sql
+$ ISQL -m -i v3.sql
 # TYPE v3a
-# ISQL -i v3a.sql
+# ISQL -m -i v3a.sql
 $ DELETE doc v1.sql v2.sql v2a.sql v3.sql v3a.sql v1 v2 v3 
 # DELETE v4.sql v5.sql v4 v5 
 $ DELETE v2a v3a

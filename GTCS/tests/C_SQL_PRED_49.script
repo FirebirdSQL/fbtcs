@@ -142,6 +142,6 @@ SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB
 FROM SALES S1 WHERE S1.PONUMB STARTING WITH '8';
 select count(*) from sales where ponumb starting with '8';
 quit;
-$ISQL -i sta001.sql
+$ISQL -m -i sta001.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta001* 

@@ -133,5 +133,5 @@ select 'Passed 6 - Update' from t25 where date_diff = d_end - d_start having cou
 drop database;
 exit;
 
-$ ISQL -sqldialect 1 -m -input cf_test.sql
+$ ISQL -m -sqldialect 1 -input cf_test.sql
 $ DELETE cf_test.sql

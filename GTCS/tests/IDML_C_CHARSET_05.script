@@ -108,6 +108,6 @@ $ GPRE -m btest2.e
 $ CC FLAG_CC btest2.c
 $ LINK FLAG_LINK btest2 
 $ RUN btest2
-$ ISQL -i verify.sql
+$ ISQL -m -i verify.sql
 $ DELETE btest2* verify.sql
 $ DROP WHERE_GDB:intlemp_05.gdb

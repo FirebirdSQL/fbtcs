@@ -121,6 +121,6 @@ connect WHERE_GDB:intlemp_06.gdb;
 select * from employee;
 quit;
 
-$ ISQL -i verify.sql -m
+$ ISQL -m -i verify.sql
 $ DROP WHERE_GDB:intlemp_06.gdb
 $ DELETE btest3* comment verify.sql

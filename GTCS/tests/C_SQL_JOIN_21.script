@@ -123,6 +123,6 @@ connect WHERE_GDB:sh_join_21.gdb;
 select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row
 from (st1 x left join st2 y on x.s1 >= y.s1) ;
 quit;
-$ISQL -i join021.sql
+$ISQL -m -i join021.sql
 $DROP WHERE_GDB:sh_join_21.gdb
 $ DELETE join021* 

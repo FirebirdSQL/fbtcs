@@ -45,7 +45,7 @@ main()
 		printf("\n");
 	end_for;
 }
-$ISQL -i init.sql	
+$ISQL -m -i init.sql	
 $GPRE -m -e p1.e
 $CC FLAG_CC p1.c
 $LINK FLAG_LINK p1 

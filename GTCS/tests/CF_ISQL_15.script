@@ -26,6 +26,6 @@ create table t0 (a integer, af computed by (non_exist_udf(a)));
 
 drop database;
 exit;
-$ ISQL -input cf_test.sql
+$ ISQL -m -input cf_test.sql
 
 $ DELETE cf_test.sql

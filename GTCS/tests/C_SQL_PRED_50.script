@@ -150,6 +150,6 @@ FROM SALES S1 WHERE S1.PONUMB STARTING WITH '8902'
 ORDER BY S1.CUSTNO ASCENDING;
 select count(*) from sales where ponumb starting with '8902';
 quit;
-$ISQL -i sta002.sql
+$ISQL -m -i sta002.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta002* 

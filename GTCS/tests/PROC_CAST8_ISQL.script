@@ -1,6 +1,6 @@
 
 $GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -sqldialect 3 WHERE_GDB:sp1.gdb
+$ ISQL -m -sqldialect 3 WHERE_GDB:sp1.gdb
 set term go;
 create procedure cast1(a blob) RETURNS (b smallint) as
 begin

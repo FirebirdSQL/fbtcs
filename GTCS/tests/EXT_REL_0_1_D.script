@@ -55,12 +55,12 @@ CONNECT "WHERE_GDB:ext_rel_0_1_D.gdb";
 INSERT INTO ext_table (field1) VALUES ('Success');
 SELECT * FROM ext_table;
 
-$ISQL -input isql.in
-$ISQL -input isql2.in
+$ISQL -m -input isql.in
+$ISQL -m -input isql2.in
 $CREATE isql3.in
 drop database;
 commit;
 quit;
-$ISQL WHERE_GDB:ext_rel_0_1_D.gdb -i isql3.in
+$ISQL -m WHERE_GDB:ext_rel_0_1_D.gdb -i isql3.in
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
 $DELETE COMMENT isql.in isql2.in isql3.in

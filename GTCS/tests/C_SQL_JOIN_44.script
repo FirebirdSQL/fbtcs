@@ -148,6 +148,6 @@ from ((((st1 a left outer join st1 b on a.s1 = b.s1) left outer join st1 c on b.
 st1 d on c.s1 = d.s1) left outer join st1 e on d.s1 = e.s1)
 order by a.table_row ascending;
 quit;
-$ISQL -i join044.sql
+$ISQL -m -i join044.sql
 $DROP WHERE_GDB:sh_join_44.gdb
 $ DELETE join044* 

@@ -137,7 +137,7 @@ connect WHERE_GDB:sh_test.gdb;
 select custno, customer from customers 
 where customer containing 'a' or customer containing 'B' order by custno;
 quit;
-$ISQL -i con004.sql
+$ISQL -m -i con004.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con004* 
 

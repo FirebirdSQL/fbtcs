@@ -205,7 +205,7 @@ where t3.sales_rep = 137))
 group by t1.sales_rep
 order by t1.sales_rep descending;
 quit;
-$ISQL -i sin012.sql
+$ISQL -m -i sin012.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin012* 
 

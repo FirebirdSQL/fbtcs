@@ -133,7 +133,7 @@ char *argv[];
 		isc_print_status(user_status);
 }
 
-$ISQL -i init.sql
+$ISQL -m -i init.sql
 $GPRE -m -e  p1.e
 $CC FLAG_CC p1.c
 $LINK FLAG_LINK p1 

@@ -50,7 +50,7 @@ end
 go
 set term ; go
 exit;
-$ISQL -I event5.sql -sqldialect 1 
+$ISQL -m -I event5.sql -sqldialect 1 
 $ CREATE foo5.e
 
 # include <stdio.h>

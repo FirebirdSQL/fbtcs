@@ -42,6 +42,6 @@ end !!
 set term ; !!
 select * from p_error1;
 select * from block_trace;
-$ ISQL -i proc_err.sql
+$ ISQL -m -i proc_err.sql
 $ DELETE proc_err.sql
 $ DROP WHERE_GDB:proc_err.gdb

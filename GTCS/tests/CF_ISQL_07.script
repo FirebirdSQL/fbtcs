@@ -164,5 +164,5 @@ select 'Passed 7 - Update' from t35 where literal_date = '01/01/95' - f_date hav
 drop database;
 exit;
 
-$ ISQL -sqldialect 1 -m -input cf_test.sql
+$ ISQL -m -sqldialect 1 -input cf_test.sql
 $ DELETE cf_test.sql

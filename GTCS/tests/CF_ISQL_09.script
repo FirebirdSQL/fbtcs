@@ -108,5 +108,5 @@ select 'Passed 6 - Update' from t25 where float_as_char = cast(f_float as char(1
 drop database;
 exit;
 
-$ ISQL -sqldialect 1 -m -input cf_test.sql
+$ ISQL -m -sqldialect 1 -input cf_test.sql
 $ DELETE cf_test.sql

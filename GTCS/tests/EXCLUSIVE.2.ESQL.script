@@ -87,7 +87,7 @@ show table t1;
 show table t2;
 select * from t1;
 select * from t2;
-$ISQL -i init.sql
+$ISQL -m -i init.sql
 $GPRE -e A1.e
 $RUN sed "/isc_tpb_0/s/3};/isc_tpb_exclusive};/" A1.c > A1a.c
 $CC FLAG_CC A1a.c
@@ -96,7 +96,7 @@ $GPRE -e A2.e
 $CC FLAG_CC A2.c
 $LINK FLAG_LINK_MU A2
 $RUN WHERE_MU:mu -p A1a -q 20 -l 10 -p A2 -q 20 -l 10
-$ISQL -i show.sql
+$ISQL -m -i show.sql
 $DELETE A1a A1a.c A1a.o A1.e A1.c A1.o A2 A2.e A2.c A2.o init.sql COMMENT
 $DELETE show.sql
 $DROP WHERE_GDB:test.gdb

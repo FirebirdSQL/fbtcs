@@ -210,7 +210,7 @@ v3.empno = v4.empno)
 group by v1.deptno, v1.department, v1.mgrno
 order by v1.deptno;
 quit;
-$ISQL -i sin022.sql
+$ISQL -m -i sin022.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin022* 
 

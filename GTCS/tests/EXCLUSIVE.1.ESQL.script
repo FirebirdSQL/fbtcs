@@ -95,7 +95,7 @@ char * argv[];
 
   qa_mu_cleanup();
 }
-$ISQL -i init.sql
+$ISQL -m -i init.sql
 $GPRE -e A1.e
 $RUN sed "/isc_tpb_0/s/3};/isc_tpb_exclusive};/" A1.c > A1a.c
 $CC FLAG_CC A1a.c

@@ -72,7 +72,7 @@ $GPRE column.e
 $CC FLAG_CC column.c
 $LINK FLAG_LINK column
 $RUN column
-$ISQL -input isql.in
+$ISQL -m -input isql.in
 $DROP WHERE_GDB:ext_rel_0_29_E.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
 $DELETE COMMENT isql.in column*

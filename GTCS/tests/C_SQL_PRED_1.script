@@ -152,7 +152,7 @@ select * from customers c1
 where 1 < (select count(*) from customers c2 where c1.custno = c2.custno)
 or 0 = (select count(*) from customers c3 where c3.custno = c3.custno);
 quit;
-$ISQL -i sin002.sql
+$ISQL -m -i sin002.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin002* 
 

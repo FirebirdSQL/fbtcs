@@ -136,6 +136,6 @@ select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row
 from (st1 t full join st2 x on (t.s1 = x.s1 and t.sscale = x.sscale)and 
 (t.s1 = x.s1 and t.s3 = x.s3));
 quit;
-$ISQL -i join039.sql
+$ISQL -m -i join039.sql
 $DROP WHERE_GDB:sh_join_39.gdb
 $ DELETE join039* 

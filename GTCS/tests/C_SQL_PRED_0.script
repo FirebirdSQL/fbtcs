@@ -145,6 +145,6 @@ where singular (select * from customers c2 where c1.phone_no = c2.phone_no);
 select * from customers c1
 where 1 =  (select count(*) from customers c2 where c1.phone_no = c2.phone_no);
 quit;
-$ISQL -i sin001.sql
+$ISQL -m -i sin001.sql
 $ DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin001* 

@@ -2,5 +2,5 @@
 $CREATE init.sql
 create database "WHERE_GDB:test.gdb";
 create table t ( a int);
-$ISQL -i init.sql
+$ISQL -m -i init.sql
 $DELETE init.sql

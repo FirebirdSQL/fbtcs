@@ -112,6 +112,6 @@ connect WHERE_GDB:sh_join_28.gdb;
 select count(*)
 from (st5 x full join st1 y on x.s2 = y.s2);
 quit;
-$ISQL -i join028.sql
+$ISQL -m -i join028.sql
 $DROP WHERE_GDB:sh_join_28.gdb
 $ DELETE join028* 

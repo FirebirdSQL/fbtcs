@@ -139,7 +139,7 @@ where singular (select * from sales s1 where s1.custno = c1.custno);
 select * from customers c1
 where 1 = (select count(*) from sales s1 where s1.custno = c1.custno);
 quit;
-$ISQL -i sin003.sql
+$ISQL -m -i sin003.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin003* 
 

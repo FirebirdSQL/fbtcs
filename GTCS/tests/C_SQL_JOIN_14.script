@@ -143,6 +143,6 @@ from (ct1 x right join ct2 y on x.c1 = y.c1)
 right join ct3 z on z.c1 = y.c1
 where z.table_row in ('ct3-1','ct3-2','ct3-3','ct3-6');
 quit;
-$ISQL -i join014.sql
+$ISQL -m -i join014.sql
 $DROP WHERE_GDB:sh_join_14.gdb
 $ DELETE join014* 

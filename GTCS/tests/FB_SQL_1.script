@@ -3,7 +3,7 @@ HISTORY:
 19-May-2001  Neil McCalden    New test created.
 
 $ GBAK -r WHERE_FILES:atlas.gbk WHERE_GDB:atlas.gdb
-$ISQL WHERE_GDB:atlas.gdb -i WHERE_EXAMPLES:ib_udf.sql
+$ISQL -m WHERE_GDB:atlas.gdb -i WHERE_EXAMPLES:ib_udf.sql
 $ CREATE udfgrp.e
 /**********************************************************************
  Purpose:		Test group by a udf function 
@@ -130,33 +130,33 @@ as
 select first_name,last_name,state,substr(first_name,1,2)
 from mayors;
 quit;
-$ISQL -i grpview.sql
+$ISQL -m -i grpview.sql
 $CREATE udfgrp1.sql
 connect WHERE_GDB:atlas.gdb;
 select substr(first_name,1,2) as sname ,count(*)
  from mayors 
 group by substr(first_name,1,2);
 quit;
-$ISQL -i udfgrp1.sql
+$ISQL -m -i udfgrp1.sql
 $CREATE udfgrp2.sql
 connect WHERE_GDB:atlas.gdb;
 select sname,count(*) from udfgrp_view
 group by sname;
 quit;
-$ISQL -i udfgrp2.sql
+$ISQL -m -i udfgrp2.sql
 $CREATE udfgrp3.sql
 connect WHERE_GDB:atlas.gdb;
 select state,substr(first_name,1,2) as sname ,count(*)
  from mayors 
 group by state,substr(first_name,1,2);
 quit;
-$ISQL -i udfgrp3.sql
+$ISQL -m -i udfgrp3.sql
 $CREATE udfgrp4.sql
 connect WHERE_GDB:atlas.gdb;
 select state,sname,count(*) from udfgrp_view
 group by state,sname;
 quit;
-$ISQL -i udfgrp4.sql
+$ISQL -m -i udfgrp4.sql
 
 $DROP WHERE_GDB:atlas.gdb
 $ DELETE grpview.sql udfgrp*

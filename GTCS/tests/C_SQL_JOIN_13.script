@@ -135,6 +135,6 @@ select x.c1,x.c10,x.table_row,y.c1,y.c10,y.table_row ,z.c1,z.c10,z.table_row
 from (ct1 x left join ct2 y on x.c1 = y.c1) 
 left join ct3 z on z.c1 = y.c1;
 quit;
-$ISQL -i join013.sql
+$ISQL -m -i join013.sql
 $DROP WHERE_GDB:sh_join_13.gdb
 $ DELETE join013* 

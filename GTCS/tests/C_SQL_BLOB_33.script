@@ -2,7 +2,7 @@
 $ CREATE blob33.sql
 create database "WHERE_GDB:blob33.gdb";
 quit;
-$ ISQL -i blob33.sql
+$ ISQL -m -i blob33.sql
 $ CREATE blob33x.e
 exec sql set database db = "WHERE_GDB:blob33.gdb";
 exec sql include sqlca;

@@ -137,6 +137,6 @@ connect WHERE_GDB:sh_test.gdb;
 SELECT JOB FROM EMPLOYEES WHERE JOB STARTING WITH'M' ORDER BY JOB;
 select count(*) from employees where job starting with 'M';
 quit;
-$ISQL -i sta024.sql
+$ISQL -m -i sta024.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta024* 

@@ -49,5 +49,5 @@ select * from t0 where genid_field = gen_id(gen1, 1);
 drop database;
 exit;
 
-$ ISQL -input cf_test.sql
+$ ISQL -m -input cf_test.sql
 $ DELETE cf_test.sql

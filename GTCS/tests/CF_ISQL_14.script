@@ -47,6 +47,6 @@ insert into t5 values(10);
 
 drop database;
 exit;
-$ ISQL -input cf_test.sql
+$ ISQL -m -input cf_test.sql
 
 $ DELETE cf_test.sql

@@ -1,6 +1,6 @@
 
 $ GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL WHERE_GDB:sp1.gdb
+$ ISQL -m WHERE_GDB:sp1.gdb
 set term go;
 create procedure proc8 RETURNS (a varchar(20), b integer) as
 begin

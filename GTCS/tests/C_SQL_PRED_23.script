@@ -184,7 +184,7 @@ select * from customers c1 where 1 =
 (select count(*) from sales s1
 where s1.custno = c1.custno and s1.ponumb containing '8902');
 quit;
-$ISQL -i sin027.sql
+$ISQL -m -i sin027.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin027* 
 

@@ -11,7 +11,7 @@
                    exception.
 *******************************************************************************/
 /* Level 0 create, alter, drop - autocommit on */
-$ isql WHERE_GDB:atlas.gdb
+$ isql -m WHERE_GDB:atlas.gdb
 create exception noriver "River does not currently exist in Rivers relation";
 create exception nostate "State does not currently exist in State relation";
 create exception noupdate "Update cannot be completed because of errors";

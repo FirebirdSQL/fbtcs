@@ -87,11 +87,11 @@ connect WHERE_GDB:intlemp2.gdb;
 select * from employee;
 quit;
 
-$ ISQL -i create.sql
+$ ISQL -m -i create.sql
 $ GPRE -m -charset ISO8859_1 btest5.e
 $ CC FLAG_CC btest5.c
 $ LINK FLAG_LINK btest5 
 $ RUN btest5
-$ ISQL -i verify2.sql -m
+$ ISQL -m -i verify2.sql
 $ DROP WHERE_GDB:intlemp2.gdb
 $ DELETE verify2.sql btest5* create.sql

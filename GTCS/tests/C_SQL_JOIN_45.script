@@ -171,6 +171,6 @@ left outer join st1 o on o.s1 = n.s1) left outer join st1 p on p.s1 = o.s1)
 left outer join st1 q on q.s1 = p.s1) left outer join st1 r on r.s1 = q.s1)
 order by a.table_row ascending;
 quit;
-$ISQL -i join045.sql
+$ISQL -m -i join045.sql
 $DROP WHERE_GDB:sh_join_45.gdb
 $ DELETE join045* 

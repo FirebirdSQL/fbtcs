@@ -126,6 +126,6 @@ $ CREATE sta008.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT STATE FROM CUSTOMERS WHERE STATE STARTING 'C' AND STATE NOT IN ('CA');
 quit;
-$ISQL -i sta008.sql
+$ISQL -m -i sta008.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta008* 

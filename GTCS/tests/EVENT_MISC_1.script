@@ -250,7 +250,7 @@ insert into stocks ( company, price) values ( "SUN", 55.75);
 commit;
 exit;
 
-$ISQL -i input.sql
+$ISQL -m -i input.sql
 $GPRE -e -n post_events
 $GPRE -e -n event_mgr
 $CC FLAG_CC post_events.c

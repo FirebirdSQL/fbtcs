@@ -63,6 +63,6 @@ exit;
 
 $GDEF init.gdl
 $QLI -n -a init.qli
-$ISQL -i init.sql
+$ISQL -m -i init.sql
 $DELETE init.*
 

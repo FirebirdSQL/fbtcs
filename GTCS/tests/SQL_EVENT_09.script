@@ -19,7 +19,7 @@ end
 go
 set term ; go
 exit;
-$ISQL -I event9.sql -e -sqldialect 1
+$ISQL -m -I event9.sql -e -sqldialect 1
 $ CREATE foo.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"

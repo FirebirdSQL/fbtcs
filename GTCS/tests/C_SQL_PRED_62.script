@@ -150,6 +150,6 @@ connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO FROM PROJECTS WHERE PROJ_DESC NOT STARTING WITH 'a';
 select count(*) from projects where proj_desc not starting with 'a';
 quit;
-$ISQL -i sta020.sql
+$ISQL -m -i sta020.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta020* 

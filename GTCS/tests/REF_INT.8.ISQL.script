@@ -44,12 +44,12 @@ insert into employee values (7, 'e7', 2);
 insert into employee values (8, 'e8', 3);
 insert into employee values (9, 'e9', 3);
 commit;
-$ISQL -i init.sql
+$ISQL -m -i init.sql
 $CREATE test8.sql
 alter index ref_key inactive;
 commit;
 insert into employee values (11, 'e11', 1);
 insert into employee values (12, 'e12', 234);
-$ISQL -m WHERE_GDB:ref_int8.gdb -e -i test8.sql -merge
+$ISQL WHERE_GDB:ref_int8.gdb -e -i test8.sql -merge
 $DROP WHERE_GDB:ref_int8.gdb
 $DELETE  COMMENT init.sql test8.sql

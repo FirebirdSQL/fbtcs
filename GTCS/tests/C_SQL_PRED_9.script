@@ -185,6 +185,6 @@ and t2.total_value >
 from sales t3 
 where t3.sales_rep = 137));
 quit;
-$ISQL -i sin010.sql
+$ISQL -m -i sin010.sql
 $DROP WHERE_GDB:sh_test.gdb
 $DELETE sin010*

@@ -63,13 +63,13 @@ $CREATE show.sql
  connect 'WHERE_GDB:test.gdb';
  execute procedure ins 10;
  select * from t;
-$ISQL -i init.sql
+$ISQL -m -i init.sql
 $GPRE -e  A.e
 $RUN sed "/isc_tpb_. \[/s/\[.\] = {1,/\[\] = {1, isc_tpb_autocommit,/" A.c > A1.c
 $RUN sed "/isc_start_transaction /s/4/5/" A1.c > A2.c
 $CC FLAG_CC A2.c
 $LINK FLAG_LINK A2 
 $RUN A2
-$ISQL -i show.sql
+$ISQL -m -i show.sql
 $DELETE COMMENT init.sql show.sql A.* A1.* A2.*
 $DROP WHERE_GDB:test.gdb

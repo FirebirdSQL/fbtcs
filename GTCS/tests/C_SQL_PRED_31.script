@@ -137,7 +137,7 @@ connect WHERE_GDB:sh_test.gdb;
 select count(*) from customers 
 where customer containing 'A' or customer containing 'c';
 quit;
-$ISQL -i con005.sql
+$ISQL -m -i con005.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con005* 
 

@@ -27,7 +27,7 @@ end
 go
 set term ; go
 exit;
-$ISQL -I event3.sql -sqldialect 1
+$ISQL -m -I event3.sql -sqldialect 1
 $ CREATE foo3.e
 # include <stdio.h>
 DATABASE DB = "WHERE_GDB:events.gdb"
@@ -68,7 +68,7 @@ $ CC FLAG_CC foo3.c
 $ LINK FLAG_LINK foo3 
 $ RUN_BG foo3 > foo3.tt1 &
 $ SLEEP 5
-$ ISQL 
+$ ISQL -m 
 connect "WHERE_GDB:events.gdb" ;
 update works_on set hours = hours + 10 where pnumber = 1 ;
 commit;
@@ -78,7 +78,7 @@ $ SLEEP 5
 $ TYPE foo3.tt1 
 $ RUN_BG foo3 > foo3.tt2 &
 $ SLEEP 5
-$ ISQL 
+$ ISQL -m 
 connect "WHERE_GDB:events.gdb" ;
 update works_on set hours = hours - 10 where pnumber = 2 ;
 commit;

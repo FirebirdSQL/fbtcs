@@ -140,6 +140,6 @@ SELECT COUNT(*)
 FROM SALES
 WHERE SHIPPED IS NULL;
 quit;
-$ISQL -i con015.sql
+$ISQL -m -i con015.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con015* 

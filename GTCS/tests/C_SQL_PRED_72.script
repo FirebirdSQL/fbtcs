@@ -134,6 +134,6 @@ $ CREATE con038.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT customer,zip_code FROM customers WHERE customer CONTAINING "'";
 quit;
-$ISQL -i con038.sql
+$ISQL -m -i con038.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con038* 

@@ -134,6 +134,6 @@ SELECT NAME
 FROM EMPLOYEES
 WHERE NAME CONTAINING 'z';
 quit;
-$ISQL WHERE_GDB:sh_test.gdb -i con010.sql
+$ISQL -m WHERE_GDB:sh_test.gdb -i con010.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con010* 

@@ -71,6 +71,6 @@ $ CREATE join001.sql
 connect WHERE_GDB:atlas_join_1.gdb;
 SELECT C.CITY, S.STATE FROM CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE;
 quit;
-$ISQL -i join001.sql
+$ISQL -m -i join001.sql
 $DROP WHERE_GDB:atlas_join_1.gdb
 $ DELETE join001*

@@ -145,6 +145,6 @@ where t.s1 >
 (select st1a.s1 from (st1 st1a inner join st2 st2a on st1a.s2 = st2a.s2 and st2a.s2= 101))
 order by t.table_row ascending;
 quit;
-$ISQL -i join041.sql
+$ISQL -m -i join041.sql
 $DROP WHERE_GDB:sh_join_41.gdb
 $ DELETE join041* 

@@ -202,7 +202,7 @@ select * from head_dept v1 where 1 =
 v2.deptno= v1.deptno and v2.department = v3.department and
 v3.empno = v4.empno);
 quit;
-$ISQL -i sin021.sql
+$ISQL -m -i sin021.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin021* 
 

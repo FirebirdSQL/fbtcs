@@ -7,7 +7,7 @@
 *This traps for error message.(Does not work)
 ***********************************************************************/
 
-$ ISQL
+$ ISQL -m 
 create database "WHERE_GDB:events.gdb";
 create table project  ( PNAME   VARCHAR(15) Not Null,
                         PNUMBER     INTEGER);

@@ -154,6 +154,6 @@ SELECT PROJ_NO
 FROM PROJECTS
 WHERE PROJ_DESC CONTAINING 'A';
 quit;
-$ISQL -i con020.sql
+$ISQL -m -i con020.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con020* 

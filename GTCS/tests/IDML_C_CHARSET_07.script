@@ -96,6 +96,6 @@ connect WHERE_GDB:intlemp_07.gdb;
 select * from employee;
 quit;
 
-$ ISQL -i verify.sql
+$ ISQL -m -i verify.sql
 $ DELETE btest4*   
 $ DROP WHERE_GDB:intlemp_07.gdb

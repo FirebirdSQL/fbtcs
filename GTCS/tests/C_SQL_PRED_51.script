@@ -142,6 +142,6 @@ WHERE CUSTOMER STARTING WITH 'C'
 ORDER BY CUSTNO;
 select count(*) from customers where customer starting with 'C';
 quit;
-$ISQL -i sta003.sql
+$ISQL -m -i sta003.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta003* 

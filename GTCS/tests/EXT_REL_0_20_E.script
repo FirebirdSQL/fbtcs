@@ -82,7 +82,7 @@ $GPRE varchar.e
 $CC FLAG_CC varchar.c
 $LINK FLAG_LINK varchar
 $RUN varchar
-$ISQL -input isql.in
+$ISQL -m -input isql.in
 $DROP WHERE_GDB:ext_rel_0_20_E.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
 $DELETE comment varchar* isql.in

@@ -154,7 +154,7 @@ from sales_people t1 where 1 =
 (select count(*) from sales t3 , employees t2 where
 t3.sales_rep = t1.empno and t3.total_value > 6000 and t3.sales_rep = t2.empno);
 quit;
-$ISQL -i sin009.sql
+$ISQL -m -i sin009.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin009*
 

@@ -10,12 +10,12 @@ X
 
 1      
 
-Statement failed, SQLCODE = -413
-
-conversion error from string "10001"
 
 X      
 ====== 
+Statement failed, SQLCODE = -413
+
+conversion error from string "10001"
 
 X          
 ========== 

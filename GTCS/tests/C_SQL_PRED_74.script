@@ -299,6 +299,6 @@ and t1.total_value >
 order by v2.deptno;
 
 quit;
-$ ISQL WHERE_GDB:sh_test.gdb -i sin026.sql
+$ ISQL -m WHERE_GDB:sh_test.gdb -i sin026.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin026*

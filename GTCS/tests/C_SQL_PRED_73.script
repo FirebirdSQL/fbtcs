@@ -132,7 +132,7 @@ $ CREATE con039.sql
 connect WHERE_GDB:sh_test.gdb;
 select count(*) from customers where customer containing "'";
 quit;
-$ISQL -i con039.sql
+$ISQL -m -i con039.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con039*
 

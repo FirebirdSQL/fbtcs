@@ -20,7 +20,7 @@
 			  is more correct.
  */
 $GBAK -r sp1.gbk WHERE_GDB:sp1.gdb
-$ ISQL -sqldialect 3 -e -m WHERE_GDB:sp1.gdb
+$ ISQL -m -sqldialect 3 -e WHERE_GDB:sp1.gdb
 set term go;
 create procedure cast1(a decimal(5,2)) RETURNS (b smallint) as
 begin

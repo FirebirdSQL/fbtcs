@@ -39,7 +39,7 @@ insert into st5 values (-15,'unique');
 
 commit;
 quit;
-$ISQL -i bug6164.sql -m
+$ISQL -m -i bug6164.sql
 $ CREATE bug6164.e
 
 /**********************************************************************

@@ -156,8 +156,8 @@ if (SQLCODE != 100)
      printf("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
      exit(1);
 }
-$ ISQL -i ddlfile.sql -m
-$ ISQL -i dmlfile.sql -m
+$ ISQL -m -i ddlfile.sql
+$ ISQL -m -i dmlfile.sql
 $ GBAK -t WHERE_GDB:intlemp.gdb intlemp.gbk
 $ CREATE testcmt1
 

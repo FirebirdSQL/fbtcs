@@ -53,8 +53,8 @@ CONNECT 'WHERE_GDB:ext_rel_0_11_D.gdb';
 INSERT INTO ext_table (field1) VALUES (12);
 SELECT * FROM ext_table;
 
-$ISQL -input isql.in
-$ISQL -input isql2.in
+$ISQL -m -input isql.in
+$ISQL -m -input isql2.in
 $ CREATE errcmt
 ********************  15-May-95: conversion error is proper result
 

@@ -132,6 +132,6 @@ connect WHERE_GDB:sh_test.gdb;
 SELECT DEPTNO FROM DEPT_BUDGET WHERE DEPTNO STARTING '12';
 select count(*) from dept_budget where deptno starting with '12';
 quit;
-$ISQL -i sta013.sql
+$ISQL -m -i sta013.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta013* 

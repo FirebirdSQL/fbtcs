@@ -133,7 +133,7 @@ CONNECT WHERE_GDB:sh_test.gdb;
 SELECT salary FROM management WHERE salary STARTING 1;
 SELECT COUNT(*) FROM management WHERE salary STARTING WITH 1;
 QUIT;
-$ISQL -i sta029.sql
+$ISQL -m -i sta029.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta029* 
 

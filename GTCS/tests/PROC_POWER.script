@@ -8,7 +8,7 @@
 	24-May-95:        Failing remote due to db string appearing
 			  in the output. Changed to isql script that
 			  is executed rather than the interactive:
-			  ISQL -e -m .clare.
+			  ISQL -m -e .clare.
 	2June95:          Solaris returns "Infinity" while other machines
 			  return ++ when the double precision number is
 			  overflowed on returning the output from the procedure.
@@ -44,6 +44,6 @@ execute procedure power 2, 1000;
 execute procedure power 4.45, 100;
 execute procedure power 2, 1024;
 quit;
-$ ISQL -i power.sql -m
+$ ISQL -m -i power.sql -m
 $DROP WHERE_GDB:power.gdb
 $ DELETE power.sql

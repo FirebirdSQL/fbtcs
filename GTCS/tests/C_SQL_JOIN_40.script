@@ -131,6 +131,6 @@ select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
 from (st1 t left outer join st2 x on t.comp_s = x.comp_s)
 order by t.table_row ascending;
 quit;
-$ISQL -i join040.sql
+$ISQL -m -i join040.sql
 $DROP WHERE_GDB:sh_join_40.gdb
 $ DELETE join040* 

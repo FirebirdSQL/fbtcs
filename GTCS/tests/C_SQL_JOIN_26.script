@@ -119,6 +119,6 @@ connect WHERE_GDB:sh_join_26.gdb;
 select distinct x.s1,x.s2,y.s1,y.s2
 from (st5 x left join st1 y on x.s2 = y.s2);
 quit;
-$ISQL -i join026.sql
+$ISQL -m -i join026.sql
 $DROP WHERE_GDB:sh_join_26.gdb
 $ DELETE join026* 

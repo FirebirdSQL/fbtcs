@@ -179,6 +179,6 @@ and t2.total_value > 6000 and 1 =
 (select count(*) from customers t3 where t3.custno = t2.custno)) and 1 =
 (select count(*) from sales_perf t4 where t4.empno = t1.empno);
 quit;
-$ISQL -i sin006.sql WHERE_GDB:sh_test.gdb
+$ISQL -m -i sin006.sql WHERE_GDB:sh_test.gdb
 $DROP WHERE_GDB:sh_test.gdb
 $DELETE sin006* 

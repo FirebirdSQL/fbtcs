@@ -142,7 +142,7 @@ connect WHERE_GDB:sh_test.gdb;
 select s1.custno, s1.total_value, s1.ponumb from sales s1 
 where s1.ponumb containing '8902' order by s1.custno ascending;
 quit;
-$ISQL -i con002.sql
+$ISQL -m -i con002.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con002* 
 

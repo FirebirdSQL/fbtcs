@@ -52,7 +52,7 @@ go
 set term ; go
 
 exit;
-$ISQL -I create.sql -sqldialect 1
+$ISQL -m -I create.sql -sqldialect 1
 $ CREATE foo1.e
 #include <stdio.h>
 /* This program had no semi colon after this statment and

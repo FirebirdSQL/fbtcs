@@ -225,7 +225,7 @@ and t1.total_value >
 group by v2.deptno, v2.department, v2.mgrno
 order by v2.deptno;
 quit;
-$ISQL -i sin023.sql
+$ISQL -m -i sin023.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin023* 
 

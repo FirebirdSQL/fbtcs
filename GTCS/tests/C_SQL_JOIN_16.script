@@ -129,6 +129,6 @@ group by y.s1
 having sum(y.s1) > 1
 order by y.s1 ascending;
 quit;
-$ISQL -i join016.sql
+$ISQL -m -i join016.sql
 $DROP WHERE_GDB:sh_join_16.gdb
 $ DELETE join016* 

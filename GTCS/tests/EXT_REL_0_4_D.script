@@ -52,8 +52,8 @@ CONNECT "WHERE_GDB:ext_rel_0_4_D.gdb";
 INSERT INTO ext_table (field1) VALUES (1000000000);
 SELECT * FROM ext_table;
 
-$ISQL -input isql.in
-$ISQL -input isql2.in
+$ISQL -m -input isql.in
+$ISQL -m -input isql2.in
 $DROP WHERE_GDB:ext_rel_0_4_D.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
 $DELETE COMMENT isql.in isql2.in

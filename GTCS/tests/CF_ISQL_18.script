@@ -68,7 +68,7 @@ INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (7, NULL, 'Arjen  ', '1
 INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (8, NULL, 'Short  ', '');
 INSERT INTO TEST1(ID, LEEG, VOORNAAM, ACHTERNAAM) VALUES (9, NULL, 'Jasper ', 'Janssen');
 
-$ISQL -e -i create_db.sql
-$ISQL -e -i run_test.sql
+$ISQL -m -e -i create_db.sql
+$ISQL -m -e -i run_test.sql
 $DROP WHERE_GDB:cf_18.fdb
 $DELETE create_db.sql run_test.sql

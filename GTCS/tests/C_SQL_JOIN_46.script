@@ -14,6 +14,6 @@ salary from employee
 where job_code = 'SRep' and salary > any 
 (select salary from employee where job_code = 'Mngr');
 quit;
-$ISQL -i join.sql -m WHERE_GDB:employee.gdb
+$ISQL -m -i join.sql WHERE_GDB:employee.gdb
 $DELETE join.sql comment.txt
 $DROP WHERE_GDB:employee.gdb

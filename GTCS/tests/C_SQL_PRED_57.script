@@ -135,6 +135,6 @@ connect WHERE_GDB:sh_test.gdb;
 SELECT JOB FROM EMPLOYEES WHERE JOB STARTING WITH '' ORDER BY JOB ASCENDING;
 select count(*) from employees where job starting with '';
 quit;
-$ISQL -i sta009.sql
+$ISQL -m -i sta009.sql
 $ DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta009* 

@@ -140,6 +140,6 @@ FROM EMPLOYEES
 WHERE JOB CONTAINING 'mgr'
 ORDER BY JOB;
 quit;
-$ISQL -i con028.sql
+$ISQL -m -i con028.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con028* 

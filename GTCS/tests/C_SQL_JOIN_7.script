@@ -119,6 +119,6 @@ connect WHERE_GDB:sh_join_7.gdb;
 select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row 
 from ct1 t1 inner join ct2 t2 on t1.c1 = t2.c1;
 quit;
-$ISQL -i join007.sql
+$ISQL -m -i join007.sql
 $DROP WHERE_GDB:sh_join_7.gdb
 $ DELETE join007*

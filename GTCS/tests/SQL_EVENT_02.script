@@ -33,7 +33,7 @@ end
 go
 set term ; go
 exit;
-$ISQL -I event2.sql -sqldialect 1
+$ISQL -m -I event2.sql -sqldialect 1
 $ CREATE foo2.e
 #include <stdio.h>
 DATABASE DB = "WHERE_GDB:events1.gdb"

@@ -139,6 +139,6 @@ FROM EMPLOYEES
 WHERE JOB CONTAINING 'M'
 ORDER BY JOB;
 quit;
-$ISQL -i con027.sql
+$ISQL -m -i con027.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE con027* 

@@ -174,6 +174,6 @@ FROM SALES WHERE SHIPPED STARTING WITH '21';
 select count(*) from sales
 where shipped starting with '21';
 quit;
-$ISQL -i sta030.sql
+$ISQL -m -i sta030.sql
 $DROP WHERE_GDB:sh_test.gdb
 $DELETE sta030*

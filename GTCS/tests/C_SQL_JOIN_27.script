@@ -114,6 +114,6 @@ connect WHERE_GDB:sh_join_27.gdb;
 select min(x.s1),max(x.s2),avg(y.s3), sum(y.sscale)
 from (st5 x left join st1 y on x.s2 = y.s2);
 quit;
-$ISQL -i join027.sql
+$ISQL -m -i join027.sql
 $DROP WHERE_GDB:sh_join_27.gdb
 $ DELETE join027* 

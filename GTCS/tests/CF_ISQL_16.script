@@ -37,6 +37,6 @@ create table t6 (a integer, af computed by (a*3) primary key);
 show tables;
 drop database;
 exit;
-$ISQL  -input cf_test.sql
+$ISQL -m -input cf_test.sql
 
 $ DELETE cf_test.sql

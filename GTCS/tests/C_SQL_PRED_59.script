@@ -144,6 +144,6 @@ FROM PROJECTS
 WHERE PROJ_NO STARTING WITH 'HH300';
 select count(*) from projects where proj_no starting with 'HH300';
 quit;
-$ISQL -i sta011.sql
+$ISQL -m -i sta011.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta011* 

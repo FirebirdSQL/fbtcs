@@ -298,7 +298,7 @@ and t1.total_value >
 order by v2.deptno;
 
 quit;
-$ ISQL WHERE_GDB:sh_test.gdb -i sin026.sql
+$ ISQL -m WHERE_GDB:sh_test.gdb -i sin026.sql
 $ CREATE sin026.sql
 connect WHERE_GDB:sh_test.gdb;
 select v2.deptno, v2.department, v2.mgrno, v2.budget
@@ -321,6 +321,6 @@ and t1.total_value >
 (select min(t2.total_value) from sales t2 where t2.sales_rep = 100))
 order by v2.deptno;
 quit;
-$ISQL -i sin026.sql
+$ISQL -m -i sin026.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin026* 

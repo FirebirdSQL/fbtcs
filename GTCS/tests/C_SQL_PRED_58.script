@@ -135,6 +135,6 @@ connect WHERE_GDB:sh_test.gdb;
 SELECT EMPNO, LAST_NAME, FIRST_NAME FROM EMPLOYEES WHERE NAME STARTING WITH 'S';
 select count(*) from employees where name starting with 'S';
 quit;
-$ISQL -i sta010.sql
+$ISQL -m -i sta010.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta010* 

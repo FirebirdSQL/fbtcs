@@ -42,7 +42,7 @@ insert into employee values (7, 'e7', 2);
 insert into employee values (8, 'e8', 3);
 insert into employee values (9, 'e9', 3);
 commit;
-$ISQL -i init.sql
+$ISQL -m -i init.sql
 $CREATE test4.sql
 drop index ref_key;
 $ISQL -m WHERE_GDB:ref_int4.gdb -e -i test4.sql

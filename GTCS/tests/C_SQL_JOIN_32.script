@@ -123,6 +123,6 @@ connect WHERE_GDB:sh_join_32.gdb;
 select t.s1/1,t.s2*10,t.s3*(-10),t.table_row,x.s1*1,x.s2,x.table_row
 from (st1 t left join st2 x on t.s1 = x.s1);
 quit;
-$ISQL -i join032.sql
+$ISQL -m -i join032.sql
 $DROP WHERE_GDB:sh_join_32.gdb
 $ DELETE join032* 

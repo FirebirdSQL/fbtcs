@@ -146,6 +146,6 @@ WHERE DEPTNO NOT STARTING '12'
 ORDER BY DEPTNO DESCENDING;
 select count(*) from dept_budget where deptno not starting '12';
 quit;
-$ISQL -i sta014.sql
+$ISQL -m -i sta014.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sta014* 

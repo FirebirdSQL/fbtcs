@@ -145,6 +145,6 @@ from (ct1 x left join ct2 y on x.c1 = y.c1) right join ct5 z on z.c1 = x.c1
 where x.c1 like 'a%'
 order by x.c1 ascending;
 quit;
-$ISQL -i join017.sql
+$ISQL -m -i join017.sql
 $DROP WHERE_GDB:sh_join_17.gdb
 $ DELETE join017* 

@@ -1,5 +1,5 @@
 
-$ ISQL
+$ ISQL -m 
 create database "WHERE_GDB:emp1.gdb";
 CREATE TABLE job
 (

@@ -34,7 +34,7 @@ end
 go
 set term ; go
 exit;
-$ISQL -I event11.sql -sqldialect 1
+$ISQL -m -I event11.sql -sqldialect 1
 $ CREATE foo.e
 #include <stdio.h>
 DATABASE DB = "WHERE_GDB:events.gdb"
@@ -70,7 +70,7 @@ $ CC FLAG_CC foo.c
 $ LINK FLAG_LINK foo 
 $ RUN_BG foo > foo.tt1 &
 $ SLEEP  5
-$ ISQL WHERE_GDB:events.gdb
+$ ISQL -m WHERE_GDB:events.gdb
 update project set pnumber = 11 where pnumber = 1;
 commit;
 select * from project;
