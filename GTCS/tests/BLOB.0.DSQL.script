@@ -6,9 +6,9 @@ $CREATE p1.e
 #include <stdio.h>
 #include <string.h>
 #ifndef DARWIN
-#include <gds.h>
+#include <ibase.h>
 #else
-#include <Firebird/gds.h>
+#include <Firebird/ibase.h>
 #endif
 exec sql include sqlca;
 exec sql set database db = "WHERE_GDB:test3.gdb";

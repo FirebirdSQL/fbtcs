@@ -6,7 +6,7 @@ $ CREATE btest4.e
 	    as a result.
    11/10/94: add set transaction due to new rule that says we
 	     must use -m w/SET NAMES
-16-Feb-2000 JLI:  Added #include <gds.h> for the gds calls.
+16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
 Case 4:
    Contains DATABASE, SET NAMES CONNECT: 
    Select is w/select stmt into host vars and insert
@@ -15,9 +15,9 @@ Case 4:
 #include "WHERE_FILES:tcs.h"
 #include "WHERE_FILES:example.h"
 #ifndef DARWIN
-#include <gds.h>
+#include <ibase.h>
 #else
-#include <Firebird/gds.h>
+#include <Firebird/ibase.h>
 #endif
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL WHENEVER SQLERROR GOTO Err;

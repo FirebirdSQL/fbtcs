@@ -1,9 +1,4 @@
 
-$CREATE comment
-10/4/98: clare: series failed because there is not gds.h in V5.5 
-   include dir on NT.  There is a gds.h in the last Unix build so
-   this could be an install issue.  Will check another NT and the
-   build dir to see if it should be there.
 $ GBAK -r WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
 $ CREATE globals.c
 /*
@@ -37,9 +32,9 @@ typedef struct vary512 {
 
 #ifndef _Windows
 #ifndef DARWIN
-#include <gds.h>
+#include <ibase.h>
 #else
-#include <Firebird/gds.h>
+#include <Firebird/ibase.h>
 #endif
 #define LogPrintf printf
 void print_varfield();

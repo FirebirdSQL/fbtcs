@@ -5,9 +5,9 @@ $CREATE svc_api_restore.cpp
 #include <string.h>
 #include <stdlib.h>
 #ifndef DARWIN
-#include <gds.h>
+#include <ibase.h>
 #else
-#include <Firebird/gds.h>
+#include <Firebird/ibase.h>
 #endif
 
 #define RESPBUF 1024
