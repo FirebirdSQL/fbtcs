@@ -25,7 +25,7 @@ ss EXTERNAL_DAT=external.dat
 # sb boilerplate
 # se environment
 #
-sl $(TCS:FBTCS)/LI_LTCS
+sl $(TCS:FBTCS)/FR_LTCS
 sg $(TCS:FBTCS)/GTCS
 so $(TCS:FBTCS)/output
 sb bp_freebsd
