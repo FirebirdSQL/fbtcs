@@ -6,6 +6,8 @@ $CREATE cf_isql_19.sql
 
 CREATE DATABASE 'WHERE_GDB:cf_isql_19.fdb';
 
+set echo;
+
 -- I am a comment
 
 /* BEGIN */
@@ -51,6 +53,6 @@ Comment
 */ select * from rdb$database;
 
 
-$ISQL -m -e -i cf_isql_19.sql
+$ISQL -m -i cf_isql_19.sql
 $DROP WHERE_GDB:cf_isql_19.fdb
 $DELETE cf_isql_19.sql

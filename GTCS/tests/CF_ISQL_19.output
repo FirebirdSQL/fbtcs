@@ -1,7 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
 SQL> 
-SQL> CREATE DATABASE 'localhost:D:/Proyectos/firebird/fbtcs/temp/cf_isql_19.fdb';
-SQL> 
 SQL> -- I am a comment
 SQL> 
 SQL> /* BEGIN */
