@@ -38,7 +38,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 ================= ======= ========================= ========================= 
 
 set names is 437:       1 pÇchÇ                     pÈchÈ                     
-set names is 437:       2 ?lborg                    ≈lborg                    
+set names is 437:       2 èlborg                    ≈lborg                    
 set names is 437:       3 cësium                    cÊsium                    
 set names is 437:       4 Aalborg                   Aalborg                   
 set names is 437:       5 aãeul                     aÔeul                     
@@ -63,7 +63,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 ==================== ======= ========================= ========================= 
 
 set names is dos850:       1 pÇchÇ                     pÇchÇ                     
-set names is dos850:       2 ?lborg                    ?lborg                    
+set names is dos850:       2 èlborg                    èlborg                    
 set names is dos850:       3 cësium                    cësium                    
 set names is dos850:       4 Aalborg                   Aalborg                   
 set names is dos850:       5 aãeul                     aãeul                     
