@@ -1,6 +1,7 @@
 
 $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ CREATE domain_08.sql
+set echo;
 create domain dom08a_1 as smallint;
 commit;
 show domain dom08a_1;

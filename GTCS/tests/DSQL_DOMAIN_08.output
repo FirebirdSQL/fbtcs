@@ -1,29 +1,93 @@
+SQL> create domain dom08a_1 as smallint;
+SQL> commit;
+SQL> show domain dom08a_1;
 DOM08A_1                        SMALLINT Nullable
+SQL> 
+SQL> /* the next statement should fail */
+CON> 
+CON> alter domain dom08a_1 
+CON>  add constraint not null;
 Statement failed, SQLCODE = -104
 
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 4, char 15
+-Token unknown - line 4, char 17
 -not
+SQL> commit;
+SQL> show domain dom08a_1;
 DOM08A_1                        SMALLINT Nullable
+SQL> create domain dom08a_2 as numeric(3,1);
+SQL> commit;
+SQL> show domain dom08a_2;
 DOM08A_2                        NUMERIC(3, 1) Nullable
+SQL> create domain dom08b_1 as integer;
+SQL> commit;
+SQL> show domain dom08b_1;
 DOM08B_1                        INTEGER Nullable
+SQL> create domain dom08b_2 as int;
+SQL> commit;
+SQL> show domain dom08b_2;
 DOM08B_2                        INTEGER Nullable
+SQL> create domain dom08b_3 as numeric;
+SQL> commit;
+SQL> show domain dom08b_3;
 DOM08B_3                        NUMERIC(9, 0) Nullable
+SQL> create domain dom08b_4 as numeric(6,2);
+SQL> commit;
+SQL> show domain dom08b_4;
 DOM08B_4                        NUMERIC(6, 2) Nullable
+SQL> create domain dom08c as date;
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
+SQL> commit;
+SQL> show domain dom08c;
 DOM08C                          TIMESTAMP Nullable
+SQL> create domain dom08d_1 as char(20);
+SQL> commit;
+SQL> show domain dom08d_1;
 DOM08D_1                        CHAR(20) Nullable
+SQL> create domain dom08d_2 as character(99);
+SQL> commit;
+SQL> show domain dom08d_2;
 DOM08D_2                        CHAR(99) Nullable
+SQL> create domain dom08e_1 as varchar(25);
+SQL> commit;
+SQL> show domain dom08e_1;
 DOM08E_1                        VARCHAR(25) Nullable
+SQL> create domain dom08e_2 as character varying(100);
+SQL> commit;
+SQL> show domain dom08e_2;
 DOM08E_2                        VARCHAR(100) Nullable
+SQL> create domain dom08e_3 as char varying(2);
+SQL> commit;
+SQL> show domain dom08e_3;
 DOM08E_3                        VARCHAR(2) Nullable
+SQL> create domain dom08f_1 as decimal(6,2);
+SQL> commit;
+SQL> show domain dom08f_1;
 DOM08F_1                        DECIMAL(6, 2) Nullable
+SQL> create domain dom08g_1 as float;
+SQL> commit;
+SQL> show domain dom08g_1;
 DOM08G_1                        FLOAT Nullable
+SQL> create domain dom08g_2 as long float;
+SQL> commit;
+SQL> show domain dom08g_2;
 DOM08G_2                        DOUBLE PRECISION Nullable
+SQL> create domain dom08g_3 as real;
+SQL> commit;
+SQL> show domain dom08g_3;
 DOM08G_3                        FLOAT Nullable
+SQL> create domain dom08h as double precision;
+SQL> commit;
+SQL> show domain dom08h;
 DOM08H                          DOUBLE PRECISION Nullable
+SQL> create domain dom08i_1 as blob;
+SQL> commit;
+SQL> show domain dom08i_1;
 DOM08I_1                        BLOB segment 80, subtype UNKNOWN Nullable
+SQL> create domain dom08i_2 as blob(60,1);
+SQL> commit;
+SQL> show domain dom08i_2;
 DOM08I_2                        BLOB segment 60, subtype TEXT Nullable
- 
+SQL> exit;
