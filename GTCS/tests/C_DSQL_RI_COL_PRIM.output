@@ -4,7 +4,7 @@ View REFERENTIAL_CONSTRAINTS created ok.
 View CHECK_CONSTRAINTS created ok.
 View CONSTRAINTS_COLUMN_USAGE created ok.
 unsuccessful metadata update
--Column: COL1 not defined as NOT NULL - cannot be used in PRIMARY KEY/UNIQUE constraint definition
+-Column: COL1 not defined as NOT NULL - cannot be used in PRIMARY KEY constraint definition
 entered setup
 about to create books...
 books created successfully.

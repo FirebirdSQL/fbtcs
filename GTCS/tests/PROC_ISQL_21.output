@@ -3,6 +3,7 @@ Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 3, char 22
 -;
+At line 12 in file proc_isql_21.sql
 
            X 
 ============ 

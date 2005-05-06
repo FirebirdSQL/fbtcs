@@ -1,4 +1,4 @@
-SQL> select * from sp;
+select * from sp;
 
 SNO    PNO             QTY 
 ====== ====== ============ 
@@ -10,8 +10,8 @@ S2     P2              400
 S4     P4              300 
 S4     P5              400 
 
-SQL> EXECUTE PROCEDURE PROC_SELECT_INSERT3 ;
-SQL> select * from sp;
+EXECUTE PROCEDURE PROC_SELECT_INSERT3 ;
+select * from sp;
 
 SNO    PNO             QTY 
 ====== ====== ============ 
@@ -24,4 +24,4 @@ S4     P4              300
 S4     P5              400 
 S3     <null>       <null> 
 
-SQL> exit;
+exit;

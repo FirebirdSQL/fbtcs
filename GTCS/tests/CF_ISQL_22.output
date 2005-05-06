@@ -1,29 +1,30 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> 
-SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_22.fdb';
-SQL> 
-SQL> create table t(a int);
-SQL> create view v as select a from t;
-SQL> 
-SQL> Use CONNECT or CREATE DATABASE to specify a database
-SQL> connect 'WHERE_GDB:cf_isql_22.fdb';
-SQL> show tables;
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_22.fdb';
+
+create table t(a int);
+create view v as select a from t;
+
+Use CONNECT or CREATE DATABASE to specify a database
+connect 'WHERE_GDB:cf_isql_22.fdb';
+show tables;
        T                               
-SQL> show views;
+show views;
        V                               
-SQL> show table v;
+show table v;
 There is no table V in this database
-SQL> show table t;
+show table t;
 A                               INTEGER Nullable 
-SQL> show view v;
+show view v;
 A                               INTEGER Nullable 
 View Source:
 ==== ======
  select a from t
-SQL> show view t;
+show view t;
 There is no view T in this database
-SQL> 
-SQL>  
+
+Database:  WHERE_GDB:cf_isql_22.fdb
+ 
 SET SQL DIALECT 3; 
  
 /* CREATE DATABASE 'WHERE_GDB:cf_isql_22.fdb' DEFAULT CHARACTER SET NONE */
@@ -36,5 +37,3 @@ CREATE TABLE T (A INTEGER);
 /* View: V, Owner: SYSDBA */
 CREATE VIEW V (A) AS
  select a from t;
-
-/* Grant permissions for this database */

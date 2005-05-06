@@ -6,6 +6,7 @@
 Statement failed, SQLCODE = -413
 conversion error from string "x"
 -At procedure 'CAST1'
+After line 63 in file proc_cast10.sql
 
            B 
 ============ 
@@ -14,6 +15,7 @@ conversion error from string "x"
 Statement failed, SQLCODE = -413
 conversion error from string "x"
 -At procedure 'CAST2'
+After line 65 in file proc_cast10.sql
 
              B 
 ============== 
@@ -22,6 +24,7 @@ conversion error from string "x"
 Statement failed, SQLCODE = -413
 conversion error from string "x"
 -At procedure 'CAST3'
+After line 67 in file proc_cast10.sql
 
                       B 
 ======================= 
@@ -30,6 +33,7 @@ conversion error from string "x"
 Statement failed, SQLCODE = -413
 conversion error from string "abc"
 -At procedure 'CAST4'
+After line 69 in file proc_cast10.sql
 
            B 
 ============ 
@@ -38,6 +42,7 @@ conversion error from string "abc"
 Statement failed, SQLCODE = -413
 conversion error from string "abc"
 -At procedure 'CAST5'
+After line 71 in file proc_cast10.sql
 
           B 
 =========== 
@@ -56,6 +61,7 @@ conversion error from string "abc"
 Statement failed, SQLCODE = -413
 conversion error from string "abc"
 -At procedure 'CAST7'
+After line 75 in file proc_cast10.sql
 
 B          
 ========== 

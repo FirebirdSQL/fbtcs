@@ -16,6 +16,6 @@ DOM04G                          FLOAT Nullable
                                 check (value < 50000.00)
 DOM04H                          DOUBLE PRECISION Nullable
                                 check (value > 99.999)
-DOM04I                          BLOB segment 80, subtype UNKNOWN Nullable
+DOM04I                          BLOB segment 80, subtype BINARY Nullable
                                 check (value > 500)
  

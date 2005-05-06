@@ -1,10 +1,10 @@
-SQL> EXECUTE PROCEDURE PROC15 ;
+EXECUTE PROCEDURE PROC15 ;
 
            A 
 ============ 
           10 
 
-SQL> SELECT * FROM PROC15;
+SELECT * FROM PROC15;
 
            A 
 ============ 
@@ -17,14 +17,14 @@ SQL> SELECT * FROM PROC15;
           20 
           30 
 
-SQL> SELECT MAX(A) FROM PROC15;
+SELECT MAX(A) FROM PROC15;
 
          MAX 
 ============ 
 
           30 
 
-SQL> SELECT A FROM PROC15;
+SELECT A FROM PROC15;
 
            A 
 ============ 
@@ -37,7 +37,7 @@ SQL> SELECT A FROM PROC15;
           20 
           30 
 
-SQL> SELECT A FROM PROC15 ORDER BY A;
+SELECT A FROM PROC15 ORDER BY A;
 
            A 
 ============ 
@@ -50,14 +50,14 @@ SQL> SELECT A FROM PROC15 ORDER BY A;
           20 
           30 
 
-SQL> SELECT A, AVG(A) FROM PROC15 GROUP BY A HAVING AVG(A) > 20;
+SELECT A, AVG(A) FROM PROC15 GROUP BY A HAVING AVG(A) > 20;
 
            A                   AVG 
 ============ ===================== 
 
           30                    30 
 
-SQL> SELECT A, AVG(A) FROM PROC15 GROUP BY A ;
+SELECT A, AVG(A) FROM PROC15 GROUP BY A ;
 
            A                   AVG 
 ============ ===================== 
@@ -70,8 +70,8 @@ SQL> SELECT A, AVG(A) FROM PROC15 GROUP BY A ;
           20                    20 
           30                    30 
 
-SQL> SELECT A  FROM PROC15
-CON>         WHERE A > (SELECT AVG(A) FROM PROC15);
+SELECT A  FROM PROC15
+        WHERE A > (SELECT AVG(A) FROM PROC15);
 
            A 
 ============ 
@@ -80,4 +80,4 @@ CON>         WHERE A > (SELECT AVG(A) FROM PROC15);
           20 
           30 
 
-SQL> exit;
+exit;

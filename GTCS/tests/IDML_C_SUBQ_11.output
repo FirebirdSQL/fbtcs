@@ -40,3 +40,4 @@ Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
 -Invalid expression in the select list (not contained in either an aggregate function or the GROUP BY clause)
+After line 3 in file subq11.sql

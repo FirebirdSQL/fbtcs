@@ -1,3 +1,4 @@
 Statement failed, SQLCODE = -902
 database WHERE_GDB:test.gdb shutdown
+After line 0 in file isql.in
 Use CONNECT or CREATE DATABASE to specify a database

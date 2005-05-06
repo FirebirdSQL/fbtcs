@@ -1,10 +1,10 @@
-SQL> EXECUTE PROCEDURE PROC16 ;
+EXECUTE PROCEDURE PROC16 ;
 
 A                               B 
 ==================== ============ 
 Nut                            12 
 
-SQL> SELECT * FROM PROC16;
+SELECT * FROM PROC16;
 
 A                               B 
 ==================== ============ 
@@ -13,14 +13,14 @@ Nut                            12
 Screw                          14 
 Cam                            12 
 
-SQL> SELECT MAX(B) FROM PROC16;
+SELECT MAX(B) FROM PROC16;
 
          MAX 
 ============ 
 
           14 
 
-SQL> SELECT  B FROM PROC16;
+SELECT  B FROM PROC16;
 
            B 
 ============ 
@@ -29,7 +29,7 @@ SQL> SELECT  B FROM PROC16;
           14 
           12 
 
-SQL> SELECT A,B FROM PROC16 ORDER BY A;
+SELECT A,B FROM PROC16 ORDER BY A;
 
 A                               B 
 ==================== ============ 
@@ -38,7 +38,7 @@ Cam                            12
 Nut                            12 
 Screw                          14 
 
-SQL> SELECT A, AVG(B) FROM PROC16 GROUP BY A HAVING AVG(B) > 10;
+SELECT A, AVG(B) FROM PROC16 GROUP BY A HAVING AVG(B) > 10;
 
 A                                      AVG 
 ==================== ===================== 
@@ -47,7 +47,7 @@ Cam                                     12
 Nut                                     12 
 Screw                                   14 
 
-SQL> SELECT A, AVG(B) FROM PROC16 GROUP BY A ;
+SELECT A, AVG(B) FROM PROC16 GROUP BY A ;
 
 A                                      AVG 
 ==================== ===================== 
@@ -56,12 +56,12 @@ Cam                                     12
 Nut                                     12 
 Screw                                   14 
 
-SQL> SELECT A , B FROM PROC16
-CON>         WHERE B > (SELECT AVG(B) FROM PROC16);
+SELECT A , B FROM PROC16
+        WHERE B > (SELECT AVG(B) FROM PROC16);
 
 A                               B 
 ==================== ============ 
 
 Screw                          14 
 
-SQL> exit;
+exit;

@@ -6,8 +6,10 @@ Use CONNECT or CREATE DATABASE to specify a database
 T_IND UNIQUE INDEX ON T(B) 
 Statement failed, SQLCODE = -803
 attempt to store duplicate value (visible to active transactions) in unique index "T_IND"
+After line 2 in file show.sql
 Statement failed, SQLCODE = -803
 attempt to store duplicate value (visible to active transactions) in unique index "T_IND"
+After line 3 in file show.sql
 
            A            B 
 ============ ============ 

@@ -1,38 +1,40 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> /* This script checks how long a procedure name can be. */
-SQL> set term go;
-SQL> create procedure pabcdefghijklmnopqrstuvwxyzabcd  RETURNS (a int) as
-CON> begin
-CON>    a = 10;
-CON>    SUSPEND;
-CON> end
-CON> go
-SQL> 
-SQL> create procedure qabcdefghijklmnopqrstuvwxyzabcde  RETURNS (a int) as
-CON> begin
-CON>    a = 10;
-CON>    SUSPEND;
-CON> end
-CON> go
+/* This script checks how long a procedure name can be. */
+set term go;
+create procedure pabcdefghijklmnopqrstuvwxyzabcd  RETURNS (a int) as
+begin
+   a = 10;
+   SUSPEND;
+end
+go
+
+create procedure qabcdefghijklmnopqrstuvwxyzabcde  RETURNS (a int) as
+begin
+   a = 10;
+   SUSPEND;
+end
+go
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Name longer than database column size
-SQL> 
-SQL> set term ; go
-SQL> show proc;
+After line 11 in file proc_level0_tests.sql
+
+set term ; go
+show proc;
 Procedure Name                    Dependency, Type
 ================================= ======================================
 PABCDEFGHIJKLMNOPQRSTUVWXYZABCD   
-SQL> execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
+execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
 
            A 
 ============ 
           10 
 
-SQL> execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
+execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
 Statement failed, SQLCODE = -204
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -QABCDEFGHIJKLMNOPQRSTUVWXYZABCDE
-SQL> exit;
+After line 22 in file proc_level0_tests.sql
+exit;

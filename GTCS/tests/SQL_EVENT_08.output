@@ -1,43 +1,43 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> create database "WHERE_GDB:events.gdb";
-SQL> create table project  ( PNAME   VARCHAR(15) Not Null,
-CON>                         PNUMBER     INTEGER,
-CON>                         PRIZE        DOUBLE PRECISION);
-SQL> 
-SQL> insert into project values('ProductX',1,22);
-SQL> insert into project values('ProductY',2,26);
-SQL> commit;
-SQL> create table works_on (SSN       INTEGER Not Null,
-CON>                        PNUMBER   INTEGER Not Null,
-CON>                        HOURS     DOUBLE PRECISION);
-SQL> insert into works_on values (1,1,20);
-SQL> commit;
-SQL> create table works_on1 (SSN       INTEGER Not Null,
-CON>                        PNUMBER   INTEGER Not Null);
-SQL> insert into works_on1 values (2,2);
-SQL> commit;
-SQL> 
-SQL> set term go;
-SQL> create trigger trig01 for project 
-CON> active after update position 0
-CON> as 
-CON> declare variable x int;
-CON> begin
-CON>     insert into works_on values (4, 4, new.prize/old.prize);     
-CON>     post_event 'event1';
-CON> end
-CON> go
-SQL> create trigger trig02 for works_on 
-CON> active after insert position 1
-CON> as
-CON> declare variable x int;
-CON> begin
-CON>     insert into works_on1 values (8, 8);
-CON>     post_event 'event2';
-CON> end
-CON> go
-SQL> set term ; go
-SQL> exit;
+create database "WHERE_GDB:events.gdb";
+create table project  ( PNAME   VARCHAR(15) Not Null,
+                        PNUMBER     INTEGER,
+                        PRIZE        DOUBLE PRECISION);
+
+insert into project values('ProductX',1,22);
+insert into project values('ProductY',2,26);
+commit;
+create table works_on (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null,
+                       HOURS     DOUBLE PRECISION);
+insert into works_on values (1,1,20);
+commit;
+create table works_on1 (SSN       INTEGER Not Null,
+                       PNUMBER   INTEGER Not Null);
+insert into works_on1 values (2,2);
+commit;
+
+set term go;
+create trigger trig01 for project 
+active after update position 0
+as 
+declare variable x int;
+begin
+    insert into works_on values (4, 4, new.prize/old.prize);     
+    post_event 'event1';
+end
+go
+create trigger trig02 for works_on 
+active after insert position 1
+as
+declare variable x int;
+begin
+    insert into works_on1 values (8, 8);
+    post_event 'event2';
+end
+go
+set term ; go
+exit;
 
 PNAME                PNUMBER                   PRIZE 
 =============== ============ ======================= 

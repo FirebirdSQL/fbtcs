@@ -2,47 +2,46 @@ DOM06A1                         SMALLINT Nullable
                                 default 0
 DOM06A1                         SMALLINT Nullable
 DOM06A1                         SMALLINT Nullable
-                                 default 5000
+                                default 5000
 DOM06B1                         INTEGER Nullable
                                 default 0
 DOM06B1                         INTEGER Nullable
 DOM06B1                         INTEGER Nullable
-                                 default -200
+                                default -200
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 DOM06C1                         TIMESTAMP Nullable
                                 default '12-12-57'
 DOM06C1                         TIMESTAMP Nullable
 DOM06C1                         TIMESTAMP Nullable
-                                 default '01/27/92'
+                                default '01/27/92'
 DOM06D1                         CHAR(30) Nullable
                                 default user
 DOM06D1                         CHAR(30) Nullable
 DOM06D1                         CHAR(30) Nullable
-                                 default 'New default of 30 characters x'
+                                default 'New default of 30 characters x'
 DOM06E1                         VARCHAR(4) Nullable
                                 default 'TEST'
 DOM06E1                         VARCHAR(4) Nullable
 DOM06E1                         VARCHAR(4) Nullable
-                                 default 'def'
+                                default 'def'
 DOM06F1                         NUMERIC(15, 1) Nullable
                                 default 300.1
 DOM06F1                         NUMERIC(15, 1) Nullable
 DOM06F1                         NUMERIC(15, 1) Nullable
-                                 default null
+                                default null
 DOM06G1                         FLOAT Nullable
                                 default 2.2
 DOM06G1                         FLOAT Nullable
 DOM06G1                         FLOAT Nullable
-                                 default 55.55
+                                default 55.55
 DOM06H1                         DOUBLE PRECISION Nullable
                                 default 0
 DOM06H1                         DOUBLE PRECISION Nullable
 DOM06H1                         DOUBLE PRECISION Nullable
-                                 default -100
-DOM06I1                         BLOB segment 80, subtype UNKNOWN Nullable
+                                default -100
+DOM06I1                         BLOB segment 80, subtype BINARY Nullable
                                 default null
-DOM06I1                         BLOB segment 80, subtype UNKNOWN Nullable
-DOM06I1                         BLOB segment 80, subtype UNKNOWN Nullable
-                                 default 'default blob'
- 
+DOM06I1                         BLOB segment 80, subtype BINARY Nullable
+DOM06I1                         BLOB segment 80, subtype BINARY Nullable
+                                default 'default blob'

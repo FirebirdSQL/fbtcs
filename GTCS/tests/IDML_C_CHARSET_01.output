@@ -38,6 +38,7 @@ T_ROWID T_UNI                          A_DESC
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 4 in file v1.sql
 
 T_ROWID T_UNI                          A_DESC                                                  
 ======= ============================== ======================================================= 
@@ -50,6 +51,7 @@ T_ROWID T_UNI                          A_DESC
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 6 in file v1.sql
 
 T_ROWID T_UNI                          A_DESC                                                  
 ======= ============================== ======================================================= 
@@ -62,6 +64,7 @@ T_ROWID T_UNI                          A_DESC
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 8 in file v1.sql
 
 T_ROWID T_UNI                          A_DESC                                                  
 ======= ============================== ======================================================= 
@@ -74,6 +77,7 @@ T_ROWID T_UNI                          A_DESC
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 10 in file v1.sql
 ---------------------------------------------------------------
 
   Then RUNNING...
@@ -110,6 +114,7 @@ T_ROWID T_UNI
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 4 in file v2.sql
 
 T_ROWID T_UNI                          
 ======= ============================== 
@@ -122,6 +127,7 @@ T_ROWID T_UNI
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 6 in file v2.sql
 
 T_ROWID T_UNI                          
 ======= ============================== 
@@ -134,6 +140,7 @@ T_ROWID T_UNI
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 8 in file v2.sql
 
 T_ROWID T_UNI                          
 ======= ============================== 
@@ -146,6 +153,7 @@ T_ROWID T_UNI
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 10 in file v2.sql
 ---------------------------------------------------------------
 
   Then RUNNING...
@@ -172,11 +180,13 @@ T_ROWID T_850      A_DESC
 ======= ========== ======================================================= 
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
+After line 3 in file v3.sql
 
 T_ROWID T_850      A_DESC                                                  
 ======= ========== ======================================================= 
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
+After line 4 in file v3.sql
 
 T_ROWID T_UNI                          A_DESC                                                  
 ======= ============================== ======================================================= 

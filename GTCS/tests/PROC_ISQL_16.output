@@ -1,4 +1,4 @@
-SQL> select * from p;
+select * from p;
 
 PNO    PNAME                COLOR        WEIGHT CITY            
 ====== ==================== ====== ============ =============== 
@@ -10,9 +10,9 @@ P4     Screw                Red              14 London
 P5     Cam                  Blue             12 Paris           
 P6     Cog                  Red              19 London          
 
-SQL> EXECUTE PROCEDURE PROC_INSERT 'P15',NULL , 'Pink', NULL, 'Hoboken';
-SQL> INSERT INTO P VALUES ('P16', NULL, NULL, NULL, 'Varanasi');
-SQL> select * from p;
+EXECUTE PROCEDURE PROC_INSERT 'P15',NULL , 'Pink', NULL, 'Hoboken';
+INSERT INTO P VALUES ('P16', NULL, NULL, NULL, 'Varanasi');
+select * from p;
 
 PNO    PNAME                COLOR        WEIGHT CITY            
 ====== ==================== ====== ============ =============== 
@@ -26,4 +26,4 @@ P6     Cog                  Red              19 London
 P15    <null>               Pink         <null> Hoboken         
 P16    <null>               <null>       <null> Varanasi        
 
-SQL> exit;
+exit;

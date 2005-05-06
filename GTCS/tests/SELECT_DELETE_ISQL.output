@@ -1,4 +1,4 @@
-SQL> select * from proc;
+select * from proc;
 
 X      
 ====== 
@@ -10,7 +10,7 @@ S2
 S4     
 S4     
 
-SQL> select * from s;
+select * from s;
 
 SNO    SNAME                      STATUS CITY            
 ====== ==================== ============ =============== 
@@ -18,8 +18,8 @@ SNO    SNAME                      STATUS CITY
 S3     Blake                          30 Paris           
 S5     Adams                          30 Athens          
 
-SQL> rollback;
-SQL> select * from proc1;
+rollback;
+select * from proc1;
 
 X      
 ====== 
@@ -31,7 +31,7 @@ S2
 S4     
 S4     
 
-SQL> select * from s;
+select * from s;
 
 SNO    SNAME                      STATUS CITY            
 ====== ==================== ============ =============== 
@@ -41,8 +41,8 @@ S2     Jones                          10 Paris
 S3     Blake                          30 Paris           
 S5     Adams                          30 Athens          
 
-SQL> rollback;
-SQL> select * from proc2;
+rollback;
+select * from proc2;
 
 X      
 ====== 
@@ -54,5 +54,5 @@ S2
 S4     
 S4     
 
-SQL> rollback;
-SQL> exit;
+rollback;
+exit;

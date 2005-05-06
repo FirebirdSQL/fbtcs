@@ -1,51 +1,51 @@
-SQL> EXECUTE PROCEDURE PROC8 ;
+EXECUTE PROCEDURE PROC8 ;
 
 A                               B 
 ==================== ============ 
 Cog                            19 
 
-SQL> SELECT * FROM PROC8;
+SELECT * FROM PROC8;
 
 A                               B 
 ==================== ============ 
 
 Cog                            19 
 
-SQL> SELECT MAX(A) FROM PROC8;
+SELECT MAX(A) FROM PROC8;
 
 MAX                  
 ==================== 
 
 Cog                  
 
-SQL> SELECT B FROM PROC8;
+SELECT B FROM PROC8;
 
            B 
 ============ 
 
           19 
 
-SQL> SELECT A,B FROM PROC8 ORDER BY A;
+SELECT A,B FROM PROC8 ORDER BY A;
 
 A                               B 
 ==================== ============ 
 
 Cog                            19 
 
-SQL> SELECT A, AVG(B) FROM PROC8 GROUP BY A HAVING AVG(B) > 35;
-SQL> SELECT A, AVG(B) FROM PROC8 GROUP BY A ;
+SELECT A, AVG(B) FROM PROC8 GROUP BY A HAVING AVG(B) > 35;
+SELECT A, AVG(B) FROM PROC8 GROUP BY A ;
 
 A                                      AVG 
 ==================== ===================== 
 
 Cog                                     19 
 
-SQL> SELECT A , B FROM PROC8
-CON>              WHERE B = (SELECT AVG(B) FROM PROC8);
+SELECT A , B FROM PROC8
+             WHERE B = (SELECT AVG(B) FROM PROC8);
 
 A                               B 
 ==================== ============ 
 
 Cog                            19 
 
-SQL> exit;
+exit;

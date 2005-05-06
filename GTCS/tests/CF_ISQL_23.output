@@ -1,17 +1,17 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> connect 'WHERE_GDB:cf_isql_23.fdb';
-SQL>  delete from TEST where T_GROUP = 2;
-SQL> execute procedure GROUP_COPY( 1 , 2 );
-SQL> commit;
-SQL> select count(*) from test;
+connect 'WHERE_GDB:cf_isql_23.fdb';
+ delete from TEST where T_GROUP = 2;
+execute procedure GROUP_COPY( 1 , 2 );
+commit;
+select count(*) from test;
 
        COUNT 
 ============ 
 
         6000 
 
-SQL> select * from groups;
+select * from groups;
 
        GR_ID GR_NAME                                  
 ============ ======================================== 
@@ -19,5 +19,4 @@ SQL> select * from groups;
            1 Group1                                   
            2 Group2                                   
 
-SQL> 
-SQL> 
+

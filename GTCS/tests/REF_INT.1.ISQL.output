@@ -1,5 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> alter table employee
-CON>  drop constraint ref_key;
-SQL> alter table department
-CON>  drop constraint dept_key;
+alter table employee
+ drop constraint ref_key;
+alter table department
+ drop constraint dept_key;

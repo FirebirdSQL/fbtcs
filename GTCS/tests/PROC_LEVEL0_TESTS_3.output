@@ -3,4 +3,5 @@ Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -STORE RDB$PROCEDURE_PARAMETERS failed
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_18"
+After line 3 in file proc_level0_tests3.sql
 There are no stored procedures in this database

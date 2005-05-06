@@ -1,48 +1,50 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> 
-SQL> SET SQL DIALECT 3;
-SQL> 
-SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_29.fdb';
-SQL> 
-SQL> SET TERM ^ ;
-SQL> 
-SQL> CREATE PROCEDURE SPX_Aux_TEST (Par1 BIGINT) RETURNS (Ret1 BIGINT)
-CON> AS
-CON> DECLARE VARIABLE Lok1 BIGINT ;
-CON> DECLARE VARIABLE iTmpVar Integer;
-CON> BEGIN
-CON> /* === Kern - Source */
-CON> /* START */
-CON> BEGIN
-CON> Lok1=2;
-CON> iTmpVar = 1/0;
-CON> WHEN ANY DO BEGIN
-CON> EXCEPTION;
-CON> END
-CON> END
-CON> /* END */
-CON> /* === Kern-Source */
-CON> END^
-SQL> 
-SQL> SET TERM ; ^
-SQL> commit;
-SQL> 
-SQL> Use CONNECT or CREATE DATABASE to specify a database
-SQL> 
-SQL> EXECUTE PROCEDURE SPX_AUX_TEST (1);
+
+SET SQL DIALECT 3;
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_29.fdb';
+
+SET TERM ^ ;
+
+CREATE PROCEDURE SPX_Aux_TEST (Par1 BIGINT) RETURNS (Ret1 BIGINT)
+AS
+DECLARE VARIABLE Lok1 BIGINT ;
+DECLARE VARIABLE iTmpVar Integer;
+BEGIN
+/* === Kern - Source */
+/* START */
+BEGIN
+Lok1=2;
+iTmpVar = 1/0;
+WHEN ANY DO BEGIN
+EXCEPTION;
+END
+END
+/* END */
+/* === Kern-Source */
+END^
+
+SET TERM ; ^
+commit;
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+EXECUTE PROCEDURE SPX_AUX_TEST (1);
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -At procedure 'SPX_AUX_TEST'
 -At procedure 'SPX_AUX_TEST'
-SQL> EXECUTE PROCEDURE SPX_AUX_TEST (1);
+After line 3 in file cf_isql_29c.sql
+EXECUTE PROCEDURE SPX_AUX_TEST (1);
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -At procedure 'SPX_AUX_TEST'
 -At procedure 'SPX_AUX_TEST'
-SQL> EXECUTE PROCEDURE SPX_AUX_TEST (1);
+After line 5 in file cf_isql_29c.sql
+EXECUTE PROCEDURE SPX_AUX_TEST (1);
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -At procedure 'SPX_AUX_TEST'
 -At procedure 'SPX_AUX_TEST'
-SQL> 
-SQL> 
+After line 6 in file cf_isql_29c.sql
+

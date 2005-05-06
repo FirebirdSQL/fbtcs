@@ -23,19 +23,23 @@ Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 1, char 18
 -123
+At line 19 in file dsql_except_01.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 1, char 18
 -$
+At line 21 in file dsql_except_01.sql
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -DEFINE EXCEPTION failed
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
+After line 22 in file dsql_except_01.sql
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Exception not found
+After line 25 in file dsql_except_01.sql
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Exception not found
- 
+After line 27 in file dsql_except_01.sql

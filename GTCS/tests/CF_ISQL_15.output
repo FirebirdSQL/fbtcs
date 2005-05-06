@@ -4,3 +4,4 @@ Dynamic SQL Error
 -SQL error code = -804
 -Function unknown
 -NON_EXIST_UDF
+After line 1 in file cf_test.sql

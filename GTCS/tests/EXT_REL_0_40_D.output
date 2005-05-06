@@ -3,6 +3,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Operation not supported for EXTERNAL FILE table EXT_TABLE
+After line 1 in file isql2.in
 Use CONNECT or CREATE DATABASE to specify a database
 External file: WHERE_GDB_EXTERNAL:(PLATFORM_UPPER)EXTERNAL_DAT:
 FIELD1                          SMALLINT Not Null 

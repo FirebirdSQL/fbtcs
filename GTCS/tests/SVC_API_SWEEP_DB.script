@@ -1,4 +1,4 @@
-$GBAK -r WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
+$GBAK -rep WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
 >> svc_api_sweep_db.cpp
 
 #include <stdio.h>

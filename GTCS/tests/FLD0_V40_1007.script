@@ -305,7 +305,7 @@ $LINK FLAG_LINK db_info
 $GFIX -use full WHERE_GDB:atlas.gdb
 $RUN db_info WHERE_GDB:atlas.gdb
 $GBAK WHERE_GDB:atlas.gdb atlas.gbak
-$GBAK -r atlas.gbak WHERE_GDB:atlas.gdb
+$GBAK -rep atlas.gbak WHERE_GDB:atlas.gdb
 $RUN db_info WHERE_GDB:atlas.gdb
 $DROP WHERE_GDB:atlas.gdb
 $DELETE db_info* atlas.gbak

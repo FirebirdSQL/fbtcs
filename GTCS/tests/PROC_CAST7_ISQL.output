@@ -2,28 +2,34 @@ Statement failed, SQLCODE = -607
 Dynamic SQL Error
 -SQL error code = -607
 -Array/BLOB/DATE data types not allowed in arithmetic
+After line 1 in file proc_cast7.sql
 Statement failed, SQLCODE = -607
 Dynamic SQL Error
 -SQL error code = -607
 -Array/BLOB/DATE data types not allowed in arithmetic
+After line 7 in file proc_cast7.sql
 Statement failed, SQLCODE = -607
 Dynamic SQL Error
 -SQL error code = -607
 -Array/BLOB/DATE data types not allowed in arithmetic
+After line 19 in file proc_cast7.sql
 Statement failed, SQLCODE = -607
 Dynamic SQL Error
 -SQL error code = -607
 -Array/BLOB/DATE data types not allowed in arithmetic
+After line 25 in file proc_cast7.sql
 Statement failed, SQLCODE = -204
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST1
+At line 65 in file proc_cast7.sql
 Statement failed, SQLCODE = -204
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST2
+At line 67 in file proc_cast7.sql
 
           B 
 =========== 
@@ -34,17 +40,21 @@ Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST4
+At line 71 in file proc_cast7.sql
 Statement failed, SQLCODE = -204
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST5
+At line 73 in file proc_cast7.sql
 Statement failed, SQLCODE = -413
 conversion error from string "1978-03-29"
 -At procedure 'CAST6'
+After line 69 in file proc_cast7.sql
 Statement failed, SQLCODE = -413
 conversion error from string "1978-03-29"
 -At procedure 'CAST7'
+After line 70 in file proc_cast7.sql
 
 B          
 ========== 

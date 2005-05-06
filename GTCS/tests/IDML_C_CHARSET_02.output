@@ -231,13 +231,16 @@ Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 2 in file dos437l1.sql
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 7 in file dos437l1.sql
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 11 in file dos437l2.sql
 ---------------------------------------------------------------
 1.
   RUNNING...                

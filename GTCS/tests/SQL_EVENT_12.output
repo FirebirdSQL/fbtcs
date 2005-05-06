@@ -5,6 +5,7 @@ Dynamic SQL Error
 -Column unknown
 -OLD.PNUMBER
 -At line 4, column 26.
+At line 28 in file sql_event_12a.sql
 
 PNAME                PNUMBER 
 =============== ============ 

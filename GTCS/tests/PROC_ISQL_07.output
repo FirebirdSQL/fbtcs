@@ -1,12 +1,12 @@
-SQL> set term go;
-SQL> create procedure proc9  RETURNS (a integer) as
-CON> begin
-CON>   for select distinct max(qty) from sp where qty > 300 into :a
-CON>   do  SUSPEND;
-CON> end
-CON> go
-SQL> set term ; go
-SQL> set echo;
+set term go;
+create procedure proc9  RETURNS (a integer) as
+begin
+  for select distinct max(qty) from sp where qty > 300 into :a
+  do  SUSPEND;
+end
+go
+set term ; go
+set echo;
 
            A 
 ============ 

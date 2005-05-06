@@ -32,6 +32,7 @@ Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
 Use CONNECT or CREATE DATABASE to specify a database
+After line 4 in file giso.sql
 
                   S_ROWID C_ENUS                    C_437_25                  
 ================= ======= ========================= ========================= 
@@ -76,3 +77,4 @@ Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
+After line 2 in file g8502.sql

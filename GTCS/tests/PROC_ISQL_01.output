@@ -1,57 +1,57 @@
-SQL> EXECUTE PROCEDURE PROC1;
+EXECUTE PROCEDURE PROC1;
 
            A 
 ============ 
          400 
 
-SQL> SELECT  * FROM PROC1;
+SELECT  * FROM PROC1;
 
            A 
 ============ 
 
          400 
 
-SQL> SELECT  MAX(A) FROM PROC1;
+SELECT  MAX(A) FROM PROC1;
 
          MAX 
 ============ 
 
          400 
 
-SQL> SELECT  A FROM PROC1;
+SELECT  A FROM PROC1;
 
            A 
 ============ 
 
          400 
 
-SQL> SELECT  * FROM PROC1 ORDER BY A;
+SELECT  * FROM PROC1 ORDER BY A;
 
            A 
 ============ 
 
          400 
 
-SQL> SELECT A, AVG(A) FROM PROC1 GROUP BY A HAVING AVG(A) > 350;
+SELECT A, AVG(A) FROM PROC1 GROUP BY A HAVING AVG(A) > 350;
 
            A                   AVG 
 ============ ===================== 
 
          400                   400 
 
-SQL> SELECT A, AVG(A) FROM PROC1 GROUP BY A ;
+SELECT A, AVG(A) FROM PROC1 GROUP BY A ;
 
            A                   AVG 
 ============ ===================== 
 
          400                   400 
 
-SQL> SELECT A  FROM PROC1
-CON>         WHERE A = (SELECT AVG(A) FROM PROC1);
+SELECT A  FROM PROC1
+        WHERE A = (SELECT AVG(A) FROM PROC1);
 
            A 
 ============ 
 
          400 
 
-SQL> exit;
+exit;

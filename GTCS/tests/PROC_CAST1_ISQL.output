@@ -26,6 +26,7 @@
 Statement failed, SQLCODE = -413
 conversion error from string "100"
 -At procedure 'CAST6'
+After line 70 in file proc_cast1.sql
 
            B 
 ============ 

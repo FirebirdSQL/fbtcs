@@ -14,3 +14,4 @@ Statement failed, SQLCODE = -836
 exception 1
 -THIS IS AN EXCEPTION !!
 -At procedure 'PROC'
+After line 1 in file show.sql

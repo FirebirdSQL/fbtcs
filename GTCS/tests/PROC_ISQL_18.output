@@ -1,14 +1,14 @@
-SQL> set term go;
-SQL> create procedure  proc_select_insert as
-CON> begin
-CON>     insert into sp(sno)
-CON>     select sno from s where sno NOT IN
-CON>     (select sno from sp) ;
-CON> SUSPEND;
-CON> end
-CON> go
-SQL> set term ; go
-SQL> select * from sp;
+set term go;
+create procedure  proc_select_insert as
+begin
+    insert into sp(sno)
+    select sno from s where sno NOT IN
+    (select sno from sp) ;
+SUSPEND;
+end
+go
+set term ; go
+select * from sp;
 
 SNO    PNO             QTY 
 ====== ====== ============ 
@@ -20,8 +20,8 @@ S2     P2              400
 S4     P4              300 
 S4     P5              400 
 
-SQL> EXECUTE PROCEDURE PROC_SELECT_INSERT;
-SQL> select * from sp;
+EXECUTE PROCEDURE PROC_SELECT_INSERT;
+select * from sp;
 
 SNO    PNO             QTY 
 ====== ====== ============ 
@@ -35,8 +35,8 @@ S4     P5              400
 S3     <null>       <null> 
 S5     <null>       <null> 
 
-SQL> rollback;
-SQL> select * from sp;
+rollback;
+select * from sp;
 
 SNO    PNO             QTY 
 ====== ====== ============ 
@@ -48,13 +48,14 @@ S2     P2              400
 S4     P4              300 
 S4     P5              400 
 
-SQL> select * from proc_select_insert;
+select * from proc_select_insert;
 Statement failed, SQLCODE = -84
 Dynamic SQL Error
 -SQL error code = -84
 -procedure PROC_SELECT_INSERT does not return any values
 -At line 1, column 15.
-SQL> select * from sp;
+At line 16 in file proc_isql_18.sql
+select * from sp;
 
 SNO    PNO             QTY 
 ====== ====== ============ 
@@ -66,4 +67,4 @@ S2     P2              400
 S4     P4              300 
 S4     P5              400 
 
-SQL> exit;
+exit;

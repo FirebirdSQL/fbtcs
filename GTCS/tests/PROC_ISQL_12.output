@@ -1,10 +1,10 @@
-SQL> EXECUTE PROCEDURE PROC14;
+EXECUTE PROCEDURE PROC14;
 
 A                                B 
 ===================== ============ 
 Bolt                            17 
 
-SQL> SELECT  * FROM PROC14;
+SELECT  * FROM PROC14;
 
 A                                B 
 ===================== ============ 
@@ -12,14 +12,14 @@ A                                B
 Bolt                            17 
 Cog                             19 
 
-SQL> SELECT MAX(B) FROM PROC14;
+SELECT MAX(B) FROM PROC14;
 
          MAX 
 ============ 
 
           19 
 
-SQL> SELECT  B FROM PROC14;
+SELECT  B FROM PROC14;
 
            B 
 ============ 
@@ -27,7 +27,7 @@ SQL> SELECT  B FROM PROC14;
           17 
           19 
 
-SQL> SELECT A,B FROM PROC14 ORDER BY B;
+SELECT A,B FROM PROC14 ORDER BY B;
 
 A                                B 
 ===================== ============ 
@@ -35,8 +35,8 @@ A                                B
 Bolt                            17 
 Cog                             19 
 
-SQL> SELECT A, AVG(B) FROM PROC14 GROUP BY A HAVING AVG(B) > 350;
-SQL> SELECT A, AVG(B) FROM PROC14 GROUP BY A ;
+SELECT A, AVG(B) FROM PROC14 GROUP BY A HAVING AVG(B) > 350;
+SELECT A, AVG(B) FROM PROC14 GROUP BY A ;
 
 A                                       AVG 
 ===================== ===================== 
@@ -44,12 +44,12 @@ A                                       AVG
 Bolt                                     17 
 Cog                                      19 
 
-SQL> SELECT A , B FROM PROC14
-CON>         WHERE B > (SELECT AVG(B) FROM PROC14);
+SELECT A , B FROM PROC14
+        WHERE B > (SELECT AVG(B) FROM PROC14);
 
 A                                B 
 ===================== ============ 
 
 Cog                             19 
 
-SQL> exit;
+exit;

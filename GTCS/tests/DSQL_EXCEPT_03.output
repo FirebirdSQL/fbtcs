@@ -3,6 +3,7 @@ unsuccessful metadata update
 -cannot delete
 -EXCEPTION TRIG03_NULLRIVER
 -there are 1 dependencies
+After line 14 in file dsql_except_03.sql
 Exception Name                  Used by, Type
 =============================== =============================================
 TRIG03_NULLRIVER                TEST03A, Trigger
@@ -10,4 +11,3 @@ TRIG03_NULLRIVER                TEST03A, Trigger
 
 There are no triggers on table RIVER_STATES in this database
 There is no exception TRIG03_NULLRIVER in this database
- 

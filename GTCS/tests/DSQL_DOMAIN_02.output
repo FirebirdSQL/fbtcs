@@ -50,7 +50,7 @@ DOM02P                          FLOAT Nullable
                                 default null
 DOM02Q                          DOUBLE PRECISION Nullable
                                 default null
-DOM02R                          BLOB segment 80, subtype UNKNOWN Nullable
+DOM02R                          BLOB segment 80, subtype BINARY Nullable
                                 default null
 DOM02V                          CHAR(15) Nullable
                                 default user

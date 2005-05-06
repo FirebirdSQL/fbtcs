@@ -1,5 +1,5 @@
 
-$ GBAK -r WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
+$ GBAK -rep WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
 >> globals.c
 /*
 **      Name:           globals.c

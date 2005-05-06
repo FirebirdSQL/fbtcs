@@ -1,25 +1,25 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> set term go;
-SQL> create procedure abc RETURNS( x varchar(2)) as
-CON> begin
-CON>   x = 'Q';
-CON>   SUSPEND;
-CON> end
-CON> go
-SQL> create procedure ABC RETURNS( x varchar(2)) as
-CON> begin
-CON>   x = 'Q';
-CON>   SUSPEND;
-CON> end
-CON> go
+set term go;
+create procedure abc RETURNS( x varchar(2)) as
+begin
+  x = 'Q';
+  SUSPEND;
+end
+go
+create procedure ABC RETURNS( x varchar(2)) as
+begin
+  x = 'Q';
+  SUSPEND;
+end
+go
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Procedure ABC already exists
-SQL> 
-SQL> set term ; go
-SQL> show proc;
+After line 10 in file proc_level0_tests1.sql
+
+set term ; go
+show proc;
 Procedure Name                    Dependency, Type
 ================================= ======================================
 ABC                               
-SQL> 
-SQL> 
+

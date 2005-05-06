@@ -18,9 +18,10 @@ DOM11G_1                        FLOAT Nullable
 DOM11G_2                        DOUBLE PRECISION Nullable
 DOM11G_3                        FLOAT Nullable
 DOM11H                          DOUBLE PRECISION Nullable
-DOM11I_1                        BLOB segment 80, subtype UNKNOWN Nullable
+DOM11I_1                        BLOB segment 80, subtype BINARY Nullable
 DOM11I_2                        BLOB segment 60, subtype TEXT Nullable
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Column not found
+After line 0 in file domain_11b.sql
  

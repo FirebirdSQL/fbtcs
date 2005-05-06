@@ -6,6 +6,7 @@
 Statement failed, SQLCODE = -413
 conversion error from string "abc       "
 -At procedure 'CAST1'
+After line 64 in file proc_cast9.sql
 
            B 
 ============ 
@@ -14,6 +15,7 @@ conversion error from string "abc       "
 Statement failed, SQLCODE = -413
 conversion error from string "abc       "
 -At procedure 'CAST2'
+After line 66 in file proc_cast9.sql
 
              B 
 ============== 
@@ -22,6 +24,7 @@ conversion error from string "abc       "
 Statement failed, SQLCODE = -413
 conversion error from string "abc       "
 -At procedure 'CAST3'
+After line 68 in file proc_cast9.sql
 
                       B 
 ======================= 
@@ -30,6 +33,7 @@ conversion error from string "abc       "
 Statement failed, SQLCODE = -413
 conversion error from string "abc       "
 -At procedure 'CAST4'
+After line 70 in file proc_cast9.sql
 
            B 
 ============ 
@@ -38,6 +42,7 @@ conversion error from string "abc       "
 Statement failed, SQLCODE = -413
 conversion error from string "abc       "
 -At procedure 'CAST5'
+After line 72 in file proc_cast9.sql
 
           B 
 =========== 
@@ -46,15 +51,18 @@ conversion error from string "abc       "
 Statement failed, SQLCODE = -413
 conversion error from string "abc       "
 -At procedure 'CAST6'
+After line 74 in file proc_cast9.sql
 Statement failed, SQLCODE = -206
 Dynamic SQL Error
 -SQL error code = -206
 -Column unknown
 -ABC
 -At line 1, column 25.
+At line 76 in file proc_cast9.sql
 Statement failed, SQLCODE = -413
 conversion error from string "100       "
 -At procedure 'CAST6'
+After line 76 in file proc_cast9.sql
 
            B 
 ============ 
@@ -63,6 +71,7 @@ conversion error from string "100       "
 Statement failed, SQLCODE = -413
 conversion error from string "abc       "
 -At procedure 'CAST7'
+After line 78 in file proc_cast9.sql
 
 B          
 ========== 

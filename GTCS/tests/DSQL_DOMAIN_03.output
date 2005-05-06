@@ -8,5 +8,5 @@ DOM03E                          VARCHAR(25) Not Null
 DOM03F                          DECIMAL(6, 2) Not Null
 DOM03G                          FLOAT Not Null
 DOM03H                          DOUBLE PRECISION Not Null
-DOM03I                          BLOB segment 80, subtype UNKNOWN Not Null
+DOM03I                          BLOB segment 80, subtype BINARY Not Null
  

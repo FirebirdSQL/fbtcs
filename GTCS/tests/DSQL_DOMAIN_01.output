@@ -17,34 +17,39 @@ DOM01G_1                        FLOAT Nullable
 DOM01G_2                        DOUBLE PRECISION Nullable
 DOM01G_3                        FLOAT Nullable
 DOM01H                          DOUBLE PRECISION Nullable
-DOM01I_1                        BLOB segment 80, subtype UNKNOWN Nullable
+DOM01I_1                        BLOB segment 80, subtype BINARY Nullable
 DOM01I_2                        BLOB segment 60, subtype TEXT Nullable
 LONG_DOMAIN_NAME_OF_31_CHARSXXX INTEGER Nullable
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Name longer than database column size
+After line 3 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 1, char 15
 -23456789
+At line 6 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 1, char 15
 -$
+At line 8 in file domain_01b.sql
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -STORE RDB$FIELDS failed
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_2"
+After line 9 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 1, char 25
 -rubbish
+At line 12 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 1, char 15
 -table
- 
+At line 14 in file domain_01b.sql

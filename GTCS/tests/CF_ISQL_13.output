@@ -5,6 +5,7 @@ unsuccessful metadata update
 -cannot delete
 -COLUMN A
 -there are 1 dependencies
+After line 1 in file cf_test_13b.sql
 A                               INTEGER Nullable 
 AF                              Computed by: (a*3)
 
@@ -18,6 +19,7 @@ unsuccessful metadata update
 -cannot delete
 -COLUMN AF
 -there are 1 dependencies
+After line 9 in file cf_test_13b.sql
 A                               INTEGER Nullable 
 AF                              Computed by: (a*4)
 AFAF                            Computed by: (af*5)

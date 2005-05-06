@@ -40,9 +40,9 @@ DOM07H                          DOUBLE PRECISION Nullable
 DOM07H                          DOUBLE PRECISION Nullable
 DOM07H                          DOUBLE PRECISION Nullable
                                 check (value > (select count(*) from rivers))
-DOM07I                          BLOB segment 80, subtype UNKNOWN Nullable
+DOM07I                          BLOB segment 80, subtype BINARY Nullable
                                 check (value > 500)
-DOM07I                          BLOB segment 80, subtype UNKNOWN Nullable
-DOM07I                          BLOB segment 80, subtype UNKNOWN Nullable
+DOM07I                          BLOB segment 80, subtype BINARY Nullable
+DOM07I                          BLOB segment 80, subtype BINARY Nullable
                                 check (value is not null)
  
