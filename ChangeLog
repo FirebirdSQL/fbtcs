@@ -1,3 +1,344 @@
+2005-05-06	alexpeshkoff
+	* GTCS/series/CF_ISQL.list 1.10:
+	* GTCS/series/GSTAT.list 1.2:
+	* GTCS/series/SQL_EVENTS.list 1.4:
+	* GTCS/series/SVC_API.list 1.3:
+	* GTCS/tests/AUTO_DDL.EXCP.DSQL.output 1.3:
+	* GTCS/tests/AUTO_DDL.GEN.DSQL.output 1.3:
+	* GTCS/tests/AUTO_DDL.IND.DSQL.output 1.4:
+	* GTCS/tests/CF_ISQL_11.output 1.3:
+	* GTCS/tests/CF_ISQL_13.output 1.4:
+	* GTCS/tests/CF_ISQL_15.output 1.3:
+	* GTCS/tests/CF_ISQL_16.output 1.3:
+	* GTCS/tests/CF_ISQL_18.output 1.3:
+	* GTCS/tests/CF_ISQL_22.output 1.4:
+	* GTCS/tests/CF_ISQL_23.output 1.3:
+	* GTCS/tests/CF_ISQL_24.output 1.4:
+	* GTCS/tests/CF_ISQL_25.output 1.3:
+	* GTCS/tests/CF_ISQL_26.output 1.4:
+	* GTCS/tests/CF_ISQL_27.output 1.3:
+	* GTCS/tests/CF_ISQL_27.script 1.3:
+	* GTCS/tests/CF_ISQL_29.knownbug 1.4:
+	* GTCS/tests/CF_ISQL_31.knownbug 1.4:
+	* GTCS/tests/C_DSQL_RI_COL_PRIM.output 1.2:
+	* GTCS/tests/C_SQL_JOIN_42.output 1.3:
+	* GTCS/tests/DSQL_DOMAIN_01.output 1.3:
+	* GTCS/tests/DSQL_DOMAIN_02.output 1.2:
+	* GTCS/tests/DSQL_DOMAIN_03.output 1.2:
+	* GTCS/tests/DSQL_DOMAIN_04.output 1.2:
+	* GTCS/tests/DSQL_DOMAIN_06.output 1.2:
+	* GTCS/tests/DSQL_DOMAIN_07.output 1.2:
+	* GTCS/tests/DSQL_DOMAIN_08.output 1.4:
+	* GTCS/tests/DSQL_DOMAIN_11.output 1.3:
+	* GTCS/tests/DSQL_DOMAIN_22.output 1.3:
+	* GTCS/tests/DSQL_DOMAIN_26.output 1.3:
+	* GTCS/tests/DSQL_EXCEPT_01.output 1.3:
+	* GTCS/tests/DSQL_EXCEPT_02.output 1.3:
+	* GTCS/tests/DSQL_EXCEPT_03.output 1.3:
+	* GTCS/tests/EXT_REL_0_11_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_22_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_22_E.output 1.3:
+	* GTCS/tests/EXT_REL_0_27_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_27_E.output 1.3:
+	* GTCS/tests/EXT_REL_0_28_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_29_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_30_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_31_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_31_E.output 1.3:
+	* GTCS/tests/EXT_REL_0_32_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_33_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_34_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_36_D.output 1.3:
+	* GTCS/tests/EXT_REL_0_36_G.output 1.3:
+	* GTCS/tests/EXT_REL_0_40_D.output 1.3:
+	* GTCS/tests/FLD0_V40_1006.script 1.6:
+	* GTCS/tests/FLD0_V40_1007.script 1.6:
+	* GTCS/tests/GF_SHUT_0.knownbug 1.3:
+	* GTCS/tests/GF_SHUT_0.output 1.3:
+	* GTCS/tests/GF_SHUT_1.knownbug 1.3:
+	* GTCS/tests/GF_SHUT_1.output 1.3:
+	* GTCS/tests/GF_SHUT_2.knownbug 1.3:
+	* GTCS/tests/GF_SHUT_2.output 1.3:
+	* GTCS/tests/GSTAT1.output 1.3:
+	* GTCS/tests/GSTAT2.output 1.3:
+	* GTCS/tests/GSTAT3.output 1.3:
+	* GTCS/tests/GSTAT4.output 1.3:
+	* GTCS/tests/IDML_C_CHARSET_01.output 1.3:
+	* GTCS/tests/IDML_C_CHARSET_02.output 1.3:
+	* GTCS/tests/IDML_C_SUBQ_02.output 1.3:
+	* GTCS/tests/IDML_C_SUBQ_03.output 1.4:
+	* GTCS/tests/IDML_C_SUBQ_11.output 1.3:
+	* GTCS/tests/IE_PROC_ERR_2.output 1.4:
+	* GTCS/tests/ISC_ERRSET.script 1.6:
+	* GTCS/tests/IS_PROC_ERR_2.output 1.4:
+	* GTCS/tests/PROCS_QA_INIT_ISQL.output 1.2:
+	* GTCS/tests/PROC_ARRAY2.output 1.3:
+	* GTCS/tests/PROC_CAST10_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST11_ISQL.output 1.4:
+	* GTCS/tests/PROC_CAST1_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST2_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST3_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST4_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST5_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST6_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST7_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST9_ISQL.knownbug 1.3:
+	* GTCS/tests/PROC_ISQL_01.output 1.2:
+	* GTCS/tests/PROC_ISQL_03.output 1.2:
+	* GTCS/tests/PROC_ISQL_04.output 1.2:
+	* GTCS/tests/PROC_ISQL_05.output 1.3:
+	* GTCS/tests/PROC_ISQL_06.output 1.2:
+	* GTCS/tests/PROC_ISQL_07.output 1.2:
+	* GTCS/tests/PROC_ISQL_08.output 1.3:
+	* GTCS/tests/PROC_ISQL_12.output 1.2:
+	* GTCS/tests/PROC_ISQL_13.output 1.2:
+	* GTCS/tests/PROC_ISQL_14.output 1.2:
+	* GTCS/tests/PROC_ISQL_15.output 1.2:
+	* GTCS/tests/PROC_ISQL_16.output 1.2:
+	* GTCS/tests/PROC_ISQL_18.output 1.3:
+	* GTCS/tests/PROC_ISQL_19.output 1.2:
+	* GTCS/tests/PROC_ISQL_20.output 1.2:
+	* GTCS/tests/PROC_ISQL_21.output 1.3:
+	* GTCS/tests/PROC_LEVEL0_TESTS.output 1.3:
+	* GTCS/tests/PROC_LEVEL0_TESTS_1.output 1.3:
+	* GTCS/tests/PROC_LEVEL0_TESTS_2.output 1.3:
+	* GTCS/tests/PROC_LEVEL0_TESTS_3.output 1.3:
+	* GTCS/tests/REF_INT.1.ISQL.output 1.2:
+	* GTCS/tests/REF_INT.2.ISQL.output 1.3:
+	* GTCS/tests/REF_INT.3.ISQL.output 1.3:
+	* GTCS/tests/REF_INT.4.ISQL.output 1.3:
+	* GTCS/tests/REF_INT.5.ISQL.output 1.3:
+	* GTCS/tests/REF_INT.6.ISQL.output 1.3:
+	* GTCS/tests/REF_INT.7.ISQL.output 1.3:
+	* GTCS/tests/REF_INT.8.ISQL.output 1.3:
+	* GTCS/tests/SELECT_DELETE_ISQL.output 1.2:
+	* GTCS/tests/SQL_EVENT_08.output 1.2:
+	* GTCS/tests/SQL_EVENT_09.output 1.2:
+	* GTCS/tests/SQL_EVENT_12.output 1.3:
+	* GTCS/tests/SVC_API_DB_STATS1.output 1.3:
+	* GTCS/tests/SVC_API_DB_STATS1.script 1.2:
+	* GTCS/tests/SVC_API_DB_STATS2.output 1.3:
+	* GTCS/tests/SVC_API_DB_STATS2.script 1.2:
+	* GTCS/tests/SVC_API_DB_STATS3.output 1.3:
+	* GTCS/tests/SVC_API_DB_STATS3.script 1.2:
+	* GTCS/tests/SVC_API_DB_STATS4.output 1.3:
+	* GTCS/tests/SVC_API_DB_STATS4.script 1.2:
+	* GTCS/tests/SVC_API_DB_STATS5.output 1.3:
+	* GTCS/tests/SVC_API_DB_STATS5.script 1.2:
+	* GTCS/tests/SVC_API_SWEEP_DB.script 1.6:
+		FBTCS almost ready for use with firebird 2.0
+
+	* src/tcs/drop_gdb.cpp 1.8:
+		Commented version check - it makes no real sense, but prevents 
+		compilation
+
+2005-03-14	kkuznetsov
+	* src/tcs/drop_gdb.cpp 1.7:
+		fix compile error
+
+2005-02-13	alexpeshkoff
+	* GTCS/tests/C_SQL_BLOB_33.script 1.6:
+		make it compile on linux
+
+2004-11-15	kkuznetsov
+	* SO_LTCS/environments/env_solx86 1.2:
+	* src/autotest.solx86.sh 1.1:
+	* src/runtcs.solx86.sh 1.2:
+	* src/tcs/drop_gdb.cpp 1.6:
+		Some fixes
+
+2004-08-26	brodsom
+	* GTCS/tests/DSQL_EXCEPT_03.output 1.2:
+	* GTCS/tests/DSQL_EXCEPT_03.script 1.3:
+	* GTCS/tests/PROC_ISQL_05.output 1.2:
+	* GTCS/tests/PROC_ISQL_05.script 1.4:
+		Corrections
+
+	* GTCS/tests/AUTO_COMMIT.2.ESQL.output 1.2:
+	* GTCS/tests/AUTO_COMMIT.3.ESQL.output 1.2:
+	* GTCS/tests/AUTO_DDL.EXCP.DSQL.output 1.2:
+	* GTCS/tests/AUTO_DDL.GEN.DSQL.output 1.2:
+	* GTCS/tests/AUTO_DDL.IND.DSQL.output 1.3:
+	* GTCS/tests/CF_ISQL_11.output 1.2:
+	* GTCS/tests/CF_ISQL_13.output 1.3:
+	* GTCS/tests/CF_ISQL_14.output 1.3:
+	* GTCS/tests/CF_ISQL_15.output 1.2:
+	* GTCS/tests/CF_ISQL_16.output 1.2:
+	* GTCS/tests/CF_ISQL_18.output 1.2:
+	* GTCS/tests/CF_ISQL_19.output 1.3:
+	* GTCS/tests/CF_ISQL_20.output 1.3:
+	* GTCS/tests/CF_ISQL_26.output 1.3:
+	* GTCS/tests/CF_ISQL_27.knownbug 1.2:
+	* GTCS/tests/CF_ISQL_28.knownbug 1.2:
+	* GTCS/tests/CF_ISQL_29.knownbug 1.2:
+	* GTCS/tests/CF_ISQL_29.knownbug 1.3:
+	* GTCS/tests/CF_ISQL_31.knownbug 1.2:
+	* GTCS/tests/CF_ISQL_31.knownbug 1.3:
+	* GTCS/tests/CF_ISQL_33.output 1.2:
+	* GTCS/tests/C_DSQL_RI_FIELD_DROP.knownbug 1.2:
+	* GTCS/tests/DSQL_DOMAIN_01.output 1.2:
+	* GTCS/tests/DSQL_DOMAIN_08.output 1.3:
+	* GTCS/tests/DSQL_DOMAIN_11.output 1.2:
+	* GTCS/tests/DSQL_DOMAIN_22.output 1.2:
+	* GTCS/tests/DSQL_DOMAIN_26.output 1.2:
+	* GTCS/tests/DSQL_EXCEPT_01.output 1.2:
+	* GTCS/tests/DSQL_EXCEPT_02.output 1.2:
+	* GTCS/tests/EXT_REL_0_11_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_22_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_22_E.output 1.2:
+	* GTCS/tests/EXT_REL_0_27_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_27_E.output 1.2:
+	* GTCS/tests/EXT_REL_0_28_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_29_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_30_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_31_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_31_E.output 1.2:
+	* GTCS/tests/EXT_REL_0_32_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_33_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_33_G.output 1.2:
+	* GTCS/tests/EXT_REL_0_34_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_36_D.output 1.2:
+	* GTCS/tests/EXT_REL_0_36_G.output 1.2:
+	* GTCS/tests/EXT_REL_0_40_D.output 1.2:
+	* GTCS/tests/GF_SHUT_0.knownbug 1.2:
+	* GTCS/tests/GF_SHUT_0.output 1.2:
+	* GTCS/tests/GF_SHUT_1.knownbug 1.2:
+	* GTCS/tests/GF_SHUT_1.output 1.2:
+	* GTCS/tests/GF_SHUT_2.knownbug 1.2:
+	* GTCS/tests/GF_SHUT_2.output 1.2:
+	* GTCS/tests/GSTAT1.output 1.2:
+	* GTCS/tests/GSTAT2.output 1.2:
+	* GTCS/tests/GSTAT3.output 1.2:
+	* GTCS/tests/GSTAT4.output 1.2:
+	* GTCS/tests/GSTAT5.output 1.2:
+	* GTCS/tests/IDML_C_CHARSET_01.output 1.2:
+	* GTCS/tests/IDML_C_CHARSET_02.output 1.2:
+	* GTCS/tests/IDML_C_SUBQ_02.output 1.2:
+	* GTCS/tests/IDML_C_SUBQ_03.output 1.3:
+	* GTCS/tests/IDML_C_SUBQ_11.output 1.2:
+	* GTCS/tests/IE_PROC_ERR_2.output 1.3:
+	* GTCS/tests/IS_PROC_ERR_2.output 1.3:
+	* GTCS/tests/PROC_ARRAY2.output 1.2:
+	* GTCS/tests/PROC_CAST10_ISQL.output 1.2:
+	* GTCS/tests/PROC_CAST11_ISQL.output 1.3:
+	* GTCS/tests/PROC_CAST1_ISQL.output 1.2:
+	* GTCS/tests/PROC_CAST2_ISQL.output 1.2:
+	* GTCS/tests/PROC_CAST3_ISQL.output 1.2:
+	* GTCS/tests/PROC_CAST4_ISQL.output 1.2:
+	* GTCS/tests/PROC_CAST5_ISQL.output 1.2:
+	* GTCS/tests/PROC_CAST6_ISQL.output 1.2:
+	* GTCS/tests/PROC_CAST7_ISQL.output 1.2:
+	* GTCS/tests/PROC_CAST9_ISQL.knownbug 1.2:
+	* GTCS/tests/PROC_ISQL_18.output 1.2:
+	* GTCS/tests/PROC_ISQL_21.output 1.2:
+	* GTCS/tests/PROC_LEVEL0_TESTS.output 1.2:
+	* GTCS/tests/PROC_LEVEL0_TESTS_1.output 1.2:
+	* GTCS/tests/PROC_LEVEL0_TESTS_2.output 1.2:
+	* GTCS/tests/PROC_LEVEL0_TESTS_3.output 1.2:
+	* GTCS/tests/REF_INT.2.ISQL.output 1.2:
+	* GTCS/tests/REF_INT.3.ISQL.output 1.2:
+	* GTCS/tests/REF_INT.4.ISQL.output 1.2:
+	* GTCS/tests/REF_INT.5.ISQL.output 1.2:
+	* GTCS/tests/REF_INT.6.ISQL.output 1.2:
+	* GTCS/tests/REF_INT.7.ISQL.output 1.2:
+	* GTCS/tests/REF_INT.8.ISQL.output 1.2:
+	* GTCS/tests/SQL_EVENT_12.output 1.2:
+	* GTCS/tests/SVC_API_BACKUP.knownbug 1.2:
+	* GTCS/tests/SVC_API_BACKUP.output 1.2:
+	* GTCS/tests/SVC_API_DB_STATS1.output 1.2:
+	* GTCS/tests/SVC_API_DB_STATS2.output 1.2:
+	* GTCS/tests/SVC_API_DB_STATS3.output 1.2:
+	* GTCS/tests/SVC_API_DB_STATS4.output 1.2:
+	* GTCS/tests/SVC_API_DB_STATS5.output 1.2:
+	* GTCS/tests/SVC_API_RESTORE.output 1.2:
+	* NT_LTCS/tests/IDML_C_CHARSET_01.output 1.7:
+	* NT_LTCS/tests/IDML_C_CHARSET_02.output 1.8:
+	* NT_LTCS/tests/IDML_C_SUBQ_02.output 1.7:
+		Update after last changes
+
+2004-07-30	kkuznetsov
+	* SO_LTCS/boiler_plates/bp_solx86 1.1:
+	* SO_LTCS/environments/env_solx86 1.1:
+		Env for tcs for Solaris X86
+
+	* src/runtcs.solx86.sh 1.1:
+	* src/tcs.config.solx86 1.1:
+	* src/tcs/build_gcc.sh 1.6:
+	* src/tcs/drop_gdb.cpp 1.5:
+		Added Some Solaris things
+
+2004-07-02	brodsom
+	* GTCS/tests/CF_ISQL_32.knownbug 1.2:
+	* GTCS/tests/CF_ISQL_32.output 1.1:
+		Fixed bug
+
+2004-06-10	brodsom
+	* GTCS/series/CF_ISQL.list 1.9:
+	* GTCS/tests/CF_ISQL_28.knownbug 1.1:
+	* GTCS/tests/CF_ISQL_28.script 1.1:
+	* GTCS/tests/CF_ISQL_29.knownbug 1.1:
+	* GTCS/tests/CF_ISQL_29.script 1.1:
+	* GTCS/tests/CF_ISQL_30.output 1.1:
+	* GTCS/tests/CF_ISQL_30.script 1.1:
+	* GTCS/tests/CF_ISQL_31.knownbug 1.1:
+	* GTCS/tests/CF_ISQL_31.script 1.1:
+	* GTCS/tests/CF_ISQL_32.knownbug 1.1:
+	* GTCS/tests/CF_ISQL_32.script 1.1:
+	* GTCS/tests/CF_ISQL_33.output 1.1:
+	* GTCS/tests/CF_ISQL_33.script 1.1:
+		New tests
+
+	* GTCS/tests/CF_ISQL_20.output 1.2:
+	* GTCS/tests/CF_ISQL_21.output 1.2:
+	* GTCS/tests/CF_ISQL_22.output 1.3:
+	* GTCS/tests/CF_ISQL_23.output 1.2:
+	* GTCS/tests/CF_ISQL_24.output 1.3:
+	* GTCS/tests/CF_ISQL_25.output 1.2:
+	* GTCS/tests/CF_ISQL_26.output 1.2:
+	* GTCS/tests/CF_ISQL_27.output 1.2:
+		Corrections
+
+2004-06-01	brodsom
+	* GTCS/tests/EVENT_MISC_1.script 1.5:
+	* GTCS/tests/SQL_EVENT_03.script 1.5:
+	* GTCS/tests/SQL_EVENT_04.script 1.5:
+	* GTCS/tests/SQL_EVENT_05.script 1.4:
+	* GTCS/tests/SQL_EVENT_10.script 1.4:
+	* GTCS/tests/SQL_EVENT_14.script 1.4:
+		Corrections
+
+	* GTCS/meta_series/ALL_SERIES.list 1.4:
+	* GTCS/series/GSTAT.list 1.1:
+	* GTCS/series/SVC_API.list 1.2:
+	* GTCS/tests/GSTAT1.output 1.1:
+	* GTCS/tests/GSTAT1.script 1.1:
+	* GTCS/tests/GSTAT2.output 1.1:
+	* GTCS/tests/GSTAT2.script 1.1:
+	* GTCS/tests/GSTAT3.output 1.1:
+	* GTCS/tests/GSTAT3.script 1.1:
+	* GTCS/tests/GSTAT4.output 1.1:
+	* GTCS/tests/GSTAT4.script 1.1:
+	* GTCS/tests/GSTAT5.output 1.1:
+	* GTCS/tests/GSTAT5.script 1.1:
+	* GTCS/tests/SVC_API_DB_STATS1.output 1.1:
+	* GTCS/tests/SVC_API_DB_STATS1.script 1.1:
+	* GTCS/tests/SVC_API_DB_STATS2.output 1.1:
+	* GTCS/tests/SVC_API_DB_STATS2.script 1.1:
+	* GTCS/tests/SVC_API_DB_STATS3.output 1.1:
+	* GTCS/tests/SVC_API_DB_STATS3.script 1.1:
+	* GTCS/tests/SVC_API_DB_STATS4.output 1.1:
+	* GTCS/tests/SVC_API_DB_STATS4.script 1.1:
+	* GTCS/tests/SVC_API_DB_STATS5.output 1.1:
+	* GTCS/tests/SVC_API_DB_STATS5.script 1.1:
+		Tests for gstat (util & service)
+
+2004-05-13	brodsom
+	* GTCS/meta_series/ALL_SERIES.list 1.3:
+	* GTCS/tests/C_SQL_JOIN_42.output 1.2:
+	* GTCS/tests/C_SQL_JOIN_42.script 1.5:
+	* GTCS/tests/C_SQL_PRED_21.script 1.5:
+		Correction
+
 2004-05-03	brodsom
 	* GTCS/tests/AUTO_COMMIT.1.ESQL.script 1.3:
 	* GTCS/tests/AUTO_COMMIT.2.ESQL.script 1.3:
