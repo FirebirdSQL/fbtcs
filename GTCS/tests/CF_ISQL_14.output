@@ -4,7 +4,6 @@ attempted update of read-only column
 
            A                    AF 
 ============ ===================== 
-
           10                    30 
 
 Statement failed, SQLCODE = -151
@@ -12,7 +11,6 @@ attempted update of read-only column
 
            A                    AF 
 ============ ===================== 
-
           10                    30 
 
 Statement failed, SQLCODE = -804

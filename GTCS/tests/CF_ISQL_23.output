@@ -8,14 +8,12 @@ select count(*) from test;
 
        COUNT 
 ============ 
-
         6000 
 
 select * from groups;
 
        GR_ID GR_NAME                                  
 ============ ======================================== 
-
            1 Group1                                   
            2 Group2                                   
 

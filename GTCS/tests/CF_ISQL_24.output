@@ -8,7 +8,6 @@ AND j.field2 = (SELECT MAX(x.field2) FROM test2 x);
 
     KEYFIELD       FIELD1     KEYFIELD       FIELD2 
 ============ ============ ============ ============ 
-
            2           20            2           40 
 
 
@@ -21,7 +20,6 @@ AND j.field2 = (SELECT MAX(x.field2) FROM test2 x);
 
     KEYFIELD       FIELD1     KEYFIELD       FIELD2 
 ============ ============ ============ ============ 
-
            2           20            2           40 
 
 
@@ -34,7 +32,6 @@ AND j.field2 = (SELECT MAX(x.field2) FROM test2 x);
 
     KEYFIELD       FIELD1     KEYFIELD       FIELD2 
 ============ ============ ============ ============ 
-
            2           20            2           40 
 
 

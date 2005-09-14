@@ -11,6 +11,7 @@ SHOW SQL DIALECT;
 DROP DATABASE;
 SHOW DATABASE;
 Use CONNECT or CREATE DATABASE to specify a database
+Command error: SHOW DATABASE
 SHOW SQL DIALECT;
         Client SQL dialect is set to: 3. No database has been connected.
 SET SQL DIALECT 1;

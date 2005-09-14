@@ -1,45 +1,44 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> 
-SQL> CREATE DATABASE 'WHERE_GDB:cf_isql_27.fdb';
-SQL> 
-SQL> CREATE GENERATOR GEN_TEST1;
-SQL> SET GENERATOR GEN_TEST1 TO 0;
-SQL> 
-SQL> CREATE GENERATOR GEN_TEST2;
-SQL> SET GENERATOR GEN_TEST2 TO 0;
-SQL> 
-SQL> SET TERM ^ ;
-SQL> 
-SQL> create procedure rpl$generator_values
-CON> returns (
-CON>    gen_name varchar(31),
-CON>    gen_value integer
-CON> )
-CON> as
-CON> begin
-CON>   for 
-CON>     select rdb$generator_name
-CON>     from rdb$generators 
-CON>     where rdb$system_flag is null 
-CON>     into :gen_name do
-CON>   begin
-CON>     execute statement 'select gen_id(' || gen_name || ',0) from rdb$database' into :gen_value;
-CON>     suspend;
-CON>   end
-CON> END^
-SQL> 
-SQL> SET TERM ; ^
-SQL> commit;
-SQL> show procedures;
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_27.fdb';
+
+CREATE GENERATOR GEN_TEST1;
+SET GENERATOR GEN_TEST1 TO 0;
+
+CREATE GENERATOR GEN_TEST2;
+SET GENERATOR GEN_TEST2 TO 0;
+
+SET TERM ^ ;
+
+create procedure rpl$generator_values
+returns (
+   gen_name varchar(31),
+   gen_value integer
+)
+as
+begin
+  for 
+    select rdb$generator_name
+    from rdb$generators 
+    where rdb$system_flag is null 
+    into :gen_name do
+  begin
+    execute statement 'select gen_id(' || gen_name || ',0) from rdb$database' into :gen_value;
+    suspend;
+  end
+END^
+
+SET TERM ; ^
+commit;
+show procedures;
 Procedure Name                    Dependency, Type
 ================================= ======================================
 RPL$GENERATOR_VALUES              RDB$GENERATORS, Table
-SQL> 
-SQL> Use CONNECT or CREATE DATABASE to specify a database
-SQL> execute procedure rpl$generator_values;
+
+Use CONNECT or CREATE DATABASE to specify a database
+execute procedure rpl$generator_values;
 Statement failed, SQLCODE = -904
 Variable type (position 0) in EXECUTE STATEMENT 'select gen_id(GEN_TEST1        ' INTO does not match returned column type
 -At procedure 'RPL$GENERATOR_VALUES'
-SQL> 
-SQL> 
-SQL> 
+
+

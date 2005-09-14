@@ -4,13 +4,11 @@ J                               Computed by: (i)
 
                   
 ================= 
-
 Passed 1 - Insert 
 
 
                   
 ================= 
-
 Passed 1 - Update 
 
 I                               INTEGER Nullable 
@@ -18,13 +16,11 @@ J                               Computed by: (i+i)
 
                   
 ================= 
-
 Passed 2 - Insert 
 
 
                   
 ================= 
-
 Passed 2 - Update 
 
 I                               INTEGER Nullable 
@@ -32,13 +28,11 @@ J                               Computed by: (i*i)
 
                   
 ================= 
-
 Passed 3 - Insert 
 
 
                   
 ================= 
-
 Paseed 3 - Update 
 
 I                               INTEGER Nullable 
@@ -46,13 +40,11 @@ J                               Computed by: (i/i)
 
                   
 ================= 
-
 Passed 4 - Insert 
 
 
                   
 ================= 
-
 Passed 4 - Update 
 
 I                               INTEGER Nullable 
@@ -60,13 +52,11 @@ J                               Computed by: (i+2)
 
                   
 ================= 
-
 Passed 5 - Insert 
 
 
                   
 ================= 
-
 Passed 5 - Update 
 
 I                               INTEGER Nullable 
@@ -74,13 +64,11 @@ J                               Computed by: (i*2)
 
                   
 ================= 
-
 Passed 6 - Insert 
 
 
                   
 ================= 
-
 Passed 6 - Update 
 
 I                               INTEGER Nullable 
@@ -88,13 +76,11 @@ J                               Computed by: (i/2)
 
                   
 ================= 
-
 Passed 7 - Insert 
 
 
                   
 ================= 
-
 Passed 7 - Update 
 
 I                               INTEGER Nullable 
@@ -102,13 +88,11 @@ J                               Computed by: (-i)
 
                   
 ================= 
-
 Passed 8 - Insert 
 
 
                   
 ================= 
-
 Passed 8 - Update 
 
 I                               INTEGER Nullable 
@@ -116,13 +100,11 @@ J                               Computed by: (+i)
 
                   
 ================= 
-
 Passed 9 - Insert 
 
 
                   
 ================= 
-
 Passed 9 - Update 
 
 I                               INTEGER Nullable 
@@ -130,13 +112,11 @@ J                               Computed by: ((i-i+i)*i/i)
 
                     
 =================== 
-
 Passed 9.1 - Insert 
 
 
                     
 =================== 
-
 Passed 9.1 - Update 
 
 I                               INTEGER Nullable 
@@ -144,13 +124,11 @@ J                               Computed by: (0)
 
                    
 ================== 
-
 Passed 10 - Insert 
 
 
                    
 ================== 
-
 Passed 10 - Update 
 
 I                               INTEGER Nullable 
@@ -158,12 +136,10 @@ J                               Computed by: ((4*2-4+4)/2)
 
                    
 ================== 
-
 Passed 11 - Insert 
 
 
                    
 ================== 
-
 Passed 11 - Update 
 

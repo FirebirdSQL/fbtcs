@@ -4,13 +4,11 @@ UPPER_A                         Computed by: (upper(a))
 
                   
 ================= 
-
 Passed 1 - Insert 
 
 
                   
 ================= 
-
 Passed 1 - Update 
 
 A                               CHAR(25) Nullable 
@@ -18,12 +16,10 @@ UPPER_CONST                     Computed by: (a || upper('upper()'))
 
                   
 ================= 
-
 Passed 2 - Insert 
 
 
                   
 ================= 
-
 Passed 2 - Update 
 

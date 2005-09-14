@@ -9,14 +9,12 @@ GENID_FIELD3                    Computed by: (gen_id(gen3, genid_field2))
 
            A          GENID_FIELD3 
 ============ ===================== 
-
            4                  1228 
            1                  3428 
 
 
            A          GENID_FIELD1          GENID_FIELD2          GENID_FIELD3 
 ============ ===================== ===================== ===================== 
-
            4                  1004                  4205                  6630 
            1                  1007                  6216                 11840 
 

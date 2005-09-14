@@ -1,27 +1,27 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> 
-SQL> CREATE DOMAIN EXTRACT_BUG AS CHAR(1) CHARACTER SET ISO8859_1 default 'v' check(value >='a' and value <='z') COLLATE ES_ES;
-SQL> 
-SQL> /* Table: T_EXTRACT_BUG, Owner: SYSDBA */
-SQL> CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
-SQL> 
-SQL> ALTER TABLE T_EXTRACT_BUG ADD check(a>='c');
-SQL> 
-SQL> Use CONNECT or CREATE DATABASE to specify a database
+
+CREATE DOMAIN EXTRACT_BUG AS CHAR(1) CHARACTER SET ISO8859_1 default 'v' check(value >='a' and value <='z') COLLATE ES_ES;
+
+/* Table: T_EXTRACT_BUG, Owner: SYSDBA */
+CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
+
+ALTER TABLE T_EXTRACT_BUG ADD check(a>='c');
+
+Use CONNECT or CREATE DATABASE to specify a database
 EXTRACT_BUG                     CHAR(1) CHARACTER SET ISO8859_1 Nullable
                                 default 'v'
                                 check(value >='a' and value <='z')
                                  COLLATE ES_ES
-A                               (EXTRACT_BUG) CHAR(1) CHARACTER SET ISO8859_1 Nullable  DEFAULT 'w'
+A                               (EXTRACT_BUG) CHAR(1) CHARACTER SET ISO8859_1 Nullable DEFAULT 'w'
                                 check(value >='a' and value <='z')
                                  COLLATE PT_PT
 CONSTRAINT INTEG_1:
   check(a>='c')
- 
-SET SQL DIALECT 3; 
- 
-/* CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb' DEFAULT CHARACTER SET NONE */
+Database:  WHERE_GDB:cf_isql_20.fdb
 
+SET SQL DIALECT 3; 
+
+/* CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb' DEFAULT CHARACTER SET NONE */
 
 /* Domain definitions */
 CREATE DOMAIN EXTRACT_BUG AS CHAR(1) CHARACTER SET ISO8859_1
@@ -29,9 +29,7 @@ CREATE DOMAIN EXTRACT_BUG AS CHAR(1) CHARACTER SET ISO8859_1
          check(value >='a' and value <='z') COLLATE ES_ES;
 
 /* Table: T_EXTRACT_BUG, Owner: SYSDBA */
-CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG CHARACTER SET ISO8859_1  DEFAULT 'w' COLLATE PT_PT);
- 
- ALTER TABLE T_EXTRACT_BUG ADD 
-        check(a>='c');
+CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
 
-/* Grant permissions for this database */
+ALTER TABLE T_EXTRACT_BUG ADD 
+        check(a>='c');

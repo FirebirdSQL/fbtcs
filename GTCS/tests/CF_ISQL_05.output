@@ -6,7 +6,6 @@ DC                              Computed by: (d)
 
                   
 ================= 
-
 Passed 1 - Insert 
 
 SQL warning code = 301
@@ -14,7 +13,6 @@ SQL warning code = 301
 
                   
 ================= 
-
 Passed 1 - Update 
 
 SQL warning code = 301
@@ -24,7 +22,6 @@ DC                              Computed by: (d + 1)
 
                   
 ================= 
-
 Passed 2 - Insert 
 
 SQL warning code = 301
@@ -32,7 +29,6 @@ SQL warning code = 301
 
                   
 ================= 
-
 Passed 2 - Update 
 
 SQL warning code = 301
@@ -42,7 +38,6 @@ DC                              Computed by: (d - 1)
 
                   
 ================= 
-
 Passed 3 - Insert 
 
 SQL warning code = 301
@@ -50,7 +45,6 @@ SQL warning code = 301
 
                   
 ================= 
-
 Passed 3 - Update 
 
 SQL warning code = 301
@@ -60,7 +54,6 @@ DC                              Computed by: ('today')
 
                   
 ================= 
-
 Passed 4 - Insert 
 
 SQL warning code = 301
@@ -68,7 +61,6 @@ SQL warning code = 301
 
                   
 ================= 
-
 Passed 4 - Update 
 
 SQL warning code = 301
@@ -80,7 +72,6 @@ DC                              Computed by: (cast('today' as date) + 1 )
 
                   
 ================= 
-
 Passed 5 - Insert 
 
 SQL warning code = 301
@@ -88,7 +79,6 @@ SQL warning code = 301
 
                   
 ================= 
-
 Passed 5 - Update 
 
 SQL warning code = 301
@@ -101,7 +91,6 @@ DATE_DIFF                       Computed by: (d_end - d_start)
 
                   
 ================= 
-
 Passed 6 - Insert 
 
 SQL warning code = 301
@@ -109,6 +98,5 @@ SQL warning code = 301
 
                   
 ================= 
-
 Passed 6 - Update 
 

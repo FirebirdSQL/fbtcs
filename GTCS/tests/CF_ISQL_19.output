@@ -1,102 +1,92 @@
 Use CONNECT or CREATE DATABASE to specify a database
-SQL> 
-SQL> -- I am a comment
-SQL> 
-SQL> /* BEGIN */
-SQL> -- I am a comment
-SQL> select * from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
+-- I am a comment
 
-           <null>             128 <null>                          NONE                            
+/* BEGIN */
+-- I am a comment
+select * from rdb$database;
 
-SQL> /* END */
-SQL> 
-SQL> /* BEGIN */
-SQL> -- comment with unclosed 'quoted string
-SQL> select * from rdb$database;
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
+/* END */
 
-           <null>             128 <null>                          NONE                            
+/* BEGIN */
+-- comment with unclosed 'quoted string
+select * from rdb$database;
 
-SQL> /* END */
-SQL> 
-SQL> /* BEGIN */
-SQL> -- comment with unclosed "quoted string
-SQL> select * from rdb$database;
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
+/* END */
 
-           <null>             128 <null>                          NONE                            
+/* BEGIN */
+-- comment with unclosed "quoted string
+select * from rdb$database;
 
-SQL> /* END */
-SQL> 
-SQL> /* BEGIN */
-SQL> -- I am a comment;
-SQL> select * from rdb$database;
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
+/* END */
 
-           <null>             128 <null>                          NONE                            
+/* BEGIN */
+-- I am a comment;
+select * from rdb$database;
 
-SQL> /* END */
-SQL> 
-SQL> /* BEGIN with unclosed "quoted */
-SQL> -- I am a comment;
-SQL> select * from rdb$database;
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
+/* END */
 
-           <null>             128 <null>                          NONE                            
+/* BEGIN with unclosed "quoted */
+-- I am a comment;
+select * from rdb$database;
 
-SQL> /* END */
-SQL> 
-SQL> select * /*
---> comment
---> */
-CON> from rdb$database;
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
+/* END */
 
-           <null>             128 <null>                          NONE                            
+select * /*
+comment
+*/
+from rdb$database;
 
-SQL> 
-SQL> select * 
-CON> /* comment */
-CON> from rdb$database;
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
 
-           <null>             128 <null>                          NONE                            
+select * 
+/* comment */
+from rdb$database;
 
-SQL> 
-SQL> select * 
-CON> -- comment
-CON> from rdb$database;
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
 
-           <null>             128 <null>                          NONE                            
+select * 
+-- comment
+from rdb$database;
 
-SQL> 
-SQL> /*
---> Comment
---> */ select * from rdb$database;
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS              RDB$CHARACTER_SET_NAME          
-================= =============== =============================== =============================== 
 
-           <null>             128 <null>                          NONE                            
+/*
+Comment
+*/ select * from rdb$database;
 
-SQL> 
-SQL> 
-SQL> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                                                            RDB$CHARACTER_SET_NAME                                                                        
+================= =============== =============================================================================== =============================================================================== 
+           <null>             128 <null>                                                                                        NONE                                                                                          
+
+
+

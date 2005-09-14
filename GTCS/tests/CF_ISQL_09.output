@@ -4,13 +4,11 @@ CHAR_AS_INT                     Computed by: (cast(f_char as integer))
 
                   
 ================= 
-
 Passed 1 - Insert 
 
 
                   
 ================= 
-
 Passed 1 - Update 
 
 F_CHAR                          CHAR(25) Nullable 
@@ -18,13 +16,11 @@ CHAR_AS_FLOAT                   Computed by: (cast(f_char as float))
 
                   
 ================= 
-
 Passed 2 - Insert 
 
 
                   
 ================= 
-
 Passed 2 - Update 
 
 SQL warning code = 301
@@ -36,7 +32,6 @@ SQL warning code = 301
 
                   
 ================= 
-
 Passed 3 - Insert 
 
 SQL warning code = 301
@@ -44,7 +39,6 @@ SQL warning code = 301
 
                   
 ================= 
-
 Passed 3 - Update 
 
 SQL warning code = 301
@@ -54,13 +48,11 @@ DATE_AS_CHAR                    Computed by: (cast(f_date as char(15)))
 
                   
 ================= 
-
 Passed 4 - Insert 
 
 
                   
 ================= 
-
 Passed 4 - Update 
 
 F_INT                           INTEGER Nullable 
@@ -68,13 +60,11 @@ INT_AS_CHAR                     Computed by: (cast(f_int as char(15)))
 
                   
 ================= 
-
 Passed 5 - Insert 
 
 
                   
 ================= 
-
 Passed 5 - Update 
 
 F_FLOAT                         FLOAT Nullable 
@@ -82,12 +72,10 @@ FLOAT_AS_CHAR                   Computed by: (cast(f_float as char(15)))
 
                   
 ================= 
-
 Passed 6 - Insert 
 
 
                   
 ================= 
-
 Passed 6 - Update 
 
