@@ -74,7 +74,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO CUSTOMER                  
 ======= ========================= 
-
     100 Thomas Novelty Co.        
     101 Scott Bros Auto Care      
     103 The Groton Company        

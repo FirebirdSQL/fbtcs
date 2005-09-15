@@ -32,13 +32,11 @@ Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO CUSTOMER                  
 ======= ========================= 
-
     108 Carbone Machine Tools     
     109 Czbrynik Meat Packer      
 
 
        COUNT 
 ============ 
-
            2 
 

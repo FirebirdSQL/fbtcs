@@ -31,12 +31,10 @@ Use CONNECT or CREATE DATABASE to specify a database
 
   EMPNO LAST_NAME       FIRST_NAME JOB          SALARY   HIRE_DATE 
 ======= =============== ========== ====== ============ =========== 
-
     118 Griffon         Ronald     Sales      45000.00 26-JUL-1987 
 
 
   EMPNO LAST_NAME       FIRST_NAME JOB          SALARY   HIRE_DATE 
 ======= =============== ========== ====== ============ =========== 
-
     118 Griffon         Ronald     Sales      45000.00 26-JUL-1987 
 

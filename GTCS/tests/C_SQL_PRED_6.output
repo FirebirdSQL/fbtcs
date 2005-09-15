@@ -28,12 +28,10 @@ Use CONNECT or CREATE DATABASE to specify a database
 
   EMPNO LAST_NAME       FIRST_NAME 
 ======= =============== ========== 
-
     118 Griffon         Ronald     
 
 
   EMPNO LAST_NAME       FIRST_NAME 
 ======= =============== ========== 
-
     118 Griffon         Ronald     
 

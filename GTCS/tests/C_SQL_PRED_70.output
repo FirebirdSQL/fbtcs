@@ -36,7 +36,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO  TOTAL_VALUE     SHIPPED 
 ======= ============ =========== 
-
     103        53000 21-JUL-1989 
     100         5500 21-JUL-1989 
     109        15500 21-JUL-1989 
@@ -44,6 +43,5 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            3 
 

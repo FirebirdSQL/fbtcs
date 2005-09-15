@@ -26,14 +26,12 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO DEPARTMENT                  MGRNO          SUM 
 ====== ========================= ======= ============ 
-
 111    Eastern Sales Region          142    276500.00 
 115    Federal Sales Region          138    157000.00 
 
 
 DEPTNO DEPARTMENT                  MGRNO          SUM 
 ====== ========================= ======= ============ 
-
 111    Eastern Sales Region          142    276500.00 
 115    Federal Sales Region          138    157000.00 
 

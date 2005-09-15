@@ -88,7 +88,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
   EMPNO 
 ======= 
-
     101 
     104 
     105 
@@ -109,6 +108,5 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
           16 
 

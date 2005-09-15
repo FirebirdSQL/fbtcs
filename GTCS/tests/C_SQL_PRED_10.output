@@ -52,7 +52,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 SALES_REP  TOTAL_VALUE 
 ========= ============ 
-
       125        15500 
       125        18500 
       125        25500 
@@ -65,7 +64,6 @@ SALES_REP  TOTAL_VALUE
 
 SALES_REP  TOTAL_VALUE 
 ========= ============ 
-
       125        15500 
       125        18500 
       125        25500 

@@ -26,12 +26,10 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO DEPARTMENT                  MGRNO SUB_TOTAL_REPORTS DEPT_LEVEL HEAD_DEPT   SUB_BUDGET 
 ====== ========================= ======= ================= ========== ========= ============ 
-
 000    Corporate Headquarters        120                 9 1          000          527500.00 
 
 
 DEPTNO DEPARTMENT                  MGRNO SUB_TOTAL_REPORTS DEPT_LEVEL HEAD_DEPT   SUB_BUDGET 
 ====== ========================= ======= ================= ========== ========= ============ 
-
 000    Corporate Headquarters        120                 9 1          000          527500.00 
 

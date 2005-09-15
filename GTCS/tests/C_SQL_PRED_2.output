@@ -179,7 +179,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO CUSTOMER                  CONTACT                   ADDRESS                        CITY                      STATE  ZIP_CODE PHONE_NO   ON_HOLD 
 ======= ========================= ========================= ============================== ========================= ====== ======== ========== ======= 
-
     100 Thomas Novelty Co.        George Thomas             101 Tremont St                 Boston                    MA     02108    6179291181 <null>  
     101 Scott Bros Auto Care      Winfield Scott            109 Bittersweet Lane           Randolph                  MA     02368    6179632219 *       
     102 JL Music Corp             Ambrose Burnside          7801 Escanaba Ave S            Chicago                   IL     60649    3123429982 <null>  
@@ -196,7 +195,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO CUSTOMER                  CONTACT                   ADDRESS                        CITY                      STATE  ZIP_CODE PHONE_NO   ON_HOLD 
 ======= ========================= ========================= ============================== ========================= ====== ======== ========== ======= 
-
     100 Thomas Novelty Co.        George Thomas             101 Tremont St                 Boston                    MA     02108    6179291181 <null>  
     101 Scott Bros Auto Care      Winfield Scott            109 Bittersweet Lane           Randolph                  MA     02368    6179632219 *       
     102 JL Music Corp             Ambrose Burnside          7801 Escanaba Ave S            Chicago                   IL     60649    3123429982 <null>  

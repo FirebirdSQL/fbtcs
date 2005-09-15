@@ -48,7 +48,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
   EMPNO LAST_NAME       FIRST_NAME 
 ======= =============== ========== 
-
     125 Mastiff         Samantha   
     130 Briard          Susan      
     139 Pointer         Samuel     
@@ -59,6 +58,5 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            6 
 

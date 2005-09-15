@@ -42,7 +42,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO  TOTAL_VALUE PONUMB   
 ======= ============ ======== 
-
     103         8000 89021301 
     104        38000 89021302 
     105        25500 89022201 
@@ -51,6 +50,5 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            4 
 

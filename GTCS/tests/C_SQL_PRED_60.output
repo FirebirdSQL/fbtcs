@@ -36,7 +36,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO 
 ====== 
-
 120    
 121    
 122    
@@ -44,6 +43,5 @@ DEPTNO
 
        COUNT 
 ============ 
-
            3 
 

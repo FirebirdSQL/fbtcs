@@ -30,12 +30,10 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 PROJ_NO PROJ_NAME       PRODUCT      VERSION 
 ======= =============== ============ ======= 
-
 HH300   Howard Hues     RDBMS        HHI30A  
 
 
        COUNT 
 ============ 
-
            1 
 

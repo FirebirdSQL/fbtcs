@@ -28,14 +28,12 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 SALES_REP          SUM 
 ========= ============ 
-
       137       141000 
       125       151500 
 
 
 SALES_REP          SUM 
 ========= ============ 
-
       137       141000 
       125       151500 
 

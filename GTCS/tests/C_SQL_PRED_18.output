@@ -22,12 +22,10 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO DEPARTMENT                  MGRNO        COUNT 
 ====== ========================= ======= ============ 
-
 000    Corporate Headquarters        120            1 
 
 
 DEPTNO DEPARTMENT                  MGRNO        COUNT 
 ====== ========================= ======= ============ 
-
 000    Corporate Headquarters        120            1 
 

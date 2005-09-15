@@ -84,7 +84,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO CUSTOMER                  
 ======= ========================= 
-
     100 Thomas Novelty Co.        
     101 Scott Bros Auto Care      
     102 JL Music Corp             
@@ -104,6 +103,5 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
           15 
 
