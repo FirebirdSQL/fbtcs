@@ -39,15 +39,15 @@ select * from t0;
 update t0 set af = 99 where a = 10;
 select * from t0;
 
-/*-----------------------------------------------------------------------------*/
-/* Create a table with only a computed-field should fail.                      */
-/*-----------------------------------------------------------------------------*/
+/*---------------------------------------------------------------*/
+/* Create a table with only a computed-field should fail.        */
+/*---------------------------------------------------------------*/
 create table t5 (af computed by (1+2));
 
-/*-----------------------------------------------------------------------------*/
-/* Create a table with only a computed-field, which has constant value. Trying */
-/* to insert a value in it should fail.                                        */
-/*-----------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------*/
+/* Create a table with a computed-field, which has constant value. */
+/* Trying to insert a value in it should fail.                     */
+/*-----------------------------------------------------------------*/
 create table t6 (af int, bf computed by (1+2));
 insert into t6 values(10, 12);
 
