@@ -15,6 +15,7 @@
 #  Author:		Ravil A. Desai
 #  Change history:
 #                       cloned for V6.x FSG 16.Oct:00
+#			can't have a table with only computed fields since 2.0 AP,2005
 #
 
 >> cf_test.sql
@@ -39,11 +40,16 @@ update t0 set af = 99 where a = 10;
 select * from t0;
 
 /*-----------------------------------------------------------------------------*/
+/* Create a table with only a computed-field should fail.                      */
+/*-----------------------------------------------------------------------------*/
+create table t5 (af computed by (1+2));
+
+/*-----------------------------------------------------------------------------*/
 /* Create a table with only a computed-field, which has constant value. Trying */
 /* to insert a value in it should fail.                                        */
 /*-----------------------------------------------------------------------------*/
-create table t5 (af computed by (1+2));
-insert into t5 values(10);
+create table t6 (af int, bf computed by (1+2));
+insert into t6 values(10, 12);
 
 drop database;
 exit;

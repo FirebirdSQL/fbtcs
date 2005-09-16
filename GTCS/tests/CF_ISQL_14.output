@@ -1,6 +1,7 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLCODE = -151
 attempted update of read-only column
+After line 7 in file cf_test.sql
 
            A                    AF 
 ============ ===================== 
@@ -8,12 +9,19 @@ attempted update of read-only column
 
 Statement failed, SQLCODE = -151
 attempted update of read-only column
+After line 13 in file cf_test.sql
 
            A                    AF 
 ============ ===================== 
           10                    30 
 
+Statement failed, SQLCODE = -607
+unsuccessful metadata update
+-TABLE T5
+-Can't have relation with only computed fields or constraints
+After line 19 in file cf_test.sql
 Statement failed, SQLCODE = -804
 Dynamic SQL Error
 -SQL error code = -804
 -Count of read-write columns does not equal count of values
+After line 30 in file cf_test.sql
