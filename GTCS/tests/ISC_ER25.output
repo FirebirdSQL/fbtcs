@@ -1,8 +1,8 @@
 Running ER25, Bad tr handle to exec immed.
 RC=335544324
 ERROR: Unsuccessful execution caused by an unavailable resource.
-RC=335544569
-ERROR: Undefined name
-RC=335544569
-ERROR: Undefined name
+RC=335544332
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
+RC=335544332
+ERROR: Unsuccessful execution caused by system error that does not preclude successful execution of subsequent statements
 Finished ER25
