@@ -2,30 +2,34 @@
 # BRS 26-Apr-2004
 #
 # bug #518349 isql show mangles relationship
+# AP,2005 - can't assign old.* fields in triggers
 #
 
->> cf_isql_20a.sql
+>> cf_isql_21a.sql
 
 set echo;
 
-CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb';
+CREATE DATABASE 'WHERE_GDB:cf_isql_21.fdb';
 
 create table t(a int);
 create table u(a int);
 set term ^;
-create trigger t for u after delete as begin
-old.a=old.a; end^
+create trigger t for u after delete as 
+declare variable i int;
+begin
+  i = old.a; 
+end^
 commit ^
 
->> cf_isql_20b.sql
+>> cf_isql_21b.sql
 
 set echo;
-connect 'WHERE_GDB:cf_isql_20.fdb';
+connect 'WHERE_GDB:cf_isql_21.fdb';
 show table t;
 show table u;
 
-$ISQL -m -i cf_isql_20a.sql
-$ISQL -m -i cf_isql_20b.sql
-$ISQL -m -x WHERE_GDB:cf_isql_20.fdb
-$DROP WHERE_GDB:cf_isql_20.fdb
-$DELETE cf_isql_20*
+$ISQL -m -i cf_isql_21a.sql
+$ISQL -m -i cf_isql_21b.sql
+$ISQL -m -x WHERE_GDB:cf_isql_21.fdb
+$DROP WHERE_GDB:cf_isql_21.fdb
+$DELETE cf_isql_21*
