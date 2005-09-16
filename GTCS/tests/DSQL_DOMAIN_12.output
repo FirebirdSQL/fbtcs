@@ -11,7 +11,6 @@ FLD8                            (DOM12H1) DOUBLE PRECISION Nullable default null
 
    FLD1         FLD2        FLD3 FLD4                           FLD5   FLD6                 FLD7                    FLD8 
 ======= ============ =========== ============================== ====== ========== ============== ======================= 
-
     100            0 12-DEC-1957 generic username               <null> default         0.0000000                  <null> 
       0          200 12-DEC-1957 generic username               <null> default         0.0000000                  <null> 
       0            0 27-JAN-1992 generic username               <null> default         0.0000000                  <null> 

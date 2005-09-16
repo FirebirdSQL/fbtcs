@@ -1,17 +1,16 @@
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-FLD1                            (DOM13A1) SMALLINT Nullable  default 500
-FLD2                            (DOM13B1) INTEGER Nullable  default 500
-FLD3                            (DOM13C1) TIMESTAMP Nullable  default '12/12/57'
-FLD4                            (DOM13D1) VARCHAR(4) Nullable  default 'TEST'
-FLD5                            (DOM13E1) CHAR(30) Nullable  default null
-FLD6                            (DOM13F1) NUMERIC(15, 1) Nullable  default 500.0
-FLD7                            (DOM13G1) FLOAT Nullable  default 500
-FLD8                            (DOM13H1) DOUBLE PRECISION Nullable  default 500
+FLD1                            (DOM13A1) SMALLINT Nullable default 500
+FLD2                            (DOM13B1) INTEGER Nullable default 500
+FLD3                            (DOM13C1) TIMESTAMP Nullable default '12/12/57'
+FLD4                            (DOM13D1) VARCHAR(4) Nullable default 'TEST'
+FLD5                            (DOM13E1) CHAR(30) Nullable default null
+FLD6                            (DOM13F1) NUMERIC(15, 1) Nullable default 500.0
+FLD7                            (DOM13G1) FLOAT Nullable default 500
+FLD8                            (DOM13H1) DOUBLE PRECISION Nullable default 500
 
    FLD1         FLD2        FLD3 FLD4   FLD5                                              FLD6           FLD7                    FLD8 
 ======= ============ =========== ====== ============================== ======================= ============== ======================= 
-
     100          500 12-DEC-1957 TEST   <null>                                           500.0      500.00000       500.0000000000000 
     500          200 12-DEC-1957 TEST   <null>                                           500.0      500.00000       500.0000000000000 
     500          500 27-JAN-1992 TEST   <null>                                           500.0      500.00000       500.0000000000000 
@@ -21,18 +20,17 @@ FLD8                            (DOM13H1) DOUBLE PRECISION Nullable  default 500
     500          500 12-DEC-1957 TEST   <null>                                           500.0      50.020000       500.0000000000000 
     500          500 12-DEC-1957 TEST   <null>                                           500.0      500.00000       10000.00000000000 
 
-FLD1                            (DOM13A1) SMALLINT Nullable  default 500
+FLD1                            (DOM13A1) SMALLINT Nullable default 500
 FLD2                            (DOM13A1) SMALLINT Nullable default 0
-FLD3                            (DOM13C1) TIMESTAMP Nullable  default '12/12/57'
+FLD3                            (DOM13C1) TIMESTAMP Nullable default '12/12/57'
 FLD4                            (DOM13C1) TIMESTAMP Nullable default '01/01/93'
-FLD5                            (DOM13E1) CHAR(30) Nullable  default null
+FLD5                            (DOM13E1) CHAR(30) Nullable default null
 FLD6                            (DOM13E1) CHAR(30) Nullable default 'generic username'
-FLD7                            (DOM13G1) FLOAT Nullable  default 500
+FLD7                            (DOM13G1) FLOAT Nullable default 500
 FLD8                            (DOM13G1) FLOAT Nullable default 0
 
    FLD1    FLD2        FLD3        FLD4 FLD5                           FLD6                                     FLD7           FLD8 
 ======= ======= =========== =========== ============================== ============================== ============== ============== 
-
     100       0 12-DEC-1957  1-JAN-1993 <null>                         generic username                    500.00000      0.0000000 
     500     200 12-DEC-1957  1-JAN-1993 <null>                         generic username                    500.00000      0.0000000 
     500       0 27-JAN-1992  1-JAN-1993 <null>                         generic username                    500.00000      0.0000000 
