@@ -7,7 +7,7 @@ After line 14 in file dsql_except_03.sql
 Exception Name                  Used by, Type
 =============================== =============================================
 TRIG03_NULLRIVER                TEST03A, Trigger
-  River field cannot be left blank
+Msg: River field cannot be left blank
 
 There are no triggers on table RIVER_STATES in this database
 There is no exception TRIG03_NULLRIVER in this database

@@ -1,21 +1,21 @@
 Exception Name                  Used by, Type
 =============================== =============================================
 ERROR                           
-  This error message comes from exception handling
+Msg: This error message comes from exception handling
 
 NORIVER                         
-  River does not currently exist in Rivers relation
+Msg: River does not currently exist in Rivers relation
 
 NOSTATE                         
-  State does not currently exist in State relation
+Msg: State does not currently exist in State relation
 
 NOUPDATE                        
-  Update cannot be completed because of errors
+Msg: Update cannot be completed because of errors
 
 Exception Name                  Used by, Type
 =============================== =============================================
 NOUPDATE                        
-  Update cannot be completed because of data errors
+Msg: Update cannot be completed because of data errors
 
 There is no exception ERROR in this database
 Statement failed, SQLCODE = -104
