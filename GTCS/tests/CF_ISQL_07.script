@@ -78,8 +78,8 @@ insert into t5(f_integer, f_char) values(11,'11');
 select 'Passed 2 - Insert' from t5 where integer_char = f_integer*f_char having count(*) = 2;
 select * from t5;
 
-update t5 set f_integer = 12, f_char = '12' where f_integer = 10;
-update t5 set f_integer = 13                where f_integer = 11;
+update t5 set f_integer = 12, f_char = '12.25' where f_integer = 10;
+update t5 set f_integer = 13                   where f_integer = 11;
 select 'Passed 2 - Update' from t5 where integer_char = f_integer*f_char having count(*) = 2;
 select * from t5;
 

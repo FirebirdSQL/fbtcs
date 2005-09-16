@@ -24,11 +24,10 @@ show view t;
 There is no view T in this database
 
 Database:  WHERE_GDB:cf_isql_22.fdb
- 
-SET SQL DIALECT 3; 
- 
-/* CREATE DATABASE 'WHERE_GDB:cf_isql_22.fdb' DEFAULT CHARACTER SET NONE */
 
+SET SQL DIALECT 3; 
+
+/* CREATE DATABASE 'WHERE_GDB:cf_isql_22.fdb' DEFAULT CHARACTER SET NONE */
 
 
 /* Table: T, Owner: SYSDBA */

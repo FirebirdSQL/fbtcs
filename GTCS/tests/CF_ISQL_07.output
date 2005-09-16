@@ -33,10 +33,10 @@ INTEGER_CHAR                    Computed by: (f_integer*f_char)
 Passed 2 - Insert 
 
 
-   F_INTEGER F_CHAR INTEGER_CHAR 
-============ ====== ============ 
-          10 10              100 
-          11 11              121 
+   F_INTEGER F_CHAR            INTEGER_CHAR 
+============ ====== ======================= 
+          10 10           100.0000000000000 
+          11 11           121.0000000000000 
 
 
                   
@@ -44,10 +44,10 @@ Passed 2 - Insert
 Passed 2 - Update 
 
 
-   F_INTEGER F_CHAR INTEGER_CHAR 
-============ ====== ============ 
-          12 12              144 
-          13 11              143 
+   F_INTEGER F_CHAR            INTEGER_CHAR 
+============ ====== ======================= 
+          12 12.25        147.0000000000000 
+          13 11           143.0000000000000 
 
 F_FLOAT                         FLOAT Nullable 
 F_CHAR                          CHAR(5) Nullable 

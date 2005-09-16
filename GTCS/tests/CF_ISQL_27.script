@@ -28,7 +28,7 @@ begin
     where rdb$system_flag is null 
     into :gen_name do
   begin
-    execute statement 'select cast(gen_id(' || gen_name || ',0) as int) from rdb$database' into :gen_value;
+    execute statement 'select gen_id(' || gen_name || ',0) from rdb$database' into :gen_value;
     suspend;
   end
 END^
