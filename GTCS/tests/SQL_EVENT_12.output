@@ -9,7 +9,6 @@ At line 28 in file sql_event_12a.sql
 
 PNAME                PNUMBER 
 =============== ============ 
-
 ProductX                   1 
 ProductY                   2 
 ProductZ                   3 
@@ -18,7 +17,6 @@ ProductA                   4
 
          SSN      PNUMBER        HOURS 
 ============ ============ ============ 
-
            1            1            1 
            2            2            2 
            3            3            3 

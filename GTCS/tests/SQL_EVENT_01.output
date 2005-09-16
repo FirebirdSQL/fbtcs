@@ -2,7 +2,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 PNAME                PNUMBER 
 =============== ============ 
-
 ProductX                  11 
 ProductY                   2 
 ProductZ                   3 
@@ -10,7 +9,6 @@ ProductZ                   3
 
          SSN      PNUMBER        HOURS 
 ============ ============ ============ 
-
            1            1            1 
            2            2            2 
            3            3            3 
