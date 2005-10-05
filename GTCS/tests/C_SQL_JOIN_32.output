@@ -26,7 +26,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
                                                   TABLE_ROW                   S2 TABLE_ROW 
 ======================= ============ ============ ========= ============ ======= ========= 
-
       1.000000000000000         1010       -10010 st1-1                1     101 st2-1     
       2.000000000000000         1020       -10020 st1-2                2     102 st2-2     
                  <null>         1030       -10030 st1-3           <null>  <null> <null>    

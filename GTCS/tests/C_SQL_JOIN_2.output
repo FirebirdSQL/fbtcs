@@ -21,7 +21,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 CITY                      STATE_NAME                
 ========================= ========================= 
-
 Santa Fe                  New Mexico                
 San Juan                  <null>                    
 San Antonio               Texas                     

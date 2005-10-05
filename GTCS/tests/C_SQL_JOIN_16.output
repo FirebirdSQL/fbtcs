@@ -20,7 +20,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
          SUM      S1 
 ============ ======= 
-
            2       1 
            4       2 
            4       4 

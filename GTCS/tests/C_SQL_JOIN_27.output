@@ -15,6 +15,5 @@ Use CONNECT or CREATE DATABASE to specify a database
 
     MIN     MAX     AVG          SUM 
 ======= ======= ======= ============ 
-
      -5     103    1002          9.0 
 

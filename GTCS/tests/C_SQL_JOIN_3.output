@@ -47,7 +47,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 TEAM_NAME       CITY                      STATE_NAME                
 =============== ========================= ========================= 
-
 Astros          Houston                   Texas                     
 Braves          Atlanta                   Georgia                   
 Brewers         Milwaukee                 Wisconsin                 

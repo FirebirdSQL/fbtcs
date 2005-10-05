@@ -26,7 +26,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
      S1      S2 TABLE_ROW 
 ======= ======= ========= 
-
       1     101 st1-1     
       2     102 st1-2     
  <null>     103 st1-3     

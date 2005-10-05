@@ -26,7 +26,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C1     C1     C10        TABLE_ROW 
 ====== ====== ========== ========= 
-
 a-1    a-1    c10-1      ct2-1     
 a-2    a-2    c10-2      ct2-2     
 <null> <null> <null>     <null>    

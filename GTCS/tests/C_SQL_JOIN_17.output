@@ -24,7 +24,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C1     C10        TABLE_ROW C1     C10        TABLE_ROW C1     C10        TABLE_ROW 
 ====== ========== ========= ====== ========== ========= ====== ========== ========= 
-
 a-1    c10-1      ct1-1     a-1    c10-1      ct2-1     a-1    c10-1      ct5-1     
 a-1    c10-1      ct1-1     a-1    c10-1      ct2-1     a-1    c10-1      ct5-2     
 a-2    c10-2      ct1-2     a-2    c10-2      ct2-2     a-2    c10-2      ct5-3     

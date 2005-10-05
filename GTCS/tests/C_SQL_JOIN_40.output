@@ -28,7 +28,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
      S1      S2       COMP_S TABLE_ROW      S1      S2       COMP_S TABLE_ROW 
 ======= ======= ============ ========= ======= ======= ============ ========= 
-
       1     101          101 st1-1           1     101          101 st2-1     
       2     102          204 st1-2           2     102          204 st2-2     
       2     102          204 st1-2          -2    -102          204 st2-6     

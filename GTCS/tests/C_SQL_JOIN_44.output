@@ -26,7 +26,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW 
 ======= ========= ======= ========= ======= ========= ======= ========= ======= ========= 
-
       1 st1-1           1 st1-1           1 st1-1           1 st1-1           1 st1-1     
       2 st1-2           2 st1-2           2 st1-2           2 st1-2           2 st1-2     
  <null> st1-3      <null> <null>     <null> <null>     <null> <null>     <null> <null>    

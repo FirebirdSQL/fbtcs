@@ -25,7 +25,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
      S1      S2      S1      S2 
 ======= ======= ======= ======= 
-
  <null>  <null>  <null>  <null> 
  <null>     103  <null>     103 
      -5    -105  <null>  <null> 
