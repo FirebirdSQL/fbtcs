@@ -33,7 +33,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       4 Aalborg                   Aalborg                   
       5 aïeul                     aïeul                     
       2 Ålborg                    Ålborg                    
@@ -46,7 +45,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       4 Aalborg                   Aalborg                   
       5 aïeul                     aïeul                     
       2 Ålborg                    Ålborg                    

@@ -1,10 +1,9 @@
-(W) subq4.e:17: SET NAMES requires -manual switch to gpre.
+(W) subq4.e:19: SET NAMES requires -manual switch to gpre.
 No errors, 1 warning
 Use CONNECT or CREATE DATABASE to specify a database
 
 C_ENUS                    C_FRANCE                  
 ========================= ========================= 
-
 pÈchÈ                     pÈchÈ                     
 ≈lborg                    ≈lborg                    
 cÊsium                    cÊsium                    
@@ -16,7 +15,6 @@ vice versa                vice versa
 
 C_ENUS                    C_FRANCE                  
 ========================= ========================= 
-
 pÈchÈ                     pÈchÈ                     
 ≈lborg                    ≈lborg                    
 cÊsium                    cÊsium                    
@@ -29,7 +27,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C_437_25                  
 ========================= 
-
 pÈchÈ                     
 ≈lborg                    
 cÊsium                    
@@ -41,7 +38,6 @@ vice versa
 
 C_437_25                  
 ========================= 
-
 pÈchÈ                     
 ≈lborg                    
 cÊsium                    
@@ -54,9 +50,8 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C_850_25                  
 ========================= 
-
 pÇchÇ                     
-?lborg                    
+èlborg                    
 cësium                    
 Aalborg                   
 aãeul                     
@@ -66,9 +61,8 @@ vice versa
 
 C_850_25                  
 ========================= 
-
 pÇchÇ                     
-?lborg                    
+èlborg                    
 cësium                    
 Aalborg                   
 aãeul                     
@@ -79,20 +73,17 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            0 
 
 
        COUNT 
 ============ 
-
            7 
 
 Use CONNECT or CREATE DATABASE to specify a database
 
 C_ENUS                    C_FRANCE                  
 ========================= ========================= 
-
 pÈchÈ                     pÈchÈ                     
 ≈lborg                    ≈lborg                    
 cÊsium                    cÊsium                    
@@ -104,7 +95,6 @@ vice versa                vice versa
 
 C_ENUS                    C_FRANCE                  
 ========================= ========================= 
-
 pÈchÈ                     pÈchÈ                     
 ≈lborg                    ≈lborg                    
 cÊsium                    cÊsium                    
@@ -117,7 +107,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C_437_25                  
 ========================= 
-
 pÈchÈ                     
 ≈lborg                    
 cÊsium                    
@@ -129,7 +118,6 @@ vice versa
 
 C_437_25                  
 ========================= 
-
 pÈchÈ                     
 ≈lborg                    
 cÊsium                    
@@ -142,9 +130,8 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C_850_25                  
 ========================= 
-
 pÇchÇ                     
-?lborg                    
+èlborg                    
 cësium                    
 Aalborg                   
 aãeul                     
@@ -154,9 +141,8 @@ vice versa
 
 C_850_25                  
 ========================= 
-
 pÇchÇ                     
-?lborg                    
+èlborg                    
 cësium                    
 Aalborg                   
 aãeul                     

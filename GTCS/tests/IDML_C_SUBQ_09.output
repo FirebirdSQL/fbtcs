@@ -4,13 +4,11 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C_FRANCE                  
 ========================= 
-
 péché                     
 
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       1 péché                     UPDATED                   
       2 Ålborg                    UPDATED                   
       3 cæsium                    UPDATED                   
@@ -23,13 +21,11 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            7 
 
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       1 péché                     UPDATED                   
       2 Ålborg                    UPDATED                   
       3 cæsium                    UPDATED                   

@@ -14,7 +14,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
            C_ENUS                    C_FRANCE                  C_437_25                  
 ========== ========================= ========================= ========================= 
-
  table 1:  Aalborg                   Aalborg                   Aalborg                   
  table 1:  aïeul                     aïeul                     aïeul                     
  table 1:  Ålborg                    Ålborg                    Ålborg                    
@@ -26,7 +25,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
            C_ENUS                    C_FRANCE                  C_437_25                  
 ========== ========================= ========================= ========================= 
-
  table 2:  péché                     péché                     péché                     
  table 2:  Ålborg                    Ålborg                    Ålborg                    
  table 2:  cæsium                    cæsium                    cæsium                    

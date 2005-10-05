@@ -4,14 +4,12 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 S_ROWID C_FRANCE                  
 ======= ========================= 
-
       1 péché                     
       7 vice versa                
 
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       1 péché                     UPDATED                   
       2 Ålborg                    Ålborg                    
       3 cæsium                    cæsium                    
@@ -24,13 +22,11 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            0 
 
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       1 péché                     péché                     
       2 Ålborg                    Ålborg                    
       3 cæsium                    cæsium                    
@@ -42,7 +38,6 @@ S_ROWID C_ENUS                    C_FRANCE
 
 S_ROWID C_437_25                  
 ======= ========================= 
-
       1 péché                     
       2 Ålborg                    
       3 cæsium                    
@@ -54,14 +49,12 @@ S_ROWID C_437_25
 
 S_ROWID C_FRANCE                  
 ======= ========================= 
-
       1 péché                     
       7 vice versa                
 
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       1 péché                     UPDATED                   
       2 Ålborg                    Ålborg                    
       3 cæsium                    cæsium                    

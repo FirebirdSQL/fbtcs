@@ -29,7 +29,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C_437_25                  
 ========================= 
-
 péché                     
 Ålborg                    
 cæsium                    
@@ -50,25 +49,21 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            7 
 
 
        COUNT 
 ============ 
-
            7 
 
 
        COUNT 
 ============ 
-
            7 
 
 
 C_ENUS                    C_FRANCE                  
 ========================= ========================= 
-
 péché                     péché                     
 Ålborg                    Ålborg                    
 cæsium                    cæsium                    
@@ -80,7 +75,6 @@ vice versa                vice versa
 
 C_ENUS                    C_FRANCE                  
 ========================= ========================= 
-
 péché                     péché                     
 Ålborg                    Ålborg                    
 cæsium                    cæsium                    
@@ -93,7 +87,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C_437_25                  
 ========================= 
-
 péché                     
 Ålborg                    
 cæsium                    

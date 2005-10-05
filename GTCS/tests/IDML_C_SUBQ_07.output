@@ -4,13 +4,11 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            2 
 
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       1 péché                     péché                     
       7 vice versa                vice versa                
 
@@ -18,13 +16,11 @@ Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 
 ============ 
-
            0 
 
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       4 Aalborg                   Aalborg                   
       5 aïeul                     aïeul                     
       2 Ålborg                    Ålborg                    
@@ -36,7 +32,6 @@ S_ROWID C_ENUS                    C_FRANCE
 
 S_ROWID C_437_25                  
 ======= ========================= 
-
       4 Aalborg                   
       5 aïeul                     
       6 caennais                  
@@ -48,14 +43,12 @@ S_ROWID C_437_25
 
 S_ROWID C_ENUS                    C_FRANCE                  
 ======= ========================= ========================= 
-
       1 péché                     péché                     
       7 vice versa                vice versa                
 
 
 S_ROWID C_437_25                  
 ======= ========================= 
-
       1 péché                     
       7 vice versa                
 
