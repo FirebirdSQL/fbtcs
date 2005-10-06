@@ -27,13 +27,13 @@ After line 3 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 1, char 15
+-Token unknown - line 1, column 15
 -23456789
 At line 6 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 1, char 15
+-Token unknown - line 1, column 15
 -$
 At line 8 in file domain_01b.sql
 Statement failed, SQLCODE = -607
@@ -44,12 +44,12 @@ After line 9 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 1, char 25
+-Token unknown - line 1, column 25
 -rubbish
 At line 12 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 1, char 15
+-Token unknown - line 1, column 15
 -table
 At line 14 in file domain_01b.sql

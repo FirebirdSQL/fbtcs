@@ -21,13 +21,13 @@ There is no exception ERROR in this database
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 1, char 18
+-Token unknown - line 1, column 18
 -123
 At line 19 in file dsql_except_01.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 1, char 18
+-Token unknown - line 1, column 18
 -$
 At line 21 in file dsql_except_01.sql
 Statement failed, SQLCODE = -607

@@ -10,7 +10,7 @@ alter domain dom08a_1
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 2, char 17
+-Token unknown - line 2, column 17
 -not
 At line 6 in file domain_08.sql
 commit;
