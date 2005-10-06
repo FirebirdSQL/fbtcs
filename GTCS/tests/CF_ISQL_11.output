@@ -4,13 +4,13 @@ Dynamic SQL Error
 -SQL error code = -206
 -Column unknown
 -B
--At line 1, column 45.
+-At line 1, column 45
 At line 2 in file cf_test.sql
 Statement failed, SQLCODE = -206
 Dynamic SQL Error
 -SQL error code = -206
 -Column unknown
 -A
--At line 1, column 34.
+-At line 1, column 34
 At line 7 in file cf_test.sql
 There are no tables in this database
