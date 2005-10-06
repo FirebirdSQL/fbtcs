@@ -1,7 +1,14 @@
+
+CREATE DATABASE 'localhost:/usr/src/local/2/fbtcs/temp/ext_rel_0_11_D.gdb';
+
+CREATE TABLE ext_table EXTERNAL FILE '/usr/src/local/2/fbtcs/temp/external.dat'
+        (field1 SMALLINT[4]) ;
+ 
 Use CONNECT or CREATE DATABASE to specify a database
-Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLCODE = -413
-conversion error from string "BLOB"
-After line 2 in file isql2.in
-********************  15-May-95: conversion error is proper result
+Statement failed, SQLCODE = -607
+Dynamic SQL Error
+-SQL error code = -607
+-Data type ARRAY is not supported for EXTERNAL TABLES. Relation 'EXT_TABLE', field 'FIELD1'
+After line 2 in file isql.in
+**********  05-Oct-2005: Data type ARRAY is not supported is proper result
 

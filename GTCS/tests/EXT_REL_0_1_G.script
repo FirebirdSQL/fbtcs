@@ -47,7 +47,7 @@ DEFINE RELATION ext_table EXTERNAL_FILE "WHERE_GDB_EXTERNAL:external.dat"
 >> qli.in
 
 READY "WHERE_GDB:ext_rel_0_1_G.gdb";
-INSERT INTO ext_table (field1) VALUES ("Success");
+INSERT INTO ext_table (field1) VALUES ('Success');
 SELECT * FROM ext_table;
 
 $GDEF create.gdl

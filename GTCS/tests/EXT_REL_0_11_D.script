@@ -37,6 +37,8 @@
 #14-Oct-00: Frank Schlottmann-Goedde
 #  replaced double with single quotes where necessary to run with version 6.x
 #
+#05-Nov-05: Alex Peshkov
+#  since fb2.0 ARRAY/BLOB field is checked during create external table
 #*******************************************************************************
 
 >> isql.in
@@ -46,18 +48,12 @@ CREATE DATABASE 'WHERE_GDB:ext_rel_0_11_D.gdb';
 CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
         (field1 SMALLINT[4]) ;
  
->> isql2.in
-
-CONNECT 'WHERE_GDB:ext_rel_0_11_D.gdb';
-INSERT INTO ext_table (field1) VALUES (12);
-SELECT * FROM ext_table;
-
+$ TYPE isql.in
 $ISQL -m -input isql.in
-$ISQL -m -input isql2.in
 >> errcmt
-********************  15-May-95: conversion error is proper result
+**********  05-Oct-2005: Data type ARRAY is not supported is proper result
 
 $ TYPE errcmt
 $DROP WHERE_GDB:ext_rel_0_11_D.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
-$DELETE errcmt isql.in isql2.in
+$DELETE errcmt isql.in

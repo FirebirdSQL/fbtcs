@@ -3,7 +3,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 FIELD1     FIELD2     
 ========== ========== 
-
 NoNull     Success    
            Success    
 
