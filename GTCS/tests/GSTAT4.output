@@ -5,7 +5,7 @@ Database header page information:
 	Checksum		12345
 	Generation		25
 	Page size		1024
-	ODS version		11.0 type 0200
+	ODS version		11.0
 	Oldest transaction	1
 	Oldest active		2
 	Oldest snapshot		1
