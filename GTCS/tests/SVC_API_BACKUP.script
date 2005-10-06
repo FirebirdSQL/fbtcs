@@ -141,10 +141,16 @@ int main(int argc, char* argv[]){
 			// There is a length for the data, so to be different, let's print
 			// it out character by character
 			USHORT chTmp = 0;
+			// CS returns \n at the end of each line
+			// To be able to run test with both servers, take it into account
+			char lastChar = 0;
 
-			for (chTmp = 0; chTmp < len; chTmp++)
-				printf("%c",p[chTmp]);
-			printf("\n");
+			for (chTmp = 0; chTmp < len; chTmp++) {
+				lastChar = p[chTmp];
+				printf("%c", lastChar);
+			}
+			if (lastChar != '\n')
+				printf("\n");
 			fflush(stdout);
 
 			// Since we only requested one item this time, we should be at the end of 
