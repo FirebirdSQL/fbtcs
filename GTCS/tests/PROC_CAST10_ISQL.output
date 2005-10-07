@@ -1,47 +1,82 @@
-
-      B 
-======= 
-     50 
-
-Statement failed, SQLCODE = -413
-conversion error from string "x"
--At procedure 'CAST1'
+Statement failed, SQLCODE = -902
+Dynamic SQL Error
+-expression evaluation not supported
+After line 1 in file proc_cast10.sql
+Statement failed, SQLCODE = -902
+Dynamic SQL Error
+-expression evaluation not supported
+After line 7 in file proc_cast10.sql
+Statement failed, SQLCODE = -902
+Dynamic SQL Error
+-expression evaluation not supported
+After line 13 in file proc_cast10.sql
+Statement failed, SQLCODE = -902
+Dynamic SQL Error
+-expression evaluation not supported
+After line 19 in file proc_cast10.sql
+Statement failed, SQLCODE = -902
+Dynamic SQL Error
+-expression evaluation not supported
+After line 25 in file proc_cast10.sql
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST1
+After line 62 in file proc_cast10.sql
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST1
 After line 63 in file proc_cast10.sql
-
-           B 
-============ 
-       10000 
-
-Statement failed, SQLCODE = -413
-conversion error from string "x"
--At procedure 'CAST2'
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST2
+After line 64 in file proc_cast10.sql
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST2
 After line 65 in file proc_cast10.sql
-
-             B 
-============== 
-     10000.000 
-
-Statement failed, SQLCODE = -413
-conversion error from string "x"
--At procedure 'CAST3'
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST3
+After line 66 in file proc_cast10.sql
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST3
 After line 67 in file proc_cast10.sql
-
-                      B 
-======================= 
-      10000.00000000000 
-
-Statement failed, SQLCODE = -413
-conversion error from string "abc"
--At procedure 'CAST4'
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST4
+After line 68 in file proc_cast10.sql
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST4
 After line 69 in file proc_cast10.sql
-
-           B 
-============ 
-    10000.00 
-
-Statement failed, SQLCODE = -413
-conversion error from string "abc"
--At procedure 'CAST5'
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST5
+After line 70 in file proc_cast10.sql
+Statement failed, SQLCODE = -204
+Dynamic SQL Error
+-SQL error code = -204
+-Procedure unknown
+-CAST5
 After line 71 in file proc_cast10.sql
 
           B 
