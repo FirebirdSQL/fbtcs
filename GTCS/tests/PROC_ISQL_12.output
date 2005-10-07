@@ -8,7 +8,6 @@ SELECT  * FROM PROC14;
 
 A                                B 
 ===================== ============ 
-
 Bolt                            17 
 Cog                             19 
 
@@ -16,14 +15,12 @@ SELECT MAX(B) FROM PROC14;
 
          MAX 
 ============ 
-
           19 
 
 SELECT  B FROM PROC14;
 
            B 
 ============ 
-
           17 
           19 
 
@@ -31,7 +28,6 @@ SELECT A,B FROM PROC14 ORDER BY B;
 
 A                                B 
 ===================== ============ 
-
 Bolt                            17 
 Cog                             19 
 
@@ -40,7 +36,6 @@ SELECT A, AVG(B) FROM PROC14 GROUP BY A ;
 
 A                                       AVG 
 ===================== ===================== 
-
 Bolt                                     17 
 Cog                                      19 
 
@@ -49,7 +44,6 @@ SELECT A , B FROM PROC14
 
 A                                B 
 ===================== ============ 
-
 Cog                             19 
 
 exit;

@@ -8,28 +8,24 @@ SELECT  * FROM PROC5;
 
 A      B                 C 
 ====== ====== ============ 
-
 Red    P6               19 
 
 SELECT MAX(A) FROM PROC5;
 
 MAX    
 ====== 
-
 Red    
 
 SELECT  C FROM PROC5;
 
            C 
 ============ 
-
           19 
 
 SELECT A,C FROM PROC5 ORDER BY A;
 
 A                 C 
 ====== ============ 
-
 Red              19 
 
 SELECT A, AVG(C) FROM PROC5 GROUP BY A HAVING AVG(C) > 35;
@@ -37,7 +33,6 @@ SELECT A, AVG(C) FROM PROC5 GROUP BY A ;
 
 A                        AVG 
 ====== ===================== 
-
 Red                       19 
 
 SELECT A , C FROM PROC5
@@ -45,7 +40,6 @@ WHERE C = (SELECT AVG(C) FROM PROC5);
 
 A                 C 
 ====== ============ 
-
 Red              19 
 
 exit;

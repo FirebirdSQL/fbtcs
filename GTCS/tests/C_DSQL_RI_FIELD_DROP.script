@@ -42,6 +42,10 @@ $ RUN ri_views WHERE_GDB:atlas.gdb
 	       constraint creating part removed the AUTHORS in use
 	       error, but no constraints get created when running
 	       remote.
+		   
+   05-Oct-2005: Appears problem with "object AUTHORS is in use"
+		   has gone in fb 2.0.
+		   
    Tests are:
    	Table Constraints:
    		unique		tab_uniq.e

@@ -8,28 +8,24 @@ SELECT * FROM PROC8;
 
 A                               B 
 ==================== ============ 
-
 Cog                            19 
 
 SELECT MAX(A) FROM PROC8;
 
 MAX                  
 ==================== 
-
 Cog                  
 
 SELECT B FROM PROC8;
 
            B 
 ============ 
-
           19 
 
 SELECT A,B FROM PROC8 ORDER BY A;
 
 A                               B 
 ==================== ============ 
-
 Cog                            19 
 
 SELECT A, AVG(B) FROM PROC8 GROUP BY A HAVING AVG(B) > 35;
@@ -37,7 +33,6 @@ SELECT A, AVG(B) FROM PROC8 GROUP BY A ;
 
 A                                      AVG 
 ==================== ===================== 
-
 Cog                                     19 
 
 SELECT A , B FROM PROC8
@@ -45,7 +40,6 @@ SELECT A , B FROM PROC8
 
 A                               B 
 ==================== ============ 
-
 Cog                            19 
 
 exit;

@@ -2,7 +2,6 @@ select * from p;
 
 PNO    PNAME                COLOR        WEIGHT CITY            
 ====== ==================== ====== ============ =============== 
-
 P1     Nut                  Red              12 London          
 P2     Bolt                 Green            17 Paris           
 P3     Screw                Blue             17 Rome            
@@ -16,7 +15,6 @@ select * from p;
 
 PNO    PNAME                COLOR        WEIGHT CITY            
 ====== ==================== ====== ============ =============== 
-
 P1     Nut                  Red              12 London          
 P2     Bolt                 Green            17 Paris           
 P3     Screw                Blue             17 Rome            

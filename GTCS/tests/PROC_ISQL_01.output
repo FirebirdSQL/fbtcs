@@ -8,42 +8,36 @@ SELECT  * FROM PROC1;
 
            A 
 ============ 
-
          400 
 
 SELECT  MAX(A) FROM PROC1;
 
          MAX 
 ============ 
-
          400 
 
 SELECT  A FROM PROC1;
 
            A 
 ============ 
-
          400 
 
 SELECT  * FROM PROC1 ORDER BY A;
 
            A 
 ============ 
-
          400 
 
 SELECT A, AVG(A) FROM PROC1 GROUP BY A HAVING AVG(A) > 350;
 
            A                   AVG 
 ============ ===================== 
-
          400                   400 
 
 SELECT A, AVG(A) FROM PROC1 GROUP BY A ;
 
            A                   AVG 
 ============ ===================== 
-
          400                   400 
 
 SELECT A  FROM PROC1
@@ -51,7 +45,6 @@ SELECT A  FROM PROC1
 
            A 
 ============ 
-
          400 
 
 exit;
