@@ -1,7 +1,7 @@
 
-CREATE DATABASE 'localhost:/usr/src/local/2/fbtcs/temp/ext_rel_0_11_D.gdb';
+CREATE DATABASE 'WHERE_GDB:ext_rel_0_11_D.gdb';
 
-CREATE TABLE ext_table EXTERNAL FILE '/usr/src/local/2/fbtcs/temp/external.dat'
+CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
         (field1 SMALLINT[4]) ;
  
 Use CONNECT or CREATE DATABASE to specify a database
