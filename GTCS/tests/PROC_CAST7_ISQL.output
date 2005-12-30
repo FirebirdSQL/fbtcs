@@ -1,22 +1,18 @@
-Statement failed, SQLCODE = -607
+Statement failed, SQLCODE = -902
 Dynamic SQL Error
--SQL error code = -607
--Array/BLOB/DATE data types not allowed in arithmetic
+-expression evaluation not supported
 After line 1 in file proc_cast7.sql
-Statement failed, SQLCODE = -607
+Statement failed, SQLCODE = -902
 Dynamic SQL Error
--SQL error code = -607
--Array/BLOB/DATE data types not allowed in arithmetic
+-expression evaluation not supported
 After line 7 in file proc_cast7.sql
-Statement failed, SQLCODE = -607
+Statement failed, SQLCODE = -902
 Dynamic SQL Error
--SQL error code = -607
--Array/BLOB/DATE data types not allowed in arithmetic
+-expression evaluation not supported
 After line 19 in file proc_cast7.sql
-Statement failed, SQLCODE = -607
+Statement failed, SQLCODE = -902
 Dynamic SQL Error
--SQL error code = -607
--Array/BLOB/DATE data types not allowed in arithmetic
+-expression evaluation not supported
 After line 25 in file proc_cast7.sql
 Statement failed, SQLCODE = -204
 Dynamic SQL Error
