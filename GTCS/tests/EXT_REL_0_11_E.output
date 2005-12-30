@@ -4,5 +4,5 @@ Below are 2 inserts.  Both produce expected errors.
 
 ********************************  blob conversion error is proper result
 
-conversion error from string "BLOB"
+Unsupported conversion to target type ARRAY
 Data base error, SQLCODE = -413
