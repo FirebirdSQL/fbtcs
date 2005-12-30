@@ -11,7 +11,8 @@ unsuccessful metadata update
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLCODE = -836
-exception FAIL_MSG
+exception 1
+-FAIL_MSG
 -THIS IS AN EXCEPTION !!
 -At procedure 'PROC'
 After line 1 in file show.sql
