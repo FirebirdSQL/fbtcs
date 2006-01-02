@@ -1,3 +1,19 @@
+2005-12-30	alexpeshkoff
+	* GTCS/tests/AUTO_DDL.EXCP.DSQL.output 1.5:
+		fix after isql output modification
+
+	* GTCS/tests/EXT_REL_0_11_E.output 1.2:
+	* GTCS/tests/PROC_CAST7_ISQL.output 1.5:
+		better conversions rules in fb2
+
+	* GTCS/tests/PROC_CAST8_ISQL.output 1.2:
+		fb2 does not let convert numbers to blob - it was possible due 
+		to old bag
+
+2005-10-11	alexpeshkoff
+	* GTCS/tests/EVENT_MISC_0.script 1.7:
+		fixed test - it's bad idea to mix long/int on 64bit CPU
+
 2005-10-10	alexpeshkoff
 	* GTCS/tests/EXT_REL_0_11_D.output 1.5:
 		removed absolute paths, accidentially commited by me
