@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
 	char	spb_buff[128];
 	char	*spb = spb_buff;
 	char	*x;
-	USHORT	spblen;
+	ISC_USHORT	spblen;
 
 	*spb++ = isc_spb_version;
 	*spb++ = isc_spb_current_version;

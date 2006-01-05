@@ -117,7 +117,7 @@ int main(int argc, char* argv[]){
 		{
 
 			// Get the length of the data being returned */
-			USHORT len = (ISC_USHORT)isc_vax_integer(p, sizeof(ISC_USHORT));
+			ISC_USHORT len = (ISC_USHORT)isc_vax_integer(p, sizeof(ISC_USHORT));
 			p += sizeof (ISC_USHORT);
 
 			// If there is no length, then we should be done .. let's check
@@ -132,7 +132,7 @@ int main(int argc, char* argv[]){
 
 			// There is a length for the data, so to be different, let's print
 			// it out character by character
-			USHORT chTmp = 0;
+			ISC_USHORT chTmp = 0;
 
 			for (chTmp = 0; chTmp < len; chTmp++)
 				printf("%c",p[chTmp]);
