@@ -74,7 +74,7 @@ SELECT
   QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH
 FROM ITEMS;
 Statement failed, SQLCODE = -204
-Too many Contexts of Relation/Procedure/Views. Maximum allowed is 127
+Too many Contexts of Relation/Procedure/Views. Maximum allowed is 255
 After line 65 in file cf_isql_31.sql
 
 DROP DATABASE;
