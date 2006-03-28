@@ -3,7 +3,7 @@ Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 1, column 27
 -"LOWER"
-At line 361 in file /opt/firebird/UDF/ib_udf2.sql
+At line 361 in file WHERE_EXAMPLES:ib_udf2.sql
 Test:
  select substr(first_name,1,2) ,count(*) from mayors group by substr(first_name,1,2)
 --------------------------------------------------------------------------------
