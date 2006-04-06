@@ -1,493 +1,493 @@
 connected to service manager OK
 service started OK
-gbak:opened file WHERE_GDB_EXTERNAL:employee.gbk
-gbak:transportable backup -- data in XDR format
-gbak:		backup file is compressed
-gbak:created database WHERE_GDB_EXTERNAL:employee.gdb, page_size 1024 bytes
-gbak:started transaction
-gbak:restoring domain FIRSTNAME
-gbak:restoring domain LASTNAME
-gbak:restoring domain PHONENUMBER
-gbak:restoring domain COUNTRYNAME
-gbak:restoring domain ADDRESSLINE
-gbak:restoring domain EMPNO
-gbak:restoring domain DEPTNO
-gbak:restoring domain PROJNO
-gbak:restoring domain CUSTNO
-gbak:restoring domain JOBCODE
-gbak:restoring domain JOBGRADE
-gbak:restoring domain SALARY
-gbak:restoring domain BUDGET
-gbak:restoring domain PRODTYPE
-gbak:restoring domain PONUMBER
-gbak:restoring domain RDB$1
-gbak:restoring domain RDB$2
-gbak:restoring domain RDB$3
-gbak:restoring domain RDB$4
-gbak:restoring domain RDB$5
-gbak:restoring domain RDB$6
-gbak:restoring domain RDB$7
-gbak:restoring domain RDB$8
-gbak:restoring domain RDB$9
-gbak:restoring domain RDB$10
-gbak:restoring domain RDB$11
-gbak:restoring domain RDB$12
-gbak:restoring domain RDB$13
-gbak:restoring domain RDB$14
-gbak:restoring domain RDB$15
-gbak:restoring domain RDB$16
-gbak:restoring domain RDB$17
-gbak:restoring domain RDB$18
-gbak:restoring domain RDB$19
-gbak:restoring domain RDB$20
-gbak:restoring domain RDB$21
-gbak:restoring domain RDB$22
-gbak:restoring domain RDB$23
-gbak:restoring domain RDB$24
-gbak:restoring domain RDB$25
-gbak:restoring domain RDB$26
-gbak:restoring domain RDB$27
-gbak:restoring domain RDB$28
-gbak:restoring domain RDB$29
-gbak:restoring domain RDB$30
-gbak:restoring domain RDB$31
-gbak:restoring domain RDB$32
-gbak:restoring domain RDB$33
-gbak:restoring domain RDB$34
-gbak:restoring domain RDB$35
-gbak:restoring domain RDB$36
-gbak:restoring domain RDB$37
-gbak:restoring domain RDB$38
-gbak:restoring domain RDB$39
-gbak:restoring domain RDB$40
-gbak:restoring domain RDB$41
-gbak:restoring domain RDB$42
-gbak:restoring domain RDB$43
-gbak:restoring domain RDB$44
-gbak:restoring domain RDB$45
-gbak:restoring domain RDB$46
-gbak:restoring domain RDB$47
-gbak:restoring domain RDB$48
-gbak:restoring domain RDB$49
-gbak:restoring domain RDB$50
-gbak:restoring domain RDB$51
-gbak:restoring domain RDB$52
-gbak:restoring domain RDB$53
-gbak:restoring domain RDB$54
-gbak:restoring domain RDB$55
-gbak:restoring domain RDB$56
-gbak:restoring domain RDB$57
-gbak:restoring domain RDB$58
-gbak:restoring domain RDB$59
-gbak:restoring domain RDB$60
-gbak:restoring domain RDB$61
-gbak:restoring domain RDB$62
-gbak:restoring domain RDB$63
-gbak:restoring domain RDB$64
-gbak:restoring table COUNTRY
-gbak:    restoring column CURRENCY
-gbak:    restoring column COUNTRY
-gbak:restoring table JOB
-gbak:    restoring column JOB_REQUIREMENT
-gbak:    restoring column MAX_SALARY
-gbak:    restoring column MIN_SALARY
-gbak:    restoring column JOB_GRADE
-gbak:    restoring column LANGUAGE_REQ
-gbak:    restoring column JOB_TITLE
-gbak:    restoring column JOB_COUNTRY
-gbak:    restoring column JOB_CODE
-gbak:restoring table DEPARTMENT
-gbak:    restoring column BUDGET
-gbak:    restoring column PHONE_NO
-gbak:    restoring column MNGR_NO
-gbak:    restoring column LOCATION
-gbak:    restoring column HEAD_DEPT
-gbak:    restoring column DEPARTMENT
-gbak:    restoring column DEPT_NO
-gbak:restoring table EMPLOYEE
-gbak:    restoring column SALARY
-gbak:    restoring column HIRE_DATE
-gbak:    restoring column JOB_GRADE
-gbak:    restoring column PHONE_EXT
-gbak:    restoring column LAST_NAME
-gbak:    restoring column EMP_NO
-gbak:    restoring column FULL_NAME
-gbak:    restoring column JOB_COUNTRY
-gbak:    restoring column JOB_CODE
-gbak:    restoring column DEPT_NO
-gbak:    restoring column FIRST_NAME
-gbak:restoring table PHONE_LIST
-gbak:    restoring column PHONE_NO
-gbak:    restoring column PHONE_EXT
-gbak:    restoring column LAST_NAME
-gbak:    restoring column EMP_NO
-gbak:    restoring column LOCATION
-gbak:    restoring column FIRST_NAME
-gbak:restoring table PROJECT
-gbak:    restoring column PROJ_DESC
-gbak:    restoring column PRODUCT
-gbak:    restoring column TEAM_LEADER
-gbak:    restoring column PROJ_NAME
-gbak:    restoring column PROJ_ID
-gbak:restoring table CUSTOMER
-gbak:    restoring column ADDRESS_LINE2
-gbak:    restoring column ADDRESS_LINE1
-gbak:    restoring column CUST_NO
-gbak:    restoring column POSTAL_CODE
-gbak:    restoring column PHONE_NO
-gbak:    restoring column CONTACT_LAST
-gbak:    restoring column ON_HOLD
-gbak:    restoring column COUNTRY
-gbak:    restoring column STATE_PROVINCE
-gbak:    restoring column CITY
-gbak:    restoring column CONTACT_FIRST
-gbak:    restoring column CUSTOMER
-gbak:restoring table SALES
-gbak:    restoring column AGED
-gbak:    restoring column DATE_NEEDED
-gbak:    restoring column SHIP_DATE
-gbak:    restoring column ORDER_DATE
-gbak:    restoring column PO_NUMBER
-gbak:    restoring column DISCOUNT
-gbak:    restoring column TOTAL_VALUE
-gbak:    restoring column QTY_ORDERED
-gbak:    restoring column CUST_NO
-gbak:    restoring column ITEM_TYPE
-gbak:    restoring column SALES_REP
-gbak:    restoring column PAID
-gbak:    restoring column ORDER_STATUS
-gbak:restoring table EMPLOYEE_PROJECT
-gbak:    restoring column EMP_NO
-gbak:    restoring column PROJ_ID
-gbak:restoring table PROJ_DEPT_BUDGET
-gbak:    restoring column PROJECTED_BUDGET
-gbak:    restoring column QUART_HEAD_CNT
-gbak:    restoring column FISCAL_YEAR
-gbak:    restoring column DEPT_NO
-gbak:    restoring column PROJ_ID
-gbak:restoring table SALARY_HISTORY
-gbak:    restoring column NEW_SALARY
-gbak:    restoring column PERCENT_CHANGE
-gbak:    restoring column OLD_SALARY
-gbak:    restoring column CHANGE_DATE
-gbak:    restoring column UPDATER_ID
-gbak:    restoring column EMP_NO
-gbak:restoring generator EMP_NO_GEN value: 145
-gbak:restoring generator CUST_NO_GEN value: 1015
-gbak:restoring stored procedure GET_EMP_PROJ
-gbak:restoring parameter EMP_NO for stored procedure
-gbak:restoring parameter PROJ_ID for stored procedure
-gbak:restoring stored procedure ADD_EMP_PROJ
-gbak:restoring parameter EMP_NO for stored procedure
-gbak:restoring parameter PROJ_ID for stored procedure
-gbak:restoring stored procedure SUB_TOT_BUDGET
-gbak:restoring parameter HEAD_DEPT for stored procedure
-gbak:restoring parameter TOT_BUDGET for stored procedure
-gbak:restoring parameter AVG_BUDGET for stored procedure
-gbak:restoring parameter MIN_BUDGET for stored procedure
-gbak:restoring parameter MAX_BUDGET for stored procedure
-gbak:restoring stored procedure DELETE_EMPLOYEE
-gbak:restoring parameter EMP_NUM for stored procedure
-gbak:restoring stored procedure DEPT_BUDGET
-gbak:restoring parameter DNO for stored procedure
-gbak:restoring parameter TOT for stored procedure
-gbak:restoring stored procedure ORG_CHART
-gbak:restoring parameter HEAD_DEPT for stored procedure
-gbak:restoring parameter DEPARTMENT for stored procedure
-gbak:restoring parameter MNGR_NAME for stored procedure
-gbak:restoring parameter TITLE for stored procedure
-gbak:restoring parameter EMP_CNT for stored procedure
-gbak:restoring stored procedure MAIL_LABEL
-gbak:restoring parameter CUST_NO for stored procedure
-gbak:restoring parameter LINE1 for stored procedure
-gbak:restoring parameter LINE2 for stored procedure
-gbak:restoring parameter LINE3 for stored procedure
-gbak:restoring parameter LINE4 for stored procedure
-gbak:restoring parameter LINE5 for stored procedure
-gbak:restoring parameter LINE6 for stored procedure
-gbak:restoring stored procedure SHIP_ORDER
-gbak:restoring parameter PO_NUM for stored procedure
-gbak:restoring stored procedure SHOW_LANGS
-gbak:restoring parameter CODE for stored procedure
-gbak:restoring parameter GRADE for stored procedure
-gbak:restoring parameter CTY for stored procedure
-gbak:restoring parameter LANGUAGES for stored procedure
-gbak:restoring stored procedure ALL_LANGS
-gbak:restoring parameter CODE for stored procedure
-gbak:restoring parameter GRADE for stored procedure
-gbak:restoring parameter COUNTRY for stored procedure
-gbak:restoring parameter LANG for stored procedure
-gbak:restoring exception UNKNOWN_EMP_ID
-gbak:restoring exception REASSIGN_SALES
-gbak:restoring exception ORDER_ALREADY_SHIPPED
-gbak:restoring exception CUSTOMER_ON_HOLD
-gbak:restoring exception CUSTOMER_CHECK
-gbak:    committing metadata
-gbak:    restoring index RDB$PRIMARY20
-gbak:    restoring index RDB$FOREIGN21
-gbak:    restoring index UPDATERX
-gbak:    restoring index CHANGEX
-gbak:restoring data for table SALARY_HISTORY
-gbak:   49 records restored
-gbak:    restoring index RDB$PRIMARY17
-gbak:    restoring index RDB$FOREIGN18
-gbak:    restoring index RDB$FOREIGN19
-gbak:restoring data for table PROJ_DEPT_BUDGET
-gbak:   24 records restored
-gbak:    restoring index RDB$PRIMARY14
-gbak:    restoring index RDB$FOREIGN15
-gbak:    restoring index RDB$FOREIGN16
-gbak:restoring data for table EMPLOYEE_PROJECT
-gbak:   28 records restored
-gbak:    restoring index RDB$PRIMARY24
-gbak:    restoring index RDB$FOREIGN25
-gbak:    restoring index RDB$FOREIGN26
-gbak:    restoring index NEEDX
-gbak:    restoring index SALESTATX
-gbak:    restoring index QTYX
-gbak:restoring data for table SALES
-gbak:   33 records restored
-gbak:    restoring index RDB$PRIMARY22
-gbak:    restoring index RDB$FOREIGN23
-gbak:    restoring index CUSTNAMEX
-gbak:    restoring index CUSTREGION
-gbak:restoring data for table CUSTOMER
-gbak:   15 records restored
-gbak:    restoring index RDB$11
-gbak:    restoring index RDB$PRIMARY12
-gbak:    restoring index RDB$FOREIGN13
-gbak:    restoring index PRODTYPEX
-gbak:restoring data for table PROJECT
-gbak:   6 records restored
-gbak:    restoring index RDB$PRIMARY7
-gbak:    restoring index RDB$FOREIGN8
-gbak:    restoring index RDB$FOREIGN9
-gbak:    restoring index NAMEX
-gbak:restoring data for table EMPLOYEE
-gbak:   42 records restored
-gbak:    restoring index RDB$4
-gbak:    restoring index RDB$PRIMARY5
-gbak:    restoring index RDB$FOREIGN6
-gbak:    restoring index BUDGETX
-gbak:    restoring index RDB$FOREIGN10
-gbak:restoring data for table DEPARTMENT
-gbak:   21 records restored
-gbak:    restoring index RDB$PRIMARY2
-gbak:    restoring index RDB$FOREIGN3
-gbak:    restoring index MINSALX
-gbak:    restoring index MAXSALX
-gbak:restoring data for table JOB
-gbak:   31 records restored
-gbak:    restoring index RDB$PRIMARY1
-gbak:restoring data for table COUNTRY
-gbak:   14 records restored
-gbak:    restoring trigger CHECK_1
-gbak:    restoring trigger CHECK_2
-gbak:    restoring trigger CHECK_3
-gbak:    restoring trigger CHECK_4
-gbak:    restoring trigger SET_EMP_NO
-gbak:    restoring trigger CHECK_5
-gbak:    restoring trigger CHECK_6
-gbak:    restoring trigger CHECK_7
-gbak:    restoring trigger CHECK_8
-gbak:    restoring trigger SAVE_SALARY_CHANGE
-gbak:    restoring trigger CHECK_9
-gbak:    restoring trigger CHECK_10
-gbak:    restoring trigger SET_CUST_NO
-gbak:    restoring trigger CHECK_11
-gbak:    restoring trigger CHECK_12
-gbak:    restoring trigger CHECK_13
-gbak:    restoring trigger CHECK_14
-gbak:    restoring trigger CHECK_15
-gbak:    restoring trigger CHECK_16
-gbak:    restoring trigger CHECK_17
-gbak:    restoring trigger CHECK_18
-gbak:    restoring trigger CHECK_19
-gbak:    restoring trigger CHECK_20
-gbak:    restoring trigger CHECK_21
-gbak:    restoring trigger CHECK_22
-gbak:    restoring trigger CHECK_23
-gbak:    restoring trigger CHECK_24
-gbak:    restoring trigger CHECK_25
-gbak:    restoring trigger CHECK_26
-gbak:    restoring trigger CHECK_27
-gbak:    restoring trigger CHECK_28
-gbak:    restoring trigger POST_NEW_ORDER
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user SYSDBA
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:    restoring privilege for user PUBLIC
-gbak:creating indexes
-gbak:    activating and creating deferred index RDB$PRIMARY20
-gbak:    activating and creating deferred index UPDATERX
-gbak:    activating and creating deferred index CHANGEX
-gbak:    activating and creating deferred index RDB$PRIMARY17
-gbak:    activating and creating deferred index RDB$PRIMARY14
-gbak:    activating and creating deferred index RDB$PRIMARY24
-gbak:    activating and creating deferred index NEEDX
-gbak:    activating and creating deferred index SALESTATX
-gbak:    activating and creating deferred index QTYX
-gbak:    activating and creating deferred index RDB$PRIMARY22
-gbak:    activating and creating deferred index CUSTNAMEX
-gbak:    activating and creating deferred index CUSTREGION
-gbak:    activating and creating deferred index RDB$11
-gbak:    activating and creating deferred index RDB$PRIMARY12
-gbak:    activating and creating deferred index PRODTYPEX
-gbak:    activating and creating deferred index RDB$PRIMARY7
-gbak:    activating and creating deferred index NAMEX
-gbak:    activating and creating deferred index RDB$4
-gbak:    activating and creating deferred index RDB$PRIMARY5
-gbak:    activating and creating deferred index BUDGETX
-gbak:    activating and creating deferred index RDB$PRIMARY2
-gbak:    activating and creating deferred index MINSALX
-gbak:    activating and creating deferred index MAXSALX
-gbak:    activating and creating deferred index RDB$PRIMARY1
-gbak:    activating and creating deferred index RDB$FOREIGN21
-gbak:    activating and creating deferred index RDB$FOREIGN18
-gbak:    activating and creating deferred index RDB$FOREIGN19
-gbak:    activating and creating deferred index RDB$FOREIGN15
-gbak:    activating and creating deferred index RDB$FOREIGN16
-gbak:    activating and creating deferred index RDB$FOREIGN25
-gbak:    activating and creating deferred index RDB$FOREIGN26
-gbak:    activating and creating deferred index RDB$FOREIGN23
-gbak:    activating and creating deferred index RDB$FOREIGN13
-gbak:    activating and creating deferred index RDB$FOREIGN8
-gbak:    activating and creating deferred index RDB$FOREIGN9
-gbak:    activating and creating deferred index RDB$FOREIGN6
-gbak:    activating and creating deferred index RDB$FOREIGN10
-gbak:    activating and creating deferred index RDB$FOREIGN3
-gbak:    committing metadata
-gbak:finishing, closing, and going home
+gbak:opened file WHERE_GDB_EXTERNAL:employee.gbk 
+gbak:transportable backup -- data in XDR format 
+gbak:		backup file is compressed 
+gbak:created database WHERE_GDB_EXTERNAL:employee.gdb, page_size 1024 bytes 
+gbak:started transaction 
+gbak:restoring domain FIRSTNAME 
+gbak:restoring domain LASTNAME 
+gbak:restoring domain PHONENUMBER 
+gbak:restoring domain COUNTRYNAME 
+gbak:restoring domain ADDRESSLINE 
+gbak:restoring domain EMPNO 
+gbak:restoring domain DEPTNO 
+gbak:restoring domain PROJNO 
+gbak:restoring domain CUSTNO 
+gbak:restoring domain JOBCODE 
+gbak:restoring domain JOBGRADE 
+gbak:restoring domain SALARY 
+gbak:restoring domain BUDGET 
+gbak:restoring domain PRODTYPE 
+gbak:restoring domain PONUMBER 
+gbak:restoring domain RDB$1 
+gbak:restoring domain RDB$2 
+gbak:restoring domain RDB$3 
+gbak:restoring domain RDB$4 
+gbak:restoring domain RDB$5 
+gbak:restoring domain RDB$6 
+gbak:restoring domain RDB$7 
+gbak:restoring domain RDB$8 
+gbak:restoring domain RDB$9 
+gbak:restoring domain RDB$10 
+gbak:restoring domain RDB$11 
+gbak:restoring domain RDB$12 
+gbak:restoring domain RDB$13 
+gbak:restoring domain RDB$14 
+gbak:restoring domain RDB$15 
+gbak:restoring domain RDB$16 
+gbak:restoring domain RDB$17 
+gbak:restoring domain RDB$18 
+gbak:restoring domain RDB$19 
+gbak:restoring domain RDB$20 
+gbak:restoring domain RDB$21 
+gbak:restoring domain RDB$22 
+gbak:restoring domain RDB$23 
+gbak:restoring domain RDB$24 
+gbak:restoring domain RDB$25 
+gbak:restoring domain RDB$26 
+gbak:restoring domain RDB$27 
+gbak:restoring domain RDB$28 
+gbak:restoring domain RDB$29 
+gbak:restoring domain RDB$30 
+gbak:restoring domain RDB$31 
+gbak:restoring domain RDB$32 
+gbak:restoring domain RDB$33 
+gbak:restoring domain RDB$34 
+gbak:restoring domain RDB$35 
+gbak:restoring domain RDB$36 
+gbak:restoring domain RDB$37 
+gbak:restoring domain RDB$38 
+gbak:restoring domain RDB$39 
+gbak:restoring domain RDB$40 
+gbak:restoring domain RDB$41 
+gbak:restoring domain RDB$42 
+gbak:restoring domain RDB$43 
+gbak:restoring domain RDB$44 
+gbak:restoring domain RDB$45 
+gbak:restoring domain RDB$46 
+gbak:restoring domain RDB$47 
+gbak:restoring domain RDB$48 
+gbak:restoring domain RDB$49 
+gbak:restoring domain RDB$50 
+gbak:restoring domain RDB$51 
+gbak:restoring domain RDB$52 
+gbak:restoring domain RDB$53 
+gbak:restoring domain RDB$54 
+gbak:restoring domain RDB$55 
+gbak:restoring domain RDB$56 
+gbak:restoring domain RDB$57 
+gbak:restoring domain RDB$58 
+gbak:restoring domain RDB$59 
+gbak:restoring domain RDB$60 
+gbak:restoring domain RDB$61 
+gbak:restoring domain RDB$62 
+gbak:restoring domain RDB$63 
+gbak:restoring domain RDB$64 
+gbak:restoring table COUNTRY 
+gbak:    restoring column CURRENCY 
+gbak:    restoring column COUNTRY 
+gbak:restoring table JOB 
+gbak:    restoring column JOB_REQUIREMENT 
+gbak:    restoring column MAX_SALARY 
+gbak:    restoring column MIN_SALARY 
+gbak:    restoring column JOB_GRADE 
+gbak:    restoring column LANGUAGE_REQ 
+gbak:    restoring column JOB_TITLE 
+gbak:    restoring column JOB_COUNTRY 
+gbak:    restoring column JOB_CODE 
+gbak:restoring table DEPARTMENT 
+gbak:    restoring column BUDGET 
+gbak:    restoring column PHONE_NO 
+gbak:    restoring column MNGR_NO 
+gbak:    restoring column LOCATION 
+gbak:    restoring column HEAD_DEPT 
+gbak:    restoring column DEPARTMENT 
+gbak:    restoring column DEPT_NO 
+gbak:restoring table EMPLOYEE 
+gbak:    restoring column SALARY 
+gbak:    restoring column HIRE_DATE 
+gbak:    restoring column JOB_GRADE 
+gbak:    restoring column PHONE_EXT 
+gbak:    restoring column LAST_NAME 
+gbak:    restoring column EMP_NO 
+gbak:    restoring column FULL_NAME 
+gbak:    restoring column JOB_COUNTRY 
+gbak:    restoring column JOB_CODE 
+gbak:    restoring column DEPT_NO 
+gbak:    restoring column FIRST_NAME 
+gbak:restoring table PHONE_LIST 
+gbak:    restoring column PHONE_NO 
+gbak:    restoring column PHONE_EXT 
+gbak:    restoring column LAST_NAME 
+gbak:    restoring column EMP_NO 
+gbak:    restoring column LOCATION 
+gbak:    restoring column FIRST_NAME 
+gbak:restoring table PROJECT 
+gbak:    restoring column PROJ_DESC 
+gbak:    restoring column PRODUCT 
+gbak:    restoring column TEAM_LEADER 
+gbak:    restoring column PROJ_NAME 
+gbak:    restoring column PROJ_ID 
+gbak:restoring table CUSTOMER 
+gbak:    restoring column ADDRESS_LINE2 
+gbak:    restoring column ADDRESS_LINE1 
+gbak:    restoring column CUST_NO 
+gbak:    restoring column POSTAL_CODE 
+gbak:    restoring column PHONE_NO 
+gbak:    restoring column CONTACT_LAST 
+gbak:    restoring column ON_HOLD 
+gbak:    restoring column COUNTRY 
+gbak:    restoring column STATE_PROVINCE 
+gbak:    restoring column CITY 
+gbak:    restoring column CONTACT_FIRST 
+gbak:    restoring column CUSTOMER 
+gbak:restoring table SALES 
+gbak:    restoring column AGED 
+gbak:    restoring column DATE_NEEDED 
+gbak:    restoring column SHIP_DATE 
+gbak:    restoring column ORDER_DATE 
+gbak:    restoring column PO_NUMBER 
+gbak:    restoring column DISCOUNT 
+gbak:    restoring column TOTAL_VALUE 
+gbak:    restoring column QTY_ORDERED 
+gbak:    restoring column CUST_NO 
+gbak:    restoring column ITEM_TYPE 
+gbak:    restoring column SALES_REP 
+gbak:    restoring column PAID 
+gbak:    restoring column ORDER_STATUS 
+gbak:restoring table EMPLOYEE_PROJECT 
+gbak:    restoring column EMP_NO 
+gbak:    restoring column PROJ_ID 
+gbak:restoring table PROJ_DEPT_BUDGET 
+gbak:    restoring column PROJECTED_BUDGET 
+gbak:    restoring column QUART_HEAD_CNT 
+gbak:    restoring column FISCAL_YEAR 
+gbak:    restoring column DEPT_NO 
+gbak:    restoring column PROJ_ID 
+gbak:restoring table SALARY_HISTORY 
+gbak:    restoring column NEW_SALARY 
+gbak:    restoring column PERCENT_CHANGE 
+gbak:    restoring column OLD_SALARY 
+gbak:    restoring column CHANGE_DATE 
+gbak:    restoring column UPDATER_ID 
+gbak:    restoring column EMP_NO 
+gbak:restoring generator EMP_NO_GEN value: 145 
+gbak:restoring generator CUST_NO_GEN value: 1015 
+gbak:restoring stored procedure GET_EMP_PROJ 
+gbak:restoring parameter EMP_NO for stored procedure 
+gbak:restoring parameter PROJ_ID for stored procedure 
+gbak:restoring stored procedure ADD_EMP_PROJ 
+gbak:restoring parameter EMP_NO for stored procedure 
+gbak:restoring parameter PROJ_ID for stored procedure 
+gbak:restoring stored procedure SUB_TOT_BUDGET 
+gbak:restoring parameter HEAD_DEPT for stored procedure 
+gbak:restoring parameter TOT_BUDGET for stored procedure 
+gbak:restoring parameter AVG_BUDGET for stored procedure 
+gbak:restoring parameter MIN_BUDGET for stored procedure 
+gbak:restoring parameter MAX_BUDGET for stored procedure 
+gbak:restoring stored procedure DELETE_EMPLOYEE 
+gbak:restoring parameter EMP_NUM for stored procedure 
+gbak:restoring stored procedure DEPT_BUDGET 
+gbak:restoring parameter DNO for stored procedure 
+gbak:restoring parameter TOT for stored procedure 
+gbak:restoring stored procedure ORG_CHART 
+gbak:restoring parameter HEAD_DEPT for stored procedure 
+gbak:restoring parameter DEPARTMENT for stored procedure 
+gbak:restoring parameter MNGR_NAME for stored procedure 
+gbak:restoring parameter TITLE for stored procedure 
+gbak:restoring parameter EMP_CNT for stored procedure 
+gbak:restoring stored procedure MAIL_LABEL 
+gbak:restoring parameter CUST_NO for stored procedure 
+gbak:restoring parameter LINE1 for stored procedure 
+gbak:restoring parameter LINE2 for stored procedure 
+gbak:restoring parameter LINE3 for stored procedure 
+gbak:restoring parameter LINE4 for stored procedure 
+gbak:restoring parameter LINE5 for stored procedure 
+gbak:restoring parameter LINE6 for stored procedure 
+gbak:restoring stored procedure SHIP_ORDER 
+gbak:restoring parameter PO_NUM for stored procedure 
+gbak:restoring stored procedure SHOW_LANGS 
+gbak:restoring parameter CODE for stored procedure 
+gbak:restoring parameter GRADE for stored procedure 
+gbak:restoring parameter CTY for stored procedure 
+gbak:restoring parameter LANGUAGES for stored procedure 
+gbak:restoring stored procedure ALL_LANGS 
+gbak:restoring parameter CODE for stored procedure 
+gbak:restoring parameter GRADE for stored procedure 
+gbak:restoring parameter COUNTRY for stored procedure 
+gbak:restoring parameter LANG for stored procedure 
+gbak:restoring exception UNKNOWN_EMP_ID 
+gbak:restoring exception REASSIGN_SALES 
+gbak:restoring exception ORDER_ALREADY_SHIPPED 
+gbak:restoring exception CUSTOMER_ON_HOLD 
+gbak:restoring exception CUSTOMER_CHECK 
+gbak:    committing metadata 
+gbak:    restoring index RDB$PRIMARY20 
+gbak:    restoring index RDB$FOREIGN21 
+gbak:    restoring index UPDATERX 
+gbak:    restoring index CHANGEX 
+gbak:restoring data for table SALARY_HISTORY 
+gbak:   49 records restored 
+gbak:    restoring index RDB$PRIMARY17 
+gbak:    restoring index RDB$FOREIGN18 
+gbak:    restoring index RDB$FOREIGN19 
+gbak:restoring data for table PROJ_DEPT_BUDGET 
+gbak:   24 records restored 
+gbak:    restoring index RDB$PRIMARY14 
+gbak:    restoring index RDB$FOREIGN15 
+gbak:    restoring index RDB$FOREIGN16 
+gbak:restoring data for table EMPLOYEE_PROJECT 
+gbak:   28 records restored 
+gbak:    restoring index RDB$PRIMARY24 
+gbak:    restoring index RDB$FOREIGN25 
+gbak:    restoring index RDB$FOREIGN26 
+gbak:    restoring index NEEDX 
+gbak:    restoring index SALESTATX 
+gbak:    restoring index QTYX 
+gbak:restoring data for table SALES 
+gbak:   33 records restored 
+gbak:    restoring index RDB$PRIMARY22 
+gbak:    restoring index RDB$FOREIGN23 
+gbak:    restoring index CUSTNAMEX 
+gbak:    restoring index CUSTREGION 
+gbak:restoring data for table CUSTOMER 
+gbak:   15 records restored 
+gbak:    restoring index RDB$11 
+gbak:    restoring index RDB$PRIMARY12 
+gbak:    restoring index RDB$FOREIGN13 
+gbak:    restoring index PRODTYPEX 
+gbak:restoring data for table PROJECT 
+gbak:   6 records restored 
+gbak:    restoring index RDB$PRIMARY7 
+gbak:    restoring index RDB$FOREIGN8 
+gbak:    restoring index RDB$FOREIGN9 
+gbak:    restoring index NAMEX 
+gbak:restoring data for table EMPLOYEE 
+gbak:   42 records restored 
+gbak:    restoring index RDB$4 
+gbak:    restoring index RDB$PRIMARY5 
+gbak:    restoring index RDB$FOREIGN6 
+gbak:    restoring index BUDGETX 
+gbak:    restoring index RDB$FOREIGN10 
+gbak:restoring data for table DEPARTMENT 
+gbak:   21 records restored 
+gbak:    restoring index RDB$PRIMARY2 
+gbak:    restoring index RDB$FOREIGN3 
+gbak:    restoring index MINSALX 
+gbak:    restoring index MAXSALX 
+gbak:restoring data for table JOB 
+gbak:   31 records restored 
+gbak:    restoring index RDB$PRIMARY1 
+gbak:restoring data for table COUNTRY 
+gbak:   14 records restored 
+gbak:    restoring trigger CHECK_1 
+gbak:    restoring trigger CHECK_2 
+gbak:    restoring trigger CHECK_3 
+gbak:    restoring trigger CHECK_4 
+gbak:    restoring trigger SET_EMP_NO 
+gbak:    restoring trigger CHECK_5 
+gbak:    restoring trigger CHECK_6 
+gbak:    restoring trigger CHECK_7 
+gbak:    restoring trigger CHECK_8 
+gbak:    restoring trigger SAVE_SALARY_CHANGE 
+gbak:    restoring trigger CHECK_9 
+gbak:    restoring trigger CHECK_10 
+gbak:    restoring trigger SET_CUST_NO 
+gbak:    restoring trigger CHECK_11 
+gbak:    restoring trigger CHECK_12 
+gbak:    restoring trigger CHECK_13 
+gbak:    restoring trigger CHECK_14 
+gbak:    restoring trigger CHECK_15 
+gbak:    restoring trigger CHECK_16 
+gbak:    restoring trigger CHECK_17 
+gbak:    restoring trigger CHECK_18 
+gbak:    restoring trigger CHECK_19 
+gbak:    restoring trigger CHECK_20 
+gbak:    restoring trigger CHECK_21 
+gbak:    restoring trigger CHECK_22 
+gbak:    restoring trigger CHECK_23 
+gbak:    restoring trigger CHECK_24 
+gbak:    restoring trigger CHECK_25 
+gbak:    restoring trigger CHECK_26 
+gbak:    restoring trigger CHECK_27 
+gbak:    restoring trigger CHECK_28 
+gbak:    restoring trigger POST_NEW_ORDER 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user SYSDBA 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:    restoring privilege for user PUBLIC 
+gbak:creating indexes 
+gbak:    activating and creating deferred index RDB$PRIMARY20 
+gbak:    activating and creating deferred index UPDATERX 
+gbak:    activating and creating deferred index CHANGEX 
+gbak:    activating and creating deferred index RDB$PRIMARY17 
+gbak:    activating and creating deferred index RDB$PRIMARY14 
+gbak:    activating and creating deferred index RDB$PRIMARY24 
+gbak:    activating and creating deferred index NEEDX 
+gbak:    activating and creating deferred index SALESTATX 
+gbak:    activating and creating deferred index QTYX 
+gbak:    activating and creating deferred index RDB$PRIMARY22 
+gbak:    activating and creating deferred index CUSTNAMEX 
+gbak:    activating and creating deferred index CUSTREGION 
+gbak:    activating and creating deferred index RDB$11 
+gbak:    activating and creating deferred index RDB$PRIMARY12 
+gbak:    activating and creating deferred index PRODTYPEX 
+gbak:    activating and creating deferred index RDB$PRIMARY7 
+gbak:    activating and creating deferred index NAMEX 
+gbak:    activating and creating deferred index RDB$4 
+gbak:    activating and creating deferred index RDB$PRIMARY5 
+gbak:    activating and creating deferred index BUDGETX 
+gbak:    activating and creating deferred index RDB$PRIMARY2 
+gbak:    activating and creating deferred index MINSALX 
+gbak:    activating and creating deferred index MAXSALX 
+gbak:    activating and creating deferred index RDB$PRIMARY1 
+gbak:    activating and creating deferred index RDB$FOREIGN3 
+gbak:    activating and creating deferred index RDB$FOREIGN6 
+gbak:    activating and creating deferred index RDB$FOREIGN8 
+gbak:    activating and creating deferred index RDB$FOREIGN9 
+gbak:    activating and creating deferred index RDB$FOREIGN10 
+gbak:    activating and creating deferred index RDB$FOREIGN13 
+gbak:    activating and creating deferred index RDB$FOREIGN15 
+gbak:    activating and creating deferred index RDB$FOREIGN16 
+gbak:    activating and creating deferred index RDB$FOREIGN18 
+gbak:    activating and creating deferred index RDB$FOREIGN19 
+gbak:    activating and creating deferred index RDB$FOREIGN21 
+gbak:    activating and creating deferred index RDB$FOREIGN23 
+gbak:    activating and creating deferred index RDB$FOREIGN25 
+gbak:    activating and creating deferred index RDB$FOREIGN26 
+gbak:    committing metadata 
+gbak:finishing, closing, and going home 
 Output completed

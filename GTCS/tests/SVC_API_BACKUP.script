@@ -176,3 +176,4 @@ $ LINK FLAG_LINK svc_api_backup
 $ RUN svc_api_backup
 $ DROP WHERE_GDB:employee.gdb
 $ DELETE svc_api_backup.*
+$ DELETE svc_api_backup*
