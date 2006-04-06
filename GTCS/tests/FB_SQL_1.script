@@ -4,7 +4,7 @@
 #
 
 $ GBAK -r WHERE_FILES:atlas.gbk WHERE_GDB:atlas.gdb
-$ISQL -m WHERE_GDB:atlas.gdb -i WHERE_EXAMPLES:ib_udf.sql
+$ISQL -m WHERE_GDB:atlas.gdb -i WHERE_EXAMPLES:ib_udf2.sql
 >> udfgrp.epp
 /**********************************************************************
  Purpose:		Test group by a udf function 
