@@ -25,9 +25,20 @@ GROUP BY--it does not appear sorted.
 The final test is done in ISQL and produces the error at the end of the results.
 ISQL does not support the GROUP BY COLLATE used in this way.
 
+>> subq11a.sql
+connect "WHERE_GDB:tests.gdb";
+CREATE GENERATOR GEN_IDML_C_SUBQ_11;
+set term ^;
+CREATE TRIGGER TRIG_IDML_C_SUBQ_11A FOR TEST_TABLE1 BEFORE INSERT AS
+	 	BEGIN new.S_ROWID = GEN_ID(GEN_IDML_C_SUBQ_11, 1); END^
+CREATE TRIGGER TRIG_IDML_C_SUBQ_11B FOR TEST_TABLE2 BEFORE INSERT AS
+	 	BEGIN new.S_ROWID = GEN_ID(GEN_IDML_C_SUBQ_11, 1); END^
+COMMIT^
+quit^
+
 >> subq11.e 
 /*-------------------------------------------------------------------------
-  Case 10:  INSERT <table> SET <field> = "string" WHERE (subquery w/group by)
+  Case 11:  INSERT <table> SET <field> = "string" WHERE (subquery w/group by)
 ---------------------------------------------------------------------------*/
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,19 +57,19 @@ main()
 {
      EXEC SQL CONNECT db;
 
-     EXEC SQL DELETE FROM TEST_TABLE2;
      EXEC SQL DELETE FROM TEST_TABLE1;
+     EXEC SQL DELETE FROM TEST_TABLE2;
      EXEC SQL COMMIT;
-     
+
      printf("\nAttempting an insert using a SUBQUERY with GROUP BY COLLATE FR_FR--works.\n\n");
      EXEC SQL
-         INSERT INTO TEST_TABLE1 
+         INSERT INTO TEST_TABLE1
 	 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 FROM STRING_TABLE 
 	 GROUP BY C_FRANCE COLLATE FR_FR;   
      EXEC SQL COMMIT;
 
      EXEC SQL
-         INSERT INTO TEST_TABLE2 
+         INSERT INTO TEST_TABLE2
 	 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 FROM STRING_TABLE;
      EXEC SQL COMMIT;
 
@@ -66,14 +77,26 @@ main()
      exit(0);
 err: print_error();
 }
+
+>> subq11b.sql
+connect "WHERE_GDB:tests.gdb";
+DROP TRIGGER TRIG_IDML_C_SUBQ_11A;
+DROP TRIGGER TRIG_IDML_C_SUBQ_11B;
+DROP GENERATOR GEN_IDML_C_SUBQ_11;
+COMMIT;
+quit;
+
 >> ver11.sql 
 connect "WHERE_GDB:tests.gdb";
-SELECT ' table 1: ', C_ENUS, C_FRANCE, C_437_25 FROM TEST_TABLE1;
-SELECT ' table 2: ', C_ENUS, C_FRANCE, C_437_25 FROM TEST_TABLE2;
+SELECT ' table 1: ', C_ENUS, C_FRANCE, C_437_25 FROM TEST_TABLE1 ORDER BY S_ROWID;
+SELECT ' table 2: ', C_ENUS, C_FRANCE, C_437_25 FROM TEST_TABLE2 ORDER BY S_ROWID;
 quit;
 
 >> subq11.sql 
 connect "WHERE_GDB:tests.gdb";
+COMMIT;
+
+delete from test_table2;
 delete from test_table1;
 COMMIT;
 
@@ -89,7 +112,9 @@ $ TYPE doc_s11
 $ GPRE subq11.e
 $ CC FLAG_CC subq11.c
 $ LINK FLAG_LINK subq11 
+$ ISQL -i subq11a.sql -m
 $ RUN subq11
+$ ISQL -i subq11b.sql -m
 $ ISQL -i ver11.sql -m
 $ ISQL -i subq11.sql -m
 

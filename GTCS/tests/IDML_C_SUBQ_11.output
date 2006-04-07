@@ -7,9 +7,11 @@ GROUP BY--it does not appear sorted.
 The final test is done in ISQL and produces the error at the end of the results.
 ISQL does not support the GROUP BY COLLATE used in this way.
 
+Use CONNECT or CREATE DATABASE to specify a database
 
 Attempting an insert using a SUBQUERY with GROUP BY COLLATE FR_FR--works.
 
+Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
 
            C_ENUS                    C_FRANCE                  C_437_25                  
@@ -38,4 +40,4 @@ Statement failed, SQLCODE = -104
 Dynamic SQL Error
 -SQL error code = -104
 -Invalid expression in the select list (not contained in either an aggregate function or the GROUP BY clause)
-After line 3 in file subq11.sql
+After line 6 in file subq11.sql
