@@ -45,6 +45,6 @@ execute procedure power 2, 1000;
 execute procedure power 4.45, 100;
 execute procedure power 2, 1024;
 quit;
-$ ISQL -m -i power.sql -m
+$ ISQL -m -i power.sql
 $DROP WHERE_GDB:power.gdb
 $ DELETE power.sql
