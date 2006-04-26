@@ -1,3 +1,68 @@
+2006-04-07	alexpeshkoff
+	* GTCS/tests/IDML_C_SUBQ_11.output 1.5:
+	* GTCS/tests/IDML_C_SUBQ_11.script 1.4:
+		fixed badly written test
+
+	* GTCS/tests/PROC_POWER.script 1.4:
+		fixed duplicated switch of isql
+
+	* LI_LTCS/environments/env_linux 1.3:
+		make it buildable on old linuxes
+
+2006-04-06	alexpeshkoff
+	* GTCS/tests/FB_SQL_1.script 1.5:
+		fixed UDF test
+
+	* GTCS/tests/SVC_API_BACKUP.output 1.4:
+	* GTCS/tests/SVC_API_BACKUP.script 1.8:
+	* GTCS/tests/SVC_API_RESTORE.output 1.4:
+	* GTCS/tests/SVC_API_RESTORE.script 1.9:
+		fixed backup and restore (using services) tests
+
+	* GTCS/tests/REF_INT.5.ISQL.output 1.5:
+	* GTCS/tests/REF_INT.6.ISQL.output 1.5:
+	* GTCS/tests/REF_INT.7.ISQL.output 1.5:
+	* GTCS/tests/REF_INT.8.ISQL.output 1.5:
+		fixed REF_INT tests
+
+2006-04-05	alexpeshkoff
+	* GTCS/tests/SVC_API_BACKUP.knownbug 1.4:
+		bug already fixed
+
+2006-03-28	alexpeshkoff
+	* GTCS/tests/DSQL_EXCEPT_03.output 1.5:
+		fixed DSQL_EXCEPT series
+
+	* GTCS/tests/CF_ISQL_26.output 1.5:
+	* GTCS/tests/CF_ISQL_27.knownbug 1.5:
+	* GTCS/tests/CF_ISQL_27.output 1.4:
+	* GTCS/tests/CF_ISQL_27.script 1.5:
+	* GTCS/tests/CF_ISQL_31.knownbug 1.5:
+		fixed CF_ISQL series
+
+	* GTCS/tests/FB_SQL_1.output 1.4:
+		fixed FB_SQL
+
+	* GTCS/tests/PROC_ARRAY2.output 1.5:
+		fixed QA_PROCS_ISQL
+
+2006-01-05	alexpeshkoff
+	* GTCS/tests/SVC_API_BACKUP.script 1.7:
+	* GTCS/tests/SVC_API_CONNECT.script 1.5:
+	* GTCS/tests/SVC_API_DB_STATS1.script 1.3:
+	* GTCS/tests/SVC_API_DB_STATS2.script 1.3:
+	* GTCS/tests/SVC_API_DB_STATS3.script 1.3:
+	* GTCS/tests/SVC_API_DB_STATS4.script 1.3:
+	* GTCS/tests/SVC_API_DB_STATS5.script 1.3:
+	* GTCS/tests/SVC_API_RESTORE.script 1.8:
+	* GTCS/tests/SVC_API_SWEEP_DB.script 1.7:
+	* GTCS/tests/SVC_API_VALIDATE_DB.script 1.6:
+		don't use internal type in tests
+
+2006-01-03	alexpeshkoff
+	* GTCS/tests/FB_SQL_1.output 1.3:
+		Dialect 1 database can not declare "LOWER" function
+
 2005-12-30	alexpeshkoff
 	* GTCS/tests/AUTO_DDL.EXCP.DSQL.output 1.5:
 		fix after isql output modification
