@@ -8,7 +8,7 @@
 quit;
 
 $GFIX -shut -force 10 WHERE_GDB:test.gdb
-$ISQL -m -u qa_user2 -pw qa_user2 WHERE_GDB:test.gdb -i isql.in
+$ISQL -m -u qa_user2 -p qa_user2 WHERE_GDB:test.gdb -i isql.in
 $GFIX -online WHERE_GDB:test.gdb
-$ISQL -m -u qa_user2 -pw qa_user2 WHERE_GDB:test.gdb -i isql.in
+$ISQL -m -u qa_user2 -p qa_user2 WHERE_GDB:test.gdb -i isql.in
 $DELETE isql.in
