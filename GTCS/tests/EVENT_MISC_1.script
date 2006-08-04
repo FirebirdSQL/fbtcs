@@ -22,7 +22,7 @@ char *event_names [] = { "DG", "DEC", "HP", "IBM", "SUN" };
 #define SLACK_TIME 150 
 #define number_of_stocks 5
 
-DATABASE STOCKS_DB = COMPILETIME "stocks.gdb" RUNTIME db_name; 
+DATABASE STOCKS_DB = COMPILETIME "WHERE_GDB:stocks.gdb" RUNTIME db_name; 
 
 char db_name[256];
 
@@ -47,7 +47,7 @@ char ** argv;
   if ( argv[1] )
           strcpy(db_name, argv[1]);
   else
-          strcpy(db_name, "stocks.gdb");
+          strcpy(db_name, "WHERE_GDB:stocks.gdb");
 
   READY STOCKS_DB;
 
@@ -152,7 +152,7 @@ char ** argv;
 
 char *company_name [] = {"DG", "DEC", "HP", "IBM", "SUN" };
 
-DATABASE DB = COMPILETIME "stocks.gdb" RUNTIME db_name;
+DATABASE DB = COMPILETIME "WHERE_GDB:stocks.gdb" RUNTIME db_name;
 
 char db_name[256];
 
@@ -168,7 +168,7 @@ char **argv;
         if ( argv[1] )
              strcpy(db_name, argv[1]);
         else
-             strcpy(db_name, "stocks.gdb");
+             strcpy(db_name, "WHERE_GDB:stocks.gdb");
 
 
 
@@ -195,7 +195,7 @@ char **argv;
 }
 >> stocks.gdl
 
-define database "stocks.gdb"
+define database "WHERE_GDB:stocks.gdb"
 	page_size 1024;
 
 
@@ -239,7 +239,7 @@ if new.price != old.price
 	end_trigger;
 $GDEF -r stocks.gdl
 >> input.sql
-connect stocks.gdb;
+connect WHERE_GDB:stocks.gdb;
 insert into stocks ( company, price) values ( "DG", 55.50);
 insert into stocks ( company, price) values ( "DEC", 122.00);
 insert into stocks ( company, price) values ( "IBM", 145.00);
@@ -257,6 +257,5 @@ $LINK FLAG_LINK post_events
 $LINK FLAG_LINK event_mgr 
 $RUN event_mgr
 $SLEEP 5
-$DELETE event_mgr* post_events* input.sql stocks.gdl stocks.gdb
-
-
+$DELETE event_mgr* post_events* input.sql stocks.gdl
+$DROP WHERE_GDB:stocks.gdb
