@@ -2,76 +2,52 @@ connected to service manager OK
 service started OK
 querying service
 reading response
-
-querying service
+ querying service
 reading response
-Database "WHERE_GDB_EXTERNAL:employee.gdb"
-querying service
+Database "WHERE_GDB_EXTERNAL:employee.gdb" querying service
 reading response
-Database header page information:
-querying service
+Database header page information: querying service
 reading response
-	Flags			0
-querying service
+	Flags			0 querying service
 reading response
-	Checksum		12345
-querying service
+	Checksum		12345 querying service
 reading response
-	Generation		25
-querying service
+	Generation		25 querying service
 reading response
-	Page size		1024
-querying service
+	Page size		1024 querying service
 reading response
-	ODS version		11.0
-querying service
+	ODS version		11.0 querying service
 reading response
-	Oldest transaction	1
-querying service
+	Oldest transaction	1 querying service
 reading response
-	Oldest active		2
-querying service
+	Oldest active		2 querying service
 reading response
-	Oldest snapshot		1
-querying service
+	Oldest snapshot		2 querying service
 reading response
-	Next transaction	19
-querying service
+	Next transaction	19 querying service
 reading response
-	Bumped transaction	1
-querying service
+	Bumped transaction	1 querying service
 reading response
-	Sequence number		0
-querying service
+	Sequence number		0 querying service
 reading response
-	Next attachment ID	0
-querying service
+	Next attachment ID	0 querying service
 reading response
-	Implementation ID	19
-querying service
+	Implementation ID	19 querying service
 reading response
-	Shadow count		0
-querying service
+	Shadow count		0 querying service
 reading response
-	Page buffers		0
-querying service
+	Page buffers		0 querying service
 reading response
-	Next header page	0
-querying service
+	Next header page	0 querying service
 reading response
-	Database dialect	1
-querying service
+	Database dialect	1 querying service
 reading response
-
-querying service
+ querying service
 reading response
-    Variable header data:
-querying service
+    Variable header data: querying service
 reading response
-	Sweep interval:		20000
-querying service
+	Sweep interval:		20000 querying service
 reading response
-	*END*
-querying service
+	*END* querying service
 reading response
 Output completed

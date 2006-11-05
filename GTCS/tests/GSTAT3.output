@@ -3,13 +3,13 @@ Database "WHERE_GDB_EXTERNAL:employee.gdb"
 Database header page information:
 	Flags			0
 	Checksum		12345
-	Generation		26
+	Generation		25
 	Page size		1024
 	ODS version		11.0
-	Oldest transaction	18
-	Oldest active		19
-	Oldest snapshot		19
-	Next transaction	20
+	Oldest transaction	1
+	Oldest active		2
+	Oldest snapshot		2
+	Next transaction	19
 	Bumped transaction	1
 	Sequence number		0
 	Next attachment ID	0
@@ -570,7 +570,7 @@ RDB$EXCEPTIONS (30)
 
 RDB$FIELDS (2)
     Primary pointer page: 8, Index root page: 9
-    Data pages: 16, data page slots: 16, average fill: 70%
+    Data pages: 16, data page slots: 16, average fill: 72%
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 1

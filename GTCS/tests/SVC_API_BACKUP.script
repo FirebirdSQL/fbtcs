@@ -1,4 +1,4 @@
-$GBAK -r WHERE_FILES:employee.gbk WHERE_GDB_EXTERNAL:employee.gdb
+$GBAK -r WHERE_FILES:employee.gbk WHERE_GDB:employee.gdb
 >> svc_api_backup.cpp
 
 #include <stdio.h>

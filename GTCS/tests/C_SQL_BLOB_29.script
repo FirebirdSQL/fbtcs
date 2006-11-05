@@ -1,5 +1,5 @@
 
-$ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_29.gdb
+$ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_29.gdb
 >> blob090.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0

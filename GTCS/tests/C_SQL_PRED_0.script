@@ -8,7 +8,7 @@
 # Author:		Sam Hakim, Feb 18, 93
 #************************************************************************
 
-$ GBAK -r WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
+$ GBAK -rep WHERE_FILES:sh_test.gbk WHERE_GDB:sh_test.gdb
 >> sin001.e
 
 #include <stdio.h>

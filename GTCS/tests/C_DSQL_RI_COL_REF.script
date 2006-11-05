@@ -2,7 +2,7 @@
 #HISTORY:
 #
 
-$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ GBAK -rep WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
 >> col_ref.epp
 #include <stdio.h>

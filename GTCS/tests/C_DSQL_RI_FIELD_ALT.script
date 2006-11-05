@@ -7,7 +7,7 @@
 #          see comments in C_DSQL_RI_ALT_DROP. clare.
 #
 
-$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ GBAK -rep WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
 >> fieldalt.epp
 #include <stdio.h>

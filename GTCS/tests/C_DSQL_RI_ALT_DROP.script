@@ -16,7 +16,7 @@
 #   Either bug fix or?? (bug 8531)
 #
 
-$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ GBAK -rep WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
 
 >> alt_drop.epp

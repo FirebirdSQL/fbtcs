@@ -1,4 +1,3 @@
 $GBAK -r WHERE_FILES:employee.gbk WHERE_GDB_EXTERNAL:employee.gdb
 $GSTAT -l -n WHERE_GDB_EXTERNAL:employee.gdb
-$DROP WHERE_GDB_EXTERNAL:employee.gdb
-
+$DELETE WHERE_GDB_EXTERNAL:employee.gdb

@@ -8,7 +8,7 @@
 #          see comments in C_DSQL_RI_ALT_DROP.
 #
 
-$ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
+$ GBAK -rep WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 $ RUN ri_views WHERE_GDB:atlas.gdb
 >> drop_tab.epp
 #include <stdio.h>
