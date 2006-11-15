@@ -37,7 +37,7 @@ const int SYMDFN		= 3;	// line type for symbol definitions
 const int NOXCMD		= 4;	// line type for non translated commands
 const int REGTXT		= 5;	// line type for regular text
 const int COMML			= 6;	// line type for comment
-const int BUFSIZE		= 1024;	/* max input line length */
+const int BUFSIZE		= 4096;	/* max input line length */
 
 // Miscellaneous constants
 static const int MAX_LINE		= 80;
@@ -63,7 +63,7 @@ typedef enum test_result {
 const int NUM_RESULTS = unknown_result + 1;
 
 typedef unsigned short USHORT;
-typedef unsigned long ULONG;
+typedef unsigned long U_LONG;
 extern USHORT	sw_nt_bash;
 
 const int gds__dpb_version1			= 1;

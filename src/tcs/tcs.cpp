@@ -59,7 +59,7 @@ static struct test_results
 } series_results;
 
 static int parse_main_options(char* p);
-static int parse_series_args(char* , SSHORT*, SSHORT*, bool*);
+static int parse_series_args(char* , ISC_SHORT*, ISC_SHORT*, bool*);
 
 static int set_config(char*);
 static void set_symbol(char*);
@@ -482,7 +482,7 @@ static int parse_main_options(char *p)
 	return true;
 }
 
-static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *break_flag )
+static int parse_series_args (char *start, ISC_SHORT *first, ISC_SHORT *second, bool *break_flag )
 {
 	/**************************************
 	 *
@@ -496,7 +496,7 @@ static int parse_series_args (char *start, SSHORT *first, SSHORT *second, bool *
 	 *	Called by test_series.
 	 *
 	 **************************************/
-	SSHORT range;
+	ISC_SHORT range;
 	char *previous;
 	static char *current;
 
@@ -745,7 +745,7 @@ static int set_config(char *rfn)
 	 ************************************/
 	char*	line_buf;
 	FILE*	rfp;
-	USHORT	line_idx, start;
+	ISC_USHORT	line_idx, start;
 	char*	buffer;
 
 	// Open the configuration file.
@@ -793,7 +793,7 @@ static int set_config(char *rfn)
 		*cmd = 0;
 
 		// Loop through chars in a line
-		USHORT cmd_idx;
+		ISC_USHORT cmd_idx;
 		for (cmd_idx = 0; line_buf[line_idx] != '\0' && line_buf[line_idx] != '\n';
 			line_idx++, cmd_idx )
 		{
@@ -1064,7 +1064,7 @@ static int test_one(char *string)
 	 *	Compare the results of a script to the "correct" output.
 	 *
 	 **************************************/
-	USHORT		count;
+	ISC_USHORT		count;
 	TEST_RESULT	result;
 	char		test_name[33];
 	struct tm	times;
@@ -1157,8 +1157,8 @@ static int test_meta_series(char *string, char *start)
 	sprintf(gSeriesList,"%s/series/list",gBaseDir);
 	sprintf(lSeriesList,"%s/series/list",lBaseDir);
 
-	USHORT	total;
-	SSHORT	first;
+	ISC_USHORT	total;
+	ISC_SHORT	first;
 
 	// Set first to the appropriate value depending on if start is
 	// NULL or not.  If NULL, set start to zero.
@@ -1270,8 +1270,8 @@ static int test_series(char *string, char *start)
 	sprintf(gSeriesList,"%s/series/list",gBaseDir);
 	sprintf(lSeriesList,"%s/series/list",lBaseDir);
 
-	USHORT	total, count;
-	SSHORT	first, second;
+	ISC_USHORT	total, count;
+	ISC_SHORT	first, second;
 	bool break_flag = true;
 	int 	loop = true;
 
@@ -1410,7 +1410,7 @@ static int test_series(char *string, char *start)
 			print_error("\tSeries %s isn't there.\n", string,0,0);
 		printf("\tend Series");
 
-		ULONG run_time = get_elapsed_time(times1);
+		U_LONG run_time = get_elapsed_time(times1);
 		printf("\t%ld s", run_time);
 		printf("\n");
 	}
@@ -1418,11 +1418,11 @@ static int test_series(char *string, char *start)
 	return true;
 }
 
-ULONG get_elapsed_time(struct tm times1)
+U_LONG get_elapsed_time(struct tm times1)
 {
 	const time_t clock = time(NULL);
 	struct tm times2 = *localtime (&clock);
-	ULONG run_time;
+	U_LONG run_time;
 
 	//  handle test running through midnight, but bag multi day test
 

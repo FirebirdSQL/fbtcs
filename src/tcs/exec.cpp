@@ -67,12 +67,12 @@ extern char*	oBaseDir;
 
 // Static declarations
 
-static int script_parse(char*, FILE*, USHORT*);
+static int script_parse(char*, FILE*, ISC_USHORT*);
 static int execute_script(char*, char*);
-static int run_text(char*, char*, char*, ULONG*, int*, char*);
-static int compare_files(char*, char*, SSHORT);
-static TEST_RESULT compare_initialized_file(char*, char*, char*, SSHORT);
-static int next_line(FILE*, char*, USHORT);
+static int run_text(char*, char*, char*, U_LONG*, int*, char*);
+static int compare_files(char*, char*, ISC_SHORT);
+static TEST_RESULT compare_initialized_file(char*, char*, char*, ISC_SHORT);
+static int next_line(FILE*, char*, ISC_USHORT);
 static int set_dollar_verb(char*, char*);
 //
 //  A variety of utilities put unwanted messages in
@@ -88,7 +88,7 @@ static int set_dollar_verb(char*, char*);
 typedef struct pita
 {
 	char	*line;
-	SSHORT	skip;
+	ISC_SHORT	skip;
 }
 *PITA;
 
@@ -116,7 +116,7 @@ int EXEC_process_env(char *script, char *name)
  *
  **************************************/
 
-	USHORT linetype;
+	ISC_USHORT linetype;
 	char* line_buf;
 
 	// split lines
@@ -192,7 +192,7 @@ TEST_RESULT EXEC_test(char *test_name,
  *
  **************************************/
 	TEST_RESULT		result;
-	ULONG			run_time;
+	U_LONG			run_time;
 	char			output_file_name[128];
 
 	sprintf(output_file_name, "%s/%s.out", oBaseDir, test_name);
@@ -220,7 +220,7 @@ TEST_RESULT EXEC_test(char *test_name,
 	//  If the ignore initialization flag is not set then compare the
 	//  output with the the initialization.
 
-	USHORT count = 0;
+	ISC_USHORT count = 0;
 	char test_output_name[128];
 	char compare_file_name[128];
 	FILE * pFile;
@@ -299,7 +299,7 @@ TEST_RESULT EXEC_test(char *test_name,
 	return (result);
 }
 
-static int compare_files(char *compare_file, char *output_file, SSHORT global)
+static int compare_files(char *compare_file, char *output_file, ISC_SHORT global)
 {
 	/**************************************
 	 *
@@ -319,7 +319,7 @@ static int compare_files(char *compare_file, char *output_file, SSHORT global)
 	 **************************************/
 	FILE	*file,*blob_file;
 	char	f_buff [2048], b_buff [2048], *p, *q, c, lastc;
-	USHORT	eof_blob, eof_file;
+	ISC_USHORT	eof_blob, eof_file;
 
 	//  Check to make sure an output file exists.
 
@@ -388,7 +388,7 @@ static int compare_files(char *compare_file, char *output_file, SSHORT global)
 static TEST_RESULT compare_initialized_file(char *compare_file,
 											char *output_file,
 											char *test_name,
-											SSHORT global)
+											ISC_SHORT global)
 {
 	/**************************************
 	 *
@@ -401,7 +401,7 @@ static TEST_RESULT compare_initialized_file(char *compare_file,
 	 *    use the stored results for a comparison
 	 *    
 	 **************************************/
-	USHORT			result;
+	ISC_USHORT			result;
 	TEST_RESULT		test_result;
 	char			diff_file[128];
 
@@ -459,7 +459,7 @@ static int execute_script(char *script_file, char *output_file)
 }
 
 
-static int next_line (FILE *file, char *buffer, USHORT buff_len)
+static int next_line (FILE *file, char *buffer, ISC_USHORT buff_len)
 {
 	/**************************************
 	 *
@@ -475,7 +475,7 @@ static int next_line (FILE *file, char *buffer, USHORT buff_len)
 	 *
 	 **************************************/
 	int		eof;
-	USHORT	skip = 0;
+	ISC_USHORT	skip = 0;
 
 	do {
 		eof = ! fgets (buffer, buff_len, file);
@@ -489,7 +489,7 @@ static int next_line (FILE *file, char *buffer, USHORT buff_len)
 static int run_text(char *script,
 					char *script_file_name,
 					char *output_file_name,
-					ULONG *run_time,
+					U_LONG *run_time,
 					int *file_count,
 					char* boilerplate_name)
 {
@@ -504,7 +504,7 @@ static int run_text(char *script,
 	 *
 	 **************************************/
 	FILE	*script_file;
-	USHORT	success, n;
+	ISC_USHORT	success, n;
 	char	data_file [15];
 
 	n = 0;
@@ -578,7 +578,7 @@ static int run_text(char *script,
 }
 
 
-static int script_parse(char *script, FILE *script_file, USHORT *n)
+static int script_parse(char *script, FILE *script_file, ISC_USHORT *n)
 {
 	/**************************************
 	 *
@@ -602,9 +602,9 @@ static int script_parse(char *script, FILE *script_file, USHORT *n)
 	FILE	*data;
 	bool	command;
 	bool	file_open;
-	USHORT	cmdcount, count, linetype;
+	ISC_USHORT	cmdcount, count, linetype;
 	char	*buff, *c, buffer [BUFSIZE], result[BUFSIZE], data_file [32];
-	SSHORT	ch;
+	ISC_SHORT	ch;
 
 	file_open = command = false;
 	cmdcount = 0;

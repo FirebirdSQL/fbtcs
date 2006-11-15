@@ -48,16 +48,16 @@ extern bool disk_io_error;
 const char* FOPEN_READ_TYPE		= "r";
 const char* FOPEN_WRITE_TYPE	= "w";
 
-static bool		check_match(LINE *line1, LINE *line2, SLONG min, SLONG linesleft);
-static ULONG	hash (char *str);
+static bool		check_match(LINE *line1, LINE *line2, ISC_LONG min, ISC_LONG linesleft);
+static U_LONG	hash (char *str);
 static LINE		*read_file(FILE *fileptr, FILE_BLK_PTR *fileblock);
-static void		print_lines(FILE *outfile, LINE *lines1, LINE *lines2, SLONG end1,
-							SLONG end2);
-static void		do_diff(FILE *outfile, LINE *line1, LINE *line2, SLONG linecount1,
-						SLONG linecount2);
+static void		print_lines(FILE *outfile, LINE *lines1, LINE *lines2, ISC_LONG end1,
+							ISC_LONG end2);
+static void		do_diff(FILE *outfile, LINE *line1, LINE *line2, ISC_LONG linecount1,
+						ISC_LONG linecount2);
 
-int do_diffs (char *input_1, char *input_2, char *diff_file, USHORT sw_win,
-				USHORT sw_match, USHORT sw_ignore)
+int do_diffs (char *input_1, char *input_2, char *diff_file, ISC_USHORT sw_win,
+				ISC_USHORT sw_match, ISC_USHORT sw_ignore)
 {
 	/**************************************
 	 *
@@ -111,7 +111,7 @@ int do_diffs (char *input_1, char *input_2, char *diff_file, USHORT sw_win,
 	return true;
 }
 
-static bool check_match(LINE *line1, LINE *line2, SLONG min, SLONG linesleft)
+static bool check_match(LINE *line1, LINE *line2, ISC_LONG min, ISC_LONG linesleft)
 {
 	/**************************************
 	 *
@@ -126,7 +126,7 @@ static bool check_match(LINE *line1, LINE *line2, SLONG min, SLONG linesleft)
 	 *        being so picky lest we venture
 	 *        beyond our buffers
 	 **************************************/
-	SLONG	i;
+	ISC_LONG	i;
 
 	if (linesleft < window + min)
 		return true;
@@ -142,8 +142,8 @@ static bool check_match(LINE *line1, LINE *line2, SLONG min, SLONG linesleft)
 	return true;
 }
 
-static int check_lines(LINE **line1,LINE **line2, SLONG *end1, SLONG *end2,
-                       SLONG count1, SLONG count2, SLONG linesleft)
+static int check_lines(LINE **line1,LINE **line2, ISC_LONG *end1, ISC_LONG *end2,
+                       ISC_LONG count1, ISC_LONG count2, ISC_LONG linesleft)
 {
 	/**************************************
 	 *
@@ -157,7 +157,7 @@ static int check_lines(LINE **line1,LINE **line2, SLONG *end1, SLONG *end2,
 	 *      window. 
 	 *
 	 **************************************/
-	SLONG	i, j;
+	ISC_LONG	i, j;
 	LINE 	*loop1, *loop2;
 
 	loop1 = *line1;
@@ -191,8 +191,8 @@ static int check_lines(LINE **line1,LINE **line2, SLONG *end1, SLONG *end2,
 }
 
 
-static void do_diff (FILE *outfile, LINE *line1, LINE *line2, SLONG linecount1,
-                     SLONG linecount2)
+static void do_diff (FILE *outfile, LINE *line1, LINE *line2, ISC_LONG linecount1,
+                     ISC_LONG linecount2)
 {
 	/**************************************
 	 *
@@ -206,8 +206,8 @@ static void do_diff (FILE *outfile, LINE *line1, LINE *line2, SLONG linecount1,
 	 *      checking to be sure that at least min
 	 *      lines match
 	 **************************************/
-	SLONG  	max_line1, max_line2, end1, end2;
-	SLONG	i, j, linesleft;
+	ISC_LONG  	max_line1, max_line2, end1, end2;
+	ISC_LONG	i, j, linesleft;
 	LINE 	*line1ptr, *line2ptr;
 
 	i = j = 0;
@@ -238,13 +238,13 @@ static void do_diff (FILE *outfile, LINE *line1, LINE *line2, SLONG linecount1,
 
 	}
 	if (j < linecount2)
-		print_lines (outfile, line1, line2, (SLONG) 0, linecount2 - j );
+		print_lines (outfile, line1, line2, (ISC_LONG) 0, linecount2 - j );
 	else
 		if (i < linecount1)
-			print_lines(outfile, line1, line2, linecount1 - i, (SLONG) 0);
+			print_lines(outfile, line1, line2, linecount1 - i, (ISC_LONG) 0);
 }
 
-static ULONG hash (char *str)
+static U_LONG hash (char *str)
 {
 	/**************************************
 	 *
@@ -256,7 +256,7 @@ static ULONG hash (char *str)
 	 * 
 	 *  	get stringlength and hashvalue 
 	 **************************************/
-	ULONG	chksum;
+	U_LONG	chksum;
 	char 	*s;
 
 	//--- Compute checksum of string ---
@@ -266,8 +266,8 @@ static ULONG hash (char *str)
 	return ((chksum & MASK) | ((s - str) << 8) ) ;
 }
 
-static void print_lines (FILE *outfile, LINE *lines1, LINE *lines2, SLONG end1,
-                         SLONG end2)
+static void print_lines (FILE *outfile, LINE *lines1, LINE *lines2, ISC_LONG end1,
+                         ISC_LONG end2)
 {
 	/**************************************
 	 *       
@@ -280,7 +280,7 @@ static void print_lines (FILE *outfile, LINE *lines1, LINE *lines2, SLONG end1,
 	 *	file1 is source (or old file) file2 target
 	 **************************************/
 	bool bSeparator = false;
-	SLONG nType ;
+	ISC_LONG nType ;
 	char range1[32], range2[32];
 
 	if (!end2)
@@ -354,22 +354,22 @@ static LINE *read_file (FILE *fileptr, FILE_BLK_PTR *fileblock)
 	 **************************************/
 	LINE 	*thisline;
 	int	c, lastc;
-	SLONG	i, linecount, charcount, n;
+	ISC_LONG	i, linecount, charcount, n;
 	bool sol;
-	UCHAR	*ptr,*bufptr, *moreptr, *thisptr;
+	ISC_UCHAR	*ptr,*bufptr, *moreptr, *thisptr;
 
 	n = 2;
 	sol = true;
 	lastc = 0;
 
-	bufptr = (UCHAR *) malloc ((SLONG) BUFSIZE);
+	bufptr = (ISC_UCHAR *) malloc ((ISC_LONG) BUFSIZE);
 	if (bufptr == NULL)
 		return NULL;
 	;
 	thisptr = bufptr;
 	for (linecount = 0, charcount = 0;; charcount++) {
 		if (charcount % BUFSIZE == BUF_FULL) {
-			if ((moreptr = (UCHAR *) malloc ((SLONG) (n++ * BUFSIZE))) == NULL)
+			if ((moreptr = (ISC_UCHAR *) malloc ((ISC_LONG) (n++ * BUFSIZE))) == NULL)
 				return NULL;
 			;
 			thisptr = moreptr;
@@ -406,7 +406,7 @@ static LINE *read_file (FILE *fileptr, FILE_BLK_PTR *fileblock)
 			sol = false;
 		}
 	}
-	*fileblock = (FILE_BLK_PTR) malloc ((SLONG) (sizeof (FILE_BLK) 
+	*fileblock = (FILE_BLK_PTR) malloc ((ISC_LONG) (sizeof (FILE_BLK) 
 										+ ((1 + linecount) * sizeof(LINE))));
 	if (*fileblock == NULL)
 		return NULL;

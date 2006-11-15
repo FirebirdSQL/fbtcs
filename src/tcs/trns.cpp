@@ -216,7 +216,7 @@ static int addstr(char *wrd, char **bufr, char delim)
 	 *
 	 **************************************/
 	char    *bptr;
-	SSHORT	nl;
+	ISC_SHORT	nl;
 
 	//  If we didn't get a value in wrd to put in bufr return
 
@@ -243,7 +243,7 @@ static int addstr(char *wrd, char **bufr, char delim)
 	//  If we have a delimiter, and the new word did not end with a
 	//  new line, then put the delimiter at the end of the line.
 
-	if ((SSHORT)delim && !nl)
+	if ((ISC_SHORT)delim && !nl)
 		*bptr++ = delim;
 
 	*bufr = bptr;

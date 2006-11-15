@@ -22,6 +22,7 @@
  */
 
 #include <stdio.h>
+#include "tcs.h"
 
 const int PAGESIZE	= 4096;		// default line page size
 const int MASK		= 0x0FFF;	// 12 bit hash value
@@ -35,14 +36,14 @@ const int ADD		= 2;	// add a range of lines
 #define MIN(a,b)	((a < b) ? a : b)
 
 const char* OUTFILE		= "dif.out";
-const int BUFSIZE		= 4096;
+//const int BUFSIZE		= 4096;
 const int BUF_FULL		= 4080;
 
 typedef struct 
 {
 	char	*addr;		// address of string in buffer
-	ULONG	hash;		// hash value for string
-	SLONG	linenum;	// line number in file
+	U_LONG	hash;		// hash value for string
+	ISC_LONG	linenum;	// line number in file
 }
 LINE;
 
@@ -50,13 +51,13 @@ LINE;
 typedef struct file_block
 {
 	char	*buffer;
-	SLONG	line_count;
+	ISC_LONG	line_count;
 	LINE		line_ptr [1];
 } *FILE_BLK_PTR, FILE_BLK;
 
 
-static SLONG window;
-static SLONG minmatch;
+static ISC_LONG window;
+static ISC_LONG minmatch;
 
-static SLONG ignore_whtsp;
+static ISC_LONG ignore_whtsp;
 
