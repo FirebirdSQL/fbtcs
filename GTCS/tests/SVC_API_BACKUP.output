@@ -85,6 +85,8 @@ gbak:    writing domain RDB$62
 gbak:    writing domain RDB$63 
 gbak:    writing domain RDB$64 
 gbak:writing shadow files 
+gbak:writing character sets 
+gbak:writing collations 
 gbak:writing tables 
 gbak:    writing table COUNTRY 
 gbak:         writing column CURRENCY 
@@ -230,8 +232,6 @@ gbak:writing exception REASSIGN_SALES
 gbak:writing exception ORDER_ALREADY_SHIPPED 
 gbak:writing exception CUSTOMER_ON_HOLD 
 gbak:writing exception CUSTOMER_CHECK 
-gbak:writing character sets 
-gbak:writing collations 
 gbak:    writing index RDB$PRIMARY20 
 gbak:    writing index RDB$FOREIGN21 
 gbak:    writing index UPDATERX 
