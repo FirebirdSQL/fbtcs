@@ -2,24 +2,24 @@ Use CONNECT or CREATE DATABASE to specify a database
 F_CHAR                          CHAR(25) Nullable 
 CHAR_AS_INT                     Computed by: (cast(f_char as integer))
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Update 
 
 F_CHAR                          CHAR(25) Nullable 
 CHAR_AS_FLOAT                   Computed by: (cast(f_char as float))
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Update 
 
@@ -30,14 +30,14 @@ CHAR_AS_DATE                    Computed by: (cast(f_char as date))
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
-                  
+CONSTANT          
 ================= 
 Passed 3 - Insert 
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
-                  
+CONSTANT          
 ================= 
 Passed 3 - Update 
 
@@ -46,36 +46,36 @@ SQL warning code = 301
 F_DATE                          TIMESTAMP Nullable 
 DATE_AS_CHAR                    Computed by: (cast(f_date as char(15)))
 
-                  
+CONSTANT          
 ================= 
 Passed 4 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 4 - Update 
 
 F_INT                           INTEGER Nullable 
 INT_AS_CHAR                     Computed by: (cast(f_int as char(15)))
 
-                  
+CONSTANT          
 ================= 
 Passed 5 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 5 - Update 
 
 F_FLOAT                         FLOAT Nullable 
 FLOAT_AS_CHAR                   Computed by: (cast(f_float as char(15)))
 
-                  
+CONSTANT          
 ================= 
 Passed 6 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 6 - Update 
 

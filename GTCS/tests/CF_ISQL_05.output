@@ -4,14 +4,14 @@ SQL warning code = 301
 D                               TIMESTAMP Nullable 
 DC                              Computed by: (d)
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Insert 
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Update 
 
@@ -20,14 +20,14 @@ SQL warning code = 301
 D                               TIMESTAMP Nullable 
 DC                              Computed by: (d + 1)
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Insert 
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Update 
 
@@ -36,14 +36,14 @@ SQL warning code = 301
 D                               TIMESTAMP Nullable 
 DC                              Computed by: (d - 1)
 
-                  
+CONSTANT          
 ================= 
 Passed 3 - Insert 
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
-                  
+CONSTANT          
 ================= 
 Passed 3 - Update 
 
@@ -52,14 +52,14 @@ SQL warning code = 301
 D                               TIMESTAMP Nullable 
 DC                              Computed by: ('today')
 
-                  
+CONSTANT          
 ================= 
 Passed 4 - Insert 
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
-                  
+CONSTANT          
 ================= 
 Passed 4 - Update 
 
@@ -70,14 +70,14 @@ SQL warning code = 301
 D                               TIMESTAMP Nullable 
 DC                              Computed by: (cast('today' as date) + 1 )
 
-                  
+CONSTANT          
 ================= 
 Passed 5 - Insert 
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
-                  
+CONSTANT          
 ================= 
 Passed 5 - Update 
 
@@ -89,14 +89,14 @@ D_START                         TIMESTAMP Nullable
 D_END                           TIMESTAMP Nullable 
 DATE_DIFF                       Computed by: (d_end - d_start)
 
-                  
+CONSTANT          
 ================= 
 Passed 6 - Insert 
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
-                  
+CONSTANT          
 ================= 
 Passed 6 - Update 
 

@@ -2,24 +2,24 @@ Use CONNECT or CREATE DATABASE to specify a database
 A                               CHAR(25) Nullable 
 UPPER_A                         Computed by: (upper(a))
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Update 
 
 A                               CHAR(25) Nullable 
 UPPER_CONST                     Computed by: (a || upper('upper()'))
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Update 
 

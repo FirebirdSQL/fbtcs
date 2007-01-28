@@ -2,144 +2,144 @@ Use CONNECT or CREATE DATABASE to specify a database
 I                               INTEGER Nullable 
 J                               Computed by: (i)
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (i+i)
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (i*i)
 
-                  
+CONSTANT          
 ================= 
 Passed 3 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Paseed 3 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (i/i)
 
-                  
+CONSTANT          
 ================= 
 Passed 4 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 4 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (i+2)
 
-                  
+CONSTANT          
 ================= 
 Passed 5 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 5 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (i*2)
 
-                  
+CONSTANT          
 ================= 
 Passed 6 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 6 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (i/2)
 
-                  
+CONSTANT          
 ================= 
 Passed 7 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 7 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (-i)
 
-                  
+CONSTANT          
 ================= 
 Passed 8 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 8 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (+i)
 
-                  
+CONSTANT          
 ================= 
 Passed 9 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 9 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: ((i-i+i)*i/i)
 
-                    
+CONSTANT            
 =================== 
 Passed 9.1 - Insert 
 
 
-                    
+CONSTANT            
 =================== 
 Passed 9.1 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: (0)
 
-                   
+CONSTANT           
 ================== 
 Passed 10 - Insert 
 
 
-                   
+CONSTANT           
 ================== 
 Passed 10 - Update 
 
 I                               INTEGER Nullable 
 J                               Computed by: ((4*2-4+4)/2)
 
-                   
+CONSTANT           
 ================== 
 Passed 11 - Insert 
 
 
-                   
+CONSTANT           
 ================== 
 Passed 11 - Update 
 

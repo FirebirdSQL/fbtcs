@@ -2,84 +2,84 @@ Use CONNECT or CREATE DATABASE to specify a database
 S                               CHAR(25) Nullable 
 SC                              Computed by: (s)
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Update 
 
 S                               CHAR(25) Nullable 
 SC                              Computed by: (s||s)
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Update 
 
 S                               CHAR(25) Nullable 
 SC                              Computed by: (s||' test')
 
-                  
+CONSTANT          
 ================= 
 Passed 4 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 4 - Update 
 
 S                               CHAR(25) Nullable 
 SC                              Computed by: ('test '||s)
 
-                  
+CONSTANT          
 ================= 
 Passed 5 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 5 - Update 
 
 S                               CHAR(25) Nullable 
 SC                              Computed by: ('test '||s||' test')
 
-                  
+CONSTANT          
 ================= 
 Passed 6 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 6 - Update 
 
 S                               CHAR(25) Nullable 
 SC                              Computed by: ('test')
 
-                  
+CONSTANT          
 ================= 
 Passed 7 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 7 - Update 
 
 S                               CHAR(25) Nullable 
 SC                              Computed by: ('test '||' test')
 
-                  
+CONSTANT          
 ================= 
 Passed 8 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 8 - Update 
 

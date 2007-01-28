@@ -3,12 +3,12 @@ A                               INTEGER Nullable
 B                               INTEGER Nullable 
 A_B                             Computed by: (a*b)
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 1 - Update 
 
@@ -17,12 +17,12 @@ B                               INTEGER Nullable
 C                               INTEGER Nullable 
 A_B_C                           Computed by: (a*b/c)
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 2 - Update 
 
@@ -30,12 +30,12 @@ A                               INTEGER Nullable
 B                               INTEGER Nullable 
 A_B_CONST                       Computed by: (a/10*b)
 
-                  
+CONSTANT          
 ================= 
 Passed 3 - Insert 
 
 
-                  
+CONSTANT          
 ================= 
 Passed 3 - Update 
 
