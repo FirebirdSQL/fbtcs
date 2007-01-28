@@ -31,9 +31,9 @@ END^
 SET TERM ; ^
 commit;
 show procedures;
-Procedure Name                    Dependency, Type
-================================= ======================================
-RPL$GENERATOR_VALUES              RDB$GENERATORS, Table
+Procedure Name                    Invalid Dependency, Type
+================================= ======= =====================================
+RPL$GENERATOR_VALUES                      RDB$GENERATORS, Table
 
 Use CONNECT or CREATE DATABASE to specify a database
 execute procedure rpl$generator_values;
