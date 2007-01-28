@@ -1,8 +1,8 @@
 Use CONNECT or CREATE DATABASE to specify a database
 attempt to store duplicate value (visible to active transactions) in unique index "UNI_IND"
--At procedure 'INS_V'
-At procedure 'INS_U'
-At procedure 'INS_T'
+-At procedure 'INS_V' line: 3, col: 5
+At procedure 'INS_U' line: 4, col: 5
+At procedure 'INS_T' line: 4, col: 5
 Use CONNECT or CREATE DATABASE to specify a database
 
            C 

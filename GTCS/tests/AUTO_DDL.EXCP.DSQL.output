@@ -14,5 +14,5 @@ Statement failed, SQLCODE = -836
 exception 1
 -FAIL_MSG
 -THIS IS AN EXCEPTION !!
--At procedure 'PROC'
+-At procedure 'PROC' line: 1, col: 32
 After line 1 in file show.sql
