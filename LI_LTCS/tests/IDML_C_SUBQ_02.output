@@ -2,7 +2,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
 
-                  S_ROWID C_ENUS                    C_850_25                  
+CONSTANT          S_ROWID C_ENUS                    C_850_25                  
 ================= ======= ========================= ========================= 
 set names is ISO:       1 pÈchÈ                     pÈchÈ                     
 set names is ISO:       2 ≈lborg                    ≈lborg                    
@@ -13,7 +13,7 @@ set names is ISO:       6 caennais                  caennais
 set names is ISO:       7 vice versa                vice versa                
 
 
-                  S_ROWID C_UNICODE_25              
+CONSTANT          S_ROWID C_UNICODE_25              
 ================= ======= ========================= 
 set names is ISO:       1 pÈchÈ                     
 set names is ISO:       2 <null>                    
@@ -24,7 +24,7 @@ set names is ISO:       6 <null>
 set names is ISO:       7 <null>                    
 
 
-                  S_ROWID C_437_25                  
+CONSTANT          S_ROWID C_437_25                  
 ================= ======= ========================= 
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
@@ -32,7 +32,7 @@ arithmetic exception, numeric overflow, or string truncation
 After line 4 in file giso.sql
 Use CONNECT or CREATE DATABASE to specify a database
 
-                  S_ROWID C_ENUS                    C_437_25                  
+CONSTANT          S_ROWID C_ENUS                    C_437_25                  
 ================= ======= ========================= ========================= 
 set names is 437:       1 pÇchÇ                     pÈchÈ                     
 set names is 437:       2 èlborg                    ≈lborg                    
@@ -43,7 +43,7 @@ set names is 437:       6 caennais                  caennais
 set names is 437:       7 vice versa                vice versa                
 
 
-                  S_ROWID C_UNICODE_25              
+CONSTANT          S_ROWID C_UNICODE_25              
 ================= ======= ========================= 
 set names is 437:       1 pÇchÇ                     
 set names is 437:       2 <null>                    
@@ -55,7 +55,7 @@ set names is 437:       7 <null>
 
 Use CONNECT or CREATE DATABASE to specify a database
 
-                     S_ROWID C_ENUS                    C_850_25                  
+CONSTANT             S_ROWID C_ENUS                    C_850_25                  
 ==================== ======= ========================= ========================= 
 set names is dos850:       1 pÇchÇ                     pÇchÇ                     
 set names is dos850:       2 èlborg                    èlborg                    
@@ -67,7 +67,7 @@ set names is dos850:       7 vice versa                vice versa
 
 Use CONNECT or CREATE DATABASE to specify a database
 
-                     S_ROWID C_437_25                  
+CONSTANT             S_ROWID C_437_25                  
 ==================== ======= ========================= 
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
