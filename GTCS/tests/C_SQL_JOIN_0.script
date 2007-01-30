@@ -16,8 +16,7 @@
 #
 
 >> sh_join.gdl
-define database "WHERE_GDB:sh_join.gdb"
-	page_size 1024;
+define database "WHERE_GDB:sh_join.gdb" page_size 1024;
 
 /*----- My def. for join tests ----*/
 define field test_name char[30];
