@@ -4,5 +4,5 @@ BLOCK_IN
 ================================================== 
 Statement failed, SQLCODE = -802
 arithmetic exception, numeric overflow, or string truncation
--At procedure 'P_ERROR1'
+-At procedure 'P_ERROR1' line: 4, col: 5
 After line 31 in file proc_err.sql
