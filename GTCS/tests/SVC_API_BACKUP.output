@@ -3,7 +3,7 @@ service started OK
 gbak:readied database WHERE_GDB_EXTERNAL:employee.gdb for backup 
 gbak:creating file WHERE_GDB_EXTERNAL:employee.gbk 
 gbak:starting transaction 
-gbak:database WHERE_GDB_EXTERNAL:employee.gdb has a page size of 1024 bytes. 
+gbak:database WHERE_GDB_EXTERNAL:employee.gdb has a page size of 4096 bytes. 
 gbak:writing domains 
 gbak:    writing domain FIRSTNAME 
 gbak:    writing domain LASTNAME 
@@ -335,6 +335,18 @@ gbak:    writing privilege for user SYSDBA
 gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user PUBLIC 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user PUBLIC 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user SYSDBA 
@@ -544,5 +556,5 @@ gbak:writing constraint INTEG_80
 gbak:writing referential constraints 
 gbak:writing check constraints 
 gbak:writing SQL roles 
-gbak:closing file, committing, and finishing. 72192 bytes written 
+gbak:closing file, committing, and finishing. 73216 bytes written 
 Output completed
