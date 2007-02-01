@@ -21,9 +21,9 @@ After line 11 in file proc_level0_tests.sql
 
 set term ; go
 show proc;
-Procedure Name                    Dependency, Type
-================================= ======================================
-PABCDEFGHIJKLMNOPQRSTUVWXYZABCD   
+Procedure Name                    Invalid Dependency, Type
+================================= ======= =====================================
+PABCDEFGHIJKLMNOPQRSTUVWXYZABCD           
 execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
 
            A 

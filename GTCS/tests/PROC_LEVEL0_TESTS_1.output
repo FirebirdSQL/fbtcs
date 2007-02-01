@@ -19,7 +19,7 @@ After line 10 in file proc_level0_tests1.sql
 
 set term ; go
 show proc;
-Procedure Name                    Dependency, Type
-================================= ======================================
-ABC                               
+Procedure Name                    Invalid Dependency, Type
+================================= ======= =====================================
+ABC                                       
 

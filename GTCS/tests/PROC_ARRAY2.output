@@ -24,8 +24,9 @@ BLOB display set to subtype 1. This BLOB: subtype = 0
 ==============================================================================
 
 show procedures;
-Procedure Name                    Dependency, Type
-================================= ======================================
-PROC_ARR                          CITIES, Table
+Procedure Name                    Invalid Dependency, Type
+================================= ======= =====================================
+PROC_ARR                                  CITIES, Table
+                                          OCTETS, Collation
 commit;
 quit;
