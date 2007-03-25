@@ -38,7 +38,7 @@ RPL$GENERATOR_VALUES              RDB$GENERATORS, Table
 Use CONNECT or CREATE DATABASE to specify a database
 execute procedure rpl$generator_values;
 Statement failed, SQLCODE = -904
-Variable type (position 0) in EXECUTE STATEMENT 'select gen_id(GEN_TEST1        ' INTO does not match returned column type
+Variable type (position 1) in EXECUTE STATEMENT 'select gen_id(GEN_TEST1        ' INTO does not match returned column type
 -At procedure 'RPL$GENERATOR_VALUES'
 After line 3 in file cf_isql_27b.sql
 
