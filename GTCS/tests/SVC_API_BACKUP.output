@@ -87,6 +87,7 @@ gbak:    writing domain RDB$64
 gbak:writing shadow files 
 gbak:writing character sets 
 gbak:writing collations 
+gbak:writing functions 
 gbak:writing tables 
 gbak:    writing table COUNTRY 
 gbak:         writing column CURRENCY 
@@ -176,7 +177,6 @@ gbak:         writing column PERCENT_CHANGE
 gbak:         writing column NEW_SALARY 
 gbak:         writing column EMP_NO 
 gbak:         writing column UPDATER_ID 
-gbak:writing functions 
 gbak:writing types 
 gbak:writing filters 
 gbak:writing id generators 
