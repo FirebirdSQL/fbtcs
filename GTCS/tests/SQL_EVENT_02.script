@@ -70,7 +70,7 @@ $ GPRE  -n -m foo2.e
 $ CC FLAG_CC foo2.c
 $ LINK FLAG_LINK foo2 
 $ RUN_BG foo2 > foo2.tt1 &
-$ SLEEP 5
+$ SLEEP 2
 >> sql_event_02b.sql
 update project set pnumber = 22 where pnumber = 2;
 commit;
@@ -78,7 +78,7 @@ select * from project;
 select * from works_on;
 exit;
 $ ISQL -m WHERE_GDB:events1.gdb -i sql_event_02b.sql
-$ SLEEP 5
+$ SLEEP 2
 $ TYPE foo2.tt1
 $ DROP WHERE_GDB:events1.gdb
 $ DELETE foo2* sql_event_02*

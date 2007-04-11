@@ -225,7 +225,7 @@ int main (int argc, char* argv[])
 #ifdef WIN_NT
 			Sleep(5000);
 #else
-			sleep(5);
+			sleep(2);
 #endif
 		}	  
 
@@ -1166,7 +1166,7 @@ main(int argc,char* argv[])
 		for ( i = 0; i < IO_RETRY; i++ ) {
 
 			if ((nwrite = write(client_pipe,packet,size)) == size) {
-				sleep(5);
+				sleep(2);
 				break;
 			}
 			else if ((nwrite == -1) && (errno != EINTR)) {
@@ -1256,7 +1256,7 @@ $ GPRE -e event_server.e -d WHERE_GDB:asyn.gdb
 $ CC FLAG_CC event_server.c
 $ LINK FLAG_LINK event_server 
 $ RUN event_server
-$ SLEEP 5
+$ SLEEP 2
 $ DELETE event_custom.h
 $ DELETE event_server* 
 $ DELETE event_client* 

@@ -72,7 +72,7 @@ $ GPRE  -n -m foo1.e
 $ CC FLAG_CC foo1.c
 $ LINK FLAG_LINK foo1 
 $ RUN_BG foo1 > foo1.tt1 &
-$ SLEEP 5
+$ SLEEP 2
 >> foo2.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
@@ -109,7 +109,7 @@ $ GPRE  -n -m foo2.e
 $ CC FLAG_CC foo2.c
 $ LINK FLAG_LINK foo2 
 $ RUN_BG foo2 > foo2.tt2 &
-$ SLEEP 5
+$ SLEEP 2
 >> sql_event_7b.sql
 update project set prize = prize * 1.05 ;
 commit;
@@ -117,7 +117,7 @@ select * from project;
 select * from works_on;
 exit;
 $ ISQL -m WHERE_GDB:events.gdb -i sql_event_7b.sql
-$ SLEEP 5
+$ SLEEP 2
 $ TYPE foo1.tt1
 $ TYPE foo2.tt2
 $ DROP WHERE_GDB:events.gdb

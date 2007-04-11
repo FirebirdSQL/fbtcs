@@ -100,6 +100,6 @@ select * from works_on;
 exit;
 
 $ ISQL -m WHERE_GDB:events.gdb -i sql_event_12b.sql
-$ SLEEP 5
+$ SLEEP 2
 $ DROP WHERE_GDB:events.gdb
 $DELETE sql_event_12*
