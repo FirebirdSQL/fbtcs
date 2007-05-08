@@ -66,7 +66,7 @@ int main(int argc, char **argv, char **envp)
 
 	isc_db_handle db_handle = 0;
 
-	long status[20];
+    ISC_STATUS_ARRAY status;
 
 	short dpb_length=0;
 
