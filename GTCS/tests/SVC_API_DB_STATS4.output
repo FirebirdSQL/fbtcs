@@ -12,11 +12,11 @@ reading response
 reading response
 	Checksum		12345 querying service
 reading response
-	Generation		25 querying service
+	Generation		27 querying service
 reading response
-	Page size		1024 querying service
+	Page size		4096 querying service
 reading response
-	ODS version		11.0 querying service
+	ODS version		11.1 querying service
 reading response
 	Oldest transaction	1 querying service
 reading response
@@ -30,7 +30,7 @@ reading response
 reading response
 	Sequence number		0 querying service
 reading response
-	Next attachment ID	0 querying service
+	Next attachment ID	2 querying service
 reading response
 	Implementation ID	19 querying service
 reading response

@@ -3,16 +3,16 @@ Database "WHERE_GDB_EXTERNAL:employee.gdb"
 Database header page information:
 	Flags			0
 	Checksum		12345
-	Generation		25
-	Page size		1024
-	ODS version		11.0
+	Generation		27
+	Page size		4096
+	ODS version		11.1
 	Oldest transaction	1
 	Oldest active		2
 	Oldest snapshot		2
 	Next transaction	19
 	Bumped transaction	1
 	Sequence number		0
-	Next attachment ID	0
+	Next attachment ID	2
 	Implementation ID	19
 	Shadow count		0
 	Page buffers		0

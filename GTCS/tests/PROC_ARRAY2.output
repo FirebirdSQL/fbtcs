@@ -17,7 +17,7 @@ select * from  proc_arr ("Sacramento");
 
 CIT                       STAT      POPULATIO         RAIN_ARRA 
 ========================= ====== ============ ================= 
-Sacramento                CA           275741             81:e8 
+Sacramento                CA           275741             81:ef 
 ==============================================================================
 RAIN_ARRA:  
 BLOB display set to subtype 1. This BLOB: subtype = 0

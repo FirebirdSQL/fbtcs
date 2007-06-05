@@ -3,16 +3,16 @@ Database "WHERE_GDB_EXTERNAL:employee.gdb"
 Database header page information:
 	Flags			0
 	Checksum		12345
-	Generation		25
-	Page size		1024
-	ODS version		11.0
+	Generation		27
+	Page size		4096
+	ODS version		11.1
 	Oldest transaction	1
 	Oldest active		2
 	Oldest snapshot		2
 	Next transaction	19
 	Bumped transaction	1
 	Sequence number		0
-	Next attachment ID	0
+	Next attachment ID	2
 	Implementation ID	19
 	Shadow count		0
 	Page buffers		0
@@ -29,13 +29,13 @@ File WHERE_GDB_EXTERNAL:employee.gdb is the only file
 
 Analyzing database pages ...
 COUNTRY (128)
-    Primary pointer page: 301, Index root page: 302
-    Data pages: 1, data page slots: 1, average fill: 61%
+    Primary pointer page: 172, Index root page: 173
+    Data pages: 1, data page slots: 1, average fill: 15%
     Fill distribution:
-	 0 - 19% = 0
+	 0 - 19% = 1
 	20 - 39% = 0
 	40 - 59% = 0
-	60 - 79% = 1
+	60 - 79% = 0
 	80 - 99% = 0
 
     Index RDB$PRIMARY1 (0)
@@ -49,21 +49,21 @@ COUNTRY (128)
 	    80 - 99% = 0
 
 CUSTOMER (133)
-    Primary pointer page: 312, Index root page: 313
-    Data pages: 3, data page slots: 3, average fill: 72%
+    Primary pointer page: 183, Index root page: 184
+    Data pages: 1, data page slots: 1, average fill: 53%
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
 	40 - 59% = 1
-	60 - 79% = 1
-	80 - 99% = 1
+	60 - 79% = 0
+	80 - 99% = 0
 
     Index CUSTNAMEX (1)
 	Depth: 1, leaf buckets: 1, nodes: 15
 	Average data length: 15.87, total dup: 0, max dup: 0
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
@@ -72,8 +72,8 @@ CUSTOMER (133)
 	Depth: 1, leaf buckets: 1, nodes: 15
 	Average data length: 17.27, total dup: 0, max dup: 0
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
@@ -99,13 +99,13 @@ CUSTOMER (133)
 	    80 - 99% = 0
 
 DEPARTMENT (130)
-    Primary pointer page: 305, Index root page: 306
-    Data pages: 3, data page slots: 3, average fill: 61%
+    Primary pointer page: 176, Index root page: 177
+    Data pages: 1, data page slots: 1, average fill: 45%
     Fill distribution:
 	 0 - 19% = 0
-	20 - 39% = 1
-	40 - 59% = 0
-	60 - 79% = 2
+	20 - 39% = 0
+	40 - 59% = 1
+	60 - 79% = 0
 	80 - 99% = 0
 
     Index BUDGETX (2)
@@ -122,8 +122,8 @@ DEPARTMENT (130)
 	Depth: 1, leaf buckets: 1, nodes: 21
 	Average data length: 13.95, total dup: 0, max dup: 0
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
@@ -159,13 +159,13 @@ DEPARTMENT (130)
 	    80 - 99% = 0
 
 EMPLOYEE (131)
-    Primary pointer page: 307, Index root page: 308
-    Data pages: 5, data page slots: 5, average fill: 69%
+    Primary pointer page: 178, Index root page: 179
+    Data pages: 2, data page slots: 2, average fill: 42%
     Fill distribution:
-	 0 - 19% = 0
+	 0 - 19% = 1
 	20 - 39% = 0
-	40 - 59% = 1
-	60 - 79% = 4
+	40 - 59% = 0
+	60 - 79% = 1
 	80 - 99% = 0
 
     Index NAMEX (1)
@@ -173,10 +173,10 @@ EMPLOYEE (131)
 	Average data length: 15.52, total dup: 0, max dup: 0
 	Fill distribution:
 	     0 - 19% = 0
-	    20 - 39% = 0
+	    20 - 39% = 1
 	    40 - 59% = 0
 	    60 - 79% = 0
-	    80 - 99% = 1
+	    80 - 99% = 0
 
     Index RDB$FOREIGN8 (2)
 	Depth: 1, leaf buckets: 1, nodes: 42
@@ -192,9 +192,9 @@ EMPLOYEE (131)
 	Depth: 1, leaf buckets: 1, nodes: 42
 	Average data length: 6.79, total dup: 15, max dup: 4
 	Fill distribution:
-	     0 - 19% = 0
+	     0 - 19% = 1
 	    20 - 39% = 0
-	    40 - 59% = 1
+	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
 
@@ -209,12 +209,12 @@ EMPLOYEE (131)
 	    80 - 99% = 0
 
 EMPLOYEE_PROJECT (135)
-    Primary pointer page: 316, Index root page: 317
-    Data pages: 2, data page slots: 2, average fill: 41%
+    Primary pointer page: 187, Index root page: 188
+    Data pages: 1, data page slots: 1, average fill: 20%
     Fill distribution:
-	 0 - 19% = 0
-	20 - 39% = 1
-	40 - 59% = 1
+	 0 - 19% = 1
+	20 - 39% = 0
+	40 - 59% = 0
 	60 - 79% = 0
 	80 - 99% = 0
 
@@ -242,28 +242,28 @@ EMPLOYEE_PROJECT (135)
 	Depth: 1, leaf buckets: 1, nodes: 28
 	Average data length: 9.11, total dup: 0, max dup: 0
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
 
 JOB (129)
-    Primary pointer page: 303, Index root page: 304
-    Data pages: 10, data page slots: 10, average fill: 88%
+    Primary pointer page: 174, Index root page: 175
+    Data pages: 3, data page slots: 3, average fill: 72%
     Fill distribution:
 	 0 - 19% = 0
-	20 - 39% = 0
+	20 - 39% = 1
 	40 - 59% = 0
-	60 - 79% = 1
-	80 - 99% = 9
+	60 - 79% = 0
+	80 - 99% = 2
 
     Index MAXSALX (2)
 	Depth: 1, leaf buckets: 1, nodes: 31
 	Average data length: 4.55, total dup: 5, max dup: 1
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
@@ -272,8 +272,8 @@ JOB (129)
 	Depth: 1, leaf buckets: 1, nodes: 31
 	Average data length: 4.26, total dup: 7, max dup: 2
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
@@ -292,21 +292,21 @@ JOB (129)
 	Depth: 1, leaf buckets: 1, nodes: 31
 	Average data length: 10.45, total dup: 0, max dup: 0
 	Fill distribution:
-	     0 - 19% = 0
+	     0 - 19% = 1
 	    20 - 39% = 0
-	    40 - 59% = 1
+	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
 
 PROJECT (132)
-    Primary pointer page: 310, Index root page: 311
-    Data pages: 2, data page slots: 2, average fill: 58%
+    Primary pointer page: 180, Index root page: 181
+    Data pages: 1, data page slots: 1, average fill: 29%
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 1
 	40 - 59% = 0
 	60 - 79% = 0
-	80 - 99% = 1
+	80 - 99% = 0
 
     Index PRODTYPEX (2)
 	Depth: 1, leaf buckets: 1, nodes: 6
@@ -349,14 +349,14 @@ PROJECT (132)
 	    80 - 99% = 0
 
 PROJ_DEPT_BUDGET (136)
-    Primary pointer page: 318, Index root page: 319
-    Data pages: 4, data page slots: 4, average fill: 80%
+    Primary pointer page: 189, Index root page: 190
+    Data pages: 1, data page slots: 1, average fill: 79%
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
-	40 - 59% = 1
-	60 - 79% = 0
-	80 - 99% = 3
+	40 - 59% = 0
+	60 - 79% = 1
+	80 - 99% = 0
 
     Index RDB$FOREIGN18 (1)
 	Depth: 1, leaf buckets: 1, nodes: 24
@@ -382,20 +382,20 @@ PROJ_DEPT_BUDGET (136)
 	Depth: 1, leaf buckets: 1, nodes: 24
 	Average data length: 6.83, total dup: 0, max dup: 0
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
 
 SALARY_HISTORY (137)
-    Primary pointer page: 320, Index root page: 321
-    Data pages: 4, data page slots: 4, average fill: 59%
+    Primary pointer page: 191, Index root page: 192
+    Data pages: 1, data page slots: 1, average fill: 58%
     Fill distribution:
 	 0 - 19% = 0
-	20 - 39% = 1
-	40 - 59% = 0
-	60 - 79% = 3
+	20 - 39% = 0
+	40 - 59% = 1
+	60 - 79% = 0
 	80 - 99% = 0
 
     Index CHANGEX (2)
@@ -412,21 +412,21 @@ SALARY_HISTORY (137)
 	Depth: 1, leaf buckets: 1, nodes: 49
 	Average data length: 0.90, total dup: 16, max dup: 2
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
 
     Index RDB$PRIMARY20 (0)
-	Depth: 2, leaf buckets: 2, nodes: 49
-	Average data length: 18.33, total dup: 0, max dup: 0
+	Depth: 1, leaf buckets: 1, nodes: 49
+	Average data length: 18.29, total dup: 0, max dup: 0
 	Fill distribution:
-	     0 - 19% = 1
-	    20 - 39% = 0
+	     0 - 19% = 0
+	    20 - 39% = 1
 	    40 - 59% = 0
 	    60 - 79% = 0
-	    80 - 99% = 1
+	    80 - 99% = 0
 
     Index UPDATERX (1)
 	Depth: 1, leaf buckets: 1, nodes: 49
@@ -439,21 +439,21 @@ SALARY_HISTORY (137)
 	    80 - 99% = 0
 
 SALES (134)
-    Primary pointer page: 314, Index root page: 315
-    Data pages: 4, data page slots: 4, average fill: 70%
+    Primary pointer page: 185, Index root page: 186
+    Data pages: 1, data page slots: 1, average fill: 68%
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
-	40 - 59% = 1
-	60 - 79% = 3
+	40 - 59% = 0
+	60 - 79% = 1
 	80 - 99% = 0
 
     Index NEEDX (1)
 	Depth: 1, leaf buckets: 1, nodes: 33
 	Average data length: 2.55, total dup: 11, max dup: 6
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
@@ -492,8 +492,8 @@ SALES (134)
 	Depth: 1, leaf buckets: 1, nodes: 33
 	Average data length: 4.48, total dup: 0, max dup: 0
 	Fill distribution:
-	     0 - 19% = 0
-	    20 - 39% = 1
+	     0 - 19% = 1
+	    20 - 39% = 0
 	    40 - 59% = 0
 	    60 - 79% = 0
 	    80 - 99% = 0
