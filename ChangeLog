@@ -1,3 +1,55 @@
+2007-07-25	alexpeshkoff
+	* GTCS/tests/CF_ISQL_27.knownbug 1.9:
+	* GTCS/tests/CF_ISQL_27.output 1.6:
+	* GTCS/tests/CF_ISQL_27.script 1.6:
+		After intl changes that known bug is fixed
+
+2007-06-05	alexpeshkoff
+	* GTCS/tests/FB_SQL_1.output 1.5:
+	* GTCS/tests/GSTAT1.output 1.7:
+	* GTCS/tests/GSTAT2.output 1.7:
+	* GTCS/tests/GSTAT3.output 1.7:
+	* GTCS/tests/GSTAT4.output 1.7:
+	* GTCS/tests/PROC_ARRAY2.output 1.8:
+	* GTCS/tests/SVC_API_DB_STATS1.output 1.6:
+	* GTCS/tests/SVC_API_DB_STATS2.output 1.6:
+	* GTCS/tests/SVC_API_DB_STATS3.output 1.6:
+	* GTCS/tests/SVC_API_DB_STATS4.output 1.6:
+		bring tests up-to-date for fb2 HEAD
+
+2007-05-08	alexpeshkoff
+	* src/tcs/drop_gdb.cpp 1.9:
+		applied fix by Dam
+
+	* src/tcs/drop_gdb.cpp [B2_0] 1.8.2.1:
+		backported fix by Dam
+
+2007-04-11	alexpeshkoff
+	* GTCS/tests/CF_ISQL_27.knownbug 1.8:
+	* GTCS/tests/SVC_API_BACKUP.output 1.7:
+		fixed tests for HEAD
+
+	* GTCS/tests/SQL_EVENT_01.script 1.4:
+	* GTCS/tests/SQL_EVENT_02.script 1.4:
+	* GTCS/tests/SQL_EVENT_03.script 1.6:
+	* GTCS/tests/SQL_EVENT_04.script 1.6:
+	* GTCS/tests/SQL_EVENT_05.script 1.5:
+	* GTCS/tests/SQL_EVENT_06.script 1.4:
+	* GTCS/tests/SQL_EVENT_07.script 1.5:
+	* GTCS/tests/SQL_EVENT_08.script 1.5:
+	* GTCS/tests/SQL_EVENT_09.script 1.4:
+	* GTCS/tests/SQL_EVENT_10.script 1.5:
+	* GTCS/tests/SQL_EVENT_11.script 1.4:
+	* GTCS/tests/SQL_EVENT_12.script 1.4:
+	* GTCS/tests/SQL_EVENT_13.script 1.11:
+	* GTCS/tests/SQL_EVENT_14.script 1.5:
+		made delays smaller in SQL_EVENT series
+
+2007-03-25	alexpeshkoff
+	* GTCS/tests/CF_ISQL_27.knownbug [B2_0] 1.5.2.1:
+	* GTCS/tests/DSQL_DOMAIN_26.output [B2_0] 1.4.2.1:
+		Misc
+
 2007-02-07	alexpeshkoff
 	* GTCS/tests/PROC_CAST8_ISQL.output 1.3:
 		Changes for FB2.1
