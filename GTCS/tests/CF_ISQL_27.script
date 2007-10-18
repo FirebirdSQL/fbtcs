@@ -41,7 +41,7 @@ show procedures;
 
 connect 'WHERE_GDB:cf_isql_27.fdb';
 set echo on;
-execute procedure rpl$generator_values;
+select * from rpl$generator_values;
 
 
 $ISQL -m -i cf_isql_27a.sql

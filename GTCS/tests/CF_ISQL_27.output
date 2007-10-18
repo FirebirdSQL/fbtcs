@@ -36,7 +36,7 @@ Procedure Name                    Dependency, Type
 RPL$GENERATOR_VALUES              RDB$GENERATORS, Table
 
 Use CONNECT or CREATE DATABASE to specify a database
-execute procedure rpl$generator_values;
+select * from rpl$generator_values;
 
 GEN_NAME                           GEN_VALUE 
 =============================== ============ 
