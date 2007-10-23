@@ -1,0 +1,42 @@
+
+#
+#Series:   SEGVIOL    
+#Test:     SV_USER_ADD (bug in fb till 2.0.3/2.1.b1 - 
+#						lost text strings in status vector)
+#History:
+#
+
+# 
+>> sv.c
+#include <ibase.h>
+#include <stdio.h>
+#include <malloc.h>
+#ifndef WIN_NT
+#include <sys/param.h>
+#else
+#include <windef.h>
+#define MAXPATHLEN MAX_PATH
+#endif
+
+int main()
+{
+    ISC_STATUS_ARRAY s;
+	isc_db_handle db = 0;
+	const int l = MAXPATHLEN + 10;
+	char *lname = malloc(l + 1);
+	memset(lname, 'X', l);
+	memcpy(lname, "WHERE_GDB:", strlen("WHERE_GDB:"));
+	lname[l] = 0;
+
+    isc_attach_database(s, 0, lname, &db, 0, 0);	/* AV happened here */
+    if (s[1])
+        printf("Error %d\n", s[1]);
+	else
+		isc_detach_database(s, &db);
+
+	exit(0);
+}
+$ CC FLAG_CC sv.c
+$ LINK FLAG_LINK sv
+$ RUN sv
+$ DELETE sv*
