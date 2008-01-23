@@ -24,7 +24,7 @@
     10000.00 
 
 Statement failed, SQLCODE = -413
-conversion error from string "100.00000             "
+conversion error from string "100.00000"
 -At procedure 'CAST6' line: 3, col: 5
 After line 69 in file proc_cast3.sql
 
