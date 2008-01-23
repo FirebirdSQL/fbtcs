@@ -11,13 +11,13 @@ FLD8                            (DOM12H1) DOUBLE PRECISION Nullable default null
 
    FLD1         FLD2        FLD3 FLD4                           FLD5   FLD6                 FLD7                    FLD8 
 ======= ============ =========== ============================== ====== ========== ============== ======================= 
-    100            0 12-DEC-1957 generic username               <null> default         0.0000000                  <null> 
-      0          200 12-DEC-1957 generic username               <null> default         0.0000000                  <null> 
+    100            0 12-DEC-2057 generic username               <null> default         0.0000000                  <null> 
+      0          200 12-DEC-2057 generic username               <null> default         0.0000000                  <null> 
       0            0 27-JAN-1992 generic username               <null> default         0.0000000                  <null> 
-      0            0 12-DEC-1957 Testing insert to field 4 xxxx <null> default         0.0000000                  <null> 
-      0            0 12-DEC-1957 generic username               Test   default         0.0000000                  <null> 
-      0            0 12-DEC-1957 generic username               <null> no default      0.0000000                  <null> 
-      0            0 12-DEC-1957 generic username               <null> default         50.020000                  <null> 
-      0            0 12-DEC-1957 generic username               <null> default         0.0000000       10000.00000000000 
+      0            0 12-DEC-2057 Testing insert to field 4 xxxx <null> default         0.0000000                  <null> 
+      0            0 12-DEC-2057 generic username               Test   default         0.0000000                  <null> 
+      0            0 12-DEC-2057 generic username               <null> no default      0.0000000                  <null> 
+      0            0 12-DEC-2057 generic username               <null> default         50.020000                  <null> 
+      0            0 12-DEC-2057 generic username               <null> default         0.0000000       10000.00000000000 
 
  
