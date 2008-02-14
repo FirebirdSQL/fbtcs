@@ -46,8 +46,8 @@ set generator gen1 to 1000;
 show generator gen1;
 select * from t0 where genid_field = gen_id(gen1, 1);
 
-drop database;
 exit;
 
 $ ISQL -m -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

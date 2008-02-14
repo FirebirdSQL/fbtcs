@@ -51,8 +51,7 @@ create table t5 (af computed by (1+2));
 create table t6 (af int, bf computed by (1+2));
 insert into t6 values(10, 12);
 
-drop database;
 exit;
 $ ISQL -m -input cf_test.sql
-
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

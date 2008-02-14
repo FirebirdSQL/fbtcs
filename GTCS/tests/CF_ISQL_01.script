@@ -183,8 +183,8 @@ select 'Passed 11 - Insert' from t50 where j = (4*2-4+4)/2 having count(*) = 2;
 update t50 set i = 99 where i = 2;
 select 'Passed 11 - Update' from t50 where j = (4*2-4+4)/2 having count(*) = 2;
 
-drop database;
 exit;
 
 $ ISQL -m -input cf_isql_01.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_isql_01*

@@ -141,8 +141,8 @@ select 'Passed 8 - Insert' from t35 where sc = 'test '||' test' having count(*) 
 update t35 set s = 'by' where s = 'computed';
 select 'Passed 8 - Update' from t35 where sc = 'test '||' test' having count(*) = 2;
 
-drop database;
 exit;
 
 $ ISQL -m -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

@@ -225,8 +225,8 @@ select 'Passed 3(dp) - Insert' from t10_dp where j = i+i having count(*) = 2;
 update t10_dp set i = 99.0 where i = 2.0;
 select 'Passed 3(dp) - Update' from t10_dp where j = i+i having count(*) = 2;
 
-drop database;
 exit;
 
-$ISQL -m -input cf_test.sql
-$DELETE cf_test.sql
+$ ISQL -m -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
+$ DELETE cf_test.sql

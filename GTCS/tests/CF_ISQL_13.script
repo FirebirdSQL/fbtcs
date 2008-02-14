@@ -55,8 +55,8 @@ alter table t1 drop af;
 show table t1;
 select * from t1;
 
-drop database;
 exit;
 
 $ ISQL -m -input cf_test_13b.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test*

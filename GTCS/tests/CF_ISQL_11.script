@@ -30,8 +30,8 @@ create table t0 (a integer, af computed by (b));
 create table t1 (af computed by (a), a integer);
 
 show tables;
-drop database;
 exit;
 
 $ ISQL -m -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

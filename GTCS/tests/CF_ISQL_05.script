@@ -130,8 +130,8 @@ select 'Passed 6 - Insert' from t25 where date_diff = d_end - d_start having cou
 update t25 set d_end = cast('today' as date) + 5 where d_start = 'today';
 select 'Passed 6 - Update' from t25 where date_diff = d_end - d_start having count(*) = 3;
 
-drop database;
 exit;
 
 $ ISQL -m -sqldialect 1 -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

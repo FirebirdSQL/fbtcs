@@ -61,8 +61,8 @@ select 'Passed 2 - Insert' from t5 where upper_const = a || upper('upper()') hav
 update t5 set a = 'xyz' where a = 'abcdef';
 select 'Passed 2 - Update' from t5 where upper_const = a || upper('upper()') having count(*) = 4;
 
-drop database;
 exit;
 
 $ ISQL -m -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

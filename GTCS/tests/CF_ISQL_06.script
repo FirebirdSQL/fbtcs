@@ -77,8 +77,8 @@ update t10 set a = 12, b = 12 where a = 10;
 update t10 set a = 13         where a = 11;
 select 'Passed 3 - Update' from t10 where a_b_const = a/10*b having count(*) = 2;
 
-drop database;
 exit;
 
 $ ISQL -m -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

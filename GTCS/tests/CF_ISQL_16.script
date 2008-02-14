@@ -35,8 +35,7 @@ create table t5 (a integer, af computed by (a*3) unique);
 create table t6 (a integer, af computed by (a*3) primary key);
 
 show tables;
-drop database;
 exit;
 $ISQL -m -input cf_test.sql
-
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

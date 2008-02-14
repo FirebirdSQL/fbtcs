@@ -161,8 +161,8 @@ select 'Passed 7 - Insert' from t35 where literal_date = '01/01/95' - f_date hav
 update t35 set f_date = '03/01/94' where f_date = '01/01/94';
 select 'Passed 7 - Update' from t35 where literal_date = '01/01/95' - f_date having count(*) = 2;
 
-drop database;
 exit;
 
 $ ISQL -m -sqldialect 1 -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

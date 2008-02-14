@@ -113,8 +113,8 @@ so expected result is:
 
 select * from t0;
 
-drop database;
 exit;
 
 $ ISQL -m -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql

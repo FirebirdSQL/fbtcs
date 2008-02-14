@@ -26,8 +26,8 @@ create table t3 (a integer, af computed by (a*3), afaf computed by (af*2));
 insert into t3(a) values(10);
 select * from t3;
 
-drop database;
 exit;
 
 $ ISQL -m -input cf_test.sql
+$ DROP WHERE_GDB:cf.gdb
 $ DELETE cf_test.sql
