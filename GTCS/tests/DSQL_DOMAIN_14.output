@@ -29,7 +29,7 @@ FLD8                            (DOM14H) DOUBLE PRECISION Not Null default 1000
 ======= ============ =========== ==================== ========================= ============ ============== ======================= 
     100          500 27-JAN-1992 DEFAULT              VARYING DEFAULT                   4.20      500.10001       1000.000000000000 
       0          200 27-JAN-1992 DEFAULT              VARYING DEFAULT                   4.20      500.10001       1000.000000000000 
-      0          500 12-DEC-1957 DEFAULT              VARYING DEFAULT                   4.20      500.10001       1000.000000000000 
+      0          500 12-DEC-2057 DEFAULT              VARYING DEFAULT                   4.20      500.10001       1000.000000000000 
       0          500 27-JAN-1992 20 characters xxxxxx VARYING DEFAULT                   4.20      500.10001       1000.000000000000 
       0          500 27-JAN-1992 DEFAULT              25 varying characters xxx         4.20      500.10001       1000.000000000000 
       0          500 27-JAN-1992 DEFAULT              VARYING DEFAULT                2500.00      500.10001       1000.000000000000 

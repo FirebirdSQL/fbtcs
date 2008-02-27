@@ -29,7 +29,7 @@ FLD8                            (DOM15H) DOUBLE PRECISION Not Null default 1000
 ======= ============ =========== ==================== ========================= ============ ============== ======================= 
     100          500  1-JAN-1990 COL DEFAULT          VARYING DEFAULT                   0.00      500.20001       1000.000000000000 
    5000          200  1-JAN-1990 COL DEFAULT          VARYING DEFAULT                   0.00      500.20001       1000.000000000000 
-   5000          500 12-DEC-1957 COL DEFAULT          VARYING DEFAULT                   0.00      500.20001       1000.000000000000 
+   5000          500 12-DEC-2057 COL DEFAULT          VARYING DEFAULT                   0.00      500.20001       1000.000000000000 
    5000          500  1-JAN-1990 20 characters xxxxxx VARYING DEFAULT                   0.00      500.20001       1000.000000000000 
    5000          500  1-JAN-1990 COL DEFAULT          25 varying characters xxx         0.00      500.20001       1000.000000000000 
    5000          500  1-JAN-1990 COL DEFAULT          VARYING DEFAULT                2500.00      500.20001       1000.000000000000 
