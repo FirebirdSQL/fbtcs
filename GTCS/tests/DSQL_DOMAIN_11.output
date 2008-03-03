@@ -23,5 +23,6 @@ DOM11I_2                        BLOB segment 60, subtype TEXT Nullable
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Domain not found
+-SQLSTATE (42000)
 After line 0 in file domain_11b.sql
  

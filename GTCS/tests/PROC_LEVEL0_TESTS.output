@@ -17,6 +17,7 @@ go
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Name longer than database column size
+-SQLSTATE (42000)
 After line 11 in file proc_level0_tests.sql
 
 set term ; go

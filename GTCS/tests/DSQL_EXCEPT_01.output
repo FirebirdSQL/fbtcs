@@ -33,13 +33,16 @@ At line 21 in file dsql_except_01.sql
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -DEFINE EXCEPTION failed
+-SQLSTATE (42000)
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
 After line 22 in file dsql_except_01.sql
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Exception not found
+-SQLSTATE (42000)
 After line 25 in file dsql_except_01.sql
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Exception not found
+-SQLSTATE (42000)
 After line 27 in file dsql_except_01.sql

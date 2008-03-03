@@ -1,6 +1,7 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
 -STORE RDB$INDICES failed
+-SQLSTATE (42000)
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_5"
 Use CONNECT or CREATE DATABASE to specify a database
 T_IND UNIQUE INDEX ON T(B) 

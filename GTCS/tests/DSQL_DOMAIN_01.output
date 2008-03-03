@@ -23,6 +23,7 @@ LONG_DOMAIN_NAME_OF_31_CHARSXXX INTEGER Nullable
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -Name longer than database column size
+-SQLSTATE (42000)
 After line 3 in file domain_01b.sql
 Statement failed, SQLCODE = -104
 Dynamic SQL Error
@@ -39,6 +40,7 @@ At line 8 in file domain_01b.sql
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -STORE RDB$FIELDS failed
+-SQLSTATE (42000)
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_2"
 After line 9 in file domain_01b.sql
 Statement failed, SQLCODE = -104

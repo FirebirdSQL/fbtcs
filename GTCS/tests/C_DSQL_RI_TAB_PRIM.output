@@ -5,6 +5,7 @@ View CHECK_CONSTRAINTS created ok.
 View CONSTRAINTS_COLUMN_USAGE created ok.
 unsuccessful metadata update
 -Field COL1 cannot be used twice in index RDB$PRIMARY3
+-SQLSTATE (42000)
 Expected data base error (SQLCODE=-607), encountered, SQLCODE = -607
 Inserted 6 records, 1 primary key violation.
 BU1032,The Busy Executive's Database Guide,172-32-1176

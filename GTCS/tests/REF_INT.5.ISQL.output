@@ -3,6 +3,7 @@ alter index dept_key inactive;
 Statement failed, SQLCODE = -607
 unsuccessful metadata update
 -MODIFY RDB$INDICES failed
+-SQLSTATE (42000)
 -action cancelled by trigger (2) to preserve data integrity
 -Cannot deactivate index used by an integrity constraint
 After line 0 in file test5.sql

@@ -1,6 +1,7 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
 -Table T_VIEW already exists
+-SQLSTATE (42000)
 Use CONNECT or CREATE DATABASE to specify a database
 A                               INTEGER Nullable 
 View Source:
