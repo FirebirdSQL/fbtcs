@@ -9,7 +9,7 @@ Test:
 
     Relation VMB1 is a view defined as:
 	SELECT TEST_NAME,ROW_ID,COMMENT,B512 FROM MB1
-    Security class SQL$VMB1
+    Security class SQL$4
 
 Test:
   INSERT INTO VMB1 (TEST,ROW,BHALFK,DESC) VALUES (:Test_Name,:j,:BlobId,'Inserting blobs through views')
