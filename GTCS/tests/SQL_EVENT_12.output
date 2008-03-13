@@ -1,5 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLCODE = -206
+Statement failed, SQLSTATE = 42S22
 Dynamic SQL Error
 -SQL error code = -206
 -Column unknown

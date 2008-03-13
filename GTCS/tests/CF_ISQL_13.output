@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLCODE = -607
+Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -cannot delete
 -COLUMN A
@@ -13,7 +13,7 @@ AF                              Computed by: (a*3)
 ============ ===================== 
           10                    30 
 
-Statement failed, SQLCODE = -607
+Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -cannot delete
 -COLUMN AF

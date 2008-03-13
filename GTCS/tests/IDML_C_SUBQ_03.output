@@ -41,7 +41,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 
 C_437_25                  
 ========================= 
-Statement failed, SQLCODE = -802
+Statement failed, SQLSTATE = 22003
 arithmetic exception, numeric overflow, or string truncation
 -Cannot transliterate character between character sets
 After line 2 in file isosel.sql

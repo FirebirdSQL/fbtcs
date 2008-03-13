@@ -11,7 +11,7 @@ X
 
 X      
 ====== 
-Statement failed, SQLCODE = -413
+Statement failed, SQLSTATE = 22018
 conversion error from string "10001"
 -At procedure 'P2' line: 3, col: 2
 After line 25 in file proc_cast11.sql

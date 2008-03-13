@@ -1,7 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
 -DEFINE EXCEPTION failed
--SQLSTATE (42000)
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
 unsuccessful metadata update
 -cannot delete
@@ -9,10 +8,9 @@ unsuccessful metadata update
 -there are 1 dependencies
 unsuccessful metadata update
 -DEFINE EXCEPTION failed
--SQLSTATE (42000)
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLCODE = -836
+Statement failed, SQLSTATE = HY000
 exception 1
 -FAIL_MSG
 -THIS IS AN EXCEPTION !!

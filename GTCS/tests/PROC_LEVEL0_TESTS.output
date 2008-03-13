@@ -14,10 +14,9 @@ begin
    SUSPEND;
 end
 go
-Statement failed, SQLCODE = -607
+Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -Name longer than database column size
--SQLSTATE (42000)
 After line 11 in file proc_level0_tests.sql
 
 set term ; go
@@ -32,7 +31,7 @@ execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
           10 
 
 execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown

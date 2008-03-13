@@ -12,10 +12,9 @@ begin
   SUSPEND;
 end
 go
-Statement failed, SQLCODE = -607
+Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -Procedure ABC already exists
--SQLSTATE (42000)
 After line 10 in file proc_level0_tests1.sql
 
 set term ; go

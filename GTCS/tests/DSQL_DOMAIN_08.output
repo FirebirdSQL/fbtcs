@@ -7,7 +7,7 @@ DOM08A_1                        SMALLINT Nullable
 
 alter domain dom08a_1 
  add constraint not null;
-Statement failed, SQLCODE = -104
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 2, column 17

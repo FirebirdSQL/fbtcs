@@ -1,15 +1,14 @@
 Use CONNECT or CREATE DATABASE to specify a database
 alter index dept_key inactive;
-Statement failed, SQLCODE = -607
+Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -MODIFY RDB$INDICES failed
--SQLSTATE (42000)
 -action cancelled by trigger (2) to preserve data integrity
 -Cannot deactivate index used by an integrity constraint
 After line 0 in file test6.sql
 commit;
 insert into employee values (11, 'e11', 34);
-Statement failed, SQLCODE = -530
+Statement failed, SQLSTATE = 42000
 violation of FOREIGN KEY constraint "REF_KEY" on table "EMPLOYEE"
 -Foreign key reference target does not exist
 After line 2 in file test6.sql

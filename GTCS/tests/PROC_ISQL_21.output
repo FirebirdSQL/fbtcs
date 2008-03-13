@@ -1,4 +1,4 @@
-Statement failed, SQLCODE = -104
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Token unknown - line 3, column 22

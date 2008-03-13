@@ -423,7 +423,7 @@ sum(ap.iznos) from apromet ap where ap.vrsta
 =
 vv.vrsta)
 FROM vv;
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = HY000
 Too many Contexts of Relation/Procedure/Views. Maximum allowed is 255
 After line 3 in file cf_isql_26b.sql
 

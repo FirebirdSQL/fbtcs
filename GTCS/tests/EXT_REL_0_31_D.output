@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLCODE = -297
+Statement failed, SQLSTATE = 23000
 Operation violates CHECK constraint SMALLER on view or table EXT_TABLE
 -At trigger 'CHECK_1'
 After line 3 in file isql2.in

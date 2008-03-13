@@ -20,15 +20,13 @@ DOM20G                          FLOAT Nullable
                                 check (value < 50000.00)
 DOM20H                          DOUBLE PRECISION Not Null
                                 default 1000
-Statement failed, SQLCODE = -607
+Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -Domain DOM20A is used in table TAB26A (local name FLD1) and cannot be dropped
--SQLSTATE (42000)
 After line 40 in file domain_26.sql
-Statement failed, SQLCODE = -607
+Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -Domain DOM20B is used in table TAB26A (local name FLD2) and cannot be dropped
--SQLSTATE (42000)
 After line 41 in file domain_26.sql
 DOM20A                          SMALLINT Nullable
                                 default 0
@@ -42,4 +40,3 @@ There is no domain DOM20E in this database
 There is no domain DOM20F in this database
 There is no domain DOM20G in this database
 There is no domain DOM20H in this database
- 

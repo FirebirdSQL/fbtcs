@@ -1,26 +1,26 @@
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 1 in file proc_cast7.sql
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 7 in file proc_cast7.sql
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 19 in file proc_cast7.sql
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 25 in file proc_cast7.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST1
 After line 64 in file proc_cast7.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
@@ -31,23 +31,23 @@ After line 65 in file proc_cast7.sql
 =========== 
 1978-03-29  
 
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST4
 After line 67 in file proc_cast7.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST5
 After line 68 in file proc_cast7.sql
-Statement failed, SQLCODE = -413
+Statement failed, SQLSTATE = 22018
 conversion error from string "1978-03-29"
 -At procedure 'CAST6' line: 3, col: 5
 After line 69 in file proc_cast7.sql
-Statement failed, SQLCODE = -413
+Statement failed, SQLSTATE = 22018
 conversion error from string "1978-03-29"
 -At procedure 'CAST7' line: 3, col: 5
 After line 70 in file proc_cast7.sql

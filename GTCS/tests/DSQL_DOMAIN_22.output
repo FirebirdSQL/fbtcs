@@ -38,10 +38,10 @@ DOM20A                          SMALLINT Nullable
                                 check (value > 100)
 DOM20A                          SMALLINT Nullable
                                 check (value > 100)
-Statement failed, SQLCODE = -625
+Statement failed, SQLSTATE = 23000
 validation error for column FLD1, value "0"
 After line 1 in file domain_22b.sql
-Statement failed, SQLCODE = -625
+Statement failed, SQLSTATE = 23000
 validation error for column FLD4, value "*** null ***"
 After line 4 in file domain_22b.sql
 
@@ -49,4 +49,3 @@ After line 4 in file domain_22b.sql
 ======= ============ =========== ==================== ========================= ============ ============== ======================= 
       0          500  1-JAN-2050 Sacramento           VARYING DEFAULT                   4.20      500.10001       1000.000000000000 
 
- 

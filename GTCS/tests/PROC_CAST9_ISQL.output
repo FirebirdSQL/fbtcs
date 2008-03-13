@@ -1,78 +1,78 @@
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 1 in file proc_cast9.sql
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 7 in file proc_cast9.sql
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 13 in file proc_cast9.sql
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 19 in file proc_cast9.sql
-Statement failed, SQLCODE = -902
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -expression evaluation not supported
 After line 25 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST1
 After line 63 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST1
 After line 64 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST2
 After line 65 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST2
 After line 66 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST3
 After line 67 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST3
 After line 68 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST4
 After line 69 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST4
 After line 70 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
 -CAST5
 After line 71 in file proc_cast9.sql
-Statement failed, SQLCODE = -204
+Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
@@ -83,18 +83,18 @@ After line 72 in file proc_cast9.sql
 =========== 
 1992-03-12  
 
-Statement failed, SQLCODE = -413
+Statement failed, SQLSTATE = 22018
 conversion error from string "abc       "
 -At procedure 'CAST6' line: 3, col: 5
 After line 74 in file proc_cast9.sql
-Statement failed, SQLCODE = -206
+Statement failed, SQLSTATE = 42S22
 Dynamic SQL Error
 -SQL error code = -206
 -Column unknown
 -ABC
 -At line 1, column 25
 At line 76 in file proc_cast9.sql
-Statement failed, SQLCODE = -413
+Statement failed, SQLSTATE = 22018
 conversion error from string "100       "
 -At procedure 'CAST6' line: 3, col: 5
 After line 76 in file proc_cast9.sql
@@ -103,7 +103,7 @@ After line 76 in file proc_cast9.sql
 ============ 
       100.00 
 
-Statement failed, SQLCODE = -413
+Statement failed, SQLSTATE = 22018
 conversion error from string "abc       "
 -At procedure 'CAST7' line: 3, col: 5
 After line 78 in file proc_cast9.sql

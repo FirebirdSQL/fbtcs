@@ -1,4 +1,4 @@
-Statement failed, SQLCODE = -607
+Statement failed, SQLSTATE = 22000
 unsuccessful metadata update
 -cannot delete
 -EXCEPTION TRIG03_NULLRIVER

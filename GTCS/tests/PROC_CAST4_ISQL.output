@@ -88,7 +88,7 @@ execute procedure cast5 100;
     10000.00 
 
 execute procedure cast6 10.23;
-Statement failed, SQLCODE = -413
+Statement failed, SQLSTATE = 22018
 conversion error from string "10.23000000000000"
 -At procedure 'CAST6' line: 3, col: 5
 After line 64 in file proc_cast4.sql
