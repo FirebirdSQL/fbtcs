@@ -199,13 +199,15 @@ TEST_RESULT EXEC_test(char *test_name,
 
 	result = passed;
 
+	time_t now = time(0);
+	struct tm *t = localtime(&now);
+
 	//  If phase == 0 (it will always unless '-n' no system flag is
 	//  set) then run the test, by calling run().
 
-	if (test_name[-1] == 'l')
-		fprintf (stdout, "\t\ttest %25s\tlocal", test_name);
-	else
-		fprintf (stdout, "\t\ttest %25s\tglobal", test_name);
+	fprintf (stdout, "%02d:%02d:%02d\ttest %25s\t%s", 
+					t->tm_hour, t->tm_min, t->tm_sec, test_name,
+					test_name[-1] == 'l' ? "local" : "global");
 	fflush (stdout);
 
 	bool test_result = run_text(script, const_cast<char*>(SCRIPT_FILE),
