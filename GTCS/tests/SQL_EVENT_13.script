@@ -1256,7 +1256,7 @@ $ GPRE -e event_server.e -d WHERE_GDB:asyn.gdb
 $ CC FLAG_CC event_server.c
 $ LINK FLAG_LINK event_server 
 $ RUN event_server
-$ SLEEP 2
+$ SLEEP 1
 $ DELETE event_custom.h
 $ DELETE event_server* 
 $ DELETE event_client* 

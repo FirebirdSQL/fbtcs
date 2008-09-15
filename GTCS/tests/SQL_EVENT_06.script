@@ -69,7 +69,7 @@ $ GPRE  -n -m foo6.e
 $ CC FLAG_CC foo6.c
 $ LINK FLAG_LINK foo6 
 $ RUN_BG foo6 > foo6.tt1 &
-$ SLEEP 2
+$ SLEEP 1
 >> sql_event_6b.sql
 
 update project set prize = prize * 1.05 ;
@@ -78,7 +78,7 @@ select * from project;
 select * from works_on;
 
 $ ISQL -m WHERE_GDB:events.gdb -i sql_event_6b.sql
-$ SLEEP 2
+$ SLEEP 1
 $ TYPE foo6.tt1
 $ DROP WHERE_GDB:events.gdb 
 $ DELETE foo6* sql_event_6*
