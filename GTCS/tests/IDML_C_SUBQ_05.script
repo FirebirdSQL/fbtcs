@@ -113,6 +113,7 @@ $ CC FLAG_CC subq5.c
 $ LINK FLAG_LINK subq5 
 $ RUN subq5
 $ ISQL -i ver5.sql -m
+$ DELETE ver5.sql
 
 $ ISQL -i subq6.sql -m
 $ DELETE subq5* 
