@@ -73,9 +73,11 @@ ITEMS_TR2, Sequence: 2, Type: AFTER INSERT, Active
 SELECT
   QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH, QOH
 FROM ITEMS;
-Statement failed, SQLSTATE = 54001
-Too many Contexts of Relation/Procedure/Views. Maximum allowed is 255
-After line 65 in file cf_isql_31.sql
+
+                  QOH                   QOH                   QOH                   QOH                   QOH                   QOH                   QOH                   QOH                   QOH                   QOH 
+===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== 
+                    0                     0                     0                     0                     0                     0                     0                     0                     0                     0 
+
 
 DROP DATABASE;
 
