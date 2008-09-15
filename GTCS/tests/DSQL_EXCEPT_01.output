@@ -32,8 +32,7 @@ Dynamic SQL Error
 At line 21 in file dsql_except_01.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--DEFINE EXCEPTION failed
--attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
+-Exception NOSTATE already exists
 After line 22 in file dsql_except_01.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update

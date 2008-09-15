@@ -1,7 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
--DEFINE GENERATOR failed
--attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_11"
+-Generator T_GEN already exists
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
