@@ -30,20 +30,23 @@ commit;
 Use CONNECT or CREATE DATABASE to specify a database
 
 EXECUTE PROCEDURE SPX_AUX_TEST (1);
-Statement failed, SQLSTATE = 22003
+Statement failed, SQLSTATE = 22012
 arithmetic exception, numeric overflow, or string truncation
+-Integer divide by zero.  The code attempted to divide an integer value by an integer divisor of zero.
 -At procedure 'SPX_AUX_TEST' line: 10, col: 1
 -At procedure 'SPX_AUX_TEST' line: 12, col: 1
 After line 3 in file cf_isql_29c.sql
 EXECUTE PROCEDURE SPX_AUX_TEST (1);
-Statement failed, SQLSTATE = 22003
+Statement failed, SQLSTATE = 22012
 arithmetic exception, numeric overflow, or string truncation
+-Integer divide by zero.  The code attempted to divide an integer value by an integer divisor of zero.
 -At procedure 'SPX_AUX_TEST' line: 10, col: 1
 -At procedure 'SPX_AUX_TEST' line: 12, col: 1
 After line 5 in file cf_isql_29c.sql
 EXECUTE PROCEDURE SPX_AUX_TEST (1);
-Statement failed, SQLSTATE = 22003
+Statement failed, SQLSTATE = 22012
 arithmetic exception, numeric overflow, or string truncation
+-Integer divide by zero.  The code attempted to divide an integer value by an integer divisor of zero.
 -At procedure 'SPX_AUX_TEST' line: 10, col: 1
 -At procedure 'SPX_AUX_TEST' line: 12, col: 1
 After line 6 in file cf_isql_29c.sql

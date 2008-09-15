@@ -5,7 +5,7 @@ CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
         (field1 SMALLINT[4]) ;
  
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLSTATE = 42000
+Statement failed, SQLSTATE = HY004
 Dynamic SQL Error
 -SQL error code = -607
 -Data type ARRAY is not supported for EXTERNAL TABLES. Relation 'EXT_TABLE', field 'FIELD1'

@@ -1,5 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLSTATE = 42000
+Statement failed, SQLSTATE = 42S01
 unsuccessful metadata update
 -Table EXT_TABLE already exists
 After line 5 in file create.sql

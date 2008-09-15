@@ -8,7 +8,7 @@ unsuccessful metadata update
 After line 0 in file test5.sql
 commit;
 insert into department values (1, 'hello');
-Statement failed, SQLSTATE = HY000
+Statement failed, SQLSTATE = 23000
 violation of PRIMARY or UNIQUE KEY constraint "DEPT_KEY" on table "DEPARTMENT"
 After line 2 in file test5.sql
 commit;

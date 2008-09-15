@@ -20,7 +20,7 @@ unsuccessful metadata update
 -TABLE T5
 -Can't have relation with only computed fields or constraints
 After line 19 in file cf_test.sql
-Statement failed, SQLSTATE = 42000
+Statement failed, SQLSTATE = 21S01
 Dynamic SQL Error
 -SQL error code = -804
 -Count of read-write columns does not equal count of values

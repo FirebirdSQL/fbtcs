@@ -10,7 +10,7 @@ unsuccessful metadata update
 -DEFINE EXCEPTION failed
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLSTATE = HY000
+Statement failed, SQLSTATE = 42000
 exception 1
 -FAIL_MSG
 -THIS IS AN EXCEPTION !!

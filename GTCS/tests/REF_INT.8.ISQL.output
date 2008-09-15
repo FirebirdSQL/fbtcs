@@ -9,7 +9,7 @@ After line 0 in file test8.sql
 commit;
 insert into employee values (11, 'e11', 1);
 insert into employee values (12, 'e12', 234);
-Statement failed, SQLSTATE = 42000
+Statement failed, SQLSTATE = 23000
 violation of FOREIGN KEY constraint "REF_KEY" on table "EMPLOYEE"
 -Foreign key reference target does not exist
 After line 3 in file test8.sql
