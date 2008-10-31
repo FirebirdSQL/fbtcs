@@ -2,6 +2,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = HY004
 Dynamic SQL Error
 -SQL error code = -607
+-Invalid command
 -Data type BLOB is not supported for EXTERNAL TABLES. Relation 'EXT_TABLE', field 'FIELD1'
 After line 2 in file isql.in
 Use CONNECT or CREATE DATABASE to specify a database
