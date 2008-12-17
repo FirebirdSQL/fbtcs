@@ -20,14 +20,14 @@ char *argv[];
 	XSQLDA *insqlda, *outsqlda;
 	GDS_QUAD to_blob;
 	char buffer[80];
-	char user_status[20];
+	ISC_STATUS user_status[20];
 	char  segment[80];
 	char *sentence="This is segment number %d\n";
 	char insert[100], select[100];
 	long blobret;
 	long ret;
-	long * stmt;
-	long * to_blob_handle;
+	isc_stmt_handle stmt;
+	isc_blob_handle to_blob_handle;
 	int segment_len;
 	int i, j;
 	int k = 0;
@@ -69,7 +69,8 @@ char *argv[];
 			if (isc_put_segment (user_status, &to_blob_handle,segment_len, segment))
 				isc_print_status(user_status);
 		}
-		isc_close_blob (user_status, &to_blob_handle);
+		if (isc_close_blob (user_status, &to_blob_handle))
+			isc_print_status(user_status);
 		if (isc_dsql_exec_immed2(user_status, &db, &gds__trans, 0, 
 								insert, 1, insqlda, (XSQLDA *)0))
 		{
@@ -80,6 +81,8 @@ char *argv[];
 			isc_commit_transaction(user_status, &gds__trans);
 		else
 			isc_rollback_transaction(user_status, &gds__trans);
+		if (user_status[0] == 1 && user_status[1] != 0)
+			isc_print_status(user_status);
 		if (isc_start_transaction(user_status, &gds__trans, 1, &db, 0, NULL))
 			isc_print_status(user_status);
 		j++;
