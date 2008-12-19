@@ -64,23 +64,27 @@ static  char    db_items[]=
           isc_info_end
         }; 
  
-static show_dbb_parameters (dbh)
-long*	dbh;
+static show_dbb_parameters (isc_db_handle* dbh)
 {
-CHAR	*d, buffer[2048], item;
+CHAR	*d, buffer[127], item;
+CHAR	*end = &buffer[sizeof(buffer)];
 int	length;
 long	value_out;
-long	stsvec[20];
+ISC_STATUS	stsvec[20];
 
 if (!dbh)
     return;
 
-if (gds__database_info (stsvec, &dbh, sizeof (db_items), db_items,
+if (gds__database_info (stsvec, dbh, sizeof (db_items),  db_items,
 						sizeof (buffer), buffer))
+	{
+	printf("gds__database_info failed: ");
 	isc_print_status( stsvec );
+	return;
+	}
 
 
-for (d = buffer; *d != isc_info_end; )
+for (d = buffer;  d < end && *d != isc_info_end; )
     {
     value_out = 0;
     item = *d++;
@@ -116,12 +120,12 @@ for (d = buffer; *d != isc_info_end; )
             printf("Pages size = %d \n", value_out);
             break;
  
-        case isc_info_num_buffers: 
+        case isc_info_num_buffers:
 	    value_out = isc_vax_integer (d, length);
             printf("Number of buffers = %d\n", value_out);
             break;
  
-        case isc_info_num_wal_buffers:  
+        case isc_info_num_wal_buffers:       
 	    value_out = isc_vax_integer (d, length);
             printf("Number of wal buffers = %d \n", value_out);
             break;
@@ -133,12 +137,12 @@ for (d = buffer; *d != isc_info_end; )
 
         case isc_info_wal_ckpt_length:
 	    value_out = isc_vax_integer (d, length);
-            printf("Max check point interval = %d \n", value_out);
+            printf("Check point length = %d \n", value_out);
             break;
 
         case isc_info_wal_cur_ckpt_interval:
 	    value_out = isc_vax_integer (d, length);
-            printf("Current check point interval = %d \n", value_out);
+            printf("Check point interval = %d \n", value_out);
             break;
 
         case isc_info_wal_grpc_wait_usecs:
@@ -255,18 +259,20 @@ for (d = buffer; *d != isc_info_end; )
 	    value_out = isc_vax_integer (d, length);
             printf("Info version number = %d \n", value_out);
             break;
-
+ 
         case isc_info_no_reserve:
-            value_out = isc_vax_integer (d, length);
-            printf("No reserve = %d \n", value_out  );
-            if ( value_out != 1 )
-            printf("Currently this always returns zero \n");
+	    value_out = isc_vax_integer (d, length);
+            printf("No reserve = %d \n", value_out);
             break;
  
         case isc_info_limbo:
 	    value_out = isc_vax_integer (d, length);
             printf("Transaction in limbo = %d \n", value_out);
             break;
+
+	default:
+	    printf("Wrong return from gds__database_info\n");
+	    return;
 
 	}
     d += length;
@@ -292,7 +298,7 @@ strcpy(db_name, *argv);
  
 READY db_name AS DB;
 
-show_dbb_parameters( DB );
+show_dbb_parameters( &DB );
 
 
 FINISH;

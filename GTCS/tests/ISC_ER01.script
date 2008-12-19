@@ -18,6 +18,8 @@
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
+	sleep(5);
+
 	isc_db_handle   DB;
 	ISC_STATUS      rc, status[20];
 	char            err_buf[128];
