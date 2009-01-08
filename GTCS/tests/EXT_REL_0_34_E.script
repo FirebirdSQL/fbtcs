@@ -45,7 +45,7 @@ EXEC SQL
 	INCLUDE SQLCA
 
 EXEC SQL
-	WHENEVER SQLERROR GO TO ERR;
+	WHENEVER SQLERROR GO TO ERR_LBL;
 
 
 main(int argc, char* argv[])
@@ -66,7 +66,7 @@ EXEC SQL
 		CONSTRAINT for_key FOREIGN KEY (field1) REFERENCES int_table (field1));
 
 exit(0);
-ERR:
+ERR_LBL:
 	EXEC SQL WHENEVER SQLERROR CONTINUE;
 	fprintf(stderr, "Data base error, SQLCODE = %d\n", SQLCODE);
 	fflush(stderr);

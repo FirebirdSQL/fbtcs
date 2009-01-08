@@ -289,7 +289,7 @@ $ GDEF sh_join.gdl
 DATABASE DB = 'WHERE_GDB:sh_join.gdb';
 EXEC SQL	INCLUDE SQLCA;
 
-EXEC SQL	WHENEVER SQLERROR GO TO ERR;
+EXEC SQL	WHENEVER SQLERROR GO TO ERR_LBL;
 
 void Load_Char();
 void Load_VChar();
@@ -317,7 +317,7 @@ Load_Double();
 
 exit(0);
 
-ERR:
+ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
         isc_print_status(gds__status);
 

@@ -15,7 +15,7 @@ DATABASE DB = "WHERE_GDB:sh_join_39.gdb";
 EXEC SQL	INCLUDE SQLCA;
 
 EXEC SQL
-        WHENEVER SQLERROR GO TO ERR;
+        WHENEVER SQLERROR GO TO ERR_LBL;
 EXEC SQL
         WHENEVER NOT FOUND GO TO NOMORE;
 
@@ -84,7 +84,7 @@ NOMORE:
 
 exit(0);
 
-ERR:
+ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
         isc_print_status(gds__status);
 

@@ -140,7 +140,7 @@ FINISH;
 
 exit(0);
 
-ERR:
+ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
         isc_print_status(gds_status);
 

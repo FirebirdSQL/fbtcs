@@ -20,7 +20,7 @@ $ COPY WHERE_FILES:sh_binary.tif sh_binary.tif
 
 DATABASE DB = "WHERE_GDB:sh_blobs_26.gdb";
 EXEC SQL INCLUDE SQLCA;
-EXEC SQL WHENEVER SQLERROR GO TO ERR;
+EXEC SQL WHENEVER SQLERROR GO TO ERR_LBL;
 
 /* Database Variables */
 BASED_ON ST.TEST_NAME      Test_Name;
@@ -98,7 +98,7 @@ short i,j,k,l;
 
 exit(0);
 
-ERR:
+ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
         isc_print_status(gds_status);
 
@@ -230,7 +230,7 @@ $ RUN blob026
 
 DATABASE DB = "WHERE_GDB:sh_blobs_26.gdb";
 EXEC SQL INCLUDE SQLCA;
-EXEC SQL WHENEVER SQLERROR GO TO ERR;
+EXEC SQL WHENEVER SQLERROR GO TO ERR_LBL;
 
 /* Database Variables */
 BASED_ON ST.TEST_NAME      Test_Name;
@@ -309,7 +309,7 @@ short i,j,k,l;
 
 exit(0);
 
-ERR:
+ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
         isc_print_status(gds_status);
 

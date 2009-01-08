@@ -161,7 +161,7 @@ int setup() {
 	}
 
 	EXEC SQL
-		WHENEVER SQLERROR GO TO ERR;
+		WHENEVER SQLERROR GO TO err;
 
 	return 0;
 err:		die_on_error();

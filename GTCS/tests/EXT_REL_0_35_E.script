@@ -44,7 +44,7 @@ EXEC SQL
     INCLUDE SQLCA
 
 EXEC SQL
-    WHENEVER SQLERROR GO TO ERR;
+    WHENEVER SQLERROR GO TO ERR_LBL;
  
 main()
 {
@@ -65,7 +65,7 @@ EXEC SQL
        (field1 CHARACTER(10)) ;
  
 exit(0);
-ERR: 
+ERR_LBL: 
 	EXEC SQL WHENEVER SQLERROR CONTINUE;
 	printf("Data base error, SQLCODE = %d\n", SQLCODE);
 	isc_print_status (gds__status);
@@ -84,7 +84,7 @@ EXEC SQL
     INCLUDE SQLCA
  
 EXEC SQL
-    WHENEVER SQLERROR GO TO ERR;
+    WHENEVER SQLERROR GO TO ERR_LBL;
  
 EXEC SQL
     SET DATABASE DB = 'WHERE_GDB:ext_rel_0_35_E.gdb';
@@ -114,7 +114,7 @@ EXEC SQL
 
 
 exit(0);
-ERR:
+ERR_LBL:
 	EXEC SQL WHENEVER SQLERROR CONTINUE;
 	printf("Data base error, SQLCODE = %d\n", SQLCODE);
 	isc_print_status (gds__status);

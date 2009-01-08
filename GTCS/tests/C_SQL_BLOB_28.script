@@ -25,7 +25,7 @@ reinitializing.
 
 DATABASE DB = "WHERE_GDB:sh_blobs_28.gdb";
 EXEC SQL INCLUDE SQLCA;
-EXEC SQL WHENEVER SQLERROR GO TO ERR;
+EXEC SQL WHENEVER SQLERROR GO TO ERR_LBL;
 
 bool verbose;
 
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 
 exit(0);
 
-ERR:
+ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
         isc_print_status(gds_status);
 
@@ -97,7 +97,7 @@ $ QLI -n -a blob028a.qli
 
 DATABASE DB = "WHERE_GDB:sh_blobs_28.gdb";
 EXEC SQL INCLUDE SQLCA;
-EXEC SQL WHENEVER SQLERROR GO TO ERR;
+EXEC SQL WHENEVER SQLERROR GO TO ERR_LBL;
 
 BASED_ON VMB1.TEST        Test_Name;
 BASED_ON VMB1.DESC        Comment;
@@ -170,7 +170,7 @@ int Count;
 
 exit(0);
 
-ERR:
+ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
         isc_print_status(gds_status);
 

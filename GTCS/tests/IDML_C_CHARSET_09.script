@@ -65,7 +65,7 @@ QUIT;
 #else
 #include <Firebird/ibase.h>
 #endif
-EXEC SQL WHENEVER SQLERROR GOTO ERR;
+EXEC SQL WHENEVER SQLERROR GOTO ERR_LBL;
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL SET DATABASE dbfoo = "WHERE_GDB:sundb.gdb";
 EXEC SQL BEGIN DECLARE SECTION;       /* moved the vars here */ 
@@ -116,7 +116,7 @@ main()
     EXEC SQL CLOSE C_GET;    
     EXEC SQL COMMIT;
 exit(0);
-ERR:
+ERR_LBL:
         isc_print_sqlerror (SQLCODE, gds__status);
         isc_print_status (gds__status);
 exit(1);    
