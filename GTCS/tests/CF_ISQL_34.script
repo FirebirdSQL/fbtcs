@@ -1,0 +1,62 @@
+#
+#  The contents of this file are subject to the Initial
+#  Developer's Public License Version 1.0 (the "License");
+#  you may not use this file except in compliance with the
+#  License. You may obtain a copy of the License at
+#  http://www.ibphoenix.com/main.nfs?a=ibphoenix&page=ibp_idpl.
+#
+#  Software distributed under the License is distributed AS IS,
+#  WITHOUT WARRANTY OF ANY KIND, either express or implied.
+#  See the License for the specific language governing rights
+#  and limitations under the License.
+#
+#  The Original Code was created by Alex Peshkoff
+#  for the Firebird Open Source RDBMS project.
+#
+#  Copyright (c) 2009 Alex Peshkoff <peshkoff@mail.ru>
+#  and all contributors signed below.
+#
+#  All Rights Reserved.
+#  Contributor(s): ______________________________________.
+#
+
+#
+# Minimum grant test
+#
+
+>> cf_isql_34_0.sql
+
+CREATE DATABASE 'WHERE_GDB:cf_isql_34.fdb';
+
+CREATE TABLE Restricted (C1 int);
+commit;
+
+GRANT INSERT ON Restricted TO qa_user1;
+GRANT SELECT ON Restricted TO qa_user2;
+commit;
+
+>> cf_isql_34_1.sql
+
+CONNECT 'WHERE_GDB:cf_isql_34.fdb' USER 'qa_user1' PASSWORD 'qa_user1';
+
+INSERT INTO Restricted VALUES(1);
+commit;
+
+SELECT * FROM Restricted;	-- should fail
+commit;
+
+>> cf_isql_34_2.sql
+
+CONNECT 'WHERE_GDB:cf_isql_34.fdb' USER 'qa_user2' PASSWORD 'qa_user2';
+
+INSERT INTO Restricted VALUES(2);	-- should fail
+commit;
+
+SELECT * FROM Restricted;
+commit;
+
+$ISQL -m -i cf_isql_34_0.sql
+$ISQL -m -i cf_isql_34_1.sql
+$ISQL -m -i cf_isql_34_2.sql
+$DROP WHERE_GDB:cf_isql_34.fdb
+$DELETE cf_isql_34*

@@ -1,0 +1,14 @@
+Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLSTATE = 28000
+no permission for read/select access to TABLE RESTRICTED
+After line 5 in file cf_isql_34_1.sql
+Use CONNECT or CREATE DATABASE to specify a database
+Statement failed, SQLSTATE = 28000
+no permission for insert/write access to TABLE RESTRICTED
+After line 2 in file cf_isql_34_2.sql
+
+          C1 
+============ 
+           1 
+
