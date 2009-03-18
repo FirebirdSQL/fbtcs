@@ -101,6 +101,7 @@ select * from works_on;
 exit;
 
 $ ISQL -m WHERE_GDB:events.gdb -i sql_event_05b.sql
+$ SLEEP 1
 $ TYPE foo5.tt1
 $ SLEEP 1
 $ DELETE foo5* sql_event_05*
