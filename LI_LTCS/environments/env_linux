@@ -14,6 +14,8 @@ ve SH=sh
 #
 # Template symbols 
 #
-te FLAG_CC -c -w -Wall -DLINUX %s -I WHERE_FIREBIRD_INCLUDE: -I WHERE_FBTCS_INCLUDE: -pthread
+te FLAG_CC -ggdb -c -w -Wall -DLINUX %s -I WHERE_FIREBIRD_INCLUDE: -I WHERE_FBTCS_INCLUDE: -pthread
+# te FLAG_CC -c -w -Wall -DLINUX %s -I WHERE_FIREBIRD_INCLUDE: -I WHERE_FBTCS_INCLUDE: -pthread
 te FLAG_CXX -c -w -Wall -DLINUX %s -I WHERE_FIREBIRD_INCLUDE: -I WHERE_FBTCS_INCLUDE: -pthread
-te FLAG_LINK %s -lstdc++ WHERE_FIREBIRD_LIB:libfbclient.so -pthread -o %s
+te FLAG_LINK -ggdb %s -lstdc++ WHERE_FIREBIRD_LIB:libfbclient.so -pthread -o %s -Wl,-rpath,WHERE_FIREBIRD_LIB:
+# te FLAG_LINK %s -lstdc++ WHERE_FIREBIRD_LIB:libfbclient.so -pthread -o %s -Wl,-rpath,WHERE_FIREBIRD_LIB:
