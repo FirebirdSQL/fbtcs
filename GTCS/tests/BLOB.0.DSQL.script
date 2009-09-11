@@ -5,6 +5,7 @@ create table t1 (a int not null, b blob);
 >> p1.e
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #ifndef DARWIN
 #include <ibase.h>
 #else

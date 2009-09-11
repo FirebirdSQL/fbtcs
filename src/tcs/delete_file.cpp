@@ -18,6 +18,8 @@ extern int gethostname(char *name, size_t len);
 }
 #endif
 
+using namespace std;
+
 void remove_local(char*);
 void remove_remote(char*, char*);
 

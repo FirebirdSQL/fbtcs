@@ -10,6 +10,8 @@ $ RUN ri_views WHERE_GDB:atlas.gdb
 #include <cstring>
 #include <ctype.h>
 
+using namespace std;
+
 /* Author: Michael Shulman/Michael Taht
    Date:   1-Feb-93
    Title:  colnnull.e

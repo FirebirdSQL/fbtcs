@@ -11,6 +11,8 @@ $ RUN ri_views WHERE_GDB:atlas.gdb
 #include <cstring>
 #include <ctype.h>
 
+using namespace std;
+
 /* Author: Michael Shulman
    Date:   1-Feb-93
    Title:  tab_uniq.e

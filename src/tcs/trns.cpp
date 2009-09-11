@@ -54,13 +54,13 @@ static int process_comml(char* in_line, char*  result);
 static int process_regtxt(char* in_line, char*  result);
 static int handle_keyword(char* in_line, char* result);
 
-static int addstr(char* wrd, char** bufr, char delim);
+static int addstr(const char* wrd, char** bufr, char delim);
 
 static int fix_isc(char* line, char* bufr, int language);
 static int fix_link(char* line, char* bufr, int language);
 static int fix_compile(char* line, char* result, int language);
 
-static char *mytokget(char** position, char* delimiters);
+static char *mytokget(char** position, const char* delimiters);
 static struct defn *lookup_defn(char* wrd);
 static int handle_options(char* options, char* opt_template);
 static int handle_filename(char* name);
@@ -73,7 +73,7 @@ static int	defn_ofst = 0;	// offset into defintion table for next symbol
 
 const int MAXDEFNS		= 80;	// Max number of definitions
 const int MAXIDLEN		= 40;	// Max length of ident field
-const int MAXRPCLN		= 256;	// Max length of replacement field
+const int MAXRPCLN		= 1024;	// Max length of replacement field
 
 // Entry for symbol definition
 struct defn
@@ -202,7 +202,7 @@ int PTSL_2ap(char *in_line, char *result)
 	return (success ? linetype : false);
 }
 
-static int addstr(char *wrd, char **bufr, char delim)
+static int addstr(const char *wrd, char **bufr, char delim)
 {
 	/**************************************
 	 *
@@ -888,7 +888,7 @@ static struct defn *lookup_defn(char *wrd)
 	return dptr;
 }
 
-static char *mytokget(char **position, char *delimiters)
+static char *mytokget(char **position, const char *delimiters)
 {
 	/**************************************
 	 *
@@ -902,7 +902,8 @@ static char *mytokget(char **position, char *delimiters)
 	 *         section of a string. 
 	 *
 	 **************************************/
-	char	*ch, *delim, *str;
+	char *ch, *str;
+	const char* delim;
 
 	if (!(**position))
 		return (NULL);

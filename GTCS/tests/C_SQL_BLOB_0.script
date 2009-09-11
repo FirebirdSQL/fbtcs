@@ -54,7 +54,9 @@ $ GDEF sh_blobs.gdl
  **********************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include <cstdlib>
+#include <stdlib.h>
+
+using namespace std;
 
 DATABASE DB = "WHERE_GDB:sh_blobs.gdb";
 EXEC SQL	INCLUDE SQLCA;

@@ -601,7 +601,7 @@ static int script_parse(char *script, FILE *script_file, ISC_USHORT *n)
 	 *      data file to open or close until we read the next line
 	 *
 	 **************************************/
-	FILE	*data;
+	FILE	*data = NULL;
 	bool	command;
 	bool	file_open;
 	ISC_USHORT	cmdcount, count, linetype;

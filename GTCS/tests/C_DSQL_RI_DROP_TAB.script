@@ -16,6 +16,8 @@ $ RUN ri_views WHERE_GDB:atlas.gdb
 #include <cstring>
 #include <ctype.h>
 
+using namespace std;
+
 /* Author: Allen Zhao
    Date:   Oct-8-93
    Title:  drop_tab.e

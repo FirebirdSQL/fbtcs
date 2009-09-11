@@ -557,5 +557,5 @@ gbak:writing referential constraints
 gbak:writing check constraints 
 gbak:writing SQL roles 
 gbak:writing names mapping 
-gbak:closing file, committing, and finishing. 73216 bytes written 
+gbak:closing file, committing, and finishing. 72704 bytes written 
 Output completed

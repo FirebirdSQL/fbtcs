@@ -3,6 +3,9 @@
 //
 // wrapper platform independent utility to compare two files
 //
+
+using namespace std;
+
 int main(int argc, char* argv[]){
 	if (argc<3){
 		printf("Compare file needs two arguments\n");

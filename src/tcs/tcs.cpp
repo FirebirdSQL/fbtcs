@@ -675,7 +675,7 @@ static int parse_series_args (char *start, ISC_SHORT *first, ISC_SHORT *second, 
 	return true;
 }
 
-void print_error(char *string, char *a, char *b, char *c)
+void print_error(const char *string, char *a, char *b, char *c)
 {
 	/**************************************
 	 *

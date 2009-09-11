@@ -11,6 +11,8 @@ $ RUN ri_views WHERE_GDB:atlas.gdb
 #include <cstring>
 #include <ctype.h>
 
+using namespace std;
+
 /* Author: Allen Zhao
    Date:   Oct-11-93
    Title:  fieldrop.e  TCS TEST NAME:  c_dsql_ri_field_drop

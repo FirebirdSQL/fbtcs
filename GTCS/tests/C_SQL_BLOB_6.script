@@ -10,6 +10,8 @@ $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_6.gdb
 #include <stdio.h>
 #include <cstdlib>
 
+using namespace std;
+
 DATABASE DB = "WHERE_GDB:sh_blobs_6.gdb";
 EXEC SQL	INCLUDE SQLCA;
 

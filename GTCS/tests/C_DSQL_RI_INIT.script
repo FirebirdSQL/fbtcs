@@ -7,6 +7,9 @@ $ GBAK -rep WHERE_FILES:atlas.gbak WHERE_GDB:atlas.gdb
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>
+
+using namespace std;
+
 /* Build views for RI */
 /* Include the SQL Communications Area. */
 EXEC SQL
@@ -196,6 +199,9 @@ $ RUN ri_views WHERE_GDB:atlas.gdb
 */
 #include <cstdlib>
 #include <cstdio>
+
+using namespace std;
+
 /* Include the SQL Communications Area. */
 EXEC SQL
 	INCLUDE SQLCA;

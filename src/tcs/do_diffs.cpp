@@ -21,7 +21,7 @@
  * Contributor(s): ______________________________________.
  */
 
-#include <stdio.h>
+#include <cstdio>
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
@@ -35,12 +35,10 @@
 #if (defined WIN_NT)
 #include <io.h>
 #include <stdlib.h>
-#else
-#if !defined(LINUX) && !defined(DARWIN) && !defined(FREEBSD)
-extern char	*sys_errlist[];
-extern int	sys_nerr;
 #endif
-#endif
+
+using namespace std;
+
 
 // This variable comes from either diffs.c for isc_diff, or tcs.e for tcs
 extern bool disk_io_error;
@@ -71,24 +69,31 @@ int do_diffs (char *input_1, char *input_2, char *diff_file, ISC_USHORT sw_win,
 	FILE		*fileptr1, *fileptr2, *outfile;
 	FILE_BLK_PTR	file_block1, file_block2;
 	LINE		*line1, *line2;
+	char err_msg[255];
 
 	if ( !(fileptr1 = fopen (input_1, FOPEN_READ_TYPE))) {
 		fprintf (stderr, "ISC_DIFF: Unable to open %s\n", input_1);
-		fprintf (stderr, "%s\n", sys_errlist [errno]);
+		if (strerror_r(errno, err_msg, sizeof(err_msg)))
+			strcpy(err_msg, "Unknown");
+		fprintf (stderr, err_msg);
 		disk_io_error = true;
 		return false;
 	}
 
 	if ( !(fileptr2 = fopen (input_2, FOPEN_READ_TYPE))) {
 		fprintf (stderr, "ISC_DIFF: Unable to open %s\n", input_2);
-		fprintf (stderr, "%s\n", sys_errlist [errno]);
+		if (strerror_r(errno, err_msg, sizeof(err_msg)))
+			strcpy(err_msg, "Unknown");
+		fprintf (stderr, err_msg);
 		disk_io_error = true;
 		return false;
 	}
 
 	if ( !(outfile = fopen (diff_file, FOPEN_WRITE_TYPE))) {
 		fprintf (stderr, "ISC_DIFF: Unable to open %s\n", diff_file);
-		fprintf (stderr, "%s\n", sys_errlist [errno]);
+		if (strerror_r(errno, err_msg, sizeof(err_msg)))
+			strcpy(err_msg, "Unknown");
+		fprintf (stderr, err_msg);
 		disk_io_error = true;
 		return false;
 	}

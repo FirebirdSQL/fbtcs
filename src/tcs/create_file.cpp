@@ -1,4 +1,7 @@
 #include <cstdio>
+
+using namespace std;
+
 //
 // Stupid program to create stdout from stdin
 

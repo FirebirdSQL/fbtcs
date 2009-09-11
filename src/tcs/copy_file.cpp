@@ -1,5 +1,8 @@
 #include <stdlib.h>
 #include <cstdio>
+
+using namespace std;
+
 //
 // Platform independent utility to copy a file 
 //

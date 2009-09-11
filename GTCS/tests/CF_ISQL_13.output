@@ -3,7 +3,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -cannot delete
--COLUMN A
+-COLUMN T0.A
 -there are 1 dependencies
 After line 1 in file cf_test_13b.sql
 A                               INTEGER Nullable 
@@ -16,7 +16,7 @@ AF                              Computed by: (a*3)
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -cannot delete
--COLUMN AF
+-COLUMN T1.AF
 -there are 1 dependencies
 After line 9 in file cf_test_13b.sql
 A                               INTEGER Nullable 
