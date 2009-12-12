@@ -147,6 +147,7 @@ err:		die_on_error();
 
 
 int setup() {
+	const char* cmd;
 
 	if (verbose)
 		printf("entered setup\n");
@@ -155,16 +156,16 @@ int setup() {
 		if (verbose) 
 			printf("books found... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE BOOKS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
+		EXEC SQL COMMIT;
 	}
 
 	if (istable("authors")) {
 		if (verbose) 
 			printf("authors found... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE AUTHORS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE AUTHORS';
+		EXEC SQL COMMIT;
 	}
 	if (verbose)
 		printf("about to create authors...\n");
@@ -173,11 +174,12 @@ int setup() {
 		DECLARE AUTHORS TABLE
 			(AUTHOR_ID CHAR(11), AUTHOR_NAME CHAR(12))
 	
-	EXEC SQL
-		CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) 
-			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL 
-				CONSTRAINT AUTH_ID_KEY PRIMARY KEY,
-			AUTHOR_NAME CHAR(12))
+	cmd = "CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) \
+			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL \
+				CONSTRAINT AUTH_ID_KEY PRIMARY KEY,\
+			AUTHOR_NAME CHAR(12))";
+	EXEC SQL EXECUTE IMMEDIATE :cmd;
+	EXEC SQL COMMIT;
 
 	if (verbose)
 		printf("authors created\n");
@@ -190,15 +192,12 @@ int setup() {
 			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
 			 BOOK_AUTH_ID CHAR(11));
 
-	EXEC SQL
-		CREATE TABLE BOOKS
-			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
-			 BOOK_AUTH_ID CHAR(11)
-			 CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)
-/*      proper syntax causes gpre error in Beta 1 5.0.  The above
-	constraint will only compile if REFERENCES AUTHORS is
-	REFERENCES AUTHORS(AUTH_ID).  Our 4.0 doc shows that
-	a foreign key may ommit the primary key field name. pg 90 DDL guide */
+	cmd = "CREATE TABLE BOOKS\
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),\
+			 BOOK_AUTH_ID CHAR(11)\
+			 CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)";
+	EXEC SQL EXECUTE IMMEDIATE :cmd;
+	EXEC SQL COMMIT;
 
 	if (verbose)
 		printf("books created successfully.\n");
@@ -334,9 +333,9 @@ bool alter_drop_key() {
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
-	EXEC SQL   /* should fail */
-	   	ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY 
+
+	/* should fail */
+	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY';
 
 	if (SQLCODE) 
 		got_err = true;
@@ -356,9 +355,9 @@ bool alter_drop_not_null() {
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
-	EXEC SQL   /* should fail */
-		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL 
+
+	/* should fail */
+	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL';
 
 	if (SQLCODE) 
 		got_err = true;
@@ -378,15 +377,18 @@ bool alter_drop_references() {
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
-	EXEC SQL   /* should fail */
-		ALTER TABLE BOOKS DROP CONSTRAINT BOOK_AUTH_ID
+
+	/* should fail */
+	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE BOOKS DROP CONSTRAINT BOOK_AUTH_ID';
+	EXEC SQL COMMIT;
 
 	if (SQLCODE) 
 		got_err = true;
 
 	printf ("alter_drop_references got SQLCODE = %d\n", 
 			SQLCODE);
+
+	EXEC SQL ROLLBACK;
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;

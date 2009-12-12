@@ -20,10 +20,13 @@ exec sql whenever sqlerror goto err;
 
 int main(int argc, char* argv[])
 {
+char cmd[] = "create table big_blob (test_name char(15),comment char(30),\
+	row_id integer, b32k blob(32767,1), b40k blob(40960,1), b64k blob(65535,1))";
+
 exec sql connect db;
 
-exec sql create table big_blob (test_name char(15),comment char(30), 
-row_id integer, b32k blob(32767,1), b40k blob(40960,1), b64k blob(65535,1));
+exec sql execute immediate :cmd;
+exec sql commit;
 
 exit(0);
 

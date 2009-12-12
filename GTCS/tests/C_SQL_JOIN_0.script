@@ -15,273 +15,299 @@
 #28-Aug98: added doc file to the 'DELETE' statement. (changed by stsikin)
 #
 
->> sh_join.gdl
-define database "WHERE_GDB:sh_join.gdb" page_size 1024;
+>> sh_join.sql
+create database 'WHERE_GDB:sh_join.gdb' page_size 1024;
 
 /*----- My def. for join tests ----*/
-define field test_name char[30];
-define field c1 char [3];
-define field c10 char [10];
-define field c255 char [255];
-define field table_row char [6];
+create domain test_name char(30);
+create domain c1 char(3);
+create domain c10 char(10);
+create domain c255 char(255);
+create domain table_row char(6);
 
-define field v1 varying [3];
-define field v10 varying [10];
-define field v255 varying [255];
-define field v2000 varying [2000];
+create domain v1 varchar(3);
+create domain v10 varchar(10);
+create domain v255 varchar(255);
+create domain v2000 varchar(2000);
  
-define field d1 double;
-define field d2 double;
-define field d3 double;
+create domain d1 double precision;
+create domain d2 double precision;
+create domain d3 double precision;
 
-define field l1 long;
-define field l2 long;
-define field l3 long;
-define field lscale long 
-	scale -2 
-	edit_string "$$$,$$$,999.99";
+create domain l1 integer;
+create domain l2 integer;
+create domain l3 integer;
+create domain lscale numeric (11,2);
 
-define field s1 short;
-define field s2 short;
-define field s3 short;
-define field sscale short 
-	scale -1
-	edit_string "999";
+create domain s1 smallint;
+create domain s2 smallint;
+create domain s3 smallint;
+create domain sscale numeric(3);
 
-define field f1 float;
-define field f2 float;
-define field f3 float;
+create domain f1 float;
+create domain f2 float;
+create domain f3 float;
 
-define field dt1 date;
-define field dt2 date;
-define field dt3 date;
+create domain dt1 date;
+create domain dt2 date;
+create domain dt3 date;
 
 
-define field arr char[5](2);
+create domain arr char(5)[2];
 
-define field blob_field blob segment_length 40 sub_type text;
+create domain blob_field blob sub_type text segment size 40;
 
-define relation ct1
-c1		position 0,
-c10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table ct1 (
+	c1 c1,
+	c10 c10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation ct2
-c1		position 0,
-c10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table ct2 (
+	c1 c1,
+	c10 c10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation ct3
-c1		position 0,
-c10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table ct3 (
+	c1 c1,
+	c10 c10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation ct4
-c1		position 0,
-c10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table ct4 (
+	c1 c1,
+	c10 c10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation ct5
-c1		position 0,
-c10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table ct5 (
+	c1 c1,
+	c10 c10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation ct_null
-c1		position 0,
-c10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table ct_null (
+	c1 c1,
+	c10 c10,
+	test_name test_name,
+	table_row table_row
+);
 
 
 /*--- var char tables ---*/
-define relation vt1
-v1		position 0,
-v10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table vt1 (
+	v1 v1,
+	v10 v10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation vt2
-v1		position 0,
-v10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table vt2 (
+	v1 v1,
+	v10 v10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation vt3
-v1		position 0,
-v10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table vt3 (
+	v1 v1,
+	v10 v10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation vt4
-v1		position 0,
-v10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table vt4 (
+	v1 v1,
+	v10 v10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation vt5
-v1		position 0,
-v10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table vt5 (
+	v1 v1,
+	v10 v10,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation vt_null
-v1		position 0,
-v10		position 1,
-test_name	position 2,
-table_row	position 3;
+create table vt_null (
+	v1 v1,
+	v10 v10,
+	test_name test_name,
+	table_row table_row
+);
 
 /*---- Double ----*/
-define relation dt1
-d1		position 0,
-d2		position 1,
-d3		position 2,
-test_name	position 3,
-table_row	position 4;
+create table dt1 (
+	d1 d1,
+	d2 d2,
+	d3 d3,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation dt2
-d1		position 0,
-d2		position 1,
-d3		position 2,
-test_name	position 3,
-table_row	position 4;
+create table dt2 (
+	d1 d1,
+	d2 d2,
+	d3 d3,
+	test_name test_name,
+	table_row table_row
+);
+
 /*---- Long ----*/
-define relation lt1
-l1		position 0,
-l2		position 1,
-l3		position 2,
-lscale		position 3,
-test_name	position 4,
-table_row	position 5;
+create table lt1 (
+	l1 l1,
+	l2 l2,
+	l3 l3,
+	lscale lscale,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation lt2
-l1		position 0,
-l2		position 1,
-l3		position 2,
-lscale		position 3,
-test_name	position 4,
-table_row	position 5;
+create table lt2 (
+	l1 l1,
+	l2 l2,
+	l3 l3,
+	lscale lscale,
+	test_name test_name,
+	table_row table_row
+);
+
 /*--- short ----*/
-define relation st1
-s1		position 0,
-s2		position 1,
-s3		position 2,
-sscale		position 3,
-comp_s		computed by (s1 * s2) position 4,
-test_name	position 5,
-table_row	position 6;
+create table st1 (
+	s1 s1,
+	s2 s2,
+	s3 s3,
+	sscale sscale,
+	comp_s integer computed by (s1 * s2),
+	test_name test_name,
+	table_row table_row
+);
 
-define relation st2
-s1		position 0,
-s2		position 1,
-s3		position 2,
-sscale		position 3,
-comp_s		computed by (s1 * s2) position 4,
-test_name	position 5,
-table_row	position 6;
+create table st2 (
+	s1 s1,
+	s2 s2,
+	s3 s3,
+	sscale sscale,
+	comp_s integer computed by (s1 * s2),
+	test_name test_name,
+	table_row table_row
+);
 
-define relation st3
-s1		position 0,
-s2		position 1,
-s3		position 2,
-sscale		position 3,
-comp_s		computed by (s1 * s2) position 4,
-test_name	position 5,
-table_row	position 6;
+create table st3 (
+	s1 s1,
+	s2 s2,
+	s3 s3,
+	sscale sscale,
+	comp_s integer computed by (s1 * s2),
+	test_name test_name,
+	table_row table_row
+);
 
-define relation st4
-s1		position 0,
-s2		position 1,
-s3		position 2,
-sscale		position 3,
-comp_s		computed by (s1 * s2) position 4,
-test_name	position 5,
-table_row	position 6;
+create table st4 (
+	s1 s1,
+	s2 s2,
+	s3 s3,
+	sscale sscale,
+	comp_s integer computed by (s1 * s2),
+	test_name test_name,
+	table_row table_row
+);
 
-define relation st5
-s1		position 0,
-s2		position 1,
-s3		position 2,
-sscale		position 3,
-comp_s		computed by (s1 * s2) position 4,
-test_name	position 5,
-table_row	position 6;
+create table st5 (
+	s1 s1,
+	s2 s2,
+	s3 s3,
+	sscale sscale,
+	comp_s integer computed by (s1 * s2),
+	test_name test_name,
+	table_row table_row
+);
 
 /*---- Float ---*/
-define relation ft1
-f1		position 0,
-f2		position 1,
-f3		position 2,
-f4		computed by (f1 * f2) position 3,
-test_name	position 4,
-table_row	position 5;
+create table ft1 (
+	f1 f1,
+	f2 f2,
+	f3 f3,
+	f4 computed by (f1 * f2),
+	test_name test_name,
+	table_row table_row
+);
 
-define relation ft2
-f1		position 0,
-f2		position 1,
-f3		position 2,
-test_name	position 3,
-table_row	position 4;
+create table ft2 (
+	f1 f1,
+	f2 f2,
+	f3 f3,
+	test_name test_name,
+	table_row table_row
+);
 
 /*---- Date ----*/
-define relation dt_table1
-dt1		position 0,
-dt2		position 1,
-dt3		position 2,
-test_name	position 3,
-table_row	position 4;
+create table dt_table1 (
+	dt1 dt1,
+	dt2 dt2,
+	dt3 dt3,
+	test_name test_name,
+	table_row table_row
+);
 
-define relation dt_table2
-dt1		position 0,
-dt2		position 1,
-dt3		position 2,
-test_name	position 3,
-table_row	position 4;
+create table dt_table2 (
+	dt1 dt1,
+	dt2 dt2,
+	dt3 dt3,
+	test_name test_name,
+	table_row table_row
+);
 
 
-define relation mixed1
-c10		position 0,
-v10		position 1,
-d1		position 2,
-f1		position 3,
-s1		position 4,
-l1		position 5,
-comp_s1		computed by (s1 *2) 	position 6 ,
-arr		position 7,
-blob_field	position 8,
-dt1		position 9,
-comp_dt1	position 10 computed by ('today'),
-test_name	position 11,
-table_row	position 12;
+create table mixed1 (
+	c10 c10,
+	v10 v10,
+	d1 d1,
+	f1 f1,
+	s1 s2,
+	l1 l1,
+	comp_s1 computed by (s1 *2),
+	arr arr,
+	blob_field blob_field,
+	dt1 dt1,
+	comp_dt1 computed by ('today'),
+	test_name test_name,
+	table_row table_row
+);
 
-define relation mixed2
-c10		position 0,
-v10		position 1,
-d1		position 2,
-f1		position 3,
-s1		position 4,
-l1		position 5,
-comp_s2		computed by (s1 *2) position 6 ,
-arr		position 7,
-blob_field	position 8,
-dt1		position 9,
-comp_date2	position 10 computed by ('today'),
-test_name	position 11,
-table_row	position 12;
+create table mixed2 (
+	c10 c10,
+	v10 v10,
+	d1 d1,
+	f1 f1,
+	s1 s2,
+	l1 l1,
+	comp_s2 computed by (s1 *2),
+	arr arr,
+	blob_field blob_field,
+	dt1 dt1,
+	comp_date2 computed by ('today'),
+	test_name test_name,
+	table_row table_row
+);
 
 /*--- big key ---*/
-define relation bigkey1
-c255		position 0,
-v255		position 1,
-v2000		position 2,
-test_name	position 3,
-table_row	position 4;
+create table bigkey1 (
+	c255 c255,
+	v255 v255,
+	v2000 v2000,
+	test_name test_name,
+	table_row table_row
+);
 
-$ GDEF sh_join.gdl
+$ ISQL -q -i sh_join.sql
 >> JLoader.e
 
 #include <stdio.h>
