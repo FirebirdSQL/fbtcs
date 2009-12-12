@@ -32,7 +32,7 @@ EXEC SQL WHENEVER SQLERROR GO TO ERR_LBL;
 bool verbose;
 
 char Test[]="CREATE VIEW VMB1 (TEST,ROW,BHALFK,DESC) \
-AS (SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1)";
+AS SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1";
 
 void Underline(int);
 
@@ -49,9 +49,8 @@ int main(int argc, char* argv[])
     Underline(strlen(Test));
 
 
-    EXEC SQL CREATE VIEW VMB1 (TEST,ROW,DESC,BHALFK)
-             AS SELECT TEST_NAME,ROW_ID,COMMENT,B512 FROM MB1;
-    /* DDL's are automatically committed  EXEC SQL COMMIT;  No need to committ*/
+    EXEC SQL EXECUTE IMMEDIATE :Test;
+    EXEC SQL COMMIT;
 
 exit(0);
 

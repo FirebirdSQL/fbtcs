@@ -1,15 +1,15 @@
 Test:
- CREATE VIEW VMB1 (TEST,ROW,BHALFK,DESC) AS (SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1)
--------------------------------------------------------------------------------------------
+ CREATE VIEW VMB1 (TEST,ROW,BHALFK,DESC) AS SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
+-----------------------------------------------------------------------------------------
     VMB1
         TEST              text, length 30
         ROW               short binary
-        DESC              text, length 100
         BHALFK            BLOB, segment length 255, subtype TEXT
+        DESC              text, length 100
 
     Relation VMB1 is a view defined as:
-	SELECT TEST_NAME,ROW_ID,COMMENT,B512 FROM MB1
-    Security class SQL$4
+	 SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
+    Security class SQL$7
 
 Test:
   INSERT INTO VMB1 (TEST,ROW,BHALFK,DESC) VALUES (:Test_Name,:j,:BlobId,'Inserting blobs through views')

@@ -1,46 +1,51 @@
 
->> sh_blobs.gdl
+>> sh_blobs.sql
 
-define database "WHERE_GDB:sh_blobs.gdb";
+set sql dialect 1;
+create database "WHERE_GDB:sh_blobs.gdb";
 
-define field test_name char[30];
-define field row_id short;
-define field b blob sub_type text;
-define field b60 blob sub_type text segment_length 60;
-define field b120 blob sub_type text segment_length 120;
-define field b256 blob sub_type text segment_length 256;
-define field b512 blob sub_type text segment_length 512;
-define field bin1 blob sub_type -1 segment_length 60;
-define field bin2 blob sub_type -500 segment_length 512;
-define field comment char [100];
+create domain test_name char(30);
+create domain row_id smallint;
+create domain b blob sub_type text;
+create domain b60 blob sub_type text segment size 60;
+create domain b120 blob sub_type text segment size 120;
+create domain b256 blob sub_type text segment size 256;
+create domain b512 blob sub_type text segment size 512;
+create domain bin1 blob sub_type -1 segment size 60;
+create domain bin2 blob sub_type -500 segment size 512;
+create domain comment char(100);
 
-define relation mb1
-test_name position 0,
-row_id		position 1,
-b		position 2,
-b60		position 3,
-b120		position 4,
-b256		position 5,
-b512		position 6,
-comment		position 7;
+create table mb1 (
+	test_name test_name,
+	row_id row_id,
+	b b,
+	b60 b60,
+	b120 b120,
+	b256 b256,
+	b512 b512,
+	comment comment
+);
 
-define relation mb2
-test_name position 0,
-row_id		position 1,
-b		position 2,
-b60		position 3,
-b120		position 4,
-b256		position 5,
-b512		position 6,
-comment		position 7;
+create table mb2 (
+	test_name test_name,
+	row_id row_id,
+	b b,
+	b60 b60,
+	b120 b120,
+	b256 b256,
+	b512 b512,
+	comment comment
+);
 
-define relation st
-test_name position 0,
-row_id          position 1,
-bin1            position 2,
-bin2            position 3,
-comment         position 4;
-$ GDEF sh_blobs.gdl
+create table st (
+	test_name test_name,
+	row_id row_id,
+	bin1 bin1,
+	bin2 bin2,
+	comment comment
+);
+
+$ ISQL -q -i sh_blobs.sql
 >> BlobLoader.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
@@ -520,4 +525,4 @@ $ LINK FLAG_LINK BlobLoader
 $ RUN BlobLoader
 $ GBAK -t WHERE_GDB:sh_blobs.gdb sh_blobs.gbk
 $ DROP WHERE_GDB:sh_blobs.gdb
-$ DELETE BlobLoader*  sh_blobs.gdl
+$ DELETE BlobLoader*  sh_blobs.sql
