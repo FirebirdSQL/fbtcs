@@ -61,12 +61,8 @@ date
 
 PATH=./bin:$FIREBIRD/bin:$PATH
 export PATH
-LD_LIBRARY_PATH=/usr/lib:./bin
+LD_LIBRARY_PATH=$FIREBIRD/lib:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
-SHLIB_PATH=/usr/lib:./bin
-export SHLIB_PATH
-LD_RUN_PATH=/usr/lib:$FBTCS:./bin
-export LD_RUN_PATH
 
 $FIREBIRD/bin/gsec -delete qa_user1
 $FIREBIRD/bin/gsec -delete qa_user2
