@@ -21,16 +21,19 @@ Database:  WHERE_GDB:cf_isql_20.fdb
 
 SET SQL DIALECT 3; 
 
-/* CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb' PAGE_SIZE 4096 DEFAULT CHARACTER SET NONE */
+/* CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb' PAGE_SIZE 4096 DEFAULT CHARACTER SET NONE; */
 
 
 /* Domain definitions */
 CREATE DOMAIN EXTRACT_BUG AS CHAR(1) CHARACTER SET ISO8859_1
-         default 'v'
-         check(value >='a' and value <='z') COLLATE ES_ES;
+         default 'v' COLLATE ES_ES;
 
 /* Table: T_EXTRACT_BUG, Owner: SYSDBA */
 CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
 
 ALTER TABLE T_EXTRACT_BUG ADD 
         check(a>='c');
+
+/* Domain constraints */
+ALTER DOMAIN EXTRACT_BUG ADD CONSTRAINT
+         check(value >='a' and value <='z');

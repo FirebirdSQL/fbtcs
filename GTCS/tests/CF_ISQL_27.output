@@ -31,9 +31,13 @@ END^
 SET TERM ; ^
 commit;
 show procedures;
+Global procedures:
 Procedure Name                    Invalid Dependency, Type
 ================================= ======= =====================================
 RPL$GENERATOR_VALUES                      RDB$GENERATORS, Table
+Packaged procedures:
+Procedure Name                    Invalid Dependency, Type
+================================= ======= =====================================
 
 Use CONNECT or CREATE DATABASE to specify a database
 select * from rpl$generator_values;
