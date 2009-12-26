@@ -1,19 +1,20 @@
 
->> init.gdl
+>> define.sql
 
-define database "WHERE_GDB:index.gdb";
+create database "WHERE_GDB:index.gdb";
  
-define field fld1 short;
-define field fld2 varying[25];
+create domain fld1 smallint;
+create domain fld2 varchar(25);
 
-define relation data_table1
-fld1 position 0,
-fld2 position 1;
+create table data_table1 (
+  fld1 fld1,
+  fld2 fld2
+);
 
-define index idx1_1 for data_table1 unique fld1;
-define index idx1_2 for data_table1 fld1;
-define index idx1_3 for data_table1 desc fld1;
-define index idx1_4 for data_table1 asc fld1;
+create unique index idx1_1 on data_table1 (fld1);
+create index idx1_2 on data_table1 (fld1);
+create desc index idx1_3 on data_table1 (fld1);
+create asc index idx1_4 on data_table1 (fld1);
 
 >> init.qli
 
@@ -61,7 +62,7 @@ select * from data_table2 order by fld1 asc;
 drop database;
 exit;
 
-$GDEF init.gdl
+$ISQL -q -m -i define.sql
 $QLI -n -a init.qli
 $ISQL -m -i init.sql
 $DELETE init.*
