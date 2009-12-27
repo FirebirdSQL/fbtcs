@@ -1,0 +1,141 @@
+>> init.sql
+create database "WHERE_GDB:test3.gdb";
+create table t1 (n integer, b blob sub_type text);
+
+insert into t1 values (1, 'Blob one............................... one');
+insert into t1 values (2, 'Blob two............................... two... two');
+insert into t1 values (3, 'Blob three............................. three... three... three');
+
+update t1 set b = b || b || b || b where n = 3;
+
+>> p1.e
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#ifndef DARWIN
+#include <ibase.h>
+#else
+#include <Firebird/ibase.h>
+#endif
+
+exec sql include sqlca;
+exec sql set database db = "WHERE_GDB:test3.gdb";
+
+int main(int argc, const char** argv)
+{
+	XSQLDA* outsqlda1;
+	XSQLDA* insqlda2;
+	XSQLDA* outsqlda2;
+	ISC_STATUS userStatus[20];
+	isc_stmt_handle stmt1, stmt2;
+	ISC_QUAD b1;
+	char buffer[80];
+	short ind1 = 0;
+	short ind2 = 0;
+	ISC_STATUS ret;
+
+	if (isc_attach_database(userStatus, 0, "WHERE_GDB:test3.gdb", &db, 0, NULL))
+		isc_print_status(userStatus);
+
+	if (isc_start_transaction(userStatus, &gds__trans, 1, &db, 0, NULL))
+		isc_print_status(userStatus);
+
+	outsqlda1 = (XSQLDA*) malloc(XSQLDA_LENGTH(1));
+	outsqlda1->sqld = outsqlda1->sqln = 1;
+	outsqlda1->version = 1;
+
+	outsqlda1->sqlvar[0].sqldata = &b1;
+	outsqlda1->sqlvar[0].sqltype = SQL_QUAD;
+	outsqlda1->sqlvar[0].sqlind  = &ind1;
+	outsqlda1->sqlvar[0].sqllen  = sizeof(b1);
+	outsqlda1->sqlvar[0].sqlscale = 0;
+
+	stmt1 = 0;
+	if (isc_dsql_allocate_statement(userStatus, &db, &stmt1))
+		isc_print_status(userStatus);
+	if (isc_dsql_prepare(userStatus, &gds__trans, &stmt1, 0,
+			"select b from t1 order by n", 1, outsqlda1))
+	{
+		isc_print_status(userStatus);
+	}
+	if (isc_dsql_execute(userStatus, &gds__trans, &stmt1, 1, NULL))
+		isc_print_status(userStatus);
+
+	insqlda2 = (XSQLDA*) malloc(XSQLDA_LENGTH(1));
+	insqlda2->sqld = insqlda2->sqln = 1;
+	insqlda2->version = 1;
+
+	insqlda2->sqlvar[0].sqldata = &b1;
+	insqlda2->sqlvar[0].sqltype = SQL_QUAD;
+	insqlda2->sqlvar[0].sqlind  = &ind1;
+	insqlda2->sqlvar[0].sqllen  = sizeof(b1);
+	insqlda2->sqlvar[0].sqlscale = 0;
+
+	outsqlda2 = (XSQLDA*) malloc(XSQLDA_LENGTH(1));
+	outsqlda2->sqld = outsqlda2->sqln = 1;
+	outsqlda2->version = 1;
+
+	outsqlda2->sqlvar[0].sqldata = buffer;
+	outsqlda2->sqlvar[0].sqltype = SQL_TEXT;
+	outsqlda2->sqlvar[0].sqlind  = &ind2;
+	outsqlda2->sqlvar[0].sqllen  = sizeof(buffer);
+	outsqlda2->sqlvar[0].sqlscale = 0;
+
+	stmt2 = 0;
+	if (isc_dsql_allocate_statement(userStatus, &db, &stmt2))
+		isc_print_status(userStatus);
+	if (isc_dsql_prepare(userStatus, &gds__trans, &stmt2, 0,
+			"read blob b from t1", 1, NULL))
+	{
+		isc_print_status(userStatus);
+	}
+
+	while (1)
+	{
+		ret = isc_dsql_fetch(userStatus, &stmt1, 1, outsqlda1);
+		if (ret != 0) 
+			break;
+
+		printf("T1 record:\n", ((ISC_LONG*) &b1)[0], ((ISC_LONG*) &b1)[1]);
+
+		if (isc_dsql_execute(userStatus, &gds__trans, &stmt2, 1, insqlda2))
+			isc_print_status(userStatus);
+
+		while (1)
+		{
+			ret = isc_dsql_fetch(userStatus, &stmt2, 1, outsqlda2);
+			if (ret != 0) 
+				break;
+
+			printf("Blob chunk: %s\n", buffer);
+		}
+
+		if (isc_dsql_free_statement(userStatus, &stmt2, DSQL_close))
+			isc_print_status(userStatus);
+	}
+
+	if (ret != 100 && ret != 0)
+		isc_print_status(userStatus);
+
+	if (isc_dsql_free_statement(userStatus, &stmt1, DSQL_drop))
+		isc_print_status(userStatus);
+
+	if (isc_dsql_free_statement(userStatus, &stmt2, DSQL_drop))
+		isc_print_status(userStatus);
+
+	if (isc_commit_transaction(userStatus, &gds__trans))
+		isc_print_status(userStatus);
+
+	if (isc_detach_database(userStatus, &db))
+		isc_print_status(userStatus);
+
+	return 0;
+}
+
+$ISQL -q -m -i init.sql
+$GPRE -m -e  p1.e
+$CC FLAG_CC p1.c
+$LINK FLAG_LINK p1 
+$RUN p1
+$DELETE -f p1* init.sql
+$DROP WHERE_GDB:test3.gdb
