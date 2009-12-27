@@ -1,0 +1,132 @@
+>> init.sql
+create database "WHERE_GDB:test2.gdb";
+create table t1 (n1 integer, n2 integer);
+
+insert into t1 values (1, 11);
+insert into t1 values (2, 22);
+insert into t1 values (3, 33);
+
+>> p1.e
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#ifndef DARWIN
+#include <ibase.h>
+#else
+#include <Firebird/ibase.h>
+#endif
+
+exec sql include sqlca;
+exec sql set database db = "WHERE_GDB:test2.gdb";
+
+int main(int argc, const char** argv)
+{
+	XSQLDA* insqlda;
+	XSQLDA* outsqlda;
+	ISC_STATUS userStatus[20];
+	isc_stmt_handle stmt1, stmt2;
+	ISC_LONG n1, n2;
+	short ind1 = 0;
+	short ind2 = 0;
+	ISC_STATUS ret;
+
+	if (isc_attach_database(userStatus, 0, "WHERE_GDB:test2.gdb", &db, 0, NULL))
+		isc_print_status(userStatus);
+
+	if (isc_start_transaction(userStatus, &gds__trans, 1, &db, 0, NULL))
+		isc_print_status(userStatus);
+
+	outsqlda = (XSQLDA*) malloc(XSQLDA_LENGTH(2));
+	outsqlda->sqld = outsqlda->sqln = 2;
+	outsqlda->version = 1;
+
+	outsqlda->sqlvar[0].sqldata = &n1;
+	outsqlda->sqlvar[0].sqltype = SQL_LONG;
+	outsqlda->sqlvar[0].sqlind  = &ind1;
+	outsqlda->sqlvar[0].sqllen  = sizeof(n1);
+	outsqlda->sqlvar[0].sqlscale = 0;
+
+	outsqlda->sqlvar[1].sqldata = &n2;
+	outsqlda->sqlvar[1].sqltype = SQL_LONG;
+	outsqlda->sqlvar[1].sqlind  = &ind2;
+	outsqlda->sqlvar[1].sqllen  = sizeof(n2);
+	outsqlda->sqlvar[1].sqlscale = 0;
+
+	stmt1 = 0;
+	if (isc_dsql_allocate_statement(userStatus, &db, &stmt1))
+		isc_print_status(userStatus);
+	if (isc_dsql_prepare(userStatus, &gds__trans, &stmt1, 0,
+			"select n1, n2 from t1 for update", 1, outsqlda))
+	{
+		isc_print_status(userStatus);
+	}
+	if (isc_dsql_set_cursor_name(userStatus, &stmt1, "C1", 0))
+		isc_print_status(userStatus);
+	if (isc_dsql_execute(userStatus, &gds__trans, &stmt1, 1, NULL))
+		isc_print_status(userStatus);
+
+	stmt2 = 0;
+	if (isc_dsql_allocate_statement(userStatus, &db, &stmt2))
+		isc_print_status(userStatus);
+	if (isc_dsql_prepare(userStatus, &gds__trans, &stmt2, 0,
+			"update t1 set n2 = n2 * 2 where current of C1", 1, NULL))
+	{
+		isc_print_status(userStatus);
+	}
+
+	printf("Original values:\n");
+
+	while (1)
+	{
+		ret = isc_dsql_fetch(userStatus, &stmt1, 1, outsqlda);
+		if (ret != 0) 
+			break;
+
+		printf("%d, %d\n", n1, n2);
+
+		if (isc_dsql_execute(userStatus, &gds__trans, &stmt2, 1, NULL))
+			isc_print_status(userStatus);
+	}
+
+	if (ret != 100 && ret != 0)
+		isc_print_status(userStatus);
+
+	if (isc_dsql_free_statement(userStatus, &stmt1, DSQL_close))
+		isc_print_status(userStatus);
+
+	if (isc_dsql_execute(userStatus, &gds__trans, &stmt1, 1, NULL))
+		isc_print_status(userStatus);
+
+	printf("\nNew values:\n");
+
+	while (1)
+	{
+		ret = isc_dsql_fetch(userStatus, &stmt1, 1, outsqlda);
+		if (ret != 0) 
+			break;
+
+		printf("%d, %d\n", n1, n2);
+	}
+
+	if (ret != 100 && ret != 0)
+		isc_print_status(userStatus);
+
+	if (isc_dsql_free_statement(userStatus, &stmt1, DSQL_drop))
+		isc_print_status(userStatus);
+
+	if (isc_commit_transaction(userStatus, &gds__trans))
+		isc_print_status(userStatus);
+
+	if (isc_detach_database(userStatus, &db))
+		isc_print_status(userStatus);
+
+	return 0;
+}
+
+$ISQL -q -m -i init.sql
+$GPRE -m -e  p1.e
+$CC FLAG_CC p1.c
+$LINK FLAG_LINK p1 
+$RUN p1
+$DELETE -f p1* init.sql
+$DROP WHERE_GDB:test2.gdb
