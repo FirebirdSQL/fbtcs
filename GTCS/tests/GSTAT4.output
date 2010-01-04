@@ -2,21 +2,21 @@
 Database "WHERE_GDB_EXTERNAL:employee.gdb"
 Database header page information:
 	Flags			0
-	Checksum		12345
-	Generation		27
+	Generation		28
+	System Change Number	0
 	Page size		4096
-	ODS version		11.1
+	ODS version		12.0
 	Oldest transaction	1
 	Oldest active		2
 	Oldest snapshot		2
-	Next transaction	19
-	Bumped transaction	1
+	Next transaction	20
 	Sequence number		0
 	Next attachment ID	2
-	Implementation ID	19
+	Implementation		HW=AMD/Intel/x64 little-endian OS=Linux CC=gcc
 	Shadow count		0
 	Page buffers		0
 	Next header page	0
+	Clumplet End		98
 	Database dialect	1
 
     Variable header data:
