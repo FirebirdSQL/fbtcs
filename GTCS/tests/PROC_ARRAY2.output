@@ -17,16 +17,21 @@ select * from  proc_arr ("Sacramento");
 
 CIT                       STAT      POPULATIO         RAIN_ARRA 
 ========================= ====== ============ ================= 
-Sacramento                CA           275741             81:ef 
+Sacramento                CA           275741              81:9 
 ==============================================================================
 RAIN_ARRA:  
 BLOB display set to subtype 1. This BLOB: subtype = 0
 ==============================================================================
 
 show procedures;
+Global procedures:
 Procedure Name                    Invalid Dependency, Type
 ================================= ======= =====================================
 PROC_ARR                                  CITIES, Table
                                           OCTETS, Collation
+
+Packaged procedures:
+Procedure Name                    Invalid Dependency, Type
+================================= ======= =====================================
 commit;
 quit;
