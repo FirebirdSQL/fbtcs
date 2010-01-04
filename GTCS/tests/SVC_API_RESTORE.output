@@ -3,6 +3,7 @@ service started OK
 gbak:opened file WHERE_GDB_EXTERNAL:employee.gbk 
 gbak:transportable backup -- data in XDR format 
 gbak:		backup file is compressed 
+gbak:backup version is 6 
 gbak:created database WHERE_GDB_EXTERNAL:employee.gdb, page_size 1024 bytes 
 gbak:started transaction 
 gbak:restoring domain FIRSTNAME 
@@ -117,6 +118,7 @@ gbak:    restoring column JOB_CODE
 gbak:    restoring column DEPT_NO 
 gbak:    restoring column FIRST_NAME 
 gbak:restoring table PHONE_LIST 
+gbak:    table PHONE_LIST is a view 
 gbak:    restoring column PHONE_NO 
 gbak:    restoring column PHONE_EXT 
 gbak:    restoring column LAST_NAME 
@@ -175,54 +177,54 @@ gbak:    restoring column EMP_NO
 gbak:restoring generator EMP_NO_GEN value: 145 
 gbak:restoring generator CUST_NO_GEN value: 1015 
 gbak:restoring stored procedure GET_EMP_PROJ 
-gbak:restoring parameter EMP_NO for stored procedure 
-gbak:restoring parameter PROJ_ID for stored procedure 
+gbak:    restoring parameter EMP_NO for stored procedure 
+gbak:    restoring parameter PROJ_ID for stored procedure 
 gbak:restoring stored procedure ADD_EMP_PROJ 
-gbak:restoring parameter EMP_NO for stored procedure 
-gbak:restoring parameter PROJ_ID for stored procedure 
+gbak:    restoring parameter EMP_NO for stored procedure 
+gbak:    restoring parameter PROJ_ID for stored procedure 
 gbak:restoring stored procedure SUB_TOT_BUDGET 
-gbak:restoring parameter HEAD_DEPT for stored procedure 
-gbak:restoring parameter TOT_BUDGET for stored procedure 
-gbak:restoring parameter AVG_BUDGET for stored procedure 
-gbak:restoring parameter MIN_BUDGET for stored procedure 
-gbak:restoring parameter MAX_BUDGET for stored procedure 
+gbak:    restoring parameter HEAD_DEPT for stored procedure 
+gbak:    restoring parameter TOT_BUDGET for stored procedure 
+gbak:    restoring parameter AVG_BUDGET for stored procedure 
+gbak:    restoring parameter MIN_BUDGET for stored procedure 
+gbak:    restoring parameter MAX_BUDGET for stored procedure 
 gbak:restoring stored procedure DELETE_EMPLOYEE 
-gbak:restoring parameter EMP_NUM for stored procedure 
+gbak:    restoring parameter EMP_NUM for stored procedure 
 gbak:restoring stored procedure DEPT_BUDGET 
-gbak:restoring parameter DNO for stored procedure 
-gbak:restoring parameter TOT for stored procedure 
+gbak:    restoring parameter DNO for stored procedure 
+gbak:    restoring parameter TOT for stored procedure 
 gbak:restoring stored procedure ORG_CHART 
-gbak:restoring parameter HEAD_DEPT for stored procedure 
-gbak:restoring parameter DEPARTMENT for stored procedure 
-gbak:restoring parameter MNGR_NAME for stored procedure 
-gbak:restoring parameter TITLE for stored procedure 
-gbak:restoring parameter EMP_CNT for stored procedure 
+gbak:    restoring parameter HEAD_DEPT for stored procedure 
+gbak:    restoring parameter DEPARTMENT for stored procedure 
+gbak:    restoring parameter MNGR_NAME for stored procedure 
+gbak:    restoring parameter TITLE for stored procedure 
+gbak:    restoring parameter EMP_CNT for stored procedure 
 gbak:restoring stored procedure MAIL_LABEL 
-gbak:restoring parameter CUST_NO for stored procedure 
-gbak:restoring parameter LINE1 for stored procedure 
-gbak:restoring parameter LINE2 for stored procedure 
-gbak:restoring parameter LINE3 for stored procedure 
-gbak:restoring parameter LINE4 for stored procedure 
-gbak:restoring parameter LINE5 for stored procedure 
-gbak:restoring parameter LINE6 for stored procedure 
+gbak:    restoring parameter CUST_NO for stored procedure 
+gbak:    restoring parameter LINE1 for stored procedure 
+gbak:    restoring parameter LINE2 for stored procedure 
+gbak:    restoring parameter LINE3 for stored procedure 
+gbak:    restoring parameter LINE4 for stored procedure 
+gbak:    restoring parameter LINE5 for stored procedure 
+gbak:    restoring parameter LINE6 for stored procedure 
 gbak:restoring stored procedure SHIP_ORDER 
-gbak:restoring parameter PO_NUM for stored procedure 
+gbak:    restoring parameter PO_NUM for stored procedure 
 gbak:restoring stored procedure SHOW_LANGS 
-gbak:restoring parameter CODE for stored procedure 
-gbak:restoring parameter GRADE for stored procedure 
-gbak:restoring parameter CTY for stored procedure 
-gbak:restoring parameter LANGUAGES for stored procedure 
+gbak:    restoring parameter CODE for stored procedure 
+gbak:    restoring parameter GRADE for stored procedure 
+gbak:    restoring parameter CTY for stored procedure 
+gbak:    restoring parameter LANGUAGES for stored procedure 
 gbak:restoring stored procedure ALL_LANGS 
-gbak:restoring parameter CODE for stored procedure 
-gbak:restoring parameter GRADE for stored procedure 
-gbak:restoring parameter COUNTRY for stored procedure 
-gbak:restoring parameter LANG for stored procedure 
+gbak:    restoring parameter CODE for stored procedure 
+gbak:    restoring parameter GRADE for stored procedure 
+gbak:    restoring parameter COUNTRY for stored procedure 
+gbak:    restoring parameter LANG for stored procedure 
 gbak:restoring exception UNKNOWN_EMP_ID 
 gbak:restoring exception REASSIGN_SALES 
 gbak:restoring exception ORDER_ALREADY_SHIPPED 
 gbak:restoring exception CUSTOMER_ON_HOLD 
 gbak:restoring exception CUSTOMER_CHECK 
-gbak:    committing metadata 
+gbak:committing metadata 
 gbak:    restoring index RDB$PRIMARY20 
 gbak:    restoring index RDB$FOREIGN21 
 gbak:    restoring index UPDATERX 
@@ -488,6 +490,6 @@ gbak:    activating and creating deferred index RDB$FOREIGN21
 gbak:    activating and creating deferred index RDB$FOREIGN23 
 gbak:    activating and creating deferred index RDB$FOREIGN25 
 gbak:    activating and creating deferred index RDB$FOREIGN26 
-gbak:    committing metadata 
+gbak:committing metadata 
 gbak:finishing, closing, and going home 
 Output completed

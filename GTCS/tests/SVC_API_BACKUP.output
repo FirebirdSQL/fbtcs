@@ -87,6 +87,7 @@ gbak:    writing domain RDB$64
 gbak:writing shadow files 
 gbak:writing character sets 
 gbak:writing collations 
+gbak:writing packages 
 gbak:writing functions 
 gbak:writing tables 
 gbak:    writing table COUNTRY 
@@ -121,7 +122,7 @@ gbak:         writing column DEPT_NO
 gbak:         writing column JOB_CODE 
 gbak:         writing column JOB_COUNTRY 
 gbak:         writing column FULL_NAME 
-gbak:    writing table PHONE_LIST 
+gbak:    writing view PHONE_LIST 
 gbak:         writing column EMP_NO 
 gbak:         writing column LAST_NAME 
 gbak:         writing column PHONE_EXT 
@@ -472,6 +473,7 @@ gbak:    writing privilege for user PUBLIC
 gbak:    writing privilege for user PUBLIC 
 gbak:    writing privilege for user PUBLIC 
 gbak:    writing privilege for user PUBLIC 
+gbak:writing security classes 
 gbak:writing table constraints 
 gbak:writing constraint INTEG_1 
 gbak:writing constraint INTEG_2 
