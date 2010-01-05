@@ -1,0 +1,57 @@
+>> dsql_except_04.sql
+
+create exception e1 'e1';
+
+create table t (n integer);
+
+set term !;
+
+create procedure p1
+as
+begin
+  insert into t values (0);
+  exception e1;
+end!
+
+create procedure p2
+as
+begin
+  insert into t values (-1);
+  exception e1 ('abc' || 'def');
+end!
+
+create procedure p3
+as
+begin
+  insert into t values (-2);
+  exception;
+end!
+
+create procedure p4
+as
+begin
+  insert into t values (-3);
+  execute procedure p1;
+when any do
+  exception;
+end!
+
+set term ;!
+
+insert into t values (1);
+execute procedure p1;
+select * from t;
+
+execute procedure p2;
+select * from t;
+
+execute procedure p3;
+select * from t;
+
+execute procedure p4;
+select * from t;
+
+exit;
+
+$ISQL -m WHERE_GDB:atlas.gdb -i dsql_except_04.sql
+$DELETE dsql_except_04*

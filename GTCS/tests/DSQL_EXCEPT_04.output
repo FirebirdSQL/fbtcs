@@ -1,0 +1,41 @@
+Statement failed, SQLSTATE = 42000
+exception 11
+-E1
+-e1
+-At procedure 'P1' line: 5, col: 3
+After line 40 in file dsql_except_04.sql
+
+           N 
+============ 
+           1 
+
+Statement failed, SQLSTATE = 42000
+exception 11
+-E1
+-abcdef
+-At procedure 'P2' line: 5, col: 3
+After line 42 in file dsql_except_04.sql
+
+           N 
+============ 
+           1 
+
+
+           N 
+============ 
+           1 
+          -2 
+
+Statement failed, SQLSTATE = 42000
+exception 11
+-E1
+-e1
+-At procedure 'P1' line: 5, col: 3
+At procedure 'P4' line: 5, col: 3
+After line 48 in file dsql_except_04.sql
+
+           N 
+============ 
+           1 
+          -2 
+
