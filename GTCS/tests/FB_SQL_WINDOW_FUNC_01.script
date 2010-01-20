@@ -184,6 +184,11 @@ select
 
 select
     entries.*,
+    count(*) over (partition by person || person)
+  from entries;
+
+select
+    entries.*,
     count(*) over (),
     count(val) over (),
     count(*) over (partition by person),
