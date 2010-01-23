@@ -1,0 +1,125 @@
+>> fb_sql_window_func_02.sql
+connect "WHERE_GDB:winfunc.fdb";
+
+---
+
+select
+    p.*,
+    sum(1) over (order by id)
+  from persons p;
+
+select
+    p.*,
+    sum(1) over (order by id desc)
+  from persons p;
+
+select
+    p.*,
+    sum(1) over (order by id)
+  from persons p
+  order by id;
+
+select
+    p.*,
+    sum(1) over (order by id)
+  from persons p
+  order by id desc;
+
+select
+    p.*,
+    sum(1) over (order by id desc)
+  from persons p
+  order by id desc;
+
+select
+    p.*,
+    sum(1) over (order by id desc) s
+  from persons p
+  order by s;
+
+select
+    p.*,
+    sum(id) over (order by id)
+  from persons p;
+
+select
+    p.*,
+    sum(mod(id, 2)) over (order by id)
+  from persons p;
+
+---
+
+select
+    e.*,
+    avg(val) over (order by person nulls first),
+    avg(val) over (order by dat nulls first)
+  from entries e
+  order by id;
+
+select
+    e.*,
+    avg(val) over (order by person nulls last),
+    avg(val) over (order by dat nulls last)
+  from entries e
+  order by id;
+
+select
+    e.*,
+    count(val) over (order by person),
+    count(*) over (order by person),
+    count(null) over (order by person)
+  from entries e
+  order by id;
+
+---
+
+select
+    e.*,
+    count(val) over (order by person),
+    count(val) over (order by id),
+    count(*) over (order by person),
+    count(*) over (order by id),
+    count(null) over (order by person),
+    count(null) over (order by id)
+  from entries e
+  order by id;
+
+---
+
+select
+    e.*,
+    sum(val) over (partition by id order by person),
+    sum(val) over (partition by id order by id),
+    count(*) over (partition by person order by person),
+    count(*) over (partition by person order by id),
+    sum(id) over (partition by dat order by person),
+    sum(id) over (partition by dat order by id)
+  from entries e
+  order by id;
+
+select
+    e.*,
+    sum(val) over (partition by extract(month from dat)),
+    sum(id) over (partition by extract(month from dat)),
+    sum(val) over (partition by extract(year from dat)),
+    sum(id) over (partition by extract(year from dat)),
+    sum(val) over (partition by extract(day from dat)),
+    sum(id) over (partition by extract(day from dat))
+  from entries e
+  order by id;
+
+select
+    e.*,
+    min(id) over (partition by extract(month from dat)),
+    max(id) over (partition by extract(month from dat)),
+    min(val) over (partition by extract(month from dat)),
+    max(val) over (partition by extract(month from dat))
+  from entries e
+  order by id;
+
+---
+
+exit;
+
+$ ISQL -q -m -e -i fb_sql_window_func_02.sql
+$ DELETE fb_sql_window_func_02*
