@@ -22,7 +22,6 @@ A                               INTEGER Nullable
 Triggers on Table U:
 T, Sequence: 0, Type: AFTER DELETE, Active
 
-Database:  WHERE_GDB:cf_isql_21.fdb
 
 SET SQL DIALECT 3; 
 
