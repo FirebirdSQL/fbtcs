@@ -1,4 +1,4 @@
-connect "localhost:/home/asfernandes/fb/test/fbtcs/temp/winfunc.fdb";
+connect "WHERE_GDB:winfunc.fdb";
 
 ---
 

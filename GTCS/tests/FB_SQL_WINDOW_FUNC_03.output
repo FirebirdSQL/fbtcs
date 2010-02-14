@@ -1,0 +1,167 @@
+connect "WHERE_GDB:winfunc.fdb";
+
+---
+
+select
+    p.*,
+    dense_rank() over (order by id),
+    dense_rank() over (order by id desc),
+    rank() over (order by id),
+    rank() over (order by id desc),
+    row_number() over (order by id),
+    row_number() over (order by id desc)
+  from persons p
+  order by id;
+
+          ID NAME                       DENSE_RANK            DENSE_RANK                  RANK                  RANK            ROW_NUMBER            ROW_NUMBER 
+============ =============== ===================== ===================== ===================== ===================== ===================== ===================== 
+           1 Person 1                            1                     5                     1                     5                     1                     5 
+           2 Person 2                            2                     4                     2                     4                     2                     4 
+           3 Person 3                            3                     3                     3                     3                     3                     3 
+           4 Person 4                            4                     2                     4                     2                     4                     2 
+           5 Person 5                            5                     1                     5                     1                     5                     1 
+
+
+select
+    e.*,
+    dense_rank() over (order by val nulls first),
+    rank() over (order by val nulls first),
+    row_number() over (order by val nulls first)
+  from entries e
+  order by id;
+
+          ID       PERSON         DAT                   VAL            DENSE_RANK                  RANK            ROW_NUMBER 
+============ ============ =========== ===================== ===================== ===================== ===================== 
+           1            1 2010-01-03                   2.30                     2                     2                     2 
+           2            2 2010-01-04                   4.30                     4                     5                     5 
+           3            3 2010-01-05                   6.30                     5                     6                     6 
+           4            4 2010-01-06                   8.30                     7                     9                     9 
+           5            5 2010-01-07                  10.30                     9                    12                    12 
+           6            1 2010-02-02                   3.40                     3                     3                     3 
+           7            2 2010-02-03                   6.40                     6                     7                     7 
+           8            3 2010-02-04                   9.40                     8                    10                    10 
+           9            4 2010-02-05                  12.40                    10                    13                    13 
+          10            5 2010-02-06                  15.40                    11                    15                    15 
+          11            1 2010-03-02                   3.40                     3                     3                     4 
+          12            2 2010-03-03                   6.40                     6                     7                     8 
+          13            3 2010-03-04                   9.40                     8                    10                    11 
+          14            4 2010-03-05                  12.40                    10                    13                    14 
+          15            5 2010-03-06                  15.40                    11                    15                    16 
+          16            1      <null>                <null>                     1                     1                     1 
+
+
+select
+    e.*,
+    dense_rank() over (partition by person order by val nulls first, dat nulls first),
+    rank() over (partition by person order by val nulls first, dat nulls first),
+    row_number() over (partition by person order by val nulls first, dat nulls first)
+  from entries e
+  order by id;
+
+          ID       PERSON         DAT                   VAL            DENSE_RANK                  RANK            ROW_NUMBER 
+============ ============ =========== ===================== ===================== ===================== ===================== 
+           1            1 2010-01-03                   2.30                     2                     2                     2 
+           2            2 2010-01-04                   4.30                     1                     1                     1 
+           3            3 2010-01-05                   6.30                     1                     1                     1 
+           4            4 2010-01-06                   8.30                     1                     1                     1 
+           5            5 2010-01-07                  10.30                     1                     1                     1 
+           6            1 2010-02-02                   3.40                     3                     3                     3 
+           7            2 2010-02-03                   6.40                     2                     2                     2 
+           8            3 2010-02-04                   9.40                     2                     2                     2 
+           9            4 2010-02-05                  12.40                     2                     2                     2 
+          10            5 2010-02-06                  15.40                     2                     2                     2 
+          11            1 2010-03-02                   3.40                     4                     4                     4 
+          12            2 2010-03-03                   6.40                     3                     3                     3 
+          13            3 2010-03-04                   9.40                     3                     3                     3 
+          14            4 2010-03-05                  12.40                     3                     3                     3 
+          15            5 2010-03-06                  15.40                     3                     3                     3 
+          16            1      <null>                <null>                     1                     1                     1 
+
+
+select
+    person,
+    sum(dr),
+    sum(r),
+    sum(rn)
+  from (
+    select
+        e.*,
+        dense_rank() over (partition by person) dr,
+        rank() over (partition by person) r,
+        row_number() over (partition by person) rn
+      from entries e
+  ) x
+  group by
+    person
+  order by person;
+
+      PERSON                   SUM                   SUM                   SUM 
+============ ===================== ===================== ===================== 
+           1                     4                     4                    10 
+           2                     3                     3                     6 
+           3                     3                     3                     6 
+           4                     3                     3                     6 
+           5                     3                     3                     6 
+
+
+select
+    sum(dr),
+    sum(r),
+    sum(rn)
+  from (
+    select
+        e.*,
+        dense_rank() over (partition by person) dr,
+        rank() over (partition by person) r,
+        row_number() over (partition by person) rn
+      from entries e
+  ) x;
+
+                  SUM                   SUM                   SUM 
+===================== ===================== ===================== 
+                   16                    16                    34 
+
+
+select
+    id,
+    person,
+    dat,
+    val,
+    sum(rn) srn,
+    row_number() over (order by id)
+  from (
+    select
+        e.*,
+        row_number() over (partition by person order by id) rn
+      from entries e
+  ) x
+  group by
+    id,
+    person,
+    dat,
+    val
+  order by id;
+
+          ID       PERSON         DAT                   VAL                   SRN            ROW_NUMBER 
+============ ============ =========== ===================== ===================== ===================== 
+           1            1 2010-01-03                   2.30                     1                     1 
+           2            2 2010-01-04                   4.30                     1                     2 
+           3            3 2010-01-05                   6.30                     1                     3 
+           4            4 2010-01-06                   8.30                     1                     4 
+           5            5 2010-01-07                  10.30                     1                     5 
+           6            1 2010-02-02                   3.40                     2                     6 
+           7            2 2010-02-03                   6.40                     2                     7 
+           8            3 2010-02-04                   9.40                     2                     8 
+           9            4 2010-02-05                  12.40                     2                     9 
+          10            5 2010-02-06                  15.40                     2                    10 
+          11            1 2010-03-02                   3.40                     3                    11 
+          12            2 2010-03-03                   6.40                     3                    12 
+          13            3 2010-03-04                   9.40                     3                    13 
+          14            4 2010-03-05                  12.40                     3                    14 
+          15            5 2010-03-06                  15.40                     3                    15 
+          16            1      <null>                <null>                     4                    16 
+
+
+---
+
+exit;
