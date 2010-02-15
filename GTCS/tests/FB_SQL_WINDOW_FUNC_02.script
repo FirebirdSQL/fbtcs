@@ -6,12 +6,14 @@ connect "WHERE_GDB:winfunc.fdb";
 select
     p.*,
     sum(1) over (order by id)
-  from persons p;
+  from persons p
+  order by id;
 
 select
     p.*,
     sum(1) over (order by id desc)
-  from persons p;
+  from persons p
+  order by id;
 
 select
     p.*,

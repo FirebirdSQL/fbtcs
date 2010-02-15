@@ -5,7 +5,8 @@ connect "WHERE_GDB:winfunc.fdb";
 select
     p.*,
     sum(1) over (order by id)
-  from persons p;
+  from persons p
+  order by id;
 
           ID NAME                              SUM 
 ============ =============== ===================== 
@@ -19,15 +20,16 @@ select
 select
     p.*,
     sum(1) over (order by id desc)
-  from persons p;
+  from persons p
+  order by id;
 
           ID NAME                              SUM 
 ============ =============== ===================== 
-           5 Person 5                            1 
-           4 Person 4                            2 
-           3 Person 3                            3 
-           2 Person 2                            4 
            1 Person 1                            5 
+           2 Person 2                            4 
+           3 Person 3                            3 
+           4 Person 4                            2 
+           5 Person 5                            1 
 
 
 select

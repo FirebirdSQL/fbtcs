@@ -12,7 +12,8 @@ select
     count(*) over (), count(val) over (), min(val) over (), max(val) over (),
     count(distinct val) over (), min(distinct val) over (), max(distinct val) over (),
     id
-  from entries;
+  from entries
+  order by id;
 
 ---
 
@@ -21,7 +22,8 @@ select
     count(distinct val), min(distinct val), max(distinct val),
     person
   from entries
-  group by person;
+  group by person
+  order by person;
 
 select
     count(*) over (partition by person), count(val) over (partition by person),
@@ -29,7 +31,8 @@ select
     count(distinct val) over (partition by person), min(distinct val) over (partition by person),
     max(distinct val) over (partition by person),
     person
-  from entries;
+  from entries
+  order by 1, 2, 3, 4, 5, 6, 7, 8;
 
 ---
 
@@ -40,7 +43,8 @@ select
   from entries e
   join persons p
     on p.id = e.person
-  group by p.name;
+  group by p.name
+  order by p.name;
 
 select
     count(*) over (partition by p.id), count(e.val) over (partition by p.id),
@@ -50,7 +54,8 @@ select
     p.name
   from entries e
   join persons p
-    on p.id = e.person;
+    on p.id = e.person
+  order by e.id;
 
 ---
 
@@ -58,13 +63,15 @@ select
     person,
     count(person) over (partition by person)
   from entries
-  group by person;
+  group by person
+  order by person;
 
 select
     person,
     count(*) over (partition by person)
   from entries
-  group by person;
+  group by person
+  order by person;
 
 ---
 
@@ -120,7 +127,8 @@ select
     person,
     count(*) over (),
     count(*) over (partition by person)
-  from entries;
+  from entries
+  order by 1, 2, 3;
 
 select
     person,
@@ -132,14 +140,16 @@ select
     person,
     count(*) over (),
     count(*) over (partition by person)
-  from entries;
+  from entries
+  order by 1, 2, 3;
 
 ---
 
 select
     entries.*,
     count(*) over (partition by person || person)
-  from entries;
+  from entries
+  order by 1;
 
 select
     entries.*,
@@ -149,7 +159,8 @@ select
     count(val) over (partition by person),
     count(*) over (partition by dat),
     count(val) over (partition by dat)
-  from entries;
+  from entries
+  order by 1;
 
 select
     entries.*,
@@ -159,13 +170,15 @@ select
     count(val) over (partition by person),
     count(*) over (partition by extract(month from dat)),
     count(val) over (partition by extract(month from dat))
-  from entries;
+  from entries
+  order by 1;
 
 select
     entries.*,
     min(dat) over (partition by person),
     max(dat) over (partition by person)
-  from entries;
+  from entries
+  order by 1;
 
 select distinct
     person,
@@ -177,7 +190,8 @@ select distinct
     person,
     count(*) over (),
     count(*) over (partition by person)
-  from entries;
+  from entries
+  order by 1;
 
 select
     person,
@@ -186,7 +200,8 @@ select
     count(*) over (partition by person),
     count(*) over (partition by 1, 2, 3)
   from entries
-  group by person;
+  group by person
+  order by 1;
 
 select
     person,
