@@ -1,0 +1,29 @@
+>> fb_sql_regex_1.sql
+create database "WHERE_GDB:regex.fdb";
+
+---
+
+create table tests (
+  str varchar(20),
+  pattern varchar(20),
+  expected varchar(20)
+);
+
+insert into tests values ('(12) 3456-7890', '\(__\) \"%\-%\"', '3456-7890');
+insert into tests values ('(12) 3456-7890', '\(__\) \"%x%\"', null);
+insert into tests values ('abc123abc456', '\"%\"abc%6', 'abc123');
+insert into tests values ('abc123abc456', '\"%\"abc%7', null);
+
+select substring('(12) 3456-7890' similar '\(__\) \"%\-%\"' escape '\') from rdb$database;
+select substring('abc123abc456' similar '\"%\"abc%6' escape '\') from rdb$database;
+select substring('abc123abc456' similar '\"%\"abc%7' escape '\') from rdb$database;
+
+select substring(str similar pattern escape '\'), expected from tests;
+
+---
+
+exit;
+
+$ ISQL -q -m -e -i fb_sql_regex_1.sql
+$ DELETE fb_sql_regex_1*
+$ DROP WHERE_GDB:regex.fdb

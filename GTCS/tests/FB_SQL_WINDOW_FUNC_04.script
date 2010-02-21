@@ -1,0 +1,31 @@
+>> fb_sql_window_func_04.sql
+connect "WHERE_GDB:winfunc.fdb";
+
+---
+
+select
+    e.*,
+    lag(val) over (order by val nulls first, id),
+    lead(val) over (order by val nulls first, id),
+    lag(val, 2) over (order by val nulls first, id),
+    lead(val, 3) over (order by val nulls first, id)
+  from entries e
+  order by id;
+
+select
+    person,
+    sum(val),
+    lag(sum(val)) over (order by person),
+    lead(sum(val)) over (order by person),
+    lag(sum(val), 2) over (order by person),
+    lead(sum(val), 3) over (order by person)
+  from entries
+  group by person
+  order by person;
+
+---
+
+exit;
+
+$ ISQL -q -m -e -i fb_sql_window_func_04.sql
+$ DELETE fb_sql_window_func_04*
