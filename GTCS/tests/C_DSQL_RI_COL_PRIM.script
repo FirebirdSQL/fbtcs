@@ -83,14 +83,26 @@ err:		die_on_error();
 
 int setup() {
 
+	char booksTable[] =
+		"CREATE TABLE BOOKS	\
+			(BOOK_ID CHAR(6) NOT NULL PRIMARY KEY, BOOK_NAME VARCHAR(80),	\
+			 BOOK_AUTH_ID CHAR(11))";
+	char authorsTable[] =
+		"CREATE TABLE AUTHORS	\
+			(AUTH_ID CHAR(11)	\
+				NOT NULL		\
+				        /* 1234567890123456789012345678901 - 31 char */	\
+				CONSTRAINT AUTH_NAME_PRIM_6789012345678901 PRIMARY KEY,	\
+			 AUTH_NAME CHAR(50))";
+
 	if (verbose)
 		printf("entered setup\n");
 
 	if (istable("books")) {
 		if (verbose) 
 			printf("books found... will be dropped\n");
-		EXEC SQL
-			DROP TABLE BOOKS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
+		EXEC SQL COMMIT;
 	}
 
 	if (verbose)
@@ -101,10 +113,8 @@ int setup() {
 			(BOOK_ID CHAR(6) NOT NULL PRIMARY KEY, BOOK_NAME VARCHAR(80),
 			 BOOK_AUTH_ID CHAR(11));
 
-	EXEC SQL
-		CREATE TABLE BOOKS
-			(BOOK_ID CHAR(6) NOT NULL PRIMARY KEY, BOOK_NAME VARCHAR(80),
-			 BOOK_AUTH_ID CHAR(11));
+	EXEC SQL EXECUTE IMMEDIATE :booksTable;
+	EXEC SQL COMMIT;
 
 	if (verbose)
 		printf("books created successfully.\n");
@@ -113,8 +123,8 @@ int setup() {
 	if (istable("authors")) {
 		if (verbose) 
 			printf("authors found... will be dropped\n");
-		EXEC SQL
-			DROP TABLE AUTHORS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE AUTHORS';
+		EXEC SQL COMMIT;
 	}
 
 	if (verbose)
@@ -128,39 +138,11 @@ int setup() {
 				CONSTRAINT AUTH_NAME_PRIM_6789012345678901 PRIMARY KEY,
 			 AUTH_NAME CHAR(50));
 
-	EXEC SQL
-		CREATE TABLE AUTHORS
-			(AUTH_ID CHAR(11) 
-				NOT NULL 
-				        /* 1234567890123456789012345678901 - 31 char */
-				CONSTRAINT AUTH_NAME_PRIM_6789012345678901 PRIMARY KEY,
-			 AUTH_NAME CHAR(50));
+	EXEC SQL EXECUTE IMMEDIATE :authorsTable;
+	EXEC SQL COMMIT;
 
 	if (verbose)
 		printf("authors created successfully.\n");
-
-	if (istable("bad_table")) {
-		if (verbose) 
-			printf("bad_table found... will be dropped\n");
-		EXEC SQL
-			DROP TABLE BAD_TABLE;
-
-	}
-
-	EXEC SQL
-		WHENEVER SQLERROR CONTINUE;
-
-	EXEC SQL
-		CREATE TABLE BAD_TABLE 
-			(COL1 CHAR(1) PRIMARY KEY);  /* NOT NULL missing, is required */
-
-	if (!SQLCODE)
-		goto err;
-	else {
-		printf ("Expected data base error (SQLCODE=-607), ");
-		printf ("encountered, SQLCODE = %d\n", SQLCODE);
-		isc_print_status(gds_status);
-	}
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
@@ -184,11 +166,6 @@ int verify() {
 
 	if (print_books(num_recs))
 		exit(1);
-
-	if (istable("bad_table")) {
-		printf("BAD_TABLE found. Contains column defined PRIMARY KEY, but");
-		printf("is missing NOT NULL constraint.\n");
-	}
 
 	if (print_views())
 		exit(1);

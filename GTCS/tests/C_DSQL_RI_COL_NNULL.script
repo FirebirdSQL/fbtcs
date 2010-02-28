@@ -82,14 +82,22 @@ err:		die_on_error();
 
 int setup() {
 
+	char booksTable[] =
+		"CREATE TABLE BOOKS	\
+			(BOOK_ID CHAR(6) NOT NULL,	\
+			 BOOK_NAME VARCHAR(80) CONSTRAINT req_input2 NOT NULL,	\
+			 BOOK_AUTH_ID CHAR(11),	\
+			 PRICE FLOAT CONSTRAINT req_input NOT NULL,	\
+ 			 UNIQUE (BOOK_ID))";
+
 	if (verbose)
 		printf("entered setup\n");
 
 	if (istable("books")) {
 		if (verbose) 
 			printf("books found... will be dropped\n");
-		EXEC SQL
-			DROP TABLE BOOKS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
+		EXEC SQL COMMIT;
 	}
 			
 	EXEC SQL DECLARE BOOKS TABLE
@@ -99,13 +107,8 @@ int setup() {
 			 PRICE FLOAT);
 
 
-	EXEC SQL
-		CREATE TABLE BOOKS
-			(BOOK_ID CHAR(6) NOT NULL, 
-			 BOOK_NAME VARCHAR(80) CONSTRAINT req_input2 NOT NULL,
-			 BOOK_AUTH_ID CHAR(11), 
-			 PRICE FLOAT CONSTRAINT req_input NOT NULL,
- 			 UNIQUE (BOOK_ID));
+	EXEC SQL EXECUTE IMMEDIATE :booksTable;
+	EXEC SQL COMMIT;
 
 	printf("books created successfully.\n");
 

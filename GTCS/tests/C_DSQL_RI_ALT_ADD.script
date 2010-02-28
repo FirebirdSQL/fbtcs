@@ -130,9 +130,8 @@ int setup() {
 		if (verbose) 
 			printf("books found... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE BOOKS;
-			
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
+		EXEC SQL COMMIT;
 	}
 
 	if (verbose)

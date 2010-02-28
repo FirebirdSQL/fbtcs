@@ -90,6 +90,12 @@ err:		die_on_error();
 
 int setup() {
 
+	char booksTable[] =
+		"CREATE TABLE BOOKS	\
+			(BOOK_ID CHAR(6) NOT NULL, BOOK_NAME VARCHAR(80),	\
+			 BOOK_AUTH_ID CHAR(11),	\
+			 CONSTRAINT BOOK_ID_FORMAT CHECK (BOOK_ID LIKE \"BU____\"))";
+
 	if (verbose)
 		printf("entered setup\n");
 
@@ -97,8 +103,8 @@ int setup() {
 		if (verbose) 
 			printf("books found... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE BOOKS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
+		EXEC SQL COMMIT;
 	}
 
 	if (verbose)
@@ -109,11 +115,9 @@ int setup() {
 			(BOOK_ID CHAR(6) NOT NULL, BOOK_NAME VARCHAR(80),
 			 BOOK_AUTH_ID CHAR(11) NOT NULL);
 
-	EXEC SQL
-		CREATE TABLE BOOKS
-			(BOOK_ID CHAR(6) NOT NULL, BOOK_NAME VARCHAR(80),
-			 BOOK_AUTH_ID CHAR(11), 
-			 CONSTRAINT BOOK_ID_FORMAT CHECK (BOOK_ID LIKE "BU____"));
+	EXEC SQL EXECUTE IMMEDIATE :booksTable;
+	EXEC SQL COMMIT;
+
 	if (verbose)
 		printf("books created successfully.\n");
 
@@ -121,8 +125,8 @@ int setup() {
 		if (verbose) 
 			printf("foofound... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE FOO;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE FOO';
+		EXEC SQL COMMIT;
 	}
 
 	if (verbose)
@@ -132,9 +136,9 @@ int setup() {
 		DECLARE FOO TABLE
 			(C1 CHAR(1), C2 CHAR); 
 
-	EXEC SQL
-		CREATE TABLE FOO 
-			(C1 CHAR(1), C2 CHAR, CHECK (C2 > C1));
+	EXEC SQL EXECUTE IMMEDIATE 'CREATE TABLE FOO (C1 CHAR(1), C2 CHAR, CHECK (C1 IS NOT NULL AND C2 IS NOT NULL AND C2 > C1))';
+	EXEC SQL COMMIT;
+
 	if (verbose)
 		printf("foo created successfully.\n");
 
@@ -373,5 +377,5 @@ $ GPRE tabcheck.epp -d WHERE_GDB:atlas.gdb
 $ CXX FLAG_CXX tabcheck.cpp
 $ LINK FLAG_LINK tabcheck pr_views 
 $ RUN tabcheck
-$DROP WHERE_GDB:atlas.gdb
+# $DROP WHERE_GDB:atlas.gdb
 $ DELETE tabcheck*
