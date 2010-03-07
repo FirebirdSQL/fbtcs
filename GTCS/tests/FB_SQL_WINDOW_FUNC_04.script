@@ -8,7 +8,10 @@ select
     lag(val) over (order by val nulls first, id),
     lead(val) over (order by val nulls first, id),
     lag(val, 2) over (order by val nulls first, id),
-    lead(val, 3) over (order by val nulls first, id)
+    lead(val, 3) over (order by val nulls first, id),
+    lag(val, 1, -val) over (order by val nulls first, id),
+    lag(val, 2, -val) over (order by val nulls first, id),
+    lead(val, 3, -1.00) over (order by val nulls first, id)
   from entries e
   order by id;
 
@@ -18,7 +21,9 @@ select
     lag(sum(val)) over (order by person),
     lead(sum(val)) over (order by person),
     lag(sum(val), 2) over (order by person),
-    lead(sum(val), 3) over (order by person)
+    lead(sum(val), 3) over (order by person),
+    lag(sum(val), 2, -sum(val)) over (order by person),
+    lead(sum(val), 3, -1.00) over (order by person)
   from entries
   group by person
   order by person;
