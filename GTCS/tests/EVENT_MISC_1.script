@@ -193,58 +193,63 @@ char **argv;
 	}
 	EXEC SQL COMMIT RELEASE;
 }
->> stocks.gdl
+>> stocks.sql
 
-define database "WHERE_GDB:stocks.gdb"
+SET SQL DIALECT 1;
+
+create database "WHERE_GDB:stocks.gdb"
 	page_size 1024;
 
 
 /*	Global Field Definitions	*/
 
-define field COMPANY char [10];
-define field NEW_PRICE float;
-define field OLD_PRICE float;
-define field PRICE float
-	edit_string "$$$9.999";
+create domain COMPANY char(10);
+create domain NEW_PRICE float;
+create domain OLD_PRICE float;
+create domain PRICE float;
 
 
 /*	Relation Definitions	*/
 
 
-define relation EVENTSLOG
-    COMPANY	position 1,
-    OLD_PRICE	position 2,
-    NEW_PRICE	position 3;
+create table EVENTSLOG (
+    COMPANY	COMPANY,
+    OLD_PRICE OLD_PRICE,
+    NEW_PRICE NEW_PRICE
+);
 
-define relation STOCKS
-    COMPANY	position 1,
-    PRICE	position 2
-	edit_string "$$$9.999";
+create table STOCKS (
+    COMPANY COMPANY,
+    PRICE PRICE
+);
 
 
 /*	Generator Definitions	*/
 
 
-define generator STOCKS;
+create generator STOCKS;
 
 /*	Trigger Definitions	*/
 
+set term !;
 
+create trigger STOCKS$MODIFY before update on STOCKS
+as
+begin
+	if (new.price <> old.price) then
+		post_event new.company;
+end!
 
-define trigger STOCKS$MODIFY for STOCKS
-	pre modify 0:
-if new.price != old.price 
-	then post new.company;
+set term ;!
 
-	end_trigger;
-$GDEF -r stocks.gdl
+$ISQL -q -i stocks.sql
 >> input.sql
 connect WHERE_GDB:stocks.gdb;
-insert into stocks ( company, price) values ( "DG", 55.50);
-insert into stocks ( company, price) values ( "DEC", 122.00);
-insert into stocks ( company, price) values ( "IBM", 145.00);
-insert into stocks ( company, price) values ( "HP", 85.00 );
-insert into stocks ( company, price) values ( "SUN", 55.75);
+insert into stocks ( company, price) values ( 'DG', 55.50);
+insert into stocks ( company, price) values ( 'DEC', 122.00);
+insert into stocks ( company, price) values ( 'IBM', 145.00);
+insert into stocks ( company, price) values ( 'HP', 85.00 );
+insert into stocks ( company, price) values ( 'SUN', 55.75);
 commit;
 exit;
 
@@ -257,5 +262,5 @@ $LINK FLAG_LINK post_events
 $LINK FLAG_LINK event_mgr 
 $RUN event_mgr
 $SLEEP 5
-$DELETE event_mgr* post_events* input.sql stocks.gdl
+$DELETE event_mgr* post_events* input.sql stocks.sql
 $DROP WHERE_GDB:stocks.gdb
