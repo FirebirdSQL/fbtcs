@@ -1,0 +1,319 @@
+create database "WHERE_GDB:returning.fdb";
+
+set term !;
+
+---
+
+create table tab (
+  n1 integer primary key,
+  n2 integer
+)!
+
+create table tab2 (
+  n1 integer primary key,
+  n2 integer
+)!
+
+insert into tab values (1, 10) returning n1, n2!
+
+          N1           N2 
+============ ============ 
+           1           10 
+
+insert into tab values (2, 20) returning n1, n2!
+
+          N1           N2 
+============ ============ 
+           2           20 
+
+
+execute block returns (o1 integer, o2 integer)
+as
+begin
+  insert into tab values (3, 30) returning n1, n2 into o1, o2;
+  suspend;
+  insert into tab values (4, 40) returning n1, n2 into o1, o2;
+  suspend;
+end!
+
+          O1           O2 
+============ ============ 
+           3           30 
+           4           40 
+
+
+select * from tab order by n1!
+
+          N1           N2 
+============ ============ 
+           1           10 
+           2           20 
+           3           30 
+           4           40 
+
+
+update or insert into tab values (3, 300) returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+          N1           N2     CONSTANT     CONSTANT           N1           N2 
+============ ============ ============ ============ ============ ============ 
+           3          300            3           30            3          300 
+
+update or insert into tab values (5, 500) returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+          N1           N2     CONSTANT     CONSTANT           N1           N2 
+============ ============ ============ ============ ============ ============ 
+           5          500       <null>       <null>            5          500 
+
+
+execute block returns (o1 integer, o2 integer, o3 integer, o4 integer, o5 integer, o6 integer)
+as
+begin
+  update or insert into tab values (2, 200) returning n1, n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+  update or insert into tab values (6, 600) returning n1, n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+end!
+
+          O1           O2           O3           O4           O5           O6 
+============ ============ ============ ============ ============ ============ 
+           2          200            2           20            2          200 
+           6          600       <null>       <null>            6          600 
+
+
+select * from tab order by n1!
+
+          N1           N2 
+============ ============ 
+           1           10 
+           2          200 
+           3          300 
+           4           40 
+           5          500 
+           6          600 
+
+
+commit!
+
+update tab set n2 = 2 returning n2!
+Statement failed, SQLSTATE = 21000
+multiple rows in singleton select
+After line 47 in file fb_sql_returning_1.sql
+
+update tab set n2 = 2!
+update or insert into tab values (2, 2) matching (n2) returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+Statement failed, SQLSTATE = 21000
+multiple rows in singleton select
+After line 51 in file fb_sql_returning_1.sql
+rollback!
+
+merge into tab2 using tab
+  on tab2.n1 = tab.n1
+  when matched then update set n1 = tab.n1, n2 = tab.n2
+  returning old.n1, old.n2, new.n1, new.n2, tab.n1, tab.n2!
+
+          N1           N2           N1           N2           N1           N2 
+============ ============ ============ ============ ============ ============ 
+      <null>       <null>       <null>       <null>       <null>       <null> 
+
+
+merge into tab2 using tab
+  on tab2.n1 = tab.n1
+  when matched then update set n1 = tab.n1, n2 = tab.n2
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+Statement failed, SQLSTATE = 42702
+Dynamic SQL Error
+-SQL error code = -204
+-Ambiguous field name between table TAB and table TAB2 
+-N1
+After line 58 in file fb_sql_returning_1.sql
+
+merge into tab2 using tab
+  on tab2.n1 = tab.n1
+  when matched then delete
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+Statement failed, SQLSTATE = 42702
+Dynamic SQL Error
+-SQL error code = -204
+-Ambiguous field name between table TAB and table TAB2 
+-N1
+After line 63 in file fb_sql_returning_1.sql
+
+merge into tab2 using tab
+  on tab2.n1 = tab.n1
+  when not matched then insert values (n1, n2)
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+Statement failed, SQLSTATE = 42702
+Dynamic SQL Error
+-SQL error code = -204
+-Ambiguous field name between table TAB and table TAB2 
+-N1
+After line 68 in file fb_sql_returning_1.sql
+
+--
+
+merge into tab2 using (select n1 x1, n2 x2 from tab) tab
+  on tab2.n1 = tab.x1
+  when matched then update set n1 = tab.x1, n2 = tab.x2
+  when not matched then insert values (x1, x2)
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+Statement failed, SQLSTATE = 21000
+multiple rows in singleton select
+After line 73 in file fb_sql_returning_1.sql
+
+merge into tab2 using (select n1 x1, n2 x2 from tab) tab
+  on tab2.n1 = tab.x1
+  when matched then update set n1 = tab.x1, n2 = tab.x2
+  when not matched and 1 = 0 then insert values (x1, x2)
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+          N1           N2           N1           N2           N1           N2 
+============ ============ ============ ============ ============ ============ 
+      <null>       <null>       <null>       <null>       <null>       <null> 
+
+
+merge into tab2 using (select n1 x1, n2 x2 from tab) tab
+  on tab2.n1 = tab.x1
+  when matched then update set n1 = tab.x1, n2 = tab.x2
+  when not matched then insert values (x1, x2)!
+
+select * from tab2!
+
+          N1           N2 
+============ ============ 
+           1           10 
+           2          200 
+           3          300 
+           4           40 
+           5          500 
+           6          600 
+
+
+merge into tab2 using (select n1 x1, n2 x2 from tab) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 0 then update set n1 = tab.x1, n2 = tab.x2
+  when not matched then insert values (x1, x2)
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+          N1           N2           N1           N2           N1           N2           X1           X2 
+============ ============ ============ ============ ============ ============ ============ ============ 
+      <null>       <null>       <null>       <null>       <null>       <null>       <null>       <null> 
+
+
+merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 1) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 0 then update set n2 = tab.x2 * 10
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+          N1           N2           N1           N2           N1           N2           X1           X2 
+============ ============ ============ ============ ============ ============ ============ ============ 
+      <null>       <null>       <null>       <null>       <null>       <null>       <null>       <null> 
+
+
+merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 1) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 1 then update set n2 = tab.x2 * 10
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+          N1           N2           N1           N2           N1           N2           X1           X2 
+============ ============ ============ ============ ============ ============ ============ ============ 
+           1          100            1           10            1          100            1           10 
+
+
+merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 4) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 0 then delete
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+          N1           N2           N1           N2 CONSTANT CONSTANT           X1           X2 
+============ ============ ============ ============ ======== ======== ============ ============ 
+      <null>       <null>       <null>       <null> <null>   <null>         <null>       <null> 
+
+
+merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 4) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 1 then delete
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+          N1           N2           N1           N2 CONSTANT CONSTANT           X1           X2 
+============ ============ ============ ============ ======== ======== ============ ============ 
+           4           40            4           40 <null>   <null>              4           40 
+
+
+select * from tab2!
+
+          N1           N2 
+============ ============ 
+           1          100 
+           2          200 
+           3          300 
+           5          500 
+           6          600 
+
+
+--
+
+delete from tab!
+
+execute block returns (o1 integer, o2 integer, o3 integer, o4 integer, o5 integer, o6 integer)
+as
+begin
+  merge into tab using tab2
+    on tab.n1 = tab2.n1
+    when matched and tab2.n2 = 100 then
+      update set n1 = tab2.n1, n2 = tab.n2 + tab2.n2
+    when not matched and tab2.n2 = 100 then
+      insert values (n1, n2 * 10)
+    returning tab2.n1, tab2.n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+
+  merge into tab using tab2
+    on tab.n1 = tab2.n1
+    when matched and tab2.n2 = 100 then
+      update set n1 = tab2.n1, n2 = tab.n2 + tab2.n2
+    when not matched and tab2.n2 = 100 then
+      insert values (n1, n2 * 10)
+    returning tab2.n1, tab2.n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+
+  merge into tab using tab2
+    on tab.n1 = tab2.n1
+    when not matched and tab2.n2 = 200 then
+      insert values (n1, n2 * 10)
+    returning tab2.n1, tab2.n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+
+  merge into tab using tab2
+    on tab.n1 = tab2.n1
+    when matched and tab2.n2 = 200 then
+      update set n1 = tab2.n1, n2 = tab.n2 + tab2.n2
+    returning tab2.n1, tab2.n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+end!
+
+          O1           O2           O3           O4           O5           O6 
+============ ============ ============ ============ ============ ============ 
+           1          100       <null>       <null>            1         1000 
+           1          100            1         1000            1         1100 
+           2          200       <null>       <null>            2         2000 
+           2          200            2         2000            2         2200 
+
+
+select * from tab!
+
+          N1           N2 
+============ ============ 
+           1         1100 
+           2         2200 
+
+
+---
+
+set term ;!
+
+exit;

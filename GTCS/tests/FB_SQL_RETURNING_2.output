@@ -1,0 +1,79 @@
+create database "WHERE_GDB:returning.fdb";
+
+set term !;
+
+---
+
+create table tab (
+  n1 integer primary key,
+  n2 integer
+)!
+
+insert into tab values (1, 10) returning n1, n2!
+
+          N1           N2 
+============ ============ 
+           1           10 
+
+insert into tab values (2, 20) returning n1, n2!
+
+          N1           N2 
+============ ============ 
+           2           20 
+
+
+update tab set n2 = n2 * 10 returning n1, n2, new.n1, new.n2, old.n1, old.n2!
+Statement failed, SQLSTATE = 21000
+multiple rows in singleton select
+After line 13 in file fb_sql_returning_2.sql
+
+update tab set n2 = n2 * 10 where n1 = 0 returning n1, n2, new.n1, new.n2, old.n1, old.n2!
+
+          N1           N2           N1           N2           N1           N2 
+============ ============ ============ ============ ============ ============ 
+      <null>       <null>       <null>       <null>       <null>       <null> 
+
+
+update tab set n2 = n2 * 10 where n1 = 2 returning n1, n2, new.n1, new.n2, old.n1, old.n2!
+
+          N1           N2           N1           N2           N1           N2 
+============ ============ ============ ============ ============ ============ 
+           2          200            2          200            2           20 
+
+
+update or insert into tab values (2, 2000) returning n1, n2, new.n1, new.n2, old.n1, old.n2!
+
+          N1           N2           N1           N2     CONSTANT     CONSTANT 
+============ ============ ============ ============ ============ ============ 
+           2         2000            2         2000            2          200 
+
+update or insert into tab values (3, 3000) returning n1, n2, new.n1, new.n2, old.n1, old.n2!
+
+          N1           N2           N1           N2     CONSTANT     CONSTANT 
+============ ============ ============ ============ ============ ============ 
+           3         3000            3         3000       <null>       <null> 
+
+
+delete from tab returning n1, n2!
+Statement failed, SQLSTATE = 21000
+multiple rows in singleton select
+After line 22 in file fb_sql_returning_2.sql
+
+delete from tab where n1 = 1 returning n1, n2!
+
+          N1           N2 
+============ ============ 
+           1           10 
+
+delete from tab where n1 = 1 returning n1, n2!
+
+          N1           N2 
+============ ============ 
+      <null>       <null> 
+
+
+---
+
+set term ;!
+
+exit;

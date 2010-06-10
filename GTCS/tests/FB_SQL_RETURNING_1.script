@@ -1,0 +1,179 @@
+>> fb_sql_returning_1.sql
+create database "WHERE_GDB:returning.fdb";
+
+set term !;
+
+---
+
+create table tab (
+  n1 integer primary key,
+  n2 integer
+)!
+
+create table tab2 (
+  n1 integer primary key,
+  n2 integer
+)!
+
+insert into tab values (1, 10) returning n1, n2!
+insert into tab values (2, 20) returning n1, n2!
+
+execute block returns (o1 integer, o2 integer)
+as
+begin
+  insert into tab values (3, 30) returning n1, n2 into o1, o2;
+  suspend;
+  insert into tab values (4, 40) returning n1, n2 into o1, o2;
+  suspend;
+end!
+
+select * from tab order by n1!
+
+update or insert into tab values (3, 300) returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+update or insert into tab values (5, 500) returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+execute block returns (o1 integer, o2 integer, o3 integer, o4 integer, o5 integer, o6 integer)
+as
+begin
+  update or insert into tab values (2, 200) returning n1, n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+  update or insert into tab values (6, 600) returning n1, n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+end!
+
+select * from tab order by n1!
+
+commit!
+
+update tab set n2 = 2 returning n2!
+
+update tab set n2 = 2!
+update or insert into tab values (2, 2) matching (n2) returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+rollback!
+
+merge into tab2 using tab
+  on tab2.n1 = tab.n1
+  when matched then update set n1 = tab.n1, n2 = tab.n2
+  returning old.n1, old.n2, new.n1, new.n2, tab.n1, tab.n2!
+
+merge into tab2 using tab
+  on tab2.n1 = tab.n1
+  when matched then update set n1 = tab.n1, n2 = tab.n2
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+merge into tab2 using tab
+  on tab2.n1 = tab.n1
+  when matched then delete
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+merge into tab2 using tab
+  on tab2.n1 = tab.n1
+  when not matched then insert values (n1, n2)
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+--
+
+merge into tab2 using (select n1 x1, n2 x2 from tab) tab
+  on tab2.n1 = tab.x1
+  when matched then update set n1 = tab.x1, n2 = tab.x2
+  when not matched then insert values (x1, x2)
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+merge into tab2 using (select n1 x1, n2 x2 from tab) tab
+  on tab2.n1 = tab.x1
+  when matched then update set n1 = tab.x1, n2 = tab.x2
+  when not matched and 1 = 0 then insert values (x1, x2)
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2!
+
+merge into tab2 using (select n1 x1, n2 x2 from tab) tab
+  on tab2.n1 = tab.x1
+  when matched then update set n1 = tab.x1, n2 = tab.x2
+  when not matched then insert values (x1, x2)!
+
+select * from tab2!
+
+merge into tab2 using (select n1 x1, n2 x2 from tab) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 0 then update set n1 = tab.x1, n2 = tab.x2
+  when not matched then insert values (x1, x2)
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 1) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 0 then update set n2 = tab.x2 * 10
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 1) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 1 then update set n2 = tab.x2 * 10
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 4) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 0 then delete
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 4) tab
+  on tab2.n1 = tab.x1
+  when matched and 1 = 1 then delete
+  returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
+
+select * from tab2!
+
+--
+
+delete from tab!
+
+execute block returns (o1 integer, o2 integer, o3 integer, o4 integer, o5 integer, o6 integer)
+as
+begin
+  merge into tab using tab2
+    on tab.n1 = tab2.n1
+    when matched and tab2.n2 = 100 then
+      update set n1 = tab2.n1, n2 = tab.n2 + tab2.n2
+    when not matched and tab2.n2 = 100 then
+      insert values (n1, n2 * 10)
+    returning tab2.n1, tab2.n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+
+  merge into tab using tab2
+    on tab.n1 = tab2.n1
+    when matched and tab2.n2 = 100 then
+      update set n1 = tab2.n1, n2 = tab.n2 + tab2.n2
+    when not matched and tab2.n2 = 100 then
+      insert values (n1, n2 * 10)
+    returning tab2.n1, tab2.n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+
+  merge into tab using tab2
+    on tab.n1 = tab2.n1
+    when not matched and tab2.n2 = 200 then
+      insert values (n1, n2 * 10)
+    returning tab2.n1, tab2.n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+
+  merge into tab using tab2
+    on tab.n1 = tab2.n1
+    when matched and tab2.n2 = 200 then
+      update set n1 = tab2.n1, n2 = tab.n2 + tab2.n2
+    returning tab2.n1, tab2.n2, old.n1, old.n2, new.n1, new.n2
+    into o1, o2, o3, o4, o5, o6;
+  suspend;
+end!
+
+select * from tab!
+
+---
+
+set term ;!
+
+exit;
+
+$ ISQL -q -m -e -i fb_sql_returning_1.sql
+$ DELETE fb_sql_returning_1*
+$ DROP WHERE_GDB:returning.fdb
