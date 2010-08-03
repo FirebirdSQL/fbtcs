@@ -1,6 +1,8 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 39000
-Dynamic SQL Error
+unsuccessful metadata update
+-CREATE TABLE T0 failed
+-Dynamic SQL Error
 -SQL error code = -804
 -Function unknown
 -NON_EXIST_UDF

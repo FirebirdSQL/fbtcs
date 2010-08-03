@@ -22,5 +22,6 @@ DOM11I_1                        BLOB segment 80, subtype BINARY Nullable
 DOM11I_2                        BLOB segment 60, subtype TEXT Nullable
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
+-DROP DOMAIN RUBBISH failed
 -Domain not found
 After line 0 in file domain_11b.sql

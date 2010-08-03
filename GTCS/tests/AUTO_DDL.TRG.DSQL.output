@@ -1,7 +1,7 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
--DEFINE TRIGGER failed
--attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_8"
+-CREATE TRIGGER INS failed
+-violation of PRIMARY or UNIQUE KEY constraint "RDB$INDEX_8" on table "RDB$TRIGGERS"
 Use CONNECT or CREATE DATABASE to specify a database
 
            A 

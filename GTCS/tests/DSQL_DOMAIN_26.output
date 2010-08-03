@@ -22,10 +22,12 @@ DOM20H                          DOUBLE PRECISION Not Null
                                 default 1000
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
+-DROP DOMAIN DOM20A failed
 -Domain DOM20A is used in table TAB26A (local name FLD1) and cannot be dropped
 After line 40 in file domain_26.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
+-DROP DOMAIN DOM20B failed
 -Domain DOM20B is used in table TAB26A (local name FLD2) and cannot be dropped
 After line 41 in file domain_26.sql
 DOM20A                          SMALLINT Nullable

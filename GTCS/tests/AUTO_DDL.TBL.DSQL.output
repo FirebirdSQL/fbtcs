@@ -1,5 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
+-CREATE TABLE T failed
 -Table T already exists
 Use CONNECT or CREATE DATABASE to specify a database
 A                               INTEGER Nullable 

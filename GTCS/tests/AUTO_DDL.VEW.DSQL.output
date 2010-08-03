@@ -1,5 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
+-CREATE VIEW T_VIEW failed
 -Table T_VIEW already exists
 Use CONNECT or CREATE DATABASE to specify a database
 A                               INTEGER Nullable 

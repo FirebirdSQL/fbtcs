@@ -1,5 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
+-CREATE PROCEDURE INS failed
 -Procedure INS already exists
 Use CONNECT or CREATE DATABASE to specify a database
 

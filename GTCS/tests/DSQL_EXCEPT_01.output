@@ -32,13 +32,16 @@ Dynamic SQL Error
 At line 21 in file dsql_except_01.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
+-CREATE EXCEPTION NOSTATE failed
 -Exception NOSTATE already exists
 After line 22 in file dsql_except_01.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
+-ALTER EXCEPTION RUBBISH failed
 -Exception not found
 After line 25 in file dsql_except_01.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
+-DROP EXCEPTION RUBBISH failed
 -Exception not found
 After line 27 in file dsql_except_01.sql
