@@ -107,7 +107,7 @@ int main(int argc, const char** argv)
 			if (ret != 0) 
 				break;
 
-			printf("Blob chunk: %s\n", buffer);
+			printf("Blob chunk: %.80s\n", buffer);
 		}
 
 		if (isc_dsql_free_statement(userStatus, &stmt2, DSQL_close))
