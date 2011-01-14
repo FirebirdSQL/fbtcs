@@ -1,11 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLSTATE = 42S22
-Dynamic SQL Error
--SQL error code = -206
--Column unknown
--OLD.PNUMBER
--At line 4, column 26
-At line 28 in file sql_event_12a.sql
+
+foo12 done, event (abc) was posted.
 
 PNAME                PNUMBER 
 =============== ============ 
@@ -20,4 +15,5 @@ ProductA                   4
            1            1            1 
            2            2            2 
            3            3            3 
+          11           11           12 
 

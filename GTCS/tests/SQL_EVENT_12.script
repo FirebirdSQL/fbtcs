@@ -35,7 +35,7 @@ go
 create trigger trig01 for project
 active before insert position 1
 as begin 
-  if (new.pnumber <> old.pnumber) then
+  if (new.pnumber is not null) then
    execute procedure proc1;
 end
 go
@@ -44,52 +44,35 @@ exit;
 
 $ ISQL -m -i sql_event_12a.sql
 
-#/**************************************************
-#*Modified: 7/26/94
-#* I am commenting out this section of this test because this test "apparently"
-#* tests for the fix to bug 4741 which states that:
-#* PROBLEM_RESOLUTION        For Pre/post insert triggers the OLD context will
-#* not be created and for Pre/post delete triggers the NEW context will not 
-#* be created.  This will result in follwoing kind syntax errors when the
-#* triggers are *defined:
-#*
-#*	            -SQL error code = -206
-#*	            -Field unknown
-#*	            -OLD.RIVER
-#*
-#* Which means that the trigger never gets defined, never gets fired, and 
-#* foo12 never completes and files don't get deleted and tests fail.
-#*
-#*>> foo12.e
-#*DATABASE DB = "WHERE_GDB:events.gdb"
-#*main()
-#*{
-#*  EXEC SQL 
-#*	CONNECT DB;
-#*  EXEC SQL 
-#*	SET TRANSACTION;
-#*  EXEC SQL 
-#*	EVENT INIT xyz DB ("abc") ;
-#*
-#*  if (isc_status[1])
-#*        isc_print_status(isc_status);
-#*
-#*  EXEC SQL 
-#*	EVENT WAIT xyz;
-#*  EXEC SQL 
-#*	COMMIT WORK;
-#*
-#*  if (isc_status[1])
-#*        isc_print_status(isc_status);
-#*  else
-#*        printf ("\nfoo12 done, event (abc) was posted.\n");
-#*}
-#*$ GPRE  -n -m foo12.e
-#*$ CC FLAG_CC foo12.c
-#*$ LINK FLAG_LINK foo12 
-#*
-#*$ RUN foo12 &
-#*****************************************************/
+>> foo12.e
+DATABASE DB = "WHERE_GDB:events.gdb"
+main()
+{
+  EXEC SQL
+	CONNECT DB;
+  EXEC SQL
+	SET TRANSACTION;
+  EXEC SQL
+	EVENT INIT xyz DB ('abc');
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+
+  EXEC SQL 
+	EVENT WAIT xyz;
+  EXEC SQL 
+	COMMIT WORK;
+
+  if (isc_status[1])
+        isc_print_status(isc_status);
+  else
+        printf ("\nfoo12 done, event (abc) was posted.\n");
+}
+$ GPRE  -n -m foo12.e
+$ CC FLAG_CC foo12.c
+$ LINK FLAG_LINK foo12 
+
+$ RUN foo12 &
 
 >> sql_event_12b.sql
 
