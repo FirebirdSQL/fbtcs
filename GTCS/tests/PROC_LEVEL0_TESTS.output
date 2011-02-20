@@ -15,15 +15,21 @@ begin
 end
 go
 Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
+Dynamic SQL Error
+-SQL error code = -104
 -Name longer than database column size
 After line 11 in file proc_level0_tests.sql
 
 set term ; go
 show proc;
+Global procedures:
 Procedure Name                    Invalid Dependency, Type
 ================================= ======= =====================================
 PABCDEFGHIJKLMNOPQRSTUVWXYZABCD           
+
+Packaged procedures:
+Procedure Name                    Invalid Dependency, Type
+================================= ======= =====================================
 execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
 
            A 
@@ -33,8 +39,7 @@ execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
 execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--QABCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+-SQL error code = -104
+-Name longer than database column size
 After line 22 in file proc_level0_tests.sql
 exit;

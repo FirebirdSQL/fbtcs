@@ -19,9 +19,9 @@ S_ROWID C_ENUS                    C_FRANCE
 
 Use CONNECT or CREATE DATABASE to specify a database
 
-       COUNT 
-============ 
-           7 
+                COUNT 
+===================== 
+                    7 
 
 
 S_ROWID C_ENUS                    C_FRANCE                  

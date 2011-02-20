@@ -47,19 +47,19 @@ arithmetic exception, numeric overflow, or string truncation
 After line 2 in file isosel.sql
 Use CONNECT or CREATE DATABASE to specify a database
 
-       COUNT 
-============ 
-           7 
+                COUNT 
+===================== 
+                    7 
 
 
-       COUNT 
-============ 
-           7 
+                COUNT 
+===================== 
+                    7 
 
 
-       COUNT 
-============ 
-           7 
+                COUNT 
+===================== 
+                    7 
 
 
 C_ENUS                    C_FRANCE                  

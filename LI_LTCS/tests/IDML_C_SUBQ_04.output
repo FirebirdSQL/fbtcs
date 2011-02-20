@@ -71,14 +71,14 @@ vice versa
 
 Use CONNECT or CREATE DATABASE to specify a database
 
-       COUNT 
-============ 
-           0 
+                COUNT 
+===================== 
+                    0 
 
 
-       COUNT 
-============ 
-           7 
+                COUNT 
+===================== 
+                    7 
 
 Use CONNECT or CREATE DATABASE to specify a database
 

@@ -20,6 +20,10 @@ select substring('abc123abc456' similar '\"%\"abc%7' escape '\') from rdb$databa
 
 select substring(str similar pattern escape '\'), expected from tests;
 
+select substring('asds 12.34 asd' similar '% \"[\+\-]?[0-9]*([0-9].|.[0-9])?[0-9]*\" %' escape '\') from rdb$database;
+select substring('asd 5 s 1234 a 12 sd' similar '% \"[\+\-]?[0-9]*\" %' escape '\') from rdb$database;
+select substring('a 1 b' similar '%#"[0-9]*#" %' escape '#') from rdb$database;
+
 ---
 
 exit;

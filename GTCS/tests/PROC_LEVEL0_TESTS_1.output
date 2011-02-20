@@ -14,6 +14,7 @@ end
 go
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
+-CREATE PROCEDURE ABC failed
 -Procedure ABC already exists
 After line 10 in file proc_level0_tests1.sql
 

@@ -42,6 +42,25 @@ abc123               abc123
 <null>               <null>               
 
 
+select substring('asds 12.34 asd' similar '% \"[\+\-]?[0-9]*([0-9].|.[0-9])?[0-9]*\" %' escape '\') from rdb$database;
+
+SUBSTRING      
+============== 
+12.34          
+
+select substring('asd 5 s 1234 a 12 sd' similar '% \"[\+\-]?[0-9]*\" %' escape '\') from rdb$database;
+
+SUBSTRING            
+==================== 
+5                    
+
+select substring('a 1 b' similar '%#"[0-9]*#" %' escape '#') from rdb$database;
+
+SUBSTRING 
+========= 
+          
+
+
 ---
 
 exit;

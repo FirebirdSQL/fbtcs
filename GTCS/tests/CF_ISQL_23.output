@@ -6,9 +6,9 @@ execute procedure GROUP_COPY( 1 , 2 );
 commit;
 select count(*) from test;
 
-       COUNT 
-============ 
-        6000 
+                COUNT 
+===================== 
+                 6000 
 
 select * from groups;
 
