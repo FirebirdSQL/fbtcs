@@ -6,4 +6,4 @@ Use CONNECT or CREATE DATABASE to specify a database
 A                               INTEGER Nullable 
 View Source:
 ==== ======
- SELECT * FROM T WHERE a > 1
+SELECT * FROM T WHERE a > 1

@@ -19,7 +19,7 @@ show view v;
 A                               INTEGER Nullable 
 View Source:
 ==== ======
- select a from t
+select a from t
 show view t;
 There is no view T in this database
 
@@ -35,4 +35,4 @@ CREATE TABLE T (A INTEGER);
 
 /* View: V, Owner: SYSDBA */
 CREATE VIEW V (A) AS
- select a from t;
+select a from t;

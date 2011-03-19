@@ -8,7 +8,7 @@ Test:
         DESC              text, length 100
 
     Relation VMB1 is a view defined as:
-	 SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
+	SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
     Security class SQL$7
 
 Test:
