@@ -1,0 +1,397 @@
+
+>> er43_tran.cpp
+/*
+ *	Writabe GTT in read-only transactions.
+ *
+ *  Test name: er43_tran.cpp
+ *  Created by: Vlad Horsun, Alex Peshkoff
+ *  Date created: March 2011
+ */
+
+#include "WHERE_FILES:isc_test.h"
+
+#include <memory.h>
+#include <stdio.h>
+
+#include "iberror.h"
+
+#ifndef MSCVER
+#define sprintf_s snprintf
+#define strcpy_s(to, size, from) strncpy(to, from, size)
+#define strcat_s(to, size, from) strncat(to, from, size)
+#endif
+
+const char dbFileName[] = "WHERE_GDB:txtest.fdb";
+
+const ISC_SCHAR dpbRO[] = {
+	isc_dpb_version1,
+	isc_dpb_set_db_readonly, 1, 1
+};
+
+const ISC_SCHAR tpbDLL[] = {
+	isc_tpb_version3,
+	isc_tpb_write,
+	isc_tpb_nowait,
+	isc_tpb_concurrency
+};
+
+const char *sqlDDL[] = {
+	"CREATE TABLE T1 (ID INT)",
+	"CREATE UNIQUE INDEX T1_UQ ON T1 (ID)",
+
+	"CREATE GLOBAL TEMPORARY TABLE T2 (ID INT) ON COMMIT PRESERVE ROWS",
+	"CREATE UNIQUE INDEX T2_UQ ON T2 (ID)",
+
+	"CREATE GLOBAL TEMPORARY TABLE T3 (ID INT) ON COMMIT DELETE ROWS",
+	"CREATE UNIQUE INDEX T3_UQ ON T3 (ID)"
+};
+const int cntDDL = sizeof(sqlDDL)/sizeof(sqlDDL[0]);
+
+
+const char *txKinds[] = {
+	"SET TRANSACTION READ COMMITTED RECORD_VERSION NO WAIT",
+//	"SET TRANSACTION READ COMMITTED NO RECORD_VERSION NO WAIT",
+	"SET TRANSACTION SNAPSHOT NO WAIT"
+};
+const int txKindsCnt = sizeof(txKinds)/sizeof(txKinds[0]);
+
+enum TabScope {tabPersistent, tabGttPreserve, tabGttDelete};
+int cntErrors = 0;
+
+
+ISC_STATUS checkStatus(const ISC_STATUS* status, bool print = true);
+void checkStatusAndExit(const ISC_STATUS* status, bool print = true);
+
+ISC_STATUS execDDL(ISC_STATUS* status, isc_db_handle &hDB, int cnt, const char** stmts);
+void runTest(const char* tabName, TabScope tabScope, isc_db_handle &hDB1, const char *tx1, isc_db_handle &hDB2, const char *tx2);
+void runSeries(isc_db_handle &hDB1);
+
+class AttachHolder
+{
+public:
+	AttachHolder(const char* dbFileName, int dpbLen, const ISC_SCHAR* dpb) :
+	  m_DB(0)
+	{
+		ISC_STATUS_ARRAY status;
+		if (isc_attach_database(status, 0, dbFileName, &m_DB, dpbLen, dpb))
+			checkStatus(status);
+	}
+
+	~AttachHolder()
+	{
+		ISC_STATUS_ARRAY status;
+		if (m_DB && isc_detach_database(status, &m_DB))
+			checkStatus(status);
+	}
+
+	operator isc_db_handle& ()
+	{
+		return m_DB;
+	}
+
+private:
+	isc_db_handle m_DB;
+};
+
+int main()
+{
+	ISC_STATUS_ARRAY status;
+
+	isc_db_handle hDB = 0;
+
+	if (!isc_attach_database(status, sizeof(dbFileName), dbFileName, &hDB, 0, NULL))
+		isc_drop_database(status, &hDB);
+
+	if (isc_create_database(status, sizeof(dbFileName), dbFileName, &hDB, 0, NULL, 0))
+		checkStatusAndExit(status); 
+
+	if (execDDL(status, hDB, cntDDL, sqlDDL))
+		checkStatusAndExit(status); 
+
+/*	uncomment to test on read-only database
+	{
+		isc_tr_handle tx = 0;
+		isc_start_transaction(status, &tx, 1, &hDB, 0, 0);
+		isc_commit_transaction(status, &tx);
+
+		isc_detach_database(status, &hDB);
+		if (isc_attach_database(status, sizeof(dbFileName), dbFileName, &hDB, sizeof(dpbRO), dpbRO))
+			checkStatusAndExit(status);
+	}
+*/
+	runSeries(hDB);
+
+	if (isc_drop_database(status, &hDB))
+		checkStatusAndExit(status);
+
+	printf("\n\nFinished ER43_TRAN: TOTAL ERRORS: %d\n", cntErrors);
+	return 0;
+}
+
+
+ISC_STATUS checkStatus(const ISC_STATUS* status, bool print)
+{
+	if (print && status[1])
+	{
+		char buff[1024];
+		const ISC_STATUS *ptr = status;
+		while (fb_interpret(buff, sizeof(buff), &ptr))
+		{
+			printf("\n\t%s", buff);
+		}
+		printf("\n");
+	}
+
+	return status[1];
+}
+
+void checkStatusAndExit(const ISC_STATUS* status, bool print)
+{
+	if (checkStatus(status, print))
+		exit(status[1]);
+}
+
+ISC_STATUS execDDL(ISC_STATUS* status, isc_db_handle &hDB, int cnt, const char** stmts)
+{
+	isc_tr_handle hTx = 0;
+	if (isc_start_transaction(status, &hTx, 1, &hDB, sizeof(tpbDLL), tpbDLL))
+		return checkStatus(status);
+
+	const char **stmt = stmts, **end = stmts + cnt;
+	for (; stmt < end; stmt++)
+	{
+		printf("\nDDL: %s", *stmt);
+		if (isc_dsql_execute_immediate(status, &hDB, &hTx, 0, *stmt, SQL_DIALECT_V6, NULL))
+			break;
+	}
+
+	if (!checkStatus(status))
+	{
+		printf("\nDDL: COMMIT");
+		isc_commit_transaction(status, &hTx);
+	}
+
+	if (checkStatus(status))
+	{
+		ISC_STATUS_ARRAY local;
+		printf("\nDDL: ROLLBACK");
+		if (isc_rollback_transaction(local, &hTx))
+			checkStatus(local);
+	}
+
+	return status[1];
+}
+
+void runTest(const char* tabName, TabScope tabScope, isc_db_handle &hDB1, const char *tx1, isc_db_handle &hDB2, const char *tx2)
+{
+	bool tx1_is_RC = strstr(tx1, "READ COMMITTED");
+	bool ok;
+
+	const int STMT_SIZE = 255;
+	char stmt[STMT_SIZE];
+	
+	ISC_STATUS_ARRAY status;
+	
+	isc_tr_handle hTx1 = 0;
+	printf("\ntx1: %s", tx1);
+	if (isc_dsql_execute_immediate(status, &hDB1, &hTx1, 0, tx1, SQL_DIALECT_V6, 0))
+		checkStatus(status);
+
+	sprintf_s(stmt, STMT_SIZE, "INSERT INTO %s VALUES (1)", tabName);
+	printf("\ntx1: %s", stmt);
+	if (isc_dsql_execute_immediate(status, &hDB1, &hTx1, 0, stmt, SQL_DIALECT_V6, 0))
+		checkStatus(status);
+
+	const bool roDb = (status[1] == isc_read_only_database);
+
+	isc_tr_handle hTx2 = 0;
+	printf("\ntx2: %s", tx2);
+	if (isc_dsql_execute_immediate(status, &hDB2, &hTx2, 0, tx2, SQL_DIALECT_V6, 0))
+		checkStatus(status);
+
+	sprintf_s(stmt, STMT_SIZE, "INSERT INTO %s VALUES (1)", tabName);
+	printf("\ntx2: %s", stmt);
+	if (isc_dsql_execute_immediate(status, &hDB2, &hTx2, 0, stmt, SQL_DIALECT_V6, 0))
+		checkStatus(status);
+
+	switch (tabScope)
+	{
+	case tabPersistent:
+		ok = (status[1] == isc_read_only_database || status[1] == isc_no_dup);	
+		break;
+	case tabGttPreserve:
+		ok = (status[1] == isc_no_dup) && (hDB1 == hDB2) || (status[1] == 0) && (hDB1 != hDB2); 
+		break;
+	case tabGttDelete:
+		ok = (status[1] == 0);
+		break;
+	};
+	if (!ok) cntErrors++;
+	printf("%s", ok ? "" : "\n^^^ FAIL !!!");
+
+	sprintf_s(stmt, STMT_SIZE, "INSERT INTO %s VALUES (2)", tabName);
+	printf("\ntx2: %s", stmt);
+	if (isc_dsql_execute_immediate(status, &hDB2, &hTx2, 0, stmt, SQL_DIALECT_V6, 0))
+		checkStatus(status);
+
+	char buff[XSQLDA_LENGTH(3)];
+	memset(buff, 0, sizeof(buff));
+
+	XSQLDA *xsqlda = (XSQLDA*)buff;
+	xsqlda->sqln = 3;
+	xsqlda->version = 1;
+
+	int retVal;
+	short retNull;
+	xsqlda->sqld = 1;
+	xsqlda->sqlvar[0].sqltype	= (SQL_LONG | 1);
+	xsqlda->sqlvar[0].sqldata	= (char*) &retVal;
+	xsqlda->sqlvar[0].sqllen	= sizeof(retVal);
+	xsqlda->sqlvar[0].sqlind	= &retNull;
+
+	sprintf_s(stmt, STMT_SIZE, "SELECT COUNT(*) FROM %s", tabName);
+	printf("\ntx1: %s", stmt);
+	if (isc_dsql_exec_immed2(status, &hDB1, &hTx1, 0, stmt, SQL_DIALECT_V6, 0, xsqlda))
+		checkStatus(status);
+	else
+		printf("\ntx1: count = %d", retVal);
+	
+	ok = (retVal == 0) && roDb && (tabScope == tabPersistent) || (retVal == 1) && ((tabScope != tabPersistent) || !roDb);
+	if (!ok) cntErrors++;
+	printf("%s", ok ? "" : "\n^^^ FAIL !!!");
+
+	sprintf_s(stmt, STMT_SIZE, "SELECT COUNT(*) FROM %s", tabName);
+	printf("\ntx2: %s", stmt);
+	if (isc_dsql_exec_immed2(status, &hDB2, &hTx2, 0, stmt, SQL_DIALECT_V6, 0, xsqlda))
+		checkStatus(status);
+	else
+		printf("\ntx2: count = %d", retVal);
+
+	switch (tabScope)
+	{
+	case tabPersistent:
+		ok = (retVal == 0) && roDb || !roDb && (retVal == 1);
+		break;
+	case tabGttPreserve:
+		ok = (retVal == 1) && (hDB1 == hDB2) || (retVal == 2) && (hDB1 != hDB2); 
+		break;
+	case tabGttDelete:
+		ok = (retVal == 2);
+		break;
+	};
+	if (!ok) cntErrors++;
+	printf("%s", ok ? "" : "\n^^^ FAIL !!!");
+
+	printf("\ntx2: COMMIT");
+	if (isc_commit_transaction(status, &hTx2))
+		checkStatus(status);
+
+	sprintf_s(stmt, STMT_SIZE, "SELECT COUNT(*) FROM %s", tabName);
+	printf("\ntx1: %s", stmt);
+	if (isc_dsql_exec_immed2(status, &hDB1, &hTx1, 0, stmt, SQL_DIALECT_V6, 0, xsqlda))
+		checkStatus(status);
+	else
+		printf("\ntx1: count = %d", retVal);
+
+	switch (tabScope)
+	{
+	case tabPersistent:
+		ok = (retVal == 0) && roDb || !roDb && ((retVal == 1) && !tx1_is_RC || (retVal == 2) && tx1_is_RC);
+		break;
+	case tabGttPreserve:
+		ok = (retVal == 2) && (hDB1 == hDB2) && (tx1_is_RC) || (retVal == 1) && ((hDB1 != hDB2) || !tx1_is_RC); 
+		break;
+	case tabGttDelete:
+		ok = (retVal == 1);
+		break;
+	};
+	if (!ok) cntErrors++;
+	printf("%s", ok ? "" : "\n^^^ FAIL !!!");
+
+	printf("\ntx1: COMMIT");
+	if (isc_commit_transaction(status, &hTx1))
+		checkStatus(status);
+
+
+	printf("\ntx3: %s", tx1);
+	if (isc_dsql_execute_immediate(status, &hDB1, &hTx1, 0, tx1, SQL_DIALECT_V6, 0))
+		checkStatus(status);
+
+	sprintf_s(stmt, STMT_SIZE, "SELECT COUNT(*) FROM %s", tabName);
+	printf("\ntx3: %s", stmt);
+	if (isc_dsql_exec_immed2(status, &hDB1, &hTx1, 0, stmt, SQL_DIALECT_V6, 0, xsqlda))
+		checkStatus(status);
+	else
+		printf("\ntx3: count = %d", retVal);
+
+	switch (tabScope)
+	{
+	case tabPersistent:
+		ok = (retVal == 0) && roDb || (retVal == 2) && !roDb;
+		break;
+	case tabGttPreserve:
+		ok = (retVal == 2) && (hDB1 == hDB2) || (retVal == 1) && (hDB1 != hDB2); 
+		break;
+	case tabGttDelete:
+		ok = (retVal == 0);
+		break;
+	};
+	if (!ok) cntErrors++;
+	printf("%s", ok ? "" : "\n^^^ FAIL !!!");
+
+	sprintf_s(stmt, STMT_SIZE, "DELETE FROM %s", tabName);
+	printf("\ntx3: %s", stmt);
+	if (isc_dsql_execute_immediate(status, &hDB1, &hTx1, 0, stmt, SQL_DIALECT_V6, 0))
+		checkStatus(status);
+
+	printf("\ntx3: COMMIT");
+	if (isc_commit_transaction(status, &hTx1))
+		checkStatus(status);	
+}
+
+void runSeries(isc_db_handle &hDB)
+{
+	const char** lastTx = txKinds + txKindsCnt;
+
+	for (const char** tx1 = txKinds; tx1 < lastTx; tx1++)
+		for (const char** tx2 = txKinds; tx2 < lastTx; tx2++)
+		{
+			char tx1_ro[128], tx2_ro[128];
+			strcpy_s(tx1_ro, 128, *tx1); strcat_s(tx1_ro, 128, " READ ONLY");
+			strcpy_s(tx2_ro, 128, *tx2); strcat_s(tx2_ro, 128, " READ ONLY");
+
+			printf("\n---- One attachment, PERSISTENT ----\n");
+			runTest("T1", tabPersistent, hDB, *tx1, hDB, *tx2);
+			printf("\n----\n\n");
+
+			printf("\n---- One attachment, GTT + PRESERVE ----\n");
+			runTest("T2", tabGttPreserve, hDB, tx1_ro, hDB, tx2_ro);
+			printf("\n----\n\n");
+
+			printf("\n---- One attachment, GTT + DELETE ----\n");
+			runTest("T3", tabGttDelete, hDB, tx1_ro, hDB, tx2_ro);
+			printf("\n----\n\n");
+
+
+			AttachHolder hDB2(dbFileName, 0, NULL);
+
+			printf("\n---- Two attachments, PERSISTENT ----\n");
+			runTest("T1", tabPersistent, hDB, *tx1, hDB, *tx2);
+			printf("\n----\n\n");
+
+			printf("\n---- Two attachments, GTT + PRESERVE ----\n");
+			runTest("T2", tabGttPreserve, hDB, tx1_ro, hDB2, tx2_ro);
+			printf("\n----\n\n");
+
+			printf("\n---- Two attachments, GTT + DELETE ----\n");
+			runTest("T3", tabGttDelete, hDB, tx1_ro, hDB2, tx2_ro);
+			printf("\n----\n\n");
+
+			printf("\n");
+		}
+}
+
+$ CXX FLAG_CXX er43_tran.cpp
+$ LINK FLAG_LINK er43_tran
+$ RUN er43_tran
+$ DELETE er43_tran*
