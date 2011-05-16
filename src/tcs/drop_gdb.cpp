@@ -223,8 +223,8 @@ const char* VERSION_STRING	= "version \"%[A-Z]-%c%c.%c";
 const int VERSION_MAJOR		= 1;
 const int VERSION_MINOR		= 2;
 
-	char ch[6],
-	*ptr;
+	char ch[6];
+	const char* ptr;
 	int  tmp;
 
 	/* if verbose, print all the version info */
