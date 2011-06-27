@@ -491,5 +491,6 @@ gbak:    activating and creating deferred index RDB$FOREIGN23
 gbak:    activating and creating deferred index RDB$FOREIGN25 
 gbak:    activating and creating deferred index RDB$FOREIGN26 
 gbak:committing metadata 
+gbak:fixing system generators 
 gbak:finishing, closing, and going home 
 Output completed
