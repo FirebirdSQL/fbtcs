@@ -94,90 +94,90 @@ gbak:    writing table COUNTRY
 gbak:         writing column CURRENCY 
 gbak:         writing column COUNTRY 
 gbak:    writing table JOB 
-gbak:         writing column MIN_SALARY 
-gbak:         writing column MAX_SALARY 
 gbak:         writing column JOB_REQUIREMENT 
+gbak:         writing column MAX_SALARY 
+gbak:         writing column MIN_SALARY 
 gbak:         writing column JOB_GRADE 
-gbak:         writing column JOB_CODE 
-gbak:         writing column JOB_COUNTRY 
-gbak:         writing column JOB_TITLE 
 gbak:         writing column LANGUAGE_REQ 
+gbak:         writing column JOB_TITLE 
+gbak:         writing column JOB_COUNTRY 
+gbak:         writing column JOB_CODE 
 gbak:    writing table DEPARTMENT 
 gbak:         writing column BUDGET 
+gbak:         writing column PHONE_NO 
 gbak:         writing column MNGR_NO 
-gbak:         writing column PHONE_NO 
-gbak:         writing column DEPT_NO 
-gbak:         writing column DEPARTMENT 
+gbak:         writing column LOCATION 
 gbak:         writing column HEAD_DEPT 
-gbak:         writing column LOCATION 
-gbak:    writing table EMPLOYEE 
-gbak:         writing column HIRE_DATE 
-gbak:         writing column SALARY 
-gbak:         writing column EMP_NO 
-gbak:         writing column LAST_NAME 
-gbak:         writing column PHONE_EXT 
-gbak:         writing column JOB_GRADE 
-gbak:         writing column FIRST_NAME 
+gbak:         writing column DEPARTMENT 
 gbak:         writing column DEPT_NO 
-gbak:         writing column JOB_CODE 
-gbak:         writing column JOB_COUNTRY 
-gbak:         writing column FULL_NAME 
-gbak:    writing view PHONE_LIST 
-gbak:         writing column EMP_NO 
-gbak:         writing column LAST_NAME 
+gbak:    writing table EMPLOYEE 
+gbak:         writing column SALARY 
+gbak:         writing column HIRE_DATE 
+gbak:         writing column JOB_GRADE 
 gbak:         writing column PHONE_EXT 
-gbak:         writing column PHONE_NO 
+gbak:         writing column LAST_NAME 
+gbak:         writing column EMP_NO 
+gbak:         writing column FULL_NAME 
+gbak:         writing column JOB_COUNTRY 
+gbak:         writing column JOB_CODE 
+gbak:         writing column DEPT_NO 
 gbak:         writing column FIRST_NAME 
+gbak:    writing view PHONE_LIST 
+gbak:         writing column PHONE_NO 
+gbak:         writing column PHONE_EXT 
+gbak:         writing column LAST_NAME 
+gbak:         writing column EMP_NO 
 gbak:         writing column LOCATION 
+gbak:         writing column FIRST_NAME 
 gbak:    writing table PROJECT 
 gbak:         writing column PROJ_DESC 
-gbak:         writing column PROJ_NAME 
-gbak:         writing column TEAM_LEADER 
 gbak:         writing column PRODUCT 
+gbak:         writing column TEAM_LEADER 
+gbak:         writing column PROJ_NAME 
 gbak:         writing column PROJ_ID 
 gbak:    writing table CUSTOMER 
-gbak:         writing column ADDRESS_LINE1 
 gbak:         writing column ADDRESS_LINE2 
+gbak:         writing column ADDRESS_LINE1 
 gbak:         writing column CUST_NO 
-gbak:         writing column CONTACT_LAST 
-gbak:         writing column PHONE_NO 
 gbak:         writing column POSTAL_CODE 
-gbak:         writing column CUSTOMER 
-gbak:         writing column CONTACT_FIRST 
-gbak:         writing column CITY 
-gbak:         writing column STATE_PROVINCE 
-gbak:         writing column COUNTRY 
+gbak:         writing column PHONE_NO 
+gbak:         writing column CONTACT_LAST 
 gbak:         writing column ON_HOLD 
+gbak:         writing column COUNTRY 
+gbak:         writing column STATE_PROVINCE 
+gbak:         writing column CITY 
+gbak:         writing column CONTACT_FIRST 
+gbak:         writing column CUSTOMER 
 gbak:    writing table SALES 
-gbak:         writing column PO_NUMBER 
-gbak:         writing column ORDER_DATE 
-gbak:         writing column SHIP_DATE 
-gbak:         writing column DATE_NEEDED 
 gbak:         writing column AGED 
-gbak:         writing column CUST_NO 
-gbak:         writing column QTY_ORDERED 
-gbak:         writing column TOTAL_VALUE 
+gbak:         writing column DATE_NEEDED 
+gbak:         writing column SHIP_DATE 
+gbak:         writing column ORDER_DATE 
+gbak:         writing column PO_NUMBER 
 gbak:         writing column DISCOUNT 
-gbak:         writing column SALES_REP 
+gbak:         writing column TOTAL_VALUE 
+gbak:         writing column QTY_ORDERED 
+gbak:         writing column CUST_NO 
 gbak:         writing column ITEM_TYPE 
-gbak:         writing column ORDER_STATUS 
+gbak:         writing column SALES_REP 
 gbak:         writing column PAID 
+gbak:         writing column ORDER_STATUS 
 gbak:    writing table EMPLOYEE_PROJECT 
 gbak:         writing column EMP_NO 
 gbak:         writing column PROJ_ID 
 gbak:    writing table PROJ_DEPT_BUDGET 
 gbak:         writing column PROJECTED_BUDGET 
-gbak:         writing column FISCAL_YEAR 
 gbak:         writing column QUART_HEAD_CNT 
-gbak:         writing column PROJ_ID 
+gbak:         writing column FISCAL_YEAR 
 gbak:         writing column DEPT_NO 
+gbak:         writing column PROJ_ID 
 gbak:    writing table SALARY_HISTORY 
-gbak:         writing column CHANGE_DATE 
-gbak:         writing column OLD_SALARY 
-gbak:         writing column PERCENT_CHANGE 
 gbak:         writing column NEW_SALARY 
-gbak:         writing column EMP_NO 
+gbak:         writing column PERCENT_CHANGE 
+gbak:         writing column OLD_SALARY 
+gbak:         writing column CHANGE_DATE 
 gbak:         writing column UPDATER_ID 
+gbak:         writing column EMP_NO 
 gbak:writing types 
 gbak:writing filters 
 gbak:writing id generators 
@@ -492,6 +492,7 @@ gbak:writing constraint INTEG_14
 gbak:writing constraint INTEG_15 
 gbak:writing constraint INTEG_16 
 gbak:writing constraint INTEG_17 
+gbak:writing constraint INTEG_31 
 gbak:writing constraint INTEG_18 
 gbak:writing constraint INTEG_19 
 gbak:writing constraint INTEG_20 
@@ -505,32 +506,11 @@ gbak:writing constraint INTEG_27
 gbak:writing constraint INTEG_28 
 gbak:writing constraint INTEG_29 
 gbak:writing constraint INTEG_30 
-gbak:writing constraint INTEG_31 
 gbak:writing constraint INTEG_32 
 gbak:writing constraint INTEG_33 
 gbak:writing constraint INTEG_34 
 gbak:writing constraint INTEG_35 
 gbak:writing constraint INTEG_36 
-gbak:writing constraint INTEG_37 
-gbak:writing constraint INTEG_38 
-gbak:writing constraint INTEG_39 
-gbak:writing constraint INTEG_40 
-gbak:writing constraint INTEG_41 
-gbak:writing constraint INTEG_42 
-gbak:writing constraint INTEG_43 
-gbak:writing constraint INTEG_44 
-gbak:writing constraint INTEG_45 
-gbak:writing constraint INTEG_46 
-gbak:writing constraint INTEG_47 
-gbak:writing constraint INTEG_48 
-gbak:writing constraint INTEG_49 
-gbak:writing constraint INTEG_50 
-gbak:writing constraint INTEG_51 
-gbak:writing constraint INTEG_52 
-gbak:writing constraint INTEG_53 
-gbak:writing constraint INTEG_54 
-gbak:writing constraint INTEG_55 
-gbak:writing constraint INTEG_56 
 gbak:writing constraint INTEG_57 
 gbak:writing constraint INTEG_58 
 gbak:writing constraint INTEG_59 
@@ -555,6 +535,26 @@ gbak:writing constraint INTEG_77
 gbak:writing constraint INTEG_78 
 gbak:writing constraint INTEG_79 
 gbak:writing constraint INTEG_80 
+gbak:writing constraint INTEG_37 
+gbak:writing constraint INTEG_38 
+gbak:writing constraint INTEG_39 
+gbak:writing constraint INTEG_40 
+gbak:writing constraint INTEG_41 
+gbak:writing constraint INTEG_42 
+gbak:writing constraint INTEG_43 
+gbak:writing constraint INTEG_44 
+gbak:writing constraint INTEG_45 
+gbak:writing constraint INTEG_46 
+gbak:writing constraint INTEG_47 
+gbak:writing constraint INTEG_48 
+gbak:writing constraint INTEG_49 
+gbak:writing constraint INTEG_50 
+gbak:writing constraint INTEG_51 
+gbak:writing constraint INTEG_52 
+gbak:writing constraint INTEG_53 
+gbak:writing constraint INTEG_54 
+gbak:writing constraint INTEG_55 
+gbak:writing constraint INTEG_56 
 gbak:writing referential constraints 
 gbak:writing check constraints 
 gbak:writing SQL roles 
