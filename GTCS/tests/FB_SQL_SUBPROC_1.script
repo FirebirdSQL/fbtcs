@@ -1,0 +1,257 @@
+>> fb_sql_subproc_1.sql
+set names iso8859_1;
+create database "WHERE_GDB:subproc.fdb" USER 'qa_user1' PASSWORD 'qa_user1';
+
+set term !;
+
+---
+
+create procedure p1 returns (o1 integer)
+as
+	declare procedure sub1 returns (o1 integer)
+	as
+	begin
+		o1 = 1;
+		suspend;
+		o1 = 2;
+		suspend;
+		o1 = 3;
+		suspend;
+	end
+begin
+	execute procedure sub1 returning_values o1;
+	suspend;
+
+	for select o1 from sub1 into o1 do
+		suspend;
+end!
+
+select * from p1!
+
+---
+
+execute block returns (o1 integer)
+as
+	declare procedure sub1 returns (o1 integer)
+	as
+	begin
+		o1 = 1;
+		suspend;
+		o1 = 2;
+		suspend;
+		o1 = 3;
+		suspend;
+	end
+begin
+	execute procedure sub1 returning_values o1;
+	suspend;
+
+	for select o1 from sub1 x into o1 do
+		suspend;
+end!
+
+---
+
+create function f1 returns integer
+as
+	declare procedure sub1 returns (o1 integer)
+	as
+	begin
+		o1 = 1;
+		suspend;
+		o1 = 2;
+		suspend;
+		o1 = 3;
+		suspend;
+	end
+
+	declare o1 integer = 0;
+	declare v integer;
+begin
+	for select o1 from sub1 into v do
+		o1 = o1 + v;
+
+	return o1;
+end!
+
+select f1() from rdb$database!
+
+---
+
+execute block returns (o1 integer)
+as
+	declare procedure sub1 (i1 integer, i2 integer = 2) returns (o1 integer)
+	as
+	begin
+		o1 = i2;
+	end
+begin
+	execute procedure sub1 (0, 1) returning_values o1;
+	suspend;
+
+	execute procedure sub1 (0) returning_values o1;
+	suspend;
+end!
+
+---
+
+create procedure p2 (i1 integer) returns ("ó1" integer)
+as
+	declare procedure "súb1" (i1 integer) returns ("ó1" integer not null)
+	as
+	begin
+		"ó1" = i1;
+	end
+begin
+	execute procedure "súb1" (i1) returning_values "ó1";
+end!
+
+grant execute on procedure p2 to user qa_user2!
+
+execute procedure p2 (1)!
+execute procedure p2 (null)!
+
+---
+
+execute block returns (o1 integer)
+as
+	declare procedure sub1 (x integer) returns (x integer)
+	as
+	begin
+	end
+begin
+end!
+
+---
+
+execute block returns (o1 integer)
+as
+	declare procedure sub1
+	as
+	begin
+	end
+
+	declare procedure sub1
+	as
+	begin
+	end
+begin
+end!
+
+---
+
+execute block returns (o1 integer)
+as
+	declare procedure sub1
+	as
+		declare procedure sub11
+		as
+		begin
+		end
+	begin
+	end
+begin
+end!
+
+---
+
+create domain d1 integer!
+create domain d2 integer!
+create domain d3 integer!
+
+create table t1 (x1 d3)!
+
+create procedure p3
+as
+	declare procedure sub1 returns (o1 d1)
+	as
+		declare x1 d2;
+		declare x2 type of column t1.x1;
+	begin
+		execute procedure p1 returning_values o1;
+		suspend;
+	end
+
+	declare v integer;
+begin
+	execute procedure sub1 returning_values v;
+	select o1 from sub1 into v;
+end!
+
+commit!
+
+select *
+	from rdb$dependencies
+	where rdb$dependent_name = 'P3'
+	order by rdb$dependent_name, rdb$depended_on_name, rdb$field_name!
+
+---
+
+grant select on table t1 to user qa_user2!
+
+create procedure p4
+as
+	declare procedure sub1
+	as
+	begin
+		insert into t1 values (2);
+	end
+begin
+	insert into t1 values (1);
+	execute procedure sub1;
+end!
+
+grant all on table t1 to procedure p4!
+grant execute on procedure p4 to user qa_user2!
+
+create procedure p5
+as
+	declare procedure sub1
+	as
+	begin
+		update t1 set x1 = x1 * 10;
+	end
+begin
+	execute procedure sub1;
+end!
+
+grant execute on procedure p5 to user qa_user2!
+
+commit!
+set names utf8!
+connect "WHERE_GDB:subproc.fdb" USER 'qa_user2' PASSWORD 'qa_user2'!
+
+execute procedure p4!
+select * from t1 order by x1!
+
+execute procedure p5!
+select * from t1 order by x1!
+
+execute block
+as
+	declare procedure sub1
+	as
+	begin
+		update t1 set x1 = x1 * 10;
+	end
+begin
+	execute procedure sub1;
+end!
+
+---
+
+execute procedure p2 (1)!
+execute procedure p2 (null)!
+
+---
+
+set blob all!
+select rdb$procedure_blr from rdb$procedures where rdb$procedure_name = 'P1'!
+
+---
+
+exit!
+
+$ DROP WHERE_GDB:subproc.fdb
+$ ISQL -q -m -e -i fb_sql_subproc_1.sql
+$ DELETE fb_sql_subproc_1*
