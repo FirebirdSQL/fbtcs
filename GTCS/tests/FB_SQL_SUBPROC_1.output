@@ -1,5 +1,5 @@
 set names iso8859_1;
-create database "localhost:/home/asfernandes/fb/test/fbtcs/temp/subproc.fdb" USER 'qa_user1' PASSWORD 'qa_user1';
+create database "WHERE_GDB:subproc.fdb" USER 'qa_user1' PASSWORD 'qa_user1';
 
 set term !;
 
@@ -274,7 +274,7 @@ grant execute on procedure p5 to user qa_user2!
 
 commit!
 set names utf8!
-connect "localhost:/home/asfernandes/fb/test/fbtcs/temp/subproc.fdb" USER 'qa_user2' PASSWORD 'qa_user2'!
+connect "WHERE_GDB:subproc.fdb" USER 'qa_user2' PASSWORD 'qa_user2'!
 
 execute procedure p4!
 select * from t1 order by x1!

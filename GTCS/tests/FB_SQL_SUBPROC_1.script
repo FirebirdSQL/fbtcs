@@ -252,6 +252,6 @@ select rdb$procedure_blr from rdb$procedures where rdb$procedure_name = 'P1'!
 
 exit!
 
-$ DROP WHERE_GDB:subproc.fdb
 $ ISQL -q -m -e -i fb_sql_subproc_1.sql
 $ DELETE fb_sql_subproc_1*
+$ DROP WHERE_GDB:subproc.fdb
