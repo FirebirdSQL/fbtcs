@@ -1,0 +1,203 @@
+>> fb_sql_subfunc_1.sql
+set names iso8859_1;
+create database "WHERE_GDB:subfunc.fdb" USER 'qa_user1' PASSWORD 'qa_user1';
+
+set term !;
+
+---
+
+create procedure p1 returns (o1 integer)
+as
+	declare function sub1 returns integer
+	as
+	begin
+		return 1;
+	end
+begin
+	o1 = sub1();
+	suspend;
+end!
+
+select * from p1!
+
+---
+
+create function f1 returns integer
+as
+	declare function sub1 returns integer
+	as
+	begin
+		return 1;
+	end
+begin
+	return sub1();
+end!
+
+select f1() from rdb$database!
+
+---
+
+execute block returns (o1 integer)
+as
+	declare function sub1 (i1 integer, i2 integer = 2) returns integer
+	as
+	begin
+		return i2;
+	end
+begin
+	o1 = sub1(0, 1);
+	suspend;
+
+	o1 = sub1(0);
+	suspend;
+end!
+
+---
+
+create function f2 (i1 integer) returns integer
+as
+	declare function "súb1" ("í1" integer) returns integer not null
+	as
+	begin
+		return "í1";
+	end
+begin
+	return "súb1"(i1);
+end!
+
+grant execute on function f2 to user qa_user2!
+
+select f2(1) from rdb$database!
+select f2(null) from rdb$database!
+
+---
+
+execute block returns (o1 integer)
+as
+	declare function sub1 returns integer
+	as
+	begin
+	end
+
+	declare function sub1 returns integer
+	as
+	begin
+	end
+begin
+end!
+
+---
+
+execute block returns (o1 integer)
+as
+	declare function sub1 returns integer
+	as
+		declare function sub11 returns integer
+		as
+		begin
+		end
+	begin
+	end
+begin
+end!
+
+---
+
+create domain d1 integer!
+create domain d2 integer!
+create domain d3 integer!
+
+create table t1 (x1 d3)!
+
+create function f3 returns integer
+as
+	declare function sub1 returns d1
+	as
+		declare x1 d2;
+		declare x2 type of column t1.x1;
+		declare v type of d1;
+	begin
+		execute procedure p1 returning_values v;
+		return v;
+	end
+begin
+	return sub1();
+end!
+
+commit!
+
+select *
+	from rdb$dependencies
+	where rdb$dependent_name = 'F3'
+	order by rdb$dependent_name, rdb$depended_on_name, rdb$field_name!
+
+---
+
+grant select on table t1 to user qa_user2!
+
+create function f4 returns integer
+as
+	declare function sub1 returns integer
+	as
+	begin
+		insert into t1 values (2);
+	end
+begin
+	insert into t1 values (1);
+	return sub1();
+end!
+
+grant all on table t1 to function f4!
+grant execute on function f4 to user qa_user2!
+
+create function f5 returns integer
+as
+	declare function sub1 returns integer
+	as
+	begin
+		update t1 set x1 = x1 * 10;
+	end
+begin
+	return sub1();
+end!
+
+grant execute on function f5 to user qa_user2!
+
+commit!
+set names utf8!
+connect "WHERE_GDB:subfunc.fdb" USER 'qa_user2' PASSWORD 'qa_user2'!
+
+select f4() from rdb$database!
+select * from t1 order by x1!
+
+select f5() from rdb$database!
+select * from t1 order by x1!
+
+execute block
+as
+	declare function sub1 returns integer
+	as
+	begin
+		update t1 set x1 = x1 * 10;
+	end
+begin
+	sub1();
+end!
+
+---
+
+select f2(1) from rdb$database!
+select f2(null) from rdb$database!
+
+---
+
+set blob all!
+select rdb$function_blr from rdb$functions where rdb$function_name = 'F1'!
+
+---
+
+exit!
+
+$ ISQL -q -m -e -i fb_sql_subfunc_1.sql
+$ DELETE fb_sql_subfunc_1*
+$ DROP WHERE_GDB:subfunc.fdb

@@ -1,0 +1,369 @@
+set names iso8859_1;
+create database "WHERE_GDB:subfunc.fdb" USER 'qa_user1' PASSWORD 'qa_user1';
+
+set term !;
+
+---
+
+create procedure p1 returns (o1 integer)
+as
+	declare function sub1 returns integer
+	as
+	begin
+		return 1;
+	end
+begin
+	o1 = sub1();
+	suspend;
+end!
+
+select * from p1!
+
+          O1 
+============ 
+           1 
+
+
+---
+
+create function f1 returns integer
+as
+	declare function sub1 returns integer
+	as
+	begin
+		return 1;
+	end
+begin
+	return sub1();
+end!
+
+select f1() from rdb$database!
+
+          F1 
+============ 
+           1 
+
+
+---
+
+execute block returns (o1 integer)
+as
+	declare function sub1 (i1 integer, i2 integer = 2) returns integer
+	as
+	begin
+		return i2;
+	end
+begin
+	o1 = sub1(0, 1);
+	suspend;
+
+	o1 = sub1(0);
+	suspend;
+end!
+
+          O1 
+============ 
+           1 
+           2 
+
+
+---
+
+create function f2 (i1 integer) returns integer
+as
+	declare function "súb1" ("í1" integer) returns integer not null
+	as
+	begin
+		return "í1";
+	end
+begin
+	return "súb1"(i1);
+end!
+
+grant execute on function f2 to user qa_user2!
+
+select f2(1) from rdb$database!
+
+          F2 
+============ 
+           1 
+
+select f2(null) from rdb$database!
+
+          F2 
+============ 
+Statement failed, SQLSTATE = 42000
+validation error for variable number 1, value "*** null ***"
+-At function 'F2' line: 9, col: 2
+After line 69 in file fb_sql_subfunc_1.sql
+
+---
+
+execute block returns (o1 integer)
+as
+	declare function sub1 returns integer
+	as
+	begin
+	end
+
+	declare function sub1 returns integer
+	as
+	begin
+	end
+begin
+end!
+Statement failed, SQLSTATE = 42000
+duplicate specification of SUB1 - not supported
+After line 70 in file fb_sql_subfunc_1.sql
+
+---
+
+execute block returns (o1 integer)
+as
+	declare function sub1 returns integer
+	as
+		declare function sub11 returns integer
+		as
+		begin
+		end
+	begin
+	end
+begin
+end!
+Statement failed, SQLSTATE = 0A000
+feature is not supported
+-nested sub function
+After line 86 in file fb_sql_subfunc_1.sql
+
+---
+
+create domain d1 integer!
+create domain d2 integer!
+create domain d3 integer!
+
+create table t1 (x1 d3)!
+
+create function f3 returns integer
+as
+	declare function sub1 returns d1
+	as
+		declare x1 d2;
+		declare x2 type of column t1.x1;
+		declare v type of d1;
+	begin
+		execute procedure p1 returning_values v;
+		return v;
+	end
+begin
+	return sub1();
+end!
+
+commit!
+
+select *
+	from rdb$dependencies
+	where rdb$dependent_name = 'F3'
+	order by rdb$dependent_name, rdb$depended_on_name, rdb$field_name!
+
+RDB$DEPENDENT_NAME              RDB$DEPENDED_ON_NAME            RDB$FIELD_NAME                  RDB$DEPENDENT_TYPE RDB$DEPENDED_ON_TYPE RDB$PACKAGE_NAME                
+=============================== =============================== =============================== ================== ==================== =============================== 
+F3                              D1                              <null>                                          15                    9 <null>                          
+F3                              D2                              <null>                                          15                    9 <null>                          
+F3                              P1                              <null>                                          15                    5 <null>                          
+F3                              T1                              X1                                              15                    0 <null>                          
+
+
+---
+
+grant select on table t1 to user qa_user2!
+
+create function f4 returns integer
+as
+	declare function sub1 returns integer
+	as
+	begin
+		insert into t1 values (2);
+	end
+begin
+	insert into t1 values (1);
+	return sub1();
+end!
+
+grant all on table t1 to function f4!
+grant execute on function f4 to user qa_user2!
+
+create function f5 returns integer
+as
+	declare function sub1 returns integer
+	as
+	begin
+		update t1 set x1 = x1 * 10;
+	end
+begin
+	return sub1();
+end!
+
+grant execute on function f5 to user qa_user2!
+
+commit!
+set names utf8!
+connect "WHERE_GDB:subfunc.fdb" USER 'qa_user2' PASSWORD 'qa_user2'!
+
+select f4() from rdb$database!
+
+          F4 
+============ 
+      <null> 
+
+select * from t1 order by x1!
+
+          X1 
+============ 
+           1 
+           2 
+
+
+select f5() from rdb$database!
+Statement failed, SQLSTATE = 28000
+no permission for update/write access to TABLE T1
+After line 170 in file fb_sql_subfunc_1.sql
+select * from t1 order by x1!
+
+          X1 
+============ 
+           1 
+           2 
+
+
+execute block
+as
+	declare function sub1 returns integer
+	as
+	begin
+		update t1 set x1 = x1 * 10;
+	end
+begin
+	sub1();
+end!
+Statement failed, SQLSTATE = 28000
+no permission for update/write access to TABLE T1
+After line 173 in file fb_sql_subfunc_1.sql
+
+---
+
+select f2(1) from rdb$database!
+
+          F2 
+============ 
+           1 
+
+select f2(null) from rdb$database!
+
+          F2 
+============ 
+Statement failed, SQLSTATE = 42000
+validation error for variable number 1, value "*** null ***"
+-At function 'F2' line: 9, col: 2
+After line 188 in file fb_sql_subfunc_1.sql
+
+---
+
+set blob all!
+select rdb$function_blr from rdb$functions where rdb$function_name = 'F1'!
+
+ RDB$FUNCTION_BLR 
+================= 
+             e:f1 
+==============================================================================
+RDB$FUNCTION_BLR:  
+        	blr_version5,
+        	blr_begin,
+        	   blr_message, 1, 3,0,
+        	      blr_long, 0,
+        	      blr_short, 0,
+        	      blr_short, 0,
+        	   blr_begin,
+        	      blr_declare, 0,0, blr_long, 0,
+        	      blr_assignment,
+        	         blr_null,
+        	         blr_variable, 0,0,
+        	      blr_subfunc_decl, 4, 'S','U','B','1',
+        	         0,
+        	         0,
+        	         0,0,
+        	         1,0,
+        	         0,
+        	         0,
+        	         76, 0, 0, 0,
+        	         blr_version5,
+        	         blr_begin,
+        	            blr_message, 1, 3,0,
+        	               blr_long, 0,
+        	               blr_short, 0,
+        	               blr_short, 0,
+        	            blr_begin,
+        	               blr_declare, 0,0, blr_long, 0,
+        	               blr_assignment,
+        	                  blr_null,
+        	                  blr_variable, 0,0,
+        	               blr_stall,
+        	               blr_label, 0,
+        	                  blr_begin,
+        	                     blr_begin,
+        	                        blr_begin,
+        	                           blr_assignment,
+        	                              blr_literal, blr_long, 0, 1,0,0,0,
+        	                              blr_variable, 0,0,
+        	                           blr_send, 1,
+        	                              blr_begin,
+        	                                 blr_assignment,
+        	                                    blr_variable, 0,0,
+        	                                    blr_parameter2, 1, 0,0, 1,0,
+        	                                 blr_end,
+        	                           blr_leave, 0,
+        	                           blr_end,
+        	                        blr_end,
+        	                     blr_end,
+        	               blr_end,
+        	            blr_send, 1,
+        	               blr_begin,
+        	                  blr_assignment,
+        	                     blr_variable, 0,0,
+        	                     blr_parameter2, 1, 0,0, 1,0,
+        	                  blr_end,
+        	            blr_end,
+        	         blr_eoc
+        	      blr_stall,
+        	      blr_label, 0,
+        	         blr_begin,
+        	            blr_begin,
+        	               blr_begin,
+        	                  blr_assignment,
+        	                     blr_subfunc, 4, 'S','U','B','1',0,
+        	                     blr_variable, 0,0,
+        	                  blr_send, 1,
+        	                     blr_begin,
+        	                        blr_assignment,
+        	                           blr_variable, 0,0,
+        	                           blr_parameter2, 1, 0,0, 1,0,
+        	                        blr_end,
+        	                  blr_leave, 0,
+        	                  blr_end,
+        	               blr_end,
+        	            blr_end,
+        	      blr_end,
+        	   blr_send, 1,
+        	      blr_begin,
+        	         blr_assignment,
+        	            blr_variable, 0,0,
+        	            blr_parameter2, 1, 0,0, 1,0,
+        	         blr_end,
+        	   blr_end,
+        	blr_eoc
+
+==============================================================================
+
+
+---
+
+exit!
