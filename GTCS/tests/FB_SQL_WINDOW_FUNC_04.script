@@ -5,6 +5,22 @@ connect "WHERE_GDB:winfunc.fdb";
 
 select
     e.*,
+    first_value(val) over (order by val nulls first, id),
+    first_value(val) over (order by val nulls last, id),
+    first_value(val) over (partition by e.person order by val nulls last, id)
+  from entries e
+  order by id;
+
+select
+    person,
+    sum(val),
+    first_value(sum(val)) over (order by person desc)
+  from entries
+  group by person
+  order by person;
+
+select
+    e.*,
     lag(val) over (order by val nulls first, id),
     lead(val) over (order by val nulls first, id),
     lag(val, 2) over (order by val nulls first, id),
