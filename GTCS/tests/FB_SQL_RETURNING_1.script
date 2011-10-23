@@ -167,6 +167,78 @@ begin
 end!
 
 select * from tab!
+select * from tab2!
+
+---
+
+merge into tab using tab2
+  on tab.n1 = tab2.n1
+  when not matched and tab2.n2 <= 200 then
+    insert values (n1, n2 - 1)
+  when not matched and tab2.n2 <= 500 then
+    insert values (n1, n2 - 2)
+  when not matched then
+    insert values (n1, n2 - 3)
+  when matched and tab.n2 < 1500 then
+    update set n2 = tab2.n2 - 1
+  when matched and tab.n2 < 2500 then
+    delete!
+
+select * from tab!
+
+delete from tab!
+
+merge into tab using (select * from tab2 where n1 = 3) tab2
+  on tab.n1 = tab2.n1
+  when not matched and tab2.n2 <= 200 then
+    insert values (n1, n2 - 1)
+  when not matched and tab2.n2 <= 500 then
+    insert values (n1, n2 - 2)
+  when not matched then
+    insert values (n1, n2 - 3)
+  when matched and tab.n2 < 1500 then
+    update set n2 = tab2.n2 - 1
+  when matched and tab.n2 < 2500 then
+    delete
+  returning tab2.n2, tab.n2, old.n2, new.n2!
+
+merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
+  on n1 = x1
+  when not matched and x2 <= 200 then
+    insert values (x1, x2 - 1)
+  when not matched and x2 <= 500 then
+    insert values (x1, x2 - 2)
+  when not matched then
+    insert values (x1, x2 - 3)
+  when matched and n2 < 1500 then
+    update set n2 = x2 - 1
+  when matched and n2 < 2500 then
+    delete
+  returning x2, n2, old.n2, new.n2!
+
+merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
+  on n1 = x1
+  when not matched and x2 <= 200 then
+    insert values (x1, x2 - 1)
+  when not matched and x2 <= 500 then
+    insert values (x1, x2 - 2)
+  when not matched then
+    insert values (x1, x2 - 3)
+  when matched and n2 < 2500 then
+    delete
+  returning x2, n2, old.n2, new.n2!
+
+merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
+  on n1 = x1
+  when not matched and x2 <= 200 then
+    insert values (x1, x2 - 1)
+  when not matched and x2 <= 500 then
+    insert values (x1, x2 - 2)
+  when not matched then
+    insert values (x1, x2 - 3)
+  when matched and n2 < 2500 then
+    delete
+  returning x2, n2, old.n2, new.n2!
 
 ---
 

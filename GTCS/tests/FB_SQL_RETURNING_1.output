@@ -311,6 +311,115 @@ select * from tab!
            1         1100 
            2         2200 
 
+select * from tab2!
+
+          N1           N2 
+============ ============ 
+           1          100 
+           2          200 
+           3          300 
+           5          500 
+           6          600 
+
+
+---
+
+merge into tab using tab2
+  on tab.n1 = tab2.n1
+  when not matched and tab2.n2 <= 200 then
+    insert values (n1, n2 - 1)
+  when not matched and tab2.n2 <= 500 then
+    insert values (n1, n2 - 2)
+  when not matched then
+    insert values (n1, n2 - 3)
+  when matched and tab.n2 < 1500 then
+    update set n2 = tab2.n2 - 1
+  when matched and tab.n2 < 2500 then
+    delete!
+
+select * from tab!
+
+          N1           N2 
+============ ============ 
+           1           99 
+           3          298 
+           5          498 
+           6          597 
+
+
+delete from tab!
+
+merge into tab using (select * from tab2 where n1 = 3) tab2
+  on tab.n1 = tab2.n1
+  when not matched and tab2.n2 <= 200 then
+    insert values (n1, n2 - 1)
+  when not matched and tab2.n2 <= 500 then
+    insert values (n1, n2 - 2)
+  when not matched then
+    insert values (n1, n2 - 3)
+  when matched and tab.n2 < 1500 then
+    update set n2 = tab2.n2 - 1
+  when matched and tab.n2 < 2500 then
+    delete
+  returning tab2.n2, tab.n2, old.n2, new.n2!
+
+          N2           N2           N2           N2 
+============ ============ ============ ============ 
+         300          298       <null>          298 
+
+
+merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
+  on n1 = x1
+  when not matched and x2 <= 200 then
+    insert values (x1, x2 - 1)
+  when not matched and x2 <= 500 then
+    insert values (x1, x2 - 2)
+  when not matched then
+    insert values (x1, x2 - 3)
+  when matched and n2 < 1500 then
+    update set n2 = x2 - 1
+  when matched and n2 < 2500 then
+    delete
+  returning x2, n2, old.n2, new.n2!
+
+          X2           N2           N2           N2 
+============ ============ ============ ============ 
+         300          299          298          299 
+
+
+merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
+  on n1 = x1
+  when not matched and x2 <= 200 then
+    insert values (x1, x2 - 1)
+  when not matched and x2 <= 500 then
+    insert values (x1, x2 - 2)
+  when not matched then
+    insert values (x1, x2 - 3)
+  when matched and n2 < 2500 then
+    delete
+  returning x2, n2, old.n2, new.n2!
+
+          X2           N2           N2     CONSTANT 
+============ ============ ============ ============ 
+         300          299          299       <null> 
+
+
+merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
+  on n1 = x1
+  when not matched and x2 <= 200 then
+    insert values (x1, x2 - 1)
+  when not matched and x2 <= 500 then
+    insert values (x1, x2 - 2)
+  when not matched then
+    insert values (x1, x2 - 3)
+  when matched and n2 < 2500 then
+    delete
+  returning x2, n2, old.n2, new.n2!
+
+          X2           N2           N2     CONSTANT 
+============ ============ ============ ============ 
+         300          298       <null>          298 
+
 
 ---
 
