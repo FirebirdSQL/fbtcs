@@ -7,14 +7,26 @@ select
     e.*,
     first_value(val) over (order by val nulls first, id),
     first_value(val) over (order by val nulls last, id),
-    first_value(val) over (partition by e.person order by val nulls last, id)
+    first_value(val) over (partition by e.person order by val nulls last, id),
+    nth_value(val, 1) over (order by val nulls first, id),
+    nth_value(val, 1) over (order by val nulls last, id),
+    nth_value(val, 1) over (partition by e.person order by val nulls last, id),
+    nth_value(val, 2) over (order by val nulls first, id),
+    nth_value(val, 2) over (order by val nulls last, id),
+    nth_value(val, 2) over (partition by e.person order by val nulls last, id),
+    last_value(val) over (order by val nulls first, id),
+    last_value(val) over (order by val nulls last, id),
+    last_value(val) over (partition by e.person order by val nulls last, id)
   from entries e
   order by id;
 
 select
     person,
     sum(val),
-    first_value(sum(val)) over (order by person desc)
+    first_value(sum(val)) over (order by person desc),
+    nth_value(sum(val), 1) over (order by person desc),
+    nth_value(sum(val), 2) over (order by person desc),
+    last_value(sum(val)) over (order by person desc)
   from entries
   group by person
   order by person;

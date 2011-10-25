@@ -6,45 +6,57 @@ select
     e.*,
     first_value(val) over (order by val nulls first, id),
     first_value(val) over (order by val nulls last, id),
-    first_value(val) over (partition by e.person order by val nulls last, id)
+    first_value(val) over (partition by e.person order by val nulls last, id),
+    nth_value(val, 1) over (order by val nulls first, id),
+    nth_value(val, 1) over (order by val nulls last, id),
+    nth_value(val, 1) over (partition by e.person order by val nulls last, id),
+    nth_value(val, 2) over (order by val nulls first, id),
+    nth_value(val, 2) over (order by val nulls last, id),
+    nth_value(val, 2) over (partition by e.person order by val nulls last, id),
+    last_value(val) over (order by val nulls first, id),
+    last_value(val) over (order by val nulls last, id),
+    last_value(val) over (partition by e.person order by val nulls last, id)
   from entries e
   order by id;
 
-          ID       PERSON         DAT                   VAL           FIRST_VALUE           FIRST_VALUE           FIRST_VALUE 
-============ ============ =========== ===================== ===================== ===================== ===================== 
-           1            1 2010-01-03                   2.30                <null>                  2.30                  2.30 
-           2            2 2010-01-04                   4.30                <null>                  2.30                  4.30 
-           3            3 2010-01-05                   6.30                <null>                  2.30                  6.30 
-           4            4 2010-01-06                   8.30                <null>                  2.30                  8.30 
-           5            5 2010-01-07                  10.30                <null>                  2.30                 10.30 
-           6            1 2010-02-02                   3.40                <null>                  2.30                  2.30 
-           7            2 2010-02-03                   6.40                <null>                  2.30                  4.30 
-           8            3 2010-02-04                   9.40                <null>                  2.30                  6.30 
-           9            4 2010-02-05                  12.40                <null>                  2.30                  8.30 
-          10            5 2010-02-06                  15.40                <null>                  2.30                 10.30 
-          11            1 2010-03-02                   3.40                <null>                  2.30                  2.30 
-          12            2 2010-03-03                   6.40                <null>                  2.30                  4.30 
-          13            3 2010-03-04                   9.40                <null>                  2.30                  6.30 
-          14            4 2010-03-05                  12.40                <null>                  2.30                  8.30 
-          15            5 2010-03-06                  15.40                <null>                  2.30                 10.30 
-          16            1      <null>                <null>                <null>                  2.30                  2.30 
+          ID       PERSON         DAT                   VAL           FIRST_VALUE           FIRST_VALUE           FIRST_VALUE             NTH_VALUE             NTH_VALUE             NTH_VALUE             NTH_VALUE             NTH_VALUE             NTH_VALUE            LAST_VALUE            LAST_VALUE            LAST_VALUE 
+============ ============ =========== ===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== ===================== 
+           1            1 2010-01-03                   2.30                <null>                  2.30                  2.30                <null>                  2.30                  2.30                  2.30                <null>                <null>                  2.30                  2.30                  2.30 
+           2            2 2010-01-04                   4.30                <null>                  2.30                  4.30                <null>                  2.30                  4.30                  2.30                  3.40                <null>                  4.30                  4.30                  4.30 
+           3            3 2010-01-05                   6.30                <null>                  2.30                  6.30                <null>                  2.30                  6.30                  2.30                  3.40                <null>                  6.30                  6.30                  6.30 
+           4            4 2010-01-06                   8.30                <null>                  2.30                  8.30                <null>                  2.30                  8.30                  2.30                  3.40                <null>                  8.30                  8.30                  8.30 
+           5            5 2010-01-07                  10.30                <null>                  2.30                 10.30                <null>                  2.30                 10.30                  2.30                  3.40                <null>                 10.30                 10.30                 10.30 
+           6            1 2010-02-02                   3.40                <null>                  2.30                  2.30                <null>                  2.30                  2.30                  2.30                  3.40                  3.40                  3.40                  3.40                  3.40 
+           7            2 2010-02-03                   6.40                <null>                  2.30                  4.30                <null>                  2.30                  4.30                  2.30                  3.40                  6.40                  6.40                  6.40                  6.40 
+           8            3 2010-02-04                   9.40                <null>                  2.30                  6.30                <null>                  2.30                  6.30                  2.30                  3.40                  9.40                  9.40                  9.40                  9.40 
+           9            4 2010-02-05                  12.40                <null>                  2.30                  8.30                <null>                  2.30                  8.30                  2.30                  3.40                 12.40                 12.40                 12.40                 12.40 
+          10            5 2010-02-06                  15.40                <null>                  2.30                 10.30                <null>                  2.30                 10.30                  2.30                  3.40                 15.40                 15.40                 15.40                 15.40 
+          11            1 2010-03-02                   3.40                <null>                  2.30                  2.30                <null>                  2.30                  2.30                  2.30                  3.40                  3.40                  3.40                  3.40                  3.40 
+          12            2 2010-03-03                   6.40                <null>                  2.30                  4.30                <null>                  2.30                  4.30                  2.30                  3.40                  6.40                  6.40                  6.40                  6.40 
+          13            3 2010-03-04                   9.40                <null>                  2.30                  6.30                <null>                  2.30                  6.30                  2.30                  3.40                  9.40                  9.40                  9.40                  9.40 
+          14            4 2010-03-05                  12.40                <null>                  2.30                  8.30                <null>                  2.30                  8.30                  2.30                  3.40                 12.40                 12.40                 12.40                 12.40 
+          15            5 2010-03-06                  15.40                <null>                  2.30                 10.30                <null>                  2.30                 10.30                  2.30                  3.40                 15.40                 15.40                 15.40                 15.40 
+          16            1      <null>                <null>                <null>                  2.30                  2.30                <null>                  2.30                  2.30                <null>                  3.40                  3.40                <null>                <null>                <null> 
 
 
 select
     person,
     sum(val),
-    first_value(sum(val)) over (order by person desc)
+    first_value(sum(val)) over (order by person desc),
+    nth_value(sum(val), 1) over (order by person desc),
+    nth_value(sum(val), 2) over (order by person desc),
+    last_value(sum(val)) over (order by person desc)
   from entries
   group by person
   order by person;
 
-      PERSON                   SUM           FIRST_VALUE 
-============ ===================== ===================== 
-           1                  9.10                 41.10 
-           2                 17.10                 41.10 
-           3                 25.10                 41.10 
-           4                 33.10                 41.10 
-           5                 41.10                 41.10 
+      PERSON                   SUM           FIRST_VALUE             NTH_VALUE             NTH_VALUE            LAST_VALUE 
+============ ===================== ===================== ===================== ===================== ===================== 
+           1                  9.10                 41.10                 41.10                 33.10                  9.10 
+           2                 17.10                 41.10                 41.10                 33.10                 17.10 
+           3                 25.10                 41.10                 41.10                 33.10                 25.10 
+           4                 33.10                 41.10                 41.10                 33.10                 33.10 
+           5                 41.10                 41.10                 41.10                <null>                 41.10 
 
 
 select
