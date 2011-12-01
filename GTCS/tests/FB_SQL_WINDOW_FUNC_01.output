@@ -39,6 +39,14 @@ select
                    16                    15                  2.30                 15.40                    10                  2.30                 15.40           16 
 
 
+select
+    count(*) over (), count(val) over (), min(val) over (), max(val) over (),
+    count(distinct val) over (), min(distinct val) over (), max(distinct val) over (),
+    id
+  from entries
+  where 1 = 0
+  order by id;
+
 ---
 
 select
@@ -735,7 +743,7 @@ Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Invalid expression in the select list (not contained in either an aggregate function or the GROUP BY clause)
-After line 282 in file fb_sql_window_func_01.sql
+After line 290 in file fb_sql_window_func_01.sql
 
 select
     person
@@ -745,7 +753,7 @@ Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Cannot use an aggregate or window function in a WHERE clause, use HAVING (for aggregate only) instead
-After line 291 in file fb_sql_window_func_01.sql
+After line 299 in file fb_sql_window_func_01.sql
 
 select
     person
@@ -756,7 +764,7 @@ Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Cannot use an aggregate or window function in a WHERE clause, use HAVING (for aggregate only) instead
-After line 296 in file fb_sql_window_func_01.sql
+After line 304 in file fb_sql_window_func_01.sql
 
 ---
 

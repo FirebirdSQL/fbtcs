@@ -15,6 +15,14 @@ select
   from entries
   order by id;
 
+select
+    count(*) over (), count(val) over (), min(val) over (), max(val) over (),
+    count(distinct val) over (), min(distinct val) over (), max(distinct val) over (),
+    id
+  from entries
+  where 1 = 0
+  order by id;
+
 ---
 
 select
