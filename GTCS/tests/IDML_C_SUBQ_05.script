@@ -51,14 +51,16 @@ main()
      EXEC SQL
          INSERT INTO TEST_TABLE1 (C_437_25)
 	 SELECT C_437_25 FROM STRING_TABLE
-		WHERE C_437_25 <= 'cæsium';
+		WHERE C_437_25 <= 'cæsium'
+		ORDER BY C_437_25;
 
      EXEC SQL COMMIT;
 
      EXEC SQL
          INSERT INTO TEST_TABLE2 (C_437_25)
 	 SELECT C_437_25 FROM STRING_TABLE
-		WHERE C_437_25 >= 'cæsium';
+		WHERE C_437_25 >= 'cæsium'
+		ORDER BY C_437_25;
      EXEC SQL COMMIT RELEASE;
      exit(0);
 err: print_error();
