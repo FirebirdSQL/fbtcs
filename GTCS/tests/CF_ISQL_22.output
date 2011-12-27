@@ -23,7 +23,6 @@ View Source:
 show view t;
 There is no view T in this database
 
-Database:  WHERE_GDB:cf_isql_22.fdb
 
 SET SQL DIALECT 3; 
 

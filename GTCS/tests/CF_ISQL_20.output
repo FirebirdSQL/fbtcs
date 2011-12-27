@@ -17,7 +17,6 @@ A                               (EXTRACT_BUG) CHAR(1) CHARACTER SET ISO8859_1 Nu
                                  COLLATE PT_PT
 CONSTRAINT INTEG_1:
   check(a>='c')
-Database:  WHERE_GDB:cf_isql_20.fdb
 
 SET SQL DIALECT 3; 
 
