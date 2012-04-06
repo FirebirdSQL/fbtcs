@@ -1,5 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
+-CREATE INDEX T_IND failed
 -Index T_IND already exists
 Use CONNECT or CREATE DATABASE to specify a database
 T_IND UNIQUE INDEX ON T(B) 

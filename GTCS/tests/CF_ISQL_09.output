@@ -29,16 +29,12 @@ F_CHAR                          CHAR(25) Nullable
 CHAR_AS_DATE                    Computed by: (cast(f_char as date))
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
--SQL warning code = 301
--DATE data type is now called TIMESTAMP
 
 CONSTANT          
 ================= 
 Passed 3 - Insert 
 
 SQL warning code = 301
--DATE data type is now called TIMESTAMP
--SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 
 CONSTANT          
