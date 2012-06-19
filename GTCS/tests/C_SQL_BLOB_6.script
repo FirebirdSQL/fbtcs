@@ -159,5 +159,5 @@ $ GPRE -e blob006.epp
 $ CXX FLAG_CXX blob006.cpp
 $ LINK FLAG_LINK blob006 
 $ RUN blob006
-$DROP WHERE_GDB:sh_blobs_6.gdb
+$ DROP WHERE_GDB:sh_blobs_6.gdb
 $ DELETE blob006*

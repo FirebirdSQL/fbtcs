@@ -1461,16 +1461,16 @@ main(int argc, char* argv[])
 }
 # CC FLAG_CC delay.c
 # LINK FLAG_LINK delay
-$ GPRE -e -n -m event_client.e 
+$ GPRE -e -n -m event_client.e
 $ CC FLAG_CC event_client.c
-$ LINK FLAG_LINK event_client 
-$ GPRE -e -n -m event_server.e 
+$ LINK FLAG_LINK event_client
+$ GPRE -e -n -m event_server.e
 $ CC FLAG_CC event_server.c
-$ LINK FLAG_LINK event_server 
-$ RUN event_server 
+$ LINK FLAG_LINK event_server
+$ RUN event_server
 $ DELETE event_custom.h
-$ DELETE event_server* 
-$ DELETE event_client* 
+$ DELETE event_server*
+$ DELETE event_client*
 $ SLEEP 10
 $ DROP WHERE_GDB:asyn_evnts.gdb
 $ DELETE delay*
