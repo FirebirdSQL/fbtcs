@@ -73,6 +73,7 @@ $ CC FLAG_CC foo12.c
 $ LINK FLAG_LINK foo12 
 
 $ RUN foo12 &
+$ SLEEP 1
 
 >> sql_event_12b.sql
 
@@ -85,4 +86,4 @@ exit;
 $ ISQL -m WHERE_GDB:events.gdb -i sql_event_12b.sql
 $ SLEEP 1
 $ DROP WHERE_GDB:events.gdb
-$DELETE sql_event_12*
+$ DELETE foo12* sql_event_12*
