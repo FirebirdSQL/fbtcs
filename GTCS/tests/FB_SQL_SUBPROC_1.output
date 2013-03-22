@@ -287,7 +287,7 @@ select * from t1 order by x1!
 
 execute procedure p5!
 Statement failed, SQLSTATE = 28000
-no permission for update/write access to TABLE T1
+no permission for UPDATE access to TABLE T1
 After line 224 in file fb_sql_subproc_1.sql
 select * from t1 order by x1!
 
@@ -308,7 +308,7 @@ begin
 	execute procedure sub1;
 end!
 Statement failed, SQLSTATE = 28000
-no permission for update/write access to TABLE T1
+no permission for UPDATE access to TABLE T1
 After line 227 in file fb_sql_subproc_1.sql
 
 ---

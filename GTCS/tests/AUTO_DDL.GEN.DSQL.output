@@ -1,7 +1,7 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
 -CREATE SEQUENCE T_GEN failed
--Generator T_GEN already exists
+-Sequence T_GEN already exists
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
