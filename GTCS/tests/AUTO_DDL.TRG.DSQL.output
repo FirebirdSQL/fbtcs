@@ -2,6 +2,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
 -CREATE TRIGGER INS failed
 -violation of PRIMARY or UNIQUE KEY constraint "RDB$INDEX_8" on table "RDB$TRIGGERS"
+-Problematic key value is ("RDB$TRIGGER_NAME" = 'INS')
 Use CONNECT or CREATE DATABASE to specify a database
 
            A 
