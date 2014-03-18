@@ -5,5 +5,6 @@ BLOCK_IN
 Statement failed, SQLSTATE = 22001
 arithmetic exception, numeric overflow, or string truncation
 -string right truncation
+-expected length 1, actual 3
 -At procedure 'P_ERROR1' line: 4, col: 5
 After line 31 in file proc_err.sql

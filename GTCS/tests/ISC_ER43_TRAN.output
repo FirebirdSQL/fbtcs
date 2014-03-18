@@ -13,6 +13,7 @@ tx1: INSERT INTO T1 VALUES (1)
 tx2: SET TRANSACTION READ COMMITTED RECORD_VERSION NO WAIT
 tx2: INSERT INTO T1 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T1_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T1 VALUES (2)
 tx1: SELECT COUNT(*) FROM T1
@@ -38,6 +39,7 @@ tx1: INSERT INTO T2 VALUES (1)
 tx2: SET TRANSACTION READ COMMITTED RECORD_VERSION NO WAIT READ ONLY
 tx2: INSERT INTO T2 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T2_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T2 VALUES (2)
 tx1: SELECT COUNT(*) FROM T2
@@ -86,6 +88,7 @@ tx1: INSERT INTO T1 VALUES (1)
 tx2: SET TRANSACTION READ COMMITTED RECORD_VERSION NO WAIT
 tx2: INSERT INTO T1 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T1_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T1 VALUES (2)
 tx1: SELECT COUNT(*) FROM T1
@@ -158,6 +161,7 @@ tx1: INSERT INTO T1 VALUES (1)
 tx2: SET TRANSACTION SNAPSHOT NO WAIT
 tx2: INSERT INTO T1 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T1_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T1 VALUES (2)
 tx1: SELECT COUNT(*) FROM T1
@@ -183,6 +187,7 @@ tx1: INSERT INTO T2 VALUES (1)
 tx2: SET TRANSACTION SNAPSHOT NO WAIT READ ONLY
 tx2: INSERT INTO T2 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T2_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T2 VALUES (2)
 tx1: SELECT COUNT(*) FROM T2
@@ -231,6 +236,7 @@ tx1: INSERT INTO T1 VALUES (1)
 tx2: SET TRANSACTION SNAPSHOT NO WAIT
 tx2: INSERT INTO T1 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T1_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T1 VALUES (2)
 tx1: SELECT COUNT(*) FROM T1
@@ -303,6 +309,7 @@ tx1: INSERT INTO T1 VALUES (1)
 tx2: SET TRANSACTION READ COMMITTED RECORD_VERSION NO WAIT
 tx2: INSERT INTO T1 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T1_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T1 VALUES (2)
 tx1: SELECT COUNT(*) FROM T1
@@ -328,6 +335,7 @@ tx1: INSERT INTO T2 VALUES (1)
 tx2: SET TRANSACTION READ COMMITTED RECORD_VERSION NO WAIT READ ONLY
 tx2: INSERT INTO T2 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T2_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T2 VALUES (2)
 tx1: SELECT COUNT(*) FROM T2
@@ -376,6 +384,7 @@ tx1: INSERT INTO T1 VALUES (1)
 tx2: SET TRANSACTION READ COMMITTED RECORD_VERSION NO WAIT
 tx2: INSERT INTO T1 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T1_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T1 VALUES (2)
 tx1: SELECT COUNT(*) FROM T1
@@ -448,6 +457,7 @@ tx1: INSERT INTO T1 VALUES (1)
 tx2: SET TRANSACTION SNAPSHOT NO WAIT
 tx2: INSERT INTO T1 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T1_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T1 VALUES (2)
 tx1: SELECT COUNT(*) FROM T1
@@ -473,6 +483,7 @@ tx1: INSERT INTO T2 VALUES (1)
 tx2: SET TRANSACTION SNAPSHOT NO WAIT READ ONLY
 tx2: INSERT INTO T2 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T2_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T2 VALUES (2)
 tx1: SELECT COUNT(*) FROM T2
@@ -521,6 +532,7 @@ tx1: INSERT INTO T1 VALUES (1)
 tx2: SET TRANSACTION SNAPSHOT NO WAIT
 tx2: INSERT INTO T1 VALUES (1)
 	attempt to store duplicate value (visible to active transactions) in unique index "T1_UQ"
+	Problematic key value is ("ID" = 1)
 
 tx2: INSERT INTO T1 VALUES (2)
 tx1: SELECT COUNT(*) FROM T1

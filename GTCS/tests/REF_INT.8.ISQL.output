@@ -12,4 +12,5 @@ insert into employee values (12, 'e12', 234);
 Statement failed, SQLSTATE = 23000
 violation of FOREIGN KEY constraint "REF_KEY" on table "EMPLOYEE"
 -Foreign key reference target does not exist
+-Problematic key value is ("DEPT_NO" = '234')
 After line 3 in file test8.sql

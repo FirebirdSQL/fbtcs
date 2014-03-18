@@ -41,6 +41,7 @@ Statement failed, SQLSTATE = 23000
 unsuccessful metadata update
 -CREATE DOMAIN DOM01A_1 failed
 -violation of PRIMARY or UNIQUE KEY constraint "RDB$INDEX_2" on table "RDB$FIELDS"
+-Problematic key value is ("RDB$FIELD_NAME" = 'DOM01A_1')
 After line 9 in file domain_01b.sql
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error

@@ -3,5 +3,6 @@ Statement failed, SQLSTATE = 23000
 unsuccessful metadata update
 -CREATE PROCEDURE PROC failed
 -violation of PRIMARY or UNIQUE KEY constraint "RDB$INDEX_51" on table "RDB$PROCEDURE_PARAMETERS"
+-Problematic key value is ("RDB$PACKAGE_NAME" = NULL, "RDB$PROCEDURE_NAME" = 'PROC', "RDB$PARAMETER_NAME" = 'A')
 After line 3 in file proc_level0_tests3.sql
 There are no stored procedures in this database
