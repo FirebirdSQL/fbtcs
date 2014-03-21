@@ -1,25 +1,35 @@
 Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
+unsuccessful metadata update
+-CREATE PROCEDURE CAST1 failed
+-Dynamic SQL Error
 -expression evaluation not supported
 -Strings cannot be divided in dialect 3
 After line 1 in file proc_cast10.sql
 Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
+unsuccessful metadata update
+-CREATE PROCEDURE CAST2 failed
+-Dynamic SQL Error
 -expression evaluation not supported
 -Strings cannot be multiplied in dialect 3
 After line 7 in file proc_cast10.sql
 Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
+unsuccessful metadata update
+-CREATE PROCEDURE CAST3 failed
+-Dynamic SQL Error
 -expression evaluation not supported
 -Strings cannot be multiplied in dialect 3
 After line 13 in file proc_cast10.sql
 Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
+unsuccessful metadata update
+-CREATE PROCEDURE CAST4 failed
+-Dynamic SQL Error
 -expression evaluation not supported
 -Strings cannot be multiplied in dialect 3
 After line 19 in file proc_cast10.sql
 Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
+unsuccessful metadata update
+-CREATE PROCEDURE CAST5 failed
+-Dynamic SQL Error
 -expression evaluation not supported
 -Strings cannot be multiplied in dialect 3
 After line 25 in file proc_cast10.sql

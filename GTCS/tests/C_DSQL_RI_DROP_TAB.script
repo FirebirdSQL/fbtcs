@@ -132,6 +132,8 @@ err:		die_on_error();
 
 int setup() {
 
+	const char* cmd;
+
 	if (verbose)
 		printf("entered setup\n");
 
@@ -139,16 +141,16 @@ int setup() {
 		if (verbose) 
 			printf("books found... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE BOOKS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
+		EXEC SQL COMMIT;
 	}
 
 	if (istable("authors")) {
 		if (verbose) 
 			printf("authors found... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE AUTHORS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE AUTHORS';
+		EXEC SQL COMMIT;
 	}
 	if (verbose)
 		printf("about to create authors...\n");
@@ -157,11 +159,12 @@ int setup() {
 		DECLARE AUTHORS TABLE
 			(AUTHOR_ID CHAR(11), AUTHOR_NAME CHAR(12))
 	
-	EXEC SQL
-		CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) 
-			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL 
-				CONSTRAINT AUTH_ID_KEY PRIMARY KEY,
-			AUTHOR_NAME CHAR(12))
+	cmd = "CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) \
+			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL \
+				CONSTRAINT AUTH_ID_KEY PRIMARY KEY, \
+			AUTHOR_NAME CHAR(12))";
+	EXEC SQL EXECUTE IMMEDIATE :cmd;
+	EXEC SQL COMMIT;
 
 	if (verbose)
 		printf("authors created\n");
@@ -175,11 +178,12 @@ int setup() {
 			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
 			 BOOK_AUTH_ID CHAR(11));
 
-	EXEC SQL
-		CREATE TABLE BOOKS
-			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
-			 BOOK_AUTH_ID CHAR(11)
-			 CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)
+	cmd = "CREATE TABLE BOOKS \
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80), \
+			 BOOK_AUTH_ID CHAR(11) \
+			 CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)";
+	EXEC SQL EXECUTE IMMEDIATE :cmd;
+	EXEC SQL COMMIT;
 
 
 	if (verbose)
@@ -196,8 +200,7 @@ bool alter_drop_referring_field() {
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
 		
-	EXEC SQL   /* */
-	   	ALTER TABLE BOOKS DROP BOOK_AUTH_ID 
+	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE BOOKS DROP BOOK_AUTH_ID';
 
 	if (SQLCODE) 
 		got_err = true;
@@ -207,6 +210,8 @@ bool alter_drop_referring_field() {
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
+
+	EXEC SQL COMMIT;
 
 	return (got_err);
 err:		die_on_error();
@@ -220,9 +225,9 @@ bool drop_table(int constraint)
 	
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
-	EXEC SQL   /* should succeed if no constraint, else should fail  */
-	   	DROP TABLE AUTHORS 
+
+	/* should succeed if no constraint, else should fail  */
+	EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE AUTHORS';
 
 	if (SQLCODE) 
 		got_err = true;
@@ -236,6 +241,8 @@ bool drop_table(int constraint)
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
+
+	EXEC SQL COMMIT;
 
 	return (got_err);
 err:		die_on_error();

@@ -194,6 +194,8 @@ err:  die_on_error();
 
 int setup_authors() {
 
+	const char* cmd;
+
 	if (verbose)
 		printf("entered setup_authors\n");
 
@@ -201,7 +203,7 @@ int setup_authors() {
 		if (verbose) 
 			printf("authors found... will be dropped\n");
 		
-		EXEC SQL DROP TABLE AUTHORS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE AUTHORS';
 		EXEC SQL COMMIT RELEASE;
 	}
 	if (verbose)
@@ -211,11 +213,12 @@ int setup_authors() {
 		DECLARE AUTHORS TABLE
 			(AUTHOR_ID CHAR(11), AUTHOR_NAME CHAR(12))
 	
-	EXEC SQL
-		CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) 
-			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL 
-				CONSTRAINT AUTH_ID_KEY PRIMARY KEY,
-			AUTHOR_NAME CHAR(12))
+	cmd = "CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) \
+			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL \
+				CONSTRAINT AUTH_ID_KEY PRIMARY KEY, \
+			AUTHOR_NAME CHAR(12))";
+	EXEC SQL EXECUTE IMMEDIATE :cmd;
+
 	if (verbose)
 		printf("authors created\n");
 
@@ -227,6 +230,8 @@ err:		die_on_error();
 
 int setup_books() {
 
+	const char* cmd;
+
 	if (verbose)
 		printf("entered setup_books\n");
 
@@ -234,10 +239,9 @@ int setup_books() {
 		if (verbose) 
 			printf("books found... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE BOOKS;
-	        EXEC SQL COMMIT RELEASE
-		}
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
+		EXEC SQL COMMIT RELEASE
+	}
 
 	if (verbose) 
 		printf("No books table... creating one\n");
@@ -248,13 +252,14 @@ int setup_books() {
 
 	if (verbose) 
 		printf("After the declare, CREATE TABLE..\n");
-	EXEC SQL
-		CREATE TABLE BOOKS
-			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
-			 BOOK_AUTH_ID CHAR(11)
-			 CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)
 
-        EXEC SQL COMMIT RELEASE;
+	cmd = "CREATE TABLE BOOKS \
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80), \
+			 BOOK_AUTH_ID CHAR(11) \
+			 CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)";
+	EXEC SQL EXECUTE IMMEDIATE :cmd;
+
+	EXEC SQL COMMIT RELEASE;
 	if (verbose)
 		printf("books created successfully.\n");
 
@@ -270,8 +275,8 @@ bool alter_drop_field(int flag)
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
 		
-	EXEC SQL     /* should succeed if flag is ok_flag; should fail otherwise */ 
-	   	ALTER TABLE AUTHORS DROP AUTHOR_ID 
+	/* should succeed if flag is ok_flag; should fail otherwise */ 
+	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE AUTHORS DROP AUTHOR_ID';
 
 	if (SQLCODE) 
 		got_err = true;
@@ -286,6 +291,8 @@ bool alter_drop_field(int flag)
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
 
+	EXEC SQL COMMIT RELEASE;
+
 	return (got_err);
 err:		die_on_error();
 }
@@ -297,13 +304,13 @@ bool alter_drop_referring_field() {
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
 		
-	EXEC SQL   /* should succeed */
-	   	ALTER TABLE BOOKS DROP BOOK_AUTH_ID 
+	/* should succeed */
+	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE BOOKS DROP BOOK_AUTH_ID';
 
 	if (SQLCODE) 
 		got_err = true;
 
-        EXEC SQL COMMIT RELEASE;
+	EXEC SQL COMMIT RELEASE;
 	printf ("alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = %d\n", 
 			SQLCODE);
 
@@ -317,14 +324,16 @@ err:		die_on_error();
 
 bool alter_add_field() {
 	bool got_err = false;
+	const char* cmd;
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
 		
-	EXEC SQL   /* should work */
-	   	ALTER TABLE AUTHORS ADD AUTHOR_ID CHAR (11) 
-				CONSTRAINT AUTHOR_ID_NOT_NULL NOT NULL
-				CONSTRAINT AUTHOR_ID_KEY PRIMARY KEY
+	/* should work */
+	cmd = "ALTER TABLE AUTHORS ADD AUTHOR_ID CHAR (11) \
+				CONSTRAINT AUTHOR_ID_NOT_NULL NOT NULL \
+				CONSTRAINT AUTHOR_ID_KEY PRIMARY KEY";
+	EXEC SQL EXECUTE IMMEDIATE :cmd;
 
 	if (SQLCODE) 
 		got_err = true;
@@ -334,6 +343,8 @@ bool alter_add_field() {
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
+
+	EXEC SQL COMMIT RELEASE;
 
 	return (got_err);
 err:		die_on_error();

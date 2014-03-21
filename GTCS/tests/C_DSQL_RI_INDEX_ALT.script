@@ -127,6 +127,8 @@ err:		die_on_error();
 
 int setup() {
 
+	const char* cmd;
+
 	if (verbose)
 		printf("entered setup\n");
 
@@ -134,8 +136,7 @@ int setup() {
 		if (verbose) 
 			printf("books found... will be dropped\n");
 		
-		EXEC SQL
-			DROP TABLE BOOKS;
+		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
 	}
 
 
@@ -147,10 +148,11 @@ int setup() {
 			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
 			 BOOK_AUTH_ID CHAR(11), PRICE FLOAT);
 
-	EXEC SQL
-		CREATE TABLE BOOKS
-			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
-			 BOOK_AUTH_ID CHAR(11), PRICE FLOAT);
+	cmd = "CREATE TABLE BOOKS \
+			(BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80), \
+			 BOOK_AUTH_ID CHAR(11), PRICE FLOAT)";
+	EXEC SQL EXECUTE IMMEDIATE :cmd;
+	EXEC SQL COMMIT;
 
 	if (verbose)
 		printf("books created successfully.\n");
@@ -167,8 +169,8 @@ bool alter_index_active()
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
 		
-	EXEC SQL
-		ALTER INDEX BOOK_IND ACTIVE;
+	EXEC SQL EXECUTE IMMEDIATE 'ALTER INDEX BOOK_IND ACTIVE';
+	EXEC SQL COMMIT;
 
 	if (SQLCODE) 
 		got_err = true;
@@ -191,8 +193,7 @@ bool alter_index_inactive()
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
 		
-	EXEC SQL
-		ALTER INDEX BOOK_IND INACTIVE;
+	EXEC SQL EXECUTE IMMEDIATE 'ALTER INDEX BOOK_IND INACTIVE';
 
 	if (SQLCODE) 
 		got_err = true;
@@ -201,6 +202,8 @@ bool alter_index_inactive()
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
+
+	EXEC SQL COMMIT;
 
 	return (got_err);
 err:		die_on_error();
@@ -216,8 +219,7 @@ bool create_unique_index()
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
 		
-	EXEC SQL
-		CREATE UNIQUE INDEX BOOK_IND ON BOOKS (BOOK_ID)
+	EXEC SQL EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX BOOK_IND ON BOOKS (BOOK_ID)';
 
 	if (SQLCODE) 
 		got_err = true;
@@ -227,6 +229,8 @@ bool create_unique_index()
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
+
+	EXEC SQL COMMIT;
 
 	return (got_err);
 err:		die_on_error();
