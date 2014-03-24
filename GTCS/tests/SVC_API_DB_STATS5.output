@@ -1,4 +1,5 @@
 connected to service manager OK
 Unable to start service:
 ERROR: unrecognized service parameter block
+ERROR: All services except for getting server log require switches
 End of errors

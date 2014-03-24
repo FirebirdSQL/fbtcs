@@ -10,7 +10,7 @@ Database header page information: querying service
 reading response
 	Flags			0 querying service
 reading response
-	Generation		28 querying service
+	Generation		29 querying service
 reading response
 	System Change Number	0 querying service
 reading response
@@ -24,11 +24,11 @@ reading response
 reading response
 	Oldest snapshot		2 querying service
 reading response
-	Next transaction	20 querying service
+	Next transaction	21 querying service
 reading response
 	Sequence number		0 querying service
 reading response
-	Next attachment ID	2 querying service
+	Next attachment ID	6 querying service
 reading response
 	Implementation		HW=AMD/Intel/x64 little-endian OS=Linux CC=gcc querying service
 reading response
@@ -38,7 +38,7 @@ reading response
 reading response
 	Next header page	0 querying service
 reading response
-	Clumplet End		98 querying service
+	Clumplet End		138 querying service
 reading response
 	Database dialect	1 querying service
 reading response
@@ -64,11 +64,13 @@ Analyzing database pages ... querying service
 reading response
 COUNTRY (128) querying service
 reading response
-    Primary pointer page: 193, Index root page: 194 querying service
+    Primary pointer page: 215, Index root page: 216 querying service
 reading response
-    Data pages: 1, data page slots: 1, average fill: 15% querying service
+    Pointer pages: 1, data page slots: 1 querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Data pages: 1, average fill: 15% querying service
+reading response
+    Primary pages: 1, full pages: 0, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -86,9 +88,15 @@ reading response
 reading response
     Index RDB$PRIMARY1 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 14 querying service
+	Root page: 292, depth: 1, leaf buckets: 1, nodes: 14 querying service
 reading response
-	Average data length: 6.50, total dup: 0, max dup: 0 querying service
+	Average node length: 10.50, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 8.64, compression ratio: 0.80 querying service
+reading response
+	Average prefix length: 0.43, average data length: 6.50 querying service
+reading response
+	Clustering factor: 1, ratio: 0.07 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -106,11 +114,13 @@ reading response
 reading response
 CUSTOMER (133) querying service
 reading response
-    Primary pointer page: 204, Index root page: 205 querying service
+    Primary pointer page: 226, Index root page: 227 querying service
 reading response
-    Data pages: 1, data page slots: 1, average fill: 53% querying service
+    Pointer pages: 1, data page slots: 1 querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Data pages: 1, average fill: 53% querying service
+reading response
+    Primary pages: 1, full pages: 0, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -128,9 +138,15 @@ reading response
 reading response
     Index CUSTNAMEX (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 15 querying service
+	Root page: 279, depth: 1, leaf buckets: 1, nodes: 15 querying service
 reading response
-	Average data length: 15.87, total dup: 0, max dup: 0 querying service
+	Average node length: 19.87, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 18.27, compression ratio: 0.90 querying service
+reading response
+	Average prefix length: 0.60, average data length: 15.87 querying service
+reading response
+	Clustering factor: 1, ratio: 0.07 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -148,9 +164,15 @@ reading response
 reading response
     Index CUSTREGION (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 15 querying service
+	Root page: 280, depth: 1, leaf buckets: 1, nodes: 15 querying service
 reading response
-	Average data length: 17.27, total dup: 0, max dup: 0 querying service
+	Average node length: 21.27, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 20.20, compression ratio: 0.97 querying service
+reading response
+	Average prefix length: 2.33, average data length: 17.27 querying service
+reading response
+	Clustering factor: 1, ratio: 0.07 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -168,9 +190,15 @@ reading response
 reading response
     Index RDB$FOREIGN23 (3) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 15 querying service
+	Root page: 306, depth: 1, leaf buckets: 1, nodes: 15 querying service
 reading response
-	Average data length: 4.87, total dup: 4, max dup: 4 querying service
+	Average node length: 8.60, total dup: 4, max dup: 4 querying service
+reading response
+	Average key length: 6.93, compression ratio: 0.83 querying service
+reading response
+	Average prefix length: 0.87, average data length: 4.87 querying service
+reading response
+	Clustering factor: 1, ratio: 0.07 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -188,9 +216,15 @@ reading response
 reading response
     Index RDB$PRIMARY22 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 15 querying service
+	Root page: 278, depth: 1, leaf buckets: 1, nodes: 15 querying service
 reading response
-	Average data length: 1.13, total dup: 0, max dup: 0 querying service
+	Average node length: 4.20, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 3.13, compression ratio: 0.96 querying service
+reading response
+	Average prefix length: 1.87, average data length: 1.13 querying service
+reading response
+	Clustering factor: 1, ratio: 0.07 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -208,11 +242,13 @@ reading response
 reading response
 DEPARTMENT (130) querying service
 reading response
-    Primary pointer page: 197, Index root page: 198 querying service
+    Primary pointer page: 219, Index root page: 220 querying service
 reading response
-    Data pages: 1, data page slots: 1, average fill: 45% querying service
+    Pointer pages: 1, data page slots: 1 querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Data pages: 1, average fill: 45% querying service
+reading response
+    Primary pages: 1, full pages: 0, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -230,9 +266,15 @@ reading response
 reading response
     Index BUDGETX (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+	Root page: 288, depth: 1, leaf buckets: 1, nodes: 21 querying service
 reading response
-	Average data length: 2.00, total dup: 7, max dup: 3 querying service
+	Average node length: 5.67, total dup: 7, max dup: 3 querying service
+reading response
+	Average key length: 4.62, compression ratio: 0.82 querying service
+reading response
+	Average prefix length: 1.81, average data length: 2.00 querying service
+reading response
+	Clustering factor: 1, ratio: 0.05 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -250,9 +292,15 @@ reading response
 reading response
     Index RDB$4 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+	Root page: 286, depth: 1, leaf buckets: 1, nodes: 21 querying service
 reading response
-	Average data length: 13.95, total dup: 0, max dup: 0 querying service
+	Average node length: 17.95, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 16.57, compression ratio: 1.16 querying service
+reading response
+	Average prefix length: 5.29, average data length: 13.95 querying service
+reading response
+	Clustering factor: 1, ratio: 0.05 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -270,9 +318,15 @@ reading response
 reading response
     Index RDB$FOREIGN10 (4) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+	Root page: 299, depth: 1, leaf buckets: 1, nodes: 21 querying service
 reading response
-	Average data length: 1.14, total dup: 3, max dup: 3 querying service
+	Average node length: 4.29, total dup: 3, max dup: 3 querying service
+reading response
+	Average key length: 3.24, compression ratio: 0.60 querying service
+reading response
+	Average prefix length: 0.81, average data length: 1.14 querying service
+reading response
+	Clustering factor: 1, ratio: 0.05 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -290,9 +344,15 @@ reading response
 reading response
     Index RDB$FOREIGN6 (3) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+	Root page: 296, depth: 1, leaf buckets: 1, nodes: 21 querying service
 reading response
-	Average data length: 0.81, total dup: 13, max dup: 4 querying service
+	Average node length: 4.10, total dup: 13, max dup: 4 querying service
+reading response
+	Average key length: 2.95, compression ratio: 0.97 querying service
+reading response
+	Average prefix length: 2.05, average data length: 0.81 querying service
+reading response
+	Clustering factor: 1, ratio: 0.05 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -310,9 +370,15 @@ reading response
 reading response
     Index RDB$PRIMARY5 (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 21 querying service
+	Root page: 287, depth: 1, leaf buckets: 1, nodes: 21 querying service
 reading response
-	Average data length: 1.71, total dup: 0, max dup: 0 querying service
+	Average node length: 5.24, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 4.05, compression ratio: 0.74 querying service
+reading response
+	Average prefix length: 1.29, average data length: 1.71 querying service
+reading response
+	Clustering factor: 1, ratio: 0.05 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -330,11 +396,13 @@ reading response
 reading response
 EMPLOYEE (131) querying service
 reading response
-    Primary pointer page: 199, Index root page: 200 querying service
+    Primary pointer page: 221, Index root page: 222 querying service
 reading response
-    Data pages: 2, data page slots: 2, average fill: 43% querying service
+    Pointer pages: 1, data page slots: 2 querying service
 reading response
-    Primary pages: 2, full pages: 2, swept pages: 0 querying service
+    Data pages: 2, average fill: 43% querying service
+reading response
+    Primary pages: 2, full pages: 1, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -352,9 +420,15 @@ reading response
 reading response
     Index NAMEX (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 42 querying service
+	Root page: 285, depth: 1, leaf buckets: 1, nodes: 42 querying service
 reading response
-	Average data length: 15.52, total dup: 0, max dup: 0 querying service
+	Average node length: 19.52, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 18.50, compression ratio: 0.96 querying service
+reading response
+	Average prefix length: 2.17, average data length: 15.52 querying service
+reading response
+	Clustering factor: 7, ratio: 0.17 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -372,9 +446,15 @@ reading response
 reading response
     Index RDB$FOREIGN8 (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 42 querying service
+	Root page: 297, depth: 1, leaf buckets: 1, nodes: 42 querying service
 reading response
-	Average data length: 0.81, total dup: 23, max dup: 4 querying service
+	Average node length: 4.07, total dup: 23, max dup: 4 querying service
+reading response
+	Average key length: 2.98, compression ratio: 1.01 querying service
+reading response
+	Average prefix length: 2.19, average data length: 0.81 querying service
+reading response
+	Clustering factor: 9, ratio: 0.21 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -392,9 +472,15 @@ reading response
 reading response
     Index RDB$FOREIGN9 (3) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 42 querying service
+	Root page: 298, depth: 1, leaf buckets: 1, nodes: 42 querying service
 reading response
-	Average data length: 6.79, total dup: 15, max dup: 4 querying service
+	Average node length: 10.43, total dup: 15, max dup: 4 querying service
+reading response
+	Average key length: 9.40, compression ratio: 1.68 querying service
+reading response
+	Average prefix length: 9.05, average data length: 6.79 querying service
+reading response
+	Clustering factor: 7, ratio: 0.17 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -412,9 +498,15 @@ reading response
 reading response
     Index RDB$PRIMARY7 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 42 querying service
+	Root page: 284, depth: 1, leaf buckets: 1, nodes: 42 querying service
 reading response
-	Average data length: 1.31, total dup: 0, max dup: 0 querying service
+	Average node length: 4.62, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 3.60, compression ratio: 0.69 querying service
+reading response
+	Average prefix length: 1.17, average data length: 1.31 querying service
+reading response
+	Clustering factor: 2, ratio: 0.05 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -432,11 +524,13 @@ reading response
 reading response
 EMPLOYEE_PROJECT (135) querying service
 reading response
-    Primary pointer page: 208, Index root page: 209 querying service
+    Primary pointer page: 230, Index root page: 231 querying service
 reading response
-    Data pages: 1, data page slots: 1, average fill: 20% querying service
+    Pointer pages: 1, data page slots: 1 querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Data pages: 1, average fill: 20% querying service
+reading response
+    Primary pages: 1, full pages: 0, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -454,9 +548,15 @@ reading response
 reading response
     Index RDB$FOREIGN15 (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 28 querying service
+	Root page: 301, depth: 1, leaf buckets: 1, nodes: 28 querying service
 reading response
-	Average data length: 1.04, total dup: 6, max dup: 2 querying service
+	Average node length: 4.29, total dup: 6, max dup: 2 querying service
+reading response
+	Average key length: 3.25, compression ratio: 0.74 querying service
+reading response
+	Average prefix length: 1.36, average data length: 1.04 querying service
+reading response
+	Clustering factor: 1, ratio: 0.04 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -474,9 +574,15 @@ reading response
 reading response
     Index RDB$FOREIGN16 (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 28 querying service
+	Root page: 302, depth: 1, leaf buckets: 1, nodes: 28 querying service
 reading response
-	Average data length: 0.86, total dup: 23, max dup: 9 querying service
+	Average node length: 4.04, total dup: 23, max dup: 9 querying service
+reading response
+	Average key length: 2.89, compression ratio: 1.73 querying service
+reading response
+	Average prefix length: 4.14, average data length: 0.86 querying service
+reading response
+	Clustering factor: 1, ratio: 0.04 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -494,9 +600,15 @@ reading response
 reading response
     Index RDB$PRIMARY14 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 28 querying service
+	Root page: 273, depth: 1, leaf buckets: 1, nodes: 28 querying service
 reading response
-	Average data length: 9.11, total dup: 0, max dup: 0 querying service
+	Average node length: 13.11, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 12.07, compression ratio: 0.99 querying service
+reading response
+	Average prefix length: 2.89, average data length: 9.11 querying service
+reading response
+	Clustering factor: 1, ratio: 0.04 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -514,9 +626,11 @@ reading response
 reading response
 JOB (129) querying service
 reading response
-    Primary pointer page: 195, Index root page: 196 querying service
+    Primary pointer page: 217, Index root page: 218 querying service
 reading response
-    Data pages: 3, data page slots: 3, average fill: 72% querying service
+    Pointer pages: 1, data page slots: 3 querying service
+reading response
+    Data pages: 3, average fill: 72% querying service
 reading response
     Primary pages: 1, full pages: 1, swept pages: 0 querying service
 reading response
@@ -536,9 +650,15 @@ reading response
 reading response
     Index MAXSALX (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 31 querying service
+	Root page: 291, depth: 1, leaf buckets: 1, nodes: 31 querying service
 reading response
-	Average data length: 4.55, total dup: 5, max dup: 1 querying service
+	Average node length: 8.39, total dup: 5, max dup: 1 querying service
+reading response
+	Average key length: 7.35, compression ratio: 1.51 querying service
+reading response
+	Average prefix length: 6.55, average data length: 4.55 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -556,9 +676,15 @@ reading response
 reading response
     Index MINSALX (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 31 querying service
+	Root page: 290, depth: 1, leaf buckets: 1, nodes: 31 querying service
 reading response
-	Average data length: 4.26, total dup: 7, max dup: 2 querying service
+	Average node length: 8.03, total dup: 7, max dup: 2 querying service
+reading response
+	Average key length: 7.00, compression ratio: 1.57 querying service
+reading response
+	Average prefix length: 6.71, average data length: 4.26 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -576,9 +702,15 @@ reading response
 reading response
     Index RDB$FOREIGN3 (3) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 31 querying service
+	Root page: 295, depth: 1, leaf buckets: 1, nodes: 31 querying service
 reading response
-	Average data length: 1.39, total dup: 24, max dup: 20 querying service
+	Average node length: 4.61, total dup: 24, max dup: 20 querying service
+reading response
+	Average key length: 3.39, compression ratio: 1.23 querying service
+reading response
+	Average prefix length: 2.77, average data length: 1.39 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -596,9 +728,15 @@ reading response
 reading response
     Index RDB$PRIMARY2 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 31 querying service
+	Root page: 289, depth: 1, leaf buckets: 1, nodes: 31 querying service
 reading response
-	Average data length: 10.45, total dup: 0, max dup: 0 querying service
+	Average node length: 14.45, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 13.42, compression ratio: 1.24 querying service
+reading response
+	Average prefix length: 6.19, average data length: 10.45 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -616,11 +754,13 @@ reading response
 reading response
 PROJECT (132) querying service
 reading response
-    Primary pointer page: 202, Index root page: 203 querying service
+    Primary pointer page: 224, Index root page: 225 querying service
 reading response
-    Data pages: 2, data page slots: 2, average fill: 14% querying service
+    Pointer pages: 1, data page slots: 2 querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Data pages: 2, average fill: 14% querying service
+reading response
+    Primary pages: 1, full pages: 0, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -638,9 +778,15 @@ reading response
 reading response
     Index PRODTYPEX (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 6 querying service
+	Root page: 283, depth: 1, leaf buckets: 1, nodes: 6 querying service
 reading response
-	Average data length: 22.50, total dup: 0, max dup: 0 querying service
+	Average node length: 26.50, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 25.33, compression ratio: 1.05 querying service
+reading response
+	Average prefix length: 4.17, average data length: 22.50 querying service
+reading response
+	Clustering factor: 1, ratio: 0.17 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -658,9 +804,15 @@ reading response
 reading response
     Index RDB$11 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 6 querying service
+	Root page: 281, depth: 1, leaf buckets: 1, nodes: 6 querying service
 reading response
-	Average data length: 13.33, total dup: 0, max dup: 0 querying service
+	Average node length: 17.33, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 15.50, compression ratio: 0.88 querying service
+reading response
+	Average prefix length: 0.33, average data length: 13.33 querying service
+reading response
+	Clustering factor: 1, ratio: 0.17 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -678,9 +830,15 @@ reading response
 reading response
     Index RDB$FOREIGN13 (3) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 6 querying service
+	Root page: 300, depth: 1, leaf buckets: 1, nodes: 6 querying service
 reading response
-	Average data length: 1.33, total dup: 0, max dup: 0 querying service
+	Average node length: 4.67, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 3.50, compression ratio: 0.57 querying service
+reading response
+	Average prefix length: 0.67, average data length: 1.33 querying service
+reading response
+	Clustering factor: 1, ratio: 0.17 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -698,9 +856,15 @@ reading response
 reading response
     Index RDB$PRIMARY12 (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 6 querying service
+	Root page: 282, depth: 1, leaf buckets: 1, nodes: 6 querying service
 reading response
-	Average data length: 4.83, total dup: 0, max dup: 0 querying service
+	Average node length: 8.83, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 7.00, compression ratio: 0.71 querying service
+reading response
+	Average prefix length: 0.17, average data length: 4.83 querying service
+reading response
+	Clustering factor: 1, ratio: 0.17 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -718,11 +882,13 @@ reading response
 reading response
 PROJ_DEPT_BUDGET (136) querying service
 reading response
-    Primary pointer page: 210, Index root page: 211 querying service
+    Primary pointer page: 232, Index root page: 233 querying service
 reading response
-    Data pages: 2, data page slots: 2, average fill: 39% querying service
+    Pointer pages: 1, data page slots: 2 querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Data pages: 2, average fill: 39% querying service
+reading response
+    Primary pages: 1, full pages: 0, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -740,9 +906,15 @@ reading response
 reading response
     Index RDB$FOREIGN18 (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 24 querying service
+	Root page: 303, depth: 1, leaf buckets: 1, nodes: 24 querying service
 reading response
-	Average data length: 0.71, total dup: 15, max dup: 5 querying service
+	Average node length: 3.92, total dup: 15, max dup: 5 querying service
+reading response
+	Average key length: 2.79, compression ratio: 1.07 querying service
+reading response
+	Average prefix length: 2.29, average data length: 0.71 querying service
+reading response
+	Clustering factor: 1, ratio: 0.04 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -760,9 +932,15 @@ reading response
 reading response
     Index RDB$FOREIGN19 (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 24 querying service
+	Root page: 304, depth: 1, leaf buckets: 1, nodes: 24 querying service
 reading response
-	Average data length: 1.00, total dup: 19, max dup: 8 querying service
+	Average node length: 4.21, total dup: 19, max dup: 8 querying service
+reading response
+	Average key length: 3.04, compression ratio: 1.64 querying service
+reading response
+	Average prefix length: 4.00, average data length: 1.00 querying service
+reading response
+	Clustering factor: 1, ratio: 0.04 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -780,9 +958,15 @@ reading response
 reading response
     Index RDB$PRIMARY17 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 24 querying service
+	Root page: 272, depth: 1, leaf buckets: 1, nodes: 24 querying service
 reading response
-	Average data length: 6.83, total dup: 0, max dup: 0 querying service
+	Average node length: 10.71, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 9.67, compression ratio: 1.97 querying service
+reading response
+	Average prefix length: 12.17, average data length: 6.83 querying service
+reading response
+	Clustering factor: 1, ratio: 0.04 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -800,11 +984,13 @@ reading response
 reading response
 SALARY_HISTORY (137) querying service
 reading response
-    Primary pointer page: 212, Index root page: 213 querying service
+    Primary pointer page: 234, Index root page: 235 querying service
 reading response
-    Data pages: 1, data page slots: 1, average fill: 58% querying service
+    Pointer pages: 1, data page slots: 1 querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Data pages: 1, average fill: 58% querying service
+reading response
+    Primary pages: 1, full pages: 0, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -822,9 +1008,15 @@ reading response
 reading response
     Index CHANGEX (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 49 querying service
+	Root page: 271, depth: 1, leaf buckets: 1, nodes: 49 querying service
 reading response
-	Average data length: 0.31, total dup: 46, max dup: 21 querying service
+	Average node length: 3.37, total dup: 46, max dup: 21 querying service
+reading response
+	Average key length: 2.35, compression ratio: 2.98 querying service
+reading response
+	Average prefix length: 6.69, average data length: 0.31 querying service
+reading response
+	Clustering factor: 1, ratio: 0.02 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -842,9 +1034,15 @@ reading response
 reading response
     Index RDB$FOREIGN21 (3) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 49 querying service
+	Root page: 305, depth: 1, leaf buckets: 1, nodes: 49 querying service
 reading response
-	Average data length: 0.90, total dup: 16, max dup: 2 querying service
+	Average node length: 4.12, total dup: 16, max dup: 2 querying service
+reading response
+	Average key length: 3.10, compression ratio: 0.75 querying service
+reading response
+	Average prefix length: 1.43, average data length: 0.90 querying service
+reading response
+	Clustering factor: 1, ratio: 0.02 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -862,9 +1060,15 @@ reading response
 reading response
     Index RDB$PRIMARY20 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 49 querying service
+	Root page: 269, depth: 1, leaf buckets: 1, nodes: 49 querying service
 reading response
-	Average data length: 18.29, total dup: 0, max dup: 0 querying service
+	Average node length: 22.29, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 21.27, compression ratio: 1.06 querying service
+reading response
+	Average prefix length: 4.31, average data length: 18.29 querying service
+reading response
+	Clustering factor: 1, ratio: 0.02 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -882,9 +1086,15 @@ reading response
 reading response
     Index UPDATERX (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 49 querying service
+	Root page: 270, depth: 1, leaf buckets: 1, nodes: 49 querying service
 reading response
-	Average data length: 0.29, total dup: 46, max dup: 28 querying service
+	Average node length: 3.35, total dup: 46, max dup: 28 querying service
+reading response
+	Average key length: 2.29, compression ratio: 2.48 querying service
+reading response
+	Average prefix length: 5.39, average data length: 0.29 querying service
+reading response
+	Clustering factor: 1, ratio: 0.02 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -902,11 +1112,13 @@ reading response
 reading response
 SALES (134) querying service
 reading response
-    Primary pointer page: 206, Index root page: 207 querying service
+    Primary pointer page: 228, Index root page: 229 querying service
 reading response
-    Data pages: 1, data page slots: 1, average fill: 68% querying service
+    Pointer pages: 1, data page slots: 1 querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Data pages: 1, average fill: 68% querying service
+reading response
+    Primary pages: 1, full pages: 0, swept pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -924,9 +1136,15 @@ reading response
 reading response
     Index NEEDX (1) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+	Root page: 275, depth: 1, leaf buckets: 1, nodes: 33 querying service
 reading response
-	Average data length: 2.55, total dup: 11, max dup: 6 querying service
+	Average node length: 5.97, total dup: 11, max dup: 6 querying service
+reading response
+	Average key length: 4.94, compression ratio: 1.10 querying service
+reading response
+	Average prefix length: 2.88, average data length: 2.55 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -944,9 +1162,15 @@ reading response
 reading response
     Index QTYX (3) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+	Root page: 277, depth: 1, leaf buckets: 1, nodes: 33 querying service
 reading response
-	Average data length: 1.85, total dup: 11, max dup: 3 querying service
+	Average node length: 5.06, total dup: 11, max dup: 3 querying service
+reading response
+	Average key length: 4.03, compression ratio: 3.23 querying service
+reading response
+	Average prefix length: 11.18, average data length: 1.85 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -964,9 +1188,15 @@ reading response
 reading response
     Index RDB$FOREIGN25 (4) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+	Root page: 307, depth: 1, leaf buckets: 1, nodes: 33 querying service
 reading response
-	Average data length: 0.52, total dup: 18, max dup: 4 querying service
+	Average node length: 3.55, total dup: 18, max dup: 4 querying service
+reading response
+	Average key length: 2.52, compression ratio: 1.19 querying service
+reading response
+	Average prefix length: 2.48, average data length: 0.52 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -984,9 +1214,15 @@ reading response
 reading response
     Index RDB$FOREIGN26 (5) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+	Root page: 308, depth: 1, leaf buckets: 1, nodes: 33 querying service
 reading response
-	Average data length: 0.45, total dup: 25, max dup: 7 querying service
+	Average node length: 3.67, total dup: 25, max dup: 7 querying service
+reading response
+	Average key length: 2.64, compression ratio: 1.01 querying service
+reading response
+	Average prefix length: 2.21, average data length: 0.45 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -1004,9 +1240,15 @@ reading response
 reading response
     Index RDB$PRIMARY24 (0) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+	Root page: 274, depth: 1, leaf buckets: 1, nodes: 33 querying service
 reading response
-	Average data length: 4.48, total dup: 0, max dup: 0 querying service
+	Average node length: 8.45, total dup: 0, max dup: 0 querying service
+reading response
+	Average key length: 7.42, compression ratio: 1.08 querying service
+reading response
+	Average prefix length: 3.52, average data length: 4.48 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response
@@ -1024,9 +1266,15 @@ reading response
 reading response
     Index SALESTATX (2) querying service
 reading response
-	Depth: 1, leaf buckets: 1, nodes: 33 querying service
+	Root page: 276, depth: 1, leaf buckets: 1, nodes: 33 querying service
 reading response
-	Average data length: 0.97, total dup: 27, max dup: 14 querying service
+	Average node length: 4.06, total dup: 27, max dup: 14 querying service
+reading response
+	Average key length: 3.03, compression ratio: 3.56 querying service
+reading response
+	Average prefix length: 9.82, average data length: 0.97 querying service
+reading response
+	Clustering factor: 1, ratio: 0.03 querying service
 reading response
 	Fill distribution: querying service
 reading response

@@ -10,7 +10,7 @@ Database header page information: querying service
 reading response
 	Flags			0 querying service
 reading response
-	Generation		28 querying service
+	Generation		29 querying service
 reading response
 	System Change Number	0 querying service
 reading response
@@ -24,11 +24,11 @@ reading response
 reading response
 	Oldest snapshot		2 querying service
 reading response
-	Next transaction	20 querying service
+	Next transaction	21 querying service
 reading response
 	Sequence number		0 querying service
 reading response
-	Next attachment ID	2 querying service
+	Next attachment ID	6 querying service
 reading response
 	Implementation		HW=AMD/Intel/x64 little-endian OS=Linux CC=gcc querying service
 reading response
@@ -38,7 +38,7 @@ reading response
 reading response
 	Next header page	0 querying service
 reading response
-	Clumplet End		98 querying service
+	Clumplet End		138 querying service
 reading response
 	Database dialect	1 querying service
 reading response
