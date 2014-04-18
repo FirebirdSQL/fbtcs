@@ -39,10 +39,10 @@ DOM20A                          SMALLINT Nullable
 DOM20A                          SMALLINT Nullable
                                 check (value > 100)
 Statement failed, SQLSTATE = 23000
-validation error for column FLD1, value "0"
+validation error for column "TAB20A"."FLD1", value "0"
 After line 1 in file domain_22b.sql
 Statement failed, SQLSTATE = 23000
-validation error for column FLD4, value "*** null ***"
+validation error for column "TAB20A"."FLD4", value "*** null ***"
 After line 4 in file domain_22b.sql
 
    FLD1         FLD2        FLD3 FLD4                 FLD5                              FLD6           FLD7                    FLD8 

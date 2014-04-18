@@ -682,6 +682,14 @@ gbak:    writing privilege for user SYSDBA
 gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
+gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user PUBLIC 
 gbak:    writing privilege for user SYSDBA 
 gbak:    writing privilege for user SYSDBA 
@@ -1083,5 +1091,5 @@ gbak:writing referential constraints
 gbak:writing check constraints 
 gbak:writing SQL roles 
 gbak:writing names mapping 
-gbak:closing file, committing, and finishing. 100864 bytes written 
+gbak:closing file, committing, and finishing. 101376 bytes written 
 Output completed
