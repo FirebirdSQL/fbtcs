@@ -1,0 +1,456 @@
+>> fb_sql_cur_field.sql
+create database "WHERE_GDB:curfield.fdb";
+
+set term !;
+
+---
+
+
+-- Test assignment with ':' in the l-value
+execute block returns (o integer)
+as
+  declare v1 integer;
+begin
+  v1 = 1;
+
+  o = v1;
+  suspend;
+
+  o = :v1;
+  suspend;
+
+  :v1 = 2;
+
+  :o = :v1;
+  suspend;
+end!
+
+
+---
+
+
+create table t1 (n1 integer, n2 integer, n3 integer)!
+
+create trigger t1_1 before insert on t1
+as
+begin
+  new.n2 = new.n1;
+end!
+
+-- Test assignment with ':' in the l-value
+create trigger t1_2 before insert on t1
+as
+begin
+  :new.n3 = :new.n1;
+end!
+
+insert into t1 (n1) values (11)!
+select * from t1!
+
+
+---
+
+
+create table t2 (n1 integer)!
+
+insert into t2 (n1) values (1)!
+insert into t2 (n1) values (2)!
+insert into t2 (n1) values (3)!
+
+execute block
+as
+begin
+  for select *
+        from t2
+        as cursor tables
+  do
+  begin
+    update t2 set n1 = n1 * 10 where current of tables;
+  end
+end!
+
+select * from t2 order by n1!
+
+execute block
+as
+  declare tables cursor for (
+    select *
+      from t2
+  );
+begin
+  open tables;
+  
+  while (1 = 1)
+  do
+  begin
+    fetch tables;
+    if (row_count = 0) then
+        leave;
+
+    update t2 set n1 = n1 * 10 where current of tables;
+  end
+
+  close tables;  
+end!
+
+select * from t2 order by n1!
+
+
+---
+
+
+execute block returns (out_id integer, out_name varchar(31))
+as
+begin
+  for select rdb$relation_id as id, rdb$relation_name as name
+        from rdb$relations
+        where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+        order by rdb$relation_name
+        as cursor tables
+  do
+  begin
+    out_id = tables.id;       -- without ':'
+    out_name = :tables.name;  -- with ':'
+    suspend;
+  end
+end!
+
+
+---
+
+
+execute block returns (out_id integer, out_name varchar(31))
+as
+begin
+  for select rdb$relation_id as id, rdb$relation_name as name
+        from rdb$relations
+        where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+        order by rdb$relation_name
+        into out_id, :out_name
+        as cursor tables
+  do
+  begin
+    suspend;
+  end
+end!
+
+
+---
+
+
+execute block returns (out_id integer, out_name varchar(31))
+as
+begin
+  for select rdb$relation_id as id, rdb$relation_name as name
+        from rdb$relations
+        where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+        order by rdb$relation_name
+        as cursor tables1
+  do
+  begin
+    for select rdb$relation_id as id, rdb$relation_name as name
+          from rdb$relations
+          where rdb$relation_id = :tables1.id
+          into out_id, :out_name
+    do
+    begin
+      suspend;
+    end
+  end
+end!
+
+
+---
+
+
+execute block returns (out_id integer, out_name varchar(31))
+as
+  declare tables cursor for (
+    select rdb$relation_id as id, rdb$relation_name as name
+      from rdb$relations
+      where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+      order by rdb$relation_name
+  );
+begin
+  open tables;
+  
+  while (1 = 1)
+  do
+  begin
+    fetch tables;
+    if (row_count = 0) then
+        leave;
+
+    out_id = tables.id; 
+    out_name = :tables.name; 
+    suspend; 
+  end
+
+  close tables;  
+
+  open tables;
+  
+  while (1 = 1)
+  do
+  begin
+    fetch tables into out_id, :out_name;
+    if (row_count = 0) then
+        leave;
+
+    suspend; 
+  end
+
+  close tables;  
+end!
+
+
+---
+
+
+execute block returns (out_id integer, out_name varchar(31))
+as
+  declare tables1 cursor for (
+    select rdb$relation_id as id, rdb$relation_name as name
+      from rdb$relations
+      where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+      order by rdb$relation_name
+  );
+
+  declare tables2 cursor for (
+    select rdb$relation_id as id, rdb$relation_name as name
+      from rdb$relations
+      where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+      and rdb$relation_id = :tables1.id
+      order by rdb$relation_name
+  );
+begin
+  open tables1;
+
+  open tables2;
+  fetch tables2;
+end!
+
+
+---
+
+
+-- Test view
+
+create view v1 as
+  select *
+    from (
+      select 1 n1
+        from rdb$database
+    ) a
+    full join (
+      select 2 n2
+        from rdb$database
+    ) b
+      on 1 = 0
+    order by a.n1!
+
+execute block returns (n1 integer, n2 integer)
+as
+begin
+  for select *
+        from v1
+        as cursor tables
+  do
+  begin
+    n1 = tables.n1;
+    n2 = tables.n2;
+    suspend;
+  end
+end!
+
+
+---
+
+
+-- Test access to a cursor out of scope
+execute block returns (out_id integer, out_name varchar(31))
+as
+begin
+  for select rdb$relation_id as id, rdb$relation_name as name
+        from rdb$relations
+        where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+        order by rdb$relation_name
+        as cursor tables
+  do
+  begin
+  end
+
+  out_id = tables.id;
+  out_name = :tables.name;
+end!
+
+
+---
+
+
+-- Test write to a field cursor - 1
+execute block returns (out_id integer, out_name varchar(31))
+as
+  declare tables cursor for (
+    select rdb$relation_id as id, rdb$relation_name as name
+      from rdb$relations
+      where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+      order by rdb$relation_name
+  );
+begin
+  tables.id = 1;
+end!
+
+
+---
+
+
+-- Test write to a field cursor - 2
+execute block returns (out_id integer, out_name varchar(31))
+as
+begin
+  for select rdb$relation_id as id, rdb$relation_name as name
+        from rdb$relations
+        where rdb$relation_name in ('RDB$PAGES', 'RDB$DATABASE', 'RDB$FIELDS')
+        order by rdb$relation_name
+        as cursor tables
+  do
+  begin
+    tables.id = 1;
+  end
+end!
+
+
+---
+
+
+-- Test read a closed cursor
+execute block returns (out_id integer, out_name varchar(31))
+as
+  declare tables cursor for (
+    select rdb$relation_id as id
+      from rdb$database
+  );
+begin
+  out_id = tables.id; 
+end!
+
+
+---
+
+
+-- Test read a derived expression of a closed cursor
+execute block returns (out_id integer)
+as
+  declare tables cursor for (
+    select 1 as id
+      from rdb$database
+  );
+begin
+  out_id = tables.id; 
+end!
+
+
+---
+
+
+-- Test read a opened but not fetched cursor
+execute block returns (out_id integer, out_name varchar(31))
+as
+  declare tables cursor for (
+    select rdb$relation_id as id
+      from rdb$database
+  );
+begin
+  open tables;
+  out_id = tables.id; 
+end!
+
+
+---
+
+
+-- Test read a cursor in the eof state
+execute block returns (out_id integer, out_name varchar(31))
+as
+  declare tables cursor for (
+    select rdb$relation_id as id
+      from rdb$database
+  );
+begin
+  open tables;
+  fetch tables;
+  fetch tables;
+  out_id = tables.id; 
+end!
+
+
+---
+
+
+-- Test duplicate cursor - 1
+execute block returns (out_id integer, out_name varchar(31))
+as
+  declare tables cursor for (
+    select rdb$relation_id as id
+      from rdb$database
+  );
+
+  declare tables cursor for (
+    select rdb$relation_id as id
+      from rdb$database
+  );
+begin
+end!
+
+
+---
+
+
+-- Test duplicate cursor - 2
+execute block returns (out_id integer, out_name varchar(31))
+as
+  declare tables cursor for (
+    select rdb$relation_id as id
+      from rdb$database
+  );
+begin
+  for select rdb$relation_id as id
+        from rdb$database
+        as cursor tables
+  do
+  begin
+  end
+end!
+
+
+---
+
+
+-- Test duplicate cursor - 3
+execute block returns (out_id integer, out_name varchar(31))
+as
+begin
+  for select rdb$relation_id as id
+        from rdb$database
+        as cursor tables
+  do
+  begin
+    for select rdb$relation_id as id
+          from rdb$database
+          as cursor tables
+    do
+    begin
+    end
+  end
+end!
+
+
+---
+
+drop database!
+
+exit!
+
+$ ISQL -q -m -e -i fb_sql_cur_field.sql
+$ DELETE fb_sql_cur_field*
