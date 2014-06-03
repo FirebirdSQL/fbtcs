@@ -69,8 +69,8 @@ err: print_error();
 >> ver5.sql 
 SET NAMES DOS437;
 connect "WHERE_GDB:tests.gdb";
-SELECT C_437_25 FROM TEST_TABLE1;
-SELECT C_437_25 FROM TEST_TABLE2;
+SELECT C_437_25 FROM TEST_TABLE1 ORDER BY C_437_25;
+SELECT C_437_25 FROM TEST_TABLE2 ORDER BY C_437_25;
 quit;
 
 >> subq5.sql 
@@ -89,8 +89,8 @@ INSERT INTO TEST_TABLE2 (C_437_25)
     SELECT C_437_25 FROM STRING_TABLE 
        WHERE C_437_25 >= 'cæsium';
 commit;
-select C_437_25 from test_table1;
-select C_437_25 from test_table2;
+select C_437_25 from test_table1 ORDER BY C_437_25;
+select C_437_25 from test_table2 ORDER BY C_437_25;
 >> subq6.sql 
 SET NAMES DOS437;
 connect "WHERE_GDB:tests.gdb";
@@ -107,8 +107,8 @@ INSERT INTO TEST_TABLE2 (C_437_25)
     SELECT C_437_25 FROM STRING_TABLE 
        WHERE C_437_25 > 'cæsium';
 commit;
-select C_437_25 from test_table1;
-select C_437_25 from test_table2;
+select C_437_25 from test_table1 ORDER BY C_437_25;
+select C_437_25 from test_table2 ORDER BY C_437_25;
 
 $ GPRE subq5.e
 $ CC FLAG_CC subq5.c

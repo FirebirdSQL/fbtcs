@@ -86,7 +86,7 @@ err: print_error();
 >> ver10.sql 
 set names iso8859_1;
 connect "WHERE_GDB:tests.gdb";
-SELECT S_ROWID, C_ENUS, C_FRANCE FROM TEST_TABLE1;
+SELECT S_ROWID, C_ENUS, C_FRANCE FROM TEST_TABLE1 ORDER BY C_FRANCE;
 quit;
 
 >> subq10.sql 
@@ -100,7 +100,7 @@ INSERT INTO TEST_TABLE1
     SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 
     FROM STRING_TABLE ORDER BY C_FRANCE;
 
-select S_ROWID, C_ENUS, C_FRANCE from test_table1;
+select S_ROWID, C_ENUS, C_FRANCE from test_table1 ORDER BY C_FRANCE;
 commit;
 $ TYPE doc_s10
 $ GPRE subq10.e
