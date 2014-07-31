@@ -62,8 +62,6 @@ int main(int argc, const char** argv)
 	}
 	if (isc_dsql_set_cursor_name(userStatus, &stmt1, "C1", 0))
 		isc_print_status(userStatus);
-	if (isc_dsql_execute(userStatus, &gds__trans, &stmt1, 1, NULL))
-		isc_print_status(userStatus);
 
 	stmt2 = 0;
 	if (isc_dsql_allocate_statement(userStatus, &db, &stmt2))
@@ -73,6 +71,9 @@ int main(int argc, const char** argv)
 	{
 		isc_print_status(userStatus);
 	}
+
+	if (isc_dsql_execute(userStatus, &gds__trans, &stmt1, 1, NULL))
+		isc_print_status(userStatus);
 
 	printf("Original values:\n");
 
@@ -92,6 +93,16 @@ int main(int argc, const char** argv)
 		isc_print_status(userStatus);
 
 	if (isc_dsql_free_statement(userStatus, &stmt1, DSQL_close))
+		isc_print_status(userStatus);
+
+	if (isc_dsql_set_cursor_name(userStatus, &stmt1, "C2", 0))
+		isc_print_status(userStatus);
+
+	if (isc_dsql_prepare(userStatus, &gds__trans, &stmt1, 0,
+			"select n1, n2 from t1 for update", 1, outsqlda))
+		isc_print_status(userStatus);
+
+	if (isc_dsql_set_cursor_name(userStatus, &stmt1, "C2", 0))
 		isc_print_status(userStatus);
 
 	if (isc_dsql_execute(userStatus, &gds__trans, &stmt1, 1, NULL))
@@ -114,7 +125,7 @@ int main(int argc, const char** argv)
 	if (isc_dsql_free_statement(userStatus, &stmt1, DSQL_drop))
 		isc_print_status(userStatus);
 
-	if (isc_commit_transaction(userStatus, &gds__trans))
+	if (isc_rollback_transaction(userStatus, &gds__trans))
 		isc_print_status(userStatus);
 
 	if (isc_detach_database(userStatus, &db))
@@ -123,10 +134,168 @@ int main(int argc, const char** argv)
 	return 0;
 }
 
+>> p2.cpp
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <ibase.h>
+#include <firebird/Provider.h>
+
+using namespace Firebird;
+
+static IMaster* master = fb_get_master_interface();
+
+static void check(IStatus* s, const char* text)
+{
+	if (!s->isSuccess())
+		throw text;
+}
+
+inline const int* get(const unsigned char* b, int off)
+{
+	return reinterpret_cast<const int*>(b + off);
+}
+
+void scan2(IStatus* st, IResultSet* curs, ITransaction* tra, IStatement* stmt)
+{
+	IMessageMetadata* meta = curs->getMetadata(st);
+	check(st, "getMetadata");
+
+	unsigned l = meta->getMessageLength(st);
+	check(st, "getMessageLength");
+	unsigned char* buffer = new unsigned char[l];
+
+	const int* n1 = get(buffer, meta->getOffset(st, 0));
+	check(st, "getOffset");
+	const int* n2 = get(buffer, meta->getOffset(st, 1));
+	check(st, "getOffset-2");
+
+	meta->release();
+
+	while (curs->fetchNext(st, buffer))
+	{
+		printf("%d, %d\n", *n1, *n2);
+
+		if (stmt)
+		{
+			stmt->execute(st, tra, NULL, NULL, NULL, NULL);
+			check(st, "execute");
+		}
+	}
+	check(st, "fetchNext");
+
+	delete[] buffer;
+}
+
+void scan(IStatus* st, IStatement* s1, ITransaction* tra, IStatement* stmt)
+{
+	IResultSet* curs = s1->openCursor(st, tra, NULL, NULL, NULL);
+	check(st, "openCursor");
+
+	s1->setCursorName(st, "BadName");
+	if (st->isSuccess())
+		throw("setCursorName must fail");
+	st->init();
+
+	scan2(st, curs, tra, stmt);
+
+	curs->close(st);
+	check(st, "close cursor");
+}
+
+#define SELECT_SQL "select n1, n2 from t1 for update"
+#define UPDATE_SQL "update t1 set n2 = n2 * 2 where current of "
+
+int main()
+{
+	int rc = 0;
+
+	// declare pointers to required interfaces
+	IStatus* st = NULL;
+	IProvider* prov = NULL;
+	IAttachment* att = NULL;
+	ITransaction* tra = NULL;
+	IStatement* stmt1 = NULL;
+	IStatement* stmt2 = NULL;
+
+	try
+	{
+		st = master->getStatus();
+		prov = master->getDispatcher();
+
+		att = prov->attachDatabase(st, "WHERE_GDB:test2.gdb", 0, NULL);
+		check(st, "attachDatabase");
+
+		tra = att->startTransaction(st, 0, NULL);
+		check(st, "startTransaction");
+
+		stmt1 = att->prepare(st, tra, 0, SELECT_SQL,
+			3, IStatement::PREPARE_PREFETCH_METADATA);
+		check(st, "prepare");
+
+		stmt1->setCursorName(st, "CCC");
+		check(st, "setCursorName CCC");
+
+		stmt1->setCursorName(st, "C1");
+		check(st, "setCursorName C1");
+
+		stmt2 = att->prepare(st, tra, 0, UPDATE_SQL "C1",
+			3, IStatement::PREPARE_PREFETCH_METADATA);
+		check(st, "prepare 1");
+
+		printf("\n\nOriginal values:\n");
+		scan(st, stmt1, tra, stmt2);
+
+		stmt1->setCursorName(st, "C2");
+		check(st, "setCursorName C2");
+
+		stmt2->release();
+		stmt2 = att->prepare(st, tra, 0, UPDATE_SQL "C2",
+			3, IStatement::PREPARE_PREFETCH_METADATA);
+		check(st, "prepare 2");
+
+		printf("\nNext values:\n");
+		scan(st, stmt1, tra, stmt2);
+
+		IResultSet* rs = att->openCursor(st, tra, 0, SELECT_SQL, 3, NULL, NULL, NULL, "C3");
+		check(st, "openCursor C3");
+
+		stmt2->release();
+		stmt2 = att->prepare(st, tra, 0, UPDATE_SQL "C3",
+			3, IStatement::PREPARE_PREFETCH_METADATA);
+		check(st, "prepare 2");
+
+		printf("\nNext values:\n");
+		scan2(st, rs, tra, stmt2);
+
+		rs->release();
+
+		printf("\nFinal values:\n");
+		scan(st, stmt1, tra, NULL);
+
+		att->release();
+	}
+	catch (const char* text)
+	{
+		// handle error
+		rc = 1;
+		printf("%s:\n", text);
+		if (st)
+			isc_print_status(st->get());
+	}
+
+	return rc;
+}
+
+
 $ISQL -q -m -i init.sql
 $GPRE -m -e  p1.e
 $CC FLAG_CC p1.c
-$LINK FLAG_LINK p1 
+$LINK FLAG_LINK p1
 $RUN p1
-$DELETE -f p1* init.sql
+$CXX FLAG_CXX p2.cpp
+$LINK FLAG_LINK p2
+$RUN p2
+$DELETE -f p1* p2* init.sql
 $DROP WHERE_GDB:test2.gdb

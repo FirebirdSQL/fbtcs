@@ -1,3 +1,5 @@
+Invalid cursor declaration
+-Statement already has a cursor C1 assigned
 Original values:
 1, 11
 2, 22
@@ -7,3 +9,24 @@ New values:
 1, 22
 2, 44
 3, 66
+
+
+Original values:
+1, 11
+2, 22
+3, 33
+
+Next values:
+1, 22
+2, 44
+3, 66
+
+Next values:
+1, 44
+2, 88
+3, 132
+
+Final values:
+1, 88
+2, 176
+3, 264
