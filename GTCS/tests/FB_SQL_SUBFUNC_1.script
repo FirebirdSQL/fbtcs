@@ -1,6 +1,6 @@
 >> fb_sql_subfunc_1.sql
 set names iso8859_1;
-create database "WHERE_GDB:subfunc.fdb" USER 'qa_user1' PASSWORD 'qa_user1';
+create database "WHERE_GDB:subfunc.fdb" USER 'sysdba' PASSWORD 'masterkey';
 
 set term !;
 

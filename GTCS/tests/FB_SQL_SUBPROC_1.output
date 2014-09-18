@@ -1,5 +1,5 @@
 set names iso8859_1;
-create database "WHERE_GDB:subproc.fdb" USER 'qa_user1' PASSWORD 'qa_user1';
+create database "WHERE_GDB:subproc.fdb" USER 'sysdba' PASSWORD 'masterkey';
 
 set term !;
 
