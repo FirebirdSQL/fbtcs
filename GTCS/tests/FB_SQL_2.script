@@ -140,68 +140,54 @@ int main(int argc, const char** argv)
 #include <string.h>
 
 #include <ibase.h>
-#include <firebird/Provider.h>
+#include <firebird/Interface.h>
 
 using namespace Firebird;
 
 static IMaster* master = fb_get_master_interface();
-
-static void check(IStatus* s, const char* text)
-{
-	if (!s->isSuccess())
-		throw text;
-}
 
 inline const int* get(const unsigned char* b, int off)
 {
 	return reinterpret_cast<const int*>(b + off);
 }
 
-void scan2(IStatus* st, IResultSet* curs, ITransaction* tra, IStatement* stmt)
+void scan2(CheckStatusWrapper* st, IResultSet* curs, ITransaction* tra, IStatement* stmt)
 {
 	IMessageMetadata* meta = curs->getMetadata(st);
-	check(st, "getMetadata");
 
 	unsigned l = meta->getMessageLength(st);
-	check(st, "getMessageLength");
 	unsigned char* buffer = new unsigned char[l];
 
 	const int* n1 = get(buffer, meta->getOffset(st, 0));
-	check(st, "getOffset");
 	const int* n2 = get(buffer, meta->getOffset(st, 1));
-	check(st, "getOffset-2");
 
 	meta->release();
 
-	while (curs->fetchNext(st, buffer))
+	while (curs->fetchNext(st, buffer) == IStatus::FB_OK)
 	{
 		printf("%d, %d\n", *n1, *n2);
 
 		if (stmt)
 		{
 			stmt->execute(st, tra, NULL, NULL, NULL, NULL);
-			check(st, "execute");
 		}
 	}
-	check(st, "fetchNext");
 
 	delete[] buffer;
 }
 
-void scan(IStatus* st, IStatement* s1, ITransaction* tra, IStatement* stmt)
+void scan(CheckStatusWrapper* st, IStatement* s1, ITransaction* tra, IStatement* stmt)
 {
 	IResultSet* curs = s1->openCursor(st, tra, NULL, NULL, NULL);
-	check(st, "openCursor");
 
 	s1->setCursorName(st, "BadName");
-	if (st->isSuccess())
+	if (!(st->getStatus() & IStatus::FB_HAS_ERRORS))
 		throw("setCursorName must fail");
 	st->init();
 
 	scan2(st, curs, tra, stmt);
 
 	curs->close(st);
-	check(st, "close cursor");
 }
 
 #define SELECT_SQL "select n1, n2 from t1 for update"
@@ -211,8 +197,9 @@ int main()
 {
 	int rc = 0;
 
+	CheckStatusWrapper st(master->getStatus());
+
 	// declare pointers to required interfaces
-	IStatus* st = NULL;
 	IProvider* prov = NULL;
 	IAttachment* att = NULL;
 	ITransaction* tra = NULL;
@@ -221,68 +208,49 @@ int main()
 
 	try
 	{
-		st = master->getStatus();
 		prov = master->getDispatcher();
+		att = prov->attachDatabase(&st, "WHERE_GDB:test2.gdb", 0, NULL);
+		tra = att->startTransaction(&st, 0, NULL);
 
-		att = prov->attachDatabase(st, "WHERE_GDB:test2.gdb", 0, NULL);
-		check(st, "attachDatabase");
-
-		tra = att->startTransaction(st, 0, NULL);
-		check(st, "startTransaction");
-
-		stmt1 = att->prepare(st, tra, 0, SELECT_SQL,
+		stmt1 = att->prepare(&st, tra, 0, SELECT_SQL,
 			3, IStatement::PREPARE_PREFETCH_METADATA);
-		check(st, "prepare");
+		stmt1->setCursorName(&st, "CCC");
+		stmt1->setCursorName(&st, "C1");
 
-		stmt1->setCursorName(st, "CCC");
-		check(st, "setCursorName CCC");
-
-		stmt1->setCursorName(st, "C1");
-		check(st, "setCursorName C1");
-
-		stmt2 = att->prepare(st, tra, 0, UPDATE_SQL "C1",
+		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C1",
 			3, IStatement::PREPARE_PREFETCH_METADATA);
-		check(st, "prepare 1");
-
 		printf("\n\nOriginal values:\n");
-		scan(st, stmt1, tra, stmt2);
+		scan(&st, stmt1, tra, stmt2);
 
-		stmt1->setCursorName(st, "C2");
-		check(st, "setCursorName C2");
-
-		stmt2->release();
-		stmt2 = att->prepare(st, tra, 0, UPDATE_SQL "C2",
-			3, IStatement::PREPARE_PREFETCH_METADATA);
-		check(st, "prepare 2");
-
-		printf("\nNext values:\n");
-		scan(st, stmt1, tra, stmt2);
-
-		IResultSet* rs = att->openCursor(st, tra, 0, SELECT_SQL, 3, NULL, NULL, NULL, "C3");
-		check(st, "openCursor C3");
+		stmt1->setCursorName(&st, "C2");
 
 		stmt2->release();
-		stmt2 = att->prepare(st, tra, 0, UPDATE_SQL "C3",
+		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C2",
 			3, IStatement::PREPARE_PREFETCH_METADATA);
-		check(st, "prepare 2");
 
 		printf("\nNext values:\n");
-		scan2(st, rs, tra, stmt2);
+		scan(&st, stmt1, tra, stmt2);
+
+		IResultSet* rs = att->openCursor(&st, tra, 0, SELECT_SQL, 3, NULL, NULL, NULL, "C3");
+
+		stmt2->release();
+		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C3",
+			3, IStatement::PREPARE_PREFETCH_METADATA);
+
+		printf("\nNext values:\n");
+		scan2(&st, rs, tra, stmt2);
 
 		rs->release();
 
 		printf("\nFinal values:\n");
-		scan(st, stmt1, tra, NULL);
+		scan(&st, stmt1, tra, NULL);
 
 		att->release();
 	}
-	catch (const char* text)
+	catch (const FbException& error)
 	{
-		// handle error
 		rc = 1;
-		printf("%s:\n", text);
-		if (st)
-			isc_print_status(st->get());
+		isc_print_status(error.getStatus()->getErrors());
 	}
 
 	return rc;
