@@ -151,7 +151,7 @@ inline const int* get(const unsigned char* b, int off)
 	return reinterpret_cast<const int*>(b + off);
 }
 
-void scan2(CheckStatusWrapper* st, IResultSet* curs, ITransaction* tra, IStatement* stmt)
+void scan2(ThrowStatusWrapper* st, IResultSet* curs, ITransaction* tra, IStatement* stmt)
 {
 	IMessageMetadata* meta = curs->getMetadata(st);
 
@@ -176,13 +176,22 @@ void scan2(CheckStatusWrapper* st, IResultSet* curs, ITransaction* tra, IStateme
 	delete[] buffer;
 }
 
-void scan(CheckStatusWrapper* st, IStatement* s1, ITransaction* tra, IStatement* stmt)
+void scan(ThrowStatusWrapper* st, IStatement* s1, ITransaction* tra, IStatement* stmt)
 {
 	IResultSet* curs = s1->openCursor(st, tra, NULL, NULL, NULL);
 
-	s1->setCursorName(st, "BadName");
+	try
+	{
+		s1->setCursorName(st, "BadName");
+	}
+	catch(const FbException& error)
+	{
+		fprintf(stderr, "setCursorName() failed: ");
+		isc_print_status(error.getStatus()->getErrors());
+	}
+
 	if (!(st->getStatus() & IStatus::FB_HAS_ERRORS))
-		throw("setCursorName must fail");
+		throw("setCursorName() must fail in scan()");
 	st->init();
 
 	scan2(st, curs, tra, stmt);
@@ -197,7 +206,7 @@ int main()
 {
 	int rc = 0;
 
-	CheckStatusWrapper st(master->getStatus());
+	ThrowStatusWrapper st(master->getStatus());
 
 	// declare pointers to required interfaces
 	IProvider* prov = NULL;

@@ -9,6 +9,18 @@ New values:
 1, 22
 2, 44
 3, 66
+setCursorName() failed: Dynamic SQL Error
+-SQL error code = -502
+-Invalid cursor declaration
+-Statement already has a cursor C1 assigned
+setCursorName() failed: Dynamic SQL Error
+-SQL error code = -502
+-Invalid cursor declaration
+-Statement already has a cursor C2 assigned
+setCursorName() failed: Dynamic SQL Error
+-SQL error code = -502
+-Invalid cursor declaration
+-Statement already has a cursor C2 assigned
 
 
 Original values:
