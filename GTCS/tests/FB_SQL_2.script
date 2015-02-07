@@ -178,7 +178,7 @@ void scan2(ThrowStatusWrapper* st, IResultSet* curs, ITransaction* tra, IStateme
 
 void scan(ThrowStatusWrapper* st, IStatement* s1, ITransaction* tra, IStatement* stmt)
 {
-	IResultSet* curs = s1->openCursor(st, tra, NULL, NULL, NULL);
+	IResultSet* curs = s1->openCursor(st, tra, NULL, NULL, NULL, 0);
 
 	try
 	{
@@ -240,7 +240,7 @@ int main()
 		printf("\nNext values:\n");
 		scan(&st, stmt1, tra, stmt2);
 
-		IResultSet* rs = att->openCursor(&st, tra, 0, SELECT_SQL, 3, NULL, NULL, NULL, "C3");
+		IResultSet* rs = att->openCursor(&st, tra, 0, SELECT_SQL, 3, NULL, NULL, NULL, "C3", 0);
 
 		stmt2->release();
 		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C3",
