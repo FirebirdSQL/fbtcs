@@ -175,7 +175,7 @@ static struct ptl_cmd {
 	{"LINK",		NULL,				fix_link,		0, "\t\tInvokes linker"},
 	{"MAKE",		NULL,				fix_isc,		0, "\t\t\"nmake\""},
 	{"PASCAL",		NULL,				fix_compile,	LANG_PASCAL, "\t\tInvokes pascal compiler"},
-	{"QLI",			"qli",				fix_isc,		0, "\t\t\"qli\""},
+	{"QLI",			"qli -e",				fix_isc,		0, "\t\t\"qli\""},
 	{"RUN",			NULL,				fix_isc,		0, "\t\tExecute in the shell"},
 	{"RUN_BG",		NULL,				fix_isc,		0, "\t\t\"sh\""},
 	{"SH",			NULL,				fix_isc,		0, "\t\t\"sh\""},
