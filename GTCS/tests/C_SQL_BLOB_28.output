@@ -1,9 +1,9 @@
 Test:
- CREATE VIEW VMB1 (TEST,ROW,BHALFK,DESC) AS SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
+ CREATE VIEW VMB1 (TEST,RID,BHALFK,DESC) AS SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
 -----------------------------------------------------------------------------------------
     VMB1
         TEST              text, length 30
-        ROW               short binary
+        RID               short binary
         BHALFK            BLOB, segment length 255, subtype TEXT
         DESC              text, length 100
 
@@ -12,10 +12,10 @@ Test:
     Security class SQL$376
 
 Test:
-  INSERT INTO VMB1 (TEST,ROW,BHALFK,DESC) VALUES (:Test_Name,:j,:BlobId,'Inserting blobs through views')
+  INSERT INTO VMB1 (TEST,RID,BHALFK,DESC) VALUES (:Test_Name,:j,:BlobId,'Inserting blobs through views')
 --------------------------------------------------------------------------------
 
-             TEST                ROW
+             TEST                RID
 ============================== ======
 
 blob028                            12

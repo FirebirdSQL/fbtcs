@@ -163,7 +163,7 @@ void scan2(ThrowStatusWrapper* st, IResultSet* curs, ITransaction* tra, IStateme
 
 	meta->release();
 
-	while (curs->fetchNext(st, buffer) == IStatus::FB_OK)
+	while (curs->fetchNext(st, buffer) == IStatus::RESULT_OK)
 	{
 		printf("%d, %d\n", *n1, *n2);
 
@@ -190,7 +190,7 @@ void scan(ThrowStatusWrapper* st, IStatement* s1, ITransaction* tra, IStatement*
 		isc_print_status(error.getStatus()->getErrors());
 	}
 
-	if (!(st->getStatus() & IStatus::FB_HAS_ERRORS))
+	if (!(st->getState() & IStatus::STATE_ERRORS))
 		throw("setCursorName() must fail in scan()");
 	st->init();
 
@@ -221,21 +221,18 @@ int main()
 		att = prov->attachDatabase(&st, "WHERE_GDB:test2.gdb", 0, NULL);
 		tra = att->startTransaction(&st, 0, NULL);
 
-		stmt1 = att->prepare(&st, tra, 0, SELECT_SQL,
-			3, IStatement::PREPARE_PREFETCH_METADATA);
+		stmt1 = att->prepare(&st, tra, 0, SELECT_SQL, 3, IStatement::PREPARE_PREFETCH_METADATA);
 		stmt1->setCursorName(&st, "CCC");
 		stmt1->setCursorName(&st, "C1");
 
-		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C1",
-			3, IStatement::PREPARE_PREFETCH_METADATA);
+		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C1", 3, IStatement::PREPARE_PREFETCH_METADATA);
 		printf("\n\nOriginal values:\n");
 		scan(&st, stmt1, tra, stmt2);
 
 		stmt1->setCursorName(&st, "C2");
 
 		stmt2->release();
-		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C2",
-			3, IStatement::PREPARE_PREFETCH_METADATA);
+		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C2", 	3, IStatement::PREPARE_PREFETCH_METADATA);
 
 		printf("\nNext values:\n");
 		scan(&st, stmt1, tra, stmt2);
@@ -243,8 +240,7 @@ int main()
 		IResultSet* rs = att->openCursor(&st, tra, 0, SELECT_SQL, 3, NULL, NULL, NULL, "C3", 0);
 
 		stmt2->release();
-		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C3",
-			3, IStatement::PREPARE_PREFETCH_METADATA);
+		stmt2 = att->prepare(&st, tra, 0, UPDATE_SQL "C3", 3, IStatement::PREPARE_PREFETCH_METADATA);
 
 		printf("\nNext values:\n");
 		scan2(&st, rs, tra, stmt2);

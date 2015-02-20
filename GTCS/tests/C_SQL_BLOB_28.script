@@ -31,7 +31,7 @@ EXEC SQL WHENEVER SQLERROR GO TO ERR_LBL;
 
 bool verbose;
 
-char Test[]="CREATE VIEW VMB1 (TEST,ROW,BHALFK,DESC) \
+char Test[]="CREATE VIEW VMB1 (TEST,RID,BHALFK,DESC) \
 AS SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1";
 
 void Underline(int);
@@ -104,7 +104,7 @@ EXEC SQL WHENEVER SQLERROR GO TO ERR_LBL;
 
 BASED_ON VMB1.TEST        Test_Name;
 BASED_ON VMB1.DESC        Comment;
-BASED_ON VMB1.ROW         Row_Id;
+BASED_ON VMB1.RID         Row_Id;
 BASED_ON VMB1.BHALFK      BlobId;
 
 bool verbose;
@@ -115,7 +115,7 @@ struct Buf{
 };
 struct Buf M;
 
-char Test[]=" INSERT INTO VMB1 (TEST,ROW,BHALFK,DESC) \
+char Test[]=" INSERT INTO VMB1 (TEST,RID,BHALFK,DESC) \
 VALUES (:Test_Name,:j,:BlobId,'Inserting blobs through views')";
 
 void Underline(int);
@@ -165,7 +165,7 @@ int Count;
     EXEC SQL
         CLOSE BCW;
     EXEC SQL
-        INSERT INTO VMB1 (TEST,ROW,BHALFK,DESC) 
+        INSERT INTO VMB1 (TEST,RID,BHALFK,DESC) 
         VALUES (:Test_Name,:j,:BlobId,"Inserting blobs through views");
     EXEC SQL COMMIT RELEASE;
     }
@@ -213,7 +213,6 @@ void CreateLine(char Bf[], int L)
 char      TempBuf[4],*s;
 int	  i,j,t,k;
 
-     
      t = sizeof(TempBuf);
      j = 0;
 
@@ -233,7 +232,7 @@ $ LINK FLAG_LINK blob028
 $ RUN blob028
 >> blob028.qli
 ready WHERE_GDB:sh_blobs_28.gdb;
-select test, row, desc, bhalfk from vmb1 where test = 'blob028';
+select test, rid, desc, bhalfk from vmb1 where test = 'blob028';
 finish;
 quit;
 $ QLI -n -a blob028.qli
