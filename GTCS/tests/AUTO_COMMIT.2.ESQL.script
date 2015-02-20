@@ -24,7 +24,7 @@
   connect "WHERE_GDB:ac2_test.gdb";
   set term go;
   create trigger trig_ins for t active after insert position 0 as
-  begin 
+  begin
     insert into u values (new.a*10);
     insert into v values (new.a*100);
   end go
