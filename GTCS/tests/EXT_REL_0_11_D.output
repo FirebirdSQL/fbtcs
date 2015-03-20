@@ -6,7 +6,7 @@ CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
  
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = HY004
-Dynamic SQL Error
+unsuccessful metadata update
 -CREATE TABLE EXT_TABLE failed
 -SQL error code = -607
 -Invalid command

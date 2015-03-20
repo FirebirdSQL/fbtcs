@@ -32,6 +32,7 @@ exception 11
 -e1
 -At procedure 'P1' line: 5, col: 3
 At procedure 'P4' line: 5, col: 3
+-At procedure 'P4' line: 7, col: 3
 After line 49 in file dsql_except_04.sql
 
            N 

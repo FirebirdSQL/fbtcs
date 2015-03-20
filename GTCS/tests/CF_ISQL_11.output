@@ -6,6 +6,7 @@ unsuccessful metadata update
 -SQL error code = -206
 -Column unknown
 -B
+-At line 1, column 45
 After line 1 in file cf_test.sql
 Statement failed, SQLSTATE = 42S22
 unsuccessful metadata update
@@ -14,5 +15,6 @@ unsuccessful metadata update
 -SQL error code = -206
 -Column unknown
 -A
+-At line 1, column 34
 After line 6 in file cf_test.sql
 There are no tables in this database
