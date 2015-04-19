@@ -2,6 +2,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
 -DEFINE TRIGGER failed
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_8"
+-Problematic key value is ("RDB$TRIGGER_NAME" = 'INS')
 Use CONNECT or CREATE DATABASE to specify a database
 
            A 

@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 23000
-validation error for column FIELD1, value "*** null ***"
+validation error for column "EXT_TABLE"."FIELD1", value "*** null ***"
 After line 3 in file isql.in
 
  FIELD1 FIELD2     

@@ -40,6 +40,7 @@ Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -STORE RDB$FIELDS failed
 -attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_2"
+-Problematic key value is ("RDB$FIELD_NAME" = 'DOM01A_1')
 After line 9 in file domain_01b.sql
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
