@@ -1,6 +1,6 @@
 >> fb_sql_subproc_1.sql
 set names iso8859_1;
-create database "WHERE_GDB:subproc.fdb" USER 'sysdba' PASSWORD 'masterkey';
+create database "WHERE_GDB:subproc.fdb";
 
 set term !;
 
@@ -219,7 +219,7 @@ grant execute on procedure p5 to user qa_user2!
 
 commit!
 set names utf8!
-connect "WHERE_GDB:subproc.fdb" USER 'qa_user2' PASSWORD 'qa_user2'!
+connect "WHERE_GDB:subproc.fdb" USER qa_user2 PASSWORD qa_user2!
 
 execute procedure p4!
 select * from t1 order by x1!

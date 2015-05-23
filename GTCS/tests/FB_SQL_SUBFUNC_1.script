@@ -1,6 +1,6 @@
 >> fb_sql_subfunc_1.sql
 set names iso8859_1;
-create database "WHERE_GDB:subfunc.fdb" USER 'sysdba' PASSWORD 'masterkey';
+create database "WHERE_GDB:subfunc.fdb";
 
 set term !;
 
@@ -165,7 +165,7 @@ grant execute on function f5 to user qa_user2!
 
 commit!
 set names utf8!
-connect "WHERE_GDB:subfunc.fdb" USER 'qa_user2' PASSWORD 'qa_user2'!
+connect "WHERE_GDB:subfunc.fdb" USER qa_user2 PASSWORD qa_user2!
 
 select f4() from rdb$database!
 select * from t1 order by x1!

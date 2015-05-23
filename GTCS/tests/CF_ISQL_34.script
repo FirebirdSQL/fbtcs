@@ -37,7 +37,7 @@ commit;
 
 >> cf_isql_34_1.sql
 
-CONNECT 'WHERE_GDB:cf_isql_34.fdb' USER 'qa_user1' PASSWORD 'qa_user1';
+CONNECT 'WHERE_GDB:cf_isql_34.fdb' USER qa_user1 PASSWORD qa_user1;
 
 INSERT INTO Restricted VALUES(1);
 commit;
@@ -47,7 +47,7 @@ commit;
 
 >> cf_isql_34_2.sql
 
-CONNECT 'WHERE_GDB:cf_isql_34.fdb' USER 'qa_user2' PASSWORD 'qa_user2';
+CONNECT 'WHERE_GDB:cf_isql_34.fdb' USER qa_user2 PASSWORD qa_user2;
 
 INSERT INTO Restricted VALUES(2);	-- should fail
 commit;
