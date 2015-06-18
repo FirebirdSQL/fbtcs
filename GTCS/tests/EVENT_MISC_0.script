@@ -17,7 +17,7 @@
 #            be fixed: 5540, the status is still open, I believe.
 #
 
-$ GBAK -r WHERE_FILES:asyn_evnts.gbk WHERE_GDB:asyn_evnts.gdb
+$ GBAK -replace WHERE_FILES:asyn_evnts.gbk WHERE_GDB:asyn_evnts.gdb
 >> event_custom.h
 
 /*
@@ -156,7 +156,7 @@ main(int argc, char* argv[])
 
     short	length,more_clients = TRUE,verbose = FALSE;
 
-    int		num_events,client_count = 0, loop_count, stat, i, total=0;
+    int		num_events,client_count = 0, loop_count, stat, i, total=0, sleep_count;
     int        pipe_fd[MAX_CLIENTS][2];
 
     int	count_array[MAX_CLIENTS],event_id;
@@ -213,6 +213,8 @@ main(int argc, char* argv[])
 /* Start LOOP_COUNT at NUM_EVENTS and continue looping until LOOP_COUNT
    reaches 0. */
 
+    sleep_count = 0;
+
     for ( loop_count = num_events ; loop_count > 0; ) {
 
 /* If an event has occurred then reset the event flag, get the event counts,
@@ -221,6 +223,10 @@ main(int argc, char* argv[])
 
 	if (!event) 
             {
+			if (sleep_count > 120)
+				break;
+			sleep_count += 5;
+
 #ifdef WIN_NT
             Sleep(5000);
 #else
