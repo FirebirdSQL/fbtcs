@@ -17,7 +17,7 @@ commit;
 
 >> cf_isql_32b.sql
 
-connect 'WHERE_GDB:cf_isql_32.fdb' USER 'SYSDBA' PASSWORD 'masterkey';
+connect 'WHERE_GDB:cf_isql_32.fdb' USER 'sysdba' PASSWORD 'masterkey';
 
 select rtrim((select max(rdb$relation_id) from rdb$database)) from rdb$database;
 

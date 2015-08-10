@@ -5,7 +5,7 @@
 
 >> cf_isql_31.sql
 
-CREATE DATABASE 'WHERE_GDB:cf_isql_31.fdb' USER 'SYSDBA' PASSWORD 'masterkey';
+CREATE DATABASE 'WHERE_GDB:cf_isql_31.fdb' USER 'sysdba' PASSWORD 'masterkey';
 
 set echo; 
 
