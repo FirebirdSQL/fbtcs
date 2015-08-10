@@ -1,0 +1,56 @@
+>> p1.sql
+create database 'WHERE_GDB:p1.fdb';
+>> p1.cpp
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <firebird/Interface.h>
+
+using namespace Firebird;
+
+static IMaster* master = fb_get_master_interface();
+
+int main()
+{
+	int rc = 0;
+
+	ThrowStatusWrapper st(master->getStatus());
+	IUtil* u = master->getUtilInterface();
+
+	// Avoid automatic attach as SYSDBA
+	setenv("ISC_PASSWORD", ".", 1);
+
+	try
+	{
+		IXpbBuilder* b = u->getXpbBuilder(&st, IXpbBuilder::DPB, NULL, 0);
+
+		b->insertString(&st, isc_dpb_user_name, "qa_user2");
+		b->insertBytes(&st, isc_dpb_password, "qa_user2", 8);
+
+		IAttachment* att = master->getDispatcher()->
+			attachDatabase(&st, "WHERE_GDB:p1.fdb", b->getBufferLength(&st), b->getBuffer(&st));
+		att->detach(&st);
+
+		for (b->rewind(&st); !b->isEof(&st); b->moveNext(&st))
+		{
+			printf("Tag %d, value %s\n", b->getTag(&st), b->getString(&st));
+		}
+	}
+	catch (const FbException& error)
+	{
+		rc = 1;
+		char s[1024];
+		u->formatStatus(s, sizeof(s), error.getStatus());
+		printf("\nUnexpected Error: %s\n", s);
+	}
+
+	return rc;
+}
+
+$ISQL -q -m -i p1.sql
+$CXX FLAG_CXX p1.cpp
+$LINK FLAG_LINK p1
+$RUN p1
+$DELETE -f p1*
+$DROP WHERE_GDB:p1.fdb

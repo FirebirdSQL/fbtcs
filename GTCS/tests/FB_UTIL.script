@@ -1,0 +1,52 @@
+>> p1.cpp
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <firebird/Interface.h>
+
+using namespace Firebird;
+
+static IMaster* master = fb_get_master_interface();
+
+int main()
+{
+	int rc = 0;
+
+	ThrowStatusWrapper st(master->getStatus());
+	IUtil* u = master->getUtilInterface();
+
+	try
+	{
+		ISC_DATE date = u->encodeDate(2015, 7, 23);
+		ISC_TIME time = u->encodeTime(18, 30, 8, 25);
+		unsigned int year, month, day, hours, minutes, seconds, fractions;
+		u->decodeDate(date, &year, &month, &day);
+		u->decodeTime(time, &hours, &minutes, &seconds, &fractions);
+		printf("Test was written %4d.%02d.%02d at %02d:%02d:%02d.%04d\n",
+			year, month, day, hours, minutes, seconds, fractions);
+
+		unsigned int cv = u->getClientVersion();
+		printf("Client version is %d.%d\n", cv >> 8, cv & 0xff);
+
+		// call with illegal parameters in order to get error and test
+		// formatStatus in catch block
+		u->getFbVersion(&st, NULL, NULL);
+	}
+	catch (const FbException& error)
+	{
+		rc = 1;
+		char s[1024];
+		u->formatStatus(s, sizeof(s), error.getStatus());
+		printf("\nError thrown: %s\n", s);
+	}
+
+	return rc;
+}
+
+
+$CXX FLAG_CXX p1.cpp
+$LINK FLAG_LINK p1
+$RUN p1
+$DELETE -f p1*
+#$DROP WHERE_GDB:p1.fdb
