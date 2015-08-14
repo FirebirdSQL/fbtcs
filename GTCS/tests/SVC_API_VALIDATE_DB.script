@@ -121,10 +121,18 @@ int main(int argc, char* argv[]){
 			// If there is no length, then we should be done .. let's check
 			if (!len)
 			{
-				if (*p != isc_info_end)
-					printf ("Format error ... <%d>\n", *p);
-				else
+				switch(*p)
+				{
+				case isc_info_end:
 					printf ("Output completed\n");
+					break;
+				case isc_info_data_not_ready:
+					continue;
+				default:
+					printf ("Format error ... <%d>\n", *p);
+					break;
+				}
+				fflush(stdout);
 				break;
 			}
 
