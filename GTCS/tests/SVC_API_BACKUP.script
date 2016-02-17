@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
 	char	*thd = thd_buff;
 	char	*x;
 	short	spblen;
-	char	thdlen;
+	short	thdlen;
 	char sendbuf[] = {isc_info_svc_line};
 //	ISC_STATUS loc_status[20];
 //	ISC_STATUS *stat = loc_status;
