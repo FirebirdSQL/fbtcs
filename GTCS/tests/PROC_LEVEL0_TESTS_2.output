@@ -4,11 +4,8 @@ Dynamic SQL Error
 -SQL error code = -104
 -Name longer than database column size
 After line 9 in file proc_level_tests_2.sql
-Global procedures:
+Global procedures
+
 Procedure Name                    Invalid Dependency, Type
 ================================= ======= =====================================
 PROC                                      
-
-Packaged procedures:
-Procedure Name                    Invalid Dependency, Type
-================================= ======= =====================================

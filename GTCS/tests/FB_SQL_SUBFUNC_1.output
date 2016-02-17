@@ -275,7 +275,7 @@ select rdb$function_blr from rdb$functions where rdb$function_name = 'F1'!
 
  RDB$FUNCTION_BLR 
 ================= 
-             e:f1 
+            e:1e2 
 ==============================================================================
 RDB$FUNCTION_BLR:  
         	blr_version5,

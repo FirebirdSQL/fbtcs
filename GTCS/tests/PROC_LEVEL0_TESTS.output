@@ -22,14 +22,11 @@ After line 11 in file proc_level0_tests.sql
 
 set term ; go
 show proc;
-Global procedures:
+Global procedures
+
 Procedure Name                    Invalid Dependency, Type
 ================================= ======= =====================================
 PABCDEFGHIJKLMNOPQRSTUVWXYZABCD           
-
-Packaged procedures:
-Procedure Name                    Invalid Dependency, Type
-================================= ======= =====================================
 execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
 
            A 

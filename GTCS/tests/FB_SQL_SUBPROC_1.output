@@ -334,7 +334,7 @@ select rdb$procedure_blr from rdb$procedures where rdb$procedure_name = 'P1'!
 
 RDB$PROCEDURE_BLR 
 ================= 
-            1a:f1 
+           1a:1e2 
 ==============================================================================
 RDB$PROCEDURE_BLR:  
         	blr_version5,
