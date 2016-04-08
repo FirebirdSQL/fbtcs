@@ -2,13 +2,13 @@
 Database "WHERE_GDB_EXTERNAL:employee.gdb"
 Database header page information:
 	Flags			0
-	Generation		29
+	Generation		30
 	System Change Number	0
 	Page size		4096
 	ODS version		12.0
-	Oldest transaction	1
-	Oldest active		2
-	Oldest snapshot		2
+	Oldest transaction	20
+	Oldest active		21
+	Oldest snapshot		21
 	Next transaction	21
 	Sequence number		0
 	Next attachment ID	6

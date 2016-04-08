@@ -10,7 +10,7 @@ Database header page information: querying service
 reading response
 	Flags			0 querying service
 reading response
-	Generation		29 querying service
+	Generation		30 querying service
 reading response
 	System Change Number	0 querying service
 reading response
@@ -18,11 +18,11 @@ reading response
 reading response
 	ODS version		12.0 querying service
 reading response
-	Oldest transaction	1 querying service
+	Oldest transaction	20 querying service
 reading response
-	Oldest active		2 querying service
+	Oldest active		21 querying service
 reading response
-	Oldest snapshot		2 querying service
+	Oldest snapshot		21 querying service
 reading response
 	Next transaction	21 querying service
 reading response
