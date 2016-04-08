@@ -10,6 +10,7 @@ FJ300	Fujima Port
 
 
 * Total Records Listed >>> 3
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
                Project
 Project No      Name

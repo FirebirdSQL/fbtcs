@@ -1,6 +1,7 @@
 Test:
  DECLARE BCW CURSOR FOR INSERT BLOB B256 INTO MB1
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_3.gdb"
 
              TEST                ROW
              NAME                ID

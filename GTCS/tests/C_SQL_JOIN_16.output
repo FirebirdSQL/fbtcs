@@ -8,6 +8,7 @@ Test:
 
 
 * Total Records Listed >>> 3
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_16.gdb"
 
    TOTAL      S1
 =========== ======

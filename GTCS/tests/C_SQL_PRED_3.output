@@ -13,6 +13,7 @@ Great Road	Groton	MA	01450
 3 Meat Market	Green Bay	WI	54305
 4142983288	
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
 
 Custno         Customer                   Contact              Zip

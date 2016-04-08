@@ -49,6 +49,7 @@ PO Box 1968, El Viejo Station	Modesto	CA	95353
 Harvard Square	Cambridge	MA	02139
 6172839229	
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
 
 Custno         Customer                   Contact              Zip

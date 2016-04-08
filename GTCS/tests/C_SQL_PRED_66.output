@@ -22,6 +22,7 @@ Mgr
 
 
 * Total Records Listed >>> 9
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
  Job
 =====

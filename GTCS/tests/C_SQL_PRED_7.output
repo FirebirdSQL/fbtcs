@@ -6,6 +6,7 @@ Test:
 
 
 * Total Records Listed >>> 1
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
                                                            Date
  Empno    Last Name    First Name  Job      Salary         Hired

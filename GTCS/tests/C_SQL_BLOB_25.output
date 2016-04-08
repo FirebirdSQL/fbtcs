@@ -1,6 +1,7 @@
 Test: 
  SET A BLOB TO NULL , COMMIT, INSERT DATA INTO THE BLOB 
 ------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_25.gdb"
 
              TEST                ROW
              NAME                ID

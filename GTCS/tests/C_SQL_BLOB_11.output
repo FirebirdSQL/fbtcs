@@ -1,6 +1,7 @@
 Test:
  Buffer size and MAXIMUM_SEGMENT > seg_length in db
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_11.gdb"
 
              TEST                ROW
              NAME                ID

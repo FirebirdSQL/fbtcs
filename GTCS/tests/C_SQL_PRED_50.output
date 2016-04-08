@@ -12,6 +12,7 @@ SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB FROM SALES S1 WHERE S1.PONUMB STARTI
 
 
 * Total Records Listed >>> 4
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
                       Purchase
 Custno  Total Value    Order #

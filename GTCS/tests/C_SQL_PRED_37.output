@@ -12,6 +12,7 @@ Test:
 
 
 * Total Records Listed >>> 4
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
 Deptno
 ======

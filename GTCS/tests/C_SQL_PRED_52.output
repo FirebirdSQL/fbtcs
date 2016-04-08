@@ -4,6 +4,7 @@ Test:
 
 
 * Total Records Listed >>> 0
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
    COUNT
 ===========

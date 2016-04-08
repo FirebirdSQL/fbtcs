@@ -5,6 +5,7 @@ Test:
 
 
 * Total Records Listed >>> 1
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_27.gdb"
 
     MIN         MAX         AVG     TOTAL
 =========== =========== =========== =====

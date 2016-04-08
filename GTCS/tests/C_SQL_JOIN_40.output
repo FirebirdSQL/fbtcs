@@ -11,6 +11,7 @@ Test:
 
 
 * Total Records Listed >>> 7
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_40.gdb"
 
                  COMP      TABLE                  COMP      TABLE
   S1     S2        S        ROW    S1     S2        S        ROW

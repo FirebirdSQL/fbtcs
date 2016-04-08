@@ -1,5 +1,6 @@
 Test:
  DECLARE TCR CURSOR FOR SELECT TEST_NAME,ROW_ID,B,COMMENT FROM MB1 WHERE ROW_ID <2 FOR UPDATE OF TEST_NAME,ROW_ID,B,COMMENT 
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_22.gdb"
 
              TEST                ROW
              NAME                ID

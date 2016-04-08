@@ -1,3 +1,4 @@
+Warning: cannot issue DDL statements against database "WHERE_GDB:index.gdb"
 Database "WHERE_GDB:index.gdb" readied as QLI_0
     DATA_TABLE1
 	Index IDX1_1 (unique)

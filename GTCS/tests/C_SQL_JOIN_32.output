@@ -10,6 +10,7 @@ Test:
 
 
 * Total Records Listed >>> 6
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_32.gdb"
 
                                                     TABLE                          TABLE
                                                      ROW                     S2     ROW

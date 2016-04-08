@@ -138,6 +138,7 @@ East Burke            Vermont
 Huntington            Vermont             
 Bloomington           Indiana             
 ... End of example 2.9.1 
+Warning: cannot issue DDL statements against database "WHERE_GDB:atlas_join_1.gdb"
 
           CITY            STATE
 ========================= =====

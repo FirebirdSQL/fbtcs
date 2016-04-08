@@ -8,6 +8,7 @@ Test:
 
 
 * Total Records Listed >>> 2
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
                                                       Head      Dept
 Deptno        Department          Mgrno Reports Level Dept     Budget

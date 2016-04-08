@@ -19,6 +19,7 @@ a-4                       ct1-4        2            unique-2     ct2-6
 
 
 * Total Records Listed >>> 15
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_20.gdb"
 
                 TABLE                 TABLE
 C1      C10      ROW  C1      C10      ROW

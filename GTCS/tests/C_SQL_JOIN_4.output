@@ -19,6 +19,7 @@ Tigers               Detroit               Michigan
 White Sox            Chicago               Illinois            
 Yankees              New York              New York            
 ... End of example 2.9.1 
+Warning: cannot issue DDL statements against database "WHERE_GDB:atlas_join_4.gdb"
 
      TEAM                                           STATE
      NAME                 CITY                      NAME

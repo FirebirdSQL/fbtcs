@@ -1,6 +1,7 @@
 Test:
  INSERT INTO MB1 (TEST_NAME,ROW_ID,B512) VALUES (:Test_Name,16,NULL)
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_16.gdb"
 
              TEST                ROW
              NAME                ID

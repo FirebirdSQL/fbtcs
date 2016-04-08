@@ -16,6 +16,7 @@ Test:
 
 
 * Total Records Listed >>> 6
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
  Empno    Last Name    First Name
 ====== =============== ==========

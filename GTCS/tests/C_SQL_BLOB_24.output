@@ -1,5 +1,6 @@
 Test:
  EXEC SQL UPDATE MB1 SET TEST_NAME = :Test_Name, ROW_ID = :Row_Id+100, B = :BlobId1,COMMENT = 'Mass Blob Update - single update statement' 
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_24.gdb"
 
              TEST                ROW
              NAME                ID

@@ -1,6 +1,7 @@
 Test:
  INSERT CURSOR BCW VALUES (:M.Buffer:M.BufferLen), M.Buffer is a pointer
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_18.gdb"
 
              TEST                ROW
              NAME                ID

@@ -1,6 +1,7 @@
 Test:
  CREATE VIEW VMB1 (TEST,RID,BHALFK,DESC) AS SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
 -----------------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_28.gdb"
     VMB1
         TEST              text, length 30
         RID               short binary
@@ -14,6 +15,7 @@ Test:
 Test:
   INSERT INTO VMB1 (TEST,RID,BHALFK,DESC) VALUES (:Test_Name,:j,:BlobId,'Inserting blobs through views')
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_28.gdb"
 
              TEST                RID
 ============================== ======

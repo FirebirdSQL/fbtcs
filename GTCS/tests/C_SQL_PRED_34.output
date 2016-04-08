@@ -122,6 +122,7 @@ VP
 
 
 * Total Records Listed >>> 59
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
  Job
 =====

@@ -1,3 +1,4 @@
 Test:
  INSERT CURSOR <blob cursor>...; ROLLBACK 
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_17.gdb"

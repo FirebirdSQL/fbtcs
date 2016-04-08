@@ -8,6 +8,7 @@ Test:
 * Total Records Listed >>> 1
 Welcome to QLI
 Query Language Interpreter
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
  Empno
 ======

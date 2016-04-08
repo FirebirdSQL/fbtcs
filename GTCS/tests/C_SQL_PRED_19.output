@@ -8,6 +8,7 @@ Test:
 
 
 * Total Records Listed >>> 2
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
 Deptno        Department          Mgrno      TOTAL
 ====== ========================= ====== ==============

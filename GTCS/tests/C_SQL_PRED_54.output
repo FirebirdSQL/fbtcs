@@ -14,6 +14,7 @@ Test:
 
 
 * Total Records Listed >>> 5
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
 Custno         Customer
 ====== =========================

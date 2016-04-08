@@ -1,6 +1,7 @@
 Test:
  INSERT CURSOR <blob-cursor> VALUES (:BUFFER:BUFFERLEN) - Buffer[0]=0
 --------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_15.gdb"
 
              TEST                ROW
              NAME                ID

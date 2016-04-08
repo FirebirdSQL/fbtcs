@@ -10,6 +10,7 @@ a-4       ct1-4     a-4       ct2-4
 
 
 * Total Records Listed >>> 6
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_6.gdb"
 
      TABLE      TABLE
 C1    ROW  C1    ROW

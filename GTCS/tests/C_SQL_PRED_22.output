@@ -13,6 +13,7 @@ Milwaukee                	WI  	53206	4142320000
 106	The Bike Mart            	Sam Grant                	499 Hamlin Avenue             
 Chicago                  	IL  	60624	3123828888	
 ------------------------------------------------------------------------------------------
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
 
 
 Custno         Customer                   Contact              Zip

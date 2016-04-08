@@ -1,3 +1,4 @@
+Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join.gdb"
 
                                COMP                  TEST               TABLE
   S1     S2     S3   SSCALE      S                   NAME                ROW
