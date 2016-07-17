@@ -10,7 +10,7 @@ Database header page information: querying service
 reading response
 	Flags			0 querying service
 reading response
-	Generation		29 querying service
+	Generation		30 querying service
 reading response
 	System Change Number	0 querying service
 reading response
@@ -18,11 +18,11 @@ reading response
 reading response
 	ODS version		12.0 querying service
 reading response
-	Oldest transaction	1 querying service
+	Oldest transaction	20 querying service
 reading response
-	Oldest active		2 querying service
+	Oldest active		21 querying service
 reading response
-	Oldest snapshot		2 querying service
+	Oldest snapshot		21 querying service
 reading response
 	Next transaction	21 querying service
 reading response
@@ -64,13 +64,15 @@ Analyzing database pages ... querying service
 reading response
 COUNTRY (128) querying service
 reading response
-    Primary pointer page: 215, Index root page: 216 querying service
+    Primary pointer page: 235, Index root page: 236 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
     Data pages: 1, average fill: 15% querying service
 reading response
-    Primary pages: 1, full pages: 0, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 0, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -88,13 +90,15 @@ reading response
 reading response
 CUSTOMER (133) querying service
 reading response
-    Primary pointer page: 226, Index root page: 227 querying service
+    Primary pointer page: 246, Index root page: 247 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
     Data pages: 1, average fill: 53% querying service
 reading response
-    Primary pages: 1, full pages: 0, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 0, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -112,13 +116,15 @@ reading response
 reading response
 DEPARTMENT (130) querying service
 reading response
-    Primary pointer page: 219, Index root page: 220 querying service
+    Primary pointer page: 240, Index root page: 241 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
     Data pages: 1, average fill: 45% querying service
 reading response
-    Primary pages: 1, full pages: 0, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 0, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -136,13 +142,15 @@ reading response
 reading response
 EMPLOYEE (131) querying service
 reading response
-    Primary pointer page: 221, Index root page: 222 querying service
+    Primary pointer page: 242, Index root page: 243 querying service
 reading response
     Pointer pages: 1, data page slots: 2 querying service
 reading response
     Data pages: 2, average fill: 43% querying service
 reading response
-    Primary pages: 2, full pages: 1, swept pages: 0 querying service
+    Primary pages: 2, secondary pages: 0, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 1 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -160,13 +168,15 @@ reading response
 reading response
 EMPLOYEE_PROJECT (135) querying service
 reading response
-    Primary pointer page: 230, Index root page: 231 querying service
+    Primary pointer page: 250, Index root page: 251 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
     Data pages: 1, average fill: 20% querying service
 reading response
-    Primary pages: 1, full pages: 0, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 0, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -184,13 +194,15 @@ reading response
 reading response
 JOB (129) querying service
 reading response
-    Primary pointer page: 217, Index root page: 218 querying service
+    Primary pointer page: 237, Index root page: 238 querying service
 reading response
     Pointer pages: 1, data page slots: 3 querying service
 reading response
     Data pages: 3, average fill: 72% querying service
 reading response
-    Primary pages: 1, full pages: 1, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 2, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 1 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -208,13 +220,15 @@ reading response
 reading response
 PROJECT (132) querying service
 reading response
-    Primary pointer page: 224, Index root page: 225 querying service
+    Primary pointer page: 244, Index root page: 245 querying service
 reading response
     Pointer pages: 1, data page slots: 2 querying service
 reading response
     Data pages: 2, average fill: 14% querying service
 reading response
-    Primary pages: 1, full pages: 0, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 1, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -232,13 +246,15 @@ reading response
 reading response
 PROJ_DEPT_BUDGET (136) querying service
 reading response
-    Primary pointer page: 232, Index root page: 233 querying service
+    Primary pointer page: 252, Index root page: 253 querying service
 reading response
     Pointer pages: 1, data page slots: 2 querying service
 reading response
     Data pages: 2, average fill: 39% querying service
 reading response
-    Primary pages: 1, full pages: 0, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 1, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -256,13 +272,15 @@ reading response
 reading response
 SALARY_HISTORY (137) querying service
 reading response
-    Primary pointer page: 234, Index root page: 235 querying service
+    Primary pointer page: 254, Index root page: 255 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
     Data pages: 1, average fill: 58% querying service
 reading response
-    Primary pages: 1, full pages: 0, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 0, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response
@@ -280,13 +298,15 @@ reading response
 reading response
 SALES (134) querying service
 reading response
-    Primary pointer page: 228, Index root page: 229 querying service
+    Primary pointer page: 248, Index root page: 249 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
     Data pages: 1, average fill: 68% querying service
 reading response
-    Primary pages: 1, full pages: 0, swept pages: 0 querying service
+    Primary pages: 1, secondary pages: 0, swept pages: 0 querying service
+reading response
+    Empty pages: 0, full pages: 0 querying service
 reading response
     Fill distribution: querying service
 reading response

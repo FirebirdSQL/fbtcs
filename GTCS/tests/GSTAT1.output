@@ -2,13 +2,13 @@
 Database "WHERE_GDB_EXTERNAL:employee.gdb"
 Database header page information:
 	Flags			0
-	Generation		29
+	Generation		30
 	System Change Number	0
 	Page size		4096
 	ODS version		12.0
-	Oldest transaction	1
-	Oldest active		2
-	Oldest snapshot		2
+	Oldest transaction	20
+	Oldest active		21
+	Oldest snapshot		21
 	Next transaction	21
 	Sequence number		0
 	Next attachment ID	6
@@ -29,10 +29,11 @@ File WHERE_GDB_EXTERNAL:employee.gdb is the only file
 
 Analyzing database pages ...
 COUNTRY (128)
-    Primary pointer page: 215, Index root page: 216
+    Primary pointer page: 235, Index root page: 236
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 15%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 1
 	20 - 39% = 0
@@ -41,10 +42,11 @@ COUNTRY (128)
 	80 - 99% = 0
 
 CUSTOMER (133)
-    Primary pointer page: 226, Index root page: 227
+    Primary pointer page: 246, Index root page: 247
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 53%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -53,10 +55,11 @@ CUSTOMER (133)
 	80 - 99% = 0
 
 DEPARTMENT (130)
-    Primary pointer page: 219, Index root page: 220
+    Primary pointer page: 240, Index root page: 241
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 45%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -65,10 +68,11 @@ DEPARTMENT (130)
 	80 - 99% = 0
 
 EMPLOYEE (131)
-    Primary pointer page: 221, Index root page: 222
+    Primary pointer page: 242, Index root page: 243
     Pointer pages: 1, data page slots: 2
     Data pages: 2, average fill: 43%
-    Primary pages: 2, full pages: 1, swept pages: 0
+    Primary pages: 2, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 1
     Fill distribution:
 	 0 - 19% = 1
 	20 - 39% = 0
@@ -77,10 +81,11 @@ EMPLOYEE (131)
 	80 - 99% = 0
 
 EMPLOYEE_PROJECT (135)
-    Primary pointer page: 230, Index root page: 231
+    Primary pointer page: 250, Index root page: 251
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 20%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 1
 	20 - 39% = 0
@@ -89,10 +94,11 @@ EMPLOYEE_PROJECT (135)
 	80 - 99% = 0
 
 JOB (129)
-    Primary pointer page: 217, Index root page: 218
+    Primary pointer page: 237, Index root page: 238
     Pointer pages: 1, data page slots: 3
     Data pages: 3, average fill: 72%
-    Primary pages: 1, full pages: 1, swept pages: 0
+    Primary pages: 1, secondary pages: 2, swept pages: 0
+    Empty pages: 0, full pages: 1
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -101,10 +107,11 @@ JOB (129)
 	80 - 99% = 1
 
 PROJECT (132)
-    Primary pointer page: 224, Index root page: 225
+    Primary pointer page: 244, Index root page: 245
     Pointer pages: 1, data page slots: 2
     Data pages: 2, average fill: 14%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 1, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 2
 	20 - 39% = 0
@@ -113,10 +120,11 @@ PROJECT (132)
 	80 - 99% = 0
 
 PROJ_DEPT_BUDGET (136)
-    Primary pointer page: 232, Index root page: 233
+    Primary pointer page: 252, Index root page: 253
     Pointer pages: 1, data page slots: 2
     Data pages: 2, average fill: 39%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 1, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 1
@@ -125,10 +133,11 @@ PROJ_DEPT_BUDGET (136)
 	80 - 99% = 0
 
 SALARY_HISTORY (137)
-    Primary pointer page: 234, Index root page: 235
+    Primary pointer page: 254, Index root page: 255
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 58%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -137,10 +146,11 @@ SALARY_HISTORY (137)
 	80 - 99% = 0
 
 SALES (134)
-    Primary pointer page: 228, Index root page: 229
+    Primary pointer page: 248, Index root page: 249
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 68%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0

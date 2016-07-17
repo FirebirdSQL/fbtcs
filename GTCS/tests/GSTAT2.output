@@ -2,13 +2,13 @@
 Database "WHERE_GDB_EXTERNAL:employee.gdb"
 Database header page information:
 	Flags			0
-	Generation		29
+	Generation		30
 	System Change Number	0
 	Page size		4096
 	ODS version		12.0
-	Oldest transaction	1
-	Oldest active		2
-	Oldest snapshot		2
+	Oldest transaction	20
+	Oldest active		21
+	Oldest snapshot		21
 	Next transaction	21
 	Sequence number		0
 	Next attachment ID	6
@@ -29,10 +29,11 @@ File WHERE_GDB_EXTERNAL:employee.gdb is the only file
 
 Analyzing database pages ...
 COUNTRY (128)
-    Primary pointer page: 215, Index root page: 216
+    Primary pointer page: 235, Index root page: 236
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 15%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 1
 	20 - 39% = 0
@@ -41,7 +42,7 @@ COUNTRY (128)
 	80 - 99% = 0
 
     Index RDB$PRIMARY1 (0)
-	Root page: 292, depth: 1, leaf buckets: 1, nodes: 14
+	Root page: 323, depth: 1, leaf buckets: 1, nodes: 14
 	Average node length: 10.50, total dup: 0, max dup: 0
 	Average key length: 8.64, compression ratio: 0.80
 	Average prefix length: 0.43, average data length: 6.50
@@ -54,10 +55,11 @@ COUNTRY (128)
 	    80 - 99% = 0
 
 CUSTOMER (133)
-    Primary pointer page: 226, Index root page: 227
+    Primary pointer page: 246, Index root page: 247
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 53%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -66,7 +68,7 @@ CUSTOMER (133)
 	80 - 99% = 0
 
     Index CUSTNAMEX (1)
-	Root page: 279, depth: 1, leaf buckets: 1, nodes: 15
+	Root page: 310, depth: 1, leaf buckets: 1, nodes: 15
 	Average node length: 19.87, total dup: 0, max dup: 0
 	Average key length: 18.27, compression ratio: 0.90
 	Average prefix length: 0.60, average data length: 15.87
@@ -79,7 +81,7 @@ CUSTOMER (133)
 	    80 - 99% = 0
 
     Index CUSTREGION (2)
-	Root page: 280, depth: 1, leaf buckets: 1, nodes: 15
+	Root page: 311, depth: 1, leaf buckets: 1, nodes: 15
 	Average node length: 21.27, total dup: 0, max dup: 0
 	Average key length: 20.20, compression ratio: 0.97
 	Average prefix length: 2.33, average data length: 17.27
@@ -92,7 +94,7 @@ CUSTOMER (133)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN23 (3)
-	Root page: 306, depth: 1, leaf buckets: 1, nodes: 15
+	Root page: 337, depth: 1, leaf buckets: 1, nodes: 15
 	Average node length: 8.60, total dup: 4, max dup: 4
 	Average key length: 6.93, compression ratio: 0.83
 	Average prefix length: 0.87, average data length: 4.87
@@ -105,7 +107,7 @@ CUSTOMER (133)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY22 (0)
-	Root page: 278, depth: 1, leaf buckets: 1, nodes: 15
+	Root page: 309, depth: 1, leaf buckets: 1, nodes: 15
 	Average node length: 4.20, total dup: 0, max dup: 0
 	Average key length: 3.13, compression ratio: 0.96
 	Average prefix length: 1.87, average data length: 1.13
@@ -118,10 +120,11 @@ CUSTOMER (133)
 	    80 - 99% = 0
 
 DEPARTMENT (130)
-    Primary pointer page: 219, Index root page: 220
+    Primary pointer page: 240, Index root page: 241
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 45%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -130,7 +133,7 @@ DEPARTMENT (130)
 	80 - 99% = 0
 
     Index BUDGETX (2)
-	Root page: 288, depth: 1, leaf buckets: 1, nodes: 21
+	Root page: 319, depth: 1, leaf buckets: 1, nodes: 21
 	Average node length: 5.67, total dup: 7, max dup: 3
 	Average key length: 4.62, compression ratio: 0.82
 	Average prefix length: 1.81, average data length: 2.00
@@ -143,7 +146,7 @@ DEPARTMENT (130)
 	    80 - 99% = 0
 
     Index RDB$4 (0)
-	Root page: 286, depth: 1, leaf buckets: 1, nodes: 21
+	Root page: 317, depth: 1, leaf buckets: 1, nodes: 21
 	Average node length: 17.95, total dup: 0, max dup: 0
 	Average key length: 16.57, compression ratio: 1.16
 	Average prefix length: 5.29, average data length: 13.95
@@ -156,7 +159,7 @@ DEPARTMENT (130)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN10 (4)
-	Root page: 299, depth: 1, leaf buckets: 1, nodes: 21
+	Root page: 330, depth: 1, leaf buckets: 1, nodes: 21
 	Average node length: 4.29, total dup: 3, max dup: 3
 	Average key length: 3.24, compression ratio: 0.60
 	Average prefix length: 0.81, average data length: 1.14
@@ -169,7 +172,7 @@ DEPARTMENT (130)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN6 (3)
-	Root page: 296, depth: 1, leaf buckets: 1, nodes: 21
+	Root page: 327, depth: 1, leaf buckets: 1, nodes: 21
 	Average node length: 4.10, total dup: 13, max dup: 4
 	Average key length: 2.95, compression ratio: 0.97
 	Average prefix length: 2.05, average data length: 0.81
@@ -182,7 +185,7 @@ DEPARTMENT (130)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY5 (1)
-	Root page: 287, depth: 1, leaf buckets: 1, nodes: 21
+	Root page: 318, depth: 1, leaf buckets: 1, nodes: 21
 	Average node length: 5.24, total dup: 0, max dup: 0
 	Average key length: 4.05, compression ratio: 0.74
 	Average prefix length: 1.29, average data length: 1.71
@@ -195,10 +198,11 @@ DEPARTMENT (130)
 	    80 - 99% = 0
 
 EMPLOYEE (131)
-    Primary pointer page: 221, Index root page: 222
+    Primary pointer page: 242, Index root page: 243
     Pointer pages: 1, data page slots: 2
     Data pages: 2, average fill: 43%
-    Primary pages: 2, full pages: 1, swept pages: 0
+    Primary pages: 2, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 1
     Fill distribution:
 	 0 - 19% = 1
 	20 - 39% = 0
@@ -207,7 +211,7 @@ EMPLOYEE (131)
 	80 - 99% = 0
 
     Index NAMEX (1)
-	Root page: 285, depth: 1, leaf buckets: 1, nodes: 42
+	Root page: 316, depth: 1, leaf buckets: 1, nodes: 42
 	Average node length: 19.52, total dup: 0, max dup: 0
 	Average key length: 18.50, compression ratio: 0.96
 	Average prefix length: 2.17, average data length: 15.52
@@ -220,7 +224,7 @@ EMPLOYEE (131)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN8 (2)
-	Root page: 297, depth: 1, leaf buckets: 1, nodes: 42
+	Root page: 328, depth: 1, leaf buckets: 1, nodes: 42
 	Average node length: 4.07, total dup: 23, max dup: 4
 	Average key length: 2.98, compression ratio: 1.01
 	Average prefix length: 2.19, average data length: 0.81
@@ -233,7 +237,7 @@ EMPLOYEE (131)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN9 (3)
-	Root page: 298, depth: 1, leaf buckets: 1, nodes: 42
+	Root page: 329, depth: 1, leaf buckets: 1, nodes: 42
 	Average node length: 10.43, total dup: 15, max dup: 4
 	Average key length: 9.40, compression ratio: 1.68
 	Average prefix length: 9.05, average data length: 6.79
@@ -246,7 +250,7 @@ EMPLOYEE (131)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY7 (0)
-	Root page: 284, depth: 1, leaf buckets: 1, nodes: 42
+	Root page: 315, depth: 1, leaf buckets: 1, nodes: 42
 	Average node length: 4.62, total dup: 0, max dup: 0
 	Average key length: 3.60, compression ratio: 0.69
 	Average prefix length: 1.17, average data length: 1.31
@@ -259,10 +263,11 @@ EMPLOYEE (131)
 	    80 - 99% = 0
 
 EMPLOYEE_PROJECT (135)
-    Primary pointer page: 230, Index root page: 231
+    Primary pointer page: 250, Index root page: 251
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 20%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 1
 	20 - 39% = 0
@@ -271,7 +276,7 @@ EMPLOYEE_PROJECT (135)
 	80 - 99% = 0
 
     Index RDB$FOREIGN15 (1)
-	Root page: 301, depth: 1, leaf buckets: 1, nodes: 28
+	Root page: 332, depth: 1, leaf buckets: 1, nodes: 28
 	Average node length: 4.29, total dup: 6, max dup: 2
 	Average key length: 3.25, compression ratio: 0.74
 	Average prefix length: 1.36, average data length: 1.04
@@ -284,7 +289,7 @@ EMPLOYEE_PROJECT (135)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN16 (2)
-	Root page: 302, depth: 1, leaf buckets: 1, nodes: 28
+	Root page: 333, depth: 1, leaf buckets: 1, nodes: 28
 	Average node length: 4.04, total dup: 23, max dup: 9
 	Average key length: 2.89, compression ratio: 1.73
 	Average prefix length: 4.14, average data length: 0.86
@@ -297,7 +302,7 @@ EMPLOYEE_PROJECT (135)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY14 (0)
-	Root page: 273, depth: 1, leaf buckets: 1, nodes: 28
+	Root page: 304, depth: 1, leaf buckets: 1, nodes: 28
 	Average node length: 13.11, total dup: 0, max dup: 0
 	Average key length: 12.07, compression ratio: 0.99
 	Average prefix length: 2.89, average data length: 9.11
@@ -310,10 +315,11 @@ EMPLOYEE_PROJECT (135)
 	    80 - 99% = 0
 
 JOB (129)
-    Primary pointer page: 217, Index root page: 218
+    Primary pointer page: 237, Index root page: 238
     Pointer pages: 1, data page slots: 3
     Data pages: 3, average fill: 72%
-    Primary pages: 1, full pages: 1, swept pages: 0
+    Primary pages: 1, secondary pages: 2, swept pages: 0
+    Empty pages: 0, full pages: 1
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -322,7 +328,7 @@ JOB (129)
 	80 - 99% = 1
 
     Index MAXSALX (2)
-	Root page: 291, depth: 1, leaf buckets: 1, nodes: 31
+	Root page: 322, depth: 1, leaf buckets: 1, nodes: 31
 	Average node length: 8.39, total dup: 5, max dup: 1
 	Average key length: 7.35, compression ratio: 1.51
 	Average prefix length: 6.55, average data length: 4.55
@@ -335,7 +341,7 @@ JOB (129)
 	    80 - 99% = 0
 
     Index MINSALX (1)
-	Root page: 290, depth: 1, leaf buckets: 1, nodes: 31
+	Root page: 321, depth: 1, leaf buckets: 1, nodes: 31
 	Average node length: 8.03, total dup: 7, max dup: 2
 	Average key length: 7.00, compression ratio: 1.57
 	Average prefix length: 6.71, average data length: 4.26
@@ -348,7 +354,7 @@ JOB (129)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN3 (3)
-	Root page: 295, depth: 1, leaf buckets: 1, nodes: 31
+	Root page: 326, depth: 1, leaf buckets: 1, nodes: 31
 	Average node length: 4.61, total dup: 24, max dup: 20
 	Average key length: 3.39, compression ratio: 1.23
 	Average prefix length: 2.77, average data length: 1.39
@@ -361,7 +367,7 @@ JOB (129)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY2 (0)
-	Root page: 289, depth: 1, leaf buckets: 1, nodes: 31
+	Root page: 320, depth: 1, leaf buckets: 1, nodes: 31
 	Average node length: 14.45, total dup: 0, max dup: 0
 	Average key length: 13.42, compression ratio: 1.24
 	Average prefix length: 6.19, average data length: 10.45
@@ -374,10 +380,11 @@ JOB (129)
 	    80 - 99% = 0
 
 PROJECT (132)
-    Primary pointer page: 224, Index root page: 225
+    Primary pointer page: 244, Index root page: 245
     Pointer pages: 1, data page slots: 2
     Data pages: 2, average fill: 14%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 1, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 2
 	20 - 39% = 0
@@ -386,7 +393,7 @@ PROJECT (132)
 	80 - 99% = 0
 
     Index PRODTYPEX (2)
-	Root page: 283, depth: 1, leaf buckets: 1, nodes: 6
+	Root page: 314, depth: 1, leaf buckets: 1, nodes: 6
 	Average node length: 26.50, total dup: 0, max dup: 0
 	Average key length: 25.33, compression ratio: 1.05
 	Average prefix length: 4.17, average data length: 22.50
@@ -399,7 +406,7 @@ PROJECT (132)
 	    80 - 99% = 0
 
     Index RDB$11 (0)
-	Root page: 281, depth: 1, leaf buckets: 1, nodes: 6
+	Root page: 312, depth: 1, leaf buckets: 1, nodes: 6
 	Average node length: 17.33, total dup: 0, max dup: 0
 	Average key length: 15.50, compression ratio: 0.88
 	Average prefix length: 0.33, average data length: 13.33
@@ -412,7 +419,7 @@ PROJECT (132)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN13 (3)
-	Root page: 300, depth: 1, leaf buckets: 1, nodes: 6
+	Root page: 331, depth: 1, leaf buckets: 1, nodes: 6
 	Average node length: 4.67, total dup: 0, max dup: 0
 	Average key length: 3.50, compression ratio: 0.57
 	Average prefix length: 0.67, average data length: 1.33
@@ -425,7 +432,7 @@ PROJECT (132)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY12 (1)
-	Root page: 282, depth: 1, leaf buckets: 1, nodes: 6
+	Root page: 313, depth: 1, leaf buckets: 1, nodes: 6
 	Average node length: 8.83, total dup: 0, max dup: 0
 	Average key length: 7.00, compression ratio: 0.71
 	Average prefix length: 0.17, average data length: 4.83
@@ -438,10 +445,11 @@ PROJECT (132)
 	    80 - 99% = 0
 
 PROJ_DEPT_BUDGET (136)
-    Primary pointer page: 232, Index root page: 233
+    Primary pointer page: 252, Index root page: 253
     Pointer pages: 1, data page slots: 2
     Data pages: 2, average fill: 39%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 1, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 1
@@ -450,7 +458,7 @@ PROJ_DEPT_BUDGET (136)
 	80 - 99% = 0
 
     Index RDB$FOREIGN18 (1)
-	Root page: 303, depth: 1, leaf buckets: 1, nodes: 24
+	Root page: 334, depth: 1, leaf buckets: 1, nodes: 24
 	Average node length: 3.92, total dup: 15, max dup: 5
 	Average key length: 2.79, compression ratio: 1.07
 	Average prefix length: 2.29, average data length: 0.71
@@ -463,7 +471,7 @@ PROJ_DEPT_BUDGET (136)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN19 (2)
-	Root page: 304, depth: 1, leaf buckets: 1, nodes: 24
+	Root page: 335, depth: 1, leaf buckets: 1, nodes: 24
 	Average node length: 4.21, total dup: 19, max dup: 8
 	Average key length: 3.04, compression ratio: 1.64
 	Average prefix length: 4.00, average data length: 1.00
@@ -476,7 +484,7 @@ PROJ_DEPT_BUDGET (136)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY17 (0)
-	Root page: 272, depth: 1, leaf buckets: 1, nodes: 24
+	Root page: 303, depth: 1, leaf buckets: 1, nodes: 24
 	Average node length: 10.71, total dup: 0, max dup: 0
 	Average key length: 9.67, compression ratio: 1.97
 	Average prefix length: 12.17, average data length: 6.83
@@ -489,10 +497,11 @@ PROJ_DEPT_BUDGET (136)
 	    80 - 99% = 0
 
 SALARY_HISTORY (137)
-    Primary pointer page: 234, Index root page: 235
+    Primary pointer page: 254, Index root page: 255
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 58%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -501,7 +510,7 @@ SALARY_HISTORY (137)
 	80 - 99% = 0
 
     Index CHANGEX (2)
-	Root page: 271, depth: 1, leaf buckets: 1, nodes: 49
+	Root page: 302, depth: 1, leaf buckets: 1, nodes: 49
 	Average node length: 3.37, total dup: 46, max dup: 21
 	Average key length: 2.35, compression ratio: 2.98
 	Average prefix length: 6.69, average data length: 0.31
@@ -514,7 +523,7 @@ SALARY_HISTORY (137)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN21 (3)
-	Root page: 305, depth: 1, leaf buckets: 1, nodes: 49
+	Root page: 336, depth: 1, leaf buckets: 1, nodes: 49
 	Average node length: 4.12, total dup: 16, max dup: 2
 	Average key length: 3.10, compression ratio: 0.75
 	Average prefix length: 1.43, average data length: 0.90
@@ -527,7 +536,7 @@ SALARY_HISTORY (137)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY20 (0)
-	Root page: 269, depth: 1, leaf buckets: 1, nodes: 49
+	Root page: 300, depth: 1, leaf buckets: 1, nodes: 49
 	Average node length: 22.29, total dup: 0, max dup: 0
 	Average key length: 21.27, compression ratio: 1.06
 	Average prefix length: 4.31, average data length: 18.29
@@ -540,7 +549,7 @@ SALARY_HISTORY (137)
 	    80 - 99% = 0
 
     Index UPDATERX (1)
-	Root page: 270, depth: 1, leaf buckets: 1, nodes: 49
+	Root page: 301, depth: 1, leaf buckets: 1, nodes: 49
 	Average node length: 3.35, total dup: 46, max dup: 28
 	Average key length: 2.29, compression ratio: 2.48
 	Average prefix length: 5.39, average data length: 0.29
@@ -553,10 +562,11 @@ SALARY_HISTORY (137)
 	    80 - 99% = 0
 
 SALES (134)
-    Primary pointer page: 228, Index root page: 229
+    Primary pointer page: 248, Index root page: 249
     Pointer pages: 1, data page slots: 1
     Data pages: 1, average fill: 68%
-    Primary pages: 1, full pages: 0, swept pages: 0
+    Primary pages: 1, secondary pages: 0, swept pages: 0
+    Empty pages: 0, full pages: 0
     Fill distribution:
 	 0 - 19% = 0
 	20 - 39% = 0
@@ -565,7 +575,7 @@ SALES (134)
 	80 - 99% = 0
 
     Index NEEDX (1)
-	Root page: 275, depth: 1, leaf buckets: 1, nodes: 33
+	Root page: 306, depth: 1, leaf buckets: 1, nodes: 33
 	Average node length: 5.97, total dup: 11, max dup: 6
 	Average key length: 4.94, compression ratio: 1.10
 	Average prefix length: 2.88, average data length: 2.55
@@ -578,7 +588,7 @@ SALES (134)
 	    80 - 99% = 0
 
     Index QTYX (3)
-	Root page: 277, depth: 1, leaf buckets: 1, nodes: 33
+	Root page: 308, depth: 1, leaf buckets: 1, nodes: 33
 	Average node length: 5.06, total dup: 11, max dup: 3
 	Average key length: 4.03, compression ratio: 3.23
 	Average prefix length: 11.18, average data length: 1.85
@@ -591,7 +601,7 @@ SALES (134)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN25 (4)
-	Root page: 307, depth: 1, leaf buckets: 1, nodes: 33
+	Root page: 338, depth: 1, leaf buckets: 1, nodes: 33
 	Average node length: 3.55, total dup: 18, max dup: 4
 	Average key length: 2.52, compression ratio: 1.19
 	Average prefix length: 2.48, average data length: 0.52
@@ -604,7 +614,7 @@ SALES (134)
 	    80 - 99% = 0
 
     Index RDB$FOREIGN26 (5)
-	Root page: 308, depth: 1, leaf buckets: 1, nodes: 33
+	Root page: 339, depth: 1, leaf buckets: 1, nodes: 33
 	Average node length: 3.67, total dup: 25, max dup: 7
 	Average key length: 2.64, compression ratio: 1.01
 	Average prefix length: 2.21, average data length: 0.45
@@ -617,7 +627,7 @@ SALES (134)
 	    80 - 99% = 0
 
     Index RDB$PRIMARY24 (0)
-	Root page: 274, depth: 1, leaf buckets: 1, nodes: 33
+	Root page: 305, depth: 1, leaf buckets: 1, nodes: 33
 	Average node length: 8.45, total dup: 0, max dup: 0
 	Average key length: 7.42, compression ratio: 1.08
 	Average prefix length: 3.52, average data length: 4.48
@@ -630,7 +640,7 @@ SALES (134)
 	    80 - 99% = 0
 
     Index SALESTATX (2)
-	Root page: 276, depth: 1, leaf buckets: 1, nodes: 33
+	Root page: 307, depth: 1, leaf buckets: 1, nodes: 33
 	Average node length: 4.06, total dup: 27, max dup: 14
 	Average key length: 3.03, compression ratio: 3.56
 	Average prefix length: 9.82, average data length: 0.97
