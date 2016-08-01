@@ -8,7 +8,7 @@ unsuccessful metadata update
 unsuccessful metadata update
 -Exception FAIL_MSG already exists
 Use CONNECT or CREATE DATABASE to specify a database
-Statement failed, SQLSTATE = 42000
+Statement failed, SQLSTATE = HY000
 exception 1
 -FAIL_MSG
 -THIS IS AN EXCEPTION !!
