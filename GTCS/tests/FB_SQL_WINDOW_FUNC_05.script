@@ -61,12 +61,12 @@ select n1,
 -- 4
 select n1,
        n2,
-       sum(n2) over (order by n1 rows between unbounded preceding and current row) x1,
-       sum(n2) over (order by n1 rows between current row and unbounded following) x2,
-       sum(n2) over (order by n1 rows between current row and current row) x3,
-       sum(n2) over (order by n1 rows between 2 following and 3 following) x4,
-       sum(n2) over (order by n1 rows between 3 preceding and 2 preceding) x5,
-       sum(n2) over (order by n1 rows between 3 preceding and unbounded following) x6
+       sum(n2) over (order by n1, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1, n2 rows between 3 preceding and unbounded following) x6
   from t1
   order by n1, n2;
 
@@ -133,12 +133,12 @@ select n1,
 -- 10
 select n1,
        n2,
-       sum(n2) over (order by n1 desc rows between unbounded preceding and current row) x1,
-       sum(n2) over (order by n1 desc rows between current row and unbounded following) x2,
-       sum(n2) over (order by n1 desc rows between current row and current row) x3,
-       sum(n2) over (order by n1 desc rows between 2 following and 3 following) x4,
-       sum(n2) over (order by n1 desc rows between 3 preceding and 2 preceding) x5,
-       sum(n2) over (order by n1 desc rows between 3 preceding and unbounded following) x6
+       sum(n2) over (order by n1 desc, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1 desc, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc, n2 rows between 3 preceding and unbounded following) x6
   from t1
   order by n1 desc, n2;
 
@@ -181,12 +181,12 @@ select n1,
 -- 14
 select n1,
        n2,
-       sum(n2) over (order by n1 desc nulls last rows between unbounded preceding and current row) x1,
-       sum(n2) over (order by n1 desc nulls last rows between current row and unbounded following) x2,
-       sum(n2) over (order by n1 desc nulls last rows between current row and current row) x3,
-       sum(n2) over (order by n1 desc nulls last rows between 2 following and 3 following) x4,
-       sum(n2) over (order by n1 desc nulls last rows between 3 preceding and 2 preceding) x5,
-       sum(n2) over (order by n1 desc nulls last rows between 3 preceding and unbounded following) x6
+       sum(n2) over (order by n1 desc nulls last, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls last, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls last, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls last, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls last, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls last, n2 rows between 3 preceding and unbounded following) x6
   from t1
   order by n1 desc nulls last, n2;
 
@@ -203,10 +203,10 @@ select n1,
 -- 16
 select n1,
        n2,
-       count(*) over (order by n1 nulls first rows between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x1,
-       sum(n2) over (order by n1 nulls first rows between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x2,
-       count(*) over (order by n1 nulls first rows between coalesce(n1, 0) following and coalesce(n1, 0) following) x3,
-       sum(n2) over (order by n1 nulls first rows between coalesce(n1, 0) following and coalesce(n1, 0) following) x4
+       count(*) over (order by n1 nulls first, n2 rows between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x1,
+       sum(n2) over (order by n1 nulls first, n2 rows between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x2,
+       count(*) over (order by n1 nulls first, n2 rows between coalesce(n1, 0) following and coalesce(n1, 0) following) x3,
+       sum(n2) over (order by n1 nulls first, n2 rows between coalesce(n1, 0) following and coalesce(n1, 0) following) x4
   from t1
   order by n1 nulls first, n2;
 
