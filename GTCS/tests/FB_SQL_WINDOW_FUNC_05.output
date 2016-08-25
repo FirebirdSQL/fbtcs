@@ -1,0 +1,454 @@
+connect "WHERE_GDB:winfunc.fdb";
+
+---
+
+recreate table t1 (
+  n1 integer,
+  n2 integer
+);
+
+insert into t1 values (null, 100000);
+insert into t1 values (null, 1000);
+insert into t1 values (1, 1);
+insert into t1 values (1, 10);
+insert into t1 values (1, 100);
+insert into t1 values (1, 10000);
+insert into t1 values (2, 20);
+insert into t1 values (3, 300);
+insert into t1 values (5, 500);
+insert into t1 values (null, 50);
+insert into t1 values (null, 60);
+
+commit;
+
+-- 1
+select n1,
+       n2,
+       sum(n2) over (partition by n1 order by n2 range between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 order by n2 range between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 order by n2 range between current row and current row) x3,
+       sum(n2) over (partition by n1 order by n2 range between 2 following and 3 following) x4,
+       sum(n2) over (partition by n1 order by n2 range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (partition by n1 order by n2 range between 3 preceding and unbounded following) x6
+  from t1
+  order by n2, n1;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+           1            1                     1                 10111                     1                <null>                <null>                 10111 
+           1           10                    11                 10110                    10                <null>                <null>                 10110 
+           2           20                    20                    20                    20                <null>                <null>                    20 
+      <null>           50                    50                101110                    50                <null>                <null>                101110 
+      <null>           60                   110                101060                    60                <null>                <null>                101060 
+           1          100                   111                 10100                   100                <null>                <null>                 10100 
+           3          300                   300                   300                   300                <null>                <null>                   300 
+           5          500                   500                   500                   500                <null>                <null>                   500 
+      <null>         1000                  1110                101000                  1000                <null>                <null>                101000 
+           1        10000                 10111                 10000                 10000                <null>                <null>                 10000 
+      <null>       100000                101110                100000                100000                <null>                <null>                100000 
+
+
+-- 2
+select n1,
+       n2,
+       sum(n2) over (partition by n1 order by n2, n1 rows between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 order by n2, n1 rows between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 order by n2, n1 rows between current row and current row) x3,
+       sum(n2) over (partition by n1 order by n2, n1 rows between 2 following and 3 following) x4,
+       sum(n2) over (partition by n1 order by n2, n1 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (partition by n1 order by n2, n1 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n2, n1;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+           1            1                     1                 10111                     1                 10100                <null>                 10111 
+           1           10                    11                 10110                    10                 10000                <null>                 10111 
+           2           20                    20                    20                    20                <null>                <null>                    20 
+      <null>           50                    50                101110                    50                101000                <null>                101110 
+      <null>           60                   110                101060                    60                100000                <null>                101110 
+           1          100                   111                 10100                   100                <null>                     1                 10111 
+           3          300                   300                   300                   300                <null>                <null>                   300 
+           5          500                   500                   500                   500                <null>                <null>                   500 
+      <null>         1000                  1110                101000                  1000                <null>                    50                101110 
+           1        10000                 10111                 10000                 10000                <null>                    11                 10111 
+      <null>       100000                101110                100000                100000                <null>                   110                101110 
+
+
+-- 3
+select n1,
+       n2,
+       sum(n2) over (order by n1 range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 range between current row and current row) x3,
+       sum(n2) over (order by n1 range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+      <null>           50                101110                112041                101110                101110                101110                112041 
+      <null>           60                101110                112041                101110                101110                101110                112041 
+      <null>         1000                101110                112041                101110                101110                101110                112041 
+      <null>       100000                101110                112041                101110                101110                101110                112041 
+           1            1                111221                 10931                 10111                   300                <null>                 10931 
+           1           10                111221                 10931                 10111                   300                <null>                 10931 
+           1          100                111221                 10931                 10111                   300                <null>                 10931 
+           1        10000                111221                 10931                 10111                   300                <null>                 10931 
+           2           20                111241                   820                    20                   500                <null>                 10931 
+           3          300                111541                   800                   300                   500                 10111                 10931 
+           5          500                112041                   500                   500                <null>                   320                   820 
+
+
+-- 4
+select n1,
+       n2,
+       sum(n2) over (order by n1 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 rows between current row and current row) x3,
+       sum(n2) over (order by n1 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+      <null>           50                    50                112041                    50                101000                <null>                112041 
+      <null>           60                   110                111991                    60                100001                <null>                112041 
+      <null>         1000                  1110                111931                  1000                    11                    50                112041 
+      <null>       100000                101110                110931                100000                   110                   110                112041 
+           1            1                101111                 10931                     1                 10100                  1060                111041 
+           1           10                101121                 10930                    10                 10020                101000                 11041 
+           1          100                101221                 10920                   100                   320                100001                 10991 
+           1        10000                111221                 10820                 10000                   800                    11                 10931 
+           2           20                111241                   820                    20                   500                   110                 10930 
+           3          300                111541                   800                   300                <null>                 10100                 10920 
+           5          500                112041                   500                   500                <null>                 10020                 10820 
+
+
+-- 5
+select n1,
+       n2,
+       sum(n2) over (order by n1 nulls first range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 nulls first range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 nulls first range between current row and current row) x3,
+       sum(n2) over (order by n1 nulls first range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 nulls first range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 nulls first range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 nulls first, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+      <null>           50                101110                112041                101110                101110                101110                112041 
+      <null>           60                101110                112041                101110                101110                101110                112041 
+      <null>         1000                101110                112041                101110                101110                101110                112041 
+      <null>       100000                101110                112041                101110                101110                101110                112041 
+           1            1                111221                 10931                 10111                   300                <null>                 10931 
+           1           10                111221                 10931                 10111                   300                <null>                 10931 
+           1          100                111221                 10931                 10111                   300                <null>                 10931 
+           1        10000                111221                 10931                 10111                   300                <null>                 10931 
+           2           20                111241                   820                    20                   500                <null>                 10931 
+           3          300                111541                   800                   300                   500                 10111                 10931 
+           5          500                112041                   500                   500                <null>                   320                   820 
+
+
+-- 6
+select n1,
+       n2,
+       sum(n2) over (order by n1 nulls first, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 nulls first, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 nulls first, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1 nulls first, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 nulls first, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 nulls first, n2 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 nulls first, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+      <null>           50                    50                112041                    50                101000                <null>                112041 
+      <null>           60                   110                111991                    60                100001                <null>                112041 
+      <null>         1000                  1110                111931                  1000                    11                    50                112041 
+      <null>       100000                101110                110931                100000                   110                   110                112041 
+           1            1                101111                 10931                     1                 10100                  1060                111991 
+           1           10                101121                 10930                    10                 10020                101000                111931 
+           1          100                101221                 10920                   100                   320                100001                110931 
+           1        10000                111221                 10820                 10000                   800                    11                 10931 
+           2           20                111241                   820                    20                   500                   110                 10930 
+           3          300                111541                   800                   300                <null>                 10100                 10920 
+           5          500                112041                   500                   500                <null>                 10020                 10820 
+
+
+-- 7
+select n1,
+       n2,
+       sum(n2) over (order by n1 nulls last range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 nulls last range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 nulls last range between current row and current row) x3,
+       sum(n2) over (order by n1 nulls last range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 nulls last range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 nulls last range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 nulls last, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+           1            1                 10111                112041                 10111                   300                <null>                112041 
+           1           10                 10111                112041                 10111                   300                <null>                112041 
+           1          100                 10111                112041                 10111                   300                <null>                112041 
+           1        10000                 10111                112041                 10111                   300                <null>                112041 
+           2           20                 10131                101930                    20                   500                <null>                112041 
+           3          300                 10431                101910                   300                   500                 10111                112041 
+           5          500                 10931                101610                   500                <null>                   320                101930 
+      <null>           50                112041                101110                101110                101110                101110                101110 
+      <null>           60                112041                101110                101110                101110                101110                101110 
+      <null>         1000                112041                101110                101110                101110                101110                101110 
+      <null>       100000                112041                101110                101110                101110                101110                101110 
+
+
+-- 8
+select n1,
+       n2,
+       sum(n2) over (order by n1 nulls last, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 nulls last, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 nulls last, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1 nulls last, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 nulls last, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 nulls last, n2 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 nulls last, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+           1            1                     1                112041                     1                 10100                <null>                112041 
+           1           10                    11                112040                    10                 10020                <null>                112041 
+           1          100                   111                112030                   100                   320                     1                112041 
+           1        10000                 10111                111930                 10000                   800                    11                112041 
+           2           20                 10131                101930                    20                   550                   110                112040 
+           3          300                 10431                101910                   300                   110                 10100                112030 
+           5          500                 10931                101610                   500                  1060                 10020                111930 
+      <null>           50                 10981                101110                    50                101000                   320                101930 
+      <null>           60                 11041                101060                    60                100000                   800                101910 
+      <null>         1000                 12041                101000                  1000                <null>                   550                101610 
+      <null>       100000                112041                100000                100000                <null>                   110                101110 
+
+
+-- 9
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc range between current row and current row) x3,
+       sum(n2) over (order by n1 desc range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+           5          500                   500                112041                   500                   320                <null>                112041 
+           3          300                   800                111541                   300                 10111                   500                112041 
+           2           20                   820                111241                    20                <null>                   500                112041 
+           1            1                 10931                111221                 10111                <null>                   300                111541 
+           1           10                 10931                111221                 10111                <null>                   300                111541 
+           1          100                 10931                111221                 10111                <null>                   300                111541 
+           1        10000                 10931                111221                 10111                <null>                   300                111541 
+      <null>           50                112041                101110                101110                101110                101110                101110 
+      <null>           60                112041                101110                101110                101110                101110                101110 
+      <null>         1000                112041                101110                101110                101110                101110                101110 
+      <null>       100000                112041                101110                101110                101110                101110                101110 
+
+
+-- 10
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc rows between current row and current row) x3,
+       sum(n2) over (order by n1 desc rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+           5          500                   500                112041                   500                    21                <null>                112041 
+           3          300                   800                111541                   300                    11                <null>                112041 
+           2           20                   820                111241                    20                   110                   500                112041 
+           1            1                   821                111221                     1                 10100                   800                112041 
+           1           10                   831                111220                    10                 10050                   320                111541 
+           1          100                   931                111210                   100                   110                    21                111241 
+           1        10000                 10931                111110                 10000                  1060                    11                111221 
+      <null>           50                 10981                101110                    50                101000                   110                111220 
+      <null>           60                 11041                101060                    60                100000                 10100                111210 
+      <null>         1000                 12041                101000                  1000                <null>                 10050                111110 
+      <null>       100000                112041                100000                100000                <null>                   110                101110 
+
+
+-- 11
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc nulls first range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls first range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls first range between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls first range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls first range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls first range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc nulls first, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+      <null>           50                101110                112041                101110                101110                101110                112041 
+      <null>           60                101110                112041                101110                101110                101110                112041 
+      <null>         1000                101110                112041                101110                101110                101110                112041 
+      <null>       100000                101110                112041                101110                101110                101110                112041 
+           5          500                101610                 10931                   500                   320                <null>                 10931 
+           3          300                101910                 10431                   300                 10111                   500                 10931 
+           2           20                101930                 10131                    20                <null>                   500                 10931 
+           1            1                112041                 10111                 10111                <null>                   300                 10431 
+           1           10                112041                 10111                 10111                <null>                   300                 10431 
+           1          100                112041                 10111                 10111                <null>                   300                 10431 
+           1        10000                112041                 10111                 10111                <null>                   300                 10431 
+
+
+-- 12
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc nulls first, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+      <null>           50                    50                112041                    50                101000                <null>                112041 
+      <null>           60                   110                111991                    60                100500                <null>                112041 
+      <null>         1000                  1110                111931                  1000                   800                    50                112041 
+      <null>       100000                101110                110931                100000                   320                   110                112041 
+           5          500                101610                 10931                   500                    21                  1060                111991 
+           3          300                101910                 10431                   300                    11                101000                111931 
+           2           20                101930                 10131                    20                   110                100500                110931 
+           1            1                101931                 10111                     1                 10100                   800                 10931 
+           1           10                101941                 10110                    10                 10000                   320                 10431 
+           1          100                102041                 10100                   100                <null>                    21                 10131 
+           1        10000                112041                 10000                 10000                <null>                    11                 10111 
+
+
+-- 13
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc nulls last range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls last range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls last range between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls last range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls last range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls last range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc nulls last, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+           5          500                   500                112041                   500                   320                <null>                112041 
+           3          300                   800                111541                   300                 10111                   500                112041 
+           2           20                   820                111241                    20                <null>                   500                112041 
+           1            1                 10931                111221                 10111                <null>                   300                111541 
+           1           10                 10931                111221                 10111                <null>                   300                111541 
+           1          100                 10931                111221                 10111                <null>                   300                111541 
+           1        10000                 10931                111221                 10111                <null>                   300                111541 
+      <null>           50                112041                101110                101110                101110                101110                101110 
+      <null>           60                112041                101110                101110                101110                101110                101110 
+      <null>         1000                112041                101110                101110                101110                101110                101110 
+      <null>       100000                112041                101110                101110                101110                101110                101110 
+
+
+-- 14
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc nulls last rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls last rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls last rows between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls last rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls last rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls last rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc nulls last, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5                    X6 
+============ ============ ===================== ===================== ===================== ===================== ===================== ===================== 
+           5          500                   500                112041                   500                    21                <null>                112041 
+           3          300                   800                111541                   300                    11                <null>                112041 
+           2           20                   820                111241                    20                   110                   500                112041 
+           1            1                   821                111221                     1                 10100                   800                112041 
+           1           10                   831                111220                    10                 10050                   320                111541 
+           1          100                   931                111210                   100                   110                    21                111241 
+           1        10000                 10931                111110                 10000                  1060                    11                111221 
+      <null>           50                 10981                101110                    50                101000                   110                111220 
+      <null>           60                 11041                101060                    60                100000                 10100                111210 
+      <null>         1000                 12041                101000                  1000                <null>                 10050                111110 
+      <null>       100000                112041                100000                100000                <null>                   110                101110 
+
+
+-- 15
+select n1,
+       n2,
+       count(*) over (order by n1 nulls first range between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x1,
+       sum(n2) over (order by n1 nulls first range between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x2,
+       count(*) over (order by n1 nulls first range between coalesce(n1, 0) following and coalesce(n1, 0) following) x3,
+       sum(n2) over (order by n1 nulls first range between coalesce(n1, 0) following and coalesce(n1, 0) following) x4
+  from t1
+  order by n1 nulls first, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4 
+============ ============ ===================== ===================== ===================== ===================== 
+      <null>           50                     4                101110                     4                101110 
+      <null>           60                     4                101110                     4                101110 
+      <null>         1000                     4                101110                     4                101110 
+      <null>       100000                     4                101110                     4                101110 
+           1            1                     0                <null>                     1                    20 
+           1           10                     0                <null>                     1                    20 
+           1          100                     0                <null>                     1                    20 
+           1        10000                     0                <null>                     1                    20 
+           2           20                     0                <null>                     0                <null> 
+           3          300                     0                <null>                     0                <null> 
+           5          500                     0                <null>                     0                <null> 
+
+
+-- 16
+select n1,
+       n2,
+       count(*) over (order by n1 nulls first rows between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x1,
+       sum(n2) over (order by n1 nulls first rows between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x2,
+       count(*) over (order by n1 nulls first rows between coalesce(n1, 0) following and coalesce(n1, 0) following) x3,
+       sum(n2) over (order by n1 nulls first rows between coalesce(n1, 0) following and coalesce(n1, 0) following) x4
+  from t1
+  order by n1 nulls first, n2;
+
+          N1           N2                    X1                    X2                    X3                    X4 
+============ ============ ===================== ===================== ===================== ===================== 
+      <null>           50                     1                    50                     1                    50 
+      <null>           60                     1                    60                     1                    60 
+      <null>         1000                     1                  1000                     1                  1000 
+      <null>       100000                     1                100000                     1                100000 
+           1            1                     1                100000                     1                    10 
+           1           10                     1                     1                     1                   100 
+           1          100                     1                    10                     1                 10000 
+           1        10000                     1                   100                     1                    20 
+           2           20                     1                   100                     1                   500 
+           3          300                     1                   100                     0                <null> 
+           5          500                     1                    10                     0                <null> 
+
+
+---
+
+exit;

@@ -1,0 +1,219 @@
+>> fb_sql_window_func_05.sql
+connect "WHERE_GDB:winfunc.fdb";
+
+---
+
+recreate table t1 (
+  n1 integer,
+  n2 integer
+);
+
+insert into t1 values (null, 100000);
+insert into t1 values (null, 1000);
+insert into t1 values (1, 1);
+insert into t1 values (1, 10);
+insert into t1 values (1, 100);
+insert into t1 values (1, 10000);
+insert into t1 values (2, 20);
+insert into t1 values (3, 300);
+insert into t1 values (5, 500);
+insert into t1 values (null, 50);
+insert into t1 values (null, 60);
+
+commit;
+
+-- 1
+select n1,
+       n2,
+       sum(n2) over (partition by n1 order by n2 range between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 order by n2 range between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 order by n2 range between current row and current row) x3,
+       sum(n2) over (partition by n1 order by n2 range between 2 following and 3 following) x4,
+       sum(n2) over (partition by n1 order by n2 range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (partition by n1 order by n2 range between 3 preceding and unbounded following) x6
+  from t1
+  order by n2, n1;
+
+-- 2
+select n1,
+       n2,
+       sum(n2) over (partition by n1 order by n2, n1 rows between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 order by n2, n1 rows between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 order by n2, n1 rows between current row and current row) x3,
+       sum(n2) over (partition by n1 order by n2, n1 rows between 2 following and 3 following) x4,
+       sum(n2) over (partition by n1 order by n2, n1 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (partition by n1 order by n2, n1 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n2, n1;
+
+-- 3
+select n1,
+       n2,
+       sum(n2) over (order by n1 range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 range between current row and current row) x3,
+       sum(n2) over (order by n1 range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1, n2;
+
+-- 4
+select n1,
+       n2,
+       sum(n2) over (order by n1 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 rows between current row and current row) x3,
+       sum(n2) over (order by n1 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1, n2;
+
+-- 5
+select n1,
+       n2,
+       sum(n2) over (order by n1 nulls first range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 nulls first range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 nulls first range between current row and current row) x3,
+       sum(n2) over (order by n1 nulls first range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 nulls first range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 nulls first range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 nulls first, n2;
+
+-- 6
+select n1,
+       n2,
+       sum(n2) over (order by n1 nulls first, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 nulls first, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 nulls first, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1 nulls first, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 nulls first, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 nulls first, n2 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 nulls first, n2;
+
+-- 7
+select n1,
+       n2,
+       sum(n2) over (order by n1 nulls last range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 nulls last range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 nulls last range between current row and current row) x3,
+       sum(n2) over (order by n1 nulls last range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 nulls last range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 nulls last range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 nulls last, n2;
+
+-- 8
+select n1,
+       n2,
+       sum(n2) over (order by n1 nulls last, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 nulls last, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 nulls last, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1 nulls last, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 nulls last, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 nulls last, n2 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 nulls last, n2;
+
+-- 9
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc range between current row and current row) x3,
+       sum(n2) over (order by n1 desc range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc, n2;
+
+-- 10
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc rows between current row and current row) x3,
+       sum(n2) over (order by n1 desc rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc, n2;
+
+-- 11
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc nulls first range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls first range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls first range between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls first range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls first range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls first range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc nulls first, n2;
+
+-- 12
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls first, n2 rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc nulls first, n2;
+
+-- 13
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc nulls last range between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls last range between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls last range between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls last range between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls last range between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls last range between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc nulls last, n2;
+
+-- 14
+select n1,
+       n2,
+       sum(n2) over (order by n1 desc nulls last rows between unbounded preceding and current row) x1,
+       sum(n2) over (order by n1 desc nulls last rows between current row and unbounded following) x2,
+       sum(n2) over (order by n1 desc nulls last rows between current row and current row) x3,
+       sum(n2) over (order by n1 desc nulls last rows between 2 following and 3 following) x4,
+       sum(n2) over (order by n1 desc nulls last rows between 3 preceding and 2 preceding) x5,
+       sum(n2) over (order by n1 desc nulls last rows between 3 preceding and unbounded following) x6
+  from t1
+  order by n1 desc nulls last, n2;
+
+-- 15
+select n1,
+       n2,
+       count(*) over (order by n1 nulls first range between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x1,
+       sum(n2) over (order by n1 nulls first range between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x2,
+       count(*) over (order by n1 nulls first range between coalesce(n1, 0) following and coalesce(n1, 0) following) x3,
+       sum(n2) over (order by n1 nulls first range between coalesce(n1, 0) following and coalesce(n1, 0) following) x4
+  from t1
+  order by n1 nulls first, n2;
+
+-- 16
+select n1,
+       n2,
+       count(*) over (order by n1 nulls first rows between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x1,
+       sum(n2) over (order by n1 nulls first rows between coalesce(n1, 0) preceding and coalesce(n1, 0) preceding) x2,
+       count(*) over (order by n1 nulls first rows between coalesce(n1, 0) following and coalesce(n1, 0) following) x3,
+       sum(n2) over (order by n1 nulls first rows between coalesce(n1, 0) following and coalesce(n1, 0) following) x4
+  from t1
+  order by n1 nulls first, n2;
+
+---
+
+exit;
+
+$ ISQL -q -m -e -i fb_sql_window_func_05.sql
+$ DELETE fb_sql_window_func_05*
+
