@@ -210,6 +210,17 @@ select n1,
   from t1
   order by n1 nulls first, n2;
 
+-- 17
+select n1,
+       n2,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between current row and current row) x3,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between 10 preceding and 10 following) x4,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between 3 preceding and unbounded following) x5
+  from t1
+  order by n2, n1;
+
 ---
 
 exit;

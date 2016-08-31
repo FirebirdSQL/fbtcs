@@ -449,6 +449,32 @@ select n1,
            5          500                     1                    10                     0                <null> 
 
 
+-- 17
+select n1,
+       n2,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between current row and current row) x3,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between 10 preceding and 10 following) x4,
+       sum(n2) over (partition by n1 order by date '2000-01-01' + n2 range between 3 preceding and unbounded following) x5
+  from t1
+  order by n2, n1;
+
+          N1           N2                    X1                    X2                    X3                    X4                    X5 
+============ ============ ===================== ===================== ===================== ===================== ===================== 
+           1            1                     1                 10111                     1                    11                 10111 
+           1           10                    11                 10110                    10                    11                 10110 
+           2           20                    20                    20                    20                    20                    20 
+      <null>           50                    50                101110                    50                   110                101110 
+      <null>           60                   110                101060                    60                   110                101060 
+           1          100                   111                 10100                   100                   100                 10100 
+           3          300                   300                   300                   300                   300                   300 
+           5          500                   500                   500                   500                   500                   500 
+      <null>         1000                  1110                101000                  1000                  1000                101000 
+           1        10000                 10111                 10000                 10000                 10000                 10000 
+      <null>       100000                101110                100000                100000                100000                100000 
+
+
 ---
 
 exit;
