@@ -8,9 +8,11 @@ create view v as select a from t;
 Use CONNECT or CREATE DATABASE to specify a database
 connect 'WHERE_GDB:cf_isql_22.fdb';
 show tables;
-       T                               
+T
+
 show views;
-       V                               
+V
+
 show table v;
 There is no table V in this database
 show table t;

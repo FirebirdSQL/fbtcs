@@ -1,22 +1,8 @@
-Exception Name                  Used by, Type
-=============================== =============================================
-ERROR                           
-Msg: This error message comes from exception handling
-
-NORIVER                         
-Msg: River does not currently exist in Rivers relation
-
-NOSTATE                         
-Msg: State does not currently exist in State relation
-
-NOUPDATE                        
-Msg: Update cannot be completed because of errors
-
-Exception Name                  Used by, Type
-=============================== =============================================
-NOUPDATE                        
-Msg: Update cannot be completed because of data errors
-
+ERROR; Msg: This error message comes from exception handling
+NORIVER; Msg: River does not currently exist in Rivers relation
+NOSTATE; Msg: State does not currently exist in State relation
+NOUPDATE; Msg: Update cannot be completed because of errors
+NOUPDATE; Msg: Update cannot be completed because of data errors
 There is no exception ERROR in this database
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error

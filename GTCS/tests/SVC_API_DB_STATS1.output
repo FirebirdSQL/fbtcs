@@ -16,7 +16,7 @@ reading response
 reading response
 	Page size		4096 querying service
 reading response
-	ODS version		12.0 querying service
+	ODS version		13.0 querying service
 reading response
 	Oldest transaction	20 querying service
 reading response
@@ -38,7 +38,7 @@ reading response
 reading response
 	Next header page	0 querying service
 reading response
-	Clumplet End		138 querying service
+	Clumplet End		134 querying service
 reading response
 	Database dialect	1 querying service
 reading response
@@ -64,7 +64,7 @@ Analyzing database pages ... querying service
 reading response
 COUNTRY (128) querying service
 reading response
-    Primary pointer page: 235, Index root page: 236 querying service
+    Primary pointer page: 246, Index root page: 247 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
@@ -90,7 +90,7 @@ reading response
 reading response
 CUSTOMER (133) querying service
 reading response
-    Primary pointer page: 246, Index root page: 247 querying service
+    Primary pointer page: 257, Index root page: 258 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
@@ -116,7 +116,7 @@ reading response
 reading response
 DEPARTMENT (130) querying service
 reading response
-    Primary pointer page: 240, Index root page: 241 querying service
+    Primary pointer page: 251, Index root page: 252 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
@@ -142,7 +142,7 @@ reading response
 reading response
 EMPLOYEE (131) querying service
 reading response
-    Primary pointer page: 242, Index root page: 243 querying service
+    Primary pointer page: 253, Index root page: 254 querying service
 reading response
     Pointer pages: 1, data page slots: 2 querying service
 reading response
@@ -168,7 +168,7 @@ reading response
 reading response
 EMPLOYEE_PROJECT (135) querying service
 reading response
-    Primary pointer page: 250, Index root page: 251 querying service
+    Primary pointer page: 261, Index root page: 262 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
@@ -194,7 +194,7 @@ reading response
 reading response
 JOB (129) querying service
 reading response
-    Primary pointer page: 237, Index root page: 238 querying service
+    Primary pointer page: 248, Index root page: 249 querying service
 reading response
     Pointer pages: 1, data page slots: 3 querying service
 reading response
@@ -220,7 +220,7 @@ reading response
 reading response
 PROJECT (132) querying service
 reading response
-    Primary pointer page: 244, Index root page: 245 querying service
+    Primary pointer page: 255, Index root page: 256 querying service
 reading response
     Pointer pages: 1, data page slots: 2 querying service
 reading response
@@ -246,7 +246,7 @@ reading response
 reading response
 PROJ_DEPT_BUDGET (136) querying service
 reading response
-    Primary pointer page: 252, Index root page: 253 querying service
+    Primary pointer page: 263, Index root page: 264 querying service
 reading response
     Pointer pages: 1, data page slots: 2 querying service
 reading response
@@ -272,7 +272,7 @@ reading response
 reading response
 SALARY_HISTORY (137) querying service
 reading response
-    Primary pointer page: 254, Index root page: 255 querying service
+    Primary pointer page: 265, Index root page: 266 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response
@@ -298,7 +298,7 @@ reading response
 reading response
 SALES (134) querying service
 reading response
-    Primary pointer page: 248, Index root page: 249 querying service
+    Primary pointer page: 259, Index root page: 260 querying service
 reading response
     Pointer pages: 1, data page slots: 1 querying service
 reading response

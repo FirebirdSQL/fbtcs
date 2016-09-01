@@ -233,12 +233,12 @@ select *
 	where rdb$dependent_name = 'P3'
 	order by rdb$dependent_name, rdb$depended_on_name, rdb$field_name!
 
-RDB$DEPENDENT_NAME              RDB$DEPENDED_ON_NAME            RDB$FIELD_NAME                  RDB$DEPENDENT_TYPE RDB$DEPENDED_ON_TYPE RDB$PACKAGE_NAME                
-=============================== =============================== =============================== ================== ==================== =============================== 
-P3                              D1                              <null>                                           5                    9 <null>                          
-P3                              D2                              <null>                                           5                    9 <null>                          
-P3                              P1                              <null>                                           5                    5 <null>                          
-P3                              T1                              X1                                               5                    0 <null>                          
+RDB$DEPENDENT_NAME                                              RDB$DEPENDED_ON_NAME                                            RDB$FIELD_NAME                                                  RDB$DEPENDENT_TYPE RDB$DEPENDED_ON_TYPE RDB$PACKAGE_NAME                                                
+=============================================================== =============================================================== =============================================================== ================== ==================== =============================================================== 
+P3                                                              D1                                                              <null>                                                                           5                    9 <null>                                                          
+P3                                                              D2                                                              <null>                                                                           5                    9 <null>                                                          
+P3                                                              P1                                                              <null>                                                                           5                    5 <null>                                                          
+P3                                                              T1                                                              X1                                                                               5                    0 <null>                                                          
 
 
 ---

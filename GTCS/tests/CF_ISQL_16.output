@@ -41,4 +41,5 @@ Dynamic SQL Error
 -Token unknown - line 1, column 50
 -primary
 At line 15 in file cf_test.sql
-       T4                              
+T4
+

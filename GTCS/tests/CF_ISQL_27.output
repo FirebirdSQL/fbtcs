@@ -33,9 +33,7 @@ commit;
 show procedures;
 Global procedures
 
-Procedure Name                    Invalid Dependency, Type
-================================= ======= =====================================
-RPL$GENERATOR_VALUES                      RDB$GENERATORS, Table
+RPL$GENERATOR_VALUES; Dependencies: RDB$GENERATORS (Table)
 
 Use CONNECT or CREATE DATABASE to specify a database
 select * from rpl$generator_values;

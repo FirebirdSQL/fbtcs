@@ -26,9 +26,6 @@ BLOB display set to subtype 1. This BLOB: subtype = 0
 show procedures;
 Global procedures
 
-Procedure Name                    Invalid Dependency, Type
-================================= ======= =====================================
-PROC_ARR                                  CITIES, Table
-                                          OCTETS, Collation
+PROC_ARR; Dependencies: CITIES (Table), OCTETS (Collation)
 commit;
 quit;

@@ -22,7 +22,5 @@ set term ; go
 show proc;
 Global procedures
 
-Procedure Name                    Invalid Dependency, Type
-================================= ======= =====================================
-ABC                                       
+ABC
 
