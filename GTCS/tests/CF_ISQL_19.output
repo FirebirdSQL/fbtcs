@@ -6,9 +6,9 @@ Use CONNECT or CREATE DATABASE to specify a database
 -- I am a comment
 select * from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 /* END */
 
@@ -16,9 +16,9 @@ select * from rdb$database;
 -- comment with unclosed 'quoted string
 select * from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 /* END */
 
@@ -26,9 +26,9 @@ select * from rdb$database;
 -- comment with unclosed "quoted string
 select * from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 /* END */
 
@@ -36,9 +36,9 @@ select * from rdb$database;
 -- I am a comment;
 select * from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 /* END */
 
@@ -46,9 +46,9 @@ select * from rdb$database;
 -- I am a comment;
 select * from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 /* END */
 
@@ -57,36 +57,36 @@ comment
 */
 from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 
 select * 
 /* comment */
 from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 
 select * 
 -- comment
 from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 
 /*
 Comment
 */ select * from rdb$database;
 
-  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER 
-================= =============== =============================================================== =============================================================== ============ 
-           <null>             128 SQL$364                                                         NONE                                                                  <null> 
+  RDB$DESCRIPTION RDB$RELATION_ID RDB$SECURITY_CLASS                                              RDB$CHARACTER_SET_NAME                                            RDB$LINGER RDB$SQL_SECURITY 
+================= =============== =============================================================== =============================================================== ============ ================ 
+           <null>             128 SQL$369                                                         NONE                                                                  <null> <null>           
 
 
 
