@@ -19,11 +19,12 @@ DOM01G_3                        FLOAT Nullable
 DOM01H                          DOUBLE PRECISION Nullable
 DOM01I_1                        BLOB segment 80, subtype BINARY Nullable
 DOM01I_2                        BLOB segment 60, subtype TEXT Nullable
-LONG_DOMAIN_NAME_OF_31_CHARSXXX INTEGER Nullable
+LONG_DOMAIN_NAME_OF_63_CHARSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX INTEGER Nullable
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Name longer than database column size
+-At line 1, column 15
 After line 3 in file domain_01b.sql
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error

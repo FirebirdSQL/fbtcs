@@ -76,10 +76,10 @@ exit;
 *******************************************************************************/
 
 >> domain_01b.sql
-create domain long_domain_name_of_31_charsxxx as integer;
+create domain long_domain_name_of_63_charsxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx as integer;
 commit;
-show domain long_domain_name_of_31_charsxxx;
-create domain long_domain_name_more_than_31_characters as char(10);
+show domain long_domain_name_of_63_charsxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;
+create domain long_domain_name_more_than_63_charactersxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx as char(10);
 commit;
 create domain 23456789_domain as double;
 commit;
