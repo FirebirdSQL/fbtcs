@@ -65,7 +65,7 @@ insert into tab13b (fld2) values (200);
 commit;
 insert into tab13b (fld3) values ('01/27/92');
 commit;
-insert into tab13b (fld4) values ('08/02/66');
+insert into tab13b (fld4) values ('08/02/76');
 commit;
 insert into tab13b (fld5) values ('Testing insert to field 4 xxxx');
 commit;

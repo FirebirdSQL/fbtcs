@@ -34,10 +34,9 @@ FLD8                            (DOM13G1) FLOAT Nullable default 0
     100       0 12-DEC-2057  1-JAN-1993 <null>                         generic username                    500.00000      0.0000000 
     500     200 12-DEC-2057  1-JAN-1993 <null>                         generic username                    500.00000      0.0000000 
     500       0 27-JAN-1992  1-JAN-1993 <null>                         generic username                    500.00000      0.0000000 
-    500       0 12-DEC-2057  2-AUG-1966 <null>                         generic username                    500.00000      0.0000000 
+    500       0 12-DEC-2057  2-AUG-1976 <null>                         generic username                    500.00000      0.0000000 
     500       0 12-DEC-2057  1-JAN-1993 Testing insert to field 4 xxxx generic username                    500.00000      0.0000000 
     500       0 12-DEC-2057  1-JAN-1993 <null>                         X                                   500.00000      0.0000000 
     500       0 12-DEC-2057  1-JAN-1993 <null>                         generic username                    50.020000      0.0000000 
     500       0 12-DEC-2057  1-JAN-1993 <null>                         generic username                    500.00000      10000.000 
 
- 
