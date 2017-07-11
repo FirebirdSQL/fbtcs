@@ -493,4 +493,194 @@ RDB$PROCEDURE_BLR:
 
 ---
 
+execute block returns (i integer, o integer)
+as
+	-- Recursive procedure without forward declaration.
+	declare procedure fibonacci(n integer) returns (o integer)
+	as
+		declare x integer;
+	begin
+		if (n = 0 or n = 1) then
+			o = n;
+		else
+		begin
+			execute procedure fibonacci(n - 1) returning_values x;
+			execute procedure fibonacci(n - 2) returning_values o;
+			o = o + x;
+		end
+	end
+begin
+	i = 0;
+
+	while (i < 10)
+	do
+	begin
+		execute procedure fibonacci(i) returning_values o;
+		suspend;
+		i = i + 1;
+	end
+end!
+
+           I            O 
+============ ============ 
+           0            0 
+           1            1 
+           2            1 
+           3            2 
+           4            3 
+           5            5 
+           6            8 
+           7           13 
+           8           21 
+           9           34 
+
+
+---
+
+execute block returns (o integer)
+as
+	-- Forward declaration with default parameters.
+	declare procedure p2(n integer = 20) returns (o integer);
+
+	declare procedure p1(n integer = 10) returns (o integer)
+	as
+	begin
+		o = (select o from p2) + (select o from p2(:n));
+		suspend;
+	end
+
+	declare procedure p2(n integer) returns (o integer)
+	as
+	begin
+		o = n;
+		suspend;
+	end
+
+	-- Direct declaration with default parameters.
+	declare procedure p3(n integer = 10) returns (o integer)
+	as
+	begin
+		o = (select o from p2) + (select o from p2(:n));
+		suspend;
+	end
+begin
+	o = (select o from p1);
+	suspend;
+
+	o = (select o from p1(3));
+	suspend;
+
+	o = (select o from p2);
+	suspend;
+
+	o = (select o from p2(3));
+	suspend;
+
+	o = (select o from p3);
+	suspend;
+
+	o = (select o from p3(3));
+	suspend;
+end!
+
+           O 
+============ 
+          30 
+          23 
+          20 
+           3 
+          30 
+          23 
+
+
+---
+
+-- Error: duplicate procedure P1
+execute block returns (o integer)
+as
+	declare procedure p1() returns (o integer);
+
+	declare procedure p1() returns (o integer);
+
+	declare procedure p1() returns (o integer)
+	as
+	begin
+		o = 2;
+		suspend;
+	end
+begin
+	o = (select o from p1);
+	suspend;
+end!
+Statement failed, SQLSTATE = 42000
+duplicate specification of P1 - not supported
+After line 326 in file fb_sql_subproc_1.sql
+
+---
+
+-- Error: Sub-procedure P1 was declared but not implemented
+execute block returns (o integer)
+as
+	declare procedure p1(n integer = 1) returns (o integer);
+
+	declare procedure p2() returns (o integer)
+	as
+	begin
+		o = 2;
+		suspend;
+	end
+begin
+	o = (select o from p2);
+	suspend;
+
+	-- Call a not-implemented procedure.
+	o = (select o from p1);
+	suspend;
+end!
+Statement failed, SQLSTATE = 42000
+Sub-procedure P1 was declared but not implemented
+After line 346 in file fb_sql_subproc_1.sql
+
+---
+
+execute block returns (o integer)
+as
+	declare procedure p1(n integer = 1) returns (o integer);
+
+	-- Error: Sub-procedure P1 has a signature mismatch with its forward declaration
+	declare procedure p1() returns (o integer)
+	as
+	begin
+		return 2;
+	end
+begin
+	o = (select o from p1);
+	suspend;
+end!
+Statement failed, SQLSTATE = 42000
+Sub-procedure P1 has a signature mismatch with its forward declaration
+After line 368 in file fb_sql_subproc_1.sql
+
+---
+
+execute block returns (o integer)
+as
+	declare procedure f1(n integer) returns (o integer);
+
+	-- Error: Default values for parameters are not allowed in definition of the previously declared sub-procedure P1
+	declare procedure f1(n integer = 1) returns (o integer)
+	as
+	begin
+		return 2;
+	end
+begin
+	o = (select o from p1);
+	suspend;
+end!
+Statement failed, SQLSTATE = 42000
+Default values for parameters are not allowed in definition of the previously declared sub-procedure F1
+After line 385 in file fb_sql_subproc_1.sql
+
+---
+
 exit!

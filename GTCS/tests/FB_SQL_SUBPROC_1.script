@@ -250,6 +250,160 @@ select rdb$procedure_blr from rdb$procedures where rdb$procedure_name = 'P1'!
 
 ---
 
+execute block returns (i integer, o integer)
+as
+	-- Recursive procedure without forward declaration.
+	declare procedure fibonacci(n integer) returns (o integer)
+	as
+		declare x integer;
+	begin
+		if (n = 0 or n = 1) then
+			o = n;
+		else
+		begin
+			execute procedure fibonacci(n - 1) returning_values x;
+			execute procedure fibonacci(n - 2) returning_values o;
+			o = o + x;
+		end
+	end
+begin
+	i = 0;
+
+	while (i < 10)
+	do
+	begin
+		execute procedure fibonacci(i) returning_values o;
+		suspend;
+		i = i + 1;
+	end
+end!
+
+---
+
+execute block returns (o integer)
+as
+	-- Forward declaration with default parameters.
+	declare procedure p2(n integer = 20) returns (o integer);
+
+	declare procedure p1(n integer = 10) returns (o integer)
+	as
+	begin
+		o = (select o from p2) + (select o from p2(:n));
+		suspend;
+	end
+
+	declare procedure p2(n integer) returns (o integer)
+	as
+	begin
+		o = n;
+		suspend;
+	end
+
+	-- Direct declaration with default parameters.
+	declare procedure p3(n integer = 10) returns (o integer)
+	as
+	begin
+		o = (select o from p2) + (select o from p2(:n));
+		suspend;
+	end
+begin
+	o = (select o from p1);
+	suspend;
+
+	o = (select o from p1(3));
+	suspend;
+
+	o = (select o from p2);
+	suspend;
+
+	o = (select o from p2(3));
+	suspend;
+
+	o = (select o from p3);
+	suspend;
+
+	o = (select o from p3(3));
+	suspend;
+end!
+
+---
+
+-- Error: duplicate procedure P1
+execute block returns (o integer)
+as
+	declare procedure p1() returns (o integer);
+
+	declare procedure p1() returns (o integer);
+
+	declare procedure p1() returns (o integer)
+	as
+	begin
+		o = 2;
+		suspend;
+	end
+begin
+	o = (select o from p1);
+	suspend;
+end!
+
+---
+
+-- Error: Sub-procedure P1 was declared but not implemented
+execute block returns (o integer)
+as
+	declare procedure p1(n integer = 1) returns (o integer);
+
+	declare procedure p2() returns (o integer)
+	as
+	begin
+		o = 2;
+		suspend;
+	end
+begin
+	o = (select o from p2);
+	suspend;
+
+	-- Call a not-implemented procedure.
+	o = (select o from p1);
+	suspend;
+end!
+
+---
+
+execute block returns (o integer)
+as
+	declare procedure p1(n integer = 1) returns (o integer);
+
+	-- Error: Sub-procedure P1 has a signature mismatch with its forward declaration
+	declare procedure p1() returns (o integer)
+	as
+	begin
+		return 2;
+	end
+begin
+	o = (select o from p1);
+	suspend;
+end!
+
+---
+
+execute block returns (o integer)
+as
+	declare procedure f1(n integer) returns (o integer);
+
+	-- Error: Default values for parameters are not allowed in definition of the previously declared sub-procedure P1
+	declare procedure f1(n integer = 1) returns (o integer)
+	as
+	begin
+		return 2;
+	end
+begin
+	o = (select o from p1);
+	suspend;
+end!
+
+---
+
 exit!
 
 $ ISQL -q -m -e -i fb_sql_subproc_1.sql

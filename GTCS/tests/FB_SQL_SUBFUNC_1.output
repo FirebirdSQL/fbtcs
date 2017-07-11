@@ -368,4 +368,179 @@ RDB$FUNCTION_BLR:
 
 ---
 
+execute block returns (i integer, o integer)
+as
+	-- Recursive function without forward declaration.
+	declare function fibonacci(n integer) returns integer
+	as
+	begin
+		if (n = 0 or n = 1) then
+			return n;
+		else
+			return fibonacci(n - 1) + fibonacci(n - 2);
+	end
+begin
+	i = 0;
+
+	while (i < 10)
+	do
+	begin
+		o = fibonacci(i);
+		suspend;
+		i = i + 1;
+	end
+end!
+
+           I            O 
+============ ============ 
+           0            0 
+           1            1 
+           2            1 
+           3            2 
+           4            3 
+           5            5 
+           6            8 
+           7           13 
+           8           21 
+           9           34 
+
+
+---
+
+execute block returns (o integer)
+as
+	-- Forward declaration with default parameters.
+	declare function f2(n integer = 20) returns integer;
+
+	declare function f1(n integer = 10) returns integer
+	as
+	begin
+		return f2() + f2(n);
+	end
+
+	declare function f2(n integer) returns integer
+	as
+	begin
+		return n;
+	end
+
+	-- Direct declaration with default parameters.
+	declare function f3(n integer = 10) returns integer
+	as
+	begin
+		return f2() + f2(n);
+	end
+begin
+	o = f1();
+	suspend;
+
+	o = f1(3);
+	suspend;
+
+	o = f2();
+	suspend;
+
+	o = f2(3);
+	suspend;
+
+	o = f3();
+	suspend;
+
+	o = f3(3);
+	suspend;
+end!
+
+           O 
+============ 
+          30 
+          23 
+          20 
+           3 
+          30 
+          23 
+
+
+---
+
+-- Error: duplicate function F1
+execute block
+as
+	declare function f1() returns integer;
+
+	declare function f1() returns integer;
+
+	declare function f1() returns integer
+	as
+	begin
+		return 2;
+	end
+begin
+	f1();
+end!
+Statement failed, SQLSTATE = 42000
+duplicate specification of F1 - not supported
+After line 264 in file fb_sql_subfunc_1.sql
+
+---
+
+-- Error: Sub-function F1 was declared but not implemented
+execute block
+as
+	declare function f1(n integer = 1) returns integer;
+
+	declare function f2() returns integer
+	as
+	begin
+		return 2;
+	end
+begin
+	f2();
+
+	-- Call a not-implemented function.
+	f1();
+end!
+Statement failed, SQLSTATE = 42000
+Sub-function F1 was declared but not implemented
+After line 282 in file fb_sql_subfunc_1.sql
+
+---
+
+execute block
+as
+	declare function f1(n integer = 1) returns integer;
+
+	-- Error: Sub-function F1 has a signature mismatch with its forward declaration
+	declare function f1() returns integer
+	as
+	begin
+		return 2;
+	end
+begin
+	f1();
+end!
+Statement failed, SQLSTATE = 42000
+Sub-function F1 has a signature mismatch with its forward declaration
+After line 301 in file fb_sql_subfunc_1.sql
+
+---
+
+execute block
+as
+	declare function f1(n integer) returns integer;
+
+	-- Error: Default values for parameters are not allowed in definition of the previously declared sub-function F1
+	declare function f1(n integer = 1) returns integer
+	as
+	begin
+		return 2;
+	end
+begin
+	f1();
+end!
+Statement failed, SQLSTATE = 42000
+Default values for parameters are not allowed in definition of the previously declared sub-function F1
+After line 317 in file fb_sql_subfunc_1.sql
+
+---
+
 exit!

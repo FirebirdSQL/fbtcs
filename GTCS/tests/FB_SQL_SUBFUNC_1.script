@@ -196,6 +196,145 @@ select rdb$function_blr from rdb$functions where rdb$function_name = 'F1'!
 
 ---
 
+execute block returns (i integer, o integer)
+as
+	-- Recursive function without forward declaration.
+	declare function fibonacci(n integer) returns integer
+	as
+	begin
+		if (n = 0 or n = 1) then
+			return n;
+		else
+			return fibonacci(n - 1) + fibonacci(n - 2);
+	end
+begin
+	i = 0;
+
+	while (i < 10)
+	do
+	begin
+		o = fibonacci(i);
+		suspend;
+		i = i + 1;
+	end
+end!
+
+---
+
+execute block returns (o integer)
+as
+	-- Forward declaration with default parameters.
+	declare function f2(n integer = 20) returns integer;
+
+	declare function f1(n integer = 10) returns integer
+	as
+	begin
+		return f2() + f2(n);
+	end
+
+	declare function f2(n integer) returns integer
+	as
+	begin
+		return n;
+	end
+
+	-- Direct declaration with default parameters.
+	declare function f3(n integer = 10) returns integer
+	as
+	begin
+		return f2() + f2(n);
+	end
+begin
+	o = f1();
+	suspend;
+
+	o = f1(3);
+	suspend;
+
+	o = f2();
+	suspend;
+
+	o = f2(3);
+	suspend;
+
+	o = f3();
+	suspend;
+
+	o = f3(3);
+	suspend;
+end!
+
+---
+
+-- Error: duplicate function F1
+execute block
+as
+	declare function f1() returns integer;
+
+	declare function f1() returns integer;
+
+	declare function f1() returns integer
+	as
+	begin
+		return 2;
+	end
+begin
+	f1();
+end!
+
+---
+
+-- Error: Sub-function F1 was declared but not implemented
+execute block
+as
+	declare function f1(n integer = 1) returns integer;
+
+	declare function f2() returns integer
+	as
+	begin
+		return 2;
+	end
+begin
+	f2();
+
+	-- Call a not-implemented function.
+	f1();
+end!
+
+---
+
+execute block
+as
+	declare function f1(n integer = 1) returns integer;
+
+	-- Error: Sub-function F1 has a signature mismatch with its forward declaration
+	declare function f1() returns integer
+	as
+	begin
+		return 2;
+	end
+begin
+	f1();
+end!
+
+---
+
+execute block
+as
+	declare function f1(n integer) returns integer;
+
+	-- Error: Default values for parameters are not allowed in definition of the previously declared sub-function F1
+	declare function f1(n integer = 1) returns integer
+	as
+	begin
+		return 2;
+	end
+begin
+	f1();
+end!
+
+---
+
 exit!
 
 $ ISQL -q -m -e -i fb_sql_subfunc_1.sql
