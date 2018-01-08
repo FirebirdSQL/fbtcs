@@ -75,7 +75,6 @@ execute procedure cast4 'abc';
 execute procedure cast5 '100';
 execute procedure cast5 'abc';
 execute procedure cast6 '12-Mar-92';
-execute procedure cast6 '12Mar92';
 execute procedure cast7 '21000.98';
 execute procedure cast7 'abc';
 execute procedure cast9 '100';
