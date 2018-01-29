@@ -1,0 +1,16 @@
+$ GBAK -r WHERE_FILES:sv_hidden_var_2_5.fbk WHERE_GDB:sv_hidden_var_2_5.fdb
+
+>> sv_hidden_var_2_5.sql
+connect "WHERE_GDB:sv_hidden_var_2_5.fdb";
+
+select * from "spReports.Sales01"(current_date, current_date);
+select * from proc1;
+
+select * from proc2;
+
+select * from proc3;
+
+drop database;
+
+$ ISQL -q -m -e -i sv_hidden_var_2_5.sql
+$ DELETE sv_hidden_var_2_5.sql

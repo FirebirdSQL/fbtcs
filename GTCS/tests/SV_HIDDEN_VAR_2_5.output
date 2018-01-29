@@ -1,0 +1,36 @@
+connect "WHERE_GDB:sv_hidden_var_2_5.fdb";
+
+select * from "spReports.Sales01"(current_date, current_date);
+select * from proc1;
+
+          ID           X1           X2           X3 
+============ ============ ============ ============ 
+           1          101       <null>       <null> 
+           2          102          202       <null> 
+           3          103          203          303 
+
+
+select * from proc2;
+
+          ID           X1           X2           X3 
+============ ============ ============ ============ 
+           1          101       <null>       <null> 
+           2          102          202       <null> 
+           3          103          203          303 
+           4       <null>          204          304 
+           5       <null>       <null>          305 
+
+
+select * from proc3;
+
+          ID           X1           X2           X3           X4           X5           X6 
+============ ============ ============ ============ ============ ============ ============ 
+           1          101       <null>       <null>          101       <null>       <null> 
+           2          102          202       <null>          102          202       <null> 
+           3          103          203          303          103          203          303 
+           4       <null>          204          304       <null>          204          304 
+           5       <null>       <null>          305       <null>       <null>          305 
+
+
+drop database;
+
