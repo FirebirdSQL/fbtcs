@@ -85,6 +85,7 @@ gbak:restoring domain RDB$61
 gbak:restoring domain RDB$62 
 gbak:restoring domain RDB$63 
 gbak:restoring domain RDB$64 
+gbak:committing metadata 
 gbak:restoring table COUNTRY 
 gbak:    restoring column CURRENCY 
 gbak:    restoring column COUNTRY 
@@ -491,10 +492,10 @@ gbak:    activating and creating deferred index RDB$FOREIGN23
 gbak:    activating and creating deferred index RDB$FOREIGN25 
 gbak:    activating and creating deferred index RDB$FOREIGN26 
 gbak:committing metadata 
-gbak:fixing views dbkey length 
+gbak:adjusting views dbkey length 
 gbak:updating ownership of packages, procedures and tables 
 gbak:adding missing privileges 
-gbak:fixing system generators 
+gbak:adjusting system generators 
 gbak:finishing, closing, and going home 
 gbak:adjusting the ONLINE and FORCED WRITES flags 
 Output completed

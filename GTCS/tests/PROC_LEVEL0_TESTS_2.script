@@ -3,16 +3,16 @@
 
 create database "WHERE_GDB:foo.gdb";
 set term go;
-create procedure proc RETURNS (abcdefghijklmnopqrstuvwxyzabcde  int) as
+create procedure proc RETURNS (abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghi  int) as
 begin
-   abcdefghijklmnopqrstuvwxyzabcde = 10;
+   abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghi = 10;
    SUSPEND;
 end
 go
 
-create procedure proc1 RETURNS (abcdefghijklmnopqrstuvwxyzabcdef  int) as
+create procedure proc1 RETURNS (abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghij  int) as
 begin
-   abcdefghijklmnopqrstuvwxyzabcdef = 10;
+   abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghij = 10;
    SUSPEND;
 end
 go

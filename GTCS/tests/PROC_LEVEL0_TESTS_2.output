@@ -3,9 +3,8 @@ Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Name longer than database column size
+-At line 1, column 33
 After line 9 in file proc_level_tests_2.sql
 Global procedures
 
-Procedure Name                    Invalid Dependency, Type
-================================= ======= =====================================
-PROC                                      
+PROC

@@ -8,14 +8,14 @@ create database "WHERE_GDB:foo.gdb";
 set echo;
 /* This script checks how long a procedure name can be. */
 set term go;
-create procedure pabcdefghijklmnopqrstuvwxyzabcd  RETURNS (a int) as
+create procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghi  RETURNS (a int) as
 begin
    a = 10;
    SUSPEND;
 end
 go
 
-create procedure qabcdefghijklmnopqrstuvwxyzabcde  RETURNS (a int) as
+create procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghij  RETURNS (a int) as
 begin
    a = 10;
    SUSPEND;
@@ -24,8 +24,8 @@ go
 
 set term ; go
 show proc;
-execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
-execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
+execute procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghi;
+execute procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghij;
 exit;
 
 $ ISQL -m -i proc_level0_tests.sql

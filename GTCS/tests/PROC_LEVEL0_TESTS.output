@@ -1,14 +1,14 @@
 Use CONNECT or CREATE DATABASE to specify a database
 /* This script checks how long a procedure name can be. */
 set term go;
-create procedure pabcdefghijklmnopqrstuvwxyzabcd  RETURNS (a int) as
+create procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghi  RETURNS (a int) as
 begin
    a = 10;
    SUSPEND;
 end
 go
 
-create procedure qabcdefghijklmnopqrstuvwxyzabcde  RETURNS (a int) as
+create procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghij  RETURNS (a int) as
 begin
    a = 10;
    SUSPEND;
@@ -18,25 +18,25 @@ Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Name longer than database column size
+-At line 1, column 18
 After line 11 in file proc_level0_tests.sql
 
 set term ; go
 show proc;
 Global procedures
 
-Procedure Name                    Invalid Dependency, Type
-================================= ======= =====================================
-PABCDEFGHIJKLMNOPQRSTUVWXYZABCD           
-execute procedure pabcdefghijklmnopqrstuvwxyzabcd;
+ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHI
+execute procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghi;
 
            A 
 ============ 
           10 
 
-execute procedure qabcdefghijklmnopqrstuvwxyzabcde;
+execute procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghij;
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
 -Name longer than database column size
+-At line 1, column 19
 After line 22 in file proc_level0_tests.sql
 exit;
