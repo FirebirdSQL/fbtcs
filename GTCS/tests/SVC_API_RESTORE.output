@@ -85,6 +85,7 @@ gbak:restoring domain RDB$61
 gbak:restoring domain RDB$62 
 gbak:restoring domain RDB$63 
 gbak:restoring domain RDB$64 
+gbak:committing metadata 
 gbak:restoring table COUNTRY 
 gbak:    restoring column CURRENCY 
 gbak:    restoring column COUNTRY 
