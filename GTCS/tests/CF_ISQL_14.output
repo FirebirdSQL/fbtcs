@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
-attempted update of read-only column
+attempted update of read-only column T0.AF
 After line 7 in file cf_test.sql
 
            A                    AF 
@@ -8,7 +8,7 @@ After line 7 in file cf_test.sql
           10                    30 
 
 Statement failed, SQLSTATE = 42000
-attempted update of read-only column
+attempted update of read-only column T0.AF
 After line 13 in file cf_test.sql
 
            A                    AF 

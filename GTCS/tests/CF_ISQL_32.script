@@ -3,25 +3,15 @@
 # Reported by Rudo Mihal 06-May-2004
 # short example by Nickolay Samofatov
 #
+# Removed UDF test - deprecated. AP 2018
+#
 
 >> cf_isql_32.sql
 
-CREATE DATABASE 'WHERE_GDB:cf_isql_32.fdb' USER 'SYSDBA' PASSWORD 'masterkey';
+create database 'WHERE_GDB:cf_isql_32.fdb' USER 'sysdba' PASSWORD 'masterkey';
 
-DECLARE EXTERNAL FUNCTION rtrim
-   CSTRING(80)
-   RETURNS CSTRING(80) FREE_IT
-   ENTRY_POINT 'IB_UDF_rtrim' MODULE_NAME 'ib_udf';
-
-commit;
-
->> cf_isql_32b.sql
-
-connect 'WHERE_GDB:cf_isql_32.fdb' USER 'sysdba' PASSWORD 'masterkey';
-
-select rtrim((select max(rdb$relation_id) from rdb$database)) from rdb$database;
+select trim(TRAILING FROM (select max(rdb$relation_id) from rdb$database)) from rdb$database;
 
 $ISQL -m -i cf_isql_32.sql
-$ISQL -m -i cf_isql_32b.sql
 $DROP WHERE_GDB:cf_isql_32.fdb
 $DELETE cf_isql_32*
