@@ -97,7 +97,7 @@ void ReadBlob3(unsigned short);
 void ReadBlob4(unsigned short);
 void ReadBlob5(unsigned short);
 
-main(int argc,char* argv[])
+void main(int argc,char* argv[])
 {
 short                       i,j,k,l;
 int Count;

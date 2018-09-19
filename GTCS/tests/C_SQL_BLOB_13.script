@@ -45,7 +45,7 @@ void Underline(int);
 void CreateLine(char Bf[],int L);
 void EmptyBuffer(char *Bf,int L);
 
-main(int argc,char* argv[])
+void main(int argc,char* argv[])
 {
 short                       i,j,k,l;
 int Count;

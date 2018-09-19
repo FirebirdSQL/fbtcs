@@ -35,7 +35,7 @@ char Test[]="FETCH BCR INTO :M.Buffer";
 void Underline(int);
 void EmptyBuffer(char* Bf,unsigned short L);
 
-main(int argc, char* argv[])
+void main(int argc, char* argv[])
 {
 	
     int 	Count;

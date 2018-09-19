@@ -34,7 +34,7 @@ char Test[]="INSERT CURSOR <blob-cursor> VALUES (:BUFFER:BUFFERLEN) - Buffer[0]=
 
 void Underline(int);
 
-main(int argc, char* argv[])
+void main(int argc, char* argv[])
 {
 short                       i,j,k,l;
 bool verbose;

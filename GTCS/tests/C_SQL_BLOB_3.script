@@ -36,7 +36,7 @@ void Underline(int);
 void Append(char s[], char t[]);
 void CreateLine(char Bf[]);
 
-main(int argc,char* argv[])
+void main(int argc,char* argv[])
 {
     int Count;
     bool verbose;

@@ -37,7 +37,7 @@ FROM MB1 WHERE ROW_ID <3 MAXIMUM_SEGMENT :M.SOB";
 
 void Underline(int);
 
-main(int argc,char* argv[])
+void main(int argc,char* argv[])
 {
 	
     int 	Count;
