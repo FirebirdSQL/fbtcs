@@ -95,7 +95,7 @@ int istable(char*);
 
 bool verbose;
 
-main(int argc, char* argv[])
+void main(int argc, char* argv[])
 {
 
         /* Get database name */

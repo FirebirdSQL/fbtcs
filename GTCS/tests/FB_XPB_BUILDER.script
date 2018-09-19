@@ -19,7 +19,11 @@ int main()
 	IUtil* u = master->getUtilInterface();
 
 	// Avoid automatic attach as SYSDBA
+#ifdef WIN_NT
+	_putenv("ISC_PASSWORD=.");
+#else
 	setenv("ISC_PASSWORD", ".", 1);
+#endif
 
 	try
 	{

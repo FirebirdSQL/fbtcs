@@ -35,6 +35,9 @@
 #if (defined WIN_NT)
 #include <io.h>
 #include <stdlib.h>
+
+#define strerror_r(errno, err_msg, msg_size) strerror_s((err_msg), (msg_size), (errno))
+
 #endif
 
 using namespace std;

@@ -63,7 +63,7 @@ int istable(char*);
 
 int verbose;
 
-main(int argc, char* argv[])
+void main(int argc, char* argv[])
 {
 
         /*--- check if verbose is requested ------ */

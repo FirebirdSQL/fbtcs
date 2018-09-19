@@ -15,7 +15,7 @@
 
 #include "iberror.h"
 
-#ifndef MSCVER
+#ifndef _MSC_VER
 #define sprintf_s snprintf
 #define strcpy_s(to, size, from) strncpy(to, from, size)
 #define strcat_s(to, size, from) strncat(to, from, size)
