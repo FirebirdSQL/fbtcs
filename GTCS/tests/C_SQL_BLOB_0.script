@@ -145,7 +145,7 @@ int Count;
 
 FINISH;
 
-exit(0);
+	return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -155,7 +155,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw and underline
