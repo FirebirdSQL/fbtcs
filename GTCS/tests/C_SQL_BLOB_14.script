@@ -37,7 +37,7 @@ void Underline(int);
 void CreateLine(char[], int);
 void EmptyBuffer(char*, int);
 
-void main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 short                       i,j,k,l;
 int Count;

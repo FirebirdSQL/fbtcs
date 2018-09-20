@@ -39,7 +39,7 @@ void EmptyBuffer(char* Bf, unsigned short L);
 void FetchType();
 
 
-void main(int argc,char* argv[])
+int main(int argc,char* argv[])
 {
 	
     int 	Count;
