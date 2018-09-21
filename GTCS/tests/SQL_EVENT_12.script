@@ -72,7 +72,7 @@ $ GPRE  -n -m foo12.e
 $ CC FLAG_CC foo12.c
 $ LINK FLAG_LINK foo12 
 
-$ RUN foo12 &
+$ RUN_BG foo12 &
 $ SLEEP 1
 
 >> sql_event_12b.sql
