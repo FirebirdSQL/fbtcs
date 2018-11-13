@@ -611,7 +611,7 @@ set time zone bind legacy;
 set sqlda_display on;
 
 select timestamp '2018-05-01 20:01:02 America/Sao_Paulo',
-       time '20:01:02 America/Sao_Paulo'
+       dateadd(extract(timezone_hour from time '20:01:02 America/Sao_Paulo') + 3 hour to time '20:01:02 America/Sao_Paulo')
   from rdb$database;
 
 INPUT message field count: 0
@@ -621,10 +621,10 @@ OUTPUT message field count: 2
   :  name: CONSTANT  alias: CONSTANT
   : table:   owner: 
 02: sqltype: 560 TIME scale: 0 subtype: 0 len: 4
-  :  name: CONSTANT  alias: CONSTANT
+  :  name: DATEADD  alias: DATEADD
   : table:   owner: 
 
-                 CONSTANT      CONSTANT 
+                 CONSTANT       DATEADD 
 ========================= ============= 
 2018-05-01 21:01:02.0000  21:01:02.0000 
 
@@ -940,8 +940,8 @@ select t.*,
 2016-10-16 03:00:00.0000 GMT                              2017-02-19 01:59:59.9999 GMT                                     -180         60             -120        -2         0      -2       0 
 2017-02-19 02:00:00.0000 GMT                              2017-10-15 02:59:59.9999 GMT                                     -180          0             -180        -3         0      -3       0 
 2017-10-15 03:00:00.0000 GMT                              2018-02-18 01:59:59.9999 GMT                                     -180         60             -120        -2         0      -2       0 
-2018-02-18 02:00:00.0000 GMT                              2018-10-21 02:59:59.9999 GMT                                     -180          0             -180        -3         0      -3       0 
-2018-10-21 03:00:00.0000 GMT                              2019-02-17 01:59:59.9999 GMT                                     -180         60             -120        -2         0      -2       0 
+2018-02-18 02:00:00.0000 GMT                              2018-11-04 02:59:59.9999 GMT                                     -180          0             -180        -3         0      -3       0 
+2018-11-04 03:00:00.0000 GMT                              2019-02-17 01:59:59.9999 GMT                                     -180         60             -120        -2         0      -2       0 
 
 
 

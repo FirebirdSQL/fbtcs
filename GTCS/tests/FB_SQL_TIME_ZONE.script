@@ -370,7 +370,7 @@ set time zone bind legacy;
 set sqlda_display on;
 
 select timestamp '2018-05-01 20:01:02 America/Sao_Paulo',
-       time '20:01:02 America/Sao_Paulo'
+       dateadd(extract(timezone_hour from time '20:01:02 America/Sao_Paulo') + 3 hour to time '20:01:02 America/Sao_Paulo')
   from rdb$database;
 
 select 1
