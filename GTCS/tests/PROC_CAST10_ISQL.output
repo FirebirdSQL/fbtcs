@@ -99,11 +99,6 @@ After line 71 in file proc_cast10.sql
 1992-03-12  
 
 
-          B 
-=========== 
-1992-03-12  
-
-
            B 
 ============ 
     21000.98 
@@ -111,7 +106,7 @@ After line 71 in file proc_cast10.sql
 Statement failed, SQLSTATE = 22018
 conversion error from string "abc"
 -At procedure 'CAST7' line: 3, col: 5
-After line 75 in file proc_cast10.sql
+After line 74 in file proc_cast10.sql
 
 B          
 ========== 
