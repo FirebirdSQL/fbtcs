@@ -31,7 +31,7 @@ static void print_error();
 int istable(char*); 
 
 
-void main (int argc, char* argv[])
+int main (int argc, char* argv[])
 {
 	const char* cmd;
 
@@ -137,10 +137,10 @@ void main (int argc, char* argv[])
 		
 	printf("View CONSTRAINTS_COLUMN_USAGE created ok.\n");
 
-	exit (0);
+	return 0;
 	/* Output error information. */
 err:		print_error();
-	exit (1);
+	return 1;
 }
 
 int istable(char* tname)
