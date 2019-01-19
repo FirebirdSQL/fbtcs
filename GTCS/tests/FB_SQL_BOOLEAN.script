@@ -1,0 +1,26 @@
+>> fb_sql_boolean.sql
+create database "WHERE_GDB:boolean.fdb";
+
+---
+
+
+select true is true, false is true, null is true from rdb$database;
+
+select true is false, false is false, null is false from rdb$database;
+
+select true is null, false is null, null is null from rdb$database;
+
+select true is not true, false is not true, null is not true from rdb$database;
+
+select true is not false, false is not false, null is not false from rdb$database;
+
+select true is not null, false is not null, null is not null from rdb$database;
+
+
+drop database;
+
+exit;
+
+
+$ ISQL -q -m -e -i fb_sql_boolean.sql
+$ DELETE fb_sql_boolean*
