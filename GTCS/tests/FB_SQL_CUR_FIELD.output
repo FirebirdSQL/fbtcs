@@ -377,7 +377,7 @@ begin
   tables.id = 1;
 end!
 Statement failed, SQLSTATE = 42000
-attempted update of read-only column
+attempted update of read-only column TABLES.ID
 After line 284 in file fb_sql_cur_field.sql
 
 
@@ -399,7 +399,7 @@ begin
   end
 end!
 Statement failed, SQLSTATE = 42000
-attempted update of read-only column
+attempted update of read-only column TABLES.ID
 After line 301 in file fb_sql_cur_field.sql
 
 

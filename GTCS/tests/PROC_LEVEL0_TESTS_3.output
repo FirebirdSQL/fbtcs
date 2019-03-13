@@ -4,4 +4,6 @@ CREATE PROCEDURE PROC failed
 -SQL error code = -901
 -duplicate specification of A - not supported
 After line 3 in file proc_level0_tests3.sql
-There are no stored procedures in this database
+Package: RDB$TIME_ZONE_UTIL
+
+TRANSITIONS

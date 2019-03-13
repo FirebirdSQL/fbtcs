@@ -9,51 +9,54 @@
 
 CREATE DATABASE 'WHERE_GDB:cf_isql_19.fdb';
 
+create table test (n integer);
+insert into test values (1);
+
 set echo;
 
 -- I am a comment
 
 /* BEGIN */
 -- I am a comment
-select * from rdb$database;
+select * from test;
 /* END */
 
 /* BEGIN */
 -- comment with unclosed 'quoted string
-select * from rdb$database;
+select * from test;
 /* END */
 
 /* BEGIN */
 -- comment with unclosed "quoted string
-select * from rdb$database;
+select * from test;
 /* END */
 
 /* BEGIN */
 -- I am a comment;
-select * from rdb$database;
+select * from test;
 /* END */
 
 /* BEGIN with unclosed "quoted */
 -- I am a comment;
-select * from rdb$database;
+select * from test;
 /* END */
 
 select * /*
 comment
 */
-from rdb$database;
+from test;
 
 select * 
 /* comment */
-from rdb$database;
+from test;
 
 select * 
 -- comment
-from rdb$database;
+from test;
 
 /*
 Comment
-*/ select * from rdb$database;
+*/ select * from test;
 
 
 $ISQL -m -i cf_isql_19.sql

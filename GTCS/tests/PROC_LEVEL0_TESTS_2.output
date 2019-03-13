@@ -8,3 +8,7 @@ After line 9 in file proc_level_tests_2.sql
 Global procedures
 
 PROC
+
+Package: RDB$TIME_ZONE_UTIL
+
+TRANSITIONS
