@@ -958,3 +958,32 @@ exit;
 ============ ========================================================= 
            1 2018-01-01 11:33:33.4560 -02:00                           
 
+
+SUBSTRING                                                 
+========================================================= 
+America/Sao_Paulo                                         
+
+
+T1                             T2                             
+============================== ============================== 
+America/New_York               America/Los_Angeles            
+
+
+SUBSTRING                                                 
+========================================================= 
+America/Los_Angeles                                       
+
+
+           N T1                             T2                             T3                             
+============ ============================== ============================== ============================== 
+           0 America/Sao_Paulo              America/Los_Angeles            America/Sao_Paulo              
+           1 America/Sao_Paulo              America/Los_Angeles            America/Sao_Paulo              
+           2 America/Sao_Paulo              America/Los_Angeles            America/Sao_Paulo              
+           3 America/Sao_Paulo              America/Los_Angeles            America/Los_Angeles            
+           4 America/Los_Angeles            America/Los_Angeles            America/Los_Angeles            
+
+
+           N TZ1                            TZ2                            TZ3                            
+============ ============================== ============================== ============================== 
+           1 America/Sao_Paulo              America/New_York               America/Sao_Paulo              
+

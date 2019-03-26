@@ -495,8 +495,97 @@ exit;
 >> fb_sql_time_zone_b.sql
 connect "WHERE_GDB:time_zone.fdb";
 
+---
+
 select * from timetz;
 select * from timestamptz;
+
+---
+
+set term !;
+
+set time zone 'America/Sao_Paulo'!
+
+select substring(current_timestamp from 26) from rdb$database!
+
+execute block returns (t1 varchar(30), t2 varchar(30))
+as
+    declare procedure p0 returns (t1 varchar(30), t2 varchar(30))
+    as
+    begin
+        set time zone 'America/New_York';
+        t1 = substring(current_timestamp from 26);
+        set time zone local;
+        t2 = substring(current_timestamp from 26);
+    end
+
+    declare procedure p1 returns (t1 varchar(30), t2 varchar(30))
+    as
+    begin
+        set time zone 'America/Los_Angeles';
+
+        execute procedure p0 returning_values t1, t2;
+    end
+begin
+    execute procedure p1 returning_values t1, t2;
+    suspend;
+end!
+
+select substring(current_timestamp from 26) from rdb$database!
+
+
+set time zone 'America/Sao_Paulo'!
+
+execute block returns (n integer, t1 varchar(30), t2 varchar(30), t3 varchar(30))
+as
+    declare procedure p1 returns (n integer, t1 varchar(30), t2 varchar(30), t3 varchar(30))
+    as
+    begin
+        n = 0;
+
+        while (n <= 4)
+        do
+        begin
+            t1 = substring(current_timestamp from 26);
+            set time zone 'America/Los_Angeles';
+            t2 = substring(current_timestamp from 26);
+            if (n <= 2) then
+                set time zone local;
+            t3 = substring(current_timestamp from 26);
+            suspend;
+
+            n = n + 1;
+        end
+    end
+begin
+    for select n, t1, t2, t3 from p1 into n, t1, t2, t3
+    do
+    begin
+        suspend;
+    end
+end!
+
+
+set time zone 'America/Sao_Paulo'!
+
+create table t1 (n integer, tz1 varchar(30), tz2 varchar(30), tz3 varchar(30))!
+
+create trigger t1_bi before insert on t1
+as
+begin
+    new.tz1 = substring(current_timestamp from 26);
+    set time zone 'America/New_York';
+    new.tz2 = substring(current_timestamp from 26);
+    set time zone local;
+    new.tz3 = substring(current_timestamp from 26);
+end!
+
+insert into t1 (n) values (1)!
+select * from t1!
+
+set term ;!
+
+---
 
 drop database;
 
