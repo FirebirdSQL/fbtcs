@@ -366,6 +366,26 @@ select first_day(of year from timestamp '2018-03-08 10:11:12 America/Sao_Paulo')
 ---
 
 
+select timestamp '2017-03-12 02:30 America/New_York' t1,
+       timestamp '2017-03-12 02:30 America/New_York' at time zone '-05' t2,
+       dateadd(-1 minute to timestamp '2017-03-12 02:30 America/New_York') t3,
+       dateadd(1 minute to timestamp '2017-03-12 02:30 America/New_York') t4,
+       dateadd(-1 hour to timestamp '2017-03-12 02:30 America/New_York') t5,
+       dateadd(1 hour to timestamp '2017-03-12 02:30 America/New_York') t6
+  from rdb$database;
+
+select timestamp '2017-11-05 01:30 America/New_York' t1,
+       timestamp '2017-11-05 01:30 America/New_York' at time zone '-04' t2,
+       dateadd(-1 minute to timestamp '2017-11-05 01:30 America/New_York') t3,
+       dateadd(1 minute to timestamp '2017-11-05 01:30 America/New_York') t4,
+       dateadd(-1 hour to timestamp '2017-11-05 01:30 America/New_York') t5,
+       dateadd(1 hour to timestamp '2017-11-05 01:30 America/New_York') t6
+  from rdb$database;
+
+
+---
+
+
 set time zone bind legacy;
 set sqlda_display on;
 

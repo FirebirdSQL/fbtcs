@@ -607,6 +607,36 @@ select first_day(of year from timestamp '2018-03-08 10:11:12 America/Sao_Paulo')
 ---
 
 
+select timestamp '2017-03-12 02:30 America/New_York' t1,
+       timestamp '2017-03-12 02:30 America/New_York' at time zone '-05' t2,
+       dateadd(-1 minute to timestamp '2017-03-12 02:30 America/New_York') t3,
+       dateadd(1 minute to timestamp '2017-03-12 02:30 America/New_York') t4,
+       dateadd(-1 hour to timestamp '2017-03-12 02:30 America/New_York') t5,
+       dateadd(1 hour to timestamp '2017-03-12 02:30 America/New_York') t6
+  from rdb$database;
+
+                                                       T1                                                        T2                                                        T3                                                        T4                                                        T5                                                        T6 
+========================================================= ========================================================= ========================================================= ========================================================= ========================================================= ========================================================= 
+2017-03-12 03:30:00.0000 America/New_York                 2017-03-12 02:30:00.0000 -05:00                           2017-03-12 03:29:00.0000 America/New_York                 2017-03-12 03:31:00.0000 America/New_York                 2017-03-12 01:30:00.0000 America/New_York                 2017-03-12 04:30:00.0000 America/New_York                 
+
+
+select timestamp '2017-11-05 01:30 America/New_York' t1,
+       timestamp '2017-11-05 01:30 America/New_York' at time zone '-04' t2,
+       dateadd(-1 minute to timestamp '2017-11-05 01:30 America/New_York') t3,
+       dateadd(1 minute to timestamp '2017-11-05 01:30 America/New_York') t4,
+       dateadd(-1 hour to timestamp '2017-11-05 01:30 America/New_York') t5,
+       dateadd(1 hour to timestamp '2017-11-05 01:30 America/New_York') t6
+  from rdb$database;
+
+                                                       T1                                                        T2                                                        T3                                                        T4                                                        T5                                                        T6 
+========================================================= ========================================================= ========================================================= ========================================================= ========================================================= ========================================================= 
+2017-11-05 01:30:00.0000 America/New_York                 2017-11-05 01:30:00.0000 -04:00                           2017-11-05 01:29:00.0000 America/New_York                 2017-11-05 01:31:00.0000 America/New_York                 2017-11-05 00:30:00.0000 America/New_York                 2017-11-05 01:30:00.0000 America/New_York                 
+
+
+
+---
+
+
 set time zone bind legacy;
 set sqlda_display on;
 
@@ -653,7 +683,7 @@ Statement failed, SQLSTATE = 07002
 Dynamic SQL Error
 -SQLDA error
 -Wrong number of parameters (expected 2, got 0)
-After line 373 in file fb_sql_time_zone_a.sql
+After line 393 in file fb_sql_time_zone_a.sql
 
 set sqlda_display off;
 set time zone bind native;
@@ -678,17 +708,17 @@ insert into timetz values (7, '12:33:33 +0');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '12:33:33.0000 +00:00')
-After line 396 in file fb_sql_time_zone_a.sql
+After line 416 in file fb_sql_time_zone_a.sql
 insert into timetz values (8, '13:33:33 +1');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '13:33:33.0000 +01:00')
-After line 399 in file fb_sql_time_zone_a.sql
+After line 419 in file fb_sql_time_zone_a.sql
 insert into timetz values (9, '14:33:33 +2');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '14:33:33.0000 +02:00')
-After line 400 in file fb_sql_time_zone_a.sql
+After line 420 in file fb_sql_time_zone_a.sql
 
 select n, v, cast(v as time) from timetz order by v;
 
@@ -807,17 +837,17 @@ insert into timestamptz values (7, '2018-01-01 12:33:33 +0');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 12:33:33.0000 +00:00')
-After line 441 in file fb_sql_time_zone_a.sql
+After line 461 in file fb_sql_time_zone_a.sql
 insert into timestamptz values (8, '2018-01-01 13:33:33 +1');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 13:33:33.0000 +01:00')
-After line 444 in file fb_sql_time_zone_a.sql
+After line 464 in file fb_sql_time_zone_a.sql
 insert into timestamptz values (9, '2018-01-01 14:33:33 +2');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 14:33:33.0000 +02:00')
-After line 445 in file fb_sql_time_zone_a.sql
+After line 465 in file fb_sql_time_zone_a.sql
 
 select n, v, cast(v as timestamp) from timestamptz order by v;
 
