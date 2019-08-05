@@ -40,7 +40,7 @@ int main (int argc, char* argv[])
 	if (argc < 2)
 		{
 		fprintf (stderr, "Usage: ri_views <db_name>    Adds new system views to database.\n");
-		exit (1);
+		return 1;
 		}
 	++argv;
 	strcpy (db_name, *argv);
