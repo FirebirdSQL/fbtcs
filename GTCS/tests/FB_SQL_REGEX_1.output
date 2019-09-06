@@ -11,6 +11,9 @@ create table tests (
 insert into tests values ('aa', '(aa){1}', null);
 insert into tests values ('aa', '(a){1}', null);
 insert into tests values ('a', '(a){1}', null);
+insert into tests values ('A', '(a){1}', null);
+insert into tests values ('á', '(a){1}', null);
+insert into tests values ('Á', '(ã){1}', null);
 insert into tests values ('aa', 'a{1}', null);
 insert into tests values ('', '(1|2){0,}', null);
 insert into tests values ('', '(1|2){1,}', null);
@@ -23,6 +26,7 @@ insert into tests values ('121212', '(1|1[2]){3,5}', null);
 insert into tests values ('12121212', '(1|1[2]){3,5}', null);
 insert into tests values ('1212121212', '(1|1[2]){3,5}', null);
 insert into tests values ('121212121212', '(1|1[2]){3,5}', null);
+insert into tests values ('á', '_', null);
 
 select str, pattern, iif(str similar to pattern escape '\', 1, 0) from tests;
 
@@ -31,6 +35,9 @@ STR                  PATTERN                      CASE
 aa                   (aa){1}                         1 
 aa                   (a){1}                          0 
 a                    (a){1}                          1 
+A                    (a){1}                          0 
+á                   (a){1}                          0 
+Á                   (ã){1}                         0 
 aa                   a{1}                            0 
                      (1|2){0,}                       1 
                      (1|2){1,}                       0 
@@ -43,6 +50,82 @@ aa                   a{1}                            0
 12121212             (1|1[2]){3,5}                   1 
 1212121212           (1|1[2]){3,5}                   1 
 121212121212         (1|1[2]){3,5}                   0 
+á                   _                               0 
+
+
+select str, pattern, iif(cast(str as varchar(20) character set utf8) similar to pattern escape '\', 1, 0) from tests;
+
+STR                  PATTERN                      CASE 
+==================== ==================== ============ 
+aa                   (aa){1}                         1 
+aa                   (a){1}                          0 
+a                    (a){1}                          1 
+A                    (a){1}                          0 
+á                   (a){1}                          0 
+Á                   (ã){1}                         0 
+aa                   a{1}                            0 
+                     (1|2){0,}                       1 
+                     (1|2){1,}                       0 
+1                    (1|2){0,}                       1 
+1                    (1|2){0,1}                      1 
+1                    (1|2){1}                        1 
+12                   (1|1[2]){1}                     1 
+1212                 (1|1[2]){3,5}                   0 
+121212               (1|1[2]){3,5}                   1 
+12121212             (1|1[2]){3,5}                   1 
+1212121212           (1|1[2]){3,5}                   1 
+121212121212         (1|1[2]){3,5}                   0 
+á                   _                               1 
+
+
+select str, pattern, iif(cast(str as varchar(20) character set utf8) collate unicode_ci similar to pattern escape '\', 1, 0) from tests;
+
+STR                  PATTERN                      CASE 
+==================== ==================== ============ 
+aa                   (aa){1}                         1 
+aa                   (a){1}                          0 
+a                    (a){1}                          1 
+A                    (a){1}                          1 
+á                   (a){1}                          0 
+Á                   (ã){1}                         0 
+aa                   a{1}                            0 
+                     (1|2){0,}                       1 
+                     (1|2){1,}                       0 
+1                    (1|2){0,}                       1 
+1                    (1|2){0,1}                      1 
+1                    (1|2){1}                        1 
+12                   (1|1[2]){1}                     1 
+1212                 (1|1[2]){3,5}                   0 
+121212               (1|1[2]){3,5}                   1 
+12121212             (1|1[2]){3,5}                   1 
+1212121212           (1|1[2]){3,5}                   1 
+121212121212         (1|1[2]){3,5}                   0 
+á                   _                               1 
+
+
+select str, pattern, iif(cast(str as varchar(20) character set utf8) collate unicode_ci_ai similar to pattern escape '\', 1, 0) from tests;
+
+STR                  PATTERN                      CASE 
+==================== ==================== ============ 
+aa                   (aa){1}                         1 
+aa                   (a){1}                          0 
+a                    (a){1}                          1 
+A                    (a){1}                          1 
+á                   (a){1}                          1 
+Á                   (ã){1}                         1 
+aa                   a{1}                            0 
+                     (1|2){0,}                       1 
+                     (1|2){1,}                       0 
+1                    (1|2){0,}                       1 
+1                    (1|2){0,1}                      1 
+1                    (1|2){1}                        1 
+12                   (1|1[2]){1}                     1 
+1212                 (1|1[2]){3,5}                   0 
+121212               (1|1[2]){3,5}                   1 
+12121212             (1|1[2]){3,5}                   1 
+1212121212           (1|1[2]){3,5}                   1 
+121212121212         (1|1[2]){3,5}                   0 
+á                   _                               1 
 
 
 delete from tests;
