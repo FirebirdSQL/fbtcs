@@ -268,6 +268,19 @@ SUBSTRING
           
 
 
+select substring('çaaaЫxЫЫcccç' similar '%aaa#"%#"ccc%' escape '#') from rdb$database;
+
+SUBSTRING         
+================= 
+ЫxЫЫ           
+
+select substring(cast('aaaЫxЫЫccc' as varchar(15) character set win1251) similar '%aaa#"%#"ccc%' escape '#') from rdb$database;
+
+SUBSTRING       
+=============== 
+ЫxЫЫ         
+
+
 ---
 
 exit;

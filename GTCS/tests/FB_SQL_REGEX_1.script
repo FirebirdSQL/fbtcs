@@ -97,6 +97,9 @@ select substring('asds 12.34 asd' similar '% \"[\+\-]?[0-9]*([0-9].|.[0-9])?[0-9
 select substring('asd 5 s 1234 a 12 sd' similar '% \"[\+\-]?[0-9]*\" %' escape '\') from rdb$database;
 select substring('a 1 b' similar '%#"[0-9]*#" %' escape '#') from rdb$database;
 
+select substring('çaaaЫxЫЫcccç' similar '%aaa#"%#"ccc%' escape '#') from rdb$database;
+select substring(cast('aaaЫxЫЫccc' as varchar(15) character set win1251) similar '%aaa#"%#"ccc%' escape '#') from rdb$database;
+
 ---
 
 exit;
