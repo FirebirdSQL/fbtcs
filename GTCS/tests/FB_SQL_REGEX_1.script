@@ -99,6 +99,7 @@ select substring('a 1 b' similar '%#"[0-9]*#" %' escape '#') from rdb$database;
 
 select substring('çaaaЫxЫЫcccç' similar '%aaa#"%#"ccc%' escape '#') from rdb$database;
 select substring(cast('aaaЫxЫЫccc' as varchar(15) character set win1251) similar '%aaa#"%#"ccc%' escape '#') from rdb$database;
+select cast(substring(cast(_utf8 'aaaЫxЫЫccc' as varchar(10) character set win1251) similar '%aaa#"%#"ccc%' escape '#') as varchar(10) character set utf8) from rdb$database;
 
 ---
 
