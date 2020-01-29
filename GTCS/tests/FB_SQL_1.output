@@ -8,215 +8,220 @@
 ======================= ======================= 
       3.141592653589793      0.1415926535897931 
 
-Statement failed, SQLSTATE = HY000
-Dynamic SQL Error
--SQL error code = -104
--Client SQL dialect 1 does not support reference to DATE datatype
-After line 40 in file /usr/home/firebird/HEAD/gen/Debug/firebird/plugins/udr/udf_compat.sql
 
-CURRENT_TIMESTAMP GETEXACTTIMESTAMPUTC 
-================= ==================== 
-20-FEB-2018       20-FEB-2018          
+   CONSTANT DOW                                                   SDOW          
+=========== ===================================================== ============= 
+29-JAN-2020 Wednesday                                             Wed           
 
-Statement failed, SQLSTATE = HY000
-Dynamic SQL Error
--SQL error code = -104
--Client SQL dialect 1 does not support reference to DATE datatype
-After line 42 in file /usr/home/firebird/HEAD/gen/Debug/firebird/plugins/udr/udf_compat.sql
-Use CONNECT or CREATE DATABASE to specify a database
-Use CONNECT or CREATE DATABASE to specify a database
 
-DOW_INITTERM          COUNT 
-============== ============ 
-Friday                   23 
-Monday                    9 
-Saturday                  9 
-Sunday                   17 
-Thursday                 10 
-Tuesday                  10 
-Wednesday                 8 
+GETEXACTTIMESTAMPTEST 
+===================== 
+                    0 
+
+
+   CONSTANT ISLEAPYEAR 
+=========== ========== 
+29-JAN-2019 <false>    
+
+
+   CONSTANT ISLEAPYEAR 
+=========== ========== 
+29-JAN-2020 <true>     
 
 Use CONNECT or CREATE DATABASE to specify a database
+Use CONNECT or CREATE DATABASE to specify a database
 
-SNAME                 COUNT 
-============== ============ 
-Friday                   23 
-Monday                    9 
-Saturday                  9 
-Sunday                   17 
-Thursday                 10 
-Tuesday                  10 
-Wednesday                 8 
+DOW_INITTERM                                                 COUNT 
+===================================================== ============ 
+Friday                                                          23 
+Monday                                                           9 
+Saturday                                                         9 
+Sunday                                                          17 
+Thursday                                                        10 
+Tuesday                                                         10 
+Wednesday                                                        8 
 
 Use CONNECT or CREATE DATABASE to specify a database
 
-STATE  DOW_INITTERM          COUNT 
-====== ============== ============ 
-AL     Sunday                    1 
-AL     Thursday                  1 
-AR     Sunday                    1 
-AZ     Friday                    1 
-CA     Monday                    2 
-CA     Sunday                    1 
-CA     Thursday                  1 
-CA     Tuesday                   1 
-CO     Friday                    1 
-CT     Friday                    1 
-DC     Sunday                    1 
-DE     Tuesday                   1 
-FL     Friday                    1 
-FL     Monday                    1 
-FL     Sunday                    1 
-FL     Thursday                  1 
-GA     Friday                    1 
-HI     Tuesday                   1 
-IA     Friday                    1 
-ID     Friday                    1 
-
-STATE  DOW_INITTERM          COUNT 
-====== ============== ============ 
-IL     Wednesday                 2 
-IN     Sunday                    2 
-KS     Monday                    1 
-KS     Saturday                  1 
-KY     Friday                    1 
-LA     Saturday                  1 
-LA     Tuesday                   1 
-MA     Sunday                    1 
-ME     Monday                    1 
-MI     Friday                    1 
-MI     Sunday                    2 
-MN     Friday                    2 
-MO     Saturday                  1 
-MO     Thursday                  1 
-MO     Wednesday                 1 
-MS     Monday                    1 
-MT     Thursday                  1 
-NC     Thursday                  1 
-ND     Tuesday                   1 
-NE     Monday                    1 
-
-STATE  DOW_INITTERM          COUNT 
-====== ============== ============ 
-NE     Wednesday                 1 
-NJ     Thursday                  1 
-NM     Saturday                  1 
-NM     Tuesday                   1 
-NV     Monday                    1 
-NV     Saturday                  1 
-NY     Friday                    3 
-OH     Friday                    1 
-OH     Tuesday                   1 
-OK     Tuesday                   1 
-OR     Friday                    1 
-OR     Tuesday                   1 
-PA     Friday                    2 
-PA     Sunday                    1 
-RI     Saturday                  1 
-SC     Sunday                    2 
-SD     Friday                    1 
-TN     Saturday                  1 
-TN     Sunday                    2 
-TX     Friday                    2 
-
-STATE  DOW_INITTERM          COUNT 
-====== ============== ============ 
-TX     Thursday                  2 
-TX     Wednesday                 3 
-UT     Sunday                    1 
-VA     Monday                    1 
-VA     Thursday                  1 
-VT     Sunday                    1 
-WA     Friday                    1 
-WA     Saturday                  1 
-WI     Friday                    1 
-WI     Saturday                  1 
-WV     Wednesday                 1 
-WY     Tuesday                   1 
+SNAME                                                        COUNT 
+===================================================== ============ 
+Friday                                                          23 
+Monday                                                           9 
+Saturday                                                         9 
+Sunday                                                          17 
+Thursday                                                        10 
+Tuesday                                                         10 
+Wednesday                                                        8 
 
 Use CONNECT or CREATE DATABASE to specify a database
 
-STATE  SNAME                 COUNT 
-====== ============== ============ 
-AL     Sunday                    1 
-AL     Thursday                  1 
-AR     Sunday                    1 
-AZ     Friday                    1 
-CA     Monday                    2 
-CA     Sunday                    1 
-CA     Thursday                  1 
-CA     Tuesday                   1 
-CO     Friday                    1 
-CT     Friday                    1 
-DC     Sunday                    1 
-DE     Tuesday                   1 
-FL     Friday                    1 
-FL     Monday                    1 
-FL     Sunday                    1 
-FL     Thursday                  1 
-GA     Friday                    1 
-HI     Tuesday                   1 
-IA     Friday                    1 
-ID     Friday                    1 
+STATE  DOW_INITTERM                                                 COUNT 
+====== ===================================================== ============ 
+AL     Sunday                                                           1 
+AL     Thursday                                                         1 
+AR     Sunday                                                           1 
+AZ     Friday                                                           1 
+CA     Monday                                                           2 
+CA     Sunday                                                           1 
+CA     Thursday                                                         1 
+CA     Tuesday                                                          1 
+CO     Friday                                                           1 
+CT     Friday                                                           1 
+DC     Sunday                                                           1 
+DE     Tuesday                                                          1 
+FL     Friday                                                           1 
+FL     Monday                                                           1 
+FL     Sunday                                                           1 
+FL     Thursday                                                         1 
+GA     Friday                                                           1 
+HI     Tuesday                                                          1 
+IA     Friday                                                           1 
+ID     Friday                                                           1 
 
-STATE  SNAME                 COUNT 
-====== ============== ============ 
-IL     Wednesday                 2 
-IN     Sunday                    2 
-KS     Monday                    1 
-KS     Saturday                  1 
-KY     Friday                    1 
-LA     Saturday                  1 
-LA     Tuesday                   1 
-MA     Sunday                    1 
-ME     Monday                    1 
-MI     Friday                    1 
-MI     Sunday                    2 
-MN     Friday                    2 
-MO     Saturday                  1 
-MO     Thursday                  1 
-MO     Wednesday                 1 
-MS     Monday                    1 
-MT     Thursday                  1 
-NC     Thursday                  1 
-ND     Tuesday                   1 
-NE     Monday                    1 
+STATE  DOW_INITTERM                                                 COUNT 
+====== ===================================================== ============ 
+IL     Wednesday                                                        2 
+IN     Sunday                                                           2 
+KS     Monday                                                           1 
+KS     Saturday                                                         1 
+KY     Friday                                                           1 
+LA     Saturday                                                         1 
+LA     Tuesday                                                          1 
+MA     Sunday                                                           1 
+ME     Monday                                                           1 
+MI     Friday                                                           1 
+MI     Sunday                                                           2 
+MN     Friday                                                           2 
+MO     Saturday                                                         1 
+MO     Thursday                                                         1 
+MO     Wednesday                                                        1 
+MS     Monday                                                           1 
+MT     Thursday                                                         1 
+NC     Thursday                                                         1 
+ND     Tuesday                                                          1 
+NE     Monday                                                           1 
 
-STATE  SNAME                 COUNT 
-====== ============== ============ 
-NE     Wednesday                 1 
-NJ     Thursday                  1 
-NM     Saturday                  1 
-NM     Tuesday                   1 
-NV     Monday                    1 
-NV     Saturday                  1 
-NY     Friday                    3 
-OH     Friday                    1 
-OH     Tuesday                   1 
-OK     Tuesday                   1 
-OR     Friday                    1 
-OR     Tuesday                   1 
-PA     Friday                    2 
-PA     Sunday                    1 
-RI     Saturday                  1 
-SC     Sunday                    2 
-SD     Friday                    1 
-TN     Saturday                  1 
-TN     Sunday                    2 
-TX     Friday                    2 
+STATE  DOW_INITTERM                                                 COUNT 
+====== ===================================================== ============ 
+NE     Wednesday                                                        1 
+NJ     Thursday                                                         1 
+NM     Saturday                                                         1 
+NM     Tuesday                                                          1 
+NV     Monday                                                           1 
+NV     Saturday                                                         1 
+NY     Friday                                                           3 
+OH     Friday                                                           1 
+OH     Tuesday                                                          1 
+OK     Tuesday                                                          1 
+OR     Friday                                                           1 
+OR     Tuesday                                                          1 
+PA     Friday                                                           2 
+PA     Sunday                                                           1 
+RI     Saturday                                                         1 
+SC     Sunday                                                           2 
+SD     Friday                                                           1 
+TN     Saturday                                                         1 
+TN     Sunday                                                           2 
+TX     Friday                                                           2 
 
-STATE  SNAME                 COUNT 
-====== ============== ============ 
-TX     Thursday                  2 
-TX     Wednesday                 3 
-UT     Sunday                    1 
-VA     Monday                    1 
-VA     Thursday                  1 
-VT     Sunday                    1 
-WA     Friday                    1 
-WA     Saturday                  1 
-WI     Friday                    1 
-WI     Saturday                  1 
-WV     Wednesday                 1 
-WY     Tuesday                   1 
+STATE  DOW_INITTERM                                                 COUNT 
+====== ===================================================== ============ 
+TX     Thursday                                                         2 
+TX     Wednesday                                                        3 
+UT     Sunday                                                           1 
+VA     Monday                                                           1 
+VA     Thursday                                                         1 
+VT     Sunday                                                           1 
+WA     Friday                                                           1 
+WA     Saturday                                                         1 
+WI     Friday                                                           1 
+WI     Saturday                                                         1 
+WV     Wednesday                                                        1 
+WY     Tuesday                                                          1 
+
+Use CONNECT or CREATE DATABASE to specify a database
+
+STATE  SNAME                                                        COUNT 
+====== ===================================================== ============ 
+AL     Sunday                                                           1 
+AL     Thursday                                                         1 
+AR     Sunday                                                           1 
+AZ     Friday                                                           1 
+CA     Monday                                                           2 
+CA     Sunday                                                           1 
+CA     Thursday                                                         1 
+CA     Tuesday                                                          1 
+CO     Friday                                                           1 
+CT     Friday                                                           1 
+DC     Sunday                                                           1 
+DE     Tuesday                                                          1 
+FL     Friday                                                           1 
+FL     Monday                                                           1 
+FL     Sunday                                                           1 
+FL     Thursday                                                         1 
+GA     Friday                                                           1 
+HI     Tuesday                                                          1 
+IA     Friday                                                           1 
+ID     Friday                                                           1 
+
+STATE  SNAME                                                        COUNT 
+====== ===================================================== ============ 
+IL     Wednesday                                                        2 
+IN     Sunday                                                           2 
+KS     Monday                                                           1 
+KS     Saturday                                                         1 
+KY     Friday                                                           1 
+LA     Saturday                                                         1 
+LA     Tuesday                                                          1 
+MA     Sunday                                                           1 
+ME     Monday                                                           1 
+MI     Friday                                                           1 
+MI     Sunday                                                           2 
+MN     Friday                                                           2 
+MO     Saturday                                                         1 
+MO     Thursday                                                         1 
+MO     Wednesday                                                        1 
+MS     Monday                                                           1 
+MT     Thursday                                                         1 
+NC     Thursday                                                         1 
+ND     Tuesday                                                          1 
+NE     Monday                                                           1 
+
+STATE  SNAME                                                        COUNT 
+====== ===================================================== ============ 
+NE     Wednesday                                                        1 
+NJ     Thursday                                                         1 
+NM     Saturday                                                         1 
+NM     Tuesday                                                          1 
+NV     Monday                                                           1 
+NV     Saturday                                                         1 
+NY     Friday                                                           3 
+OH     Friday                                                           1 
+OH     Tuesday                                                          1 
+OK     Tuesday                                                          1 
+OR     Friday                                                           1 
+OR     Tuesday                                                          1 
+PA     Friday                                                           2 
+PA     Sunday                                                           1 
+RI     Saturday                                                         1 
+SC     Sunday                                                           2 
+SD     Friday                                                           1 
+TN     Saturday                                                         1 
+TN     Sunday                                                           2 
+TX     Friday                                                           2 
+
+STATE  SNAME                                                        COUNT 
+====== ===================================================== ============ 
+TX     Thursday                                                         2 
+TX     Wednesday                                                        3 
+UT     Sunday                                                           1 
+VA     Monday                                                           1 
+VA     Thursday                                                         1 
+VT     Sunday                                                           1 
+WA     Friday                                                           1 
+WA     Saturday                                                         1 
+WI     Friday                                                           1 
+WI     Saturday                                                         1 
+WV     Wednesday                                                        1 
+WY     Tuesday                                                          1 
 
