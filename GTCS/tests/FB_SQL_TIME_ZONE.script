@@ -386,7 +386,8 @@ select timestamp '2017-11-05 01:30 America/New_York' t1,
 ---
 
 
-set time zone bind legacy;
+set bind of timestamp with time zone to legacy;
+set bind of time with time zone to legacy;
 set sqlda_display on;
 
 select timestamp '2018-05-01 20:01:02 America/Sao_Paulo',
@@ -399,7 +400,8 @@ select 1
         current_time = ?;
 
 set sqlda_display off;
-set time zone bind native;
+set bind of timestamp with time zone to native;
+set bind of time with time zone to native;
 
 
 
@@ -421,9 +423,9 @@ insert into timetz values (7, '12:33:33 +0');
 insert into timetz values (8, '13:33:33 +1');
 insert into timetz values (9, '14:33:33 +2');
 
-select n, v, cast(v as time) from timetz order by v;
+select n, v, cast(v as time) from timetz order by v, n;
 
-select n, v from timetz order by v + 0;
+select n, v from timetz order by v + 0, n;
 
 commit;
 drop index timetz_uk;
@@ -437,12 +439,12 @@ insert into timetz values (9, '14:33:33 +2');
 select n, v, cast(v as time) from timetz order by cast(v as time), n;
 select n, v, cast(v as time) from timetz order by v, n;
 
-select n, v from timetz order by v + 0;
+select n, v from timetz order by v + 0, n;
 
 commit;
 drop index timetz_idx;
 
-select n, v, cast(v as time) from timetz order by v;
+select n, v, cast(v as time) from timetz order by v, n;
 
 delete from timetz;
 insert into timetz values (1, '11:33:33.456');
@@ -466,9 +468,9 @@ insert into timestamptz values (7, '2018-01-01 12:33:33 +0');
 insert into timestamptz values (8, '2018-01-01 13:33:33 +1');
 insert into timestamptz values (9, '2018-01-01 14:33:33 +2');
 
-select n, v, cast(v as timestamp) from timestamptz order by v;
+select n, v, cast(v as timestamp) from timestamptz order by v, n;
 
-select n, v from timestamptz order by v + 0;
+select n, v from timestamptz order by v + 0, n;
 
 commit;
 drop index timestamptz_uk;
@@ -482,12 +484,12 @@ insert into timestamptz values (9, '2018-01-01 14:33:33 +2');
 select n, v, cast(v as timestamp) from timestamptz order by cast(v as timestamp), n;
 select n, v, cast(v as timestamp) from timestamptz order by v, n;
 
-select n, v from timestamptz order by v + 0;
+select n, v from timestamptz order by v + 0, n;
 
 commit;
 drop index timestamptz_idx;
 
-select n, v, cast(v as timestamp) from timestamptz order by v;
+select n, v, cast(v as timestamp) from timestamptz order by v, n;
 
 delete from timestamptz;
 insert into timestamptz values (1, '2018-01-01 11:33:33.456');

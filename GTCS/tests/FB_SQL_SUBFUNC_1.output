@@ -227,6 +227,7 @@ select * from t1 order by x1!
 select f5() from rdb$database!
 Statement failed, SQLSTATE = 28000
 no permission for UPDATE access to TABLE T1
+-Effective user is QA_USER2
 After line 170 in file fb_sql_subfunc_1.sql
 select * from t1 order by x1!
 
@@ -248,6 +249,7 @@ begin
 end!
 Statement failed, SQLSTATE = 28000
 no permission for UPDATE access to TABLE T1
+-Effective user is QA_USER2
 After line 173 in file fb_sql_subfunc_1.sql
 
 ---

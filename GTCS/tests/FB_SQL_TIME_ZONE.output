@@ -637,7 +637,8 @@ select timestamp '2017-11-05 01:30 America/New_York' t1,
 ---
 
 
-set time zone bind legacy;
+set bind of timestamp with time zone to legacy;
+set bind of time with time zone to legacy;
 set sqlda_display on;
 
 select timestamp '2018-05-01 20:01:02 America/Sao_Paulo',
@@ -683,10 +684,11 @@ Statement failed, SQLSTATE = 07002
 Dynamic SQL Error
 -SQLDA error
 -Wrong number of parameters (expected 2, got 0)
-After line 393 in file fb_sql_time_zone_a.sql
+After line 394 in file fb_sql_time_zone_a.sql
 
 set sqlda_display off;
-set time zone bind native;
+set bind of timestamp with time zone to native;
+set bind of time with time zone to native;
 
 
 
@@ -708,19 +710,19 @@ insert into timetz values (7, '12:33:33 +0');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '12:33:33.0000 +00:00')
-After line 416 in file fb_sql_time_zone_a.sql
+After line 418 in file fb_sql_time_zone_a.sql
 insert into timetz values (8, '13:33:33 +1');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '13:33:33.0000 +01:00')
-After line 419 in file fb_sql_time_zone_a.sql
+After line 421 in file fb_sql_time_zone_a.sql
 insert into timetz values (9, '14:33:33 +2');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '14:33:33.0000 +02:00')
-After line 420 in file fb_sql_time_zone_a.sql
+After line 422 in file fb_sql_time_zone_a.sql
 
-select n, v, cast(v as time) from timetz order by v;
+select n, v, cast(v as time) from timetz order by v, n;
 
            N                                              V          CAST 
 ============ ============================================== ============= 
@@ -732,7 +734,7 @@ select n, v, cast(v as time) from timetz order by v;
            1 11:33:33.4560 -02:00                           11:33:33.4560 
 
 
-select n, v from timetz order by v + 0;
+select n, v from timetz order by v + 0, n;
 
            N                                              V 
 ============ ============================================== 
@@ -782,7 +784,7 @@ select n, v, cast(v as time) from timetz order by v, n;
            1 11:33:33.4560 -02:00                           11:33:33.4560 
 
 
-select n, v from timetz order by v + 0;
+select n, v from timetz order by v + 0, n;
 
            N                                              V 
 ============ ============================================== 
@@ -800,7 +802,7 @@ select n, v from timetz order by v + 0;
 commit;
 drop index timetz_idx;
 
-select n, v, cast(v as time) from timetz order by v;
+select n, v, cast(v as time) from timetz order by v, n;
 
            N                                              V          CAST 
 ============ ============================================== ============= 
@@ -837,19 +839,19 @@ insert into timestamptz values (7, '2018-01-01 12:33:33 +0');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 12:33:33.0000 +00:00')
-After line 461 in file fb_sql_time_zone_a.sql
+After line 463 in file fb_sql_time_zone_a.sql
 insert into timestamptz values (8, '2018-01-01 13:33:33 +1');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 13:33:33.0000 +01:00')
-After line 464 in file fb_sql_time_zone_a.sql
+After line 466 in file fb_sql_time_zone_a.sql
 insert into timestamptz values (9, '2018-01-01 14:33:33 +2');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 14:33:33.0000 +02:00')
-After line 465 in file fb_sql_time_zone_a.sql
+After line 467 in file fb_sql_time_zone_a.sql
 
-select n, v, cast(v as timestamp) from timestamptz order by v;
+select n, v, cast(v as timestamp) from timestamptz order by v, n;
 
            N                                                         V                      CAST 
 ============ ========================================================= ========================= 
@@ -861,7 +863,7 @@ select n, v, cast(v as timestamp) from timestamptz order by v;
            1 2018-01-01 11:33:33.4560 -02:00                           2018-01-01 11:33:33.4560  
 
 
-select n, v from timestamptz order by v + 0;
+select n, v from timestamptz order by v + 0, n;
 
            N                                                         V 
 ============ ========================================================= 
@@ -911,7 +913,7 @@ select n, v, cast(v as timestamp) from timestamptz order by v, n;
            1 2018-01-01 11:33:33.4560 -02:00                           2018-01-01 11:33:33.4560  
 
 
-select n, v from timestamptz order by v + 0;
+select n, v from timestamptz order by v + 0, n;
 
            N                                                         V 
 ============ ========================================================= 
@@ -929,7 +931,7 @@ select n, v from timestamptz order by v + 0;
 commit;
 drop index timestamptz_idx;
 
-select n, v, cast(v as timestamp) from timestamptz order by v;
+select n, v, cast(v as timestamp) from timestamptz order by v, n;
 
            N                                                         V                      CAST 
 ============ ========================================================= ========================= 

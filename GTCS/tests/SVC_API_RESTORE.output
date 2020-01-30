@@ -453,6 +453,7 @@ gbak:    restoring privilege for user PUBLIC
 gbak:    restoring privilege for user PUBLIC 
 gbak:    restoring privilege for user PUBLIC 
 gbak:creating indexes 
+gbak:committing metadata 
 gbak:    activating and creating deferred index RDB$PRIMARY20 
 gbak:    activating and creating deferred index UPDATERX 
 gbak:    activating and creating deferred index CHANGEX 
@@ -491,7 +492,6 @@ gbak:    activating and creating deferred index RDB$FOREIGN21
 gbak:    activating and creating deferred index RDB$FOREIGN23 
 gbak:    activating and creating deferred index RDB$FOREIGN25 
 gbak:    activating and creating deferred index RDB$FOREIGN26 
-gbak:committing metadata 
 gbak:adjusting views dbkey length 
 gbak:updating ownership of packages, procedures and tables 
 gbak:adding missing privileges 
