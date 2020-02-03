@@ -1,0 +1,27 @@
+Use CONNECT or CREATE DATABASE to specify a database
+
+D_DISTINCT                                                           15514
+
+
+
+VAL                                                                  15514
+
+
+
+TEST0_N                                                                  0
+
+TEST0_N                                                                  0
+
+
+
+N_GROUPED_FROM_TEST0                                                     0
+
+
+
+N_UNIQ_FROM_TEST0                                                        0
+
+
+
+COUNT_UNIQ_FROM_TEST0           1
+
+
