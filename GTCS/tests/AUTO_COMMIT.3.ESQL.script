@@ -1,10 +1,10 @@
 
 #
-#Author: Narayan 
+#Author: Narayan
 #Date: Mar 17, 1994.
 #
-#Description: This is a test to test the auto-commit behavior of IB. 
-#It creates table t,u & v. Creates procedures ins_t, ins_u and Ins_v. 
+#Description: This is a test to test the auto-commit behavior of IB.
+#It creates table t,u & v. Creates procedures ins_t, ins_u and Ins_v.
 #These procedures execute in a chain fashion. The procedure ins_v fails
 #and so none of the procedures should commit even if auto-commit is on.
 #
@@ -26,7 +26,6 @@
   create procedure ins_v (x integer) as
   begin
     insert into v values (:x*100);
-  SUSPEND;
   end
   go
 
@@ -34,7 +33,6 @@
   begin
     insert into u values (:x*10);
     execute procedure ins_v :x;
-  SUSPEND;
   end
   go
 
@@ -42,7 +40,6 @@
   begin
     insert into t values (:x);
     execute procedure ins_u :x;
-  SUSPEND;
   end
   go
   set term ;go
@@ -62,7 +59,7 @@ main()
 
   exec sql set transaction;
 
-  exec sql execute procedure ins_t 10; 
+  exec sql execute procedure ins_t 10;
 
   if (SQLCODE) isc_print_status(gds__status);
 
@@ -79,7 +76,7 @@ $GPRE -e A.e
 $RUN sed "/isc_tpb_0 \[/s/\[.\] = {1,/\[\] = {1, isc_tpb_autocommit,/" A.c > A1.c
 $RUN sed "/isc_start_transaction /s/4/5/" A1.c > A2.c
 $CC FLAG_CC A2.c
-$LINK FLAG_LINK A2 
+$LINK FLAG_LINK A2
 $RUN A2
 $ISQL -m -i show.sql
 $DELETE init.sql show.sql A.* A1.* A2.*

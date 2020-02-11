@@ -2,7 +2,7 @@ set term go;
 create procedure proc_insert (a char(5), b char(20), c char(6), d smallint, e char(15)) as
 begin
 insert into p values (:a, :b, :c, :d, :e);
-SUSPEND; end
+end
 go
 set term ; go
 set echo;
