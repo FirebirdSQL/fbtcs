@@ -10,7 +10,7 @@ begin
     (select sno from sp) into :t do
     begin
       insert into sp(sno) values (:t);
-      SUSPEND;
+      exit;
     end
 end
 go

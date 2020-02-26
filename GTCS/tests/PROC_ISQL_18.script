@@ -8,7 +8,6 @@ begin
     insert into sp(sno)
     select sno from s where sno NOT IN
     (select sno from sp) ;
-SUSPEND;
 end
 go
 set term ; go

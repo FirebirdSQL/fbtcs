@@ -4,7 +4,6 @@ begin
     insert into sp(sno)
     select sno from s where sno NOT IN
     (select sno from sp) ;
-SUSPEND;
 end
 go
 set term ; go
@@ -51,7 +50,7 @@ Dynamic SQL Error
 -SQL error code = -84
 -procedure PROC_SELECT_INSERT does not return any values
 -At line 1, column 15
-At line 16 in file proc_isql_18.sql
+At line 15 in file proc_isql_18.sql
 select * from sp;
 
 SNO    PNO             QTY 

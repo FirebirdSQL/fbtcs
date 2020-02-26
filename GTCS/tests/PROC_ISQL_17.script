@@ -10,7 +10,6 @@ select count(*) from sp where sno = :sno into :c;
 if (c = 0 ) then
   INSERT INTO SP(sno)
 values(:sno);
-SUSPEND;
 end
 go
 set term ; go
