@@ -499,10 +499,10 @@ insert into timestamptz values (1, '2018-01-01 11:33:33.456');
 
 
 select t.*,
-       extract(timezone_hour from start_timestamp at time zone 'America/Los_Angeles') start_tzh,
-       extract(timezone_minute from start_timestamp at time zone 'America/Los_Angeles') start_tzm,
-       extract(timezone_hour from end_timestamp at time zone 'America/Los_Angeles') end_tzh,
-       extract(timezone_minute from end_timestamp at time zone 'America/Los_Angeles') end_tzm
+       extract(timezone_hour from rdb$start_timestamp at time zone 'America/Los_Angeles') start_tzh,
+       extract(timezone_minute from rdb$start_timestamp at time zone 'America/Los_Angeles') start_tzm,
+       extract(timezone_hour from rdb$end_timestamp at time zone 'America/Los_Angeles') end_tzh,
+       extract(timezone_minute from rdb$end_timestamp at time zone 'America/Los_Angeles') end_tzm
   from rdb$time_zone_util.transitions(
     'America/Los_Angeles',
     timestamp '2015-01-01 GMT',

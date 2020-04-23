@@ -954,26 +954,26 @@ insert into timestamptz values (1, '2018-01-01 11:33:33.456');
 
 
 select t.*,
-       extract(timezone_hour from start_timestamp at time zone 'America/Los_Angeles') start_tzh,
-       extract(timezone_minute from start_timestamp at time zone 'America/Los_Angeles') start_tzm,
-       extract(timezone_hour from end_timestamp at time zone 'America/Los_Angeles') end_tzh,
-       extract(timezone_minute from end_timestamp at time zone 'America/Los_Angeles') end_tzm
+       extract(timezone_hour from rdb$start_timestamp at time zone 'America/Los_Angeles') start_tzh,
+       extract(timezone_minute from rdb$start_timestamp at time zone 'America/Los_Angeles') start_tzm,
+       extract(timezone_hour from rdb$end_timestamp at time zone 'America/Los_Angeles') end_tzh,
+       extract(timezone_minute from rdb$end_timestamp at time zone 'America/Los_Angeles') end_tzm
   from rdb$time_zone_util.transitions(
     'America/Los_Angeles',
     timestamp '2015-01-01 GMT',
     timestamp '2019-01-01 GMT') t;
 
-                                          START_TIMESTAMP                                             END_TIMESTAMP ZONE_OFFSET DST_OFFSET EFFECTIVE_OFFSET START_TZH START_TZM END_TZH END_TZM 
-========================================================= ========================================================= =========== ========== ================ ========= ========= ======= ======= 
-2014-11-02 09:00:00.0000 GMT                              2015-03-08 09:59:59.9999 GMT                                     -480          0             -480        -8         0      -8       0 
-2015-03-08 10:00:00.0000 GMT                              2015-11-01 08:59:59.9999 GMT                                     -480         60             -420        -7         0      -7       0 
-2015-11-01 09:00:00.0000 GMT                              2016-03-13 09:59:59.9999 GMT                                     -480          0             -480        -8         0      -8       0 
-2016-03-13 10:00:00.0000 GMT                              2016-11-06 08:59:59.9999 GMT                                     -480         60             -420        -7         0      -7       0 
-2016-11-06 09:00:00.0000 GMT                              2017-03-12 09:59:59.9999 GMT                                     -480          0             -480        -8         0      -8       0 
-2017-03-12 10:00:00.0000 GMT                              2017-11-05 08:59:59.9999 GMT                                     -480         60             -420        -7         0      -7       0 
-2017-11-05 09:00:00.0000 GMT                              2018-03-11 09:59:59.9999 GMT                                     -480          0             -480        -8         0      -8       0 
-2018-03-11 10:00:00.0000 GMT                              2018-11-04 08:59:59.9999 GMT                                     -480         60             -420        -7         0      -7       0 
-2018-11-04 09:00:00.0000 GMT                              2019-03-10 09:59:59.9999 GMT                                     -480          0             -480        -8         0      -8       0 
+                                      RDB$START_TIMESTAMP                                         RDB$END_TIMESTAMP RDB$ZONE_OFFSET RDB$DST_OFFSET RDB$EFFECTIVE_OFFSET START_TZH START_TZM END_TZH END_TZM 
+========================================================= ========================================================= =============== ============== ==================== ========= ========= ======= ======= 
+2014-11-02 09:00:00.0000 GMT                              2015-03-08 09:59:59.9999 GMT                                         -480              0                 -480        -8         0      -8       0 
+2015-03-08 10:00:00.0000 GMT                              2015-11-01 08:59:59.9999 GMT                                         -480             60                 -420        -7         0      -7       0 
+2015-11-01 09:00:00.0000 GMT                              2016-03-13 09:59:59.9999 GMT                                         -480              0                 -480        -8         0      -8       0 
+2016-03-13 10:00:00.0000 GMT                              2016-11-06 08:59:59.9999 GMT                                         -480             60                 -420        -7         0      -7       0 
+2016-11-06 09:00:00.0000 GMT                              2017-03-12 09:59:59.9999 GMT                                         -480              0                 -480        -8         0      -8       0 
+2017-03-12 10:00:00.0000 GMT                              2017-11-05 08:59:59.9999 GMT                                         -480             60                 -420        -7         0      -7       0 
+2017-11-05 09:00:00.0000 GMT                              2018-03-11 09:59:59.9999 GMT                                         -480              0                 -480        -8         0      -8       0 
+2018-03-11 10:00:00.0000 GMT                              2018-11-04 08:59:59.9999 GMT                                         -480             60                 -420        -7         0      -7       0 
+2018-11-04 09:00:00.0000 GMT                              2019-03-10 09:59:59.9999 GMT                                         -480              0                 -480        -8         0      -8       0 
 
 
 
