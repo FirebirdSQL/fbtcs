@@ -537,6 +537,56 @@ select cast('2018-01-01 10:00:00 +05' as timestamp with time zone) = cast('2018-
 ---
 
 
+set time zone '-03:00';
+
+
+select cast(time '10:11:12.1345' as time),
+       cast(time '10:11:12.1345' as time with time zone),
+       substring(cast(time '10:11:12.1345' as timestamp) from 12),
+       substring(cast(time '10:11:12.1345' as timestamp with time zone) from 12) from rdb$database;
+
+         CAST                                           CAST SUBSTRING                 SUBSTRING                                                 
+============= ============================================== ========================= ========================================================= 
+10:11:12.1345 10:11:12.1345 -03:00                           10:11:12.1345             10:11:12.1345 -03:00                                      
+
+
+select cast(timestamp '2020-05-20 10:11:12.1345' as time),
+       cast(timestamp '2020-05-20 10:11:12.1345' as time with time zone),
+       cast(timestamp '2020-05-20 10:11:12.1345' as timestamp),
+       cast(timestamp '2020-05-20 10:11:12.1345' as timestamp with time zone) from rdb$database;
+
+         CAST                                           CAST                      CAST                                                      CAST 
+============= ============================================== ========================= ========================================================= 
+10:11:12.1345 10:11:12.1345 -03:00                           2020-05-20 10:11:12.1345  2020-05-20 10:11:12.1345 -03:00                           
+
+
+select cast(time '10:11:12.1345 america/sao_paulo' as time),
+       cast(time '10:11:12.1345 america/sao_paulo' as time with time zone),
+       substring(cast(time '10:11:12.1345 america/sao_paulo' as timestamp) from 12),
+       substring(cast(time '10:11:12.1345 america/sao_paulo' as timestamp with time zone) from 12) from rdb$database;
+
+         CAST                                           CAST SUBSTRING                 SUBSTRING                                                 
+============= ============================================== ========================= ========================================================= 
+10:11:12.1345 10:11:12.1345 America/Sao_Paulo                10:11:12.1345             10:11:12.1345 America/Sao_Paulo                           
+
+
+select cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as time),
+       cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as time with time zone),
+       cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as timestamp),
+       cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as timestamp with time zone) from rdb$database;
+
+         CAST                                           CAST                      CAST                                                      CAST 
+============= ============================================== ========================= ========================================================= 
+10:11:12.1345 10:11:12.1345 America/Sao_Paulo                2020-05-20 10:11:12.1345  2020-05-20 10:11:12.1345 America/Sao_Paulo                
+
+
+
+---
+
+
+set time zone '-02:00';
+
+
 select time '20:01:02 -05:00' at time zone '-05:00',
        time '20:01:02 -05:00' at time zone '-02:00',
        time '20:01:02 -05:00' at time zone '+03:00',
@@ -684,7 +734,7 @@ Statement failed, SQLSTATE = 07002
 Dynamic SQL Error
 -SQLDA error
 -Wrong number of parameters (expected 2, got 0)
-After line 394 in file fb_sql_time_zone_a.sql
+After line 424 in file fb_sql_time_zone_a.sql
 
 set sqlda_display off;
 set bind of timestamp with time zone to native;
@@ -698,6 +748,7 @@ set bind of time with time zone to native;
 create table timetz (n integer, v time with time zone);
 create unique index timetz_uk on timetz (v);
 
+insert into timetz values (0, '11:33:33 America/Sao_Paulo');
 insert into timetz values (1, '11:33:33.456');
 insert into timetz values (2, '11:33:33.456 -1');
 insert into timetz values (3, '11:33:33.456 +1');
@@ -710,17 +761,22 @@ insert into timetz values (7, '12:33:33 +0');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '12:33:33.0000 +00:00')
-After line 418 in file fb_sql_time_zone_a.sql
+After line 449 in file fb_sql_time_zone_a.sql
 insert into timetz values (8, '13:33:33 +1');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '13:33:33.0000 +01:00')
-After line 421 in file fb_sql_time_zone_a.sql
+After line 452 in file fb_sql_time_zone_a.sql
 insert into timetz values (9, '14:33:33 +2');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
 -Problematic key value is ("V" = '14:33:33.0000 +02:00')
-After line 422 in file fb_sql_time_zone_a.sql
+After line 453 in file fb_sql_time_zone_a.sql
+insert into timetz values (10, '11:33:33 -03');
+Statement failed, SQLSTATE = 23000
+attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
+-Problematic key value is ("V" = '11:33:33.0000 -03:00')
+After line 454 in file fb_sql_time_zone_a.sql
 
 select n, v, cast(v as time) from timetz order by v, n;
 
@@ -732,6 +788,7 @@ select n, v, cast(v as time) from timetz order by v, n;
            2 11:33:33.4560 -01:00                           10:33:33.4560 
            4 11:33:33.0000 -02:00                           11:33:33.0000 
            1 11:33:33.4560 -02:00                           11:33:33.4560 
+           0 11:33:33.0000 America/Sao_Paulo                12:33:33.0000 
 
 
 select n, v from timetz order by v + 0, n;
@@ -744,6 +801,7 @@ select n, v from timetz order by v + 0, n;
            2 11:33:33.4560 -01:00                           
            4 11:33:33.0000 -02:00                           
            1 11:33:33.4560 -02:00                           
+           0 11:33:33.0000 America/Sao_Paulo                
 
 
 commit;
@@ -768,6 +826,7 @@ select n, v, cast(v as time) from timetz order by cast(v as time), n;
            2 11:33:33.4560 -01:00                           10:33:33.4560 
            4 11:33:33.0000 -02:00                           11:33:33.0000 
            1 11:33:33.4560 -02:00                           11:33:33.4560 
+           0 11:33:33.0000 America/Sao_Paulo                12:33:33.0000 
 
 select n, v, cast(v as time) from timetz order by v, n;
 
@@ -782,6 +841,7 @@ select n, v, cast(v as time) from timetz order by v, n;
            2 11:33:33.4560 -01:00                           10:33:33.4560 
            4 11:33:33.0000 -02:00                           11:33:33.0000 
            1 11:33:33.4560 -02:00                           11:33:33.4560 
+           0 11:33:33.0000 America/Sao_Paulo                12:33:33.0000 
 
 
 select n, v from timetz order by v + 0, n;
@@ -797,6 +857,7 @@ select n, v from timetz order by v + 0, n;
            2 11:33:33.4560 -01:00                           
            4 11:33:33.0000 -02:00                           
            1 11:33:33.4560 -02:00                           
+           0 11:33:33.0000 America/Sao_Paulo                
 
 
 commit;
@@ -815,6 +876,7 @@ select n, v, cast(v as time) from timetz order by v, n;
            2 11:33:33.4560 -01:00                           10:33:33.4560 
            4 11:33:33.0000 -02:00                           11:33:33.0000 
            1 11:33:33.4560 -02:00                           11:33:33.4560 
+           0 11:33:33.0000 America/Sao_Paulo                12:33:33.0000 
 
 
 delete from timetz;
@@ -839,17 +901,17 @@ insert into timestamptz values (7, '2018-01-01 12:33:33 +0');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 12:33:33.0000 +00:00')
-After line 463 in file fb_sql_time_zone_a.sql
+After line 495 in file fb_sql_time_zone_a.sql
 insert into timestamptz values (8, '2018-01-01 13:33:33 +1');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 13:33:33.0000 +01:00')
-After line 466 in file fb_sql_time_zone_a.sql
+After line 498 in file fb_sql_time_zone_a.sql
 insert into timestamptz values (9, '2018-01-01 14:33:33 +2');
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 14:33:33.0000 +02:00')
-After line 467 in file fb_sql_time_zone_a.sql
+After line 499 in file fb_sql_time_zone_a.sql
 
 select n, v, cast(v as timestamp) from timestamptz order by v, n;
 

@@ -316,6 +316,36 @@ select cast('2018-01-01 10:00:00 +05' as timestamp with time zone) = cast('2018-
 ---
 
 
+set time zone '-03:00';
+
+
+select cast(time '10:11:12.1345' as time),
+       cast(time '10:11:12.1345' as time with time zone),
+       substring(cast(time '10:11:12.1345' as timestamp) from 12),
+       substring(cast(time '10:11:12.1345' as timestamp with time zone) from 12) from rdb$database;
+
+select cast(timestamp '2020-05-20 10:11:12.1345' as time),
+       cast(timestamp '2020-05-20 10:11:12.1345' as time with time zone),
+       cast(timestamp '2020-05-20 10:11:12.1345' as timestamp),
+       cast(timestamp '2020-05-20 10:11:12.1345' as timestamp with time zone) from rdb$database;
+
+select cast(time '10:11:12.1345 america/sao_paulo' as time),
+       cast(time '10:11:12.1345 america/sao_paulo' as time with time zone),
+       substring(cast(time '10:11:12.1345 america/sao_paulo' as timestamp) from 12),
+       substring(cast(time '10:11:12.1345 america/sao_paulo' as timestamp with time zone) from 12) from rdb$database;
+
+select cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as time),
+       cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as time with time zone),
+       cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as timestamp),
+       cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as timestamp with time zone) from rdb$database;
+
+
+---
+
+
+set time zone '-02:00';
+
+
 select time '20:01:02 -05:00' at time zone '-05:00',
        time '20:01:02 -05:00' at time zone '-02:00',
        time '20:01:02 -05:00' at time zone '+03:00',
@@ -411,6 +441,7 @@ set bind of time with time zone to native;
 create table timetz (n integer, v time with time zone);
 create unique index timetz_uk on timetz (v);
 
+insert into timetz values (0, '11:33:33 America/Sao_Paulo');
 insert into timetz values (1, '11:33:33.456');
 insert into timetz values (2, '11:33:33.456 -1');
 insert into timetz values (3, '11:33:33.456 +1');
@@ -422,6 +453,7 @@ insert into timetz values (6, '11:33:33 +1');
 insert into timetz values (7, '12:33:33 +0');
 insert into timetz values (8, '13:33:33 +1');
 insert into timetz values (9, '14:33:33 +2');
+insert into timetz values (10, '11:33:33 -03');
 
 select n, v, cast(v as time) from timetz order by v, n;
 
