@@ -1,7 +1,7 @@
 Use CONNECT or CREATE DATABASE to specify a database
-Generator GEN1, current value: 999, initial value: 0, increment: 1
-Generator GEN2, current value: 199, initial value: 0, increment: 1
-Generator GEN3, current value: 29, initial value: 0, increment: 1
+Generator GEN1, current value: 999, initial value: 1, increment: 1
+Generator GEN2, current value: 199, initial value: 1, increment: 1
+Generator GEN3, current value: 29, initial value: 1, increment: 1
 A                               INTEGER Nullable 
 GENID_FIELD1                    Computed by: (gen_id(gen1, 1))
 GENID_FIELD2                    Computed by: (gen_id(gen2, genid_field1))
