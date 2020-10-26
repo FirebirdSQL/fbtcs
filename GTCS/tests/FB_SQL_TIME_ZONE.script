@@ -4,7 +4,7 @@ create database "WHERE_GDB:time_zone.fdb";
 ---
 
 
-set time zone '00:00';
+set time zone '+00:00';
 
 
 select cast('01:23:45' as time with time zone),
@@ -134,9 +134,9 @@ select dateadd(-1 hour to timestamp '2018-02-18 01:00 America/Sao_Paulo'),
 ---
 
 
-select datediff(hour from timestamp '2018-04-01 10:00:00' to timestamp '2018-04-01 10:00:00 -03'),
-       datediff(hour from timestamp '2018-04-01 10:00:00 -03' to timestamp '2018-04-01 10:00:00 -03'),
-       datediff(hour from timestamp '2018-04-01 10:00:00' to timestamp '2018-04-01 10:00:00 -02')
+select datediff(hour from timestamp '2018-04-01 10:00:00' to timestamp '2018-04-01 10:00:00 -03:00'),
+       datediff(hour from timestamp '2018-04-01 10:00:00 -03:0' to timestamp '2018-04-01 10:00:00 -03:0'),
+       datediff(hour from timestamp '2018-04-01 10:00:00' to timestamp '2018-04-01 10:00:00 -2:0')
   from rdb$database;
 
 
@@ -185,10 +185,10 @@ select extract(timezone_hour from cast('now' as timestamp with time zone)) = -2,
 
 set time zone '-02:00';
 
-select cast('01:23:45 -01' as time),
-       cast('01:23:45 +01' as time),
-       cast('2018-01-01 01:23:45 -01' as timestamp),
-       cast('2018-01-01 01:23:45 +01' as timestamp)
+select cast('01:23:45 -1:0' as time),
+       cast('01:23:45 +1:0' as time),
+       cast('2018-01-01 01:23:45 -01:00' as timestamp),
+       cast('2018-01-01 01:23:45 +01:00' as timestamp)
   from rdb$database;
 
 select cast(cast('01:23:45' as time with time zone) as timestamp with time zone) = cast(current_date || ' 01:23:45' as timestamp with time zone)
@@ -197,25 +197,25 @@ select cast(cast('01:23:45' as time with time zone) as timestamp with time zone)
 select cast(cast('2018-01-01 01:23:45' as timestamp with time zone) as time with time zone)
   from rdb$database;
 
-select cast(cast('2018-01-01 01:23:45 -04' as timestamp with time zone) as time with time zone)
+select cast(cast('2018-01-01 01:23:45 -04:00' as timestamp with time zone) as time with time zone)
   from rdb$database;
 
 select cast(cast('2018-01-01 01:23:45' as timestamp with time zone) as date)
   from rdb$database;
 
-select cast(cast('2018-01-01 01:23:45 -04' as timestamp with time zone) as date)
+select cast(cast('2018-01-01 01:23:45 -04:00' as timestamp with time zone) as date)
   from rdb$database;
 
 select cast(cast('2018-01-01 01:23:45' as timestamp with time zone) as time)
   from rdb$database;
 
-select cast(cast('2018-01-01 01:23:45 -04' as timestamp with time zone) as time)
+select cast(cast('2018-01-01 01:23:45 -04:00' as timestamp with time zone) as time)
   from rdb$database;
 
 select cast(cast('2018-01-01 01:23:45' as timestamp with time zone) as timestamp)
   from rdb$database;
 
-select cast(cast('2018-01-01 01:23:45 -04' as timestamp with time zone) as timestamp)
+select cast(cast('2018-01-01 01:23:45 -04:00' as timestamp with time zone) as timestamp)
   from rdb$database;
 
 select cast(timestamp '2018-01-01 01:23:45' as timestamp with time zone)
@@ -230,14 +230,14 @@ select cast(cast('01:23:45' as time) as timestamp with time zone) = cast(cast('0
 select cast(cast('01:23:45' as time) as time with time zone) = '01:23:45 -02:00'
   from rdb$database;
 
-select cast(cast(cast('01:23:45 -03' as time with time zone) as timestamp) as time) = '02:23:45'
+select cast(cast(cast('01:23:45 -03:00' as time with time zone) as timestamp) as time) = '02:23:45'
   from rdb$database;
 
-select cast(cast('01:23:45 -03' as time with time zone) as time) = '02:23:45'
+select cast(cast('01:23:45 -03:00' as time with time zone) as time) = '02:23:45'
   from rdb$database;
 
 -- Error
-select cast(cast('01:23:45 -03' as time with time zone) as date)
+select cast(cast('01:23:45 -03:00' as time with time zone) as date)
   from rdb$database;
 
 select cast(date '2018-01-01' as timestamp with time zone)
@@ -258,18 +258,18 @@ select timestamp '2018-02-03 America/Sao_Paulo'
 ---
 
 
-select cast('23:23:34 +05' as time with time zone) + 1,
-       cast('23:23:34 +05' as time with time zone) - 1
+select cast('23:23:34 +05:00' as time with time zone) + 1,
+       cast('23:23:34 +05:00' as time with time zone) - 1
   from rdb$database;
 
-select cast('2018-01-01 23:23:34 +05' as timestamp with time zone) + 1,
-       cast('2018-01-01 23:23:34 +05' as timestamp with time zone) - 1
+select cast('2018-01-01 23:23:34 +05:00' as timestamp with time zone) + 1,
+       cast('2018-01-01 23:23:34 +05:00' as timestamp with time zone) - 1
   from rdb$database;
 
-select date '2018-01-01' + cast('23:23:34 +05' as time with time zone),
-       cast('23:23:34 +05' as time with time zone) + date '2018-01-01',
-       date '2018-01-01' + cast('23:23:34 +05' as time),
-       cast('23:23:34 +05' as time) + date '2018-01-01'
+select date '2018-01-01' + cast('23:23:34 +05:00' as time with time zone),
+       cast('23:23:34 +05:00' as time with time zone) + date '2018-01-01',
+       date '2018-01-01' + cast('23:23:34 +05:00' as time),
+       cast('23:23:34 +05:00' as time) + date '2018-01-01'
   from rdb$database;
 
 select cast('12:00:00 +01:00' as time with time zone) - cast('12:00:00 +00:00' as time with time zone),
@@ -288,27 +288,27 @@ select cast('2018-01-01 12:00:00 +01:00' as timestamp with time zone) - cast('20
 ---
 
 
-select cast('10:00:00 +05' as time with time zone) = cast('10:00:00 05' as time with time zone),
-       cast('10:00:00 05' as time with time zone) = cast('11:00:00 +06' as time with time zone),
-       cast('10:00:00 +12' as time with time zone) = cast('10:00:00 -12' as time with time zone),
-       cast('10:00:00 -02' as time with time zone) = cast('10:00:00' as time with time zone),
-       cast('10:00:00 -02' as time with time zone) = cast('10:00:00' as time),
-       cast('10:00:00' as time) = cast('10:00:00 -02' as time with time zone),
-       cast('10:00:00 +05' as time with time zone) = cast('10:00:00 +06' as time with time zone),
-       cast('10:00:00 +05' as time with time zone) < cast('10:00:00 +06' as time with time zone),
-       cast('10:00:00 +05' as time with time zone) > cast('10:00:00 +06' as time with time zone),
+select cast('10:00:00 +05:00' as time with time zone) = cast('10:00:00 +05:00' as time with time zone),
+       cast('10:00:00 +05:00' as time with time zone) = cast('11:00:00 +06:00' as time with time zone),
+       cast('10:00:00 +12:00' as time with time zone) = cast('10:00:00 -12:00' as time with time zone),
+       cast('10:00:00 -02:00' as time with time zone) = cast('10:00:00' as time with time zone),
+       cast('10:00:00 -02:00' as time with time zone) = cast('10:00:00' as time),
+       cast('10:00:00' as time) = cast('10:00:00 -02:00' as time with time zone),
+       cast('10:00:00 +05:00' as time with time zone) = cast('10:00:00 +06:00' as time with time zone),
+       cast('10:00:00 +05:00' as time with time zone) < cast('10:00:00 +06:00' as time with time zone),
+       cast('10:00:00 +05:00' as time with time zone) > cast('10:00:00 +06:00' as time with time zone),
        localtime = current_time at time zone '-02:00'
   from rdb$database;
 
-select cast('2018-01-01 10:00:00 +05' as timestamp with time zone) = cast('2018-01-01 10:00:00 05' as timestamp with time zone),
-       cast('2018-01-01 10:00:00 05' as timestamp with time zone) = cast('2018-01-01 11:00:00 +06' as timestamp with time zone),
-       cast('2018-01-01 10:00:00 +12' as timestamp with time zone) = cast('2018-01-01 10:00:00 -12' as timestamp with time zone),
-       cast('2018-01-01 10:00:00 -02' as timestamp with time zone) = cast('2018-01-01 10:00:00' as timestamp with time zone),
-       cast('2018-01-01 10:00:00 -02' as timestamp with time zone) = cast('2018-01-01 10:00:00' as timestamp),
-       cast('2018-01-01 10:00:00' as timestamp) = cast('2018-01-01 10:00:00 -02' as timestamp with time zone),
-       cast('2018-01-01 10:00:00 +05' as timestamp with time zone) = cast('2018-01-01 10:00:00 +06' as timestamp with time zone),
-       cast('2018-01-01 10:00:00 +05' as timestamp with time zone) < cast('2018-01-01 10:00:00 +06' as timestamp with time zone),
-       cast('2018-01-01 10:00:00 +05' as timestamp with time zone) > cast('2018-01-01 10:00:00 +06' as timestamp with time zone),
+select cast('2018-01-01 10:00:00 +05:00' as timestamp with time zone) = cast('2018-01-01 10:00:00 +05:00' as timestamp with time zone),
+       cast('2018-01-01 10:00:00 +05:00' as timestamp with time zone) = cast('2018-01-01 11:00:00 +06:00' as timestamp with time zone),
+       cast('2018-01-01 10:00:00 +12:00' as timestamp with time zone) = cast('2018-01-01 10:00:00 -12:00' as timestamp with time zone),
+       cast('2018-01-01 10:00:00 -02:00' as timestamp with time zone) = cast('2018-01-01 10:00:00' as timestamp with time zone),
+       cast('2018-01-01 10:00:00 -02:00' as timestamp with time zone) = cast('2018-01-01 10:00:00' as timestamp),
+       cast('2018-01-01 10:00:00' as timestamp) = cast('2018-01-01 10:00:00 -02:00' as timestamp with time zone),
+       cast('2018-01-01 10:00:00 +05:00' as timestamp with time zone) = cast('2018-01-01 10:00:00 +06:00' as timestamp with time zone),
+       cast('2018-01-01 10:00:00 +05:00' as timestamp with time zone) < cast('2018-01-01 10:00:00 +06:00' as timestamp with time zone),
+       cast('2018-01-01 10:00:00 +05:00' as timestamp with time zone) > cast('2018-01-01 10:00:00 +06:00' as timestamp with time zone),
        localtimestamp = current_timestamp at time zone '-02:00'
   from rdb$database;
 
@@ -397,7 +397,7 @@ select first_day(of year from timestamp '2018-03-08 10:11:12 America/Sao_Paulo')
 
 
 select timestamp '2017-03-12 02:30 America/New_York' t1,
-       timestamp '2017-03-12 02:30 America/New_York' at time zone '-05' t2,
+       timestamp '2017-03-12 02:30 America/New_York' at time zone '-05:00' t2,
        dateadd(-1 minute to timestamp '2017-03-12 02:30 America/New_York') t3,
        dateadd(1 minute to timestamp '2017-03-12 02:30 America/New_York') t4,
        dateadd(-1 hour to timestamp '2017-03-12 02:30 America/New_York') t5,
@@ -405,7 +405,7 @@ select timestamp '2017-03-12 02:30 America/New_York' t1,
   from rdb$database;
 
 select timestamp '2017-11-05 01:30 America/New_York' t1,
-       timestamp '2017-11-05 01:30 America/New_York' at time zone '-04' t2,
+       timestamp '2017-11-05 01:30 America/New_York' at time zone '-04:00' t2,
        dateadd(-1 minute to timestamp '2017-11-05 01:30 America/New_York') t3,
        dateadd(1 minute to timestamp '2017-11-05 01:30 America/New_York') t4,
        dateadd(-1 hour to timestamp '2017-11-05 01:30 America/New_York') t5,
@@ -443,17 +443,17 @@ create unique index timetz_uk on timetz (v);
 
 insert into timetz values (0, '11:33:33 America/Sao_Paulo');
 insert into timetz values (1, '11:33:33.456');
-insert into timetz values (2, '11:33:33.456 -1');
-insert into timetz values (3, '11:33:33.456 +1');
+insert into timetz values (2, '11:33:33.456 -1:0');
+insert into timetz values (3, '11:33:33.456 +1:0');
 insert into timetz values (4, '11:33:33');
-insert into timetz values (5, '11:33:33 -1');
-insert into timetz values (6, '11:33:33 +1');
+insert into timetz values (5, '11:33:33 -1:0');
+insert into timetz values (6, '11:33:33 +1:0');
 
 -- Duplicate in UTC.
-insert into timetz values (7, '12:33:33 +0');
-insert into timetz values (8, '13:33:33 +1');
-insert into timetz values (9, '14:33:33 +2');
-insert into timetz values (10, '11:33:33 -03');
+insert into timetz values (7, '12:33:33 +0:0');
+insert into timetz values (8, '13:33:33 +1:0');
+insert into timetz values (9, '14:33:33 +2:0');
+insert into timetz values (10, '11:33:33 -03:00');
 
 select n, v, cast(v as time) from timetz order by v, n;
 
@@ -464,9 +464,9 @@ drop index timetz_uk;
 create index timetz_idx on timetz (v);
 
 -- Duplicate in UTC.
-insert into timetz values (7, '12:33:33 +0');
-insert into timetz values (8, '13:33:33 +1');
-insert into timetz values (9, '14:33:33 +2');
+insert into timetz values (7, '12:33:33 +0:0');
+insert into timetz values (8, '13:33:33 +1:0');
+insert into timetz values (9, '14:33:33 +2:0');
 
 select n, v, cast(v as time) from timetz order by cast(v as time), n;
 select n, v, cast(v as time) from timetz order by v, n;
@@ -489,16 +489,16 @@ create table timestamptz (n integer, v timestamp with time zone);
 create unique index timestamptz_uk on timestamptz (v);
 
 insert into timestamptz values (1, '2018-01-01 11:33:33.456');
-insert into timestamptz values (2, '2018-01-01 11:33:33.456 -1');
-insert into timestamptz values (3, '2018-01-01 11:33:33.456 +1');
+insert into timestamptz values (2, '2018-01-01 11:33:33.456 -1:0');
+insert into timestamptz values (3, '2018-01-01 11:33:33.456 +1:0');
 insert into timestamptz values (4, '2018-01-01 11:33:33');
-insert into timestamptz values (5, '2018-01-01 11:33:33 -1');
-insert into timestamptz values (6, '2018-01-01 11:33:33 +1');
+insert into timestamptz values (5, '2018-01-01 11:33:33 -1:0');
+insert into timestamptz values (6, '2018-01-01 11:33:33 +1:0');
 
 -- Duplicate in UTC.
-insert into timestamptz values (7, '2018-01-01 12:33:33 +0');
-insert into timestamptz values (8, '2018-01-01 13:33:33 +1');
-insert into timestamptz values (9, '2018-01-01 14:33:33 +2');
+insert into timestamptz values (7, '2018-01-01 12:33:33 +0:0');
+insert into timestamptz values (8, '2018-01-01 13:33:33 +1:0');
+insert into timestamptz values (9, '2018-01-01 14:33:33 +2:0');
 
 select n, v, cast(v as timestamp) from timestamptz order by v, n;
 
@@ -509,9 +509,9 @@ drop index timestamptz_uk;
 create index timestamptz_idx on timestamptz (v);
 
 -- Duplicate in UTC.
-insert into timestamptz values (7, '2018-01-01 12:33:33 +0');
-insert into timestamptz values (8, '2018-01-01 13:33:33 +1');
-insert into timestamptz values (9, '2018-01-01 14:33:33 +2');
+insert into timestamptz values (7, '2018-01-01 12:33:33 +0:0');
+insert into timestamptz values (8, '2018-01-01 13:33:33 +1:0');
+insert into timestamptz values (9, '2018-01-01 14:33:33 +2:0');
 
 select n, v, cast(v as timestamp) from timestamptz order by cast(v as timestamp), n;
 select n, v, cast(v as timestamp) from timestamptz order by v, n;
