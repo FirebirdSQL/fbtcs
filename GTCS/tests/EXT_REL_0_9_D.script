@@ -52,7 +52,7 @@ CREATE TABLE ext_table EXTERNAL FILE 'WHERE_GDB_EXTERNAL:external.dat'
 >> isql2.in
 
 CONNECT 'WHERE_GDB:ext_rel_0_9_D.gdb';
-INSERT INTO ext_table (field1) VALUES ('June 28,1994');
+INSERT INTO ext_table (field1) VALUES ('28-June-1994');
 COMMIT;
 SELECT * FROM ext_table;
 
