@@ -733,7 +733,7 @@ OUTPUT message field count: 1
 Statement failed, SQLSTATE = 07002
 Dynamic SQL Error
 -SQLDA error
--Wrong number of parameters (expected 2, got 0)
+-No SQLDA for input values provided
 After line 424 in file fb_sql_time_zone_a.sql
 
 set sqlda_display off;
