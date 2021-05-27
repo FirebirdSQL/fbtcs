@@ -1,97 +1,47 @@
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST1 failed
--Dynamic SQL Error
--expression evaluation not supported
--Strings cannot be divided in dialect 3
-After line 1 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST2 failed
--Dynamic SQL Error
--expression evaluation not supported
--Strings cannot be multiplied in dialect 3
-After line 7 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST3 failed
--Dynamic SQL Error
--expression evaluation not supported
--Strings cannot be multiplied in dialect 3
-After line 13 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST4 failed
--Dynamic SQL Error
--expression evaluation not supported
--Strings cannot be multiplied in dialect 3
-After line 19 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST5 failed
--Dynamic SQL Error
--expression evaluation not supported
--Strings cannot be multiplied in dialect 3
-After line 25 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST1
-After line 63 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST1
+
+      B 
+======= 
+     50 
+
+Statement failed, SQLSTATE = 22018
+conversion error from string "abc       "
+-At procedure 'CAST1' line: 3, col: 5
 After line 64 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST2
-After line 65 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST2
+
+           B 
+============ 
+       10000 
+
+Statement failed, SQLSTATE = 22018
+conversion error from string "abc       "
+-At procedure 'CAST2' line: 3, col: 5
 After line 66 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST3
-After line 67 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST3
+
+             B 
+============== 
+     10000.000 
+
+Statement failed, SQLSTATE = 22018
+conversion error from string "abc       "
+-At procedure 'CAST3' line: 3, col: 5
 After line 68 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST4
-After line 69 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST4
+
+                      B 
+======================= 
+      10000.00000000000 
+
+Statement failed, SQLSTATE = 22018
+conversion error from string "abc       "
+-At procedure 'CAST4' line: 3, col: 5
 After line 70 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST5
-After line 71 in file proc_cast9.sql
-Statement failed, SQLSTATE = 42000
-Dynamic SQL Error
--SQL error code = -204
--Procedure unknown
--CAST5
+
+           B 
+============ 
+    10000.00 
+
+Statement failed, SQLSTATE = 22018
+conversion error from string "abc       "
+-At procedure 'CAST5' line: 3, col: 5
 After line 72 in file proc_cast9.sql
 
           B 

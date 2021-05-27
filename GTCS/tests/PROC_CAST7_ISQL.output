@@ -1,30 +1,18 @@
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST1 failed
--Dynamic SQL Error
--expression evaluation not supported
--Invalid data type for division in dialect 3
+Statement failed, SQLSTATE = 2F000
+Error while parsing procedure CAST1's BLR
+-data type not supported for arithmetic
 After line 1 in file proc_cast7.sql
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST2 failed
--Dynamic SQL Error
--expression evaluation not supported
--Invalid data type for multiplication in dialect 3
+Statement failed, SQLSTATE = 2F000
+Error while parsing procedure CAST2's BLR
+-data type not supported for arithmetic
 After line 7 in file proc_cast7.sql
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST4 failed
--Dynamic SQL Error
--expression evaluation not supported
--Invalid data type for multiplication in dialect 3
+Statement failed, SQLSTATE = 2F000
+Error while parsing procedure CAST4's BLR
+-data type not supported for arithmetic
 After line 19 in file proc_cast7.sql
-Statement failed, SQLSTATE = 42000
-unsuccessful metadata update
--CREATE PROCEDURE CAST5 failed
--Dynamic SQL Error
--expression evaluation not supported
--Invalid data type for multiplication in dialect 3
+Statement failed, SQLSTATE = 2F000
+Error while parsing procedure CAST5's BLR
+-data type not supported for arithmetic
 After line 25 in file proc_cast7.sql
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
