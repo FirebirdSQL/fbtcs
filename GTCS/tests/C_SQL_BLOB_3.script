@@ -26,7 +26,7 @@ short                       i,j,k,l;
 
 struct Buf{
     char            Buffer[256];
-	unsigned short	BufferLen;
+    unsigned short	BufferLen;
 };
 struct Buf M;
 
@@ -49,7 +49,7 @@ int main(int argc,char* argv[])
 
     EXEC SQL CONNECT DB;
     EXEC SQL SET TRANSACTION;
-   
+
     Count = 0;
     M.Buffer[0] = 0;
 
@@ -86,14 +86,14 @@ FINISH;
 exit(0);
 
 ERR_LBL:
-	printf("Database error, SQLCODE = %d\n",SQLCODE);
+    printf("Database error, SQLCODE = %d\n",SQLCODE);
         isc_print_status(gds_status);
 
-	EXEC SQL
-		ROLLBACK RELEASE;
-	FINISH;
+    EXEC SQL
+        ROLLBACK RELEASE;
+    FINISH;
 
-	exit(1);
+    exit(1);
 }
 /************************************************************
  * Draw and underline
@@ -103,7 +103,7 @@ void Underline(int i)
 int j;
 
 for (j=0;j<i;j++)
-	printf("-");
+    printf("-");
 printf("\n");
 
 }
@@ -129,20 +129,80 @@ short		i;
      TempBuf[3]=0;
 
      for (i = 1; i < 21; i++){
-	sprintf (TempBuf,"%2d,",i);
+    sprintf (TempBuf,"%2d,",i);
         Append(Bf,TempBuf);
-	}
+    }
 }
 
 $ GPRE -e blob003.epp
 $ CXX FLAG_CXX blob003.cpp
-$ LINK FLAG_LINK blob003 
+$ LINK FLAG_LINK blob003
 $ RUN blob003
->> blob003.qli
-ready WHERE_GDB:sh_blobs_3.gdb;
-select test_name, row_id,b256 from mb1 where test_name = 'blob003';
-finish;
-quit;
-$ QLI -n -a blob003.qli
+
+>> blob003b.cpp
+#include <firebird/Interface.h>
+#include <firebird/Message.h>
+#include <cstdio>
+
+using namespace Firebird;
+
+static IMaster* master = fb_get_master_interface();
+
+int main()
+{
+    ThrowStatusWrapper st(master->getStatus());
+
+    auto prov = master->getDispatcher();
+    auto utl = master->getUtilInterface();
+
+    try
+    {
+        auto att = prov->attachDatabase(&st, "WHERE_GDB:sh_blobs_3.gdb", 0, nullptr);
+        auto tra = att->startTransaction(&st, 0, nullptr);
+
+        FB_MESSAGE(Output, ThrowStatusWrapper,
+            (FB_VARCHAR(31), testName)
+            (FB_INTEGER, rowId)
+            (FB_BLOB, blob)
+        ) output(&st, master);
+
+        auto rs = att->openCursor(&st, tra, 0,
+            "select test_name, row_id, b256 from mb1 where test_name = 'blob003' order by row_id",
+            3, nullptr, nullptr, output.getMetadata(), nullptr, 0);
+
+        while (rs->fetchNext(&st, output.getData()) == IStatus::RESULT_OK)
+        {
+            printf("%s %d\n", output->testName.str, output->rowId);
+
+            auto blob = att->openBlob(&st, tra, &output->blob, 0, nullptr);
+
+            char buf[256];
+            unsigned len = 0;
+
+            while (blob->getSegment(&st, sizeof(buf) - 1, buf, &len) == IStatus::RESULT_OK)
+                printf("%.*s\n", len, buf);
+
+            blob->close(&st);
+        }
+
+        rs->close(&st);
+        tra->commit(&st);
+        att->detach(&st);
+
+        return 0;
+    }
+    catch (const FbException& error)
+    {
+        char s[1024];
+        utl->formatStatus(s, sizeof(s), error.getStatus());
+        printf("\nUnexpected Error: %s\n", s);
+        return 1;
+    }
+}
+
+$ CXX FLAG_CXX blob003b.cpp
+$ LINK FLAG_LINK blob003b
+$ RUN blob003b
+
 $DROP WHERE_GDB:sh_blobs_3.gdb
 $ DELETE blob003*

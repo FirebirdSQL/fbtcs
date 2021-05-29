@@ -1,12 +1,8 @@
 Test: 
  SET A BLOB TO NULL , COMMIT, INSERT DATA INTO THE BLOB 
 ------------------------------------------------------
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_25.gdb"
 
-             TEST                ROW
-             NAME                ID
-============================== ======
-
-blob025                             2
-New blob content after it was nullified - blob025
+TEST_NAME                       ROW_ID CAST                                                         
+============================== ======= ============================================================ 
+blob025                              2 New blob content after it was nullified - blob025            
 

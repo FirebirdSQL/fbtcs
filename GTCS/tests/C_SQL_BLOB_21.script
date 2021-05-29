@@ -94,11 +94,9 @@ $ GPRE -e blob021.epp
 $ CXX FLAG_CXX blob021.cpp
 $ LINK FLAG_LINK blob021 
 $ RUN blob021
->> blob021.qli
-ready WHERE_GDB:sh_blobs_21.gdb;
-select test_name, row_id, comment, b from mb1 where test_name = 'blob021' and b is null;
-finish;
-quit;
-$ QLI -n -a blob021.qli
+>> blob021.sql
+connect "WHERE_GDB:sh_blobs_21.gdb";
+select test_name, row_id, comment, b from mb1 where test_name = 'blob021' and b is null order by row_id;
+$ ISQL -q -i blob021.sql
 $DROP WHERE_GDB:sh_blobs_21.gdb
 $ DELETE blob021*

@@ -80,12 +80,10 @@ $ GPRE -e blob028a.epp
 $ CXX FLAG_CXX blob028a.cpp
 $ LINK FLAG_LINK blob028a 
 $ RUN blob028a
->> blob028a.qli
-ready WHERE_GDB:sh_blobs_28.gdb
-show relation vmb1;
-finish;
-quit;
-$ QLI -n -a blob028a.qli
+>> blob028a.sql
+connect "WHERE_GDB:sh_blobs_28.gdb";
+show view vmb1;
+$ ISQL -q -i blob028a.sql
 >> blob028.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
@@ -230,11 +228,72 @@ $ GPRE -e blob028.epp
 $ CXX FLAG_CXX blob028.cpp
 $ LINK FLAG_LINK blob028 
 $ RUN blob028
->> blob028.qli
-ready WHERE_GDB:sh_blobs_28.gdb;
-select test, rid, desc, bhalfk from vmb1 where test = 'blob028';
-finish;
-quit;
-$ QLI -n -a blob028.qli
+
+>> blob028b.cpp
+#include <firebird/Interface.h>
+#include <firebird/Message.h>
+#include <cstdio>
+
+using namespace Firebird;
+
+static IMaster* master = fb_get_master_interface();
+
+int main()
+{
+    ThrowStatusWrapper st(master->getStatus());
+
+    auto prov = master->getDispatcher();
+    auto utl = master->getUtilInterface();
+
+    try
+    {
+        auto att = prov->attachDatabase(&st, "WHERE_GDB:sh_blobs_28.gdb", 0, nullptr);
+        auto tra = att->startTransaction(&st, 0, nullptr);
+
+        FB_MESSAGE(Output, ThrowStatusWrapper,
+            (FB_VARCHAR(31), test)
+            (FB_INTEGER, rid)
+            (FB_VARCHAR(31), desc)
+            (FB_BLOB, bhalfk)
+        ) output(&st, master);
+
+        auto rs = att->openCursor(&st, tra, 0,
+            "select test, rid, desc, bhalfk from vmb1 where test = 'blob028' order by rid",
+            3, nullptr, nullptr, output.getMetadata(), nullptr, 0);
+
+        while (rs->fetchNext(&st, output.getData()) == IStatus::RESULT_OK)
+        {
+            printf("%s %d %s\n", output->test.str, output->rid, output->desc.str);
+
+            auto bhalfk = att->openBlob(&st, tra, &output->bhalfk, 0, nullptr);
+
+            char buf[1024];
+            unsigned len = 0;
+
+            while (bhalfk->getSegment(&st, sizeof(buf) - 1, buf, &len) == IStatus::RESULT_OK)
+                printf("%.*s\n", len, buf);
+
+            bhalfk->close(&st);
+        }
+
+        rs->close(&st);
+        tra->commit(&st);
+        att->detach(&st);
+
+        return 0;
+    }
+    catch (const FbException& error)
+    {
+        char s[1024];
+        utl->formatStatus(s, sizeof(s), error.getStatus());
+        printf("\nUnexpected Error: %s\n", s);
+        return 1;
+    }
+}
+
+$ CXX FLAG_CXX blob028b.cpp
+$ LINK FLAG_LINK blob028b
+$ RUN blob028b
+
 $DROP WHERE_GDB:sh_blobs_28.gdb
 $ DELETE blob028*

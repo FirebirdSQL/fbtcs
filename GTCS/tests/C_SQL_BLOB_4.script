@@ -137,11 +137,71 @@ $ GPRE -e blob004.epp
 $ CXX FLAG_CXX blob004.cpp
 $ LINK FLAG_LINK blob004 
 $ RUN blob004
->> blob004.qli
-ready WHERE_GDB:sh_blobs_4.gdb;
-select test_name, row_id,b256 from mb1 where test_name = 'blob004';
-finish;
-quit;
-$ QLI -n -a blob004.qli
+
+>> blob004b.cpp
+#include <firebird/Interface.h>
+#include <firebird/Message.h>
+#include <cstdio>
+
+using namespace Firebird;
+
+static IMaster* master = fb_get_master_interface();
+
+int main()
+{
+    ThrowStatusWrapper st(master->getStatus());
+
+    auto prov = master->getDispatcher();
+    auto utl = master->getUtilInterface();
+
+    try
+    {
+        auto att = prov->attachDatabase(&st, "WHERE_GDB:sh_blobs_4.gdb", 0, nullptr);
+        auto tra = att->startTransaction(&st, 0, nullptr);
+
+        FB_MESSAGE(Output, ThrowStatusWrapper,
+            (FB_VARCHAR(31), testName)
+            (FB_INTEGER, rowId)
+            (FB_BLOB, blob)
+        ) output(&st, master);
+
+        auto rs = att->openCursor(&st, tra, 0,
+            "select test_name, row_id, b256 from mb1 where test_name = 'blob004' order by row_id",
+            3, nullptr, nullptr, output.getMetadata(), nullptr, 0);
+
+        while (rs->fetchNext(&st, output.getData()) == IStatus::RESULT_OK)
+        {
+            printf("%s %d\n", output->testName.str, output->rowId);
+
+            auto blob = att->openBlob(&st, tra, &output->blob, 0, nullptr);
+
+            char buf[256];
+            unsigned len = 0;
+
+            while (blob->getSegment(&st, sizeof(buf) - 1, buf, &len) == IStatus::RESULT_OK)
+                printf("%.*s\n", len, buf);
+
+            blob->close(&st);
+        }
+
+        rs->close(&st);
+        tra->commit(&st);
+        att->detach(&st);
+
+        return 0;
+    }
+    catch (const FbException& error)
+    {
+        char s[1024];
+        utl->formatStatus(s, sizeof(s), error.getStatus());
+        printf("\nUnexpected Error: %s\n", s);
+        return 1;
+    }
+}
+
+$ CXX FLAG_CXX blob004b.cpp
+$ LINK FLAG_LINK blob004b
+$ RUN blob004b
+
 $DROP WHERE_GDB:sh_blobs_4.gdb
 $ DELETE blob004*

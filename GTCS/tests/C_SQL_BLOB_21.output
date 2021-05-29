@@ -1,10 +1,5 @@
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_21.gdb"
 
-             TEST                ROW
-             NAME                ID
-============================== ======
-
-blob021                             2
-Blob Nullifier                                                                                      
-
+TEST_NAME                       ROW_ID COMMENT                                                                                                              B 
+============================== ======= ==================================================================================================== ================= 
+blob021                              2 Blob Nullifier                                                                                                  <null> 
 
