@@ -16,9 +16,9 @@ create index idx1_2 on data_table1 (fld1);
 create desc index idx1_3 on data_table1 (fld1);
 create asc index idx1_4 on data_table1 (fld1);
 
->> init.qli
+>> init1.sql
 
-READY "WHERE_GDB:index.gdb";
+connect 'WHERE_GDB:index.gdb';
 
 show indexes;
 
@@ -30,10 +30,9 @@ select fld1, fld2 from data_table1 order by fld1;
 select fld1, fld2 from data_table1 order by fld1 desc;
 select fld1, fld2 from data_table1 order by fld1 asc;
 
-finish;
-quit;
+exit;
 
->> init.sql
+>> init2.sql
 
 connect 'WHERE_GDB:index.gdb';
 create table data_table2(
@@ -63,7 +62,7 @@ drop database;
 exit;
 
 $ISQL -q -m -i define.sql
-$QLI -n -a init.qli
-$ISQL -m -i init.sql
-$DELETE init.*
-
+$ISQL -m -i init1.sql
+$ISQL -m -i init2.sql
+$DELETE init1.*
+$DELETE init2.*
