@@ -10,18 +10,6 @@ Test:
 
 
 * Total Records Listed >>> 6
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_26.gdb"
-
-  S1     S2     S1     S2
-====== ====== ====== ======
-
-                     
-          103           103
-    -5   -105        
-     1    101      1    101
-     2    102      2    102
-     4               
-
 Use CONNECT or CREATE DATABASE to specify a database
 
      S1      S2      S1      S2 

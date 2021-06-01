@@ -7,19 +7,6 @@
 
 
 * Total Records Listed >>> 6
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_45.gdb"
-
-        TABLE         TABLE         TABLE         TABLE         TABLE
-  S1     ROW    S1     ROW    S1     ROW    S1     ROW    S1     ROW
-====== ====== ====== ====== ====== ====== ====== ====== ====== ======
-
-     1 st1-1       1 st1-1       1 st1-1       1 st1-1       1 st1-1 
-     2 st1-2       2 st1-2       2 st1-2       2 st1-2       2 st1-2 
-       st1-3                                                   
-     4 st1-4       4 st1-4       4 st1-4       4 st1-4       4 st1-4 
-       st1-5                                                   
-    -1 st1-6      -1 st1-6      -1 st1-6      -1 st1-6      -1 st1-6 
-
 Use CONNECT or CREATE DATABASE to specify a database
 
      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW 

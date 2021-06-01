@@ -721,8 +721,8 @@ $ GPRE -e JLoader.e
 $ CC FLAG_CC JLoader.c
 $ LINK FLAG_LINK JLoader 
 $ RUN JLoader
->> JLoader.qli
-ready WHERE_GDB:sh_join.gdb;
+>> JLoader.sql
+connect "WHERE_GDB:sh_join.gdb";
 select * from st1 order by table_row;
 select * from st2 order by table_row;
 select * from st3 order by table_row;
@@ -733,9 +733,8 @@ select * from ct2 order by table_row;
 select * from ct3 order by table_row;
 select * from ct4 order by table_row;
 select * from ct5 order by table_row;
-finish;
 quit;
-$ QLI -n -a JLoader.qli
+$ ISQL -q -m -i JLoader.sql
 $ GBAK -t WHERE_GDB:sh_join.gdb sh_join.gbk
 $DROP WHERE_GDB:sh_join.gdb
 $ DELETE JLoader*  sh_join.*

@@ -107,17 +107,6 @@ $ GPRE -e join011.e
 $ CC FLAG_CC join011.c
 $ LINK FLAG_LINK join011 
 $ RUN join011
->> join011.qli
-ready WHERE_GDB:sh_join_11.gdb;
-set semicolon;
-set columns 100;
-
-select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row 
-from ct1 t1 full outer join ct2 t2 on t1.c1 = t2.c1;
-
-finish;
-quit;
-$ QLI -n -a join011.qli
 >> join011.sql
 connect WHERE_GDB:sh_join_11.gdb;
 select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row 

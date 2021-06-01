@@ -9,17 +9,6 @@ Test:
 
 
 * Total Records Listed >>> 5
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_15.gdb"
-
-   TOTAL      S1
-=========== ======
-
-            
-         -5     -5
-          2      1
-          4      2
-          4      4
-
 Use CONNECT or CREATE DATABASE to specify a database
 
          SUM      S1 

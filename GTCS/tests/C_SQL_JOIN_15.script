@@ -105,16 +105,6 @@ $ GPRE -e join015.e
 $ CC FLAG_CC join015.c
 $ LINK FLAG_LINK join015 
 $ RUN join015
->> join015.qli
-ready WHERE_GDB:sh_join_15.gdb;
-set semicolon;
-set columns 100;
-select sum(x.s1), x.s1
-from (st5 x left join st2 y on x.s1 = y.s1) 
-group by x.s1;
-finish;
-quit;
-$ QLI -n -a join015.qli
 >> join015.sql
 connect WHERE_GDB:sh_join_15.gdb;
 select sum(x.s1), x.s1

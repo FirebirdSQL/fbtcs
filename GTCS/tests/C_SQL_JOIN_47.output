@@ -10,16 +10,13 @@ Test:
   -11  unique      <null><null><null><null><null><null><null><null>
 
 * Total Records Listed >>> 6
-Warning: cannot issue DDL statements against database "WHERE_GDB:bug6164.gdb"
 
-        TABLE         TABLE         TABLE         TABLE         TABLE
-  S1     ROW    S1     ROW    S1     ROW    S1     ROW    S1     ROW
-====== ====== ====== ====== ====== ====== ====== ====== ====== ======
-
-     1 st1-1       1 st2-1       1 st3-1       1 st4-1       1 st5-1 
-     1 st1-1       1 st2-1       1 st3-1       1 st4-1       1 st5-2 
-     2 st1-2       2 st2-2       2 st3-2       2 st4-2       2 st5-3 
-     2 st1-2       2 st2-2       2 st3-2       2 st4-2       2 st5-4 
-    -1 st1-3      -1 st2-3      -1 st3-3      -1 st4-3      -1 st5-5 
-   -11 unique                                                  
+     S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW      S1 TABLE_ROW 
+======= ========= ======= ========= ======= ========= ======= ========= ======= ========= 
+      1 st1-1           1 st2-1           1 st3-1           1 st4-1           1 st5-1     
+      1 st1-1           1 st2-1           1 st3-1           1 st4-1           1 st5-2     
+      2 st1-2           2 st2-2           2 st3-2           2 st4-2           2 st5-3     
+      2 st1-2           2 st2-2           2 st3-2           2 st4-2           2 st5-4     
+     -1 st1-3          -1 st2-3          -1 st3-3          -1 st4-3          -1 st5-5     
+    -11 unique     <null> <null>     <null> <null>     <null> <null>     <null> <null>    
 

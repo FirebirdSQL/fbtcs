@@ -8,17 +8,6 @@ a-2       c10-2     ct1-2     a-2       c10-2     ct2-2     a-2       c10-2     
 
 
 * Total Records Listed >>> 4
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_14.gdb"
-
-                TABLE                 TABLE                 TABLE
-C1      C10      ROW  C1      C10      ROW  C1      C10      ROW
-=== ========== ====== === ========== ====== === ========== ======
-
-a-1 c10-1      ct1-1  a-1 c10-1      ct2-1  a-1 c10-1      ct3-1 
-a-2 c10-2      ct1-2  a-2 c10-2      ct2-2  a-2 c10-2      ct3-2 
-                                                c10-3      ct3-3 
-                                            3   unique-3   ct3-6 
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 C1     C10        TABLE_ROW C1     C10        TABLE_ROW C1     C10        TABLE_ROW 

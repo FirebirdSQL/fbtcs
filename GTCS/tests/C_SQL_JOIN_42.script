@@ -137,29 +137,6 @@ order by t.table_row ascending;
 
 exit;
 $ ISQL -m -e WHERE_GDB:sh_join_42.gdb -i join042a.sql
->> join042.qli
-ready WHERE_GDB:sh_join_42.gdb;
-set semicolon;
-set columns 100;
-
-/* select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
-from (st1 t left outer join st2 x on t.s1 = x.s1)
-where t.s1 > ALL
-(select (y.s1+1-6) from st1 y 
-where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
-order by t.table_row ascending;
-*/
-select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row
-from (st1 t left outer join st2 x on t.s1 = x.s1)
-where t.s1 > ALL
-(select (y.s1+1-6) from st1 y
-where y.s1 is not null and y.s3 in (select z.s3 from st3 z where z.s3 is not null))
-order by t.table_row ascending;
-finish;
-quit;
-/* The qli query will not be run because it is unsupported 
-   The result given in QLI is incorrect */
-# QLI -n -a join042.qli
 >> join042c.sql
 connect WHERE_GDB:sh_join_42.gdb;
 select t.s1,t.s2,t.comp_s,t.table_row,x.s1,x.s2,x.comp_s,x.table_row

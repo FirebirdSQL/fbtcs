@@ -127,19 +127,6 @@ $ GPRE -e join043.e
 $ CC FLAG_CC join043.c
 $ LINK FLAG_LINK join043 
 $ RUN join043
->> join043.qli
-ready WHERE_GDB:sh_join_43.gdb;
-set semicolon;
-set columns 100;
-
-select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row
-from ((((st1 a left outer join st2 b on a.s1 = b.s1) left outer join st3 c on b.s1 = c.s1) left outer join
-st4 d on c.s1 = d.s1) left outer join st5 e on d.s1 = e.s1)
-order by a.table_row ascending;
-
-finish;
-quit;
-$ QLI -n -a join043.qli
 >> join043.sql
 connect WHERE_GDB:sh_join_43.gdb;
 select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row

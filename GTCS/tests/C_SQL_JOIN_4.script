@@ -65,19 +65,6 @@ $ GPRE -e join004.e
 $ CC FLAG_CC join004.c
 $ LINK FLAG_LINK join004 
 $ RUN join004
->> join004.qli
-ready WHERE_GDB:atlas_join_4.gdb;
-set semicolon;
-set columns 100;
-
-SELECT B.TEAM_NAME, C.CITY, S.STATE_NAME
-FROM (CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE)
-,BASEBALL_TEAMS B WHERE B.CITY = C.CITY
-ORDER BY B.TEAM_NAME, C.CITY, S.STATE_NAME;
-
-finish;
-quit;
-$ QLI -n -a join004.qli
 >> join004.sql
 connect WHERE_GDB:atlas_join_4.gdb;
 SELECT B.TEAM_NAME, C.CITY, S.STATE_NAME

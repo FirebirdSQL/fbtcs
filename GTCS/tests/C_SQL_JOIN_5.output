@@ -10,19 +10,6 @@ a-4       a-4                 ct2-4
 
 
 * Total Records Listed >>> 6
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_5.gdb"
-
-                    TABLE
-C1  C1      C10      ROW
-=== === ========== ======
-
-a-1 a-1 c10-1      ct2-1 
-a-2 a-2 c10-2      ct2-2 
-                   
-a-4 a-4            ct2-4 
-                   
-1                  
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 C1     C1     C10        TABLE_ROW 

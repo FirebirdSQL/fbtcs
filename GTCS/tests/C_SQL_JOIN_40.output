@@ -11,20 +11,6 @@ Test:
 
 
 * Total Records Listed >>> 7
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_40.gdb"
-
-                 COMP      TABLE                  COMP      TABLE
-  S1     S2        S        ROW    S1     S2        S        ROW
-====== ====== =========== ====== ====== ====== =========== ======
-
-     1    101         101 st1-1       1    101         101 st2-1 
-     2    102         204 st1-2       2    102         204 st2-2 
-     2    102         204 st1-2      -2   -102         204 st2-6 
-          103             st1-3                            
-     4                    st1-4                            
-                          st1-5                            
-    -1   -101         101 st1-6       1    101         101 st2-1 
-
 Use CONNECT or CREATE DATABASE to specify a database
 
      S1      S2       COMP_S TABLE_ROW      S1      S2       COMP_S TABLE_ROW 

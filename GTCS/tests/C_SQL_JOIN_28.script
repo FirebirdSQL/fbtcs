@@ -94,18 +94,6 @@ $ GPRE -e join028.e
 $ CC FLAG_CC join028.c
 $ LINK FLAG_LINK join028 
 $ RUN join028
->> join028.qli
-ready WHERE_GDB:sh_join_28.gdb;
-set semicolon;
-set columns 100;
-
-/* qli core dumps */
-select count(*)
-from (st5 x full join st1 y on x.s2 = y.s2);
-
-finish;
-quit;
-$ QLI -n -a join028.qli
 >> join028.sql
 connect WHERE_GDB:sh_join_28.gdb;
 select count(*)

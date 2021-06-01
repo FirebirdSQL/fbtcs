@@ -110,15 +110,6 @@ $ GPRE -e join033.e
 $ CC FLAG_CC join033.c
 $ LINK FLAG_LINK join033 
 $ RUN join033
->> join033.qli
-ready WHERE_GDB:sh_join_33.gdb;
-set semicolon;
-set columns 100;
-select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row
-from (st1 t inner join st2 x on t.s1*2+1 = x.s1*2+1);
-finish;
-quit;
-$ QLI -n -a join033.qli
 >> join033.sql
 connect WHERE_GDB:sh_join_33.gdb;
 select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row

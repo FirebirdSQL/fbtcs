@@ -55,16 +55,6 @@ $ GPRE -e join002.e
 $ CC FLAG_CC join002.c
 $ LINK FLAG_LINK join002 
 $ RUN join002
->> join002.qli
-
-ready WHERE_GDB:atlas_join_2.gdb;
-set semicolon;
-SELECT C.CITY, S.STATE_NAME
-FROM CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE
-WHERE C.CITY STARTING WITH 'San';
-finish;
-quit;
-$ QLI -n -a join002.qli
 >> join002.sql
 connect WHERE_GDB:atlas_join_2.gdb;
 SELECT C.CITY, S.STATE_NAME

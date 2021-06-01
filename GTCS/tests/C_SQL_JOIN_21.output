@@ -16,25 +16,6 @@ Test:
 
 
 * Total Records Listed >>> 12
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_21.gdb"
-
-               TABLE                TABLE
-  S1     S2     ROW    S1     S2     ROW
-====== ====== ====== ====== ====== ======
-
-     1    101 st1-1       1    101 st2-1 
-     1    101 st1-1      -2   -102 st2-6 
-     2    102 st1-2       1    101 st2-1 
-     2    102 st1-2       2    102 st2-2 
-     2    102 st1-2      -2   -102 st2-6 
-          103 st1-3                
-     4        st1-4       1    101 st2-1 
-     4        st1-4       2    102 st2-2 
-     4        st1-4       4        st2-4 
-     4        st1-4      -2   -102 st2-6 
-              st1-5                
-    -1   -101 st1-6      -2   -102 st2-6 
-
 Use CONNECT or CREATE DATABASE to specify a database
 
      S1      S2 TABLE_ROW      S1      S2 TABLE_ROW 

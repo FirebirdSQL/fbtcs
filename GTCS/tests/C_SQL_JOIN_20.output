@@ -19,28 +19,6 @@ a-4                       ct1-4        2            unique-2     ct2-6
 
 
 * Total Records Listed >>> 15
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_20.gdb"
-
-                TABLE                 TABLE
-C1      C10      ROW  C1      C10      ROW
-=== ========== ====== === ========== ======
-
-a-2 c10-2      ct1-2  a-1 c10-1      ct2-1 
-a-4            ct1-4  a-1 c10-1      ct2-1 
-1   unique-1   ct1-6  a-1 c10-1      ct2-1 
-a-1 c10-1      ct1-1  a-2 c10-2      ct2-2 
-a-4            ct1-4  a-2 c10-2      ct2-2 
-1   unique-1   ct1-6  a-2 c10-2      ct2-2 
-                          c10-3      ct2-3 
-a-1 c10-1      ct1-1  a-4            ct2-4 
-a-2 c10-2      ct1-2  a-4            ct2-4 
-1   unique-1   ct1-6  a-4            ct2-4 
-                                     ct2-5 
-a-1 c10-1      ct1-1  2   unique-2   ct2-6 
-a-2 c10-2      ct1-2  2   unique-2   ct2-6 
-a-4            ct1-4  2   unique-2   ct2-6 
-1   unique-1   ct1-6  2   unique-2   ct2-6 
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 C1     C10        TABLE_ROW C1     C10        TABLE_ROW 

@@ -103,18 +103,6 @@ $ GPRE -e join025.e
 $ CC FLAG_CC join025.c
 $ LINK FLAG_LINK join025 
 $ RUN join025
->> join025.qli
-ready WHERE_GDB:sh_join_25.gdb;
-set semicolon;
-set columns 100;
-
-select x.s1,x.s2,x.table_row
-from st1 x where not exists
-(select a.s1 from 
-(st1 a left join st2 b on a.s1 = b.s1) left join st3 c on c.s1 = b.s1 and c.s1 = 1);
-finish;
-quit;
-$ QLI -n -a join025.qli
 >> join025.sql
 connect WHERE_GDB:sh_join_25.gdb;
 select x.s1,x.s2,x.table_row

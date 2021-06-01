@@ -5,13 +5,6 @@ Test:
 
 
 * Total Records Listed >>> 1
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_27.gdb"
-
-    MIN         MAX         AVG     TOTAL
-=========== =========== =========== =====
-
-         -5         103        1002  009
-
 Use CONNECT or CREATE DATABASE to specify a database
 
     MIN     MAX     AVG          SUM 

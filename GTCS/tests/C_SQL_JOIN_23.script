@@ -123,20 +123,6 @@ $ GPRE -e join023.e
 $ CC FLAG_CC join023.c
 $ LINK FLAG_LINK join023 
 $ RUN join023
->> join023.qli
-ready WHERE_GDB:sh_join_23.gdb;
-set semicolon;
-set columns 100;
-
-select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row,z.s1,z.s2,z.table_row
-from (st1 x left join st2 y on x.s1 = y.s1) left join st3 z on z.s1 = y.s1 
-where exists
-(select a.s1 from 
-(st1 a left join st2 b on a.s1 = b.s1) left join st3 c on c.s1 = b.s1 and c.s1 = 1);
-
-finish;
-quit;
-$ QLI -n -a join023.qli
 >> join023.sql
 connect WHERE_GDB:sh_join_23.gdb;
 select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row,z.s1,z.s2,z.table_row

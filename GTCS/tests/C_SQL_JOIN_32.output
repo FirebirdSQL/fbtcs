@@ -10,19 +10,6 @@ Test:
 
 
 * Total Records Listed >>> 6
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_join_32.gdb"
-
-                                                    TABLE                          TABLE
-                                                     ROW                     S2     ROW
-                                                   ======                  ====== ======
-
- 1                1010            -10010           st1-1   1                  101 st2-1 
- 2                1020            -10020           st1-2   2                  102 st2-2 
-                  1030            -10030           st1-3                          
- 4                                -10040           st1-4   4                      st2-4 
-                                                   st1-5                          
--1               -1010             10010           st1-6                          
-
 Use CONNECT or CREATE DATABASE to specify a database
 
                  DIVIDE     MULTIPLY     MULTIPLY TABLE_ROW     MULTIPLY      S2 TABLE_ROW 

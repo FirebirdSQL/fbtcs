@@ -128,18 +128,14 @@ $ GPRE -e join019.e
 $ CC FLAG_CC join019.c
 $ LINK FLAG_LINK join019 
 $ RUN join019
->> join019.qli
-ready WHERE_GDB:sh_join_19.gdb;
-set semicolon;
-set columns 100;
 
+>> join019.sql
+connect "WHERE_GDB:sh_join_19.gdb";
 select x.c1,x.c10,x.table_row,y.c1,y.c10,y.table_row,z.c1,z.c10,z.table_row,z.test_name
 from (ct1 x right join ct2 y on x.c1 = y.c1) right join ct3 z on z.c1 = x.c1
 where 1 = (select s1 from st1 where z.test_name = st1.test_name and st1.table_row = 'st1-1') 
 order by x.table_row ascending;
-
-finish;
 quit;
-$ QLI -n -a join019.qli
+$ ISQL -q -m -i join019.sql
 $DROP WHERE_GDB:sh_join_19.gdb
 $ DELETE join019* 

@@ -6,18 +6,6 @@ San Antonio           Texas
 San Diego             California          
 San Francisco         California          
 ... End of example 2.9.1 
-Warning: cannot issue DDL statements against database "WHERE_GDB:atlas_join_2.gdb"
-
-                                    STATE
-          CITY                      NAME
-========================= =========================
-
-Santa Fe                  New Mexico
-San Juan                  
-San Antonio               Texas
-San Diego                 California
-San Francisco             California
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 CITY                      STATE_NAME                
