@@ -20,35 +20,6 @@ Test:
 
 
 * Total Records Listed >>> 8
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
- Sales
-  Rep   Total Value
-====== =============
-
-   125   $ 15,500.00
-   125   $ 18,500.00
-   137   $ 38,000.00
-   125   $ 25,500.00
-   137   $ 18,000.00
-   125   $ 48,500.00
-   125   $ 43,500.00
-   137   $ 85,000.00
-
-
- Sales
-  Rep   Total Value
-====== =============
-
-   125   $ 15,500.00
-   125   $ 18,500.00
-   137   $ 38,000.00
-   125   $ 25,500.00
-   137   $ 18,000.00
-   125   $ 48,500.00
-   125   $ 43,500.00
-   137   $ 85,000.00
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 SALES_REP  TOTAL_VALUE 

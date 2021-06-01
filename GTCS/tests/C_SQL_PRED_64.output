@@ -6,13 +6,6 @@ Test:
 * Total Records Listed >>> 0
 
 * Using GDML to print blob 
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-   COUNT
-===========
-
-          0
-
 Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 

@@ -110,16 +110,6 @@ $ GPRE -e sta010.e
 $ CC FLAG_CC sta010.c
 $ LINK FLAG_LINK sta010 
 $ RUN sta010
->> sta010.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT EMPNO, LAST_NAME, FIRST_NAME FROM EMPLOYEES WHERE NAME STARTING WITH 'S';
-for employees with name starting with 'S' print empno, last_name, first_name;
-select count(*) from employees where name starting with 'S';
-finish;
-quit;
-$ QLI -n -a sta010.qli
 >> sta010.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT EMPNO, LAST_NAME, FIRST_NAME FROM EMPLOYEES WHERE NAME STARTING WITH 'S';

@@ -116,16 +116,6 @@ $ GPRE -e con002.e
 $ CC FLAG_CC con002.c
 $ LINK FLAG_LINK con002 
 $ RUN con002
->> con002.qli
-set semicolon;
-ready WHERE_GDB:sh_test.gdb;
-select s1.custno, s1.total_value, s1.ponumb from sales s1 
-where s1.ponumb containing '8902' order by s1.custno ascending;
-for s1 in sales sorted by s1.custno with s1.ponumb containing '8902'
-print s1.custno, s1.total_value, s1.ponumb;
-finish;
-quit;
-$ QLI -n -a con002.qli
 >> con002.sql
 connect WHERE_GDB:sh_test.gdb;
 select s1.custno, s1.total_value, s1.ponumb from sales s1 

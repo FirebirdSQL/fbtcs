@@ -27,23 +27,6 @@ Porting our software to the Fujima
 platform.  All interfaces should be 
 available across the plaform.
 
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-Project No
-==========
-
- HH-3.00
- DE-3.00
- FJ-3.00
-
-
-Project No
-==========
-
- HH-3.00
- DE-3.00
- FJ-3.00
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 PROJ_NO 

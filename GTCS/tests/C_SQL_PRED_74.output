@@ -10,4 +10,3 @@ Verification: SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET FROM DEPT_BUD
 
 
 * Total Records Listed should be >>> 0
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"

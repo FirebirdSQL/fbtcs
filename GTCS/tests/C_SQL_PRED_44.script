@@ -110,19 +110,6 @@ $ GPRE -e con028.e
 $ CC FLAG_CC con028.c
 $ LINK FLAG_LINK con028 
 $ RUN con028
->> con028.qli
-set semicolon;
-ready WHERE_GDB:sh_test.gdb;
-SELECT JOB
-FROM EMPLOYEES
-WHERE JOB CONTAINING 'mgr'
-ORDER BY JOB;
-FOR E IN EMPLOYEES SORTED BY E.JOB WITH E.JOB CONTAINING 'mgr'
-PRINT E.JOB;
-finish;
-quit;
-
-$ QLI -n -a con028.qli
 >> con028.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT JOB

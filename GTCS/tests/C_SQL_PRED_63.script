@@ -122,20 +122,6 @@ $ GPRE -e sta021.e
 $ CC FLAG_CC sta021.c
 $ LINK FLAG_LINK sta021 
 $ RUN sta021
->> sta021.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT PROJ_NO 
-FROM PROJECTS WHERE PROJ_DESC 
-STARTING WITH 'Porting';
-for projects with proj_desc starting with 'Porting'
-print proj_no;
-select count(*) from projects 
-where proj_desc starting with 'Porting';
-finish;
-quit;
-$ QLI -n -a sta021.qli
 >> sta021.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO 

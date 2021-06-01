@@ -107,18 +107,6 @@ $ GPRE -e con031.e
 $ CC FLAG_CC con031.c
 $ LINK FLAG_LINK con031 
 $ RUN con031
->> con031.qli
-SET SEMICOLON;
-ready WHERE_GDB:sh_test.gdb;
-SELECT EMPNO
-FROM MANAGEMENT
-WHERE EMPNO CONTAINING 1;
-
-FOR M IN MANAGEMENT WITH M.EMPNO CONTAINING 1 PRINT M.EMPNO;
-finish;
-quit;
-
-$ QLI -n -a con031.qli
 >> con031.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT EMPNO

@@ -108,16 +108,6 @@ $ GPRE -e sta013.e
 $ CC FLAG_CC sta013.c
 $ LINK FLAG_LINK sta013 
 $ RUN sta013
->> sta013.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT DEPTNO FROM DEPT_BUDGET WHERE DEPTNO STARTING '12';
-for dept_budget with deptno starting with '12' print deptno;
-select count(*) from dept_budget where deptno starting with '12';
-finish;
-quit;
-$ QLI -n -a sta013.qli
 >> sta013.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT DEPTNO FROM DEPT_BUDGET WHERE DEPTNO STARTING '12';

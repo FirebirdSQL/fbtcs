@@ -34,19 +34,6 @@ Test:
 
 
 * Total Records Listed >>> 15
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-   COUNT
-===========
-
-         15
-
-
-   COUNT
-===========
-
-         15
-
 Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 

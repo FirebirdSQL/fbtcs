@@ -8,23 +8,6 @@ Test:
 
 
 * Total Records Listed >>> 2
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-                                                      Head      Dept
-Deptno        Department          Mgrno Reports Level Dept     Budget
-====== ========================= ====== ======= ===== ==== ==============
-
- 000   Corporate Headquarters       120     1     1   000     $112,000.00
- 330   Accounting                   112     1     3   300      $15,500.00
-
-
-                                                      Head      Dept
-Deptno        Department          Mgrno Reports Level Dept     Budget
-====== ========================= ====== ======= ===== ==== ==============
-
- 000   Corporate Headquarters       120     1     1   000     $112,000.00
- 330   Accounting                   112     1     3   300      $15,500.00
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO DEPARTMENT                  MGRNO REPORTS DEPT_LEVEL HEAD_DEPT       BUDGET 

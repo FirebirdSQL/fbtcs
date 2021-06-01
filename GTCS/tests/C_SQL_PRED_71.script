@@ -113,19 +113,6 @@ $ GPRE -e sta037.e
 $ CC FLAG_CC sta037.c
 $ LINK FLAG_LINK sta037 
 $ RUN sta037
->> sta037.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT NAME FROM EMPLOYEES 
-WHERE NAME STARTING WITH FIRST_NAME ORDER BY NAME;
-for employees sorted by name with name starting with first_name
-print name;
-select count(*) from employees where name starting with
-first_name;
-finish;
-quit;
-$ QLI -n -a sta037.qli
 >> sta037.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT NAME FROM EMPLOYEES 

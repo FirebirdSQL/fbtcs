@@ -6,19 +6,6 @@ SELECT COUNT(*)FROM SALES WHERE SHIPPED IS NULL
 
 
 * Total Records Listed >>> 1
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-   COUNT
-===========
-
-          2
-
-
-   COUNT
-===========
-
-          2
-
 Use CONNECT or CREATE DATABASE to specify a database
 
        COUNT 

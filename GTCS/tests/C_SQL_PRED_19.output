@@ -8,21 +8,6 @@ Test:
 
 
 * Total Records Listed >>> 2
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-Deptno        Department          Mgrno      TOTAL
-====== ========================= ====== ==============
-
- 111   Eastern Sales Region         142    $276,500.00
- 115   Federal Sales Region         138    $157,000.00
-
-
-Deptno        Department          Mgrno      TOTAL
-====== ========================= ====== ==============
-
- 111   Eastern Sales Region         142    $276,500.00
- 115   Federal Sales Region         138    $157,000.00
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO DEPARTMENT                  MGRNO          SUM 

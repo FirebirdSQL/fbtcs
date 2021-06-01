@@ -8,14 +8,6 @@ CT	1
 
 
 * Total Records Listed >>> 2
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-State    COUNT
-===== ===========
-
-CA              2
-CT              1
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 STATE         COUNT 

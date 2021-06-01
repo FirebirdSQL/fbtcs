@@ -163,35 +163,6 @@ $ GPRE -e sin023.e
 $ CC FLAG_CC sin023.c
 $ LINK FLAG_LINK sin023 
 $ RUN sin023
->> sin023.qli
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-
-select v2.deptno, v2.department, v2.mgrno, sum(v2.budget)
-from dept_budget v2
-where singular
-(select * from fullemp v3, empsal v4, sales t1 
-where v2.department = v3.department and
-v3.empno = v4.empno and v4.empno = t1.sales_rep 
-and t1.total_value >
-(select avg(t2.total_value) from sales t2 where t2.sales_rep = 137))
-group by v2.deptno, v2.department, v2.mgrno
-order by v2.deptno;
-
-select v2.deptno, v2.department, v2.mgrno, sum(v2.budget)
-from dept_budget v2
-where 1 =
-(select count(*) from fullemp v3, empsal v4, sales t1
-where v2.department = v3.department and
-v3.empno = v4.empno and v4.empno = t1.sales_rep 
-and t1.total_value >
-(select avg(t2.total_value) from sales t2 where t2.sales_rep = 137))
-group by v2.deptno, v2.department, v2.mgrno
-order by v2.deptno;
-
-finish;
-quit;
-$ QLI -n -a sin023.qli
 >> sin023.sql
 connect WHERE_GDB:sh_test.gdb;
 select v2.deptno, v2.department, v2.mgrno, sum(v2.budget)

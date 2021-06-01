@@ -114,18 +114,6 @@ $ GPRE -e con015.e
 $ CC FLAG_CC con015.c
 $ LINK FLAG_LINK con015 
 $ RUN con015
->> con015.qli
-set semicolon;
-ready WHERE_GDB:sh_test.gdb;
-SELECT COUNT(*)
-FROM SALES
-WHERE SHIPPED IS NULL;
-
-PRINT COUNT OF SALES WITH SHIPPED MISSING;
-FINISH;
-QUIT;
-
-$ QLI -n -a con015.qli
 >> con015.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT COUNT(*)

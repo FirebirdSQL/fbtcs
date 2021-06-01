@@ -22,41 +22,6 @@ Mgr
 
 
 * Total Records Listed >>> 9
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
- Job
-=====
-
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-
-
- Job
-=====
-
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-Mgr
-
-
-   COUNT
-===========
-
-          9
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 JOB    

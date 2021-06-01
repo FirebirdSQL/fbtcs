@@ -108,17 +108,6 @@ $ GPRE -e sta028.e
 $ CC FLAG_CC sta028.c
 $ LINK FLAG_LINK sta028 
 $ RUN sta028
->> sta028.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
- SELECT EMPNO FROM MANAGEMENT WHERE EMPNO STARTING WITH 1;
-for management with empno starting with 1
-print empno;
-select count(*) from management where empno starting with 1;
-finish;
-quit;
-$ QLI -n -a sta028.qli
 >> sta028.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT EMPNO FROM MANAGEMENT WHERE EMPNO STARTING WITH 1;

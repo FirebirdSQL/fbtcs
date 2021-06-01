@@ -117,21 +117,6 @@ $ GPRE -e sta006.e
 $ CC FLAG_CC sta006.c
 $ LINK FLAG_LINK sta006 
 $ RUN sta006
->> sta006.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT CUSTNO, CUSTOMER 
-FROM CUSTOMERS WHERE CUSTOMER STARTING WITH 'T' 
-OR CUSTOMER STARTING WITH 'S' ORDER BY CUSTOMER ASCENDING;
-for customers sorted by customer with customer starting with 'T'
-or customer starting with 'S' print custno, customer;
-
-select count(*) from customers where customer starting with 'T' 
-or customer starting with 'S';
-finish;
-quit;
-$ QLI -n -a sta006.qli
 >> sta006.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT CUSTNO, CUSTOMER 

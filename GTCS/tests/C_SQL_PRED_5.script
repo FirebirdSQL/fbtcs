@@ -134,30 +134,6 @@ $ GPRE -e sin006.e
 $ CC FLAG_CC sin006.c
 $ LINK FLAG_LINK sin006 
 $ RUN sin006
->> sin006.qli
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-
-select empno from sales_people t1 where singular 
-(select * from sales t2 where t1.empno=t2.sales_rep 
-and t2.total_value > 6000 and singular
-(select * from customers t3 where t3.custno = t2.custno)) and singular
-(select * from sales_perf t4 where t4.empno = t1.empno);
-
-/*--- table 1 and 2 join ---*/
-for t1 in sales_people with unique t2 in sales with t1.empno = t2.sales_rep
-and t2.total_value > 6000
-print t1.empno;
-
-select empno from sales_people t1 where 1 =
-(select count(*) from sales t2 where t1.empno=t2.sales_rep
-and t2.total_value > 6000 and 1 =
-(select count(*) from customers t3 where t3.custno = t2.custno)) and 1 =
-(select count(*) from sales_perf t4 where t4.empno = t1.empno);
-
-finish;
-quit;
-$QLI -a sin006.qli
 >> sin006.sql
 select empno from sales_people t1 where singular
 (select * from sales t2 where t1.empno=t2.sales_rep

@@ -114,19 +114,6 @@ $ GPRE -e sta011.e
 $ CC FLAG_CC sta011.c
 $ LINK FLAG_LINK sta011 
 $ RUN sta011
->> sta011.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT PROJ_NO, PROJ_NAME, PRODUCT, VERSION 
-FROM PROJECTS 
-WHERE PROJ_NO STARTING WITH 'HH300';
-for projects with proj_no starting with 'HH300' 
-print proj_no, proj_name, product, version;
-select count(*) from projects where proj_no starting with 'HH300';
-finish;
-quit;
-$ QLI -n -a sta011.qli
 >> sta011.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO, PROJ_NAME, PRODUCT, VERSION 

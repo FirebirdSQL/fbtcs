@@ -14,27 +14,6 @@ Test:
 
 
 * Total Records Listed >>> 5
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-    Salary
-===============
-
-    $ 91,000.00
-    $ 71,000.00
-    $ 71,000.00
-    $112,000.00
-    $ 91,000.00
-
-
-    Salary
-===============
-
-    $ 91,000.00
-    $ 71,000.00
-    $ 71,000.00
-    $112,000.00
-    $ 91,000.00
-
 Use CONNECT or CREATE DATABASE to specify a database
 
       SALARY 

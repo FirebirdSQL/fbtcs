@@ -6,19 +6,6 @@ Test:
 
 
 * Total Records Listed >>> 1
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-Deptno        Department          Mgrno    COUNT
-====== ========================= ====== ===========
-
- 000   Corporate Headquarters       120           1
-
-
-Deptno        Department          Mgrno    COUNT
-====== ========================= ====== ===========
-
- 000   Corporate Headquarters       120           1
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO DEPARTMENT                  MGRNO        COUNT 

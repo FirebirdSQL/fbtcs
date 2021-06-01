@@ -160,18 +160,6 @@ $ GPRE -e sin020.e
 $ CC FLAG_CC sin020.c
 $ LINK FLAG_LINK sin020 
 $ RUN sin020
->> sin020.qli
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-select * from dept_budget v1 where singular (select * from fullemp
-v2 where v2.department = v1.department);
- 
-select * from dept_budget v1 where 1 =  (select count(*) from fullemp
-v2 where v2.department = v1.department); 
-
-finish;
-quit;
-$ QLI -n -a sin020.qli
 >> sin020.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from dept_budget v1 where singular (select * from fullemp

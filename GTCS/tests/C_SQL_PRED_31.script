@@ -110,18 +110,6 @@ $ GPRE -e con005.e
 $ CC FLAG_CC con005.c
 $ LINK FLAG_LINK con005 
 $ RUN con005
->> con005.qli
-SET SEMICOLON;
-ready WHERE_GDB:sh_test.gdb;
-select count(*) from customers 
-where customer containing 'A' or customer containing 'c';
-
-print count of customers sorted by custno
-with customer containing 'A' or customer containing 'c';
-finish;
-quit;
-
-$ QLI -n -a con005.qli
 >> con005.sql
 connect WHERE_GDB:sh_test.gdb;
 select count(*) from customers 

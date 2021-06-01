@@ -117,24 +117,6 @@ $ GPRE -e sin002.e
 $ CC FLAG_CC sin002.c
 $ LINK FLAG_LINK sin002 
 $ RUN sin002
->> sin002.qli
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-select * from customers c1
-where not singular
-(select * from customers c2 where c1.custno = c2.custno);
-
-for c1 in customers with not unique c2 in customers over custno
-print c1.custno, c1.customer, c1.contact, c1.address, c1.city, c1.state,
-c1.zip_code, c1.phone_no,c1.on_hold;
-
-select * from customers c1
-where 1 < (select count(*) from customers c2 where c1.custno = c2.custno)
-or 0 = (select count(*) from customers c3 where c3.custno = c3.custno);
-
-finish;
-quit;
-$ QLI -n -a sin002.qli
 >> sin002.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from customers c1

@@ -114,14 +114,6 @@ $ GPRE -e con038.e
 $ CC FLAG_CC con038.c
 $ LINK FLAG_LINK con038 
 $ RUN con038
->> con038.qli
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-select customer,zip from customers
-where customer containing "'";
-finish;
-quit;
-$ QLI -n -a con038.qli
 >> con038.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT customer,zip_code FROM customers WHERE customer CONTAINING "'";

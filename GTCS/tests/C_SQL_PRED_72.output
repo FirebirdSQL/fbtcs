@@ -6,13 +6,6 @@ Nature's Food Co-op 99999
 
 
 * Total Records Listed >>> 1
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-        Customer           Zip
-========================= =====
-
-Nature's Food Co-op       99999
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 CUSTOMER                  ZIP_CODE 

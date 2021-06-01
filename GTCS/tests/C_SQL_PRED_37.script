@@ -109,18 +109,6 @@ $ GPRE -e con013.e
 $ CC FLAG_CC con013.c
 $ LINK FLAG_LINK con013 
 $ RUN con013
->> con013.qli
-set semicolon;
-ready WHERE_GDB:sh_test.gdb;
-SELECT DEPTNO
-FROM DEPT_BUDGET
-WHERE DEPTNO CONTAINING '12';
-
-FOR D IN DEPT_BUDGET WITH D.DEPTNO CONTAINING '12' PRINT D.DEPTNO;
-FINISH;
-QUIT;
-
-$ QLI -n -a con013.qli
 >> con013.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT DEPTNO

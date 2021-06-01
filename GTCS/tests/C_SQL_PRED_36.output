@@ -10,25 +10,6 @@ FJ300	Fujima Port
 
 
 * Total Records Listed >>> 3
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-               Project
-Project No      Name
-========== ===============
-
- HH-3.00   Howard Hues
- DE-3.00   Dec Port
- FJ-3.00   Fujima Port
-
-
-               Project
-Project No      Name
-========== ===============
-
- HH-3.00   Howard Hues
- DE-3.00   Dec Port
- FJ-3.00   Fujima Port
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 PROJ_NO PROJ_NAME       

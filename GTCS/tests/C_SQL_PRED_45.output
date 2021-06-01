@@ -36,49 +36,6 @@ Test:
 
 
 * Total Records Listed >>> 16
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
- Empno
-======
-
-   101
-   104
-   105
-   107
-   109
-   111
-   113
-   114
-   117
-   120
-   122
-   139
-   140
-   147
-   148
-   158
-
-
- Empno
-======
-
-   101
-   104
-   105
-   107
-   109
-   111
-   113
-   114
-   117
-   120
-   122
-   139
-   140
-   147
-   148
-   158
-
 Use CONNECT or CREATE DATABASE to specify a database
 
   EMPNO 

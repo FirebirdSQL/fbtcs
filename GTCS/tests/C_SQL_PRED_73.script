@@ -114,12 +114,6 @@ $ GPRE -e con039.e
 $ CC FLAG_CC con039.c
 $ LINK FLAG_LINK con039 
 $ RUN con039
->> con039.qli
-ready WHERE_GDB:sh_test.gdb;
-select count(*) from customers where customer containing "'";
-finish;
-quit;
-$ QLI -n -a con039.qli
 >> con039.sql
 connect WHERE_GDB:sh_test.gdb;
 select count(*) from customers where customer containing "'";

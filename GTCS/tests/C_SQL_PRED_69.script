@@ -109,17 +109,6 @@ $ GPRE -e sta029.e
 $ CC FLAG_CC sta029.c
 $ LINK FLAG_LINK sta029 
 $ RUN sta029
->> sta029.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT SALARY FROM MANAGEMENT WHERE SALARY STARTING 1;
-FOR management WITH salary STARTING WITH 1 
-PRINT salary;
-SELECT COUNT(*) FROM management WHERE salary STARTING WITH 1;
-FINISH;
-QUIT;
-$ QLI -n -a sta029.qli
 >> sta029.sql
 CONNECT WHERE_GDB:sh_test.gdb;
 SELECT salary FROM management WHERE salary STARTING 1;

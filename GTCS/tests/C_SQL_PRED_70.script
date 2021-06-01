@@ -147,19 +147,6 @@ $ GPRE -e sta030.e
 $ CC FLAG_CC sta030.c
 $ LINK FLAG_LINK sta030 
 $ RUN sta030
->> sta030.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT CUSTNO, TOTAL_VALUE, SHIPPED 
-FROM SALES WHERE SHIPPED STARTING WITH '21';
-for sales with shipped starting with '21'
-print custno, total_value,shipped;
-select count(*) from sales
-where shipped starting with '21';
-finish;
-quit;
-$ QLI -n -a sta030.qli
 >> sta030.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT CUSTNO, TOTAL_VALUE, SHIPPED 

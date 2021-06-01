@@ -148,20 +148,6 @@ $ GPRE -e sin027.e
 $ CC FLAG_CC sin027.c
 $ LINK FLAG_LINK sin027 
 $ RUN sin027
->> sin027.qli
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-select * from customers c1 where singular 
-(select * from sales s1 
-where s1.custno = c1.custno and s1.ponumb containing '8902');
-
-select * from customers c1 where 1 =
-(select count(*) from sales s1
-where s1.custno = c1.custno and s1.ponumb containing '8902');
-
-finish;
-quit;
-$ QLI -n -a sin027.qli
 >> sin027.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from customers c1 where singular 

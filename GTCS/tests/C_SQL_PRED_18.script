@@ -157,30 +157,6 @@ $ GPRE -e sin022.e
 $ CC FLAG_CC sin022.c
 $ LINK FLAG_LINK sin022 
 $ RUN sin022
->> sin022.qli
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-select v1.deptno, v1.department, v1.mgrno, count(*) 
-from head_dept v1 
-where singular
-(select * from dept_budget v2, fullemp v3, empsal v4 where
-v2.deptno= v1.deptno and v2.department = v3.department and
-v3.empno = v4.empno) 
-group by v1.deptno, v1.department, v1.mgrno
-order by v1.deptno;
-
-select v1.deptno, v1.department, v1.mgrno, count(*) 
-from head_dept v1 
-where 1 =
-(select count(*) from dept_budget v2, fullemp v3, empsal v4 where
-v2.deptno= v1.deptno and v2.department = v3.department and
-v3.empno = v4.empno) 
-group by v1.deptno, v1.department, v1.mgrno
-order by v1.deptno;
-
-finish;
-quit;
-$ QLI -n -a sin022.qli
 >> sin022.sql
 connect WHERE_GDB:sh_test.gdb;
 select v1.deptno, v1.department, v1.mgrno, count(*) 

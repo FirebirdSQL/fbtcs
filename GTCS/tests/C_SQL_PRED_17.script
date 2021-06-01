@@ -165,22 +165,6 @@ $ GPRE -e sin021.e
 $ CC FLAG_CC sin021.c
 $ LINK FLAG_LINK sin021 
 $ RUN sin021
->> sin021.qli
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-select * from head_dept v1 where singular
-(select * from dept_budget v2,fullemp v3,empsal v4 where
-v2.deptno= v1.deptno and v2.department = v3.department and
-v3.empno = v4.empno);
-
-select * from head_dept v1 where 1 =
-(select count(*) from dept_budget v2,fullemp v3,empsal v4 where
-v2.deptno= v1.deptno and v2.department = v3.department and
-v3.empno = v4.empno);
-
-finish;
-quit;
-$ QLI -n -a sin021.qli
 >> sin021.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from head_dept v1 where singular

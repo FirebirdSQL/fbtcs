@@ -12,25 +12,6 @@ Test:
 
 
 * Total Records Listed >>> 4
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-Custno  Total Value    Shipped
-====== ============= ===========
-
-   103   $ 53,000.00 21-Jul-1989
-   100   $  5,500.00 21-Jul-1989
-   109   $ 15,500.00 21-Jul-1989
-   101   $ 48,500.00 31-Jul-1989
-
-
-Custno  Total Value    Shipped
-====== ============= ===========
-
-   103   $ 53,000.00 21-Jul-1989
-   100   $  5,500.00 21-Jul-1989
-   109   $ 15,500.00 21-Jul-1989
-   101   $ 48,500.00 31-Jul-1989
-
 Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO  TOTAL_VALUE     SHIPPED 

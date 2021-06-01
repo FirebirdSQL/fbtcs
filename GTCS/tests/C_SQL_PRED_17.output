@@ -6,23 +6,6 @@ Test:
 
 
 * Total Records Listed >>> 1
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-                                            SUB
-                                           TOTAL          Head     Budget
-Deptno        Department          Mgrno   REPORTS   Level Dept    Inc Subs
-====== ========================= ====== =========== ===== ==== ==============
-
- 000   Corporate Headquarters       120           9   1   000     $527,500.00
-
-
-                                            SUB
-                                           TOTAL          Head     Budget
-Deptno        Department          Mgrno   REPORTS   Level Dept    Inc Subs
-====== ========================= ====== =========== ===== ==== ==============
-
- 000   Corporate Headquarters       120           9   1   000     $527,500.00
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO DEPARTMENT                  MGRNO SUB_TOTAL_REPORTS DEPT_LEVEL HEAD_DEPT   SUB_BUDGET 

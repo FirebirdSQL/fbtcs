@@ -12,25 +12,6 @@ Test:
 
 
 * Total Records Listed >>> 4
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-Deptno
-======
-
- 112
- 120
- 121
- 122
-
-
-Deptno
-======
-
- 112
- 120
- 121
- 122
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 DEPTNO 

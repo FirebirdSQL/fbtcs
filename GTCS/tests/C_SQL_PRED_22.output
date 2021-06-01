@@ -13,43 +13,6 @@ Milwaukee                	WI  	53206	4142320000
 106	The Bike Mart            	Sam Grant                	499 Hamlin Avenue             
 Chicago                  	IL  	60624	3123828888	
 ------------------------------------------------------------------------------------------
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-
-Custno         Customer                   Contact              Zip
-====== ========================= =========================    =====
-
-   103 The Groton Company        Phil Sheridan
-Great Road                     Groton                    MA   01450
-(508) 643-6627 
-   104 Pope & Saunders Ltd       John Pope
-1172 Seminole Drive            Apalachiola               FL   32320
-(305) 298-3744 *
-   105 1st Litonian Bank         Joe Hooker
-PO Box 6000, Teutonia Sta      Milwaukee                 WI   53206
-(414) 232-0000 
-   106 The Bike Mart             Sam Grant
-499 Hamlin Avenue              Chicago                   IL   60624
-(312) 382-8888 
-
-
-
-Custno         Customer                   Contact              Zip
-====== ========================= =========================    =====
-
-   103 The Groton Company        Phil Sheridan
-Great Road                     Groton                    MA   01450
-(508) 643-6627 
-   104 Pope & Saunders Ltd       John Pope
-1172 Seminole Drive            Apalachiola               FL   32320
-(305) 298-3744 *
-   105 1st Litonian Bank         Joe Hooker
-PO Box 6000, Teutonia Sta      Milwaukee                 WI   53206
-(414) 232-0000 
-   106 The Bike Mart             Sam Grant
-499 Hamlin Avenue              Chicago                   IL   60624
-(312) 382-8888 
-
 Use CONNECT or CREATE DATABASE to specify a database
 
  CUSTNO CUSTOMER                  CONTACT                   ADDRESS                        CITY                      STATE  ZIP_CODE PHONE_NO   ON_HOLD 

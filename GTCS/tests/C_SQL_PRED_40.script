@@ -126,18 +126,6 @@ $ GPRE -e con020.e
 $ CC FLAG_CC con020.c
 $ LINK FLAG_LINK con020 
 $ RUN con020
->> con020.qli
-set semicolon;
-ready WHERE_GDB:sh_test.gdb;
-SELECT PROJ_NO
-FROM PROJECTS
-WHERE PROJ_DESC CONTAINING 'A';
-
-FOR P IN PROJECTS WITH P.PROJ_DESC CONTAINING 'A' PRINT P.PROJ_NO;
-FINISH;
-QUIT;
-
-$ QLI -n -a con020.qli
 >> con020.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT PROJ_NO

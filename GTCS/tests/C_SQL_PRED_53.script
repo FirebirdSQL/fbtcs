@@ -113,21 +113,6 @@ $ GPRE -e sta005.e
 $ CC FLAG_CC sta005.c
 $ LINK FLAG_LINK sta005 
 $ RUN sta005
->> sta005.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT CUSTNO, CUSTOMER 
-FROM CUSTOMERS 
-WHERE CUSTOMER NOT STARTING WITH 'A'
-ORDER BY CUSTNO;
-for customers sorted by custno with customer not starting with 'A' 
-print custno, customer;
-
-select count(*) from customers where customer not starting with 'A';
-finish;
-quit;
-$ QLI -n -a sta005.qli
 >> sta005.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT CUSTNO, CUSTOMER 

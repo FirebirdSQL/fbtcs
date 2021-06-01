@@ -112,22 +112,6 @@ $ GPRE -e sta014.e
 $ CC FLAG_CC sta014.c
 $ LINK FLAG_LINK sta014 
 $ RUN sta014
->> sta014.qli
-
-ready WHERE_GDB:sh_test.gdb;
-set semicolon;
-SELECT DEPTNO 
-FROM DEPT_BUDGET 
-WHERE DEPTNO NOT STARTING '12' 
-ORDER BY DEPTNO DESCENDING;
-for dept_budget sorted by desc deptno 
-with deptno not starting '12' 
-print deptno;
-select count(*) from dept_budget where deptno not starting '12';
-
-finish;
-quit;
-$ QLI -n -a sta014.qli
 >> sta014.sql
 connect WHERE_GDB:sh_test.gdb;
 SELECT DEPTNO 

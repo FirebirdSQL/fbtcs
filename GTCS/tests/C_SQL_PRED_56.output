@@ -6,13 +6,6 @@ CT
 
 
 * Total Records Listed >>> 1
-Warning: cannot issue DDL statements against database "WHERE_GDB:sh_test.gdb"
-
-State
-=====
-
-CT
-
 Use CONNECT or CREATE DATABASE to specify a database
 
 STATE  
