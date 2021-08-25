@@ -47,7 +47,7 @@ select * from tab order by n1!
 
 commit!
 
-update tab set n2 = 2 returning n2!
+update tab set n2 = 1 returning n2!
 
 update tab set n2 = 2!
 update or insert into tab values (2, 2) matching (n2) returning n1, n2, old.n1, old.n2, new.n1, new.n2!
@@ -56,21 +56,25 @@ rollback!
 merge into tab2 using tab
   on tab2.n1 = tab.n1
   when matched then update set n1 = tab.n1, n2 = tab.n2
+  order by tab2.n1, tab2.n2
   returning old.n1, old.n2, new.n1, new.n2, tab.n1, tab.n2!
 
 merge into tab2 using tab
   on tab2.n1 = tab.n1
   when matched then update set n1 = tab.n1, n2 = tab.n2
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2!
 
 merge into tab2 using tab
   on tab2.n1 = tab.n1
   when matched then delete
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2!
 
 merge into tab2 using tab
   on tab2.n1 = tab.n1
   when not matched then insert values (n1, n2)
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2!
 
 --
@@ -79,12 +83,14 @@ merge into tab2 using (select n1 x1, n2 x2 from tab) tab
   on tab2.n1 = tab.x1
   when matched then update set n1 = tab.x1, n2 = tab.x2
   when not matched then insert values (x1, x2)
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2!
 
 merge into tab2 using (select n1 x1, n2 x2 from tab) tab
   on tab2.n1 = tab.x1
   when matched then update set n1 = tab.x1, n2 = tab.x2
   when not matched and 1 = 0 then insert values (x1, x2)
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2!
 
 merge into tab2 using (select n1 x1, n2 x2 from tab) tab
@@ -98,26 +104,31 @@ merge into tab2 using (select n1 x1, n2 x2 from tab) tab
   on tab2.n1 = tab.x1
   when matched and 1 = 0 then update set n1 = tab.x1, n2 = tab.x2
   when not matched then insert values (x1, x2)
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
 
 merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 1) tab
   on tab2.n1 = tab.x1
   when matched and 1 = 0 then update set n2 = tab.x2 * 10
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
 
 merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 1) tab
   on tab2.n1 = tab.x1
   when matched and 1 = 1 then update set n2 = tab.x2 * 10
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
 
 merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 4) tab
   on tab2.n1 = tab.x1
   when matched and 1 = 0 then delete
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
 
 merge into tab2 using (select n1 x1, n2 x2 from tab where n1 = 4) tab
   on tab2.n1 = tab.x1
   when matched and 1 = 1 then delete
+  order by tab2.n1, tab2.n2
   returning n1, n2, old.n1, old.n2, new.n1, new.n2, x1, x2!
 
 select * from tab2!
@@ -200,6 +211,7 @@ merge into tab using (select * from tab2 where n1 = 3) tab2
     update set n2 = tab2.n2 - 1
   when matched and tab.n2 < 2500 then
     delete
+  order by tab.n1, tab.n2
   returning tab2.n2, tab.n2, old.n2, new.n2!
 
 merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
@@ -214,6 +226,7 @@ merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
     update set n2 = x2 - 1
   when matched and n2 < 2500 then
     delete
+  order by tab.n1, tab.n2
   returning x2, n2, old.n2, new.n2!
 
 merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
@@ -226,6 +239,7 @@ merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
     insert values (x1, x2 - 3)
   when matched and n2 < 2500 then
     delete
+  order by tab.n1, tab.n2
   returning x2, n2, old.n2, new.n2!
 
 merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
@@ -238,6 +252,7 @@ merge into tab using (select n1 x1, n2 x2 from tab2 where n1 = 3) tab2
     insert values (x1, x2 - 3)
   when matched and n2 < 2500 then
     delete
+  order by tab.n1, tab.n2
   returning x2, n2, old.n2, new.n2!
 
 ---

@@ -19,8 +19,8 @@ update tab set n2 = n2 * 10 where n1 = 0 returning n1, n2, new.n1, new.n2, old.n
 
 update tab set n2 = n2 * 10 where n1 = 2 returning n1, n2, new.n1, new.n2, old.n1, old.n2!
 
-update or insert into tab values (2, 2000) returning n1, n2, new.n1, new.n2, old.n1, old.n2!
-update or insert into tab values (3, 3000) returning n1, n2, new.n1, new.n2, old.n1, old.n2!
+update or insert into tab values (2, 20000) returning n1, n2, new.n1, new.n2, old.n1, old.n2!
+update or insert into tab values (3, 30000) returning n1, n2, new.n1, new.n2, old.n1, old.n2!
 
 delete from tab returning n1, n2!
 
