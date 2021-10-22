@@ -221,6 +221,51 @@ select n1,
   from t1
   order by n2, n1;
 
+-- 18
+select n1,
+       n2,
+       sum(n2) over (range between unbounded preceding and current row) x1,
+       sum(n2) over (range between current row and unbounded following) x2,
+       sum(n2) over (range between current row and current row) x3
+  from t1
+  order by n2, n1;
+
+-- 19
+select n1,
+       n2,
+       sum(n2) over (rows between unbounded preceding and current row) x1,
+       sum(n2) over (rows between current row and unbounded following) x2,
+       sum(n2) over (rows between current row and current row) x3
+  from t1
+  order by n2, n1;
+
+-- 20
+select n1,
+       n2,
+       sum(n2) over (partition by n1 range between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 range between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 range between current row and current row) x3
+  from t1
+  order by n2, n1;
+
+-- 21
+select n1,
+       n2,
+       sum(n2) over (partition by n1 rows between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 rows between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 rows between current row and current row) x3
+  from t1
+  order by n1 nulls first, n2;
+
+-- 22
+select n1,
+       n2,
+       sum(n2) over (partition by n1 order by n1, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 order by n1, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 order by n1, n2 rows between current row and current row) x3
+  from t1
+  order by n1 nulls first, n2;
+
 ---
 
 exit;

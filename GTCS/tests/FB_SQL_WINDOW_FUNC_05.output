@@ -475,6 +475,126 @@ select n1,
       <null>       100000                101110                100000                100000                100000                100000 
 
 
+-- 18
+select n1,
+       n2,
+       sum(n2) over (range between unbounded preceding and current row) x1,
+       sum(n2) over (range between current row and unbounded following) x2,
+       sum(n2) over (range between current row and current row) x3
+  from t1
+  order by n2, n1;
+
+          N1           N2                    X1                    X2                    X3 
+============ ============ ===================== ===================== ===================== 
+           1            1                112041                112041                112041 
+           1           10                112041                112041                112041 
+           2           20                112041                112041                112041 
+      <null>           50                112041                112041                112041 
+      <null>           60                112041                112041                112041 
+           1          100                112041                112041                112041 
+           3          300                112041                112041                112041 
+           5          500                112041                112041                112041 
+      <null>         1000                112041                112041                112041 
+           1        10000                112041                112041                112041 
+      <null>       100000                112041                112041                112041 
+
+
+-- 19
+select n1,
+       n2,
+       sum(n2) over (rows between unbounded preceding and current row) x1,
+       sum(n2) over (rows between current row and unbounded following) x2,
+       sum(n2) over (rows between current row and current row) x3
+  from t1
+  order by n2, n1;
+
+          N1           N2                    X1                    X2                    X3 
+============ ============ ===================== ===================== ===================== 
+           1            1                101001                 11041                     1 
+           1           10                101011                 11040                    10 
+           2           20                111131                   930                    20 
+      <null>           50                111981                   110                    50 
+      <null>           60                112041                    60                    60 
+           1          100                101111                 11030                   100 
+           3          300                111431                   910                   300 
+           5          500                111931                   610                   500 
+      <null>         1000                101000                 12041                  1000 
+           1        10000                111111                 10930                 10000 
+      <null>       100000                100000                112041                100000 
+
+
+-- 20
+select n1,
+       n2,
+       sum(n2) over (partition by n1 range between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 range between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 range between current row and current row) x3
+  from t1
+  order by n2, n1;
+
+          N1           N2                    X1                    X2                    X3 
+============ ============ ===================== ===================== ===================== 
+           1            1                 10111                 10111                 10111 
+           1           10                 10111                 10111                 10111 
+           2           20                    20                    20                    20 
+      <null>           50                101110                101110                101110 
+      <null>           60                101110                101110                101110 
+           1          100                 10111                 10111                 10111 
+           3          300                   300                   300                   300 
+           5          500                   500                   500                   500 
+      <null>         1000                101110                101110                101110 
+           1        10000                 10111                 10111                 10111 
+      <null>       100000                101110                101110                101110 
+
+
+-- 21
+select n1,
+       n2,
+       sum(n2) over (partition by n1 rows between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 rows between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 rows between current row and current row) x3
+  from t1
+  order by n1 nulls first, n2;
+
+          N1           N2                    X1                    X2                    X3 
+============ ============ ===================== ===================== ===================== 
+      <null>           50                    50                101110                    50 
+      <null>           60                   110                101060                    60 
+      <null>         1000                  1110                101000                  1000 
+      <null>       100000                101110                100000                100000 
+           1            1                     1                 10111                     1 
+           1           10                    11                 10110                    10 
+           1          100                   111                 10100                   100 
+           1        10000                 10111                 10000                 10000 
+           2           20                    20                    20                    20 
+           3          300                   300                   300                   300 
+           5          500                   500                   500                   500 
+
+
+-- 22
+select n1,
+       n2,
+       sum(n2) over (partition by n1 order by n1, n2 rows between unbounded preceding and current row) x1,
+       sum(n2) over (partition by n1 order by n1, n2 rows between current row and unbounded following) x2,
+       sum(n2) over (partition by n1 order by n1, n2 rows between current row and current row) x3
+  from t1
+  order by n1 nulls first, n2;
+
+          N1           N2                    X1                    X2                    X3 
+============ ============ ===================== ===================== ===================== 
+      <null>           50                    50                101110                    50 
+      <null>           60                   110                101060                    60 
+      <null>         1000                  1110                101000                  1000 
+      <null>       100000                101110                100000                100000 
+           1            1                     1                 10111                     1 
+           1           10                    11                 10110                    10 
+           1          100                   111                 10100                   100 
+           1        10000                 10111                 10000                 10000 
+           2           20                    20                    20                    20 
+           3          300                   300                   300                   300 
+           5          500                   500                   500                   500 
+
+
 ---
 
 exit;
