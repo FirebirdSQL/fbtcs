@@ -10,7 +10,7 @@ Warning: cannot issue DDL statements against database "WHERE_GDB:sh_blobs_28.gdb
 
     Relation VMB1 is a view defined as:
 	SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
-    Security class SQL$427
+    Security class SQL$428
 
 Test:
   INSERT INTO VMB1 (TEST,RID,BHALFK,DESC) VALUES (:Test_Name,:j,:BlobId,'Inserting blobs through views')
