@@ -28,8 +28,5 @@ Global procedures
 
 PROC_ARR; Dependencies: CITIES (Table), OCTETS (Collation)
 
-Package: RDB$TIME_ZONE_UTIL
-
-TRANSITIONS
 commit;
 quit;

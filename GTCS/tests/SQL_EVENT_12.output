@@ -1,7 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
 
-foo12 done, event (abc) was posted.
-
 PNAME                PNUMBER 
 =============== ============ 
 ProductX                   1 
@@ -17,3 +15,5 @@ ProductA                   4
            3            3            3 
           11           11           12 
 
+
+foo12 done, event (abc) was posted.

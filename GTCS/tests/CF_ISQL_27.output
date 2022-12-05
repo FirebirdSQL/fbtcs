@@ -35,9 +35,6 @@ Global procedures
 
 RPL$GENERATOR_VALUES; Dependencies: RDB$GENERATORS (Table)
 
-Package: RDB$TIME_ZONE_UTIL
-
-TRANSITIONS
 
 Use CONNECT or CREATE DATABASE to specify a database
 select * from rpl$generator_values;

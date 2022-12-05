@@ -27,9 +27,6 @@ Global procedures
 
 ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHI
 
-Package: RDB$TIME_ZONE_UTIL
-
-TRANSITIONS
 execute procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghi;
 
            A 
