@@ -545,9 +545,9 @@ select cast(time '10:11:12.1345' as time),
        substring(cast(time '10:11:12.1345' as timestamp) from 12),
        substring(cast(time '10:11:12.1345' as timestamp with time zone) from 12) from rdb$database;
 
-         CAST                                           CAST SUBSTRING                 SUBSTRING                                                 
-============= ============================================== ========================= ========================================================= 
-10:11:12.1345 10:11:12.1345 -03:00                           10:11:12.1345             10:11:12.1345 -03:00                                      
+         CAST                                           CAST SUBSTRING                 SUBSTRING                                                  
+============= ============================================== ========================= ========================================================== 
+10:11:12.1345 10:11:12.1345 -03:00                           10:11:12.1345             10:11:12.1345 -03:00                                       
 
 
 select cast(timestamp '2020-05-20 10:11:12.1345' as time),
@@ -565,9 +565,9 @@ select cast(time '10:11:12.1345 america/sao_paulo' as time),
        substring(cast(time '10:11:12.1345 america/sao_paulo' as timestamp) from 12),
        substring(cast(time '10:11:12.1345 america/sao_paulo' as timestamp with time zone) from 12) from rdb$database;
 
-         CAST                                           CAST SUBSTRING                 SUBSTRING                                                 
-============= ============================================== ========================= ========================================================= 
-10:11:12.1345 10:11:12.1345 America/Sao_Paulo                10:11:12.1345             10:11:12.1345 America/Sao_Paulo                           
+         CAST                                           CAST SUBSTRING                 SUBSTRING                                                  
+============= ============================================== ========================= ========================================================== 
+10:11:12.1345 10:11:12.1345 America/Sao_Paulo                10:11:12.1345             10:11:12.1345 America/Sao_Paulo                            
 
 
 select cast(timestamp '2020-05-20 10:11:12.1345 america/sao_paulo' as time),
@@ -1053,9 +1053,9 @@ exit;
            1 2018-01-01 11:33:33.4560 -02:00                           
 
 
-SUBSTRING                                                 
-========================================================= 
-America/Sao_Paulo                                         
+SUBSTRING                                                  
+========================================================== 
+America/Sao_Paulo                                          
 
 
 T1                             T2                             
@@ -1063,9 +1063,9 @@ T1                             T2
 America/New_York               America/Los_Angeles            
 
 
-SUBSTRING                                                 
-========================================================= 
-America/Los_Angeles                                       
+SUBSTRING                                                  
+========================================================== 
+America/Los_Angeles                                        
 
 
            N T1                             T2                             T3                             
