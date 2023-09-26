@@ -93,7 +93,7 @@ select f2(null) from rdb$database!
           F2 
 ============ 
 Statement failed, SQLSTATE = 42000
-validation error for variable number 1, value "*** null ***"
+validation error for variable [number 1], value "*** null ***"
 -At sub function 'súb1' line: 6, col: 3
 At function 'F2' line: 9, col: 2
 After line 69 in file fb_sql_subfunc_1.sql
@@ -265,7 +265,7 @@ select f2(null) from rdb$database!
           F2 
 ============ 
 Statement failed, SQLSTATE = 42000
-validation error for variable number 1, value "*** null ***"
+validation error for variable [number 1], value "*** null ***"
 -At sub function 'sÃºb1' line: 6, col: 3
 At function 'F2' line: 9, col: 2
 After line 188 in file fb_sql_subfunc_1.sql
