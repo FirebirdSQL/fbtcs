@@ -31,8 +31,6 @@ END^
 SET TERM ; ^
 commit;
 show procedures;
-Global procedures
-
 RPL$GENERATOR_VALUES; Dependencies: RDB$GENERATORS (Table)
 
 

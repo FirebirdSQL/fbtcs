@@ -1,6 +1,7 @@
 connected to service manager OK
 service started OK
 gbak:opened file WHERE_GDB_EXTERNAL:employee.gbk 
+gbak:use up to 1 parallel workers 
 gbak:transportable backup -- data in XDR format 
 gbak:		backup file is compressed 
 gbak:backup version is 6 

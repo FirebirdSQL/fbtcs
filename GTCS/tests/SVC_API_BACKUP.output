@@ -3,6 +3,7 @@ service started OK
 gbak:readied database WHERE_GDB_EXTERNAL:employee.gdb for backup 
 gbak:creating file WHERE_GDB_EXTERNAL:employee.gbk 
 gbak:starting transaction 
+gbak:use up to 1 parallel workers 
 gbak:database WHERE_GDB_EXTERNAL:employee.gdb has a page size of 4096 bytes. 
 gbak:writing domains 
 gbak:    writing domain FIRSTNAME 
