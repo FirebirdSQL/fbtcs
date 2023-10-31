@@ -6,9 +6,9 @@ SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 DOM15C                          TIMESTAMP Not Null
                                 default 'today'
-DOM15D                          CHAR(20) Not Null
+DOM15D                          CHAR(20) CHARACTER SET NONE Not Null
                                 default 'DEFAULT'
-DOM15E                          VARCHAR(25) Not Null
+DOM15E                          VARCHAR(25) CHARACTER SET NONE Not Null
                                 default 'VARYING DEFAULT'
 DOM15F                          DECIMAL(6, 2) Not Null
                                 default 4.2
@@ -19,8 +19,8 @@ DOM15H                          DOUBLE PRECISION Not Null
 FLD1                            (DOM15A) SMALLINT Not Null default 5000
 FLD2                            (DOM15B) INTEGER Not Null default 500
 FLD3                            (DOM15C) TIMESTAMP Not Null default '01/01/90'
-FLD4                            (DOM15D) CHAR(20) Not Null default 'COL DEFAULT'
-FLD5                            (DOM15E) VARCHAR(25) Not Null default 'VARYING DEFAULT'
+FLD4                            (DOM15D) CHAR(20) CHARACTER SET NONE Not Null default 'COL DEFAULT'
+FLD5                            (DOM15E) VARCHAR(25) CHARACTER SET NONE Not Null default 'VARYING DEFAULT'
 FLD6                            (DOM15F) DECIMAL(6, 2) Not Null default 0
 FLD7                            (DOM15G) FLOAT Not Null default 500.2
 FLD8                            (DOM15H) DOUBLE PRECISION Not Null default 1000

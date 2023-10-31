@@ -8,9 +8,9 @@ SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 DOM20C                          TIMESTAMP Nullable
                                 check (value >= 'today')
-DOM20D                          CHAR(20) Nullable
+DOM20D                          CHAR(20) CHARACTER SET NONE Nullable
                                 check (value in (select river from rivers))
-DOM20E                          VARCHAR(25) Nullable
+DOM20E                          VARCHAR(25) CHARACTER SET NONE Nullable
                                 default 'VARYING DEFAULT'
 DOM20F                          DECIMAL(6, 2) Nullable
                                 default 4.2
@@ -27,9 +27,9 @@ FLD2                            (DOM20B) INTEGER Nullable default 500
                                 check (value >= 500)
 FLD3                            (DOM20C) TIMESTAMP Nullable 
                                 check (value >= 'today')
-FLD4                            (DOM20D) CHAR(20) Nullable 
+FLD4                            (DOM20D) CHAR(20) CHARACTER SET NONE Nullable 
                                 check (value in (select river from rivers))
-FLD5                            (DOM20E) VARCHAR(25) Nullable default 'VARYING DEFAULT'
+FLD5                            (DOM20E) VARCHAR(25) CHARACTER SET NONE Nullable default 'VARYING DEFAULT'
 FLD6                            (DOM20F) DECIMAL(6, 2) Nullable default 4.2
                                 check (value > 0)
 FLD7                            (DOM20G) FLOAT Nullable default 500.1

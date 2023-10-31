@@ -15,15 +15,15 @@ DOM07C                          TIMESTAMP Nullable
 DOM07C                          TIMESTAMP Nullable
 DOM07C                          TIMESTAMP Nullable
                                 check (value < 'today')
-DOM07D                          CHAR(20) Nullable
+DOM07D                          CHAR(20) CHARACTER SET NONE Nullable
                                 check (value in (select river from rivers))
-DOM07D                          CHAR(20) Nullable
-DOM07D                          CHAR(20) Nullable
+DOM07D                          CHAR(20) CHARACTER SET NONE Nullable
+DOM07D                          CHAR(20) CHARACTER SET NONE Nullable
                                 check (value in ("TEST1","TEST2","TEST3"))
-DOM07E                          VARCHAR(25) Nullable
+DOM07E                          VARCHAR(25) CHARACTER SET NONE Nullable
                                 check (value in (select river from river_states))
-DOM07E                          VARCHAR(25) Nullable
-DOM07E                          VARCHAR(25) Nullable
+DOM07E                          VARCHAR(25) CHARACTER SET NONE Nullable
+DOM07E                          VARCHAR(25) CHARACTER SET NONE Nullable
                                 check (value is null)
 DOM07F                          DECIMAL(6, 2) Nullable
                                 check (value > 0)
@@ -45,4 +45,3 @@ DOM07I                          BLOB segment 80, subtype BINARY Nullable
 DOM07I                          BLOB segment 80, subtype BINARY Nullable
 DOM07I                          BLOB segment 80, subtype BINARY Nullable
                                 check (value is not null)
- 

@@ -61,7 +61,7 @@ commit;
 
 SHOW TABLE ITEMS;
 UID                             (DM_ID) BIGINT Not Null 
-DESCRIPTION                     VARCHAR(80) Nullable 
+DESCRIPTION                     VARCHAR(80) CHARACTER SET NONE Nullable 
 QOH                             Computed by: (COALESCE((SELECT SUM(QOH) FROM MITEMS),0))
 CONSTRAINT INTEG_2:
   Primary key (UID)

@@ -3,8 +3,8 @@ SQL warning code = 301
 FLD1                            (DOM13A1) SMALLINT Nullable default 500
 FLD2                            (DOM13B1) INTEGER Nullable default 500
 FLD3                            (DOM13C1) TIMESTAMP Nullable default '12/12/57'
-FLD4                            (DOM13D1) VARCHAR(4) Nullable default 'TEST'
-FLD5                            (DOM13E1) CHAR(30) Nullable default null
+FLD4                            (DOM13D1) VARCHAR(4) CHARACTER SET NONE Nullable default 'TEST'
+FLD5                            (DOM13E1) CHAR(30) CHARACTER SET NONE Nullable default null
 FLD6                            (DOM13F1) NUMERIC(15, 1) Nullable default 500.0
 FLD7                            (DOM13G1) FLOAT Nullable default 500
 FLD8                            (DOM13H1) DOUBLE PRECISION Nullable default 500
@@ -24,8 +24,8 @@ FLD1                            (DOM13A1) SMALLINT Nullable default 500
 FLD2                            (DOM13A1) SMALLINT Nullable default 0
 FLD3                            (DOM13C1) TIMESTAMP Nullable default '12/12/57'
 FLD4                            (DOM13C1) TIMESTAMP Nullable default '01/01/93'
-FLD5                            (DOM13E1) CHAR(30) Nullable default null
-FLD6                            (DOM13E1) CHAR(30) Nullable default 'generic username'
+FLD5                            (DOM13E1) CHAR(30) CHARACTER SET NONE Nullable default null
+FLD6                            (DOM13E1) CHAR(30) CHARACTER SET NONE Nullable default 'generic username'
 FLD7                            (DOM13G1) FLOAT Nullable default 500
 FLD8                            (DOM13G1) FLOAT Nullable default 0
 

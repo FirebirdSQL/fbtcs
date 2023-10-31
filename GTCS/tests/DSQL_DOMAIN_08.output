@@ -45,23 +45,23 @@ DOM08C                          TIMESTAMP Nullable
 create domain dom08d_1 as char(20);
 commit;
 show domain dom08d_1;
-DOM08D_1                        CHAR(20) Nullable
+DOM08D_1                        CHAR(20) CHARACTER SET NONE Nullable
 create domain dom08d_2 as character(99);
 commit;
 show domain dom08d_2;
-DOM08D_2                        CHAR(99) Nullable
+DOM08D_2                        CHAR(99) CHARACTER SET NONE Nullable
 create domain dom08e_1 as varchar(25);
 commit;
 show domain dom08e_1;
-DOM08E_1                        VARCHAR(25) Nullable
+DOM08E_1                        VARCHAR(25) CHARACTER SET NONE Nullable
 create domain dom08e_2 as character varying(100);
 commit;
 show domain dom08e_2;
-DOM08E_2                        VARCHAR(100) Nullable
+DOM08E_2                        VARCHAR(100) CHARACTER SET NONE Nullable
 create domain dom08e_3 as char varying(2);
 commit;
 show domain dom08e_3;
-DOM08E_3                        VARCHAR(2) Nullable
+DOM08E_3                        VARCHAR(2) CHARACTER SET NONE Nullable
 create domain dom08f_1 as decimal(6,2);
 commit;
 show domain dom08f_1;
@@ -89,5 +89,5 @@ DOM08I_1                        BLOB segment 80, subtype BINARY Nullable
 create domain dom08i_2 as blob(60,1);
 commit;
 show domain dom08i_2;
-DOM08I_2                        BLOB segment 60, subtype TEXT Nullable
+DOM08I_2                        BLOB segment 60, subtype TEXT CHARACTER SET NONE Nullable
 exit;

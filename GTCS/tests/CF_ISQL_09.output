@@ -1,5 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
-F_CHAR                          CHAR(25) Nullable 
+F_CHAR                          CHAR(25) CHARACTER SET NONE Nullable  
 CHAR_AS_INT                     Computed by: (cast(f_char as integer))
 
 CONSTANT          
@@ -11,7 +11,7 @@ CONSTANT
 ================= 
 Passed 1 - Update 
 
-F_CHAR                          CHAR(25) Nullable 
+F_CHAR                          CHAR(25) CHARACTER SET NONE Nullable  
 CHAR_AS_FLOAT                   Computed by: (cast(f_char as float))
 
 CONSTANT          
@@ -25,7 +25,7 @@ Passed 2 - Update
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-F_CHAR                          CHAR(25) Nullable 
+F_CHAR                          CHAR(25) CHARACTER SET NONE Nullable  
 CHAR_AS_DATE                    Computed by: (cast(f_char as date))
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP

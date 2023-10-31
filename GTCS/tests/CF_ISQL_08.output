@@ -1,5 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
-A                               CHAR(25) Nullable 
+A                               CHAR(25) CHARACTER SET NONE Nullable  
 UPPER_A                         Computed by: (upper(a))
 
 CONSTANT          
@@ -11,7 +11,7 @@ CONSTANT
 ================= 
 Passed 1 - Update 
 
-A                               CHAR(25) Nullable 
+A                               CHAR(25) CHARACTER SET NONE Nullable  
 UPPER_CONST                     Computed by: (a || upper('upper()'))
 
 CONSTANT          

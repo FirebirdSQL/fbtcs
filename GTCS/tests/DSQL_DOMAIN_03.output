@@ -3,10 +3,9 @@ DOM03B                          INTEGER Not Null
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 DOM03C                          TIMESTAMP Not Null
-DOM03D                          CHAR(20) Not Null
-DOM03E                          VARCHAR(25) Not Null
+DOM03D                          CHAR(20) CHARACTER SET NONE Not Null
+DOM03E                          VARCHAR(25) CHARACTER SET NONE Not Null
 DOM03F                          DECIMAL(6, 2) Not Null
 DOM03G                          FLOAT Not Null
 DOM03H                          DOUBLE PRECISION Not Null
 DOM03I                          BLOB segment 80, subtype BINARY Not Null
- 

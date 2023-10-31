@@ -2,9 +2,9 @@ DOM02A1                         SMALLINT Nullable
                                 default 0
 DOM02B1                         INTEGER Nullable
                                 default 0
-DOM02D1                         CHAR(30) Nullable
+DOM02D1                         CHAR(30) CHARACTER SET NONE Nullable
                                 default 0
-DOM02E1                         VARCHAR(4) Nullable
+DOM02E1                         VARCHAR(4) CHARACTER SET NONE Nullable
                                 default 0
 DOM02F1                         NUMERIC(15, 1) Nullable
                                 default 0
@@ -12,9 +12,9 @@ DOM02G1                         FLOAT Nullable
                                 default 0
 DOM02H1                         DOUBLE PRECISION Nullable
                                 default 0
-DOM02D2                         CHAR(30) Nullable
+DOM02D2                         CHAR(30) CHARACTER SET NONE Nullable
                                 default 'def'
-DOM02E2                         VARCHAR(4) Nullable
+DOM02E2                         VARCHAR(4) CHARACTER SET NONE Nullable
                                 default 'def'
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
@@ -28,9 +28,9 @@ SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 DOM02C3_3                       TIMESTAMP Nullable
                                 default '01/27/92'
-DOM02D3                         CHAR(30) Nullable
+DOM02D3                         CHAR(30) CHARACTER SET NONE Nullable
                                 default '28-OCT-1990'
-DOM02E3                         VARCHAR(8) Nullable
+DOM02E3                         VARCHAR(8) CHARACTER SET NONE Nullable
                                 default '09/01/82'
 DOM02J                          SMALLINT Nullable
                                 default null
@@ -40,9 +40,9 @@ SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 DOM02L                          TIMESTAMP Nullable
                                 default null
-DOM02M                          CHAR(2) Nullable
+DOM02M                          CHAR(2) CHARACTER SET NONE Nullable
                                 default null
-DOM02N                          VARCHAR(15) Nullable
+DOM02N                          VARCHAR(15) CHARACTER SET NONE Nullable
                                 default null
 DOM02O                          DECIMAL(4, 1) Nullable
                                 default null
@@ -52,8 +52,7 @@ DOM02Q                          DOUBLE PRECISION Nullable
                                 default null
 DOM02R                          BLOB segment 80, subtype BINARY Nullable
                                 default null
-DOM02V                          CHAR(15) Nullable
+DOM02V                          CHAR(15) CHARACTER SET NONE Nullable
                                 default user
-DOM02W                          VARCHAR(60) Nullable
+DOM02W                          VARCHAR(60) CHARACTER SET NONE Nullable
                                 default user
- 

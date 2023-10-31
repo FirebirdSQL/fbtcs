@@ -6,9 +6,9 @@ SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 DOM04C                          TIMESTAMP Nullable
                                 check (value >= 'today')
-DOM04D                          CHAR(20) Nullable
+DOM04D                          CHAR(20) CHARACTER SET NONE Nullable
                                 check (value in (select river from rivers))
-DOM04E                          VARCHAR(25) Nullable
+DOM04E                          VARCHAR(25) CHARACTER SET NONE Nullable
                                 check (value in (select river from river_states))
 DOM04F                          DECIMAL(6, 2) Nullable
                                 check (value > 0)
@@ -18,4 +18,3 @@ DOM04H                          DOUBLE PRECISION Nullable
                                 check (value > 99.999)
 DOM04I                          BLOB segment 80, subtype BINARY Nullable
                                 check (value > 500)
- 

@@ -1,5 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
-S                               CHAR(25) Nullable 
+S                               CHAR(25) CHARACTER SET NONE Nullable  
 SC                              Computed by: (s)
 
 CONSTANT          
@@ -11,7 +11,7 @@ CONSTANT
 ================= 
 Passed 1 - Update 
 
-S                               CHAR(25) Nullable 
+S                               CHAR(25) CHARACTER SET NONE Nullable  
 SC                              Computed by: (s||s)
 
 CONSTANT          
@@ -23,7 +23,7 @@ CONSTANT
 ================= 
 Passed 2 - Update 
 
-S                               CHAR(25) Nullable 
+S                               CHAR(25) CHARACTER SET NONE Nullable  
 SC                              Computed by: (s||' test')
 
 CONSTANT          
@@ -35,7 +35,7 @@ CONSTANT
 ================= 
 Passed 4 - Update 
 
-S                               CHAR(25) Nullable 
+S                               CHAR(25) CHARACTER SET NONE Nullable  
 SC                              Computed by: ('test '||s)
 
 CONSTANT          
@@ -47,7 +47,7 @@ CONSTANT
 ================= 
 Passed 5 - Update 
 
-S                               CHAR(25) Nullable 
+S                               CHAR(25) CHARACTER SET NONE Nullable  
 SC                              Computed by: ('test '||s||' test')
 
 CONSTANT          
@@ -59,7 +59,7 @@ CONSTANT
 ================= 
 Passed 6 - Update 
 
-S                               CHAR(25) Nullable 
+S                               CHAR(25) CHARACTER SET NONE Nullable  
 SC                              Computed by: ('test')
 
 CONSTANT          
@@ -71,7 +71,7 @@ CONSTANT
 ================= 
 Passed 7 - Update 
 
-S                               CHAR(25) Nullable 
+S                               CHAR(25) CHARACTER SET NONE Nullable  
 SC                              Computed by: ('test '||' test')
 
 CONSTANT          

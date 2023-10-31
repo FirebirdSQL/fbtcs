@@ -8,13 +8,11 @@ CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
 ALTER TABLE T_EXTRACT_BUG ADD check(a>='c');
 
 Use CONNECT or CREATE DATABASE to specify a database
-EXTRACT_BUG                     CHAR(1) CHARACTER SET ISO8859_1 Nullable
+EXTRACT_BUG                     CHAR(1) CHARACTER SET ISO8859_1 COLLATE ES_ES Nullable
                                 default 'v'
                                 check(value >='a' and value <='z')
-                                 COLLATE ES_ES
-A                               (EXTRACT_BUG) CHAR(1) CHARACTER SET ISO8859_1 Nullable DEFAULT 'w'
+A                               (EXTRACT_BUG) CHAR(1) CHARACTER SET ISO8859_1 COLLATE PT_PT Nullable DEFAULT 'w'
                                 check(value >='a' and value <='z')
-                                 COLLATE PT_PT
 CONSTRAINT INTEG_1:
   check(a>='c')
 

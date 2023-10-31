@@ -15,15 +15,15 @@ DOM06C1                         TIMESTAMP Nullable
 DOM06C1                         TIMESTAMP Nullable
 DOM06C1                         TIMESTAMP Nullable
                                 default '01/27/92'
-DOM06D1                         CHAR(30) Nullable
+DOM06D1                         CHAR(30) CHARACTER SET NONE Nullable
                                 default user
-DOM06D1                         CHAR(30) Nullable
-DOM06D1                         CHAR(30) Nullable
+DOM06D1                         CHAR(30) CHARACTER SET NONE Nullable
+DOM06D1                         CHAR(30) CHARACTER SET NONE Nullable
                                 default 'New default of 30 characters x'
-DOM06E1                         VARCHAR(4) Nullable
+DOM06E1                         VARCHAR(4) CHARACTER SET NONE Nullable
                                 default 'TEST'
-DOM06E1                         VARCHAR(4) Nullable
-DOM06E1                         VARCHAR(4) Nullable
+DOM06E1                         VARCHAR(4) CHARACTER SET NONE Nullable
+DOM06E1                         VARCHAR(4) CHARACTER SET NONE Nullable
                                 default 'def'
 DOM06F1                         NUMERIC(15, 1) Nullable
                                 default 300.1

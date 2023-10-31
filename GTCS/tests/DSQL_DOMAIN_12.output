@@ -3,9 +3,9 @@ SQL warning code = 301
 FLD1                            (DOM12A1) SMALLINT Nullable default 0
 FLD2                            (DOM12B1) INTEGER Nullable default 0
 FLD3                            (DOM12C1) TIMESTAMP Nullable default '12-12-57'
-FLD4                            (DOM12D1) CHAR(30) Nullable default 'generic username'
-FLD5                            (DOM12E1) VARCHAR(4) Nullable default null
-FLD6                            (DOM12F1) VARCHAR(10) Nullable default 'default'
+FLD4                            (DOM12D1) CHAR(30) CHARACTER SET NONE Nullable default 'generic username'
+FLD5                            (DOM12E1) VARCHAR(4) CHARACTER SET NONE Nullable default null
+FLD6                            (DOM12F1) VARCHAR(10) CHARACTER SET NONE Nullable default 'default'
 FLD7                            (DOM12G1) FLOAT Nullable default 0
 FLD8                            (DOM12H1) DOUBLE PRECISION Nullable default null
 
@@ -20,4 +20,3 @@ FLD8                            (DOM12H1) DOUBLE PRECISION Nullable default null
       0            0 12-DEC-2057 generic username               <null> default         50.020000                  <null> 
       0            0 12-DEC-2057 generic username               <null> default         0.0000000       10000.00000000000 
 
- 

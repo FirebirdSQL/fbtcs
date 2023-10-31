@@ -7,11 +7,11 @@ DOM11B_4                        NUMERIC(6, 2) Nullable
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 DOM11C                          TIMESTAMP Nullable
-DOM11D_1                        CHAR(20) Nullable
-DOM11D_2                        CHAR(99) Nullable
-DOM11E_1                        VARCHAR(25) Nullable
-DOM11E_2                        VARCHAR(100) Nullable
-DOM11E_3                        VARCHAR(2) Nullable
+DOM11D_1                        CHAR(20) CHARACTER SET NONE Nullable
+DOM11D_2                        CHAR(99) CHARACTER SET NONE Nullable
+DOM11E_1                        VARCHAR(25) CHARACTER SET NONE Nullable
+DOM11E_2                        VARCHAR(100) CHARACTER SET NONE Nullable
+DOM11E_3                        VARCHAR(2) CHARACTER SET NONE Nullable
 DOM11F_1                        DECIMAL(6, 2) Nullable
 DOM11F_2                        NUMERIC(15, 10) Nullable
 DOM11G_1                        FLOAT Nullable
@@ -19,7 +19,7 @@ DOM11G_2                        DOUBLE PRECISION Nullable
 DOM11G_3                        FLOAT Nullable
 DOM11H                          DOUBLE PRECISION Nullable
 DOM11I_1                        BLOB segment 80, subtype BINARY Nullable
-DOM11I_2                        BLOB segment 60, subtype TEXT Nullable
+DOM11I_2                        BLOB segment 60, subtype TEXT CHARACTER SET NONE Nullable
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -DROP DOMAIN RUBBISH failed
