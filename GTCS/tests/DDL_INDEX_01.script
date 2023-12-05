@@ -64,5 +64,6 @@ exit;
 $ISQL -q -m -i define.sql
 $ISQL -m -i init1.sql
 $ISQL -m -i init2.sql
+$DELETE define.sql
 $DELETE init1.*
 $DELETE init2.*

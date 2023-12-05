@@ -79,5 +79,5 @@ $CC FLAG_CC A2.c
 $LINK FLAG_LINK A2
 $RUN A2
 $ISQL -m -i show.sql
-$DELETE init.sql show.sql A.* A1.* A2.*
+$DELETE init.sql show.sql A.* A1.* A2.* A2
 $DROP WHERE_GDB:ac3_test.gdb
