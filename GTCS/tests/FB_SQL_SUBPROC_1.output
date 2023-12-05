@@ -143,8 +143,8 @@ execute procedure p2 (1)!
 execute procedure p2 (null)!
 Statement failed, SQLSTATE = 42000
 validation error for variable ó1, value "*** null ***"
--At sub procedure 'súb1' line: 6, col: 3
-At procedure 'P2' line: 9, col: 2
+-At sub procedure 'súb1' line: 8, col: 3
+At procedure 'P2' line: 11, col: 2
 After line 110 in file fb_sql_subproc_1.sql
 
 ---
@@ -325,8 +325,8 @@ execute procedure p2 (1)!
 execute procedure p2 (null)!
 Statement failed, SQLSTATE = 42000
 validation error for variable Ã³1, value "*** null ***"
--At sub procedure 'sÃºb1' line: 6, col: 3
-At procedure 'P2' line: 9, col: 2
+-At sub procedure 'sÃºb1' line: 8, col: 3
+At procedure 'P2' line: 11, col: 2
 After line 242 in file fb_sql_subproc_1.sql
 
 ---

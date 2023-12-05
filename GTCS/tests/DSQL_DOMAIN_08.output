@@ -10,9 +10,9 @@ alter domain dom08a_1
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
--Token unknown - line 2, column 17
+-Token unknown - line 4, column 17
 -not
-At line 6 in file domain_08.sql
+At line 8 in file domain_08.sql
 commit;
 show domain dom08a_1;
 DOM08A_1                        SMALLINT Nullable
