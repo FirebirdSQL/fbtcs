@@ -1,7 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
 -CREATE DOMAIN A_VAR failed
--violation of PRIMARY or UNIQUE KEY constraint "RDB$INDEX_2" on table "RDB$FIELDS"
--Problematic key value is ("RDB$FIELD_NAME" = 'A_VAR')
+-Domain A_VAR already exists
 Use CONNECT or CREATE DATABASE to specify a database
 A_VAR                           CHAR(10) CHARACTER SET NONE Nullable
