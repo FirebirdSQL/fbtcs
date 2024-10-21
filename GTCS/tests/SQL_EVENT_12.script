@@ -45,6 +45,11 @@ exit;
 $ ISQL -m -i sql_event_12a.sql
 
 >> foo12.e
+#include <stdio.h>
+#ifndef WIN_NT
+#include <unistd.h>
+#endif
+
 DATABASE DB = "WHERE_GDB:events.gdb"
 int main()
 {

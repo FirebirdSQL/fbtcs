@@ -7,7 +7,7 @@ insert into works_on values (1,1,20);
 commit;
 
 set term go;
-create procedure proc1 (i int) as 
+create procedure proc1 (i int) as
 begin
     insert into works_on values (4, 4, :i);
     post_event 'event1';

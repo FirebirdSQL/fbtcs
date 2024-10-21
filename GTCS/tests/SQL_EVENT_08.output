@@ -18,16 +18,16 @@ insert into works_on1 values (2,2);
 commit;
 
 set term go;
-create trigger trig01 for project 
+create trigger trig01 for project
 active after update position 0
-as 
+as
 declare variable x int;
 begin
-    insert into works_on values (4, 4, new.prize/old.prize);     
+    insert into works_on values (4, 4, new.prize/old.prize);
     post_event 'event1';
 end
 go
-create trigger trig02 for works_on 
+create trigger trig02 for works_on
 active after insert position 1
 as
 declare variable x int;
