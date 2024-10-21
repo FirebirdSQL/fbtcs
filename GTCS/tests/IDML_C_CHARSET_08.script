@@ -1,13 +1,13 @@
 
-#/* 
+#/*
 #By:          Clare Taylor
 #Date:        08/03/94
-#Test name:   IDML_C_CHARSET_08         
+#Test name:   IDML_C_CHARSET_08
 #Series:      IDML_C_CHARSET
-#Results:     bug_7122 causes half of this test to fail 
+#Results:     bug_7122 causes half of this test to fail
 #             Executes and does the insert if _CHARSET is used.
 #             Fails with translit error if no _CHARSET is used--bug 7122.
-#Dependency:  
+#Dependency:
 #History:
 #8/3/94:      logged bug 7122 which is the same as test case
 #	     IDML_C_CHARSET_06.  These test cases are the
@@ -18,9 +18,9 @@
 #16-Feb-2000 JLI:  Added #include <ibase.h> for the gds calls.
 #Description:
 #Tries two simple inserts: one with hard-coded strings
-#and _ISO8859_1 and one without the _CHARSET NOTATION.  
+#and _ISO8859_1 and one without the _CHARSET NOTATION.
 #
-#   contains  DATABASE statement now: 
+#   contains  DATABASE statement now:
 #   Compile with:   gpre -m -charset iso8859_1 btest1.e
 #                   cc btest1.c -lgds -ldld -o btest
 #
@@ -52,7 +52,7 @@ EXEC SQL INCLUDE SQLCA;
 void print_error();
 
 int main (int argc, char* argv[])
-{    
+{
      char  c;
 
      printf("\n-----------------------------------------------------------------\n");
@@ -62,17 +62,17 @@ EXEC SQL CONNECT db;
 EXEC SQL SET TRANSACTION;
      EXEC SQL
           INSERT INTO employee (emp_no, first_name, last_name)
-          VALUES (555, _ISO8859_1'Bôbbét', _ISO8859_1'Gélsôn');
+          VALUES (555, _ISO8859_1'Bï¿½bbï¿½t', _ISO8859_1'Gï¿½lsï¿½n');
 
      printf("\n-----------------------------------------------------------------\n");
      printf("   INSERTING NEW DATA--NOT using _CHARSET notation--FAILS, bug7122.\n\n");
      EXEC SQL
           INSERT INTO employee (emp_no, first_name, last_name)
-          VALUES (666, 'Hôbbét', 'Zélsôn');
+          VALUES (666, 'Hï¿½bbï¿½t', 'Zï¿½lsï¿½n');
 EXEC SQL COMMIT;
 
-     exit(0);
-Err:	
+     return 0;
+Err:
   print_error();
 }
 
@@ -81,9 +81,9 @@ void print_error()
 
 if (SQLCODE != 100)
      printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
-     isc_print_sqlerror(SQLCODE, gds__status); 
+     isc_print_sqlerror(SQLCODE, gds__status);
      isc_print_status (gds__status);
-exit(1);
+return 1;
 }
 >> verify2.sql
 set names iso8859_1;
@@ -94,7 +94,7 @@ quit;
 $ ISQL -m -i create.sql
 $ GPRE -m -charset ISO8859_1 btest5.e
 $ CC FLAG_CC btest5.c
-$ LINK FLAG_LINK btest5 
+$ LINK FLAG_LINK btest5
 $ RUN btest5
 $ ISQL -m -i verify2.sql
 $ DROP WHERE_GDB:intlemp2.gdb

@@ -42,9 +42,9 @@ order by a.table_row ascending";
 
 void Underline();
 
-main()
+int main()
 {
-	
+
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
@@ -59,7 +59,7 @@ main()
 
         EXEC SQL
 		OPEN CR;
-		
+
     EXEC SQL    FETCH CR INTO
                 :t1s1,:t1table_row,
                 :t2s1,:t2table_row,
@@ -88,7 +88,7 @@ main()
                 :t4s1,:t4table_row,
                 :t5s1,:t5table_row;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -99,7 +99,7 @@ NOMORE:
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -109,7 +109,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -125,7 +125,7 @@ printf("\n");
 }
 $ GPRE -e join043.e
 $ CC FLAG_CC join043.c
-$ LINK FLAG_LINK join043 
+$ LINK FLAG_LINK join043
 $ RUN join043
 >> join043.sql
 connect WHERE_GDB:sh_join_43.gdb;
@@ -136,4 +136,4 @@ order by a.table_row ascending;
 quit;
 $ISQL -m -i join043.sql
 $DROP WHERE_GDB:sh_join_43.gdb
-$ DELETE join043* 
+$ DELETE join043*

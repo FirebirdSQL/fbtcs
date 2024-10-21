@@ -1,6 +1,6 @@
 
 #
-#Name: Sudhanshu Kumar 
+#Name: Sudhanshu Kumar
 #This test contains two event init statement in application program.
 #
 
@@ -25,17 +25,17 @@ insert into works_on values (3,3,40);
 commit;
 
 set term go;
-create trigger trig01 for project 
+create trigger trig01 for project
 active after update position 1
-as 
+as
 declare variable x int;
 begin
-    insert into works_on values (4, 4, new.prize/old.prize);     
+    insert into works_on values (4, 4, new.prize/old.prize);
      if (((new.prize/old.prize) >= 1.0) and ((new.prize/old.prize) <= 1.1))
            then post_event 'event1';
     if (((new.prize/old.prize) > 1.1) and ((new.prize/old.prize) <= 1.2))
            then post_event 'event2';
-    if (((new.prize/old.prize) > 1.2) and ((new.prize/old.prize) <= 1.3)) 
+    if (((new.prize/old.prize) > 1.2) and ((new.prize/old.prize) <= 1.3))
            then post_event 'event3';
 end
 go
@@ -48,8 +48,8 @@ begin
       end
     if (:i = 5) then
       begin
-         post_event 'event5'; 
-         insert into project values ('ProductB', :i, 31);   
+         post_event 'event5';
+         insert into project values ('ProductB', :i, 31);
       end
     if (:i = 6) then
       begin
@@ -70,27 +70,27 @@ $ISQL -m -I sql_event_10a.sql -sqldialect 1
 
 DATABASE DB = "WHERE_GDB:events.gdb"
 # include <stdio.h>
-main()
+int main()
 {
-  EXEC SQL 
+  EXEC SQL
 	CONNECT DB;
-  EXEC SQL 
+  EXEC SQL
 	SET TRANSACTION;
-  EXEC SQL 
+  EXEC SQL
 	EVENT INIT xyz DB ("event1", "event2", "event3");
 
   if (isc_status[1])
         isc_print_status(isc_status);
 
-  EXEC SQL 
+  EXEC SQL
 	EVENT INIT abc DB ("event4", "event5", "event6", "event7");
 
   if (isc_status[1])
         isc_print_status(isc_status);
 
-  EXEC SQL 
+  EXEC SQL
 	EVENT WAIT xyz;
-  EXEC SQL 
+  EXEC SQL
 	COMMIT WORK;
 
   if (isc_status[1])
@@ -104,9 +104,9 @@ main()
         if (isc_events[2] )
         	printf ("\nevent (event3) was posted.\n");
 
-  EXEC SQL 
+  EXEC SQL
 	EVENT WAIT abc;
-  EXEC SQL 
+  EXEC SQL
 	COMMIT WORK;
 
         if (isc_events[0] )
@@ -125,7 +125,7 @@ main()
 }
 $ GPRE  -n -m foo.e
 $ CC FLAG_CC foo.c
-$ LINK FLAG_LINK foo 
+$ LINK FLAG_LINK foo
 $ RUN_BG foo > foo.tt1 &
 $ SLEEP 1
 >> sql_event_10b.sql

@@ -4,7 +4,7 @@
 # Purpose:		Test predicates support in InterBase SQL 4.0
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 # Description:           UPDATE ... where field containing <value>
-#			UPDATE CUSTOMERS SET ZIP_CODE=99999 
+#			UPDATE CUSTOMERS SET ZIP_CODE=99999
 #			WHERE CUSTOMER CONTAINING "'";
 #
 # Author:                Sam Hakim, Feb 19, 93
@@ -36,7 +36,7 @@ WHERE CUSTOMER CONTAINING ' ";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -60,7 +60,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Name,:Zip;
 
@@ -73,7 +73,7 @@ char *argv[];
                 EXEC SQL
                         FETCH CR INTO :Name,:Zip;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -85,7 +85,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -95,7 +95,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -112,7 +112,7 @@ printf("\n");
 
 $ GPRE -e con038.e
 $ CC FLAG_CC con038.c
-$ LINK FLAG_LINK con038 
+$ LINK FLAG_LINK con038
 $ RUN con038
 >> con038.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -120,4 +120,4 @@ SELECT customer,zip_code FROM customers WHERE customer CONTAINING "'";
 quit;
 $ISQL -m -i con038.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con038* 
+$ DELETE con038*

@@ -4,13 +4,13 @@
 using namespace std;
 
 //
-// Platform independent utility to copy a file 
+// Platform independent utility to copy a file
 //
 int main(int argc, char* argv[]){
 	if (argc<3){
 		printf("Copy file needs two arguments\n");
 		fflush(stdout);
-		exit(1);
+		return 1;
 	}
 
 	FILE* file1;
@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 	if (!file1){
 		printf("Can't open file %s\n",argv[1]);
 		fflush(stdout);
-		exit(1);
+		return 1;
 	}
 /*
 	else {
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]){
 	if (!file2){
 		printf("Can't open file %s\n",argv[2]);
 		fflush(stdout);
-		exit(1);
+		return 1;
 	}
 /*
 	else{

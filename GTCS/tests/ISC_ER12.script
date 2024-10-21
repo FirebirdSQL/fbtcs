@@ -4,22 +4,22 @@
  *	isc_get_slice
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er12.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er12.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
-	isc_db_handle	DB = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
 	short	sdl_length;
-	long	len;
+	int	len;
 	int		cnt[4];
 	char	sdl_buf[100];
 	ISC_QUAD	array_id;
@@ -36,7 +36,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_get_slice(status, &DB, &trans,&array_id,sdl_length,
 			sdl_buf, 0, 0, sizeof(cnt), cnt, &len))==0)
 		printf("BUG: get slice on Null DB.\n");
@@ -46,6 +46,6 @@ int main()
 	printf("Finished ER12\n");
 }
 $ CC FLAG_CC er12.c
-$ LINK FLAG_LINK er12 
+$ LINK FLAG_LINK er12
 $ RUN er12
 $ DELETE er12*

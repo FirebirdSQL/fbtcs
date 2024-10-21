@@ -1,7 +1,7 @@
 
 #
 #HISTORY:
-#2001-Oct-04 Neil McCalden 
+#2001-Oct-04 Neil McCalden
 #Update query to pass improved field ambiguity tests in Firebird.
 #
 
@@ -10,12 +10,13 @@ $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas_join_1.gdb
 
 /*
  Out join example 2.9.1 page 64
- 
+
 */
 
 
 DATABASE atlas = FILENAME "WHERE_GDB:atlas_join_1.gdb";
 #include <stdio.h>
+#include <string.h>
 
 BASED_ON CITIES.CITY		City;
 BASED_ON STATES.STATE_NAME	State_Name;
@@ -27,14 +28,14 @@ EXEC SQL
 	INCLUDE SQLCA;
 
 
-main()
+int main()
 {
 
 EXEC SQL
 	DECLARE C CURSOR FOR
-	SELECT C.CITY, S.STATE_NAME  
+	SELECT C.CITY, S.STATE_NAME
 	FROM CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE;
-	
+
 EXEC SQL
 	OPEN C;
 
@@ -58,7 +59,7 @@ printf("... End of example 2.9.1 \n");
 }
 $ GPRE -e join001.e
 $ CC FLAG_CC join001.c
-$ LINK FLAG_LINK join001 
+$ LINK FLAG_LINK join001
 $ RUN join001
 >> join001.sql
 connect WHERE_GDB:atlas_join_1.gdb;

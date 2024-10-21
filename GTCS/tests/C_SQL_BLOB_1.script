@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_1.gdb
 >> blob001.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           READ BLOB FROM TABLE 
+ Description:           READ BLOB FROM TABLE
  Author:                Sam Hakim, June 7, 93
  Note:			Bug 4552 was discovered in this test but was
 			extracted into its own source bug_4552.e
@@ -46,12 +46,12 @@ void Append(char s[], char t[]);
 
 int main(int argc, char* argv[])
 {
-	
+
     int Count;
-   
+
     Count = 0;
     M.Buffer[0] = 0;
-   
+
     printf("Test: \n %s \n",Test);
     Underline(sizeof(Test));
 
@@ -75,9 +75,9 @@ int main(int argc, char* argv[])
     	EXEC SQL OPEN BCR USING :BlobId;
     	EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
 
-        while (SQLCODE != 100){	
+        while (SQLCODE != 100){
 	    printf("SQLCODE = %ld, BufferLen = %d\n",SQLCODE,M.BufferLen);
-	    printf ("- Full - %*.*s\n",M.BufferLen,M.BufferLen,M.Buffer); 
+	    printf ("- Full - %*.*s\n",M.BufferLen,M.BufferLen,M.Buffer);
             while (SQLCODE == 101){
                 EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
                 printf ("- Portion - %*.*s\n",M.BufferLen,M.BufferLen,M.Buffer);
@@ -89,10 +89,10 @@ int main(int argc, char* argv[])
     }
     printf("...Done\n");
 	EXEC SQL CLOSE TCR;
-	
+
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -102,7 +102,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw and underline
@@ -131,7 +131,7 @@ void Append(char s[], char t[])
 
 $ GPRE -e blob001.epp
 $ CXX FLAG_CXX blob001.cpp
-$ LINK FLAG_LINK blob001 
+$ LINK FLAG_LINK blob001
 $ RUN blob001
 $DROP WHERE_GDB:sh_blobs_1.gdb
-$ DELETE blob001* 
+$ DELETE blob001*

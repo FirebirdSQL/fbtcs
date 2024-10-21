@@ -4,9 +4,9 @@
  *	isc_database_info
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er17.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er17.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
@@ -16,7 +16,7 @@ static char ilist[] = {isc_info_page_size};
 
 int main()
 {
-	isc_db_handle	DB = NULL;
+	isc_db_handle	DB = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
@@ -34,7 +34,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_database_info(status, &DB, sizeof(ilist), ilist,
 			sizeof(info_buf), info_buf)) ==0)
 		printf("BUG: database info on Null DB.\n");
@@ -44,6 +44,6 @@ int main()
 	printf("Finished ER17\n");
 }
 $ CC FLAG_CC er17.c
-$ LINK FLAG_LINK er17 
+$ LINK FLAG_LINK er17
 $ RUN er17
 $ DELETE er17*

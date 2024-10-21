@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
 	char	*pass = "masterkey";
 
 	ISC_STATUS	status [20];
-	isc_svc_handle	svc_handle = NULL;
+	isc_svc_handle	svc_handle = 0;
 	char	svc_name[32];
 	char	spb_buff[128];
 	char	*spb = spb_buff;

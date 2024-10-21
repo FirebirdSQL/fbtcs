@@ -61,19 +61,19 @@ $ISQL -m -I sql_event_01a.sql -sqldialect 1
 
 EXEC SQL SET DATABASE DB = "WHERE_GDB:events.gdb";
 
-main()
+int main()
 {
-	EXEC SQL 
+	EXEC SQL
 		CONNECT DB;
-	EXEC SQL 
+	EXEC SQL
 		SET TRANSACTION;
-	EXEC SQL 
+	EXEC SQL
 		EVENT INIT xyz DB ("abc") ;
 
 	if (isc_status[1])
 		isc_print_status(isc_status);
 
-	EXEC SQL 
+	EXEC SQL
 		EVENT WAIT xyz;
 	EXEC SQL
 		COMMIT WORK;  /* do we need commit release? */
@@ -83,15 +83,15 @@ main()
 	else
 		printf("\nfoo1 done, event (abc) was posted.\n");
 
-	EXEC SQL 
+	EXEC SQL
 	DISCONNECT DB;
 
-	exit(0);
+	return 0;
 }
 
 $ GPRE -n -m foo1.e
 $ CC FLAG_CC foo1.c
-$ LINK FLAG_LINK foo1 
+$ LINK FLAG_LINK foo1
 $ RUN_BG foo1 > foo1.tt1 &
 $ SLEEP 1
 >> sql_event_01b.sql

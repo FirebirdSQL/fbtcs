@@ -34,7 +34,7 @@ struct Buf M;
 
 char Test[]="EXEC SQL UPDATE MB1 \
 SET TEST_NAME = :Test_Name, ROW_ID = :Row_Id+100, B = :BlobId1,\
-COMMENT = 'Mass Blob Update - single update statement'"; 
+COMMENT = 'Mass Blob Update - single update statement'";
 
 void Underline(int);
 void UpdateBlob(char *Bf, short L, char *AppString);
@@ -61,22 +61,22 @@ int Count;
     EXEC SQL SELECT TEST_NAME,ROW_ID,B,COMMENT
 	     INTO :Test_Name,:Row_Id,:BlobId1,:Comment
              FROM MB1
-	     WHERE B CONTAINING 'Line' AND ROW_ID = 1; 
+	     WHERE B CONTAINING 'Line' AND ROW_ID = 1;
 
 	strcpy(Test_Name,"blob024");
     	UpdateBlob(M.Buffer[0],M.BufferLen[0],"---- Mass Update by Blob024----");
-	
-    	EXEC SQL UPDATE MB1 
+
+    	EXEC SQL UPDATE MB1
         SET TEST_NAME = :Test_Name, ROW_ID = :Row_Id+100, B = :BlobId1,
-	COMMENT = "Mass Blob Update - single update statement"; 
+	COMMENT = "Mass Blob Update - single update statement";
 
 DONE:
-	
+
     EXEC SQL COMMIT;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -86,7 +86,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * U p d a t e B l o b
@@ -103,7 +103,7 @@ void UpdateBlob(char *Bf, short L, char *AppString)
  BigBuffer = (char*) malloc(1024*1000);		/* Allocate .5 meg for buffer */
  if (!BigBuffer)
 	printf("\n\nError: failed to allocate 100K buffer\n");
- 
+
  BigBuffer[0] = 0;
  BlobSize = 0;
 
@@ -120,7 +120,7 @@ void UpdateBlob(char *Bf, short L, char *AppString)
 	strncat(BigBuffer,Bf,Bl);
         EXEC SQL FETCH BCR INTO :Bf:Bl;
  }
- EXEC SQL CLOSE BCR;		
+ EXEC SQL CLOSE BCR;
 
  strncat(BigBuffer,AppString,strlen(AppString));
  BlobSize +=strlen(AppString);
@@ -158,7 +158,7 @@ void WriteBlob(char *Bf, short L)
     EXEC SQL WHENEVER SQLERROR CONTINUE;
     EXEC SQL WHENEVER SQLERROR GOTO ERR1;
     EXEC SQL DECLARE BCW CURSOR FOR INSERT BLOB B INTO MB1 MAXIMUM_SEGMENT 2000;
-    EXEC SQL OPEN BCW INTO :BlobId1;      	
+    EXEC SQL OPEN BCW INTO :BlobId1;
     EXEC SQL INSERT CURSOR BCW VALUES (:Bf:L);
     EXEC SQL CLOSE BCW;
     if (verbose)
@@ -175,7 +175,7 @@ ERR1:
 
 $ GPRE -e blob024.epp
 $ CXX FLAG_CXX blob024.cpp
-$ LINK FLAG_LINK blob024 
+$ LINK FLAG_LINK blob024
 $ RUN blob024
 >> blob024.sql
 connect "WHERE_GDB:sh_blobs_24.gdb";

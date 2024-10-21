@@ -26,7 +26,7 @@ bool verbose;
 
 struct Buf{
     char            *Buffer[5];			/* Buffer vector to store blobs */
-    unsigned short  BufferLen[5];		
+    unsigned short  BufferLen[5];
 };
 struct Buf M;
 
@@ -53,7 +53,7 @@ int Count;
 
     READY;              /* Bug 4549 will be fixed in verion G */
     START_TRANSACTION;
-	
+
     EXEC SQL DECLARE TCR CURSOR FOR
              SELECT TEST_NAME,ROW_ID,B,COMMENT
              FROM MB1 WHERE ROW_ID =2;
@@ -62,14 +62,14 @@ int Count;
     EXEC SQL FETCH TCR INTO :Test_Name,:Row_Id,:BlobId1,:Comment;
 
     strcpy(Test_Name,"blob025");
-    
+
 
     EXEC SQL UPDATE MB1 SET TEST_NAME = :Test_Name,B=:BlobId1:BlobIndNull,
 	     COMMENT = "Blob Nullifier" WHERE CURRENT OF TCR;
     EXEC SQL CLOSE TCR;
     EXEC SQL COMMIT;
-   
-    /*----------------------------------------------------------------*/ 
+
+    /*----------------------------------------------------------------*/
     START_TRANSACTION;
     EXEC SQL DECLARE TCR2 CURSOR FOR
              SELECT TEST_NAME,ROW_ID,B,COMMENT
@@ -81,7 +81,7 @@ int Count;
     strcpy(M.Buffer[0],"New blob content after it was nullified - blob025");
     M.BufferLen[0] = strlen(M.Buffer[0]);
     strcpy(Comment,"New blob inserted by blob025");
-    
+
     EXEC SQL DECLARE WBC CURSOR FOR
 	     INSERT BLOB B INTO MB1 MAXIMUM_SEGMENT 80;
 
@@ -96,7 +96,7 @@ int Count;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -106,7 +106,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /***********************************************************
  * U n d e r l i n e
@@ -122,7 +122,7 @@ printf("\n");
 
 $ GPRE -e blob025.epp
 $ CXX FLAG_CXX blob025.cpp
-$ LINK FLAG_LINK blob025 
+$ LINK FLAG_LINK blob025
 $ RUN blob025
 >> blob025.sql
 connect "WHERE_GDB:sh_blobs_25.gdb";

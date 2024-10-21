@@ -46,7 +46,7 @@ int ReadBlob();
 
 struct Buf{
     char            *Buffer[2];			/* Buffer vector to store blobs */
-    unsigned short  BufferLen[2];		
+    unsigned short  BufferLen[2];
 };
 struct Buf M;
 
@@ -70,13 +70,13 @@ short i,j,k,l;
     M.BufferLen[1] = 512;			/* Work with 64K segment */
     if ((M.Buffer[1]=(char *) malloc(M.BufferLen[1])) == NULL){
 	printf("Could not allocate memory for M.Buffer\n");
-	exit(1);
+	return 1;
     }
-    
+
 
     if ((BigBuffer = (char *) malloc(1024*241)) == NULL){
 	printf("Could not allocate 82K for BigBuffer\n");
-	exit(1);		/* Allocate 82K buffer */
+	return 1;		/* Allocate 82K buffer */
     }
 
     /*-----------------------------------------------------------------*/
@@ -98,7 +98,7 @@ short i,j,k,l;
     free(BigBuffer);
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -108,11 +108,11 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 
 FileErr:
 	printf("File %s open error \n",FileName);
-	exit(1);
+	return 1;
 
 }
 /***********************************************************
@@ -216,13 +216,13 @@ ERR1:
 
 $ GPRE -e -n blob026.epp
 $ CXX FLAG_CXX blob026.cpp
-$ LINK FLAG_LINK blob026 
+$ LINK FLAG_LINK blob026
 $ RUN blob026
 >> blob027.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
  Description:           Read a binary blob, output the blob
-			to a file.  
+			to a file.
  Author:                Sam Hakim, June 16, 93
  Attention:		This test is part of blob026 and depends on it.
  **********************************************************************/
@@ -258,7 +258,7 @@ void ShowImage(char* Cmd);
 
 struct Buf{
     char            *Buffer[2];			/* Buffer vector to store blobs */
-    unsigned short  BufferLen[2];		
+    unsigned short  BufferLen[2];
 };
 struct Buf M;
 
@@ -266,7 +266,7 @@ char *BigBuffer;
 int BlobSize;
 
 char Test[]="READ BLOB of subtype -500 (binary) and output to sh_binary.bak\n \
-	     diff the output and report the outcome Pass/Fail"; 
+	     diff the output and report the outcome Pass/Fail";
 
 
 int main(int argc, char* argv[])
@@ -285,7 +285,7 @@ short i,j,k,l;
 
     if ((BigBuffer = (char *) malloc(1024*241)) == NULL){   /* Allocate 500K buffer */
 	printf("Failed to allocate memeory \n");
-	exit(1);
+	return 1;
     }
 
     /*-----------------------------------------------------------------*/
@@ -299,10 +299,10 @@ short i,j,k,l;
     BlobSize = ReadBlob(M.Buffer[1],M.BufferLen[1]);
 
     ExampleOut = OpenFile(FileName,"wb");
-    if (!ExampleOut) goto FileErr; 
+    if (!ExampleOut) goto FileErr;
     WriteFile(BigBuffer,BlobSize,ExampleOut);
     printf("The blob size is %d \n",BlobSize);
-    EXEC SQL CLOSE TCR; 
+    EXEC SQL CLOSE TCR;
 
     free(M.Buffer[1]);
     free(BigBuffer);
@@ -311,7 +311,7 @@ short i,j,k,l;
     /* ShowImage("imageview sh_binary.bak"); */
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -321,11 +321,11 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 
 FileErr:
 	printf("File %s open error \n",FileName);
-	exit(1);
+	return 1;
 
 }
 /***********************************************************
@@ -352,13 +352,13 @@ else
 }
 
 /************************************************************
- * Read a blob into buffer. Return the size of the blob. 
+ * Read a blob into buffer. Return the size of the blob.
  ************************************************************/
 int ReadBlob(char *Bf, int L)
 {
  unsigned short Bl;
  int BSize;
- int i; 
+ int i;
 
  EXEC SQL WHENEVER SQLERROR CONTINUE;
  EXEC SQL WHENEVER SQLERROR GO TO ReadERR;
@@ -374,7 +374,7 @@ int ReadBlob(char *Bf, int L)
 
  while (SQLCODE != 100 || SQLCODE == 101){
         if (verbose)
-		printf("Loop: %d BufferLen:%d \n",i++,Bl);	
+		printf("Loop: %d BufferLen:%d \n",i++,Bl);
         StAppend(BigBuffer,BSize,Bf,Bl);
  	BSize += Bl;
         EXEC SQL FETCH BCR INTO :Bf:Bl;
@@ -409,7 +409,7 @@ void StAppend(char *Dest, int S, char *Src, unsigned short L)
 
  pDest = Dest;
  pSrc = Src;
- 
+
  for (;S>0;S--)
 	pDest++;
 

@@ -48,7 +48,7 @@ int Count;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
-   
+
     Count = 0;
     M.Buffer[0] = 0;
     strcpy(Test_Name,"blob017");
@@ -83,12 +83,12 @@ int Count;
     EXEC SQL
         INSERT INTO MB1 (TEST_NAME,ROW_ID,B120) VALUES (:Test_Name,:j,:BlobId);
     }
-	
+
 	EXEC SQL ROLLBACK;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -98,7 +98,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw and underline
@@ -130,14 +130,14 @@ void CreateLine(char Bf[],int L)
 char      TempBuf[4],*s;
 int	  i,j,t,k;
 
-     
+
      t = sizeof(TempBuf);
      j = 0;
 
      for (i = 9; i < L; i+=t){
 	j++;
 	sprintf (TempBuf,"%d,",j);
-	strncat(Bf,TempBuf,t); 
+	strncat(Bf,TempBuf,t);
      }
 	strncat(Bf,"<EOL",5);
 if (verbose)
@@ -146,7 +146,7 @@ if (verbose)
 
 $ GPRE -e blob017.epp
 $ CXX FLAG_CXX blob017.cpp
-$ LINK FLAG_LINK blob017 
+$ LINK FLAG_LINK blob017
 $ RUN blob017
 >> blob017.sql
 connect "WHERE_GDB:sh_blobs_17.gdb";

@@ -4,17 +4,17 @@
  *	isc_start_transaction
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er16.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er16.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
-	isc_db_handle	DB = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
@@ -28,7 +28,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_start_transaction(status, &trans, 1, &DB,0, NULL))==0)
 		printf("BUG: start trans. on NUll DB.\n");
         else
@@ -37,6 +37,6 @@ int main()
 	printf("Finished ER16\n");
 }
 $ CC FLAG_CC er16.c
-$ LINK FLAG_LINK er16 
+$ LINK FLAG_LINK er16
 $ RUN er16
 $ DELETE er16*

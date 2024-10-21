@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 #
 # Description:           char-field, edited field
@@ -39,12 +39,12 @@ WHERE PROJ_NO CONTAINING '3'";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
 {
-	
+
 	int Count = 0;
         printf("Test:\n %s\n",Test);
         Underline(80);
@@ -56,7 +56,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Proj_No,:Proj_Name;
 
@@ -71,7 +71,7 @@ char *argv[];
                         FETCH CR INTO :Proj_No,:Proj_Name;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -83,7 +83,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -93,7 +93,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -110,7 +110,7 @@ printf("\n");
 
 $ GPRE -e con011.e
 $ CC FLAG_CC con011.c
-$ LINK FLAG_LINK con011 
+$ LINK FLAG_LINK con011
 $ RUN con011
 >> con011.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -120,4 +120,4 @@ WHERE PROJ_NO CONTAINING '3';
 quit;
 $ISQL -m -i con011.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con011* 
+$ DELETE con011*

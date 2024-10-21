@@ -18,18 +18,18 @@ using namespace std;
 
    Dependencies: Need to run C_DSQL_RI_INIT first.
 
-   Purpose: RI test suite 
+   Purpose: RI test suite
    Each test will setup() and verify()
    setup() - create table with feature
    verify() - verify feature by checking views and try to break feature
-   
+
    Tests are:
    	Table Constraints:
    		unique		tab_uniq.e
    		primary key	tab_prim.e
-   		referential	tab_ref.e     
+   		referential	tab_ref.e
    		check const	tabcheck.e  <--------- this test
-   	
+
    	Column Constraints:
    		unique		col_uniq.e
    		primary key	col_prim.e
@@ -39,7 +39,7 @@ using namespace std;
 
 
 NOT TESTED: aggregators in the <search> condition, target specification
-in the search condition (an INTO clause) 
+in the search condition (an INTO clause)
 
 */
 
@@ -47,12 +47,12 @@ in the search condition (an INTO clause)
 EXEC SQL
 	INCLUDE SQLCA;
 
-/* Set up to catch SQL errors. Note: this will require that 
+/* Set up to catch SQL errors. Note: this will require that
 each routine containing executeable SQL commands has
 an error handling section labeled 'err'.*/
 EXEC SQL
 	WHENEVER SQLERROR GO TO err;
-	
+
 /* Forward declarations */
 void die_on_error();
 int setup();
@@ -77,12 +77,12 @@ int main(int argc, char* argv[])
                 if (*argv[1] == 'v' || *argv[1] == 'V')
                         verbose = true;
         }
-	if (setup()) 
+	if (setup())
 		exit (1);
-		
-	if (verify()) 
+
+	if (verify())
 		exit (1);
-	
+
 	exit (0);
 err:		die_on_error();
 }
@@ -100,9 +100,9 @@ int setup() {
 		printf("entered setup\n");
 
 	if (istable("books")) {
-		if (verbose) 
+		if (verbose)
 			printf("books found... will be dropped\n");
-		
+
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
 		EXEC SQL COMMIT;
 	}
@@ -122,9 +122,9 @@ int setup() {
 		printf("books created successfully.\n");
 
 	if (istable("foo")) {
-		if (verbose) 
+		if (verbose)
 			printf("foofound... will be dropped\n");
-		
+
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE FOO';
 		EXEC SQL COMMIT;
 	}
@@ -134,7 +134,7 @@ int setup() {
 
 	EXEC SQL
 		DECLARE FOO TABLE
-			(C1 CHAR(1), C2 CHAR); 
+			(C1 CHAR(1), C2 CHAR);
 
 	EXEC SQL EXECUTE IMMEDIATE 'CREATE TABLE FOO (C1 CHAR(1), C2 CHAR, CHECK (C1 IS NOT NULL AND C2 IS NOT NULL AND C2 > C1))';
 	EXEC SQL COMMIT;
@@ -157,13 +157,13 @@ int verify() {
 		printf("Entering verify...\n");
 
 	if (insert_books(&num_recs))
-		exit(1);
+		return 1;
 
 	if (print_books(num_recs))
-		exit(1);
+		return 1;
 
 	if (print_views())
-		exit(1);
+		return 1;
 
 	if (insert_foo(&num_recs))
 		exit (1);
@@ -187,7 +187,7 @@ int insert_books(int *num_recs)
 	EXEC SQL
 		INSERT INTO BOOKS VALUES ('BV1111','Cooking with Computers: Surreptitious Balance Sheets',
 			'213-46-8915');
-	
+
 	EXEC SQL
 		INSERT INTO BOOKS VALUES ('BU2075','You Can Combat Computer Stress!','238-95-7766');
 
@@ -219,7 +219,7 @@ int insert_foo(int* num_recs)
 
 	EXEC SQL   /* record should be rejected */
 		INSERT INTO FOO VALUES ('D', "C");
-	
+
 	EXEC SQL   /* record should be rejected */
 		INSERT INTO FOO VALUES ("F", NULL);
 
@@ -249,7 +249,7 @@ int print_books(int num_expected)
 
 	char book_id[12];
 	char book_name[81];
-	char book_auth_id[12];	
+	char book_auth_id[12];
 	int i=0;
 
 	EXEC SQL
@@ -265,7 +265,7 @@ int print_books(int num_expected)
 	while (!SQLCODE) {
 		printf("%s,%s,%s\n", book_id, book_name, book_auth_id);
 		i++;
-		
+
 		EXEC SQL
 			FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
 	}
@@ -302,7 +302,7 @@ int print_foo(int num_expected)
 	while (!SQLCODE) {
 		printf("%s,%s\n", col1, col2);
 		i++;
-		
+
 		EXEC SQL
 			FETCH FOO_CURSOR INTO :col1, :col2;
 	}
@@ -320,10 +320,10 @@ err:		die_on_error();
 }
 
 
-int strupper(char* targ, char* source) 
+int strupper(char* targ, char* source)
 {
 	int ii;
-	
+
 	for (ii=0; *targ++ = toupper(*source++); ii++);
 
 	return ii;
@@ -337,11 +337,11 @@ int istable(char* tname)
 
 	if (!tname)
 		return 0;
-		
+
 	utname = (char *) malloc(strlen(tname)+1);
 
 	strupper(utname, tname);
-	
+
 	EXEC SQL
 		SELECT COUNT (*)
 		INTO :exists
@@ -350,11 +350,11 @@ int istable(char* tname)
 
 	EXEC SQL
 		ROLLBACK WORK;
-			
+
 	free(utname);
 
 	return exists;
-err:		
+err:
 	free(utname);
 	die_on_error();
 }
@@ -375,7 +375,7 @@ err:
 
 $ GPRE tabcheck.epp -d WHERE_GDB:atlas.gdb
 $ CXX FLAG_CXX tabcheck.cpp
-$ LINK FLAG_LINK tabcheck pr_views 
+$ LINK FLAG_LINK tabcheck pr_views
 $ RUN tabcheck
 # $DROP WHERE_GDB:atlas.gdb
 $ DELETE tabcheck*

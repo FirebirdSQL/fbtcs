@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_29.gdb
 >> blob090.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           INSERT CURSOR - No <length> specified 
+ Description:           INSERT CURSOR - No <length> specified
  Expected result:	Illegal syntax - segment length is required
  Author:                Sam Hakim, June 7, 93
  **********************************************************************/
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
-   
+
     Count = 0;
 
     printf ("Test:\n %s\n",Test);
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -90,7 +90,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw an underline

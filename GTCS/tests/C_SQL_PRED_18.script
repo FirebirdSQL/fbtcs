@@ -49,12 +49,12 @@ GROUP BY V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO \
 ORDER BY V1.DEPTNO)";
 
 void Underline();
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
 {
-	
+
 	int Count = 0;
         printf("Test:\n %s\n",Test);
         Underline(80);
@@ -71,7 +71,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :DeptNo,:Department,:MgrNo,:DeptCount;
 
@@ -84,12 +84,12 @@ char *argv[];
                 printf("%d\t",MgrNo);
                 printf("%d\n",DeptCount);
 
-		Underline(50);	
+		Underline(50);
 
                 EXEC SQL
                         FETCH CR INTO :DeptNo,:Department,:MgrNo,:DeptCount;
         }
-	
+
 NOMORE:
 
 	EXEC SQL
@@ -102,7 +102,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:    EXEC SQL
                 CLOSE CR;
@@ -114,7 +114,7 @@ ERR_LBL:    EXEC SQL
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /***************************************************************
@@ -137,7 +137,7 @@ while (*s){
 	i++;
 }
 for (;i<l;s++,i++)
-	*s=' ';	
+	*s=' ';
 *s='\0';
 }
 /*--- print and underline of width i */
@@ -155,29 +155,29 @@ printf("\n");
 
 $ GPRE -e sin022.e
 $ CC FLAG_CC sin022.c
-$ LINK FLAG_LINK sin022 
+$ LINK FLAG_LINK sin022
 $ RUN sin022
 >> sin022.sql
 connect WHERE_GDB:sh_test.gdb;
-select v1.deptno, v1.department, v1.mgrno, count(*) 
-from head_dept v1 
+select v1.deptno, v1.department, v1.mgrno, count(*)
+from head_dept v1
 where singular
 (select * from dept_budget v2, fullemp v3, empsal v4 where
 v2.deptno= v1.deptno and v2.department = v3.department and
-v3.empno = v4.empno) 
+v3.empno = v4.empno)
 group by v1.deptno, v1.department, v1.mgrno
 order by v1.deptno;
 
-select v1.deptno, v1.department, v1.mgrno, count(*) 
-from head_dept v1 
+select v1.deptno, v1.department, v1.mgrno, count(*)
+from head_dept v1
 where 1 =
 (select count(*) from dept_budget v2, fullemp v3, empsal v4 where
 v2.deptno= v1.deptno and v2.department = v3.department and
-v3.empno = v4.empno) 
+v3.empno = v4.empno)
 group by v1.deptno, v1.department, v1.mgrno
 order by v1.deptno;
 quit;
 $ISQL -m -i sin022.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin022* 
+$ DELETE sin022*
 

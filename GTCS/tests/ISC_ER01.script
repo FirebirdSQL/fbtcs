@@ -34,7 +34,7 @@ int main()
 
 	/* 2. Pass a NULL database handle. */
 
-	DB = NULL;
+	DB = 0;
 
 	if ((rc=isc_attach_database(status, 0, "WHERE_GDB:somedb.gdb", &DB, 0, NULL)) !=0)
 		{ERRCONTINUE(status, rc, err_buf)};
@@ -43,6 +43,6 @@ int main()
 }
 
 $ CC FLAG_CC er1.c
-$ LINK FLAG_LINK er1 
+$ LINK FLAG_LINK er1
 $ RUN er1
 $ DELETE er1*

@@ -31,9 +31,9 @@ from st1 x where exists \
 
 void Underline();
 
-main()
+int main()
 {
-	
+
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
@@ -48,7 +48,7 @@ main()
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :t1s1,:t1s2,:t1table_row;
 
@@ -62,7 +62,7 @@ main()
                 EXEC SQL
                 FETCH CR INTO :t1s1,:t1s2,:t1table_row;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -73,7 +73,7 @@ NOMORE:
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -83,7 +83,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -100,15 +100,15 @@ printf("\n");
 
 $ GPRE -e join024.e
 $ CC FLAG_CC join024.c
-$ LINK FLAG_LINK join024 
+$ LINK FLAG_LINK join024
 $ RUN join024
 >> join024.sql
 connect WHERE_GDB:sh_join_24.gdb;
 select x.s1,x.s2,x.table_row
 from st1 x where exists
-(select a.s1 from 
+(select a.s1 from
 (st1 a left join st2 b on a.s1 = b.s1) left join st3 c on c.s1 = b.s1 and c.s1 = 1);
 quit;
 $ISQL -m -i join024.sql
 $DROP WHERE_GDB:sh_join_24.gdb
-$ DELETE join024* 
+$ DELETE join024*

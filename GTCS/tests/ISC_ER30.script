@@ -4,9 +4,9 @@
  *	isc_dsql_prepare
  *
  *	Pass an invalid transaction handle.
- * 
- *  Test name: er30.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er30.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
@@ -16,9 +16,9 @@ int main()
 {
 	extern  char empdb[128];
 
-	isc_db_handle	DB = NULL, DB2 = NULL;
-	isc_tr_handle	trans = NULL;
-        isc_stmt_handle	stmt = NULL;
+	isc_db_handle	DB = 0, DB2 = 0;
+	isc_tr_handle	trans = 0;
+        isc_stmt_handle	stmt = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 	char	*s = "update department set budget = 0";
@@ -44,7 +44,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	trans = NULL;
+	trans = 0;
 	if ((rc=isc_dsql_prepare(status, &trans, &stmt,0, s, 1, 0))==0)
 		printf("BUG: Bad tr handle to prepare stmt.\n");
         else
@@ -60,6 +60,6 @@ int main()
 }
 $ CC FLAG_CC er30.c
 $ CC FLAG_CC globals.c
-$ LINK FLAG_LINK er30 globals 
+$ LINK FLAG_LINK er30 globals
 $ RUN er30
 $ DELETE er30*

@@ -19,8 +19,8 @@ EXEC SQL INCLUDE SQLCA;
 
 EXEC SQL BEGIN DECLARE SECTION
      BASED ON TEST_TABLE1.S_ROWID   s_rowid;
-     BASED ON TEST_TABLE1.C_437_25  p_437;  
-     BASED ON DUPLICATE.C_850_25    p_850;  
+     BASED ON TEST_TABLE1.C_437_25  p_437;
+     BASED ON DUPLICATE.C_850_25    p_850;
 EXEC SQL END DECLARE SECTION
 
 sql_select()
@@ -31,13 +31,13 @@ short row_found;
 row_found = 0;
 EXEC SQL SET TRANSACTION;
     EXEC SQL
-         DECLARE C_142 CURSOR FOR 
+         DECLARE C_142 CURSOR FOR
          SELECT S_ROWID, C_437_25 FROM TEST_TABLE1;
 
     EXEC SQL OPEN C_142;
     while (SQLCODE != 100)
 	{
-         EXEC SQL FETCH C_142 INTO :s_rowid, :p_437;  
+         EXEC SQL FETCH C_142 INTO :s_rowid, :p_437;
          if (SQLCODE == 100) break;
          printf("Found string: %d , %s\n", s_rowid,p_437);
         }
@@ -46,19 +46,18 @@ EXEC SQL COMMIT;
 return;
 err: print_error();
 }
-static print_error()
+static void print_error()
 {
     if (SQLCODE != 100)
         printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
-    exit(1);
 }
-main(argc, argv)
+int main(argc, argv)
 int     argc;
 char    *argv[];
 {
-     char    *setnames_param = "NONE";   
+     char    *setnames_param = "NONE";
 
-     if (argc > 1) 
+     if (argc > 1)
 	 {
 	 setnames_param = argv[1];
          }
@@ -70,7 +69,7 @@ EXEC SQL SET TRANSACTION;
      EXEC SQL DELETE FROM TEST_TABLE1;
 EXEC SQL COMMIT;
 
-     printf("\nEmbedded INSERT FROM A DOS850 FIELD TO A DOS437 and DOS850 FIELD. SET NAMES is: %s\n\n",setnames_param); 
+     printf("\nEmbedded INSERT FROM A DOS850 FIELD TO A DOS437 and DOS850 FIELD. SET NAMES is: %s\n\n",setnames_param);
 
 EXEC SQL SET TRANSACTION;
      EXEC SQL
@@ -86,7 +85,7 @@ EXEC SQL SET TRANSACTION;
 EXEC SQL COMMIT;
      sql_select();
 
-     exit(0);
+     return 0;
 err: print_error();
 }
 >> ver1.sql
@@ -97,11 +96,11 @@ QUIT;
 
 $ GPRE -m assign2.e
 $ CC FLAG_CC assign2.c
-$ LINK FLAG_LINK assign2 
+$ LINK FLAG_LINK assign2
 
 >> doc2
   Using SET NAMES NONE.
-  The following test is for embedded field assignment between 
+  The following test is for embedded field assignment between
   international fields of dissimilar character sets.  The insert
   is done in embedded with set names ISO, DOS437 and DOS850.  A
   select is done in embedded using the same set names.
@@ -120,4 +119,4 @@ $ ISQL -i ver1.sql -m
 $ RUN assign2 DOS437
 $ ISQL -i ver1.sql -m
 
-$ DELETE assign2* doc2 ver1.sql 
+$ DELETE assign2* doc2 ver1.sql

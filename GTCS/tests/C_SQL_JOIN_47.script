@@ -82,7 +82,7 @@ order by a.table_row ascending";
 
 void Underline();
 
-main()
+int main()
 {
 
 short t1s1Ind,t1table_rowInd;
@@ -90,7 +90,7 @@ short t2s1Ind,t2table_rowInd;
 short t3s1Ind,t3table_rowInd;
 short t4s1Ind,t4table_rowInd;
 short t5s1Ind,t5table_rowInd;
-	
+
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
@@ -105,7 +105,7 @@ short t5s1Ind,t5table_rowInd;
 
         EXEC SQL
 		OPEN CR;
-		
+
     EXEC SQL    FETCH CR INTO
                 :t1s1:t1s1Ind,:t1table_row:t1table_rowInd,
                 :t2s1:t2s1Ind,:t2table_row:t2table_rowInd,
@@ -134,7 +134,7 @@ short t5s1Ind,t5table_rowInd;
                 :t4s1:t4s1Ind,:t4table_row:t4table_rowInd,
                 :t5s1:t5s1Ind,:t5table_row:t5table_rowInd;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -145,7 +145,7 @@ NOMORE:
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -155,7 +155,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -171,7 +171,7 @@ printf("\n");
 }
 $ GPRE -e bug6164.e
 $ CC FLAG_CC bug6164.c
-$ LINK FLAG_LINK bug6164 
+$ LINK FLAG_LINK bug6164
 $ RUN bug6164
 >> bug6164b.sql
 connect WHERE_GDB:bug6164.gdb;

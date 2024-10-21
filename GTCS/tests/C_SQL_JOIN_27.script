@@ -28,9 +28,9 @@ from (st5 x left join st1 y on x.s2 = y.s2)";
 
 void Underline();
 
-main()
+int main()
 {
-	
+
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
@@ -43,7 +43,7 @@ main()
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Mins1,:Maxs1,:Avgs1,:Sums1;
 
@@ -58,7 +58,7 @@ main()
                 EXEC SQL
                 FETCH CR INTO :Mins1,:Maxs1,:Avgs1,:Sums1;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -69,7 +69,7 @@ NOMORE:
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -79,7 +79,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -95,7 +95,7 @@ printf("\n");
 }
 $ GPRE -e join027.e
 $ CC FLAG_CC join027.c
-$ LINK FLAG_LINK join027 
+$ LINK FLAG_LINK join027
 $ RUN join027
 >> join027.sql
 connect WHERE_GDB:sh_join_27.gdb;
@@ -104,4 +104,4 @@ from (st5 x left join st1 y on x.s2 = y.s2);
 quit;
 $ISQL -m -i join027.sql
 $DROP WHERE_GDB:sh_join_27.gdb
-$ DELETE join027* 
+$ DELETE join027*

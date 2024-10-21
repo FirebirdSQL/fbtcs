@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_16.gdb
 >> blob016.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           INSERT CURSOR VALUES (NULL); 
+ Description:           INSERT CURSOR VALUES (NULL);
  Author:                Sam Hakim, June 7, 93
  **********************************************************************/
 #include <stdio.h>
@@ -47,7 +47,7 @@ bool verbose;
 
     M.Buffer[0] = 0;
     M.BufferLen = strlen(M.Buffer);
-    
+
     strcpy(Test_Name,"blob016");
     printf ("Test:\n %s\n",Test);
     Underline(80);
@@ -61,14 +61,14 @@ bool verbose;
 
 
     EXEC SQL
-        CLOSE BCW; 
+        CLOSE BCW;
     EXEC SQL
         INSERT INTO MB1 (TEST_NAME,ROW_ID,B512) VALUES (:Test_Name,16,NULL);
     EXEC SQL COMMIT;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -78,7 +78,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw an underline
@@ -95,7 +95,7 @@ printf("\n");
 
 $ GPRE -e blob016.epp
 $ CXX FLAG_CXX blob016.cpp
-$ LINK FLAG_LINK blob016 
+$ LINK FLAG_LINK blob016
 $ RUN blob016
 >> blob016.sql
 connect "WHERE_GDB:sh_blobs_16.gdb";

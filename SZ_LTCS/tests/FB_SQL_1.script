@@ -6,12 +6,12 @@ $ GBAK -r WHERE_EXAMPLES_40:atlas.gbk WHERE_GDB:atlas.gdb
 $ISQL atlas.gdb -i WHERE_EXAMPLES:/v5/ib_udf.sql
 $ CREATE udfgrp.e
 /**********************************************************************
- Purpose:		Test group by a udf function 
- 
+ Purpose:		Test group by a udf function
+
  Description:     Group by a udf function on base table
 
                   SELECT SUBSTR(FIRST_NAME,1,2) AS SNAME ,COUNT(*)
-                  FROM MAYORS 
+                  FROM MAYORS
                   GROUP BY SUBSTR(FIRST_NAME,1,2);
 
  Tables:          mayors
@@ -39,7 +39,7 @@ group by substr(first_name,1,2)";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -49,13 +49,13 @@ char *argv[];
         Underline(80);
 	EXEC SQL
                 DECLARE CR CURSOR FOR
-					select substr(first_name,1,2) ,count(*) 
-					from mayors 
+					select substr(first_name,1,2) ,count(*)
+					from mayors
 					group by substr(first_name,1,2)
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Sname,:SnameCount;
 
@@ -71,7 +71,7 @@ char *argv[];
                         FETCH CR INTO :Sname,:SnameCount;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -83,7 +83,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -93,7 +93,7 @@ ERR:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -124,7 +124,7 @@ $ISQL -i grpview.sql
 $CREATE udfgrp1.sql
 connect WHERE_GDB:atlas.gdb;
 select substr(first_name,1,2) as sname ,count(*)
- from mayors 
+ from mayors
 group by substr(first_name,1,2);
 quit;
 $ISQL -i udfgrp1.sql
@@ -137,7 +137,7 @@ $ISQL -i udfgrp2.sql
 $CREATE udfgrp3.sql
 connect WHERE_GDB:atlas.gdb;
 select state,substr(first_name,1,2) as sname ,count(*)
- from mayors 
+ from mayors
 group by state,substr(first_name,1,2);
 quit;
 $ISQL -i udfgrp3.sql

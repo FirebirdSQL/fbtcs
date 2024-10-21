@@ -3,7 +3,7 @@ $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_5.gdb
 >> blob005.epp
 /**********************************************************************
  Purpose:               Test SQL blob  support in InterBase 4.0
- Description:           FETCH blobcursor - No length is specified 
+ Description:           FETCH blobcursor - No length is specified
  Author:                Sam Hakim, June 7, 93
  ***********************************************************************
 */
@@ -37,11 +37,11 @@ void EmptyBuffer(char* Bf,unsigned short L);
 
 int main(int argc, char* argv[])
 {
-	
+
     int 	Count;
     short	FullFetch,PartialFetch;
     bool verbose;
-    
+
     verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 
     Count = 0;
     FullFetch = PartialFetch = 0;
-    
+
     printf ("Test:\n %s\n",Test);
     Underline(80);
     M.SOB = sizeof(M.Buffer);
@@ -74,14 +74,14 @@ int main(int argc, char* argv[])
         EXEC SQL OPEN BCR USING :BlobId;
     	EXEC SQL FETCH BCR INTO :M.Buffer;
 
-        while (SQLCODE != 100){	
+        while (SQLCODE != 100){
 	    if (verbose)
                  printf("SQLCODE = %ld, BufferLen = %d FullFetch = %d\n",
 		         SQLCODE,M.BufferLen,FullFetch);
-		 
+
             printf ("%*.*s\n",M.SOB,M.SOB,M.Buffer);
 	    EmptyBuffer(M.Buffer,M.SOB);
-	    
+
             while (SQLCODE == 101){
                 EXEC SQL FETCH BCR INTO :M.Buffer;
 		PartialFetch++;
@@ -103,10 +103,10 @@ int main(int argc, char* argv[])
     }
     printf("...Done\n");
 	EXEC SQL CLOSE TCR;
-	
+
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -116,7 +116,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /***********************************************************
  * U n d e r l i n e
@@ -130,7 +130,7 @@ for (j=0;j<i;j++)
 printf("\n");
 }
 /***********************************************************
- * EmptyBuffer 
+ * EmptyBuffer
  * print an underline
  ***********************************************************/
 void EmptyBuffer(char* Bf,unsigned short L)
@@ -141,7 +141,7 @@ void EmptyBuffer(char* Bf,unsigned short L)
 
 $ GPRE -e blob005.epp
 $ CXX FLAG_CXX blob005.cpp
-$ LINK FLAG_LINK blob005 
+$ LINK FLAG_LINK blob005
 $ RUN blob005
 $DROP WHERE_GDB:sh_blobs_5.gdb
 $ DELETE blob005*

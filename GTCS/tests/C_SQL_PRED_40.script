@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 #
 # Description:           blob-field containing a single char
@@ -41,7 +41,7 @@ WHERE PROJ_DESC CONTAINING 'A'";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -57,7 +57,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Proj_No;
 
@@ -70,7 +70,7 @@ char *argv[];
                 EXEC SQL
                 FETCH CR INTO :Proj_No;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -95,7 +95,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -105,7 +105,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 
@@ -124,7 +124,7 @@ printf("\n");
 
 $ GPRE -e con020.e
 $ CC FLAG_CC con020.c
-$ LINK FLAG_LINK con020 
+$ LINK FLAG_LINK con020
 $ RUN con020
 >> con020.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -134,4 +134,4 @@ WHERE PROJ_DESC CONTAINING 'A';
 quit;
 $ISQL -m -i con020.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con020* 
+$ DELETE con020*

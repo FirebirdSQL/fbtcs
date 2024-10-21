@@ -34,9 +34,9 @@ from (st1 t left join st2 x on t.s1 = x.s2)";
 
 void Underline();
 
-main()
+int main()
 {
-	
+
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
@@ -49,7 +49,7 @@ main()
 
         EXEC SQL
 		OPEN CR;
-		
+
     EXEC SQL    FETCH CR INTO :t1s1,:t1s2,:t1s3,:t1table_row,
                 :t2s1,:t2s2,:t2table_row;
 
@@ -69,7 +69,7 @@ main()
                 FETCH CR INTO :t1s1,:t1s2,:t1s3,:t1table_row,
                 :t2s1,:t2s2,:t2table_row;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -80,7 +80,7 @@ NOMORE:
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -90,7 +90,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -107,7 +107,7 @@ printf("\n");
 
 $ GPRE -e join038.e
 $ CC FLAG_CC join038.c
-$ LINK FLAG_LINK join038 
+$ LINK FLAG_LINK join038
 $ RUN join038
 >> join038.sql
 connect WHERE_GDB:sh_join_38.gdb;
@@ -116,4 +116,4 @@ from (st1 t left join st2 x on t.s1 = x.s2);
 quit;
 $ISQL -m -i join038.sql
 $DROP WHERE_GDB:sh_join_38.gdb
-$ DELETE join038* 
+$ DELETE join038*

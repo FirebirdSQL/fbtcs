@@ -4,9 +4,9 @@
  *	isc_start_multiple
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er18.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er18.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
@@ -22,8 +22,8 @@ TEB teb_vec[1];
 
 int main()
 {
-	isc_db_handle	DB = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
@@ -39,7 +39,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	teb_vec[0].dbb_ptr = &DB;
 
 	if ((rc=isc_start_multiple(status, &trans, 1, teb_vec)) ==0)
@@ -50,6 +50,6 @@ int main()
 	printf("Finished ER18\n");
 }
 $ CC FLAG_CC er18.c
-$ LINK FLAG_LINK er18 
+$ LINK FLAG_LINK er18
 $ RUN er18
 $ DELETE er18*

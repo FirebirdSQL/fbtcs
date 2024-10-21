@@ -2,9 +2,9 @@
 #
 #**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-#			[NOT]SINGULAR <subquery>			
+#			[NOT]SINGULAR <subquery>
 # Description:		Reflexive join - NOT SINGULAR
-# Tables:		customers		
+# Tables:		customers
 # Expected result:	 No rows should be returned
 # Author:		Sam Hakim, Feb 18, 93
 #************************************************************************
@@ -39,7 +39,7 @@ WHERE C2.CUSTOMER = C1.CUSTOMER)";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -49,19 +49,19 @@ char *argv[];
         printf("Test:\n %s\n",Test);
         Underline(80);
 	EXEC SQL
-		DECLARE CR CURSOR FOR 
+		DECLARE CR CURSOR FOR
 	        SELECT * FROM CUSTOMERS C1 WHERE NOT SINGULAR
 		(SELECT * FROM CUSTOMERS C2
 		 WHERE C2.CUSTOMER = C1.CUSTOMER);
-		 
-		 
+
+
 	EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
-		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City, 
+		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City,
 		:State, :Zip_Code, :Phone_No, :On_Hold;
-		
+
 	while (!SQLCODE){
 		Count++;
 		printf ("%ld\t",CustNo);
@@ -74,20 +74,20 @@ char *argv[];
 		printf ("%s\t",Phone_No);
 		printf ("%s\n",On_Hold);
                 Underline(80);
-		
+
 	EXEC SQL
-		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City, 
-		:State, :Zip_Code, :Phone_No, :On_Hold;	
+		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City,
+		:State, :Zip_Code, :Phone_No, :On_Hold;
 	}
 NOMORE:
 	printf("\n\n* Total Records Listed >>> %d\n",Count);
-	
+
 	EXEC SQL
 		COMMIT RELEASE;
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -97,7 +97,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /*--- print and underline of width i */
@@ -115,7 +115,7 @@ printf("\n");
 
 $ GPRE -e sin002.e
 $ CC FLAG_CC sin002.c
-$ LINK FLAG_LINK sin002 
+$ LINK FLAG_LINK sin002
 $ RUN sin002
 >> sin002.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -128,5 +128,5 @@ or 0 = (select count(*) from customers c3 where c3.custno = c3.custno);
 quit;
 $ISQL -m -i sin002.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin002* 
+$ DELETE sin002*
 

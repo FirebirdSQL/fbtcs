@@ -1,15 +1,16 @@
 
 #
-#Series:   SEGVIOL    
-#Test:     SV_USER_ADD (bug in fb till 2.0.3/2.1.b1 - 
+#Series:   SEGVIOL
+#Test:     SV_USER_ADD (bug in fb till 2.0.3/2.1.b1 -
 #						lost text strings in status vector)
 #History:
 #
 
-# 
+#
 >> sv.c
 #include <ibase.h>
 #include <stdio.h>
+#include <string.h>
 #include <malloc.h>
 #ifndef WIN_NT
 #include <sys/param.h>
@@ -34,7 +35,7 @@ int main()
 	else
 		isc_detach_database(s, &db);
 
-	exit(0);
+	return 0;
 }
 $ CC FLAG_CC sv.c
 $ LINK FLAG_LINK sv

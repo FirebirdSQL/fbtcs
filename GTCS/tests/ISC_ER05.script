@@ -4,17 +4,17 @@
  *	isc_dsql_exec_immed2
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er5.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er5.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
-	isc_db_handle	DB = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 	char	*buf = "update x set y = 0";
@@ -30,7 +30,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_dsql_exec_immed2(status, &DB, &trans,0, buf, 1, 0, 0))==0)
 		printf("BUG: exec_immed2 on Null DB.\n");
         else
@@ -39,6 +39,6 @@ int main()
 	printf("Finished ER5\n");
 }
 $ CC FLAG_CC er5.c
-$ LINK FLAG_LINK er5 
+$ LINK FLAG_LINK er5
 $ RUN er5
 $ DELETE er5*

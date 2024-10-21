@@ -27,7 +27,7 @@ BASED_ON MB1.B256           BlobId;
 short                       i,j,k,l;
 
 struct Buf{
-    BASED_ON MB1.B256.SEGMENT	Buffer; 
+    BASED_ON MB1.B256.SEGMENT	Buffer;
     unsigned short  		BufferLen,SOB;
 };
 struct Buf M;
@@ -39,11 +39,11 @@ void EmptyBuffer(char *Bf, unsigned short L);
 
 int main(int argc, char* argv[])
 {
-	
+
     int 	Count;
     short	FullFetch,PartialFetch;
     bool verbose;
-    
+
     verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
     Count = 0;
     FullFetch = PartialFetch = 0;
-    
+
     printf ("Test:\n %s\n",Test);
     Underline(80);
     M.SOB = sizeof(M.Buffer);
@@ -76,14 +76,14 @@ int main(int argc, char* argv[])
         EXEC SQL OPEN BCR USING :BlobId;
     	EXEC SQL FETCH BCR INTO :M.Buffer;
 
-        while (SQLCODE != 100){	
+        while (SQLCODE != 100){
 	    if (verbose)
                  printf("SQLCODE = %ld, BufferLen = %d FullFetch = %d\n",
 		         SQLCODE,M.BufferLen,FullFetch);
-		 
+
             printf ("%*.*s\n",M.SOB,M.SOB,M.Buffer);
 	    EmptyBuffer(M.Buffer,M.SOB);
-	    
+
             while (SQLCODE == 101){
                 EXEC SQL FETCH BCR INTO :M.Buffer;
 		PartialFetch++;
@@ -105,10 +105,10 @@ int main(int argc, char* argv[])
     }
     printf("...Done\n");
 	EXEC SQL CLOSE TCR;
-	
+
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -118,7 +118,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /***********************************************************
  * U n d e r l i n e
@@ -132,7 +132,7 @@ for (j=0;j<i;j++)
 printf("\n");
 }
 /***********************************************************
- * EmptyBuffer 
+ * EmptyBuffer
  * print an underline
  ***********************************************************/
 void EmptyBuffer(char *Bf, unsigned short L)
@@ -143,7 +143,7 @@ void EmptyBuffer(char *Bf, unsigned short L)
 
 $ GPRE -e blob031.epp
 $ CXX FLAG_CXX blob031.cpp
-$ LINK FLAG_LINK blob031 
+$ LINK FLAG_LINK blob031
 $ RUN blob031
 $DROP WHERE_GDB:sh_blobs_31.gdb
-$ DELETE blob031* 
+$ DELETE blob031*

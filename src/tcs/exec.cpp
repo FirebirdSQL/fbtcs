@@ -78,7 +78,7 @@ static int set_dollar_verb(char*, char*);
 //  A variety of utilities put unwanted messages in
 //  unreasonable places.  This table tells us how many
 //  lines to skip when we find a line put in by the linker
-//  or one of its friends. 
+//  or one of its friends.
 //
 //  The mechanism is around in case other operating systems
 //  decide to become more verbose.
@@ -205,7 +205,7 @@ TEST_RESULT EXEC_test(char *test_name,
 	//  If phase == 0 (it will always unless '-n' no system flag is
 	//  set) then run the test, by calling run().
 
-	fprintf (stdout, "%02d:%02d:%02d\ttest %25s\t%s", 
+	fprintf (stdout, "%02d:%02d:%02d\ttest %25s\t%s",
 					t->tm_hour, t->tm_min, t->tm_sec, test_name,
 					test_name[-1] == 'l' ? "local" : "global");
 	fflush (stdout);
@@ -267,7 +267,7 @@ TEST_RESULT EXEC_test(char *test_name,
 		{
 			printf("internal error file %s not found\n", compare_file_name);
 			fflush(stdout);
-			exit(1);
+			return 1;
 		}
 		fwrite(buffer,1,strlen(buffer), compare_file);
 		fclose(compare_file);
@@ -315,9 +315,9 @@ static int compare_files(char *compare_file, char *output_file, ISC_SHORT global
 	 *      (false).
 	 *      I have changed this to compare
 	 *      two files instead of a blob
-	 *      and a file to be able to use 
+	 *      and a file to be able to use
 	 *      blobs with any segment length
-	 *      FSG 12.Nov.2000  
+	 *      FSG 12.Nov.2000
 	 **************************************/
 	FILE	*file,*blob_file;
 	char	f_buff [2048], b_buff [2048], *p, *q, c, lastc;
@@ -401,7 +401,7 @@ static TEST_RESULT compare_initialized_file(char *compare_file,
 	 * Functional description
 	 *    When an initialization record exists.
 	 *    use the stored results for a comparison
-	 *    
+	 *
 	 **************************************/
 	ISC_USHORT			result;
 	TEST_RESULT		test_result;
@@ -443,7 +443,7 @@ static int execute_script(char *script_file, char *output_file)
 	 *
 	 * Functional description
 	 *        run a command file with attendant
-	 *        data files.  
+	 *        data files.
 	 **************************************/
 	char	buffer [512];
 
@@ -669,13 +669,13 @@ static int script_parse(char *script, FILE *script_file, ISC_USHORT *n)
 			{
 				fclose (data);
 				file_open = false;
-			} 
+			}
 /*
-			else if (command) 
+			else if (command)
 			{
-				if (putc ('\n',script_file) == EOF) 
+				if (putc ('\n',script_file) == EOF)
 				{
-					print_error("IO error on write to \"%s\"\n", 
+					print_error("IO error on write to \"%s\"\n",
 								const_cast<char*>(SCRIPT_FILE),0,0);
 					if (file_open)
 						fclose (data);
@@ -694,7 +694,7 @@ static int script_parse(char *script, FILE *script_file, ISC_USHORT *n)
 			while (*c != '\n')
 			{
 				if (putc ((unsigned char)*c++, script_file) == EOF) {
-					print_error("IO error on write to \"%s\"\n", 
+					print_error("IO error on write to \"%s\"\n",
 								const_cast<char*>(SCRIPT_FILE),0,0);
 					if (file_open)
 						fclose (data);
@@ -704,9 +704,9 @@ static int script_parse(char *script, FILE *script_file, ISC_USHORT *n)
 					return false;
 				}
 			}
-			if (putc ('\n',script_file) == EOF) 
+			if (putc ('\n',script_file) == EOF)
 			{
-				print_error("IO error on write to \"%s\"\n", 
+				print_error("IO error on write to \"%s\"\n",
 							const_cast<char*>(SCRIPT_FILE),0,0);
 				if (file_open)
 					fclose (data);
@@ -729,7 +729,7 @@ static int script_parse(char *script, FILE *script_file, ISC_USHORT *n)
 			while (*c != '\n')
 			{
 				if (putc ((unsigned char)*c++, script_file) == EOF) {
-					print_error("IO error on write to \"%s\"\n", 
+					print_error("IO error on write to \"%s\"\n",
 								const_cast<char*>(SCRIPT_FILE),0,0);
 					if (file_open)
 						fclose (data);

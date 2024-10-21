@@ -1,11 +1,11 @@
 
 #
-#Author: Narayan 
+#Author: Narayan
 #Date: Mar 17, 1994.
 #
-#Description: This is a test to test the auto-commit behavior of IB. 
+#Description: This is a test to test the auto-commit behavior of IB.
 #It creates table t,u & v. Creates an after insert trigger on table t
-#that also inserts into u and v. It inserts a value into t so the 
+#that also inserts into u and v. It inserts a value into t so the
 #trigger causes the inserts into u and V. One of these inserts (caused
 #by the trigger) fails.
 #None of the inserts should be (auto)committed to the db.
@@ -39,7 +39,7 @@ exec sql include salca
 
 exec sql set database DB = "WHERE_GDB:ac2_test.gdb";
 
-main()
+int main()
 {
   exec sql connect DB;
 
@@ -62,7 +62,7 @@ $GPRE -e A.e
 $RUN sed "/isc_tpb_0 \[/s/\[.\] = {1,/\[\] = {1, isc_tpb_autocommit,/" A.c > A1.c
 $RUN sed "/isc_start_transaction /s/4/5/" A1.c > A2.c
 $CC FLAG_CC A2.c
-$LINK FLAG_LINK A2 
+$LINK FLAG_LINK A2
 $RUN A2
 $ISQL -m -i show.sql
 $DELETE init.sql show.sql A.* A1.* A2.* A2

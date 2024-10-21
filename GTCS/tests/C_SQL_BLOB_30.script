@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_30.gdb
 >> blob091.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           DECLARE BLOB CURSOR - Not a blob field 
+ Description:           DECLARE BLOB CURSOR - Not a blob field
  Author:                Sam Hakim, June 13, 93
 
  Expected result:	(E) blob019.e:56: Field COMMENT is not a blob
@@ -50,7 +50,7 @@ int Count;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
-   
+
     strcpy(Test_Name,"blob019");
     printf ("Test:\n %s\n",Test);
     Underline(80);
@@ -78,7 +78,7 @@ int Count;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -88,7 +88,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw an underline

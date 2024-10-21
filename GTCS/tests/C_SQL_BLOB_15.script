@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_15.gdb
 >> blob015.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           INSERT CURSOR - Buffer is empty (Buffer[0]='\0' 
+ Description:           INSERT CURSOR - Buffer is empty (Buffer[0]='\0'
  Author:                Sam Hakim, June 7, 93
  Mods:			Commented out strings.h.  Not needed on NT.
  **********************************************************************/
@@ -46,10 +46,10 @@ bool verbose;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
-   
+
     M.Buffer[0] = 0;
     M.BufferLen = strlen(M.Buffer);
-    
+
     strcpy(Test_Name,"blob015");
     printf ("Test:\n %s\n",Test);
     Underline(80);
@@ -78,7 +78,7 @@ bool verbose;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -88,7 +88,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw an underline
@@ -105,7 +105,7 @@ printf("\n");
 
 $ GPRE -e blob015.epp
 $ CXX FLAG_CXX blob015.cpp
-$ LINK FLAG_LINK blob015 
+$ LINK FLAG_LINK blob015
 $ RUN blob015
 >> blob015.sql
 connect "WHERE_GDB:sh_blobs_15.gdb";

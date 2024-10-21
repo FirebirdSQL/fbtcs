@@ -15,7 +15,7 @@ using namespace std;
 EXEC SQL
 	INCLUDE SQLCA
 
-/* Set up to catch SQL errors. Note: this will require that 
+/* Set up to catch SQL errors. Note: this will require that
 each routine containing executeable SQL commands has
 an error handling section labeled 'err'.*/
 EXEC SQL
@@ -28,7 +28,7 @@ char	db_name[128];
 
 /* Forward declarations */
 static void print_error();
-int istable(char*); 
+int istable(char*);
 
 
 int main (int argc, char* argv[])
@@ -51,7 +51,7 @@ int main (int argc, char* argv[])
 		printf("dropping old TABLE_CONSTRAINTS view.\n");
 
 		EXEC SQL EXECUTE IMMEDIATE 'DROP VIEW TABLE_CONSTRAINTS';
-		EXEC SQL COMMIT RELEASE;	
+		EXEC SQL COMMIT RELEASE;
 	}
 
 	cmd = "CREATE VIEW TABLE_CONSTRAINTS (CONSTRAINT_NAME, TABLE_NAME, CONSTRAINT_TYPE,\
@@ -63,14 +63,14 @@ int main (int argc, char* argv[])
 				WHERE R.RDB$SYSTEM_FLAG = 0";
 	EXEC SQL EXECUTE IMMEDIATE :cmd;
 	EXEC SQL COMMIT RELEASE;
-	
+
 	printf("View TABLE_CONSTRAINTS created ok.\n");
-		
+
 	if (istable("REFERENTIAL_CONSTRAINTS")) {
 		printf("dropping old REFERENTIAL_CONSTRAINTS view.\n");
 
 		EXEC SQL EXECUTE IMMEDIATE 'DROP VIEW REFERENTIAL_CONSTRAINTS';
-		EXEC SQL COMMIT RELEASE;	
+		EXEC SQL COMMIT RELEASE;
 	}
 
 	cmd = "CREATE VIEW REFERENTIAL_CONSTRAINTS (CONSTRAINT_NAME,\
@@ -82,14 +82,14 @@ int main (int argc, char* argv[])
 			FROM RDB$REF_CONSTRAINTS";
 	EXEC SQL EXECUTE IMMEDIATE :cmd;
 	EXEC SQL COMMIT RELEASE;
-		
+
 	printf("View REFERENTIAL_CONSTRAINTS created ok.\n");
-	
+
 	if (istable("CHECK_CONSTRAINTS")) {
 		printf("dropping old CHECK_CONSTRAINTS view.\n");
 
 		EXEC SQL EXECUTE IMMEDIATE 'DROP VIEW CHECK_CONSTRAINTS';
-		EXEC SQL COMMIT RELEASE;	
+		EXEC SQL COMMIT RELEASE;
 	}
 
 	cmd = "CREATE VIEW CHECK_CONSTRAINTS (CONSTRAINT_NAME, CHECK_CLAUSE)\
@@ -99,14 +99,14 @@ int main (int argc, char* argv[])
 				= RDB$TRIGGERS.RDB$TRIGGER_NAME";
 	EXEC SQL EXECUTE IMMEDIATE :cmd;
 	EXEC SQL COMMIT RELEASE;
-		
+
 	printf("View CHECK_CONSTRAINTS created ok.\n");
-	
+
 	if (istable("CONSTRAINTS_COLUMN_USAGE")) {
 		printf("dropping old CONSTRAINTS_COLUMN_USAGE view.\n");
 
 		EXEC SQL EXECUTE IMMEDIATE 'DROP VIEW CONSTRAINTS_COLUMN_USAGE';
-		EXEC SQL COMMIT RELEASE;	
+		EXEC SQL COMMIT RELEASE;
 	}
 
 	cmd = "CREATE VIEW CONSTRAINTS_COLUMN_USAGE (TABLE_NAME,\
@@ -134,7 +134,7 @@ int main (int argc, char* argv[])
 			RDB$RELATION_FIELDS.RDB$FIELD_SOURCE)";
 	EXEC SQL EXECUTE IMMEDIATE :cmd;
 	EXEC SQL COMMIT RELEASE;
-		
+
 	printf("View CONSTRAINTS_COLUMN_USAGE created ok.\n");
 
 	return 0;
@@ -149,18 +149,18 @@ int istable(char* tname)
 
 	if (!tname)
 		return 0;
-		
+
 	EXEC SQL
 		SELECT COUNT (*)
 		INTO :exists
 		FROM rdb$relations
 		WHERE rdb$relation_name = :tname;
-	
+
 	EXEC SQL
 		ROLLBACK WORK;
-			
+
 	return exists;
-err:		
+err:
 	print_error();
 }
 
@@ -176,7 +176,7 @@ $ CXX FLAG_CXX ri_views.cpp
 $ LINK FLAG_LINK ri_views
 $ RUN ri_views WHERE_GDB:atlas.gdb
 >> pv1.epp
-/* pr_views.e 
+/* pr_views.e
    6/2/93 by mshulman
    prints out the contents of the system views
 */
@@ -196,11 +196,11 @@ int print_REFERENTIAL_CONSTRAINTS();
 
 int print_views() {
 	if (print_TABLE_CONSTRAINTS())
-		exit(1);
+		return 1;
 	if (print_CONSTRAINTS_COLUMN_USAGE())
-		exit(1);
+		return 1;
 	if (print_REFERENTIAL_CONSTRAINTS())
-		exit(1);
+		return 1;
 	return 0;
 }
 
@@ -213,7 +213,7 @@ int print_TABLE_CONSTRAINTS() {
 
 	printf("\n\nTABLE_CONSTRAINTS:\n");
 	printf(    "------------------\n");
-	
+
 	EXEC SQL
 		DECLARE TABLE_CONSTRAINTS_CURSOR CURSOR FOR
 		SELECT * FROM TABLE_CONSTRAINTS;
@@ -222,13 +222,13 @@ int print_TABLE_CONSTRAINTS() {
 		OPEN TABLE_CONSTRAINTS_CURSOR;
 
 	EXEC SQL
-		FETCH TABLE_CONSTRAINTS_CURSOR INTO :constraint_name, :table_name, 
+		FETCH TABLE_CONSTRAINTS_CURSOR INTO :constraint_name, :table_name,
 			:constraint_type, :is_deferrable, :initially_deferred;
 
 	while (!SQLCODE) {
 		printf("%s,%s,%s,%s,%s\n", constraint_name, table_name, constraint_type,
 			is_deferrable, initially_deferred);
-		
+
 		EXEC SQL
 			FETCH TABLE_CONSTRAINTS_CURSOR INTO :constraint_name, :table_name,
 				:constraint_type, :is_deferrable, :initially_deferred;
@@ -254,21 +254,21 @@ int print_CONSTRAINTS_COLUMN_USAGE() {
 
 	EXEC SQL
 		DECLARE CONSTRAINTS_COLUMN_USAGE_CURSOR CURSOR FOR
-		SELECT CONSTRAINT_NAME, TABLE_NAME, COLUMN_NAME 
+		SELECT CONSTRAINT_NAME, TABLE_NAME, COLUMN_NAME
 		FROM CONSTRAINTS_COLUMN_USAGE;
 
 	EXEC SQL
 		OPEN CONSTRAINTS_COLUMN_USAGE_CURSOR;
 
 	EXEC SQL
-		FETCH CONSTRAINTS_COLUMN_USAGE_CURSOR INTO :constraint_name, 
+		FETCH CONSTRAINTS_COLUMN_USAGE_CURSOR INTO :constraint_name,
 			:table_name, :column_name;
 
 	while (!SQLCODE) {
 		printf("%s,%s,%s\n", constraint_name, table_name, column_name);
-		
+
 		EXEC SQL
-			FETCH CONSTRAINTS_COLUMN_USAGE_CURSOR INTO :constraint_name, 
+			FETCH CONSTRAINTS_COLUMN_USAGE_CURSOR INTO :constraint_name,
 				:table_name, :column_name;
 	}
 
@@ -291,7 +291,7 @@ int print_REFERENTIAL_CONSTRAINTS() {
 
 	printf("\n\nREFERENTIAL_CONSTRAINTS:\n");
 	printf(    "------------------------\n");
-	
+
 	EXEC SQL
 		DECLARE REFERENTIAL_CONSTRAINTS_CURSOR CURSOR FOR
 		SELECT * FROM REFERENTIAL_CONSTRAINTS;
@@ -300,17 +300,17 @@ int print_REFERENTIAL_CONSTRAINTS() {
 		OPEN REFERENTIAL_CONSTRAINTS_CURSOR;
 
 	EXEC SQL
-		FETCH REFERENTIAL_CONSTRAINTS_CURSOR INTO 
-			:constraint_name, :unique_constraint_name, 
+		FETCH REFERENTIAL_CONSTRAINTS_CURSOR INTO
+			:constraint_name, :unique_constraint_name,
 			:match_option, :update_rule, :delete_rule;
 
 	while (!SQLCODE) {
 		printf("%s,%s,%s,%s,%s\n", constraint_name, unique_constraint_name,
 			match_option, update_rule, delete_rule);
-		
+
 		EXEC SQL
-			FETCH REFERENTIAL_CONSTRAINTS_CURSOR INTO 
-				:constraint_name, :unique_constraint_name, 
+			FETCH REFERENTIAL_CONSTRAINTS_CURSOR INTO
+				:constraint_name, :unique_constraint_name,
 				:match_option, :update_rule, :delete_rule;
 	}
 

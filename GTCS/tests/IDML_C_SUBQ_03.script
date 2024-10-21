@@ -2,9 +2,9 @@
 #
 #By:          Clare Taylor
 #Date:        03/14/94
-#Test name:   IDML_C_SUBQ_02         
-#Series:      IDML_C_SUBQUERYS          
-#Results:     Passes: The table TEST_TABLE1 is populated       
+#Test name:   IDML_C_SUBQ_02
+#Series:      IDML_C_SUBQUERYS
+#Results:     Passes: The table TEST_TABLE1 is populated
 #Dependency:  none
 #History:
 #4/13/94:     Adding set names statements.  Fails in Q no matter what
@@ -30,7 +30,7 @@
 #of the insert or update.
 #
 
->> subq3.e 
+>> subq3.e
 /*-------------------------------------------------------------------
   Case:  1  INSERT INTO TEST_TABLE SELECT [subset] FROM STRING_TABLE
 ---------------------------------------------------------------------*/
@@ -47,7 +47,7 @@ EXEC SQL BEGIN DECLARE SECTION;
   BASED_ON STRING_TABLE.C_437_25      p_437;
 EXEC SQL END DECLARE SECTION;
 
-static print_error()
+static void print_error()
 {
     if (SQLCODE != 100)
         printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
@@ -57,7 +57,7 @@ void sql_insert1()
 EXEC SQL DELETE FROM TEST_TABLE2;
 EXEC SQL DELETE FROM TEST_TABLE1;
 
-EXEC SQL INSERT INTO TEST_TABLE1 
+EXEC SQL INSERT INTO TEST_TABLE1
      SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 FROM STRING_TABLE;
 EXEC SQL COMMIT;
 
@@ -69,7 +69,7 @@ void dos_select()
 {
    printf("DOS SET NAMES, SELECT DOS FIELD INSERTED BY THE SUBQUERY:\n\n");
 
-   EXEC SQL DECLARE C_DOS CURSOR FOR 
+   EXEC SQL DECLARE C_DOS CURSOR FOR
         SELECT S_ROWID, C_437_25
         FROM TEST_TABLE1;
 
@@ -96,7 +96,7 @@ void iso_select()
    printf("ISO SET NAMES, SELECT ISO FIELDS INSERTED BY THE SUBQUERY:\n\n");
 
    EXEC SQL
-       DECLARE C_SEL CURSOR FOR 
+       DECLARE C_SEL CURSOR FOR
            SELECT S_ROWID, C_ENUS, C_FRANCE
            FROM TEST_TABLE1;
 
@@ -118,7 +118,7 @@ dos_select();
 return;
 err: print_error();
 }
-main()
+int main()
 {
 char p_setnames[10];
 
@@ -127,7 +127,7 @@ char p_setnames[10];
      EXEC SQL CONNECT db;
      sql_insert1();
      iso_select();
-     dos_select();      /* fails in T because set names must be dos */ 
+     dos_select();      /* fails in T because set names must be dos */
      EXEC SQL COMMIT RELEASE;
 
      strcpy(p_setnames,"DOS437");
@@ -135,7 +135,7 @@ char p_setnames[10];
      EXEC SQL CONNECT db;
      dos_select();
 
-     exit(0);
+     return 0;
 err: print_error();
 }
 >> subq3.sql
@@ -144,7 +144,7 @@ connect "WHERE_GDB:tests.gdb";
 delete from TEST_TABLE1;
 delete from TEST_TABLE2;
 commit;
-INSERT INTO TEST_TABLE1 
+INSERT INTO TEST_TABLE1
     SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 FROM STRING_TABLE;
 commit;
 select count(*) from test_table1;
@@ -156,7 +156,7 @@ select c_enus, c_france from test_table1;
 select c_enus, c_france from test_table2;
 
 >> dos437.sql
-SET NAMES DOS437;   
+SET NAMES DOS437;
 connect "WHERE_GDB:tests.gdb";
 select c_437_25 from test_table1;
 quit;
@@ -167,7 +167,7 @@ select c_437_25 from test_table1;
 quit;
 $ GPRE subq3.e
 $ CC FLAG_CC subq3.c
-$ LINK FLAG_LINK subq3 
+$ LINK FLAG_LINK subq3
 $ RUN subq3
 $ ISQL -i dos437.sql -m
 $ ISQL -i isosel.sql -m

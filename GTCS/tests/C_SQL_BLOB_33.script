@@ -28,28 +28,28 @@ exec sql connect db;
 exec sql execute immediate :cmd;
 exec sql commit;
 
-exit(0);
+return 0;
 
 err:
 	exec sql whenever sqlerror continue;
 	isc_print_status (gds_status);
 	exec sql rollback;
 	exec sql disconnect all;
-	exit(1);
+	return 1;
 }
 $ GPRE -e -n blob33x.epp
 $ CXX FLAG_CXX blob33x.cpp
-$ LINK FLAG_LINK blob33x 
+$ LINK FLAG_LINK blob33x
 $ RUN blob33x
 >> blob33.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
 
- Description:           Insert big 32k, 40k and 64k segements 
-			WHERE_GDB:blob33.gdb. 
+ Description:           Insert big 32k, 40k and 64k segements
+			WHERE_GDB:blob33.gdb.
 
  Author:                Sam Hakim, June 7, 93
- 
+
  Note:			Requested by Michael and Doc to find out the limit
 			of segments for blobs.
 
@@ -117,15 +117,15 @@ int Count;
     strcpy(Test_Name,"BlobLoader");
     printf ("Test:\n %s\n",Test);
     Underline(strlen(Test));
-  
-    /* insert 2 records for each blob */ 
+
+    /* insert 2 records for each blob */
     for (j=1; j<3; j++){
 
 	b32k_id = WriteBlob1(sizeof(b32k_segment), b32k_segment, b32k_id);
 	b40k_id = WriteBlob2(sizeof(b40k_segment), b40k_segment, b40k_id);
 	b64k_id = WriteBlob3(sizeof(b64k_segment)-1, b64k_segment, b64k_id);
-    	EXEC SQL INSERT INTO big_blob (TEST_NAME,ROW_ID,B32K,B40K,B64K) 
-		VALUES (:Test_Name,:j,:b32k_id,:b40k_id,:b64k_id); 
+    	EXEC SQL INSERT INTO big_blob (TEST_NAME,ROW_ID,B32K,B40K,B64K)
+		VALUES (:Test_Name,:j,:b32k_id,:b40k_id,:b64k_id);
 
         EXEC SQL COMMIT;
     }
@@ -136,14 +136,14 @@ int Count;
 
 	EXEC SQL DISCONNECT ALL;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	if (SQLCODE < 0) {
 		EXEC SQL WHENEVER SQLERROR CONTINUE;
 
 		ErrTrap("main");
-		exit(1);
+		return 1;
 	}
 }
 /************************************************************
@@ -169,7 +169,7 @@ for (s=Bf;L;L--)
 	*s++ = ' ';
 }
 /************************************************************
- * Create a line with numbers stuffed in a char string. 
+ * Create a line with numbers stuffed in a char string.
  ************************************************************/
 void CreateSegment(char *pBuffer, unsigned short L, int LineNo)
 {
@@ -191,12 +191,12 @@ pBf = pBuffer;
 
 	memcpy(pBf,TempBuf,strlen(TempBuf));
 	pBf += strlen(TempBuf);
-	i+= strlen(TempBuf);  
+	i+= strlen(TempBuf);
      }
 	memcpy(pBf,"<EOL\n\0",6);
 
 if (verbose)
- 	printf("%s\n, length=%d, i = %d \n", pBf, strlen(pBuffer),i); 
+ 	printf("%s\n, length=%d, i = %d \n", pBf, strlen(pBuffer),i);
 
 }
 /*******************************************************************
@@ -209,7 +209,7 @@ unsigned short BfLen;
 int i;
 
     EXEC SQL DECLARE BCW1 CURSOR FOR INSERT BLOB b32k INTO big_blob;
-    EXEC SQL OPEN BCW1 INTO :BlobId; 
+    EXEC SQL OPEN BCW1 INTO :BlobId;
 
     for (i=1; i<3; i++){
 
@@ -239,7 +239,7 @@ unsigned short BfLen;
 int i;
 
     EXEC SQL DECLARE BCW2 CURSOR FOR INSERT BLOB b40k INTO big_blob;
-    EXEC SQL OPEN BCW2 INTO :BlobId;  
+    EXEC SQL OPEN BCW2 INTO :BlobId;
 
     for (i=1; i<3; i++){
 
@@ -279,7 +279,7 @@ int i;
 
         CreateSegment(Bf,L,i);
         BfLen = strlen(Bf);
-	
+
         EXEC SQL INSERT CURSOR BCW3 VALUES (:Bf:BfLen);
 
         if (verbose)
@@ -299,10 +299,10 @@ ERR3:
 		ErrTrap("WriteBlob3");
 
 return(BlobId);
-	
+
 }
 /**************************************************************
- * Read records. 
+ * Read records.
  **************************************************************/
 void ReadRecords()
 {
@@ -314,7 +314,7 @@ EXEC SQL DECLARE TCR CURSOR FOR
          FROM big_blob WHERE TEST_NAME = 'BlobLoader';
 
 EXEC SQL OPEN TCR;
-EXEC SQL FETCH TCR 
+EXEC SQL FETCH TCR
 INTO :Test_Name,:Row_Id,:b32k_id, :b40k_id, :b64k_id, :Comment;
 
 while (SQLCODE != 100){
@@ -323,7 +323,7 @@ while (SQLCODE != 100){
 	ReadBlob2(sizeof(b40k_segment));
 	ReadBlob3(sizeof(b64k_segment));
 
-	EXEC SQL FETCH TCR 
+	EXEC SQL FETCH TCR
 	INTO :Test_Name,:Row_Id,:b32k_id, :b40k_id, :b64k_id, :Comment;
 }
 EXEC SQL CLOSE TCR;
@@ -439,7 +439,7 @@ if (SQLCODE<0){
 
 $ GPRE -e -n blob33.epp
 $ CXX FLAG_CXX blob33.cpp
-$ LINK FLAG_LINK blob33 
+$ LINK FLAG_LINK blob33
 $ RUN blob33
 $ DROP WHERE_GDB:blob33.gdb
 $ DELETE blob33*

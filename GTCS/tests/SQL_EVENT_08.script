@@ -1,8 +1,8 @@
 
 #
 #Name: Sudhanshu Kumar
-#In this test  transaction takes place trigger trig01 gets fired, 
-#event1 is posted in application program 1. trigger2 gets fired 
+#In this test  transaction takes place trigger trig01 gets fired,
+#event1 is posted in application program 1. trigger2 gets fired
 #application program is waiting for event2 to happen.
 #
 
@@ -26,16 +26,16 @@ insert into works_on1 values (2,2);
 commit;
 
 set term go;
-create trigger trig01 for project 
+create trigger trig01 for project
 active after update position 0
-as 
+as
 declare variable x int;
 begin
-    insert into works_on values (4, 4, new.prize/old.prize);     
+    insert into works_on values (4, 4, new.prize/old.prize);
     post_event 'event1';
 end
 go
-create trigger trig02 for works_on 
+create trigger trig02 for works_on
 active after insert position 1
 as
 declare variable x int;
@@ -51,21 +51,21 @@ $ISQL -m -I sql_event_8a.sql -e -sqldialect 1
 
 DATABASE DB = "WHERE_GDB:events.gdb"
 # include <stdio.h>
-main()
+int main()
 {
-  EXEC SQL 
+  EXEC SQL
 	CONNECT DB;
-  EXEC SQL 
+  EXEC SQL
 	SET TRANSACTION;
-  EXEC SQL 
+  EXEC SQL
 	EVENT INIT xyz DB ("event1");
 
   if (isc_status[1])
         isc_print_status(gds__status);
 
-  EXEC SQL 
+  EXEC SQL
 	EVENT WAIT xyz;
-  EXEC SQL 
+  EXEC SQL
 	COMMIT WORK;
 
   if (isc_status[1])
@@ -81,15 +81,15 @@ main()
 }
 $ GPRE  -n -m foo1.e
 $ CC FLAG_CC foo1.c
-$ LINK FLAG_LINK foo1 
+$ LINK FLAG_LINK foo1
 $ RUN_BG foo1 > foo1.tt1 &
 $ SLEEP 1
 >> foo2.e
 
 DATABASE DB = "WHERE_GDB:events.gdb"
- 
+
 # include <stdio.h>
-main()
+int main()
 {
   EXEC SQL
         CONNECT DB;
@@ -118,7 +118,7 @@ main()
 }
 $ GPRE  -n -m foo2.e
 $ CC FLAG_CC foo2.c
-$ LINK FLAG_LINK foo2 
+$ LINK FLAG_LINK foo2
 $ RUN_BG foo2 > foo2.tt2 &
 $ SLEEP 1
 >> sql_event_8b.sql

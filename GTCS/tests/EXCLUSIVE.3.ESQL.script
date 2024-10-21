@@ -1,11 +1,11 @@
 
 #CREATE COMMENT
-Author: Narayan 
+Author: Narayan
 Date: Mar 18, 1994.
 
-Description: This is a test to test the exclusive lock transactions. 
+Description: This is a test to test the exclusive lock transactions.
 It creates tables t1 and t2. Column b of t2 references column b of t1.
-Program A1 locks the table t with an exclusive lock and program A2 tries 
+Program A1 locks the table t with an exclusive lock and program A2 tries
 to insert in table t2. Program A2 has snapshot table stability trans. with
 no wait.
 
@@ -15,11 +15,11 @@ We sed the A.c file to insert isc_tpb_exclusive in its tpb defintion.
 >> init.sql
  create database "WHERE_GDB:test.gdb";
  create table t1 (
-    a integer, 
+    a integer,
     b integer not null primary key);
 
  create table t2 (
-    b integer references t1(b), 
+    b integer references t1(b),
     c integer);
 
  insert into t1 values (1,2);
@@ -30,17 +30,17 @@ We sed the A.c file to insert isc_tpb_exclusive in its tpb defintion.
 exec sql include sqlca
 
 exec sql set database DB = "WHERE_GDB:test.gdb";
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char * argv[];
 {
-  
-  if (!qa_mu_init(argc,argv,1)) 
+
+  if (!qa_mu_init(argc,argv,1))
   {
     printf("%s : Error ... Exiting\n",argv[0]);
     qa_mu_cleanup();
-    exit(1);
-  } 
+    return 1;
+  }
 
   exec sql connect DB;
 
@@ -58,18 +58,18 @@ char * argv[];
 exec sql include sqlca
 
 exec sql set database DB = "WHERE_GDB:test.gdb";
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char * argv[];
 {
  int cnt_t = 0;
-  
-  if (!qa_mu_init(argc,argv,1)) 
+
+  if (!qa_mu_init(argc,argv,1))
   {
     printf("%s : Error ... Exiting\n",argv[0]);
     qa_mu_cleanup();
-    exit(1);
-  } 
+    return 1;
+  }
 
   exec sql connect DB;
 

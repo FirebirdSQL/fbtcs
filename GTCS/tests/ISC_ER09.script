@@ -4,21 +4,21 @@
  *	isc_open_blob2
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er9.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er9.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
-	isc_db_handle	DB = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 	ISC_QUAD	blob_id;
-	isc_blob_handle	blob_handle = NULL;
+	isc_blob_handle	blob_handle = 0;
 	int		len;
 	char		bpb[32];
 
@@ -34,7 +34,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_open_blob2(status, &DB, &trans,
 			&blob_handle, &blob_id, len, bpb)) ==0)
 		printf("BUG: open blob2 on Null DB.\n");
@@ -44,6 +44,6 @@ int main()
 	printf("Finished ER9\n");
 }
 $ CC FLAG_CC er9.c
-$ LINK FLAG_LINK er9 
+$ LINK FLAG_LINK er9
 $ RUN er9
 $ DELETE er9*

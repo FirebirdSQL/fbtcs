@@ -31,9 +31,9 @@ from ct1 t1 inner join ct2 t2 on t1.c1 = t2.c1";
 
 void Underline();
 
-main()
+int main()
 {
-	
+
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
@@ -46,7 +46,7 @@ main()
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :t1c1,:t1c10,:t1table_row,:t2c1,:t2c10,:t2table_row;
 
@@ -59,11 +59,11 @@ main()
                 printf("%-10s",t2c1);
                 printf("%-10s",t2c10);
                 printf("%-10s\n",t2table_row);
-		
+
                 EXEC SQL
                 FETCH CR INTO :t1c1,:t1c10,:t1table_row,:t2c1,:t2c10,:t2table_row;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -75,7 +75,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -85,7 +85,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -102,11 +102,11 @@ printf("\n");
 
 $ GPRE -e join007.e
 $ CC FLAG_CC join007.c
-$ LINK FLAG_LINK join007 
+$ LINK FLAG_LINK join007
 $ RUN join007
 >> join007.sql
 connect WHERE_GDB:sh_join_7.gdb;
-select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row 
+select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row
 from ct1 t1 inner join ct2 t2 on t1.c1 = t2.c1;
 quit;
 $ISQL -m -i join007.sql

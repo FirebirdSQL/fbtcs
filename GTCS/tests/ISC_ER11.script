@@ -4,17 +4,17 @@
  *	isc_array_lookup_desc
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er11.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er11.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
-	isc_db_handle	DB = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 	ISC_ARRAY_DESC	desc;
@@ -31,7 +31,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_array_lookup_desc(status, &DB, &trans,
 			"JOB", "JOB_REQUIREMENT", &desc)) ==0)
 		printf("BUG: array lookup desc on Null DB.\n");
@@ -41,6 +41,6 @@ int main()
 	printf("Finished ER11\n");
 }
 $ CC FLAG_CC er11.c
-$ LINK FLAG_LINK er11 
+$ LINK FLAG_LINK er11
 $ RUN er11
 $ DELETE er11*

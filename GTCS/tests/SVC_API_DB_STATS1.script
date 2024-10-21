@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
 	char	*pass = "masterkey";
 	char	*dbname = "WHERE_GDB_EXTERNAL:employee.gdb";
 	ISC_STATUS	status [20];
-	isc_svc_handle svc_handle = NULL;
+	isc_svc_handle svc_handle = 0;
 	char	svc_name[RESPBUF];
 	char	spb_buff[RESPBUF];
 	char	thd_buff[RESPBUF];
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]){
 	}
 	printf("connected to service manager OK\n");
 
-	// Set up the spb for starting the backup service 
+	// Set up the spb for starting the backup service
 
 	*thd++ = isc_action_svc_db_stats;
 
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]){
 	// argument to specify restore options
 	*thd++ = isc_spb_options;
 	unsigned long options = isc_spb_sts_data_pages | isc_spb_sts_nocreation;
-//				isc_spb_sts_data_pages | isc_spb_sts_hdr_pages | isc_spb_sts_db_log 
+//				isc_spb_sts_data_pages | isc_spb_sts_hdr_pages | isc_spb_sts_db_log
 //				| isc_spb_sts_idx_pages | isc_spb_sts_sys_relations;
 	ADD_SPB_NUMERIC(thd, options);
 
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]){
 			printf ("ERROR: %s\n", respbuf);
 		printf ("End of errors\n");
 		isc_service_detach (status, &svc_handle);
-		exit(1);
+		return 1;
 	}
 
 	printf("service started OK\n");
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]){
 			isc_print_status (status);
 			isc_service_detach (status, &svc_handle);
 			printf("wrong response\n");
-			exit(1);
+			return 1;
 		}
 		printf("reading response\n");
 
@@ -145,7 +145,7 @@ int main(int argc, char* argv[]){
 			for (chTmp = 0; chTmp < len; chTmp++)
 				printf("%c",p[chTmp]);
 
-			// Since we only requested one item this time, we should be at the end of 
+			// Since we only requested one item this time, we should be at the end of
 			// the buffer terminated by isc_info_end after moving the pointer past the
 			// data we just printed out
 

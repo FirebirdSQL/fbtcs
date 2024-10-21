@@ -40,13 +40,13 @@ int main(int argc, const char** argv)
 	outsqlda->sqld = outsqlda->sqln = 2;
 	outsqlda->version = 1;
 
-	outsqlda->sqlvar[0].sqldata = &n1;
+	outsqlda->sqlvar[0].sqldata = (ISC_SCHAR*) &n1;
 	outsqlda->sqlvar[0].sqltype = SQL_LONG;
 	outsqlda->sqlvar[0].sqlind  = &ind1;
 	outsqlda->sqlvar[0].sqllen  = sizeof(n1);
 	outsqlda->sqlvar[0].sqlscale = 0;
 
-	outsqlda->sqlvar[1].sqldata = &n2;
+	outsqlda->sqlvar[1].sqldata = (ISC_SCHAR*) &n2;
 	outsqlda->sqlvar[1].sqltype = SQL_LONG;
 	outsqlda->sqlvar[1].sqlind  = &ind2;
 	outsqlda->sqlvar[1].sqllen  = sizeof(n2);
@@ -80,7 +80,7 @@ int main(int argc, const char** argv)
 	while (1)
 	{
 		ret = isc_dsql_fetch(userStatus, &stmt1, 1, outsqlda);
-		if (ret != 0) 
+		if (ret != 0)
 			break;
 
 		printf("%d, %d\n", n1, n2);
@@ -113,7 +113,7 @@ int main(int argc, const char** argv)
 	while (1)
 	{
 		ret = isc_dsql_fetch(userStatus, &stmt1, 1, outsqlda);
-		if (ret != 0) 
+		if (ret != 0)
 			break;
 
 		printf("%d, %d\n", n1, n2);

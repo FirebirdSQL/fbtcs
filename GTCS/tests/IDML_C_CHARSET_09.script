@@ -3,7 +3,7 @@
 #By:          Clare Taylor
 #Date:        08/18/94
 #Test name:   IDML_C_CHARSET_09
-#Series:      IDML_C_CHARSET          
+#Series:      IDML_C_CHARSET
 #Results:     outputs data used for bug 6092 in a better format.
 #	     Uses both isql and embedded to look at the records.
 #Dependency:  none
@@ -27,7 +27,7 @@
 #identical).  It now inputs and outputs the same data on Unix.
 #
 
->> j1.sql 
+>> j1.sql
 CREATE DATABASE 'WHERE_GDB:sundb.gdb' DEFAULT CHARACTER SET SJIS;
 CREATE TABLE NJINDATA (
   row smallint,
@@ -46,14 +46,14 @@ CREATE TABLE JA (
 COMMIT;
 QUIT;
 
->> j2.sql 
+>> j2.sql
 SET NAMES EUCJ_0208;
 CONNECT "WHERE_GDB:sundb.gdb";
-SELECT '           LIKE %ÆÃ%:',ROW,COMP FROM JA WHERE COMP LIKE '%ÆÃ%';
-SELECT 'LIKE _EUCJ_0208 %ÆÃ%:',ROW,COMP FROM JA WHERE COMP LIKE _EUCJ_0208'%ÆÃ%';
-SELECT 'LIKE _SJIS_0208 %“Á%:',ROW,COMP FROM JA WHERE COMP LIKE _SJIS_0208'%“Á%';
-SELECT 'LIKE _SJIS_0208 %ÆÃ%',ROW,COMP FROM JA WHERE COMP LIKE _SJIS_0208'%ÆÃ%'	/* bogus case */;
-SELECT '          = ÅìÍÎÆÃÇä:',ROW,COMP FROM JA WHERE COMP = 'ÅìÍÎÆÃÇä';
+SELECT '           LIKE %ï¿½ï¿½%:',ROW,COMP FROM JA WHERE COMP LIKE '%ï¿½ï¿½%';
+SELECT 'LIKE _EUCJ_0208 %ï¿½ï¿½%:',ROW,COMP FROM JA WHERE COMP LIKE _EUCJ_0208'%ï¿½ï¿½%';
+SELECT 'LIKE _SJIS_0208 %ï¿½ï¿½%:',ROW,COMP FROM JA WHERE COMP LIKE _SJIS_0208'%ï¿½ï¿½%';
+SELECT 'LIKE _SJIS_0208 %ï¿½ï¿½%',ROW,COMP FROM JA WHERE COMP LIKE _SJIS_0208'%ï¿½ï¿½%'	/* bogus case */;
+SELECT '          = ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:',ROW,COMP FROM JA WHERE COMP = 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 QUIT;
 
 >> f1.e
@@ -68,18 +68,18 @@ QUIT;
 EXEC SQL WHENEVER SQLERROR GOTO ERR_LBL;
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL SET DATABASE dbfoo = "WHERE_GDB:sundb.gdb";
-EXEC SQL BEGIN DECLARE SECTION;       /* moved the vars here */ 
-  BASED ON JA.ROW      p_row;    
+EXEC SQL BEGIN DECLARE SECTION;       /* moved the vars here */
+  BASED ON JA.ROW      p_row;
   BASED ON JA.LNAME    fam_name;
   BASED ON JA.FNAME    name;
   BASED ON JA.COMP     comp_name;
   BASED ON JA.PHONE    tel_num;
 EXEC SQL END DECLARE SECTION;
 
-main()
+int main()
 {
-    EXEC SQL SET NAMES EUCJ;  
-    EXEC SQL CONNECT dbfoo;           
+    EXEC SQL SET NAMES EUCJ;
+    EXEC SQL CONNECT dbfoo;
     EXEC SQL SET TRANSACTION;
     /*--------------------------------------------------------------
 	This works well and was used to insure that the data were
@@ -88,17 +88,17 @@ main()
 	put it back in and use the alternate print statement below. */
     EXEC SQL
           DECLARE C_GET CURSOR FOR
-          SELECT ROW, LNAME, FNAME, COMP FROM JA;      
+          SELECT ROW, LNAME, FNAME, COMP FROM JA;
 
-    EXEC SQL OPEN C_GET;    
+    EXEC SQL OPEN C_GET;
     EXEC SQL FETCH C_GET INTO :p_row, :fam_name, :name, :comp_name;
     /*---------------------------------------------------------------*/
     /*
     EXEC SQL
           DECLARE C_GET CURSOR FOR
-          SELECT ROW, COMP FROM JA;      
+          SELECT ROW, COMP FROM JA;
 
-    EXEC SQL OPEN C_GET;    
+    EXEC SQL OPEN C_GET;
     EXEC SQL FETCH C_GET INTO :p_row, :comp_name;
     */
     while (SQLCODE == 0)
@@ -107,51 +107,51 @@ main()
 
 	  printf ("%-3d %-11s %-11s %-25s\n", p_row, fam_name, name, comp_name);
           EXEC SQL FETCH C_GET INTO :p_row, :fam_name, :name, :comp_name;
-          
+
 	  /*
           printf ("%-3d  %-25s\n", p_row, comp_name);
           EXEC SQL FETCH C_GET INTO :p_row, :comp_name;
 	 */
          }
-    EXEC SQL CLOSE C_GET;    
+    EXEC SQL CLOSE C_GET;
     EXEC SQL COMMIT;
-exit(0);
+return 0;
 ERR_LBL:
         isc_print_sqlerror (SQLCODE, gds__status);
         isc_print_status (gds__status);
-exit(1);    
+return 1;
 }
 >> sqldata.sql
 SET NAMES EUCJ;
 CONNECT WHERE_GDB:sundb.gdb;
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(1,'»°µÈ', 'µ±', 'Æü¸÷´Ñ¸÷');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(2,'¹­ÅÄ', '½ç»Ò', 'ÆÃµÞ¶ä¹Ô');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(3,'°¤Éô', '¹°Èþ', '£Â£Ò£É£Ô£Å¡¡£Ã£Ì£Å£Á£Î');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(4,'ÎëÌÚ', '¤µ¤ó¤´', '£È£Ï£Ì£É£Ä£Á£Ù¡¡£É£Î£Î');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(5,'¾®ÎÓ', '´îÈþ»Ò', '¹­¡¼£Î');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(6,'¥ß¥é¡¼', '¥Ù¥ó', 'ÅìÍÎÆÃÇä');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(7,'Æ£¸¶', '¿¿µª»Ò', 'ÆüËÜ£Ç£Ï');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(8,'²Ï¾å', '·½»Ò', '¹Ò¹Ô³¤´Ñ');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(9,'¿¹ËÜ', 'É÷»Ò', 'ÂçÆó°õ');
-INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(10,'¹­ÅÄ','½ç»Ò', 'aaaaabbbbbcccccdddddÆÃ');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(1,'ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¸ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(2,'ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½', 'ï¿½ÃµÞ¶ï¿½ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(3,'ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½', 'ï¿½Â£Ò£É£Ô£Å¡ï¿½ï¿½Ã£Ì£Å£ï¿½ï¿½ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(4,'ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½', 'ï¿½È£Ï£Ì£É£Ä£ï¿½ï¿½Ù¡ï¿½ï¿½É£Î£ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(5,'ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(6,'ï¿½ß¥é¡¼', 'ï¿½Ù¥ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(7,'Æ£ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½Ü£Ç£ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(8,'ï¿½Ï¾ï¿½', 'ï¿½ï¿½ï¿½ï¿½', 'ï¿½Ò¹Ô³ï¿½ï¿½ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(9,'ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½');
+INSERT INTO JA (ROW, LNAME, FNAME, COMP) VALUES(10,'ï¿½ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½', 'aaaaabbbbbcccccdddddï¿½ï¿½');
 COMMIT;
 QUIT;
 >> dat1
-»°µÈ         µ±           Æü¸÷´Ñ¸÷                   05424558
-¹­ÅÄ         ½ç»Ò         ÆÃµÞ¶ä¹Ô                   05494129
-°¤Éô         ¹°Èþ         £Â£Ò£É£Ô£Å¡¡£Ã£Ì£Å£Á£Î     02454324
-ÎëÌÚ         ¤µ¤ó¤´       £È£Ï£Ì£É£Ä£Á£Ù¡¡£É£Î£Î     07267932
-¾®ÎÓ         ´îÈþ»Ò       ¹­¡¼£Î                     033424524
-¥ß¥é¡¼       ¥Ù¥ó         ÅìÍÎÆÃÇä                   04524652
-Æ£¸¶         ¿¿µª»Ò       ÆüËÜ£Ç£Ï                   033545842
-²Ï¾å         ·½»Ò         ¹Ò¹Ô³¤´Ñ                   02345234
-¿¹ËÜ         É÷»Ò         ÂçÆó°õ                     02452462
-¹­ÅÄ         ½ç»Ò         aaaaabbbbbcccccdddddÆÃ     05494128
+ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½           ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¸ï¿½                   05424558
+ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½ï¿½         ï¿½ÃµÞ¶ï¿½ï¿½                   05494129
+ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½ï¿½ï¿½         ï¿½Â£Ò£É£Ô£Å¡ï¿½ï¿½Ã£Ì£Å£ï¿½ï¿½ï¿½     02454324
+ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½ï¿½ï¿½       ï¿½È£Ï£Ì£É£Ä£ï¿½ï¿½Ù¡ï¿½ï¿½É£Î£ï¿½     07267932
+ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½       ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                     033424524
+ï¿½ß¥é¡¼       ï¿½Ù¥ï¿½         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                   04524652
+Æ£ï¿½ï¿½         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½       ï¿½ï¿½ï¿½Ü£Ç£ï¿½                   033545842
+ï¿½Ï¾ï¿½         ï¿½ï¿½ï¿½ï¿½         ï¿½Ò¹Ô³ï¿½ï¿½ï¿½                   02345234
+ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½ï¿½ï¿½ï¿½                     02452462
+ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½ï¿½         aaaaabbbbbcccccdddddï¿½ï¿½     05494128
 $ ISQL -i j1.sql -m
 $ ISQL -i sqldata.sql -m
 $ GPRE -e -m f1.e
 $ CC FLAG_CC f1.c
-$ LINK FLAG_LINK f1 
+$ LINK FLAG_LINK f1
 $ RUN f1
 $ ISQL -i j2.sql -m
 $ DROP WHERE_GDB:sundb.gdb

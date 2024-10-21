@@ -5,17 +5,17 @@
  *	isc_dsql_allocate_statement
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er2.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er2.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
-	isc_db_handle	DB = NULL;
-        isc_stmt_handle	stmt = NULL;
+	isc_db_handle	DB = 0;
+        isc_stmt_handle	stmt = 0;
 	ISC_STATUS 	rc, status[20];
         char		err_buf[128];
 
@@ -29,7 +29,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_dsql_allocate_statement(status, &DB, &stmt)) ==0)
 		printf("BUG: Null DB on alloc stmt.\n");
         else
@@ -38,6 +38,6 @@ int main()
 	printf("Finished ER2\n");
 }
 $ CC FLAG_CC er2.c
-$ LINK FLAG_LINK er2 
+$ LINK FLAG_LINK er2
 $ RUN er2
 $ DELETE er2*

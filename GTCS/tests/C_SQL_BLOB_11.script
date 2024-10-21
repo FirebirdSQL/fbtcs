@@ -48,7 +48,7 @@ bool verbose;
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
-   
+
     Count = 0;
     M.Buffer[0] = 0;
     strcpy(Test_Name,"blob011");
@@ -87,7 +87,7 @@ bool verbose;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -97,7 +97,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw and underline
@@ -131,7 +131,7 @@ void CreateLine(char Bf[])
 char            TempBuf[6],*s;
 int		i,j,t,k;
 
-     
+
      t = sizeof(TempBuf);
      j = k = 1;
 
@@ -145,13 +145,13 @@ int		i,j,t,k;
 	else{
 		sprintf (TempBuf,"%4d,",j);
 	}
-	strncat(Bf,TempBuf,t); 
+	strncat(Bf,TempBuf,t);
      }
 }
 
 $ GPRE -e blob011.epp
 $ CXX FLAG_CXX blob011.cpp
-$ LINK FLAG_LINK blob011 
+$ LINK FLAG_LINK blob011
 $ RUN blob011
 
 >> blob011b.cpp
@@ -220,4 +220,4 @@ $ LINK FLAG_LINK blob011b
 $ RUN blob011b
 
 $DROP WHERE_GDB:sh_blobs_11.gdb
-$ DELETE blob011* 
+$ DELETE blob011*

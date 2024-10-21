@@ -53,7 +53,7 @@ exec sql include salca
 
 exec sql set database DB = "WHERE_GDB:ac3_test.gdb";
 
-main()
+int main()
 {
   exec sql connect DB;
 

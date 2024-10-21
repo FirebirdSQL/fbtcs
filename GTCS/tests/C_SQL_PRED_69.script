@@ -2,7 +2,7 @@
 #
 #**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column spec> STARTING [WITH] <value spec>
 #                        Case sensitive searches including blob string
 #
@@ -40,7 +40,7 @@ WHERE SALARY STARTING 1";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -56,7 +56,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Salary;
 
@@ -69,7 +69,7 @@ char *argv[];
                 EXEC SQL
                 FETCH CR INTO :Salary;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -81,7 +81,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -91,7 +91,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -107,7 +107,7 @@ printf("\n");
 }
 $ GPRE -e sta029.e
 $ CC FLAG_CC sta029.c
-$ LINK FLAG_LINK sta029 
+$ LINK FLAG_LINK sta029
 $ RUN sta029
 >> sta029.sql
 CONNECT WHERE_GDB:sh_test.gdb;
@@ -116,5 +116,5 @@ SELECT COUNT(*) FROM management WHERE salary STARTING WITH 1;
 QUIT;
 $ISQL -m -i sta029.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sta029* 
+$ DELETE sta029*
 
