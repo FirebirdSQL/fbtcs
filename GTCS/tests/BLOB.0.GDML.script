@@ -6,7 +6,7 @@ create table t1 (a int not null, b blob);
 database db = "WHERE_GDB:test2.gdb";
 #include <stdio.h>
 #include <string.h>
-main()
+int main()
 {
 	char *sentence = "This is segment number %d\n";
 	int i, j;
@@ -15,7 +15,7 @@ main()
 	start_transaction;
 
 	j = 0;
-	while ( j < 6 ) 
+	while ( j < 6 )
 	{
 		store c in t1 using
 			c.a = j;
@@ -45,10 +45,10 @@ main()
 		printf("\n");
 	end_for;
 }
-$ISQL -m -i init.sql	
+$ISQL -m -i init.sql
 $GPRE -m -e p1.e
 $CC FLAG_CC p1.c
-$LINK FLAG_LINK p1 
+$LINK FLAG_LINK p1
 $RUN p1
 $DROP WHERE_GDB:test2.gdb
 $DELETE  *.sql p1*

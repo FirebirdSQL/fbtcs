@@ -4,9 +4,9 @@
  *	isc_array_get_slice
  *
  *	Pass an invalid transaction handle.
- * 
- *  Test name: er37.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er37.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
@@ -16,12 +16,12 @@ int main()
 {
 	extern  char empdb[128];
 
-	isc_db_handle	DB = NULL, DB2 = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0, DB2 = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 	ISC_ARRAY_DESC	desc;
-	long	len;
+	int	len;
 	int		cnt[4];
 	ISC_QUAD	array_id;
 	short	length,dim;
@@ -61,7 +61,7 @@ int main()
 		{ERRCONTINUE(status, rc, err_buf)};
 		printf ("get_slice ok\n");
 
-	trans = NULL;
+	trans = 0;
 	if ((rc=isc_array_get_slice(status, &DB, &trans,&array_id, &desc,
 			cnt, &len))==0)
 		printf("BUG: Bad tr handle to array getslice.\n");
@@ -77,6 +77,6 @@ int main()
 }
 $ CC FLAG_CC er37.c
 $ CC FLAG_CC globals.c
-$ LINK FLAG_LINK er37 globals 
+$ LINK FLAG_LINK er37 globals
 $ RUN er37
 $ DELETE er37*

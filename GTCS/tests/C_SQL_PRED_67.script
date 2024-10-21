@@ -1,6 +1,6 @@
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column spec> STARTING [WITH] <value spec>
 #                        Case sensitive searches including blob string
 #
@@ -39,7 +39,7 @@ ORDER BY JOB";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -56,7 +56,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Job;
 
@@ -69,7 +69,7 @@ char *argv[];
                 EXEC SQL
                 FETCH CR INTO :Job;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -81,7 +81,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -91,7 +91,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -107,7 +107,7 @@ printf("\n");
 }
 $ GPRE -e sta026.e
 $ CC FLAG_CC sta026.c
-$ LINK FLAG_LINK sta026 
+$ LINK FLAG_LINK sta026
 $ RUN sta026
 >> sta026.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -116,5 +116,5 @@ select count(*) from employees where job starting 'mg';
 quit;
 $ISQL -m -i sta026.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sta026* 
+$ DELETE sta026*
 

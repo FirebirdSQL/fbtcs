@@ -4,9 +4,9 @@
  *	isc_array_lookup_bounds
  *
  *	Pass an invalid transaction handle.
- * 
- *  Test name: er35.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er35.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
@@ -16,8 +16,8 @@ int main()
 {
 	extern  char empdb[128];
 
-	isc_db_handle	DB = NULL, DB2 = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0, DB2 = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 	ISC_ARRAY_DESC	desc;
@@ -41,7 +41,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	trans = NULL;
+	trans = 0;
 	if ((rc=isc_array_lookup_bounds(status, &DB, &trans,"TBL1",
 			"IONE", &desc))==0)
 		printf("BUG: Bad tr handle to array lookup bounds\n");
@@ -55,6 +55,6 @@ int main()
 }
 $ CC FLAG_CC er35.c
 $ CC FLAG_CC globals.c
-$ LINK FLAG_LINK er35 globals 
+$ LINK FLAG_LINK er35 globals
 $ RUN er35
 $ DELETE er35*

@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
 	char	*dbname = "WHERE_GDB_EXTERNAL:employee.gdb";
 	char	*bkup_file = "WHERE_GDB_EXTERNAL:employee.gbk";
 	ISC_STATUS	status [20];
-	isc_svc_handle svc_handle = NULL;
+	isc_svc_handle svc_handle = 0;
 	char	svc_name[RESPBUF];
 	char	spb_buff[RESPBUF];
 	char	thd_buff[RESPBUF];
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
 	printf("connected to service manager OK\n");
 	fflush(stdout);
 
-	// Set up the spb for starting the backup service 
+	// Set up the spb for starting the backup service
 
 	*thd++ = isc_action_svc_backup;
 
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]){
 		fprintf(stderr, "End of errors\n");
 		fflush(stderr);
 		isc_service_detach (status, &svc_handle);
-		exit(1);
+		return 1;
 	}
 
 	printf("service started OK\n");
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]){
 			isc_service_detach(status, &svc_handle);
 			printf("wrong response\n");
 			fflush(stdout);
-			exit(1);
+			return 1;
 		}
 //		printf("reading response\n");
 
@@ -160,7 +160,7 @@ int main(int argc, char* argv[]){
 				printf("\n");
 			fflush(stdout);
 
-			// Since we only requested one item this time, we should be at the end of 
+			// Since we only requested one item this time, we should be at the end of
 			// the buffer terminated by isc_info_end after moving the pointer past the
 			// data we just printed out
 

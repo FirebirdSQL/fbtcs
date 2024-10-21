@@ -2,15 +2,15 @@
 #>> comment
 #By:          Clare Taylor
 #Date:        08/--/94
-#Test name:   IDML_C_CHARSET_06         
-#Series:      IDML_C_CHARSET          
+#Test name:   IDML_C_CHARSET_06
+#Series:      IDML_C_CHARSET
 #Results:     Still not working properly due to bug 7095? or the
 #	     one filed for -charset
 #
 #Dependency:  Requires db built in IDML_C_CHARSET_04 W/the .gbk
 #	     file created in that test.
 #History:
-#8/11/94:     build W: reinit due to additional results from 
+#8/11/94:     build W: reinit due to additional results from
 #	     one of the other tests (a bug fix allowed the
 #	     stored procedure insert w/set names to work).  This
 #	     still shows bad results--if -charset is used the
@@ -31,7 +31,7 @@
 $ GBAK -r intlemp.gbk WHERE_GDB:intlemp_06.gdb
 >> btest3.e
 /* Case 3:
-   Contains NO DATABASE statement so: 
+   Contains NO DATABASE statement so:
 
    Compile with:   gpre -m -charset iso8859_1 btest1.e
                    cc btest1.c -lgds -ldld -o btest
@@ -59,7 +59,7 @@ EXEC SQL SET DATABASE db = "WHERE_GDB:intlemp_06.gdb";
 
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL BEGIN DECLARE SECTION;
-     BASED ON EMPLOYEE.EMP_NO       e_empno;      
+     BASED ON EMPLOYEE.EMP_NO       e_empno;
      BASED ON EMPLOYEE.FIRST_NAME   e_firstname;
      BASED ON EMPLOYEE.FIRST_NAME   s_firstname;
      BASED ON EMPLOYEE.LAST_NAME    e_lastname;
@@ -69,7 +69,7 @@ EXEC SQL END DECLARE SECTION;
 void print_error();
 
 int main (int argc, char* argv)
-{    
+{
      char  c;
 
      printf("\n--------------------------------------------------------------\n");
@@ -83,7 +83,7 @@ EXEC SQL SET TRANSACTION;
           SELECT * FROM EMPLOYEE;
      EXEC SQL OPEN T_SEARCH;
      EXEC SQL FETCH T_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
- 
+
      while (SQLCODE == 0)
          {
           printf ("%-10d %-15s %-20s\n", e_empno, e_firstname, e_lastname);
@@ -102,7 +102,7 @@ EXEC SQL SET TRANSACTION;
           VALUES (333, :s_firstname,:s_lastname);
 EXEC SQL COMMIT;
 
-     exit(0);
+     return 0;
 Err:
   print_error();
 }
@@ -111,14 +111,14 @@ void print_error()
 {
 if (SQLCODE != 100)
      printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
-     isc_print_sqlerror(SQLCODE, gds__status); 
+     isc_print_sqlerror(SQLCODE, gds__status);
      isc_print_status (gds__status);
-exit(1);
+return 1;
 }
 
 $ GPRE -m -charset iso8859_1 btest3.e
 $ CC FLAG_CC btest3.c
-$ LINK FLAG_LINK btest3 
+$ LINK FLAG_LINK btest3
 $ RUN btest3
 >> verify.sql
 set names iso8859_1;

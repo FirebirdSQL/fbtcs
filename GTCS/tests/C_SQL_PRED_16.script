@@ -48,12 +48,12 @@ FROM FULLEMP \
 V2 WHERE V2.DEPARTMENT = V1.DEPARTMENT)";
 
 void Underline();
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
 {
-	
+
 	int Count = 0;
         printf("Test:\n %s\n",Test);
         Underline(80);
@@ -68,7 +68,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :DeptNo,:Department,:MgrNo,:Reports,
                 :Level,:Head_Dept,:Budget;
@@ -86,13 +86,13 @@ char *argv[];
                 printf("%s\t",Level);
                 printf("%s\t",Head_Dept);
                 printf("%8.2f\n",(double)((Budget)/100));
-		Underline(80);	
+		Underline(80);
 
                 EXEC SQL
                 FETCH CR INTO :DeptNo,:Department,:MgrNo,:Reports,
                 :Level,:Head_Dept,:Budget;
         }
-	
+
 NOMORE:
 
 	EXEC SQL
@@ -105,7 +105,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:    EXEC SQL
                 CLOSE CR;
@@ -117,7 +117,7 @@ ERR_LBL:    EXEC SQL
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 void Underline(i)
@@ -152,23 +152,23 @@ while (*s){
 }
 
 for (;i<l;s++,i++)
-	*s=' ';	
+	*s=' ';
 *s='\0';
 }
 
 $ GPRE -e sin020.e
 $ CC FLAG_CC sin020.c
-$ LINK FLAG_LINK sin020 
+$ LINK FLAG_LINK sin020
 $ RUN sin020
 >> sin020.sql
 connect WHERE_GDB:sh_test.gdb;
 select * from dept_budget v1 where singular (select * from fullemp
 v2 where v2.department = v1.department);
- 
+
 select * from dept_budget v1 where 1 =  (select count(*) from fullemp
-v2 where v2.department = v1.department); 
+v2 where v2.department = v1.department);
 quit;
 $ISQL -m -i sin020.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin020* 
+$ DELETE sin020*
 

@@ -1,10 +1,10 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# Syntax:		[NOT]SINGULAR <subquery>			
+# Syntax:		[NOT]SINGULAR <subquery>
 # Description:		Two table join - SINGULAR
-# Tables:		customers		
-# Expected result:	 
+# Tables:		customers
+# Expected result:
 # Author:		Sam Hakim, Feb 18, 93
 #************************************************************************
 
@@ -36,7 +36,7 @@ WHERE S1.CUSTNO = C1.CUSTNO)";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -45,16 +45,16 @@ char *argv[];
         printf("Test:\n %s\n",Test);
         Underline(80);
 	EXEC SQL
-		DECLARE CR CURSOR FOR 
+		DECLARE CR CURSOR FOR
 		SELECT * FROM CUSTOMERS C1 WHERE SINGULAR
 		(SELECT * FROM SALES S1
 		 WHERE S1.CUSTNO = C1.CUSTNO);
 	EXEC SQL
 		OPEN CR;
 	EXEC SQL
-		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City, 
+		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City,
 		:State, :Zip_Code, :Phone_No, :On_Hold;
-		
+
 	while (SQLCODE == 0){
 		printf ("%ld\t",CustNo);
 		printf ("%s\t",Customer);
@@ -66,17 +66,17 @@ char *argv[];
 		printf ("%s\t",Phone_No);
 		printf ("%s\n",On_Hold);
                 Underline(80);
-		
+
 	EXEC SQL
-		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City, 
-		:State, :Zip_Code, :Phone_No, :On_Hold;	
+		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City,
+		:State, :Zip_Code, :Phone_No, :On_Hold;
 	}
-	
+
 	EXEC SQL
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -86,7 +86,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /*--- print and underline of width i */
@@ -104,7 +104,7 @@ printf("\n");
 
 $ GPRE -e sin003.e
 $ CC FLAG_CC sin003.c
-$ LINK FLAG_LINK sin003 
+$ LINK FLAG_LINK sin003
 $ RUN sin003
 >> sin003.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -115,5 +115,5 @@ where 1 = (select count(*) from sales s1 where s1.custno = c1.custno);
 quit;
 $ISQL -m -i sin003.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin003* 
+$ DELETE sin003*
 

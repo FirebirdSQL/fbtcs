@@ -1,7 +1,7 @@
 
 #
 #Author: Sudhanshu Kumar
-#In this test event init shows its interest in two events. 
+#In this test event init shows its interest in two events.
 #
 
 >> sql_event_03a.sql
@@ -16,14 +16,14 @@ insert into works_on values (1, 2, 30);
 insert into works_on values (3, 3, 40);
 
 set term go;
-create trigger trig01 for works_on 
+create trigger trig01 for works_on
 active before update position 1
-as 
+as
 declare variable x int;
 begin
-if (new.hours > old.hours) then 
+if (new.hours > old.hours) then
      post_event 'hours_increased';
-else 
+else
      post_event 'hours_decreased';
 end
 go
@@ -33,21 +33,21 @@ $ISQL -m -I sql_event_03a.sql -sqldialect 1
 >> foo3.e
 # include <stdio.h>
 DATABASE DB = "WHERE_GDB:events.gdb"
-main()
+int main()
 {
-  EXEC SQL 
+  EXEC SQL
 	CONNECT DB;
-  EXEC SQL 
+  EXEC SQL
 	SET TRANSACTION;
-  EXEC SQL 
+  EXEC SQL
 	EVENT INIT xyz DB ("hours_increased", "hours_decreased");
 
   if (isc_status[1])
         isc_print_status(gds__status);
 
-  EXEC SQL 
+  EXEC SQL
 	EVENT WAIT xyz;
-  EXEC SQL 
+  EXEC SQL
 	COMMIT WORK;
 
   if (isc_status[1])
@@ -67,7 +67,7 @@ main()
 
 $ GPRE  -n -m foo3.e
 $ CC FLAG_CC foo3.c
-$ LINK FLAG_LINK foo3 
+$ LINK FLAG_LINK foo3
 $ RUN_BG foo3 > foo3.tt1 &
 $ SLEEP 2
 >> sql_event_03b.sql
@@ -78,7 +78,7 @@ select * from works_on;
 quit;
 $ ISQL -m -i sql_event_03b.sql
 $ SLEEP 1
-$ TYPE foo3.tt1 
+$ TYPE foo3.tt1
 $ RUN_BG foo3 > foo3.tt2 &
 $ SLEEP 1
 >> sql_event_03c.sql
@@ -90,6 +90,6 @@ quit;
 $ ISQL -m -i sql_event_03c.sql
 $ SLEEP 1
 $ TYPE foo3.tt2
-$ DROP WHERE_GDB:events.gdb 
+$ DROP WHERE_GDB:events.gdb
 $ DELETE foo3* sql_event_03*
 

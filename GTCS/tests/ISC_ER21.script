@@ -4,16 +4,16 @@
  *	isc_wait_for_event  NOT supported on PC.
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er21.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er21.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
-	isc_db_handle 	DB = NULL;
+	isc_db_handle 	DB = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 	short	len;
@@ -29,7 +29,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_wait_for_event(status, &DB, len, event_buf, rbuf))==0)
 		printf("BUG: Bad DB to wait for event\n");
         else
@@ -37,6 +37,6 @@ int main()
 	printf("Finished ER21\n");
 }
 $ CC FLAG_CC er21.c
-$ LINK FLAG_LINK er21 
+$ LINK FLAG_LINK er21
 $ RUN er21
 $ DELETE er21*

@@ -39,11 +39,11 @@ void Underline(int);
 
 int main(int argc,char* argv[])
 {
-	
+
     int 	Count;
     short	FullFetch,PartialFetch;
     bool verbose;
-    
+
     verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
@@ -52,7 +52,7 @@ int main(int argc,char* argv[])
 
     Count = 0;
     FullFetch = PartialFetch = 0;
-    
+
     printf ("Test:\n %s\n",Test);
     Underline(80);
     M.SOB = sizeof(M.Buffer);
@@ -74,13 +74,13 @@ int main(int argc,char* argv[])
         EXEC SQL OPEN BCR USING :BlobId;
     	EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
 
-        while (SQLCODE != 100){	
+        while (SQLCODE != 100){
 	    if (verbose)
                  printf("SQLCODE = %ld, BufferLen = %d FullFetch = %d\n",
 		         SQLCODE,M.BufferLen,FullFetch);
-		 
+
             printf ("%*.*s",M.BufferLen,M.BufferLen,M.Buffer);
-	    
+
             while (SQLCODE == 101){
                 EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
 		PartialFetch++;
@@ -100,10 +100,10 @@ int main(int argc,char* argv[])
     }
     printf("...Done\n");
 	EXEC SQL CLOSE TCR;
-	
+
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -113,7 +113,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /***********************************************************
  * U n d e r l i n e
@@ -129,7 +129,7 @@ printf("\n");
 
 $ GPRE -e blob002.epp
 $ CXX FLAG_CXX blob002.cpp
-$ LINK FLAG_LINK blob002 
+$ LINK FLAG_LINK blob002
 $ RUN blob002
 $DROP WHERE_GDB:sh_blobs_2.gdb
 $ DELETE blob002*

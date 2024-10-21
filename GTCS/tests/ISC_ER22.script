@@ -4,9 +4,9 @@
  *	isc_cancel_events
  *
  *	Pass an invalid database handle.
- * 
- *  Test name: er22.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er22.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
@@ -14,10 +14,10 @@
 
 int main()
 {
-	isc_db_handle	DB = NULL;
+	isc_db_handle	DB = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
-	long	event_id;
+	int	event_id;
 
 	printf("Running ER22, invalid db handle\n");
 	printf("to isc_cancel_events\n");
@@ -30,7 +30,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_cancel_events(status, &DB, &event_id))==0)
 		printf("BUG: Bad DB to cancal event\n");
         else
@@ -39,6 +39,6 @@ int main()
 	printf("Finished ER22\n");
 }
 $ CC FLAG_CC er22.c
-$ LINK FLAG_LINK er22 
+$ LINK FLAG_LINK er22
 $ RUN er22
 $ DELETE er22*

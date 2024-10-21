@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 #
 # Description:           date-field containing number
@@ -50,7 +50,7 @@ static char             *months [] ={
 };
 
 void ToDate();
-char AlphaDate[13];                     
+char AlphaDate[13];
 struct tm UxTime;
 
 
@@ -60,7 +60,7 @@ WHERE SHIPPED CONTAINING 'Jul'";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -76,7 +76,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :CustNo,:Total_Value,:Shipped;
 
@@ -93,7 +93,7 @@ char *argv[];
                 EXEC SQL
                 FETCH CR INTO :CustNo,:Total_Value,:Shipped;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -105,7 +105,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -115,7 +115,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /****************************************************************
@@ -144,7 +144,7 @@ printf("\n");
 
 $ GPRE -e con033.e
 $ CC FLAG_CC con033.c
-$ LINK FLAG_LINK con033 
+$ LINK FLAG_LINK con033
 $ RUN con033
 >> con033.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -154,4 +154,4 @@ WHERE SHIPPED CONTAINING 'Jul';
 quit;
 $ISQL -m -i con033.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con033* 
+$ DELETE con033*

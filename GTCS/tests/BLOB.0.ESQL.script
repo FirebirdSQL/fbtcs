@@ -8,7 +8,7 @@ exec sql set schema db = "WHERE_GDB:test1.gdb";
 #include <stdio.h>
 #include <string.h>
 char buffer[80];
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -27,7 +27,7 @@ char *argv[];
 		exec sql declare c cursor for insert blob b into t1;
 		exec sql open c into  :t1_blob;
 		for ( i = 0; i< 5; i++)
-		{	
+		{
 		sprintf(segment, sentence, i+j*10);
 		segment_len = strlen(segment);
 		exec sql insert cursor c values (:segment INDICATOR :segment_len);
@@ -58,12 +58,12 @@ char *argv[];
 	}
 	exec sql commit;
 }
-	
+
 
 $ISQL -m -i init.sql
 $GPRE -m -e p1.e
 $CC FLAG_CC p1.c
-$LINK FLAG_LINK p1 
+$LINK FLAG_LINK p1
 $RUN p1
 $DROP WHERE_GDB:test1.gdb
 $DELETE -f  p1* init.sql

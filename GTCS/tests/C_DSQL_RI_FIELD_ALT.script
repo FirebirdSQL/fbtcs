@@ -23,15 +23,15 @@ using namespace std;
 
    Dependencies: Need to run C_DSQL_RI_INIT first.
 
-   Purpose: RI test suite 
-   
+   Purpose: RI test suite
+
    Tests are:
    	Table Constraints:
    		unique		tab_uniq.e
    		primary key	tab_prim.e
-   		referential	tab_ref.e     
+   		referential	tab_ref.e
    		check const	tab_check.e
-   	
+
    	Column Constraints:
    		unique		col_uniq.e
    		primary key	col_prim.e
@@ -40,25 +40,25 @@ using namespace std;
    		not null    col_nnull.e
 
 	DDL Modify Operations:
-		alter table add constraint	alt_add.e	
-		alter table drop constraint	alt_drop.e   
+		alter table add constraint	alt_add.e
+		alter table drop constraint	alt_drop.e
 		drop table			drop_tab.e
 		alter field			fieldalt.e  <------ this test
-		drop field			field_drop.e 
+		drop field			field_drop.e
 		alter index			index_alt.e
 		drop index			index_drop.e
 		delete trigger			trigger_del.e
 		modify trigger			trigger_mod.e
 
 
-Overview: this test makes sure that new constraints are added correctly. 
+Overview: this test makes sure that new constraints are added correctly.
 It will:
 
-		CREATE AUTHOURS, BOOKS  with BOOKS referring to AUTHORS 
+		CREATE AUTHOURS, BOOKS  with BOOKS referring to AUTHORS
 		[Verify constraints on AUTHORS, BOOKS]
-		INSERT records into AUTHORS, some nulls, duplicates   
+		INSERT records into AUTHORS, some nulls, duplicates
 		SELECT FROM AUTHORS            		[verify expected records]
-		
+
 		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL  	[should fail]
 		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY  	[should fail]
 		[Verify constraints on AUTHORS]
@@ -70,7 +70,7 @@ It will:
 		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY  	[should succeed]
 		ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL  	[should succeed]
 		[Verify constraints on AUTHORS]
-		
+
 		INSERT records into AUTHORS, some nulls, duplicates    [duplicates kept]
 		SELECT FROM AUTHORS            		[verify expected records]
 
@@ -81,18 +81,18 @@ It will:
 EXEC SQL
 	INCLUDE SQLCA;
 
-/* Set up to catch SQL errors. Note: this will require that 
+/* Set up to catch SQL errors. Note: this will require that
 each routine containing executeable SQL commands has
 an error handling section labeled 'err'.*/
 EXEC SQL
 	WHENEVER SQLERROR GO TO err;
-	
+
 /* Forward declarations */
 void die_on_error();
 int setup();
-extern int print_views(); 
-bool alter_drop_key_constr(int); 
-bool alter_drop_nnull_constr(int); 
+extern int print_views();
+bool alter_drop_key_constr(int);
+bool alter_drop_nnull_constr(int);
 bool alter_drop_referring_field();
 bool insert_authors();
 int test_it();
@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
 
 
 
-int test_it() 
+int test_it()
 {
 	if (!insert_authors()) {
 		printf("Exit after error in insert_authors\n");
@@ -181,7 +181,7 @@ int test_it()
 		exit (1);
 	}
 
-	if (print_views())  {          
+	if (print_views())  {
 		printf("4th print view \n");
 		exit (1);
 	}
@@ -190,7 +190,7 @@ int test_it()
 				/* should keep duplicates, reject nulls */
 		exit (1);
 
-	if (verify(7))	
+	if (verify(7))
 		exit (1);
 	return 0;
 }
@@ -204,17 +204,17 @@ int setup() {
 		printf("entered setup\n");
 
 	if (istable("books")) {
-		if (verbose) 
+		if (verbose)
 			printf("books found... will be dropped\n");
-		
+
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
 		EXEC SQL COMMIT;
 	}
 
 	if (istable("authors")) {
-		if (verbose) 
+		if (verbose)
 			printf("authors found... will be dropped\n");
-		
+
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE AUTHORS';
 		EXEC SQL COMMIT;
 	}
@@ -224,7 +224,7 @@ int setup() {
 	EXEC SQL
 		DECLARE AUTHORS TABLE
 			(AUTHOR_ID CHAR(11), AUTHOR_NAME CHAR(12))
-	
+
 	cmd = "CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) \
 			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL \
 				CONSTRAINT AUTH_ID_KEY PRIMARY KEY, \
@@ -264,17 +264,17 @@ bool alter_drop_key_constr(int flag)
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
+
 	/* should fail if key referenced; else should succeed */
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY';
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
 
 	if (flag == works)
-		printf ("alter_drop_key_constr expected SQLCODE = 0. "); 
+		printf ("alter_drop_key_constr expected SQLCODE = 0. ");
 	else
-		printf ("alter_drop_key_constr expected SQLCODE = -607. "); 
+		printf ("alter_drop_key_constr expected SQLCODE = -607. ");
 
 	printf ("Got SQLCODE = %d\n", SQLCODE);
 
@@ -294,17 +294,17 @@ bool alter_drop_nnull_constr(int flag)
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
+
 	/* should fail if key constraint exits; else succeed */
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL';
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
 
 	if (flag == works)
-		printf ("alter_drop_nnull_constr expected SQLCODE = 0. "); 
+		printf ("alter_drop_nnull_constr expected SQLCODE = 0. ");
 	else
-		printf ("alter_drop_nnull_constr expected SQLCODE = -607. "); 
+		printf ("alter_drop_nnull_constr expected SQLCODE = -607. ");
 
 	printf ("Got SQLCODE = %d\n", SQLCODE);
 
@@ -324,14 +324,14 @@ bool alter_drop_referring_field() {
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
+
 	/* should succeed */
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE BOOKS DROP BOOK_AUTH_ID';
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
 
-	printf ("alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = %d\n", 
+	printf ("alter_drop_referring_field expected SQLCODE = 0. Got SQLCODE = %d\n",
 			SQLCODE);
 
 	EXEC SQL
@@ -344,13 +344,13 @@ err:		die_on_error();
 }
 
 
-int verify(int num_authors) 
+int verify(int num_authors)
 {
 	if (verbose)
 		printf("Entering verify...\n");
 
 	if (!(print_authors(num_authors)))
-		exit(1);
+		return 1;
 
 	return (0);
 
@@ -391,7 +391,7 @@ bool insert_authors() {
 
 	EXEC SQL
 		COMMIT WORK;
-	
+
 	if (verbose)
 		printf("Inserted 3 records in authors.\n");
 
@@ -403,7 +403,7 @@ err:		die_on_error();
 }
 
 
-int print_authors(int expected) 
+int print_authors(int expected)
 {
 	char author_id[12];
 	char author_name[13];
@@ -428,7 +428,7 @@ int print_authors(int expected)
 	while (!SQLCODE) {
 		found++;
 		printf("%s,%s\n", author_id, author_name);
-		
+
 		EXEC SQL
 			FETCH AUTHOR_CURSOR INTO :author_id, :author_name;
 	if (verbose)
@@ -436,7 +436,7 @@ int print_authors(int expected)
 	}
 
 	printf("Number found: %d Number expected: %d\n", found, expected);
-	
+
 	EXEC SQL
 		CLOSE AUTHOR_CURSOR;
 
@@ -449,16 +449,16 @@ err:		die_on_error();
 
 
 
-int strupper(char* targ, char* source) 
+int strupper(char* targ, char* source)
 {
 	int ii;
-	
+
 	for (ii=0; *targ++ = toupper(*source++); ii++);
 
 	return ii;
 }
 
-int istable(char* tname) 
+int istable(char* tname)
 {
 
 	int exists;
@@ -466,11 +466,11 @@ int istable(char* tname)
 
 	if (!tname)
 		return 0;
-		
+
 	utname = (char *) malloc(strlen(tname)+1);
 
 	strupper(utname, tname);
-	
+
 	EXEC SQL
 		SELECT COUNT (*)
 		INTO :exists
@@ -479,11 +479,11 @@ int istable(char* tname)
 
 	EXEC SQL
 		ROLLBACK WORK;
-			
+
 	free(utname);
 
 	return exists;
-err:		
+err:
 	free(utname);
 	die_on_error();
 }
@@ -503,7 +503,7 @@ err:
 
 $ GPRE fieldalt.epp -d WHERE_GDB:atlas.gdb
 $ CXX FLAG_CXX fieldalt.cpp
-$ LINK FLAG_LINK fieldalt pr_views 
-$ RUN fieldalt 
+$ LINK FLAG_LINK fieldalt pr_views
+$ RUN fieldalt
 $DROP WHERE_GDB:atlas.gdb
 $ DELETE fieldalt*

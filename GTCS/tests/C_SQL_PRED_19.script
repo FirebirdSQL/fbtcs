@@ -53,12 +53,12 @@ GROUP BY V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO \
 ORDER BY V2.DEPTNO)";
 
 void Underline();
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
 {
-	
+
 	int Count=0;
         printf("Test:\n %s\n",Test);
         Underline(80);
@@ -77,7 +77,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :DeptNo,:Department,:MgrNo,:BudgetSum;
 
@@ -90,12 +90,12 @@ char *argv[];
                 printf("%d\t",MgrNo);
                 printf("%10.2f\n",(double)(BudgetSum/100));
 
-		Underline(50);	
+		Underline(50);
 
                 EXEC SQL
                         FETCH CR INTO :DeptNo,:Department,:MgrNo,:BudgetSum;
         }
-	
+
 NOMORE:
 
 	EXEC SQL
@@ -109,7 +109,7 @@ NOMORE:
 	FINISH;
 
 
-exit(3);
+return 3;
 
 ERR_LBL:    EXEC SQL
                 CLOSE CR;
@@ -121,7 +121,7 @@ ERR_LBL:    EXEC SQL
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 void Underline(i)
@@ -155,22 +155,22 @@ while (*s){
 	i++;
 }
 for (;i<l;s++,i++)
-	*s=' ';	
+	*s=' ';
 *s='\0';
 }
 
 $ GPRE -e sin023.e
 $ CC FLAG_CC sin023.c
-$ LINK FLAG_LINK sin023 
+$ LINK FLAG_LINK sin023
 $ RUN sin023
 >> sin023.sql
 connect WHERE_GDB:sh_test.gdb;
 select v2.deptno, v2.department, v2.mgrno, sum(v2.budget)
 from dept_budget v2
 where singular
-(select * from fullemp v3, empsal v4, sales t1 
+(select * from fullemp v3, empsal v4, sales t1
 where v2.department = v3.department and
-v3.empno = v4.empno and v4.empno = t1.sales_rep 
+v3.empno = v4.empno and v4.empno = t1.sales_rep
 and t1.total_value >
 (select avg(t2.total_value) from sales t2 where t2.sales_rep = 137))
 group by v2.deptno, v2.department, v2.mgrno
@@ -181,7 +181,7 @@ from dept_budget v2
 where 1 =
 (select count(*) from fullemp v3, empsal v4, sales t1
 where v2.department = v3.department and
-v3.empno = v4.empno and v4.empno = t1.sales_rep 
+v3.empno = v4.empno and v4.empno = t1.sales_rep
 and t1.total_value >
 (select avg(t2.total_value) from sales t2 where t2.sales_rep = 137))
 group by v2.deptno, v2.department, v2.mgrno
@@ -189,5 +189,5 @@ order by v2.deptno;
 quit;
 $ISQL -m -i sin023.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin023* 
+$ DELETE sin023*
 

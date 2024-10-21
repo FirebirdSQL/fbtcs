@@ -33,9 +33,9 @@ group by x.s1";
 
 void Underline();
 
-main()
+int main()
 {
-	
+
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
@@ -45,11 +45,11 @@ main()
                 DECLARE CR CURSOR FOR
                 select sum(x.s1), x.s1
                 from (st5 x left join st2 y on x.s1 = y.s1)
-                group by x.s1; 
+                group by x.s1;
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :sums1,:t1s1;
 
@@ -59,12 +59,12 @@ main()
 
                 printf("%d     ",sums1);
                 printf("%d\n",t1s1);
-		
+
                 EXEC SQL
                 FETCH CR INTO :sums1,:t1s1;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -76,7 +76,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -86,7 +86,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -103,15 +103,15 @@ printf("\n");
 
 $ GPRE -e join015.e
 $ CC FLAG_CC join015.c
-$ LINK FLAG_LINK join015 
+$ LINK FLAG_LINK join015
 $ RUN join015
 >> join015.sql
 connect WHERE_GDB:sh_join_15.gdb;
 select sum(x.s1), x.s1
-from (st5 x left join st2 y on x.s1 = y.s1) 
+from (st5 x left join st2 y on x.s1 = y.s1)
 group by x.s1;
 quit;
 $ISQL -m -i join015.sql
 $DROP WHERE_GDB:sh_join_15.gdb
-$ DELETE join015* 
+$ DELETE join015*
 

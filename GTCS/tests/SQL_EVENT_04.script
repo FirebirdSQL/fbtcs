@@ -1,7 +1,7 @@
 
 #
 #This test waits on multiple events to happen. when ever one of them
-#happens, It prints out event # occured. And also checks when a mass 
+#happens, It prints out event # occured. And also checks when a mass
 #update happens then evenets gete posted or not.
 #
 
@@ -25,12 +25,12 @@ insert into works_on values (3,3,40);
 commit;
 
 set term go;
-create trigger trig01 for project 
+create trigger trig01 for project
 active after update position 1
-as 
+as
 declare variable x int;
 begin
-    insert into works_on values (4, 4, 50);     
+    insert into works_on values (4, 4, 50);
     if (((new.prize/old.prize) >= 1.0) and ((new.prize/old.prize) <= 1.1))
            then post_event 'event1';
     if (((new.prize/old.prize) > 1.1) and ((new.prize/old.prize) <= 1.2))
@@ -46,21 +46,21 @@ $ISQL -m -I sql_event_04a.sql -sqldialect 1
 
 # include <stdio.h>
 DATABASE DB = "WHERE_GDB:events.gdb"
-main()
+int main()
 {
-  EXEC SQL 
+  EXEC SQL
 	CONNECT DB;
-  EXEC SQL 
+  EXEC SQL
 	SET TRANSACTION;
-  EXEC SQL 
+  EXEC SQL
 	EVENT INIT xyz DB ("event1", "event2", "event3");
 
   if (isc_status[1])
         isc_print_status(gds__status);
 
-  EXEC SQL 
+  EXEC SQL
 	EVENT WAIT xyz;
-  EXEC SQL 
+  EXEC SQL
 	COMMIT WORK;
 
   if (isc_status[1])
@@ -80,7 +80,7 @@ main()
 
 $ GPRE  -n -m foo4.e
 $ CC FLAG_CC foo4.c
-$ LINK FLAG_LINK foo4 
+$ LINK FLAG_LINK foo4
 $ RUN_BG foo4 > foo4.tt1 &
 $ SLEEP 1
 >> sql_event_04b.sql

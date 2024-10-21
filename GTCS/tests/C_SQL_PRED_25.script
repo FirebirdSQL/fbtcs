@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-#			[NOT]SINGULAR <subquery>			
+#			[NOT]SINGULAR <subquery>
 #
 # Description:           Error trapping - SINGULAR
 #
@@ -12,7 +12,7 @@
 #                        ORDER BY T2.CUSTNO ASCENDING,
 #                        T2.TOTAL_VALUE DESCENDING);
 #
-# Tables:		customers		
+# Tables:		customers
 #
 # Author:		Sam Hakim, Feb 18, 93
 #************************************************************************
@@ -47,18 +47,18 @@ ORDER BY T2.CUSTNO ASCENDING, \
 T2.TOTAL_VALUE DESCENDING)";
 
 void Underline();
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
 
 {
-	
+
 	int verbose;
 
 	/*--- check if verbose is requested ------ */
 	verbose = FALSE;
-	if (--argc > 0){	
+	if (--argc > 0){
 		if (*argv[1] == 'v' || *argv[1] == 'V')
 			verbose = TRUE;
 	}
@@ -66,21 +66,21 @@ char *argv[];
         Underline(80);
 
         EXEC SQL
-		DECLARE CR CURSOR FOR 
+		DECLARE CR CURSOR FOR
                         SELECT * FROM NOTABLE T1 WHERE SINGULAR
                         (SELECT T2.CUSTNO, T2.TOTAL_VALUE
                         FROM SALES T2
                         WHERE T1.CUSTNO = T2.CUSTNO
                         ORDER BY T2.CUSTNO ASCENDING,
                         T2.TOTAL_VALUE DESCENDING);
-		 
+
 	EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
-		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City, 
+		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City,
 		:State, :Zip_Code, :Phone_No, :On_Hold;
-		
+
 	while (SQLCODE == 0){
 		printf ("%ld\t",CustNo);
 		printf ("%s\t",Customer);
@@ -92,18 +92,18 @@ char *argv[];
 		printf ("%s\t",Phone_No);
 		printf ("%s\n",On_Hold);
                 Underline(80);
-		
+
 	EXEC SQL
-		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City, 
-		:State, :Zip_Code, :Phone_No, :On_Hold;	
+		FETCH CR INTO :CustNo, :Customer, :Contact, :Address, :City,
+		:State, :Zip_Code, :Phone_No, :On_Hold;
 	}
-	
+
 	EXEC SQL
 		COMMIT RELEASE;
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -113,7 +113,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -130,5 +130,5 @@ printf("\n");
 
 $ GPRE -e sin092.e
 $ DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin092* 
+$ DELETE sin092*
 

@@ -2,25 +2,25 @@
 #
 #By:          Clare Taylor
 #Date:        08/03/94
-#Test name:   IDML_C_CHARSET_04         
-#Series:      IDML_C_CHARSET          
+#Test name:   IDML_C_CHARSET_04
+#Series:      IDML_C_CHARSET
 #Dependency:  none
 #Results:     Fails with transliteration error.  Bug--not
 #	     specific to stored procedures.  Also occurs
 #	     when select is used and -charset was used to
-#	     compile.  Bug_no:  7095             
+#	     compile.  Bug_no:  7095
 #History:
 #11/3/94:     bug w/-charset fixed, must use manual transactions.
-#	     added them here. 
+#	     added them here.
 #11/16/94:    doing local init on NT due to translit error.
 #Aug. 30 95:  failing w/db err 4.0B
 #25-Aug-98:   vector cleanup:  delete testcmt2 and b1test* instead of *.exe
 #23-Apr-04:   Changed NONE charset
 #
 #Series/Test Set Description:
-#The next four tests in this series test for the -charset option 
+#The next four tests in this series test for the -charset option
 #with and without stored procedures and with insert statements.
-#The first in the set builds and loads the database.  The last 
+#The first in the set builds and loads the database.  The last
 #deletes the database.
 #
 #The four test cases:
@@ -31,7 +31,7 @@
 #Charset_05 2: Translit error on procedure select due to bug 7043
 #              uses SET NAMES/CONNECT.  (need to do one w/just the
 #	      input parameter)
-#Charset_06 3: Select is from the table and insert after select fails 
+#Charset_06 3: Select is from the table and insert after select fails
 #	      to work.  uses -charset only.  new bug 7122 filed.
 #              No data actually got inserted.
 #
@@ -39,7 +39,7 @@
 #              no errors--data gets inserted.
 #
 
->> ddlfile.sql 
+>> ddlfile.sql
 CREATE DATABASE 'WHERE_GDB:intlemp.gdb' DEFAULT CHARACTER SET ISO8859_1;
 COMMIT;
 CREATE DOMAIN firstname     AS VARCHAR(15) COLLATE FR_FR;
@@ -55,14 +55,14 @@ CREATE TABLE employee
 
 SET TERM !!;
 
-CREATE PROCEDURE get_emp_id 
-RETURNS (emp_no SMALLINT, first_name VARCHAR(15) CHARACTER SET ISO8859_1, 
+CREATE PROCEDURE get_emp_id
+RETURNS (emp_no SMALLINT, first_name VARCHAR(15) CHARACTER SET ISO8859_1,
 	 last_name VARCHAR(20) CHARACTER SET ISO8859_1)
 AS
 BEGIN
-        FOR SELECT emp_no, first_name, last_name 
+        FOR SELECT emp_no, first_name, last_name
                 FROM employee
-                INTO :emp_no , first_name, last_name 
+                INTO :emp_no , first_name, last_name
         DO
                 SUSPEND;
 END !!
@@ -77,9 +77,9 @@ CONNECT WHERE_GDB:intlemp.gdb;
 
 COMMIT;
 INSERT INTO employee (emp_no, first_name, last_name)
-VALUES (1, 'Rôbért', 'Nélsôn');
+VALUES (1, 'Rï¿½bï¿½rt', 'Nï¿½lsï¿½n');
 INSERT INTO employee (emp_no, first_name, last_name)
-VALUES (2, 'Bruce', 'Nélsôn');
+VALUES (2, 'Bruce', 'Nï¿½lsï¿½n');
 COMMIT;
 QUIT;
 
@@ -95,7 +95,7 @@ QUIT;
 
    Currently a transliteration error occurs on insert.
 
-   Then use:      gpre -d intlemp.gdb btest1.e 
+   Then use:      gpre -d intlemp.gdb btest1.e
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,7 +106,7 @@ EXEC SQL SET DATABASE db = "WHERE_GDB:intlemp.gdb";
 
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL BEGIN DECLARE SECTION;
-     BASED ON EMPLOYEE.EMP_NO       e_empno;      
+     BASED ON EMPLOYEE.EMP_NO       e_empno;
      BASED ON EMPLOYEE.FIRST_NAME   e_firstname;
      BASED ON EMPLOYEE.FIRST_NAME   s_firstname;
      BASED ON EMPLOYEE.LAST_NAME    e_lastname;
@@ -116,20 +116,20 @@ EXEC SQL END DECLARE SECTION;
 void print_error();
 
 int main (int argc, char* argv[])
-{    
+{
      printf("--------------------------------------------------------------\n");
      printf("   PRINTING ALL EMPLOYEES--Using Stored Procedure.\n\n");
      printf("   (transliteration is FROM ISO to NONE so it should work.\n\n");
 
 /* two lines below added after the -charset operation was setup to use -m */
-EXEC SQL CONNECT db; 
+EXEC SQL CONNECT db;
 EXEC SQL SET TRANSACTION;
      EXEC SQL
           DECLARE A_SEARCH CURSOR FOR
           SELECT * FROM GET_EMP_ID;
      EXEC SQL OPEN A_SEARCH;
      EXEC SQL FETCH A_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
- 
+
      while (SQLCODE == 0)
          {
           printf ("%-10d %-15s %-20s\n", e_empno, e_firstname, e_lastname);
@@ -147,7 +147,7 @@ EXEC SQL SET TRANSACTION;
           INSERT INTO employee (emp_no, first_name, last_name)
           VALUES (111, :s_firstname,:s_lastname);
 EXEC SQL COMMIT;
-     exit(0);
+     return 0;
 Err:
   print_error();
 }
@@ -158,7 +158,7 @@ void print_error()
 if (SQLCODE != 100)
      printf("\nError: -------------------------------------------------------\n");
      printf("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
-     exit(1);
+     return 1;
 }
 $ ISQL -m -i ddlfile.sql
 $ ISQL -m -i dmlfile.sql
@@ -181,18 +181,18 @@ $ GBAK -t WHERE_GDB:intlemp.gdb intlemp.gbk
   charset NONE and the insert should fail.
   Select is fine but the insert should fail.
 ----------------------------------------------------------------
-  
+
 $ TYPE testcmt1
-$ GPRE -m -charset iso8859_1 btest1.e  
+$ GPRE -m -charset iso8859_1 btest1.e
 $ CC FLAG_CC btest1.c
-$ LINK FLAG_LINK btest1 
+$ LINK FLAG_LINK btest1
 $ RUN btest1
 $ COPY btest1.e btest2.e
 $ DELETE btest1*
 $ TYPE testcmt2
-$ GPRE btest2.e  
+$ GPRE btest2.e
 $ CC FLAG_CC btest2.c
-$ LINK FLAG_LINK btest2 
+$ LINK FLAG_LINK btest2
 $ RUN btest2 > btest2.out
 $ TYPE btest2.out
 $ DROP WHERE_GDB:intlemp.gdb

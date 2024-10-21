@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 #
 # Description:           char-field, in a view
@@ -39,12 +39,12 @@ ORDER BY DEPTNO";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
 {
-	
+
 	int Count = 0;
         printf("Test:\n %s\n",Test);
         Underline(80);
@@ -57,7 +57,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :DeptNo;
 
@@ -71,7 +71,7 @@ char *argv[];
                 FETCH CR INTO :DeptNo;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -83,7 +83,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -93,7 +93,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -110,7 +110,7 @@ printf("\n");
 
 $ GPRE -e con014.e
 $ CC FLAG_CC con014.c
-$ LINK FLAG_LINK con014 
+$ LINK FLAG_LINK con014
 $ RUN con014
 >> con014.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -121,4 +121,4 @@ ORDER BY DEPTNO;
 quit;
 $ISQL -m -i con014.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con014* 
+$ DELETE con014*

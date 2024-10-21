@@ -1,7 +1,7 @@
 #
 #**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# Syntax:		[NOT]SINGULAR <subquery>			
+# Syntax:		[NOT]SINGULAR <subquery>
 # Description:           Two table joins in subquery - SINGULAR
 #
 #                        SELECT T1.EMPNO,T1.LAST_NAME, T1.FIRST_NAME
@@ -41,7 +41,7 @@ AND T3.SALES_REP = T2.EMPNO)";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -59,7 +59,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :EmpNo,:Last_Name,:First_Name
 
@@ -70,12 +70,12 @@ char *argv[];
                 printf("%s\t",Last_Name);
                 printf("%s\n",First_Name);
                 Underline(80);
-		
+
                 EXEC SQL
                 FETCH CR INTO :EmpNo,:Last_Name,:First_Name
 
         }
-	
+
 NOMORE:
 	printf("\n\n* Total Records Listed >>> %d\n",Count);
 
@@ -84,7 +84,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -94,7 +94,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /*--- print and underline of width i */
@@ -117,8 +117,8 @@ $ RUN sin009
 >> sin009.sql
 connect WHERE_GDB:sh_test.gdb;
 select t1.empno,t1.last_name, t1.first_name
-from sales_people t1 where singular 
-(select * from sales t3 , employees t2 where 
+from sales_people t1 where singular
+(select * from sales t3 , employees t2 where
 t3.sales_rep = t1.empno and t3.total_value > 6000 and t3.sales_rep = t2.empno);
 
 select t1.empno,t1.last_name, t1.first_name

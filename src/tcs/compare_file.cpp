@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
 	if (argc<3){
 		printf("Compare file needs two arguments\n");
 		fflush(stdout);
-		exit(1);
+		return 1;
 	}
 //	printf("arg1 %s\n",argv[1]);
 //	printf("arg2 %s\n",argv[2]);
@@ -23,12 +23,12 @@ int main(int argc, char* argv[]){
 	if (!file1 || !file2){
 		printf("Can't open files\n");
 		fflush(stdout);
-		exit(1);
+		return 1;
 	}
 	int count = 1;
 	char c = getc(file1);
 	char d = getc(file2);
-	
+
 	while (c == d){
 		count++;
 		c = getc(file1);

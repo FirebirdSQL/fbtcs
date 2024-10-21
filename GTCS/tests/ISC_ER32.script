@@ -4,9 +4,9 @@
  *	isc_create_blob2
  *
  *	Pass an invalid transaction handle.
- * 
- *  Test name: er32.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er32.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
@@ -16,12 +16,12 @@ int main()
 {
 	extern  char empdb[128];
 
-	isc_db_handle	DB = NULL, DB2 = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0, DB2 = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 	ISC_QUAD	blob_id;
-        isc_blob_handle blob_handle=NULL;
+        isc_blob_handle blob_handle=0;
 	int		len;
 	char		bpb[32];
 
@@ -43,7 +43,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	trans = NULL;
+	trans = 0;
 	if ((rc=isc_create_blob2(status, &DB, &trans,&blob_handle, &blob_id, len, bpb))==0)
 		printf("BUG: Bad tr handle to create blob2.\n");
         else
@@ -56,6 +56,6 @@ int main()
 }
 $ CC FLAG_CC er32.c
 $ CC FLAG_CC globals.c
-$ LINK FLAG_LINK er32 globals 
+$ LINK FLAG_LINK er32 globals
 $ RUN er32
 $ DELETE er32*

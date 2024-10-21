@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column spec> STARTING [WITH] <value spec>
 #                        Case sensitive searches including blob string
 #
@@ -40,7 +40,7 @@ S1.PONUMB FROM SALES S1 WHERE S1.PONUMB STARTING WITH '8'";
 void Underline();
 void pad();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -57,7 +57,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :CustNo, :Total_Value,:PoNumb;
 
@@ -75,7 +75,7 @@ char *argv[];
                 FETCH CR INTO :CustNo, :Total_Value,:PoNumb;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -87,7 +87,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -97,7 +97,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /*--- print and underline of width i */
@@ -115,14 +115,14 @@ printf("\n");
 
 $ GPRE -e sta001.e
 $ CC FLAG_CC sta001.c
-$ LINK FLAG_LINK sta001 
+$ LINK FLAG_LINK sta001
 $ RUN sta001
 >> sta001.sql
 connect WHERE_GDB:sh_test.gdb;
-SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB 
+SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB
 FROM SALES S1 WHERE S1.PONUMB STARTING WITH '8';
 select count(*) from sales where ponumb starting with '8';
 quit;
 $ISQL -m -i sta001.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sta001* 
+$ DELETE sta001*

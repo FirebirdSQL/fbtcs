@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:
 #
 # Description:           char-field in a view
@@ -38,7 +38,7 @@ WHERE DEPTNO STARTING '12'";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -54,7 +54,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :DeptNo;
 
@@ -68,7 +68,7 @@ char *argv[];
                 FETCH CR INTO :DeptNo;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -80,7 +80,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -90,7 +90,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -106,7 +106,7 @@ printf("\n");
 }
 $ GPRE -e sta013.e
 $ CC FLAG_CC sta013.c
-$ LINK FLAG_LINK sta013 
+$ LINK FLAG_LINK sta013
 $ RUN sta013
 >> sta013.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -115,4 +115,4 @@ select count(*) from dept_budget where deptno starting with '12';
 quit;
 $ISQL -m -i sta013.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sta013* 
+$ DELETE sta013*

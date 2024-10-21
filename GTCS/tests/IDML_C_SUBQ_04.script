@@ -2,16 +2,16 @@
 #
 #By:          Clare Taylor
 #Date:        03/14/94
-#Test name:   IDML_C_SUBQ_04         
-#Series:      IDML_C_SUBQUERYS          
-#Results:     Populates the DUPLICATE table using a SELECT * subquery 
+#Test name:   IDML_C_SUBQ_04
+#Series:      IDML_C_SUBQUERYS
+#Results:     Populates the DUPLICATE table using a SELECT * subquery
 #Dependency:  Requires database build in test IDML_C_SUBQ_02
 #History:
 #
 #Description:
 #In Embedded SQL and in ISQL (dynamic):
 #Tests the INSERT statement using a SELECT * subquery.
-#Verification is done using ISQL and a specific query.  If we use 
+#Verification is done using ISQL and a specific query.  If we use
 #select * the display in ISQL is so bad that we can not easily tell
 #if the select is correct.  I inserted one string into all rows so
 #selecting C_DEFAULT shows that string in the first row selected.
@@ -36,12 +36,12 @@ EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;
 
 
-static print_error()
+static void print_error()
 {
     if (SQLCODE != 100)
         printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
 }
-main()
+int main()
 {
      EXEC SQL SET NAMES ISO8859_1;  /* field to field insert doesn't seem
 				       to require set names */
@@ -49,23 +49,23 @@ main()
      EXEC SQL DELETE FROM DUPLICATE;
      EXEC SQL COMMIT;
 
-     EXEC SQL 
+     EXEC SQL
        INSERT INTO DUPLICATE SELECT * FROM STRING_TABLE;
      EXEC SQL COMMIT;
 
      EXEC SQL COMMIT RELEASE;
-     exit(0);
+     return 0;
 err: print_error();
 }
 >> verify1.sql
 set names iso8859_1;
 connect "WHERE_GDB:tests.gdb";
-select C_ENUS, C_FRANCE from string_table; 
+select C_ENUS, C_FRANCE from string_table;
 select C_ENUS, C_FRANCE from duplicate;
 quit;
 
 >> verify2.sql
-set names DOS437;   
+set names DOS437;
 connect "WHERE_GDB:tests.gdb";
 select C_437_25 from string_table;
 select C_437_25 from duplicate;
@@ -83,7 +83,7 @@ connect "WHERE_GDB:tests.gdb";
 delete from duplicate;
 commit;
 select count(*) from duplicate;
-INSERT INTO DUPLICATE   
+INSERT INTO DUPLICATE
      SELECT * FROM STRING_TABLE;
 select count(*) from duplicate;
 commit;
@@ -91,7 +91,7 @@ quit;
 
 $ GPRE subq4.e
 $ CC FLAG_CC subq4.c
-$ LINK FLAG_LINK subq4 
+$ LINK FLAG_LINK subq4
 $ RUN subq4
 $ ISQL -i verify1.sql -m
 $ ISQL -i verify2.sql -m

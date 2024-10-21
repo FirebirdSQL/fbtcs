@@ -18,15 +18,15 @@ using namespace std;
 
    Dependencies: Need to run C_DSQL_RI_INIT first.
 
-   Purpose: RI test suite 
-   
+   Purpose: RI test suite
+
    Tests are:
    	Table Constraints:
    		unique		tab_uniq.e
    		primary key	tab_prim.e
-   		referential	tab_ref.e     
+   		referential	tab_ref.e
    		check const	tab_check.e
-   	
+
    	Column Constraints:
    		unique		col_uniq.e
    		primary key	col_prim.e
@@ -35,18 +35,18 @@ using namespace std;
    		not null    col_nnull.e
 
 	DDL Modify Operations:
-		alter table add constraint	alt_add.e	
-		alter table drop constraint	alt_drop.e   
+		alter table add constraint	alt_add.e
+		alter table drop constraint	alt_drop.e
 		alter field			field_alt.e
 		alter index			indexalt.e  <----- this test
-		drop field			field_drop.e 
+		drop field			field_drop.e
 		drop index			index_drop.e
-		drop table			drop_tab.e   
+		drop table			drop_tab.e
 		delete trigger			trigger_del.e
 		modify trigger			trigger_mod.e
 
 
-Overview: this test makes sure that new constraints are added correctly. 
+Overview: this test makes sure that new constraints are added correctly.
 It will:
 
 	CREATE TABLE BOOKS (BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),,.)
@@ -57,7 +57,7 @@ It will:
 	CREATE UNIQUE INDEX BOOK_UDX ON BOOKS (BOOK_ID) [should fail; can't create]
 						[unique index on nulls, duplicates]
 
-	Note:  With ALTER INDEX only supports ACTIVE/INACTIVE. 
+	Note:  With ALTER INDEX only supports ACTIVE/INACTIVE.
 
 */
 
@@ -65,12 +65,12 @@ It will:
 EXEC SQL
 	INCLUDE SQLCA;
 
-/* Set up to catch SQL errors. Note: this will require that 
+/* Set up to catch SQL errors. Note: this will require that
 each routine containing executeable SQL commands has
 an error handling section labeled 'err'.*/
 EXEC SQL
 	WHENEVER SQLERROR GO TO err;
-	
+
 /* Forward declarations */
 extern int print_views();
 void die_on_error();
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 	if (setup()) 		/* create table */
 		exit (1);
 
-	if (create_unique_index())  
+	if (create_unique_index())
 		exit (1);
 
 	if (insert_books() != 5) /* expected 1 of 6 rejected */
@@ -108,10 +108,10 @@ int main(int argc, char* argv[])
 	if (verify(5))
 		exit (1);
 
-	if (alter_index_inactive()) 	
+	if (alter_index_inactive())
 		exit (1);
-	
-	if (insert_books() != 6) /* expected all 6 inserted */ 
+
+	if (insert_books() != 6) /* expected all 6 inserted */
 		exit (1);
 
 	if (verify(6))
@@ -133,9 +133,9 @@ int setup() {
 		printf("entered setup\n");
 
 	if (istable("books")) {
-		if (verbose) 
+		if (verbose)
 			printf("books found... will be dropped\n");
-		
+
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
 	}
 
@@ -168,13 +168,13 @@ bool alter_index_active()
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
+
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER INDEX BOOK_IND ACTIVE';
 	EXEC SQL COMMIT;
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
-	
+
 
 	printf("alter_index_active expected SQLCODE = -803. Got SQLCODE = %d\n", SQLCODE);
 
@@ -192,10 +192,10 @@ bool alter_index_inactive()
 
 	EXEC SQL
 		WHENEVER SQLERROR GO TO err;
-		
+
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER INDEX BOOK_IND INACTIVE';
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
 
 	printf("alter_index_inactive expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
@@ -218,12 +218,12 @@ bool create_unique_index()
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
+
 	EXEC SQL EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX BOOK_IND ON BOOKS (BOOK_ID)';
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
-	
+
 
 	printf("create_unique_index expected SQLCODE = 0. Got SQLCODE = %d\n", SQLCODE);
 
@@ -238,13 +238,13 @@ err:		die_on_error();
 }
 
 
-int verify(int num_books) 
+int verify(int num_books)
 {
 	if (verbose)
 		printf("Entering verify...\n");
 
 	if (!(print_books(num_books)))
-		exit(1);
+		return 1;
 
 	return (0);
 
@@ -252,24 +252,24 @@ err:		die_on_error();
 }
 
 
-int insert_books() 
+int insert_books()
 {
 	/* Try to insert 6 books, two of them with the same BOOK_ID and one has a NULL
 	   BOOK_ID.   All of them should be inserted without problems when there is
-	   no constraint on the field BOOK_ID.  
+	   no constraint on the field BOOK_ID.
 	*/
- 
+
 	EXEC SQL BEGIN DECLARE SECTION;
 	int num_records;
 	double myprice = 15.00;
 	EXEC SQL END DECLARE SECTION;
-				
+
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
 
 	EXEC SQL DELETE FROM BOOKS;
 
-	EXEC SQL 
+	EXEC SQL
 	INSERT INTO BOOKS (BOOK_ID, BOOK_NAME, BOOK_AUTH_ID, PRICE)
 		   VALUES ('BU1111','The Busy Executive''s Database Guide',
 			   '172-32-1176', 12.00);
@@ -278,7 +278,7 @@ int insert_books()
 	INSERT INTO BOOKS (BOOK_ID, BOOK_NAME, BOOK_AUTH_ID, PRICE)
 		VALUES ('BU1111','Cooking with Computers: Surreptitious Balance Sheets',
  			'213-46-8915', 15.99);
-	
+
 	EXEC SQL
 	INSERT INTO BOOKS (BOOK_ID, BOOK_NAME, BOOK_AUTH_ID, PRICE)
 		   VALUES ('BU2075','You Can Combat Computer Stress!',
@@ -311,12 +311,12 @@ int insert_books()
 err:		die_on_error();
 }
 
-int print_books(int expected) 
+int print_books(int expected)
 {
 
 	char book_id[12];
 	char book_name[81];
-	char book_auth_id[12];	
+	char book_auth_id[12];
 	int found = 0;
 
 	EXEC SQL
@@ -332,13 +332,13 @@ int print_books(int expected)
 	while (!SQLCODE) {
 		found++;
 		printf("%s,%s,%s\n", book_id, book_name, book_auth_id);
-		
+
 		EXEC SQL
 			FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
 	}
 
 	printf("Number found: %d Number expected: %d\n", found, expected);
-	
+
 	EXEC SQL
 		CLOSE BOOK_CURSOR;
 
@@ -352,16 +352,16 @@ err:		die_on_error();
 
 
 
-int strupper(char* targ, char* source) 
+int strupper(char* targ, char* source)
 {
 	int ii;
-	
+
 	for (ii=0; *targ++ = toupper(*source++); ii++);
 
 	return ii;
 }
 
-int istable(char* tname) 
+int istable(char* tname)
 {
 
 	int exists;
@@ -369,11 +369,11 @@ int istable(char* tname)
 
 	if (!tname)
 		return 0;
-		
+
 	utname = (char *) malloc(strlen(tname)+1);
 
 	strupper(utname, tname);
-	
+
 	EXEC SQL
 		SELECT COUNT (*)
 		INTO :exists
@@ -382,11 +382,11 @@ int istable(char* tname)
 
 	EXEC SQL
 		ROLLBACK WORK;
-			
+
 	free(utname);
 
 	return exists;
-err:		
+err:
 	free(utname);
 	die_on_error();
 }
@@ -406,7 +406,7 @@ err:
 
 $ GPRE indexalt.epp -d WHERE_GDB:atlas.gdb
 $ CXX FLAG_CXX indexalt.cpp
-$ LINK FLAG_LINK indexalt pr_views 
-$ RUN indexalt 
+$ LINK FLAG_LINK indexalt pr_views
+$ RUN indexalt
 $DROP WHERE_GDB:atlas.gdb
 $ DELETE indexalt*

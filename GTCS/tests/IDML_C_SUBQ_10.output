@@ -1,26 +1,26 @@
 
-The following test is executed in Embedded SQL where it succeeds and 
+The following test is executed in Embedded SQL where it succeeds and
 in ISQL where it fails.  The test is for [illegal ?] syntax:
 
-         INSERT INTO TEST_TABLE1 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25 
+         INSERT INTO TEST_TABLE1 SELECT S_ROWID, C_ENUS, C_FRANCE, C_437_25
 	       FROM STRING_TABLE ORDER BY C_FRANCE;
 
-Using an ORDER BY in a SUBQUERY is questionable by SQL II standards.  
+Using an ORDER BY in a SUBQUERY is questionable by SQL II standards.
 The Dates book, page 347-349 are given as reference:
 
     insert   ::= INSERT INTO ...table-exp...
     table-exp::= does not show an ORDER BY allowed anywhere.  Only
-		 the GROUP BY is supported and that takes a COLLATE 
-		 clause which is how ordered data would be obtained 
+		 the GROUP BY is supported and that takes a COLLATE
+		 clause which is how ordered data would be obtained
 		 in an INSERT w/subquery.
 
-From parse.y, which appears to allow the ORDER BY as a result of 
+From parse.y, which appears to allow the ORDER BY as a result of
 the select definition:
 
 select       : union_exp order_clause for_update_clause
 union_expr   : select_exp
 select_exp   : SELECT ...
-               where_clause --> does not allow ORDER BY here, it comes from 
+               where_clause --> does not allow ORDER BY here, it comes from
 	                        the 'select' above.
 	        group_clause
 

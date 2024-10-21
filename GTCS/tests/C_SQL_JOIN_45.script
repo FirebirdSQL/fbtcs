@@ -52,16 +52,16 @@ order by a.table_row ascending";
 
 void Underline();
 
-main()
+int main()
 {
-	
+
     int Count;
     Count = 0;
     EXEC SQL
         DECLARE CR CURSOR FOR
         select a.s1,a.table_row,b.s1,b.table_row,c.s1,c.table_row,d.s1,d.table_row,e.s1,e.table_row
-        from (((((((((((((((st1 a left outer join st1 b on a.s1 = b.s1) 
-	left outer join st1 c on b.s1 = c.s1) left outer join st1 d on c.s1 = d.s1) 
+        from (((((((((((((((st1 a left outer join st1 b on a.s1 = b.s1)
+	left outer join st1 c on b.s1 = c.s1) left outer join st1 d on c.s1 = d.s1)
 	left outer join st1 e on d.s1 = e.s1) left outer join st1 f on f.s1 = e.s1)
 	left outer join st1 g on g.s1 = f.s1) left outer join st1 h on h.s1 = g.s1)
 	left outer join st1 k on k.s1 = g.s1) left outer join st1 l on l.s1 = k.s1)
@@ -72,7 +72,7 @@ main()
 
         EXEC SQL
 		OPEN CR;
-		
+
     EXEC SQL    FETCH CR INTO
                 :t1s1,:t1table_row,
                 :t2s1,:t2table_row,
@@ -101,7 +101,7 @@ main()
                 :t4s1,:t4table_row,
                 :t5s1,:t5table_row;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -112,7 +112,7 @@ NOMORE:
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -122,7 +122,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -139,7 +139,7 @@ printf("\n");
 
 $ GPRE -e join045.e
 $ CC FLAG_CC join045.c
-$ LINK FLAG_LINK join045 
+$ LINK FLAG_LINK join045
 $ RUN join045
 >> join045.sql
 connect WHERE_GDB:sh_join_45.gdb;
@@ -156,4 +156,4 @@ order by a.table_row ascending;
 quit;
 $ISQL -m -i join045.sql
 $DROP WHERE_GDB:sh_join_45.gdb
-$ DELETE join045* 
+$ DELETE join045*

@@ -40,9 +40,9 @@ where exists \
 
 void Underline();
 
-main()
+int main()
 {
-	
+
     int Count;
 	Count = 0;
     printf ("Test:\n %s\n",Test);
@@ -58,7 +58,7 @@ main()
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :t1s1,:t1s2,:t1table_row,
                 :t2s1,:t2s2,:t2table_row,
@@ -74,7 +74,7 @@ main()
                 printf("%5d   ",t2s1);
                 printf("%5d   ",t2s2);
                 printf("%-10s   ",t2table_row);
-		
+
                 printf("%5d   ",t3s1);
                 printf("%5d   ",t3s2);
                 printf("%-10s\n",t3table_row);
@@ -84,7 +84,7 @@ main()
                 :t2s1,:t2s2,:t2table_row,
                 :t3s1,:t3s2,:t3table_row;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -95,7 +95,7 @@ NOMORE:
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -105,7 +105,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -121,16 +121,16 @@ printf("\n");
 }
 $ GPRE -e join023.e
 $ CC FLAG_CC join023.c
-$ LINK FLAG_LINK join023 
+$ LINK FLAG_LINK join023
 $ RUN join023
 >> join023.sql
 connect WHERE_GDB:sh_join_23.gdb;
 select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row,z.s1,z.s2,z.table_row
-from (st1 x left join st2 y on x.s1 = y.s1) left join st3 z on z.s1 = y.s1 
+from (st1 x left join st2 y on x.s1 = y.s1) left join st3 z on z.s1 = y.s1
 where exists
-(select a.s1 from 
+(select a.s1 from
 (st1 a left join st2 b on a.s1 = b.s1) left join st3 c on c.s1 = b.s1 and c.s1 = 1);
 quit;
 $ISQL -m -i join023.sql
 $DROP WHERE_GDB:sh_join_23.gdb
-$ DELETE join023* 
+$ DELETE join023*

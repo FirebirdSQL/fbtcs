@@ -17,15 +17,15 @@ using namespace std;
    Date:   02-Apr-93
    Title:  alt_add.e
 
-   Purpose: RI test suite 
-   
+   Purpose: RI test suite
+
    Tests are:
    	Table Constraints:
    		unique		tab_uniq.e
    		primary key	tab_prim.e
-   		referential	tab_ref.e     
+   		referential	tab_ref.e
    		check const	tab_check.e
-   	
+
    	Column Constraints:
    		unique		col_uniq.e
    		primary key	col_prim.e
@@ -49,7 +49,7 @@ Overview: this test makes sure that new constraints are added correctly. It will
 	CREATE TABLE BOOKS (BOOK_ID CHAR(6) NOT NULL,...)   [no constraints]
 	INSERT records, some with duplicate values
 	ALTER TABLE BOOKS ADD UNIQUE (BOOK_ID)     [should fail]
-	DELETE FROM BOOKS 
+	DELETE FROM BOOKS
 	ALTER TABLE BOOKS ADD UNIQUE (BOOK_ID)
 	INSERT records, some with duplicate values
 	SELECT * FROM BOOKS                        [see what made it]
@@ -62,12 +62,12 @@ Overview: this test makes sure that new constraints are added correctly. It will
 EXEC SQL
 	INCLUDE SQLCA;
 
-/* Set up to catch SQL errors. Note: this will require that 
+/* Set up to catch SQL errors. Note: this will require that
 each routine containing executeable SQL commands has
 an error handling section labeled 'err'.*/
 EXEC SQL
 	WHENEVER SQLERROR GO TO err;
-	
+
 /* Forward declarations */
 void die_on_error();
 int setup();
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
         }
 	if (setup()) 		/* create table */
 		exit (1);
-	
+
 	if (insert_books())
 		exit (1);
 
@@ -112,8 +112,8 @@ int main(int argc, char* argv[])
 
 	if (insert_books())       /* 2 should be kept, 2 rejected for dups */
 		exit (1);
-	
-	if (verify(2)) 
+
+	if (verify(2))
 		exit (1);
 
 	exit (0);
@@ -127,9 +127,9 @@ int setup() {
 		printf("entered setup\n");
 
 	if (istable("books")) {
-		if (verbose) 
+		if (verbose)
 			printf("books found... will be dropped\n");
-		
+
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
 		EXEC SQL COMMIT;
 	}
@@ -153,16 +153,16 @@ int setup() {
 err:		die_on_error();
 }
 
-int verify(int num_recs) 
+int verify(int num_recs)
 {
 	if (verbose)
 		printf("Entering verify...\n");
 
 	if (print_books(num_recs))
-		exit(1);
+		return 1;
 
 	if (print_views())
-		exit(1);
+		return 1;
 
 	return (0);
 
@@ -180,7 +180,7 @@ int insert_books() {
 		INSERT INTO BOOKS VALUES ('BU1032',
 			'Cooking with Computers: Surreptitious Balance Sheets',
 			'213-46-8915');
-	
+
 	EXEC SQL
 		INSERT INTO BOOKS VALUES ('BU2075','You Can Combat Computer Stress!',
 			'238-95-7766');
@@ -202,12 +202,12 @@ int insert_books() {
 err:		die_on_error();
 }
 
-int print_books(int num_expected) 
+int print_books(int num_expected)
 {
 
 	char book_id[12];
 	char book_name[81];
-	char book_auth_id[12];	
+	char book_auth_id[12];
 	int i=0;
 
 	EXEC SQL
@@ -223,7 +223,7 @@ int print_books(int num_expected)
 	while (!SQLCODE) {
 		printf("%s,%s,%s\n", book_id, book_name, book_auth_id);
 		i++;
-		
+
 		EXEC SQL
 			FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
 	}
@@ -245,7 +245,7 @@ bool alter_add_uniq() {
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
-		
+
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE BOOKS ADD UNIQUE (BOOK_ID)';
 	EXEC SQL COMMIT;
 
@@ -263,9 +263,9 @@ err:		die_on_error();
 }
 
 int delete_all() {
-		
+
 	EXEC SQL
-		DELETE FROM BOOKS; 
+		DELETE FROM BOOKS;
 
 	EXEC SQL
 		COMMIT WORK;
@@ -274,16 +274,16 @@ int delete_all() {
 err:		die_on_error();
 }
 
-int strupper(char* targ, char* source) 
+int strupper(char* targ, char* source)
 {
 	int ii;
-	
+
 	for (ii=0; *targ++ = toupper(*source++); ii++);
 
 	return ii;
 }
 
-int istable(char* tname) 
+int istable(char* tname)
 {
 
 	int exists;
@@ -291,11 +291,11 @@ int istable(char* tname)
 
 	if (!tname)
 		return 0;
-		
+
 	utname = (char *) malloc(strlen(tname)+1);
 
 	strupper(utname, tname);
-	
+
 	EXEC SQL
 		SELECT COUNT (*)
 		INTO :exists
@@ -304,11 +304,11 @@ int istable(char* tname)
 
 	EXEC SQL
 		ROLLBACK WORK;
-			
+
 	free(utname);
 
 	return exists;
-err:		
+err:
 	free(utname);
 	die_on_error();
 }
@@ -327,7 +327,7 @@ err:
 }
 $ GPRE alt_add.epp -d WHERE_GDB:atlas.gdb
 $ CXX FLAG_CXX alt_add.cpp
-$ LINK FLAG_LINK alt_add pr_views 
+$ LINK FLAG_LINK alt_add pr_views
 $ RUN alt_add
 $DROP WHERE_GDB:atlas.gdb
 $DELETE alt_add*

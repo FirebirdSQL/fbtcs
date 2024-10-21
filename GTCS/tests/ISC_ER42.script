@@ -4,9 +4,9 @@
  *	isc_prepare_transaction2
  *
  *	Pass an invalid transaction handle.
- * 
- *  Test name: er42.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er42.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
@@ -15,8 +15,8 @@
 int main()
 {
 	char	s[1024];
-	isc_db_handle	DB = NULL;
-	isc_tr_handle	trans = NULL;
+	isc_db_handle	DB = 0;
+	isc_tr_handle	trans = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
@@ -33,7 +33,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	trans = NULL;
+	trans = 0;
 	if ((rc=isc_prepare_transaction2(status, &trans, 50, s))==0)
 		printf("BUG: Bad tr handle to prepare tran2.\n");
         else
@@ -42,6 +42,6 @@ int main()
 	printf("Finished ER42\n");
 }
 $ CC FLAG_CC er42.c
-$ LINK FLAG_LINK er42 
+$ LINK FLAG_LINK er42
 $ RUN er42
 $ DELETE er42*

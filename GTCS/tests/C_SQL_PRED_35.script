@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 #
 # Description:           char-field, concatenated field
@@ -37,12 +37,12 @@ WHERE NAME CONTAINING 'z'";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
 {
-	
+
 	int Count = 0;
         printf("Test:\n %s\n",Test);
         Underline(80);
@@ -54,7 +54,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Name;
 
@@ -68,7 +68,7 @@ char *argv[];
                         FETCH CR INTO :Name;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -80,7 +80,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -90,7 +90,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -107,7 +107,7 @@ printf("\n");
 
 $ GPRE -e con010.e
 $ CC FLAG_CC con010.c
-$ LINK FLAG_LINK con010 
+$ LINK FLAG_LINK con010
 $ RUN con010
 >> con010.sql
 SELECT NAME
@@ -116,4 +116,4 @@ WHERE NAME CONTAINING 'z';
 quit;
 $ISQL -m WHERE_GDB:sh_test.gdb -i con010.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con010* 
+$ DELETE con010*

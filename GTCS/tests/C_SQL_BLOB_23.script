@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_23.gdb
 >> blob023.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           READ BLOB/INSERT BLOB to simulate an update. 
+ Description:           READ BLOB/INSERT BLOB to simulate an update.
 			Multiple updates stepping through a table cursor.
  Author:                Sam Hakim, June 16, 93
  **********************************************************************/
@@ -55,7 +55,7 @@ int Count;
     printf("Test:\n %s \n",Test);
     M.Buffer[0] = (char*) malloc(80);
     M.BufferLen[0] = 80;
-	
+
     EXEC SQL DECLARE TCR CURSOR FOR
              SELECT TEST_NAME,ROW_ID,B,COMMENT
              FROM MB1 FOR UPDATE OF TEST_NAME,ROW_ID,B,COMMENT;
@@ -65,21 +65,21 @@ int Count;
     while (SQLCODE != 100){
 	strcpy(Test_Name,"blob023");
     	UpdateBlob(M.Buffer[0],M.BufferLen[0],"---- Cursor Updated by Blob023 -----");
-	
-    	EXEC SQL UPDATE MB1 
+
+    	EXEC SQL UPDATE MB1
         SET TEST_NAME = :Test_Name, ROW_ID = :Row_Id+22, B = :BlobId1,
 	COMMENT = "Blob Update" WHERE CURRENT OF TCR;
         EXEC SQL FETCH TCR INTO :Test_Name,:Row_Id,:BlobId1,:Comment;
     }
 
 DONE:
-	
+
     EXEC SQL CLOSE TCR;
     EXEC SQL COMMIT;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -89,7 +89,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * U p d a t e B l o b
@@ -121,12 +121,12 @@ void UpdateBlob(char *Bf, short L, char *AppString)
 	strncat(BigBuffer,Bf,Bl);
         EXEC SQL FETCH BCR INTO :Bf:Bl;
  }
- EXEC SQL CLOSE BCR;		
- 
+ EXEC SQL CLOSE BCR;
+
  strncat(BigBuffer,AppString,strlen(AppString));
  BlobSize +=strlen(AppString);
  WriteBlob(BigBuffer,BlobSize);
- 
+
  free (BigBuffer);
 
 ERR_LBL:
@@ -161,7 +161,7 @@ void WriteBlob(char *Bf, short L)
     EXEC SQL WHENEVER SQLERROR GOTO ERR1;
 
     EXEC SQL DECLARE BCW CURSOR FOR INSERT BLOB B INTO MB1 MAXIMUM_SEGMENT 65535;
-    EXEC SQL OPEN BCW INTO :BlobId1;      	
+    EXEC SQL OPEN BCW INTO :BlobId1;
 
     EXEC SQL INSERT CURSOR BCW VALUES (:Bf:L);
     EXEC SQL CLOSE BCW;
@@ -180,11 +180,11 @@ ERR1:
 
 $ GPRE -e blob023.epp
 $ CXX FLAG_CXX blob023.cpp
-$ LINK FLAG_LINK blob023 
+$ LINK FLAG_LINK blob023
 $ RUN blob023
 >> blob023.sql
 connect "WHERE_GDB:sh_blobs_23.gdb";
 select test_name, row_id, comment, b from mb1 where test_name = 'blob023' order by row_id;
 $ ISQL -q -i blob023.sql
 $DROP WHERE_GDB:sh_blobs_23.gdb
-$ DELETE blob023* 
+$ DELETE blob023*

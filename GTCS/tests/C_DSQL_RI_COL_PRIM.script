@@ -18,36 +18,36 @@ using namespace std;
 
    Dependencies: Need to run C_DSQL_RI_INIT first.
 
-   Purpose: RI test suite 
+   Purpose: RI test suite
    Each test will setup() and verify()
    setup() - create table with feature
    verify() - verify feature by checking views and try to break feature
-   
+
    Tests are:
    	Table Constraints:
    		unique		tab_uniq.e
-   		primary key	tab_prim.e   
+   		primary key	tab_prim.e
    		referential	tab_ref.e
    		check const	tab_check.e
-   	
+
    	Column Constraints:
    		unique		col_uniq.e
    		primary key	col_prim.e <--- this test
    		referential	col_ref.e
    		check const	col_check.e
-   		
+
 */
 
 /* Include the SQL Communications Area. */
 EXEC SQL
 	INCLUDE SQLCA;
 
-/* Set up to catch SQL errors. Note: this will require that 
+/* Set up to catch SQL errors. Note: this will require that
 each routine containing executeable SQL commands has
 an error handling section labeled 'err'.*/
 EXEC SQL
 	WHENEVER SQLERROR GO TO err;
-	
+
 /* Forward declarations */
 void die_on_error();
 int setup();
@@ -70,12 +70,12 @@ int main(int argc, char* argv[])
                 if (*argv[1] == 'v' || *argv[1] == 'V')
                         verbose = true;
         }
-	if (setup()) 
+	if (setup())
 		exit (1);
-		
-	if (verify()) 
+
+	if (verify())
 		exit (1);
-	
+
 	exit (0);
 err:		die_on_error();
 }
@@ -99,7 +99,7 @@ int setup() {
 		printf("entered setup\n");
 
 	if (istable("books")) {
-		if (verbose) 
+		if (verbose)
 			printf("books found... will be dropped\n");
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
 		EXEC SQL COMMIT;
@@ -121,7 +121,7 @@ int setup() {
 
 
 	if (istable("authors")) {
-		if (verbose) 
+		if (verbose)
 			printf("authors found... will be dropped\n");
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE AUTHORS';
 		EXEC SQL COMMIT;
@@ -132,8 +132,8 @@ int setup() {
 
 	EXEC SQL
 		DECLARE AUTHORS TABLE
-			(AUTH_ID CHAR(11) 
-				NOT NULL 
+			(AUTH_ID CHAR(11)
+				NOT NULL
 				        /* 1234567890123456789012345678901 - 31 char */
 				CONSTRAINT AUTH_NAME_PRIM_6789012345678901 PRIMARY KEY,
 			 AUTH_NAME CHAR(50));
@@ -162,13 +162,13 @@ int verify() {
 		printf("Entering verify...\n");
 
 	if (insert_books(&num_recs))
-		exit(1);
+		return 1;
 
 	if (print_books(num_recs))
-		exit(1);
+		return 1;
 
 	if (print_views())
-		exit(1);
+		return 1;
 
 	return (0);
 
@@ -187,7 +187,7 @@ int insert_books(int *num_recs)
 	EXEC SQL
 		INSERT INTO BOOKS VALUES ('BU1111','Cooking with Computers: Surreptitious Balance Sheets',
 			'213-46-8915');
-	
+
 	EXEC SQL
 		INSERT INTO BOOKS VALUES ('BU2075','You Can Combat Computer Stress!','238-95-7766');
 
@@ -220,7 +220,7 @@ int print_books(int num_expected)
 
 	char book_id[12];
 	char book_name[81];
-	char book_auth_id[12];	
+	char book_auth_id[12];
 	int i=0;
 
 	EXEC SQL
@@ -236,7 +236,7 @@ int print_books(int num_expected)
 	while (!SQLCODE) {
 		printf("%s,%s,%s\n", book_id, book_name, book_auth_id);
 		i++;
-		
+
 		EXEC SQL
 			FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
 	}
@@ -254,10 +254,10 @@ err:		die_on_error();
 }
 
 
-int strupper(char* targ, char* source) 
+int strupper(char* targ, char* source)
 {
 	int ii;
-	
+
 	for (ii=0; *targ++ = toupper(*source++); ii++);
 
 	return ii;
@@ -271,11 +271,11 @@ int istable(char* tname)
 
 	if (!tname)
 		return 0;
-		
+
 	utname = (char *) malloc(strlen(tname)+1);
 
 	strupper(utname, tname);
-	
+
 	EXEC SQL
 		SELECT COUNT (*)
 		INTO :exists
@@ -284,11 +284,11 @@ int istable(char* tname)
 
 	EXEC SQL
 		ROLLBACK WORK;
-			
+
 	free(utname);
 
 	return exists;
-err:		
+err:
 	free(utname);
 	die_on_error();
 }
@@ -307,7 +307,7 @@ err:
 }
 $ GPRE col_prim.epp -d WHERE_GDB:atlas.gdb
 $ CXX FLAG_CXX col_prim.cpp
-$ LINK FLAG_LINK col_prim pr_views 
+$ LINK FLAG_LINK col_prim pr_views
 $ RUN col_prim v
 $DROP WHERE_GDB:atlas.gdb
 $ DELETE col_prim*

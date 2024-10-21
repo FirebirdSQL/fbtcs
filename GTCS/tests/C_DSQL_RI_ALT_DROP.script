@@ -32,15 +32,15 @@ using namespace std;
    Date:   17-May-93
    Title:  alt_drop.e
 
-   Purpose: RI test suite 
-   
+   Purpose: RI test suite
+
    Tests are:
    	Table Constraints:
    		unique		tab_uniq.e
    		primary key	tab_prim.e
-   		referential	tab_ref.e     
+   		referential	tab_ref.e
    		check const	tab_check.e
-   	
+
    	Column Constraints:
    		unique		col_uniq.e
    		primary key	col_prim.e
@@ -49,7 +49,7 @@ using namespace std;
    		not null    col_nnull.e
 
 	DDL Modify Operations:
-		alter table add constraint	alt_add.e	
+		alter table add constraint	alt_add.e
 		alter table drop constraint	alt_drop.e  <--------- this test
 		drop table					drop_tab.e
 		alter field					field_alt.e
@@ -60,10 +60,10 @@ using namespace std;
 		modify trigger				trigger_mod.e
 
 
-Overview: this test makes sure that new constraints are added correctly. 
+Overview: this test makes sure that new constraints are added correctly.
 It will:
-	CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) 
-		CONSTRAINT AUTH_ID_NOT_NULL NOT NULL 
+	CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11)
+		CONSTRAINT AUTH_ID_NOT_NULL NOT NULL
 			CONSTRAINT AUTH_ID_KEY PRIMARY KEY,...)
 	CREATE TABLE BOOKS (BOOK_ID CHAR(6), BOOK_NAME VARCHAR(80),
 		BOOK_AUTH_ID CHAR(11) CONSTRAINT BOOK_AUTH_ID REFERENCES AUTHORS)
@@ -82,12 +82,12 @@ It will:
 EXEC SQL
 	INCLUDE SQLCA;
 
-/* Set up to catch SQL errors. Note: this will require that 
+/* Set up to catch SQL errors. Note: this will require that
 each routine containing executeable SQL commands has
 an error handling section labeled 'err'.*/
 EXEC SQL
 	WHENEVER SQLERROR GO TO err;
-	
+
 /* Forward declarations */
 void die_on_error();
 int setup();
@@ -137,8 +137,8 @@ int main(int argc, char* argv[])
 
 	if (insert_books())       /* expect all 9 are kept */
 		exit (1);
-	
-	if (verify(9)) 
+
+	if (verify(9))
 		exit (1);
 
 	exit (0);
@@ -153,17 +153,17 @@ int setup() {
 		printf("entered setup\n");
 
 	if (istable("books")) {
-		if (verbose) 
+		if (verbose)
 			printf("books found... will be dropped\n");
-		
+
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE BOOKS';
 		EXEC SQL COMMIT;
 	}
 
 	if (istable("authors")) {
-		if (verbose) 
+		if (verbose)
 			printf("authors found... will be dropped\n");
-		
+
 		EXEC SQL EXECUTE IMMEDIATE 'DROP TABLE AUTHORS';
 		EXEC SQL COMMIT;
 	}
@@ -173,7 +173,7 @@ int setup() {
 	EXEC SQL
 		DECLARE AUTHORS TABLE
 			(AUTHOR_ID CHAR(11), AUTHOR_NAME CHAR(12))
-	
+
 	cmd = "CREATE TABLE AUTHORS (AUTHOR_ID CHAR(11) \
 			CONSTRAINT AUTH_ID_NOT_NULL NOT NULL \
 				CONSTRAINT AUTH_ID_KEY PRIMARY KEY,\
@@ -206,16 +206,16 @@ int setup() {
 err:		die_on_error();
 }
 
-int verify(int num_recs) 
-{  /* make it K&R */ 
+int verify(int num_recs)
+{  /* make it K&R */
 	if (verbose)
 		printf("Entering verify...\n");
 
 	if (print_books(num_recs))
-		exit(1);
+		return 1;
 
 	if (print_views())
-		exit(1);
+		return 1;
 
 	return (0);
 
@@ -239,7 +239,7 @@ int insert_authors() {
 
 	EXEC SQL
 		COMMIT WORK;
-	
+
 	if (verbose)
 		printf("Inserted 2 records in authors.\n");
 
@@ -261,7 +261,7 @@ int insert_books() {
 			VALUES ('BU1033',
 			'Cooking with Computers: Surreptitious Balance Sheets',
 			'John');
-	
+
 	EXEC SQL
 		INSERT INTO BOOKS (BOOK_ID, BOOK_NAME, BOOK_AUTH_ID)
 			VALUES ('BU2075','You Can Combat Computer Stress!',
@@ -289,12 +289,12 @@ int insert_books() {
 err:		die_on_error();
 }
 
-int print_books(int num_expected) 
+int print_books(int num_expected)
 {
 
 	char book_id[12];
 	char book_name[81];
-	char book_auth_id[12];	
+	char book_auth_id[12];
 	int i=0;
 
 	EXEC SQL
@@ -310,7 +310,7 @@ int print_books(int num_expected)
 	while (!SQLCODE) {
 		printf("%s,%s,%s\n", book_id, book_name, book_auth_id);
 		i++;
-		
+
 		EXEC SQL
 			FETCH BOOK_CURSOR INTO :book_id, :book_name, :book_auth_id;
 	}
@@ -337,10 +337,10 @@ bool alter_drop_key() {
 	/* should fail */
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_KEY';
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
 
-	printf ("alter_drop_key expected SQLCODE = -607. Got SQLCODE = %d\n", 
+	printf ("alter_drop_key expected SQLCODE = -607. Got SQLCODE = %d\n",
 			SQLCODE);
 
 	EXEC SQL
@@ -359,10 +359,10 @@ bool alter_drop_not_null() {
 	/* should fail */
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE AUTHORS DROP CONSTRAINT AUTH_ID_NOT_NULL';
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
 
-	printf ("alter_drop_not_null expected SQLCODE = -607, got SQLCODE = %d\n", 
+	printf ("alter_drop_not_null expected SQLCODE = -607, got SQLCODE = %d\n",
 			SQLCODE);
 
 	EXEC SQL
@@ -382,10 +382,10 @@ bool alter_drop_references() {
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER TABLE BOOKS DROP CONSTRAINT BOOK_AUTH_ID';
 	EXEC SQL COMMIT;
 
-	if (SQLCODE) 
+	if (SQLCODE)
 		got_err = true;
 
-	printf ("alter_drop_references got SQLCODE = %d\n", 
+	printf ("alter_drop_references got SQLCODE = %d\n",
 			SQLCODE);
 
 	EXEC SQL ROLLBACK;
@@ -397,16 +397,16 @@ bool alter_drop_references() {
 err:		die_on_error();
 }
 
-int strupper(char* targ, char* source) 
+int strupper(char* targ, char* source)
 {
 	int ii;
-	
+
 	for (ii=0; *targ++ = toupper(*source++); ii++);
 
 	return ii;
 }
 
-int istable(char* tname) 
+int istable(char* tname)
 {
 
 	int exists;
@@ -414,11 +414,11 @@ int istable(char* tname)
 
 	if (!tname)
 		return 0;
-		
+
 	utname = (char *) malloc(strlen(tname)+1);
 
 	strupper(utname, tname);
-	
+
 	EXEC SQL
 		SELECT COUNT (*)
 		INTO :exists
@@ -427,11 +427,11 @@ int istable(char* tname)
 
 	EXEC SQL
 		ROLLBACK WORK;
-			
+
 	free(utname);
 
 	return exists;
-err:		
+err:
 	free(utname);
 	die_on_error();
 }
@@ -450,7 +450,7 @@ err:
 }
 $ GPRE alt_drop.epp -d WHERE_GDB:atlas.gdb
 $ CXX FLAG_CXX alt_drop.cpp
-$ LINK FLAG_LINK alt_drop pr_views 
+$ LINK FLAG_LINK alt_drop pr_views
 $ RUN alt_drop
 $DROP WHERE_GDB:atlas.gdb
 $ DELETE alt_drop*

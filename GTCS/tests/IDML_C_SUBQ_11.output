@@ -1,7 +1,7 @@
 The following test is for legal syntax and produce ordered results using a
 simple select on TABLE 1 after an insert using a SUBQUERY w/GROUP BY COLLATE FR_FR;
 
-It does.  The query on TABLE 2 is the result of the same insert without the 
+It does.  The query on TABLE 2 is the result of the same insert without the
 GROUP BY--it does not appear sorted.
 
 The final test is done in ISQL and produces the error at the end of the results.

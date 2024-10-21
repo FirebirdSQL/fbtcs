@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# Syntax:		[NOT]SINGULAR <subquery>			
+# Syntax:		[NOT]SINGULAR <subquery>
 # Description:           Nested subqueries - SINGULAR
 #
 #                        SELECT T1.EMPNO,T1.LAST_NAME, T1.FIRST_NAME
@@ -46,7 +46,7 @@ AND T2.TOTAL_VALUE > 6000 AND EXISTS \
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -59,13 +59,13 @@ char *argv[];
                 FROM SALES_PEOPLE T1 WHERE SINGULAR
                 (SELECT * FROM SALES T2 WHERE T1.EMPNO=T2.SALES_REP
                 AND T2.TOTAL_VALUE > 6000 AND EXISTS
-                (SELECT * FROM CUSTOMERS T3)) 
-		AND SINGULAR (SELECT * FROM SALES_PERF T4 
+                (SELECT * FROM CUSTOMERS T3))
+		AND SINGULAR (SELECT * FROM SALES_PERF T4
                 WHERE T4.EMPNO = T1.EMPNO);
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :EmpNo, :Last_Name, :First_Name;
 
@@ -77,12 +77,12 @@ char *argv[];
                 printf("%s\t",Last_Name);
                 printf("%s\n",First_Name);
                 Underline(80);
-		
+
                 EXEC SQL
                         FETCH CR INTO :EmpNo, :Last_Name, :First_Name;
 
         }
-	
+
 NOMORE:
 	printf("\n\n* Total Records Listed >>> %d\n",Count);
 
@@ -91,7 +91,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -101,7 +101,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 
@@ -121,13 +121,13 @@ printf("\n");
 
 $ GPRE -e sin007.e
 $ CC FLAG_CC sin007.c
-$ LINK FLAG_LINK sin007 
+$ LINK FLAG_LINK sin007
 $ RUN sin007
 >> sin007.sql
 connect WHERE_GDB:sh_test.gdb;
 select t1.empno,t1.last_name, t1.first_name
-from sales_people t1 where singular 
-(select * from sales t2 where t1.empno=t2.sales_rep 
+from sales_people t1 where singular
+(select * from sales t2 where t1.empno=t2.sales_rep
 and t2.total_value > 6000 and exists
 (select * from customers t3)) and singular
 (select * from sales_perf t4 where t4.empno = t1.empno);
@@ -140,5 +140,5 @@ and t2.total_value > 6000 and exists
 quit;
 $ISQL -m -i sin007.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin007* 
+$ DELETE sin007*
 

@@ -8,7 +8,7 @@
 #include <unistd.h>
 #endif
 
-#ifdef MINGW 
+#ifdef MINGW
 #include <io.h> // unlink
 #endif
 
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]){
 	if (argc < 4)
 	{
 		printf("delete_file need at least 3 parameters\n");
-		exit(1);
+		return 1;
 	}
 
 	char* where_gdb = *argv++;
@@ -66,10 +66,10 @@ int main(int argc, char* argv[]){
 			strncpy(machine_name, where_gdb, size);
 			machine_name[size] = '\0';
 		}
-		
+
 		//
 		// if the machine name is localhost or 127.0.0.1 the host is this machine
-		// 
+		//
 		if (machine_name == NULL)
 		{
 			remove_local(file);

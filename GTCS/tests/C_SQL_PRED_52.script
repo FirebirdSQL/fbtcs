@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column spec> STARTING [WITH] <value spec>
 #                        Case sensitive searches including blob string
 #
@@ -41,7 +41,7 @@ ORDER BY CUSTNO";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -58,7 +58,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :CustNo, :Customer;
 
@@ -74,7 +74,7 @@ char *argv[];
                 FETCH CR INTO :CustNo, :Customer;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -86,7 +86,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -96,7 +96,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -112,16 +112,16 @@ printf("\n");
 }
 $ GPRE -e sta004.e
 $ CC FLAG_CC sta004.c
-$ LINK FLAG_LINK sta004 
+$ LINK FLAG_LINK sta004
 $ RUN sta004
 >> sta004.sql
 connect WHERE_GDB:sh_test.gdb;
-SELECT CUSTNO, CUSTOMER 
-FROM CUSTOMERS 
-WHERE CUSTOMER STARTING WITH 'A' 
+SELECT CUSTNO, CUSTOMER
+FROM CUSTOMERS
+WHERE CUSTOMER STARTING WITH 'A'
 ORDER BY CUSTNO;
 select count(*) from customers where customer starting with 'A';
 quit;
 $ISQL -m -i sta004.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sta004* 
+$ DELETE sta004*

@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 #
 # Description:           varchar field containing number
@@ -37,7 +37,7 @@ WHERE EMPNO CONTAINING 1";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -53,7 +53,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :EmpNo;
 
@@ -66,7 +66,7 @@ char *argv[];
                 EXEC SQL
                 FETCH CR INTO :EmpNo;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -78,7 +78,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -88,7 +88,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -105,7 +105,7 @@ printf("\n");
 
 $ GPRE -e con031.e
 $ CC FLAG_CC con031.c
-$ LINK FLAG_LINK con031 
+$ LINK FLAG_LINK con031
 $ RUN con031
 >> con031.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -115,4 +115,4 @@ WHERE EMPNO CONTAINING 1;
 quit;
 $ISQL -m -i con031.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con031* 
+$ DELETE con031*

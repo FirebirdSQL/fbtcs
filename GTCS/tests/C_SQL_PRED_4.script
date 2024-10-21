@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# Syntax:		[NOT]SINGULAR <subquery>			
+# Syntax:		[NOT]SINGULAR <subquery>
 # Description:           Two table join - SINGULAR
 # Tables:                sales, customers (many-to-one relationship)
 # expected:		16 rows.
@@ -49,7 +49,7 @@ static char             *months [] ={
 };
 
 void ToDate();
-char AlphaDate[13];                     
+char AlphaDate[13];
 struct tm UxTime;
 
 char Test[]="SELECT * FROM SALES S1 \
@@ -60,7 +60,7 @@ WHERE C1.CUSTNO =S1.CUSTNO)";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -80,7 +80,7 @@ char *argv[];
 
 	EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :Custno,:Ponumb,:Aged,:Sales_rep,:Order_date,
                 :Total_value,:Date_needed,:Order_status,:Paid,:Shipped,:Warranty;
@@ -100,17 +100,17 @@ char *argv[];
                 printf ("%s\t",Paid);
                 ToDate(&Shipped);
                 printf ("%s\t",AlphaDate);
-	/* do not print aged because it is calculated 'today' - shipped 
+	/* do not print aged because it is calculated 'today' - shipped
                 printf ("%ld\t",Aged); */
 		ToDate(&Warranty);
 		printf("%s\n",AlphaDate);
                 Underline(80);
-		
+
                 EXEC SQL
                 FETCH CR INTO :Custno,:Ponumb,:Aged,:Sales_rep,:Order_date,
                 :Total_value,:Date_needed,:Order_status,:Paid,:Shipped,:Warranty;
 	}
-	
+
 NOMORE:
 	printf("\n\n* Total Records Listed >>> %d\n",Count);
 
@@ -118,7 +118,7 @@ NOMORE:
 		COMMIT RELEASE;
 	FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -128,7 +128,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /****************************************************************
@@ -156,11 +156,11 @@ printf("\n");
 }
 $ GPRE -e sin005.e
 $ CC FLAG_CC sin005.c
-$ LINK FLAG_LINK sin005 
+$ LINK FLAG_LINK sin005
 $ RUN sin005
 >> sin005.sql
 connect WHERE_GDB:sh_test.gdb;
-select * from sales s1 where not singular 
+select * from sales s1 where not singular
 (select * from customers c1 where c1.custno =s1.custno);
 select * from sales s1 where 0 =
 (select count(*) from customers c1 where c1.custno =s1.custno)
@@ -168,5 +168,5 @@ or 1 < (select count(*) from customers c2 where c2.custno =s1.custno);
 quit;
 $ISQL -m -i sin005.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin005* 
+$ DELETE sin005*
 

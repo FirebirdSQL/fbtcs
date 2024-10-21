@@ -34,12 +34,12 @@ EXEC SQL WHENEVER SQLERROR GOTO err;
 EXEC SQL INCLUDE SQLCA;
 
 
-static print_error()
+static void print_error()
 {
     if (SQLCODE != 100)
         printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
 }
-main()
+int main()
 {    /* Using DOS437 made the most sense in build P */
      EXEC SQL SET NAMES DOS437;     
      EXEC SQL CONNECT db;

@@ -41,9 +41,9 @@ void FetchType();
 
 int main(int argc,char* argv[])
 {
-	
+
     int 	Count;
-    
+
     verbose = false;
     if (--argc > 0){
         if (*argv[1] == 'v' || *argv[1] == 'V')
@@ -52,7 +52,7 @@ int main(int argc,char* argv[])
 
     Count = 0;
     FullFetch = PartialFetch = 0;
-    
+
     printf ("Test:\n %s\n",Test);
     Underline(80);
     M.SOB = sizeof(M.Buffer);
@@ -76,13 +76,13 @@ int main(int argc,char* argv[])
     	EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
 	FetchType();
 
-        while (SQLCODE != 100){	
+        while (SQLCODE != 100){
 	    if (verbose)
                  printf("SQLCODE = %ld, BufferLen = %d\n",
 		         SQLCODE,M.BufferLen);
-		 
+
             printf ("%*.*s\n",M.BufferLen,M.BufferLen,M.Buffer);
-	    
+
             while (SQLCODE == 101){
                 EXEC SQL FETCH BCR INTO :M.Buffer:M.BufferLen;
 		FetchType();
@@ -101,10 +101,10 @@ int main(int argc,char* argv[])
     }
     printf("...Done\n");
 	EXEC SQL CLOSE TCR;
-	
+
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -114,7 +114,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /***********************************************************
  * U n d e r l i n e
@@ -128,7 +128,7 @@ for (j=0;j<i;j++)
 printf("\n");
 }
 /***********************************************************
- * EmptyBuffer 
+ * EmptyBuffer
  * print an underline
  ***********************************************************/
 void EmptyBuffer(char *Bf,unsigned short L)
@@ -138,7 +138,7 @@ void EmptyBuffer(char *Bf,unsigned short L)
 }
 /***********************************************************
  * FetchType
- * Check SQLCODE, update FullFetch/PartialFetch count. 
+ * Check SQLCODE, update FullFetch/PartialFetch count.
  ***********************************************************/
 void FetchType()
 {
@@ -157,7 +157,7 @@ if (SQLCODE == 0){
 
 $ GPRE -e blob006.epp
 $ CXX FLAG_CXX blob006.cpp
-$ LINK FLAG_LINK blob006 
+$ LINK FLAG_LINK blob006
 $ RUN blob006
 $DROP WHERE_GDB:sh_blobs_6.gdb
 $ DELETE blob006*

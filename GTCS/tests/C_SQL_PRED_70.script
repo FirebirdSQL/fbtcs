@@ -2,7 +2,7 @@
 #
 #**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:
 #
 # Description:           date-field STARTING WITH a number
@@ -52,7 +52,7 @@ static char             *months [] ={
 };
 
 void ToDate();
-char AlphaDate[13];                     
+char AlphaDate[13];
 struct tm UxTime;
 
 
@@ -62,7 +62,7 @@ WHERE SHIPPED STARTING WITH '21'";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -78,7 +78,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :CustNo,:Total_Value,:Shipped;
 
@@ -95,7 +95,7 @@ char *argv[];
                 EXEC SQL
                 FETCH CR INTO :CustNo,:Total_Value,:Shipped;
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -107,7 +107,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -117,7 +117,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /****************************************************************
@@ -145,11 +145,11 @@ printf("\n");
 }
 $ GPRE -e sta030.e
 $ CC FLAG_CC sta030.c
-$ LINK FLAG_LINK sta030 
+$ LINK FLAG_LINK sta030
 $ RUN sta030
 >> sta030.sql
 connect WHERE_GDB:sh_test.gdb;
-SELECT CUSTNO, TOTAL_VALUE, SHIPPED 
+SELECT CUSTNO, TOTAL_VALUE, SHIPPED
 FROM SALES WHERE SHIPPED STARTING WITH '21';
 select count(*) from sales
 where shipped starting with '21';

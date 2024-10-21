@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_28.gdb
 >> blob028a.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           Create a view in the blob table 
+ Description:           Create a view in the blob table
 			to prepare for the test that follows.
  Author:                Sam Hakim, June 20, 93
 History:
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
             verbose = true;
         }
 
-   
+
     printf ("Test:\n %s\n",Test);
     Underline(strlen(Test));
 
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     EXEC SQL EXECUTE IMMEDIATE :Test;
     EXEC SQL COMMIT;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -62,7 +62,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw and underline
@@ -78,7 +78,7 @@ printf("\n");
 
 $ GPRE -e blob028a.epp
 $ CXX FLAG_CXX blob028a.cpp
-$ LINK FLAG_LINK blob028a 
+$ LINK FLAG_LINK blob028a
 $ RUN blob028a
 >> blob028a.sql
 connect "WHERE_GDB:sh_blobs_28.gdb";
@@ -87,7 +87,7 @@ $ ISQL -q -i blob028a.sql
 >> blob028.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           Inserting a blob through a view on a table. 
+ Description:           Inserting a blob through a view on a table.
  Author:                Sam Hakim, June 20, 93
  **********************************************************************/
 #include <stdio.h>
@@ -131,7 +131,7 @@ int Count;
             verbose = true;
         }
 
-   
+
     Count = 0;
     M.Buffer[0] = 0;
     strcpy(Test_Name,"blob028");
@@ -163,13 +163,13 @@ int Count;
     EXEC SQL
         CLOSE BCW;
     EXEC SQL
-        INSERT INTO VMB1 (TEST,RID,BHALFK,DESC) 
+        INSERT INTO VMB1 (TEST,RID,BHALFK,DESC)
         VALUES (:Test_Name,:j,:BlobId,"Inserting blobs through views");
     EXEC SQL COMMIT RELEASE;
     }
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -179,7 +179,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw and underline
@@ -217,7 +217,7 @@ int	  i,j,t,k;
      for (i = 9; i < L; i+=t){
 	j++;
 	sprintf (TempBuf,"%d,",j);
-	strncat(Bf,TempBuf,t); 
+	strncat(Bf,TempBuf,t);
      }
 	strncat(Bf,"<EOL",5);
 if (verbose)
@@ -226,7 +226,7 @@ if (verbose)
 
 $ GPRE -e blob028.epp
 $ CXX FLAG_CXX blob028.cpp
-$ LINK FLAG_LINK blob028 
+$ LINK FLAG_LINK blob028
 $ RUN blob028
 
 >> blob028b.cpp

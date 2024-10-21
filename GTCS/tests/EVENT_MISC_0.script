@@ -1,15 +1,15 @@
 
 #
-#Series:   EVENT_MISC    
+#Series:   EVENT_MISC
 #Test:     EVENT_MISC_0  (new V4.5 version to see if bug exists)
 #History:
 #May 7, 97: clare: trying to see if the problem exists in SS
 #Aug 28, 97: bsriram: test does not pass only on an SMP Solaris 2.5 Box.
 #                     Passes with IB5.0 DEV and Beta1 kits on all uni-processor
-#                     machines. The SERVER_RELATION is not getting updated 
+#                     machines. The SERVER_RELATION is not getting updated
 #                     for each event sent by the clients.
 #Dec 2, 1997:clare:This was still failing because TCS was picking
-#            up an old local 4.0 test rather than the new 4.5 test.  I 
+#            up an old local 4.0 test rather than the new 4.5 test.  I
 #            had to delete the hp local test and local init for 4.0 to
 #            force the 4.5 global test to run against the new 4.5 solaris
 #            global init. Reported problem to dmitri.  HP now passes
@@ -23,7 +23,7 @@ $ GBAK -replace WHERE_FILES:asyn_evnts.gbk WHERE_GDB:asyn_evnts.gdb
 /*
  *	MODULE NAME:	event_custom.h
  *	DESCRIPTION:	Header file for the asynchronous event test application
- *     
+ *
  */
 
 /* Constants */
@@ -47,6 +47,9 @@ $ GBAK -replace WHERE_FILES:asyn_evnts.gbk WHERE_GDB:asyn_evnts.gdb
 #else
 #include <Firebird/ibase.h>
 #endif
+#ifndef WIN_NT
+#include <unistd.h>
+#endif	// WIN_NT
 
 /* Platform dependent */
 
@@ -66,7 +69,7 @@ void packet_handler(int[],int [MAX_CLIENTS][2], short);
 
 int  update_server_relation(int[], short);
 
-void event_handler(char *,short,char *);
+void event_handler(void *,ISC_USHORT,const ISC_UCHAR *);
 
 void finish_packets(int [MAX_CLIENTS][2],short);
 
@@ -100,6 +103,7 @@ void parse_client_args(int,char *[],int *,int *,char *);
 #include <ctype.h>
 #include <time.h>
 #include <errno.h>
+#include <stdlib.h>
 
 #ifdef WIN_NT
 #include <windows.h>
@@ -114,7 +118,7 @@ void parse_client_args(int,char *[],int *,int *,char *);
 
 /* Global variables */
 
-int event = 0; 
+int event = 0;
 
 #ifdef WIN_NT
 HANDLE  pids[MAX_CLIENTS];
@@ -142,7 +146,7 @@ EXEC SQL
 
 /*---------------------------------------------------------------------------*/
 
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 
 //	int	argc;
 //	char	*argv[];
@@ -161,8 +165,9 @@ main(int argc, char* argv[])
 
     int	count_array[MAX_CLIENTS],event_id;
 
-    char	*event_buffer,*result_buffer,*start_time;
-			
+    ISC_UCHAR	*event_buffer,*result_buffer;
+    char	*start_time;
+
 /*--------------------------------------------------------------------------*/
 
 /* Ready the database and express interest in asynchronous events */
@@ -221,7 +226,7 @@ main(int argc, char* argv[])
    handle any PACKETS in the PIPELINES from the CLIENTS and update the
    database with the number of events the SERVER has received */
 
-	if (!event) 
+	if (!event)
             {
 			if (sleep_count > 120)
 				break;
@@ -232,10 +237,10 @@ main(int argc, char* argv[])
 #else
             sleep(5);
 #endif
-            }      
+            }
 
        else {
-	    event--; 
+	    event--;
 
 	    isc_event_counts(count_array,length,
               event_buffer,result_buffer);
@@ -256,7 +261,7 @@ main(int argc, char* argv[])
 			  client_names[client_count]);
 
 	}
-      
+
 
     }
 
@@ -275,8 +280,8 @@ main(int argc, char* argv[])
     stat = report_events(start_time,num_events,verbose);
 
     EXEC SQL
-        COMMIT RELEASE; 
-    
+        COMMIT RELEASE;
+
     exit(stat);
 
 }
@@ -387,7 +392,7 @@ void init_server(char** start_time,short verbose)
           {
            EXEC SQL
                ROLLBACK;
-      
+
            EXEC SQL
                SET TRANSACTION;
 
@@ -397,9 +402,9 @@ void init_server(char** start_time,short verbose)
          {
 
           if ( isc_status[1] )
-      
+
           isc_print_status(isc_status);
- 
+
 
           break;
          }
@@ -539,7 +544,7 @@ void create_client(int* client_count,int pipe_fd[MAX_CLIENTS][2], int num_events
    client_events = num_events / MAX_CLIENTS;
    extra_events  = num_events % MAX_CLIENTS;
 
-         
+
 #ifdef WIN_NT
 
         Sleep( 1 * 1000 );
@@ -550,7 +555,7 @@ if (!InitializeSecurityDescriptor(&descriptor, SECURITY_DESCRIPTOR_REVISION))
       fprintf(stdout,"Error : Init. Sec. Descriptor Failed, Error Code %d \n",
               GetLastError() );
      }
- 
+
 if (!SetSecurityDescriptorDacl(&descriptor, FALSE, NULL, FALSE))
      {
       fprintf(stdout,"Error : Set Sec. Descriptor Failed, Error Code %d \n",
@@ -563,20 +568,20 @@ attr.bInheritHandle = TRUE;
 attr.lpSecurityDescriptor = &descriptor;
 
 
-if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 )) 
+if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
     {
       fprintf(stdout,"Create pipe failed\n");
     }
 
     pipe_fd[*client_count][0] = pipe_write;
     pipe_fd[*client_count][1] = pipe_read;
-	
+
     if (*client_count != 0)
 	sprintf(event_str,"%d",client_events);
     else
 	sprintf(event_str,"%d",client_events+extra_events);
-   
-    sprintf(fd_str,"%s %d %s %s %s ", 
+
+    sprintf(fd_str,"%s %d %s %s %s ",
               "event_client.exe", pipe_fd[*client_count][1], event_str,
               client_name, NULL);
 
@@ -587,7 +592,7 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
     si.dwFlags = 0;
     si.cbReserved2 = 0;
     si.lpReserved2 = NULL;
- 
+
   if ( ! CreateProcess(NULL, fd_str, NULL,
          NULL, TRUE, NORMAL_PRIORITY_CLASS ,
          NULL, NULL, &si, &pi))
@@ -601,7 +606,7 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 
 #else
 	sleep(1);
-    
+
 	if (pipe(pipe_fd[*client_count]) == -1)
 		perror("pipe");
 
@@ -643,8 +648,8 @@ if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
     else
        fprintf(stdout,"\t\tClient %s will post %d events\n\n",
 			client_name, client_events + extra_events);
-   
-	
+
+
     (*client_count)++;
 }
 
@@ -688,7 +693,7 @@ void packet_handler(int count_array[], int pipe_fd[MAX_CLIENTS][2] , short verbo
 
 	for (client_num = 0; client_num < MAX_CLIENTS; client_num++)
 	    count_array[client_num] = 0;
-     
+
         return;
 
     }
@@ -704,7 +709,7 @@ void packet_handler(int count_array[], int pipe_fd[MAX_CLIENTS][2] , short verbo
 
 #ifdef WIN_NT
 
-        for ( i = 0; i < IO_RETRY; i++ ) 
+        for ( i = 0; i < IO_RETRY; i++ )
          {
          if (!PeekNamedPipe((HANDLE) pipe_fd[client_num][0],NULL,
              0,NULL, &outsize, NULL))
@@ -715,7 +720,7 @@ void packet_handler(int count_array[], int pipe_fd[MAX_CLIENTS][2] , short verbo
         if ( outsize )
           {
            i = IO_RETRY;
-          
+
            if (ReadFile( (HANDLE)pipe_fd[client_num][0],packet,size,&outsize,NULL))
             {
             EXEC SQL
@@ -768,7 +773,7 @@ void packet_handler(int count_array[], int pipe_fd[MAX_CLIENTS][2] , short verbo
    	    COMMIT;
 
 	CHECK_STATUS;
-	
+
         EXEC SQL
             SET TRANSACTION;
 
@@ -824,18 +829,18 @@ int update_server_relation(int count_array[], short verbose)
 
                if ( isc_status[1] == isc_deadlock )
                   {
- 
+
                    EXEC SQL
                        ROLLBACK;
 
                    EXEC SQL
-                       SET TRANSACTION; 
+                       SET TRANSACTION;
 
                    i--;
                    continue;
                   }
                else
-                   if ( isc_status[1] ) 
+                   if ( isc_status[1] )
                       isc_print_status(isc_status);
 
 
@@ -863,7 +868,7 @@ int update_server_relation(int count_array[], short verbose)
 
 /*---------------------------------------------------------------------------*/
 
-void event_handler(char* result_buffer, short length, char* updated_buffer)
+void event_handler(void* result_buffer, ISC_USHORT length, const ISC_UCHAR* updated_buffer)
 
 //    char  *result_buffer,*updated_buffer;
 //    short length;
@@ -883,7 +888,7 @@ void event_handler(char* result_buffer, short length, char* updated_buffer)
 
     event++;
     while(length--)
-	*result_buffer++ = *updated_buffer++;
+	*(ISC_UCHAR*) result_buffer++ = *updated_buffer++;
 
 }
 
@@ -910,7 +915,8 @@ int report_events(char* start_time, int num_events, short verbose)
  ***************************************************************************/
 
     int		client_num,client_event_count,client_total_events = 0;
-    int		server_event_count,packet_count,bintim,i;
+    int		server_event_count,packet_count,i;
+    time_t	bintim;
     char	*finish_time;
     short	stat = TRUE;
 
@@ -939,7 +945,7 @@ int report_events(char* start_time, int num_events, short verbose)
 	client_event_count = 0;
 	packet_count = 0;
 
-        
+
 
 	EXEC SQL
 	    SELECT CLIENT_EVENT_COUNT
@@ -951,9 +957,9 @@ int report_events(char* start_time, int num_events, short verbose)
            {
             EXEC SQL
                 ROLLBACK;
-      
+
             client_num--;
-       
+
             EXEC SQL
                 SET TRANSACTION;
 
@@ -963,7 +969,7 @@ int report_events(char* start_time, int num_events, short verbose)
 
           if ( isc_status[1] )
              isc_print_status(isc_status);
-            
+
 
 	fprintf(stdout,"\n\n\tClient %s created %d events\n",
 				client_names[client_num],client_event_count);
@@ -978,9 +984,9 @@ int report_events(char* start_time, int num_events, short verbose)
            {
             EXEC SQL
                 ROLLBACK;
-      
+
             client_num--;
-       
+
             EXEC SQL
                 SET TRANSACTION;
 
@@ -1020,7 +1026,7 @@ int report_events(char* start_time, int num_events, short verbose)
        {
         EXEC SQL
             ROLLBACK;
-      
+
         EXEC SQL
             SET TRANSACTION;
 
@@ -1096,7 +1102,7 @@ void finish_packets(int pipe_fd[MAX_CLIENTS][2], short verbose)
 #endif
 
     for ( client_num = 0; client_num < MAX_CLIENTS; client_num++ ) {
-    
+
 
 #ifdef WIN_NT
 
@@ -1113,7 +1119,7 @@ void finish_packets(int pipe_fd[MAX_CLIENTS][2], short verbose)
 
             if ( outsize )
              {
-                
+
                 ReadFile((HANDLE) pipe_fd[client_num][0],packet,
                       sizeof(packet), &outsize,NULL) ;
 
@@ -1129,7 +1135,7 @@ void finish_packets(int pipe_fd[MAX_CLIENTS][2], short verbose)
                    {
                     EXEC SQL
                         ROLLBACK;
-      
+
                     EXEC SQL
                         SET TRANSACTION;
 
@@ -1139,15 +1145,15 @@ void finish_packets(int pipe_fd[MAX_CLIENTS][2], short verbose)
                    {
 
                    if ( isc_status[1] )
-      
+
                       isc_print_status(isc_status);
- 
+
                    break;
-                   } 
+                   }
 
                 packet_num++;
 
-               } while (1) ; 
+               } while (1) ;
 
                 EXEC SQL
                     COMMIT;
@@ -1178,7 +1184,7 @@ void finish_packets(int pipe_fd[MAX_CLIENTS][2], short verbose)
                     {
                      EXEC SQL
                          ROLLBACK;
-      
+
                      EXEC SQL
                          SET TRANSACTION;
 
@@ -1188,9 +1194,9 @@ void finish_packets(int pipe_fd[MAX_CLIENTS][2], short verbose)
                     {
 
                     if ( isc_status[1] )
-      
+
                        isc_print_status(isc_status);
- 
+
                     break;
                     }
 
@@ -1198,7 +1204,7 @@ void finish_packets(int pipe_fd[MAX_CLIENTS][2], short verbose)
 
                  EXEC SQL
                      COMMIT;
-  
+
                  EXEC SQL
                      SET TRANSACTION;
 
@@ -1207,7 +1213,7 @@ void finish_packets(int pipe_fd[MAX_CLIENTS][2], short verbose)
 	     }
 #endif
 
-	 if (verbose) 
+	 if (verbose)
 	    fprintf(stdout,
 		"\n\tFinished with %d additional packets from client %s\n\n",
 					packet_num,client_names[client_num]);
@@ -1251,7 +1257,7 @@ EXEC SQL
 
 /*--------------------------------------------------------------------------*/
 
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 
 //    int  argc;
 //    char *argv[];
@@ -1303,7 +1309,7 @@ main(int argc, char* argv[])
             {
              EXEC SQL
                  ROLLBACK;
- 
+
              EXEC SQL
                  SET TRANSACTION;
 
@@ -1313,13 +1319,13 @@ main(int argc, char* argv[])
          else
            if ( isc_status[1] )
               isc_print_status(isc_status);
-  
+
 /* Commit the transaction */
 
 	EXEC SQL
             COMMIT;
 
-        EXEC SQL 
+        EXEC SQL
 	    SET TRANSACTION;
 
 /* Create a PACKET of the form: 	"MOE_100" */
@@ -1342,7 +1348,7 @@ main(int argc, char* argv[])
              fprintf(stdout,"Error : WriteFile failed, Error Code %d \n",
                     GetLastError() );
             }
-         else 
+         else
             {
                 Sleep( 5000 );
             }
@@ -1376,17 +1382,17 @@ main(int argc, char* argv[])
 
 #ifdef WIN_NT
 
-   
+
 /*    Sleep ( 24 * 1000 ); */
 
 
 	if (!CloseHandle ((HANDLE)client_pipe))
 	{
 		sprintf(buf,"**%s failed on CLOSE of PIPE %d**\n",
-				client_name,client_pipe); 
+				client_name,client_pipe);
 		fflush(buf);
 	}
-					
+
 #else
 
  /*   sleep(240); */
@@ -1438,7 +1444,7 @@ void parse_client_args(
     *num_events = atoi(argv[2]);
     strcpy(client_name,argv[3]);
 
-}    
+}
 
 /*---------------------------------------------------------------------------*/
 >> delay.c
@@ -1449,7 +1455,7 @@ void parse_client_args(
 #include <stdio.h>
 #include <stdlib.h>
 
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 //int argc;
 //char *argv[];
 {
@@ -1463,20 +1469,20 @@ main(int argc, char* argv[])
 #else
   sleep(delay);
 #endif
-  exit(0);
+  return 0;
 }
 # CC FLAG_CC delay.c
 # LINK FLAG_LINK delay
-$ GPRE -e -n -m event_client.e 
+$ GPRE -e -n -m event_client.e
 $ CC FLAG_CC event_client.c
-$ LINK FLAG_LINK event_client 
-$ GPRE -e -n -m event_server.e 
+$ LINK FLAG_LINK event_client
+$ GPRE -e -n -m event_server.e
 $ CC FLAG_CC event_server.c
-$ LINK FLAG_LINK event_server 
-$ RUN event_server 
+$ LINK FLAG_LINK event_server
+$ RUN event_server
 $ DELETE event_custom.h
-$ DELETE event_server* 
-$ DELETE event_client* 
+$ DELETE event_server*
+$ DELETE event_client*
 $ SLEEP 10
 $ DROP WHERE_GDB:asyn_evnts.gdb
 $ DELETE delay*

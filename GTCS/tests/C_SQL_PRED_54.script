@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column spec> STARTING [WITH] <value spec>
 #                        Case sensitive searches including blob string
 #
@@ -43,7 +43,7 @@ ORDER BY CUSTOMER ASCENDING";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -61,7 +61,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :CustNo, :Customer;
 
@@ -77,7 +77,7 @@ char *argv[];
                         FETCH CR INTO :CustNo, :Customer;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -89,7 +89,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -99,7 +99,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -115,16 +115,16 @@ printf("\n");
 }
 $ GPRE -e sta006.e
 $ CC FLAG_CC sta006.c
-$ LINK FLAG_LINK sta006 
+$ LINK FLAG_LINK sta006
 $ RUN sta006
 >> sta006.sql
 connect WHERE_GDB:sh_test.gdb;
-SELECT CUSTNO, CUSTOMER 
-FROM CUSTOMERS WHERE CUSTOMER STARTING WITH 'T' 
+SELECT CUSTNO, CUSTOMER
+FROM CUSTOMERS WHERE CUSTOMER STARTING WITH 'T'
 OR CUSTOMER STARTING WITH 'S' ORDER BY CUSTOMER ASCENDING;
-select count(*) from customers where customer starting with 'T' 
+select count(*) from customers where customer starting with 'T'
 or customer starting with 'S';
 quit;
 $ISQL -m -i sta006.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sta006* 
+$ DELETE sta006*

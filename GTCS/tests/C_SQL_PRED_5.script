@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# Syntax:		[NOT]SINGULAR <subquery>			
+# Syntax:		[NOT]SINGULAR <subquery>
 # Description:           Nested subqueries - SINGULAR
 #
 #                        SELECT EMPNO
@@ -55,7 +55,7 @@ WHERE T4.EMPNO = T1.EMPNO)";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -81,7 +81,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :EmpNo;
 
@@ -91,11 +91,11 @@ char *argv[];
 
                 printf("%d\n",EmpNo);
                 Underline(80);
-		
+
                 EXEC SQL
                 FETCH CR INTO :EmpNo;
         }
-	
+
 NOMORE:
 	printf("\n\n* Total Records Listed >>> %d\n",Count);
 
@@ -104,7 +104,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -114,7 +114,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 /*--- print and underline of width i */
@@ -132,7 +132,7 @@ printf("\n");
 
 $ GPRE -e sin006.e
 $ CC FLAG_CC sin006.c
-$ LINK FLAG_LINK sin006 
+$ LINK FLAG_LINK sin006
 $ RUN sin006
 >> sin006.sql
 select empno from sales_people t1 where singular
@@ -149,4 +149,4 @@ and t2.total_value > 6000 and 1 =
 quit;
 $ISQL -m -i sin006.sql WHERE_GDB:sh_test.gdb
 $DROP WHERE_GDB:sh_test.gdb
-$DELETE sin006* 
+$DELETE sin006*

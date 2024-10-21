@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_21.gdb
 >> blob021.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           SET A BLOB TO NULL 
+ Description:           SET A BLOB TO NULL
  Author:                Sam Hakim, June 16, 93
  **********************************************************************/
 #include <stdio.h>
@@ -27,7 +27,7 @@ bool verbose;
 
 struct Buf{
     char            *Buffer[5];			/* Buffer vector to store blobs */
-    unsigned short  BufferLen[5];		
+    unsigned short  BufferLen[5];
 };
 struct Buf M;
 
@@ -49,7 +49,7 @@ int Count;
     READY;              /* Bug 4549 will be fixed in verion G */
     START_TRANSACTION;
 
-	
+
     EXEC SQL DECLARE TCR CURSOR FOR
              SELECT TEST_NAME,ROW_ID,B,COMMENT
              FROM MB1 WHERE ROW_ID =2;
@@ -66,7 +66,7 @@ int Count;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -76,7 +76,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /***********************************************************
  * U n d e r l i n e
@@ -92,7 +92,7 @@ printf("\n");
 
 $ GPRE -e blob021.epp
 $ CXX FLAG_CXX blob021.cpp
-$ LINK FLAG_LINK blob021 
+$ LINK FLAG_LINK blob021
 $ RUN blob021
 >> blob021.sql
 connect "WHERE_GDB:sh_blobs_21.gdb";

@@ -3,7 +3,7 @@ $ GBAK -r sh_blobs.gbk WHERE_GDB:sh_blobs_4.gdb
 >> blob004.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           INSERT BLOB INTO TABLE MAXIMUM_SEGMENT 
+ Description:           INSERT BLOB INTO TABLE MAXIMUM_SEGMENT
  Author:                Sam Hakim, June 7, 93
  **********************************************************************/
 #include <stdio.h>
@@ -49,7 +49,7 @@ int main(int argc,char* argv[])
         }
 
     READY;              /* Bug 4549 will be fixed in verion G */
-   
+
     Count = 0;
 
     printf ("Test:\n %s\n",Test);
@@ -82,7 +82,7 @@ int main(int argc,char* argv[])
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -92,7 +92,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * Draw and underline
@@ -135,7 +135,7 @@ short		i;
 
 $ GPRE -e blob004.epp
 $ CXX FLAG_CXX blob004.cpp
-$ LINK FLAG_LINK blob004 
+$ LINK FLAG_LINK blob004
 $ RUN blob004
 
 >> blob004b.cpp

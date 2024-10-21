@@ -127,7 +127,7 @@ int main (int argc, char* argv[], char* envp[])
 	// Find execution instruction
 	if (argc<3) {
 		printf("The type and name of test set to run are needed\n");
-		exit(1);
+		return 1;
 	}
 	else {
 		argc -= 2;
@@ -178,7 +178,7 @@ int main (int argc, char* argv[], char* envp[])
 	}
 	else {
 		printf("Not known run type %s\n",type);
-		exit(1);
+		return 1;
 	}
 
 	// Done, so shutdown and exit
@@ -243,10 +243,10 @@ replacement* lookup_env_var(char* in_line)
 
 		// Check if we found a termination ')'
 		if (*end != ')') {
-			p = start+6; // Move p to search next $( 
+			p = start+6; // Move p to search next $(
 			continue;
 		}
-	
+
 		char* envvar = (char*) malloc(end - start + 2);
 		strncpy(envvar, start, end - start + 1);
 		envvar[end - start + 1] = '\0';
@@ -262,11 +262,11 @@ replacement* lookup_env_var(char* in_line)
 		if (new_rep->final == NULL){
 			printf("The enviroment variable %s have no value\n",envvar2);
 			fflush(stdout);
-			exit(1);
+			return 1;
 		}
 		new_rep->next = NULL;
 		new_rep->pos = start - in_line;
-		
+
 		if (!first_rep){
 			first_rep = last_rep = new_rep;
 		}
@@ -295,7 +295,7 @@ char* replace_text(char* origin, replacement* first_rep){
 	int shift = 0;
 	replacement* cur_rep = first_rep;
 	while (cur_rep!=NULL){
-		shift += strlen(cur_rep->final) - strlen(cur_rep->initial); 
+		shift += strlen(cur_rep->final) - strlen(cur_rep->initial);
 		cur_rep = cur_rep->next;
 	}
 
@@ -346,7 +346,7 @@ replacement* lookup_symbols(char* origin){
 			char* cont = ptr1 + strlen(cur_symbol->name);
 			const char* upper = "(PLATFORM_UPPER)";
 			if (strncmp(cont, upper, sizeof(upper)) == 0){
-				new_rep->initial = (char*) malloc (strlen(cur_symbol->name) 
+				new_rep->initial = (char*) malloc (strlen(cur_symbol->name)
 													+ strlen(upper) + 1);
 				sprintf(new_rep->initial, "%s%s", cur_symbol->name, upper);
 				new_rep->final = (char*) malloc (strlen(cur_symbol->value)+1);
@@ -486,7 +486,7 @@ static int parse_series_args (char *start, ISC_SHORT *first, ISC_SHORT *second, 
 {
 	/**************************************
 	 *
-	 *	p a r s e _ s e r i e s _ a r g s 
+	 *	p a r s e _ s e r i e s _ a r g s
 	 *
 	 **************************************
 	 *
@@ -506,7 +506,7 @@ static int parse_series_args (char *start, ISC_SHORT *first, ISC_SHORT *second, 
 	if (*break_flag == true)
 		current = start;
 
-	*break_flag = false;    // Set this to false so we don't break prematurely. 
+	*break_flag = false;    // Set this to false so we don't break prematurely.
 
 	previous = current;
 	*second = MAX_UPPER;    // Set the upper bound to pseudo - infinity.
@@ -867,7 +867,7 @@ static int set_config(char *rfn)
 			case 'S' :
 				set_symbol(cmd);
 				break;
-				
+
 			// Unknown commands.
 
 			default :
@@ -1009,7 +1009,7 @@ char* read_file(FILE* pFile, bool addnl){
 	 **************************************
 	 *
 	 * Functional description
-	 *	Read a file and put its content in a char* 
+	 *	Read a file and put its content in a char*
 	 *
 	 **************************************/
 	long lSize;
@@ -1083,7 +1083,7 @@ static int test_one(char *string)
 	*test_name = 'l';
 	strcpy(test_name+1, string);
 
-	// Execute the main file -- search for the test with name == 
+	// Execute the main file -- search for the test with name ==
 	// string
 	char testFileName[128];
 
@@ -1150,7 +1150,7 @@ static int test_meta_series(char *string, char *start)
 	 *
 	 * Functional description
 	 *	Run through a list of series
-	 *                          
+	 *
 	 **************************************/
 	char gSeriesList[128];
 	char lSeriesList[128];
@@ -1182,7 +1182,7 @@ static int test_meta_series(char *string, char *start)
 	if (ms_count <= 0)
 	{
 		char lSerieList[128];
-		// Get series local list 
+		// Get series local list
 		sprintf(lSerieList,"%s/meta_series/%s.list",lBaseDir,metaName);
 		FILE* lTests = fopen(lSerieList,"r");
 		int order;
@@ -1215,7 +1215,7 @@ static int test_meta_series(char *string, char *start)
 	if (!total)
 	{
 		total = ms_count;
-		// Get series global list 
+		// Get series global list
 		char gSerieList[128];
 		sprintf(gSerieList,"%s/meta_series/%s.list",gBaseDir,metaName);
 		FILE* gTests = fopen(gSerieList,"r");
@@ -1330,7 +1330,7 @@ static int test_series(char *string, char *start)
 		if (s_count <= 0)
 		{
 			char lSerieList[128];
-			// Get series local list 
+			// Get series local list
 			sprintf(lSerieList,"%s/series/%s.list",lBaseDir,serieName);
 			FILE* lTests = fopen(lSerieList,"r");
 			int order;
@@ -1349,10 +1349,10 @@ static int test_series(char *string, char *start)
 						s_count--;
 						s_sequence = order;
 						count = test_one(testName);
-	
+
 						// If quiet switch is not thrown and the test was run by test_one()
 						// print the differences.
-	
+
 // 					if (count && !sw_quiet)
 // 						diff (string, NULL, NULL, NULL);
 
@@ -1370,7 +1370,7 @@ static int test_series(char *string, char *start)
 		if (!total)
 		{
 			total = s_count;
-			// Get series local list 
+			// Get series local list
 			char gSerieList[128];
 			sprintf(gSerieList,"%s/series/%s.list",gBaseDir,serieName);
 			FILE* gTests = fopen(gSerieList,"r");

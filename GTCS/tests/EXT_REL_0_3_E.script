@@ -1,23 +1,23 @@
 
 #*******************************************************************************
-# 
+#
 #Test Name:  	EXT_REL_0_3_E
 #Test Level:     0
 #Series Name:    EXT_LEV_0
 #Date:  		June 28, 1994
 #Author:  	Scott Van Voris
-#Bug: 
-# 
-#Description:    This is a Level 0 test which is designed to verify the 
+#Bug:
+#
+#Description:    This is a Level 0 test which is designed to verify the
 #		syntax to create an external relation with a fixed-length
 #		datatype is working properly.
 #
-#                In order to verify the external relation was really 
-#                created, a tuple is inserted into the relation, and the 
+#                In order to verify the external relation was really
+#                created, a tuple is inserted into the relation, and the
 #                value in the relation retreived via a query.
-# 
+#
 #Expected Output:        This is value:  12000
-# 
+#
 #History:
 #
 #2-Oct-95:  Mark
@@ -25,13 +25,13 @@
 #  Also, added WHERE_GDB and RUN drop_gdb to the tests.
 #
 #3-Oct-95: Marco
-#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created
 #  by the server in the correct place when accessing data remotely.
 #  Also, I removed any referance to DIR external.dat and TYPE external.dat
 #  which would also fail when running remotely.
 #
 #4-Oct-95: Marco
-#  Renamed Fixed.e to FixedL.e, so that we no longer call DELETE fixed*, which also 
+#  Renamed Fixed.e to FixedL.e, so that we no longer call DELETE fixed*, which also
 #  deleted fixed.sed.
 #
 #7-Jan-97: CJewell
@@ -48,42 +48,42 @@
 >> fixedL.e
 #include <stdio.h>
 #include <stdlib.h>
- 
+
 EXEC SQL
     INCLUDE SQLCA
 
 EXEC SQL
     WHENEVER SQLERROR GO TO ERR_LBL;
- 
-main()
+
+int main()
 {
 
 EXEC SQL
    CREATE DATABASE "WHERE_GDB:ext_rel_0_3_E.gdb";
- 
+
 EXEC SQL
    DECLARE ext_table TABLE
        (field1 SMALLINT) ;
- 
+
 EXEC SQL
    CREATE TABLE ext_table EXTERNAL FILE "WHERE_GDB_EXTERNAL:external.dat"
        (field1 SMALLINT) ;
- 
- 
-exit(0);
+
+
+return 0;
 ERR_LBL:
 	EXEC SQL WHENEVER SQLERROR CONTINUE;
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
 	isc_print_status (gds__status);
- 
+
     EXEC SQL
         WHENEVER SQLERROR CONTINUE;
 
     EXEC SQL
         ROLLBACK RELEASE;
- 
-    exit(1);
- 
+
+    return 1;
+
 }
 >> query.e
 #include <stdio.h>
@@ -91,20 +91,20 @@ ERR_LBL:
 
 EXEC SQL
     INCLUDE SQLCA
- 
+
 EXEC SQL
     WHENEVER SQLERROR GO TO ERR_LBL;
- 
+
 EXEC SQL
     SET DATABASE DB = "WHERE_GDB:ext_rel_0_3_E.gdb";
 
-main()
+int main()
 {
-EXEC SQL 
+EXEC SQL
    BEGIN DECLARE SECTION;
 
    BASED ON EXT_TABLE.FIELD1 value;
-EXEC SQL 
+EXEC SQL
    END DECLARE SECTION;
 
 EXEC SQL
@@ -115,20 +115,20 @@ EXEC SQL
 
 printf ("This is value:  %d\n",value);
 
-exit(0);
+return 0;
 ERR_LBL:
 	EXEC SQL WHENEVER SQLERROR CONTINUE;
 	printf ("Data base error, SQLCODE = %d\n", SQLCODE);
 	isc_print_status (gds__status);
- 
+
     EXEC SQL
         WHENEVER SQLERROR CONTINUE;
 
     EXEC SQL
         ROLLBACK RELEASE;
- 
-    exit(1);
- 
+
+    return 1;
+
 }
 
 $GPRE fixedL.e
@@ -138,7 +138,7 @@ $RUN fixedL
 $GPRE query.e
 $CC FLAG_CC query.c
 $LINK FLAG_LINK query
-$RUN query 
+$RUN query
 $DROP WHERE_GDB:ext_rel_0_3_E.gdb
 $DELETE_REM WHERE_GDB: WHERE_GDB_EXTERNAL: external.dat
 $DELETE fixedL* query*

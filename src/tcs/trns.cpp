@@ -328,7 +328,7 @@ static int fix_compile(char *line, char *result, int lang)
 
 	if (!options){
 		printf("ERROR: Environment variable not defined line %s\n", line);
-		exit(1);
+		return 1;
 	}
 
 	//  If an environment variable was used, then use it.
@@ -514,7 +514,7 @@ static int fix_link(char *line, char *bufr, int lang)
 
 	if (!options){
 		printf("ERROR: Environment variable not defined line %s\n", line);
-		exit(1);
+		return 1;
 	}
 	else if (*options_template)
 		sprintf(bufr, options_template, files, firstname);
@@ -531,7 +531,7 @@ int set_ptl_lookup(char *verb, char *def)
 	 **************************************
 	 *
 	 * Functional description
-	 * 	If the '-m' command line switch 
+	 * 	If the '-m' command line switch
 	 *	has been thrown on NT then this
 	 *	function has been called and it
 	 *	will change the ptl_lookup table
@@ -685,7 +685,7 @@ static int handle_filename(char *name)
 		//  Handle GPRE C++ extensions... The default is .exx according to the docs
 		else if (strcmp(dot, ".E") == 0 && strcmp(E_CXX_EXT, dot))
 		{
-			//  Modify .a to appropriate suffix for cxx files and save length 
+			//  Modify .a to appropriate suffix for cxx files and save length
 			//  difference in longer.
 
 			*temp = '\0';
@@ -778,7 +778,7 @@ static int handle_options(char *options, char *opt_template)
 	 * Functional description
 	 *
 	 *        if this is an options template put it in
-	 *        the template buffer with a trailing \n and 
+	 *        the template buffer with a trailing \n and
 	 *	  NULL, otherwise, copy it into
 	 *        the command result buffer.
 	 *        a template contains %s
@@ -802,7 +802,7 @@ static int handle_path(char *tok, char *wrd, char *word2, char **result)
 	 *
 	 *        This assumes that a string containing
 	 *        a ':' has been found and that the word
-	 *        preceding the colon is likely to be a 
+	 *        preceding the colon is likely to be a
 	 *        path definition keyword.
 	 *
 	 **************************************/
@@ -868,7 +868,7 @@ static struct defn *lookup_defn(char *wrd)
 	 * Functional description
 	 *      Look up word in symbol list and return pointer to the
 	 *      entry in the lookup table.  If no matching entry return
-	 *      the address of the first empty space.  
+	 *      the address of the first empty space.
 	 *      If table is empty, return a point to the first empty space.
 	 *
 	 **************************************/
@@ -899,7 +899,7 @@ static char *mytokget(char **position, const char *delimiters)
 	 * Functional description
 	 *
 	 *         return a pointer to the next interesting
-	 *         section of a string. 
+	 *         section of a string.
 	 *
 	 **************************************/
 	char *ch, *str;
@@ -994,7 +994,7 @@ static int process_command(char *in_line, char *result)
 			if (lookup->cmd_replacemt==NULL)
 			{
 				printf("Dollar verb %s not defined\n", lookup->ptsl_cmds);
-				exit(1);
+				return 1;
 			}
 			else {
 				addstr(lookup->cmd_replacemt, &resultptr, ' ');
@@ -1083,7 +1083,7 @@ static int process_defn(char *in_line)
 		word2 = &w2;
 
 	//  find a definition and replace it if we can.
-	//  otherwise, point at 1st empty slot 
+	//  otherwise, point at 1st empty slot
 
 	//  If there are any entries in the symbol definition table, then
 	//  check to see if our symbol exists, and if it does replace it
@@ -1137,7 +1137,7 @@ static int process_noxcmd(char *in_line, char *result)
 	 * Functional description
 	 *      This routine removes the '^" from the front of a command line
 	 *      that is not to be translated.
-	 *      
+	 *
 	 **************************************/
 
 	strcpy(result, ++in_line);
@@ -1155,7 +1155,7 @@ static int process_comml(char *in_line, char *result)
 	 * Functional description
 	 *      This routine removes the '^" from the front of a command line
 	 *      that is not to be translated.
-	 *      
+	 *
 	 **************************************/
 
 	strcpy(result, in_line);
@@ -1173,7 +1173,7 @@ static int process_file(char *in_line, char *result)
 	 * Functional description
 	 *      This routine removes the '^" from the front of a command line
 	 *      that is not to be translated.
-	 *      
+	 *
 	 **************************************/
 //	int jj = 1; // remove >
 	int ii = 0;
@@ -1193,7 +1193,7 @@ static int process_regtxt(char *in_line, char *result)
 {
 	/**************************************
 	 *
-	 *	p r o c e s s _ r e g t x t 
+	 *	p r o c e s s _ r e g t x t
 	 *
 	 **************************************
 	 *
@@ -1201,11 +1201,11 @@ static int process_regtxt(char *in_line, char *result)
 	 *      This routine processes  the regular text portion of the script.
 	 *      one string at a time.
 	 *      It will do symbol substitution for paths if used in a #include,
-	 *      ready or database statement.  
+	 *      ready or database statement.
 	 *
-	 *      a DATABASE statement can extend over 2 lines. To process this 
+	 *      a DATABASE statement can extend over 2 lines. To process this
 	 *      correctly we set keyword and unset it as soon as we find another token
-	 *      
+	 *
 	 **************************************/
 	char	*wrd, *posn, *rsltptr;
 //	static char parse_database = 0;
@@ -1261,7 +1261,7 @@ static int handle_keyword (char *in_line, char *result)
 {
 	/**************************************
 	 *
-	 *	h a n d l e _ k e y w o r d 
+	 *	h a n d l e _ k e y w o r d
 	 *
 	 **************************************
 	 *
@@ -1269,7 +1269,7 @@ static int handle_keyword (char *in_line, char *result)
 	 *
 	 *         handle a line or a partial line with
 	 *         a filename spec in it.  If this line is
-	 *         empty then return true.  
+	 *         empty then return true.
 	 *
 	 **************************************/
 	char	*wrd, *posn, *tok, *tok2;

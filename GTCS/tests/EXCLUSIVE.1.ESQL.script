@@ -1,5 +1,5 @@
 
-Author: Narayan 
+Author: Narayan
 Date: Mar 18, 1994.
 History:
 24-May-95:   This was failing and, if the description is correct, then
@@ -9,8 +9,8 @@ History:
 	     and would have needed to be set to equal WHERE_GDB anyway.
 	     I changed it to WHERE_GDB. clare.
 
-Description: This is a test to test the exclusive lock transactions. 
-It creates table t. Program A1 locks the table t with an exclusive 
+Description: This is a test to test the exclusive lock transactions.
+It creates table t. Program A1 locks the table t with an exclusive
 lock and program A2 tries to modify the same table.
 The exclusive lock behavior is set using unix sed commands.
 We sed the A.c file to insert isc_tpb_exclusive in its tpb defintion.
@@ -30,17 +30,17 @@ We sed the A.c file to insert isc_tpb_exclusive in its tpb defintion.
 exec sql include sqlca
 
 exec sql set database DB = "WHERE_GDB:test.gdb";
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char * argv[];
 {
-  
-  if (!qa_mu_init(argc,argv,1)) 
+
+  if (!qa_mu_init(argc,argv,1))
   {
     printf("%s : Error ... Exiting\n",argv[0]);
 	qa_mu_cleanup();
-    exit(1);
-  } 
+    return 1;
+  }
 
   exec sql connect DB;
 
@@ -58,18 +58,18 @@ char * argv[];
 exec sql include sqlca
 
 exec sql set database DB = "WHERE_GDB:test.gdb";
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char * argv[];
 {
  int cnt_t = 0;
-  
-  if (!qa_mu_init(argc,argv,1)) 
+
+  if (!qa_mu_init(argc,argv,1))
   {
     printf("%s : Error ... Exiting\n",argv[0]);
     qa_mu_cleanup();
-    exit(1);
-  } 
+    return 1;
+  }
 
   exec sql connect DB;
 
@@ -96,10 +96,10 @@ $ISQL -m -i init.sql
 $GPRE -e A1.e
 $RUN sed "/isc_tpb_0/s/3};/isc_tpb_exclusive};/" A1.c > A1a.c
 $CC FLAG_CC A1a.c
-$LINK FLAG_LINK_MU A1a 
+$LINK FLAG_LINK_MU A1a
 $GPRE -e A2.e
 $CC FLAG_CC A2.c
-$LINK FLAG_LINK_MU A2 
+$LINK FLAG_LINK_MU A2
 $RUN WHERE_MU:mu -p A1a -q 20 -l 10 -p A2 -q 20 -l 10
 $DELETE A1a A1a.c A1a.o A1.e A1.c A1.o A2 A2.e A2.c A2.o init.sql
 $DROP WHERE_GDB:test.gdb

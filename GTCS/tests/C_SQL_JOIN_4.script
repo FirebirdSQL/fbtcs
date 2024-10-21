@@ -1,7 +1,7 @@
 
 #
 #HISTORY:
-#2001-May-20 Neil McCalden  
+#2001-May-20 Neil McCalden
 #Use explicit order by clause as generic sort order is not consistent across
 #different systems (little vs big endian).
 #2001-Aug-27 Neil McCalden - fix sort order to match output data and join_3
@@ -12,12 +12,13 @@ $ GBAK -r WHERE_FILES:atlas.gbak WHERE_GDB:atlas_join_4.gdb
 
 /*
  Out join example 2.9.1 page 64 - 4
- 
+
 */
 
 
 DATABASE atlas = FILENAME "WHERE_GDB:atlas_join_4.gdb";
 #include <stdio.h>
+#include <string.h>
 
 BASED_ON BASEBALL_TEAMS.TEAM_NAME	Team_Name;
 BASED_ON CITIES.CITY			City;
@@ -29,16 +30,16 @@ short StateFlag;
 EXEC SQL
 	INCLUDE SQLCA;
 
-main()
+int main()
 {
 
 EXEC SQL
 	DECLARE C CURSOR FOR
-	SELECT B.TEAM_NAME, C.CITY, S.STATE_NAME  
+	SELECT B.TEAM_NAME, C.CITY, S.STATE_NAME
 	FROM (CITIES C LEFT JOIN STATES S ON S.STATE = C.STATE)
 	,BASEBALL_TEAMS B WHERE B.CITY = C.CITY
 	ORDER BY B.TEAM_NAME, C.CITY, S.STATE_NAME;
-	
+
 EXEC SQL
 	OPEN C;
 
@@ -63,7 +64,7 @@ printf("... End of example 2.9.1 \n");
 }
 $ GPRE -e join004.e
 $ CC FLAG_CC join004.c
-$ LINK FLAG_LINK join004 
+$ LINK FLAG_LINK join004
 $ RUN join004
 >> join004.sql
 connect WHERE_GDB:atlas_join_4.gdb;

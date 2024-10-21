@@ -1,36 +1,36 @@
 
 #*******************************************************************************
-# 
+#
 #Test Name:  	EXT_REL_0_22_E
 #Test Level:     0
 #Series Name:    EXT_LEV_0
 #Date:  		July 5, 1994
 #Author:  	Scott Van Voris
-#Bug: 
+#Bug:
 #
-#Description:    This is a Level 0 test which is designed to verify the 
+#Description:    This is a Level 0 test which is designed to verify the
 #		syntax to create an external relation with certain column
 #		specific syntax works properly.
 #
 #		In this case the 'NOT NULL' clause is tested.
-# 
+#
 #Expected Output:	Use CONNECT or CREATE DATABASE to specify a database
 #			Statement failed, SQLCODE = -625
-# 
+#
 #			validation error for column FIELD1, value "*** null ***"
 #			Database:  ext_rel_0_22_E.gdb
-# 
-#			FIELD1 FIELD2     
-#			====== ========== 
-# 
-#			 12000 Success    
+#
+#			FIELD1 FIELD2
+#			====== ==========
+#
+#			 12000 Success
 #History:
 #2-Oct-95:  Mark
 #  Removed the Cleanup / Setup comments from the test.
 #  Also, added WHERE_GDB and RUN drop_gdb to the tests.
 #
 #3-Oct-95: Marco
-#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created
 #  by the server in the correct place when accessing data remotely.
 #  Also, I removed any referance to DIR external.dat and TYPE external.dat
 #  which would also fail when running remotely.
@@ -43,17 +43,17 @@
 >> column.e
 #include <stdio.h>
 #include <stdlib.h>
- 
+
 EXEC SQL
     INCLUDE SQLCA
- 
+
 EXEC SQL
     WHENEVER SQLERROR GO TO ERR_LBL;
- 
- 
-main()
+
+
+int main()
 {
- 
+
 EXEC SQL
    CREATE DATABASE 'WHERE_GDB:ext_rel_0_22_E.gdb';
 
@@ -63,7 +63,7 @@ EXEC SQL
        (field1 SMALLINT NOT NULL,
 	field2 CHARACTER(10)) ;
 
-exit(0);
+return 0;
 ERR_LBL:
 	EXEC SQL WHENEVER SQLERROR CONTINUE;
 	fprintf(stderr, "Data base error, SQLCODE = %d\n", SQLCODE);
@@ -72,7 +72,7 @@ ERR_LBL:
 	EXEC SQL
 		ROLLBACK RELEASE;
 
-	exit(1);
+	return 1;
 }
 >> isql.in
 

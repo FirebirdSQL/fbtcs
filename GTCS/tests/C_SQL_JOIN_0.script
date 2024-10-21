@@ -5,11 +5,11 @@
 #          in WHERE_FILES gets owned by its maker--which was R+D--and
 #          the file perms prevent QA from accessing the .gbk file again.
 #          For now I am leaving a gbak to WHERE_FILES too because several
-#          bugs use it.  If we set umask to 000 before we run this test  
-#          the db gets created w/full rw perm.      
+#          bugs use it.  If we set umask to 000 before we run this test
+#          the db gets created w/full rw perm.
 #29Apr97:  Linda Wahler created 4.5 version.  4.2 version has two gbak -t
 #	  statements right at the end of the test.  4.0 version had only
-#	  one.  We were getting an error, no permission to open 
+#	  one.  We were getting an error, no permission to open
 #	  WHERE_GDB:sh_join.gbk, so deleted the gbak -t statement that
 #	  created it.
 #28-Aug98: added doc file to the 'DELETE' statement. (changed by stsikin)
@@ -29,7 +29,7 @@ create domain v1 varchar(3);
 create domain v10 varchar(10);
 create domain v255 varchar(255);
 create domain v2000 varchar(2000);
- 
+
 create domain d1 double precision;
 create domain d2 double precision;
 create domain d3 double precision;
@@ -326,7 +326,7 @@ void Load_Double();
 void Load_Float();
 */
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -341,7 +341,7 @@ Load_Float();
 Load_Double();
 */
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -351,7 +351,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 void Load_Char()
 {
@@ -719,7 +719,7 @@ SErr:
 }
 $ GPRE -e JLoader.e
 $ CC FLAG_CC JLoader.c
-$ LINK FLAG_LINK JLoader 
+$ LINK FLAG_LINK JLoader
 $ RUN JLoader
 >> JLoader.sql
 connect "WHERE_GDB:sh_join.gdb";

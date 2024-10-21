@@ -5,16 +5,16 @@
  *
  *	Pass an invalid database handle.
  *	No error expected.
- * 
- *  Test name: er19.c  
- *  Created by: Marina Meyer  
+ *
+ *  Test name: er19.c
+ *  Created by: Marina Meyer
  *  Date created: April 1994
  */
 
 #include "WHERE_FILES:isc_test.h"
 int main()
 {
-	isc_db_handle	DB = NULL;
+	isc_db_handle	DB = 0;
 	ISC_STATUS 	rc, status[20];
 	char		err_buf[128];
 
@@ -28,7 +28,7 @@ int main()
         else
 		{ERRCONTINUE(status, rc, err_buf)};
 
-	DB = NULL;
+	DB = 0;
 	if ((rc=isc_dsql_finish(&DB)) ==0)
 		printf("BUG: dsql finish on Null DB.\n");
         else
@@ -37,6 +37,6 @@ int main()
 	printf("Finished ER19\n");
 }
 $ CC FLAG_CC er19.c
-$ LINK FLAG_LINK er19 
+$ LINK FLAG_LINK er19
 $ RUN er19
 $ DELETE er19*

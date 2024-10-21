@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                [NOT] SINGULAR <subquery>
 #
 # Description:           SINGULAR - Subquery returning exactly one row.
@@ -20,7 +20,7 @@
 #
 #                        SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET
 #                        FROM DEPT_BUDGET V2
-#                        WHERE 1 = 
+#                        WHERE 1 =
 #                        (SELECT count(*) FROM FULLEMP V3, EMPSAL V4, SALES T1
 #                        WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
 #                        V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
@@ -79,7 +79,7 @@ AND T1.TOTAL_VALUE > \
 ORDER BY V2.DEPTNO" ;
 
 void Underline();
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -98,13 +98,13 @@ char *argv[];
                         WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
                         V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
                         AND T1.TOTAL_VALUE >
-                        (SELECT MAX(T2.TOTAL_VALUE) FROM SALES T2 
+                        (SELECT MAX(T2.TOTAL_VALUE) FROM SALES T2
 			WHERE T2.SALES_REP = 100))
                         ORDER BY V2.DEPTNO;
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :DeptNo,:Department,:MgrNo,:BudgetSum;
 
@@ -117,12 +117,12 @@ char *argv[];
                 printf("%d\t",MgrNo);
                 printf("%10.2f\n",(double)(BudgetSum/100));
 
-		Underline(50);	
+		Underline(50);
 
                 EXEC SQL
                         FETCH CR INTO :DeptNo,:Department,:MgrNo,:BudgetSum;
         }
-	
+
 NOMORE:
 
 	EXEC SQL
@@ -135,7 +135,7 @@ EXEC SQL
 	WHENEVER NOT FOUND GO TO NOMORE2;
 
 	printf("\n\n* Total Records Listed >>> %d\n\n",Count);
-	
+
 	Count2 = 0;
 
         printf("Verification: %s\n ",Verif);
@@ -144,18 +144,18 @@ EXEC SQL
 		DECLARE CRV CURSOR FOR
                         SELECT V2.DEPTNO, V2.DEPARTMENT, V2.MGRNO, V2.BUDGET
                         FROM DEPT_BUDGET V2
-                        WHERE 1 = 
+                        WHERE 1 =
                         (SELECT count(*) FROM FULLEMP V3, EMPSAL V4, SALES T1
                         WHERE V2.DEPARTMENT = V3.DEPARTMENT AND
                         V3.EMPNO = V4.EMPNO AND V4.EMPNO = T1.SALES_REP
                         AND T1.TOTAL_VALUE >
-                        (SELECT MAX(T2.TOTAL_VALUE) FROM SALES T2 
+                        (SELECT MAX(T2.TOTAL_VALUE) FROM SALES T2
 			WHERE T2.SALES_REP = 100))
                         ORDER BY V2.DEPTNO;
 
         EXEC SQL
 		OPEN CRV;
-		
+
 	EXEC SQL
                 FETCH CRV INTO :DeptNo,:Department,:MgrNo,:BudgetSum;
 
@@ -168,7 +168,7 @@ EXEC SQL
                 printf("%d\t",MgrNo);
                 printf("%10.2f\n",(double)(BudgetSum/100));
 
-		Underline(50);	
+		Underline(50);
 
                 EXEC SQL
                         FETCH CRV INTO :DeptNo,:Department,:MgrNo,:BudgetSum;
@@ -186,7 +186,7 @@ NOMORE2:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:    EXEC SQL
                 CLOSE CR;
@@ -198,7 +198,7 @@ ERR_LBL:    EXEC SQL
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 
 void Underline(i)
@@ -232,20 +232,20 @@ while (*s){
 	i++;
 }
 for (;i<l;s++,i++)
-	*s=' ';	
+	*s=' ';
 *s='\0';
 }
 
 $ GPRE -e sin026.e
 $ CC FLAG_CC sin026.c
-$ LINK FLAG_LINK sin026 
+$ LINK FLAG_LINK sin026
 $ RUN sin026
 >> sin026a.sql
 
 select v2.deptno, v2.department, v2.mgrno, v2.budget
 from dept_budget v2
 where singular
-(select * from fullemp v3, empsal v4, sales t1 
+(select * from fullemp v3, empsal v4, sales t1
 where v2.department = v3.department and
 v3.empno = v4.empno and v4.empno = t1.sales_rep
 and t1.total_value >
@@ -254,8 +254,8 @@ order by v2.deptno;
 
 select v2.deptno, v2.department, v2.mgrno, v2.budget
 from dept_budget v2
-where 1 = 
-(select count(*) from fullemp v3, empsal v4, sales t1 
+where 1 =
+(select count(*) from fullemp v3, empsal v4, sales t1
 where v2.department = v3.department and
 v3.empno = v4.empno and v4.empno = t1.sales_rep
 and t1.total_value >
@@ -269,7 +269,7 @@ connect WHERE_GDB:sh_test.gdb;
 select v2.deptno, v2.department, v2.mgrno, v2.budget
 from dept_budget v2
 where singular
-(select * from fullemp v3, empsal v4, sales t1 
+(select * from fullemp v3, empsal v4, sales t1
 where v2.department = v3.department and
 v3.empno = v4.empno and v4.empno = t1.sales_rep
 and t1.total_value >
@@ -278,8 +278,8 @@ order by v2.deptno;
 
 select v2.deptno, v2.department, v2.mgrno, v2.budget
 from dept_budget v2
-where 1 = 
-(select count(*) from fullemp v3, empsal v4, sales t1 
+where 1 =
+(select count(*) from fullemp v3, empsal v4, sales t1
 where v2.department = v3.department and
 v3.empno = v4.empno and v4.empno = t1.sales_rep
 and t1.total_value >
@@ -288,4 +288,4 @@ order by v2.deptno;
 quit;
 $ISQL -m -i sin026b.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE sin026* 
+$ DELETE sin026*

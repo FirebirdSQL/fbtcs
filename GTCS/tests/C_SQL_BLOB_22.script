@@ -3,7 +3,7 @@ $ GBAK -rep sh_blobs.gbk WHERE_GDB:sh_blobs_22.gdb
 >> blob022.epp
 /**********************************************************************
  Purpose:               Test SQL blob support in InterBase 4.0
- Description:           READ BLOB/INSERT BLOB to simulate an update. 
+ Description:           READ BLOB/INSERT BLOB to simulate an update.
  Author:                Sam Hakim, June 16, 93
  Note:			READ/INSERT cursors will use the sam blob id.
  **********************************************************************/
@@ -27,7 +27,7 @@ bool verbose;
 
 struct Buf{
     char            *Buffer[5];			/* Buffer vector to store blobs */
-    unsigned short  BufferLen[5];		
+    unsigned short  BufferLen[5];
 };
 struct Buf M;
 
@@ -55,7 +55,7 @@ int Count;
     printf("Test:\n %s \n",Test);
     M.Buffer[0] = (char*) malloc(80);
     M.BufferLen[0] = 80;
-	
+
     EXEC SQL DECLARE TCR CURSOR FOR
              SELECT TEST_NAME,ROW_ID,B,COMMENT
              FROM MB1 WHERE ROW_ID <2 FOR UPDATE OF TEST_NAME,ROW_ID,B,COMMENT;
@@ -65,7 +65,7 @@ int Count;
 
     UpdateBlob(M.Buffer[0],M.BufferLen[0]);
     strcpy(Test_Name,"blob022");
-	
+
     EXEC SQL UPDATE MB1 SET TEST_NAME = :Test_Name, ROW_ID = 1, B = :BlobId1,
 	COMMENT = "Blob Update" WHERE CURRENT OF TCR;
     EXEC SQL CLOSE TCR;
@@ -73,7 +73,7 @@ int Count;
 
 FINISH;
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -83,7 +83,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /************************************************************
  * U p d a t e B l o b
@@ -97,9 +97,9 @@ void UpdateBlob(char *Bf, short L)
  /* Allocate 100 k for buffer */
  BigBuffer = (char*) malloc(1024*100);
 
- if (!BigBuffer)		
+ if (!BigBuffer)
 	printf("\n\n Error: Could not allocate 100K memory \n");
- 
+
  BigBuffer[0] = 0;
  BlobSize = 0;
 
@@ -116,7 +116,7 @@ void UpdateBlob(char *Bf, short L)
 	strncat(BigBuffer,Bf,Bl);
         EXEC SQL FETCH BCR INTO :Bf:Bl;
  }
- EXEC SQL CLOSE BCR;		
+ EXEC SQL CLOSE BCR;
 
  strncat(BigBuffer,"Updated",7);
  BlobSize +=7;
@@ -154,7 +154,7 @@ void WriteBlob(char *Bf, short L)
     EXEC SQL WHENEVER SQLERROR CONTINUE;
     EXEC SQL WHENEVER SQLERROR GOTO ERR1;
     EXEC SQL DECLARE BCW CURSOR FOR INSERT BLOB B INTO MB1 MAXIMUM_SEGMENT 65535;
-    EXEC SQL OPEN BCW INTO :BlobId1;      	
+    EXEC SQL OPEN BCW INTO :BlobId1;
     EXEC SQL INSERT CURSOR BCW VALUES (:Bf:L);
     EXEC SQL CLOSE BCW;
     if (verbose)
@@ -171,7 +171,7 @@ ERR1:
 
 $ GPRE -e blob022.epp
 $ CXX FLAG_CXX blob022.cpp
-$ LINK FLAG_LINK blob022 
+$ LINK FLAG_LINK blob022
 $ RUN blob022
 >> blob022.sql
 connect "WHERE_GDB:sh_blobs_22.gdb";

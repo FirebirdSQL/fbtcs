@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 #
 # Description:           char-field, containing mixture of lower and
@@ -37,7 +37,7 @@ OR CUSTOMER CONTAINING 'c' ORDER BY CUSTNO";
 
 void Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
@@ -53,7 +53,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :CustNo, :Customer;
 
@@ -69,7 +69,7 @@ char *argv[];
                 FETCH CR INTO :CustNo, :Customer;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -81,7 +81,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -91,7 +91,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -108,14 +108,14 @@ printf("\n");
 
 $ GPRE -e con005.e
 $ CC FLAG_CC con005.c
-$ LINK FLAG_LINK con005 
+$ LINK FLAG_LINK con005
 $ RUN con005
 >> con005.sql
 connect WHERE_GDB:sh_test.gdb;
-select count(*) from customers 
+select count(*) from customers
 where customer containing 'A' or customer containing 'c';
 quit;
 $ISQL -m -i con005.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con005* 
+$ DELETE con005*
 

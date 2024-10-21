@@ -1,7 +1,7 @@
 
 #/**********************************************************************
 # Purpose:		Test predicates support in InterBase SQL 4.0
-# 
+#
 # Syntax:                <column-spec> [NOT] CONTAINING <value-spec>
 #
 # Description:           containing null
@@ -43,12 +43,12 @@ WHERE SHIPPED IS NULL";
 int             SalesCount;
 void            Underline();
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 
 {
-	
+
 	int Count = 0;
         printf("\nTest:\n%s\n",Test);
         Underline(80);
@@ -61,7 +61,7 @@ char *argv[];
 
         EXEC SQL
 		OPEN CR;
-		
+
 	EXEC SQL
                 FETCH CR INTO :SalesCount;
 
@@ -74,7 +74,7 @@ char *argv[];
                 FETCH CR INTO :SalesCount;
 
         }
-	
+
 NOMORE:
         EXEC SQL
                 CLOSE CR;
@@ -86,7 +86,7 @@ NOMORE:
 	FINISH;
 
 
-exit(0);
+return 0;
 
 ERR_LBL:
 	printf("Database error, SQLCODE = %d\n",SQLCODE);
@@ -96,7 +96,7 @@ ERR_LBL:
 		ROLLBACK RELEASE;
 	FINISH;
 
-	exit(1);
+	return 1;
 }
 /*--- print and underline of width i */
 
@@ -112,7 +112,7 @@ printf("\n");
 }
 $ GPRE -e con015.e
 $ CC FLAG_CC con015.c
-$ LINK FLAG_LINK con015 
+$ LINK FLAG_LINK con015
 $ RUN con015
 >> con015.sql
 connect WHERE_GDB:sh_test.gdb;
@@ -122,4 +122,4 @@ WHERE SHIPPED IS NULL;
 quit;
 $ISQL -m -i con015.sql
 $DROP WHERE_GDB:sh_test.gdb
-$ DELETE con015* 
+$ DELETE con015*

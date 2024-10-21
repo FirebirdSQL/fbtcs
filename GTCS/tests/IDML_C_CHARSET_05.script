@@ -1,6 +1,6 @@
 
-#/* Requires the intlemp_05.gdb database built in test 4. 
-#   Contains DATABASE statement and SET NAMES. 
+#/* Requires the intlemp_05.gdb database built in test 4.
+#   Contains DATABASE statement and SET NAMES.
 #   Gets data from a stored procedure and inserts the data using
 #   host variables.
 #
@@ -43,7 +43,7 @@ EXEC SQL DATABASE db = "WHERE_GDB:intlemp_05.gdb";
 
 EXEC SQL INCLUDE SQLCA;
 EXEC SQL BEGIN DECLARE SECTION;
-     BASED ON EMPLOYEE.EMP_NO       e_empno;      
+     BASED ON EMPLOYEE.EMP_NO       e_empno;
      BASED ON EMPLOYEE.FIRST_NAME   e_firstname;
      BASED ON EMPLOYEE.FIRST_NAME   s_firstname;
      BASED ON EMPLOYEE.LAST_NAME    e_lastname;
@@ -53,7 +53,7 @@ EXEC SQL END DECLARE SECTION;
 void print_error();
 
 int main(int argc, char* argv)
-{    
+{
      char  c;
 
      EXEC SQL SET NAMES ISO8859_1;
@@ -68,7 +68,7 @@ EXEC SQL SET TRANSACTION;
           SELECT * FROM GET_EMP_ID;
      EXEC SQL OPEN A_SEARCH;
      EXEC SQL FETCH A_SEARCH INTO :e_empno, :e_firstname, :e_lastname;
- 
+
      while (SQLCODE == 0)
          {
           printf ("%-10d %-15s %-20s\n", e_empno, e_firstname, e_lastname);
@@ -80,13 +80,13 @@ EXEC SQL SET TRANSACTION;
 
      printf("\n--------------------------------------------------------------\n");
      printf("   INSERTING NEW DATA--using host variables loaded from stored procedure\n\n");
-     
+
      EXEC SQL
           INSERT INTO employee (emp_no, first_name, last_name)
           VALUES (222, :s_firstname,:s_lastname);
 
 EXEC SQL COMMIT;
-     exit(0);
+     return 0;
 Err:
   print_error();
 }
@@ -96,9 +96,9 @@ void print_error()
 if (SQLCODE != 100)
      printf ("Error: ---------------------------------------------\n");
      printf ("DATABASE ERROR, SQLCODE = %d \n", SQLCODE);
-     isc_print_sqlerror(SQLCODE, gds__status); 
+     isc_print_sqlerror(SQLCODE, gds__status);
      isc_print_status (gds__status);
-exit(1);
+return 1;
 }
 
 >> verify.sql
@@ -109,7 +109,7 @@ quit;
 
 $ GPRE -m btest2.e
 $ CC FLAG_CC btest2.c
-$ LINK FLAG_LINK btest2 
+$ LINK FLAG_LINK btest2
 $ RUN btest2
 $ ISQL -m -i verify.sql
 $ DELETE btest2* verify.sql

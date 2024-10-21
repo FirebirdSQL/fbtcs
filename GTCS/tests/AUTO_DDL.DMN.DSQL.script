@@ -1,8 +1,8 @@
 #
-#Author: Narayan 
+#Author: Narayan
 #Date: Oct 3, 1994.
 #
-#Description: This is a test to test the auto-commit behavior of IB for DDLs. 
+#Description: This is a test to test the auto-commit behavior of IB for DDLs.
 #
 #The auto-commit behavior is set using unix sed commands.
 #We sed the A.c file to insert isc_autocommit in its tpb defintion.
@@ -19,7 +19,7 @@ exec sql include salca
 
 exec sql set database DB = 'WHERE_GDB:test.gdb';
 
-main()
+int main()
 {
   exec sql connect DB;
 
@@ -60,7 +60,7 @@ $GPRE -e  A.e
 $RUN sed "/isc_tpb_. \[/s/\[.\] = {1,/\[\] = {1, isc_tpb_autocommit,/" A.c > A1.c
 $RUN sed "/isc_start_transaction /s/4/5/" A1.c > A2.c
 $CC FLAG_CC A2.c
-$LINK FLAG_LINK A2 
+$LINK FLAG_LINK A2
 $RUN A2
 $ISQL -m -i show.sql
 $DELETE init.sql show.sql A.* A1.* A2.*

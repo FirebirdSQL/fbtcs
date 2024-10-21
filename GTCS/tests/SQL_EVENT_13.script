@@ -3,7 +3,7 @@
 CREATE DATABASE "WHERE_GDB:asyn.gdb";
 CREATE TABLE CLIENT_RELATION(CLIENT_NAME VARCHAR(10),
 							 CLIENT_EVENT_COUNT INT);
-								 
+
 CREATE TABLE PACKET_RELATION( CLIENT_NAME VARCHAR(10),
  				  PACKET_TEXT VARCHAR(16),
 							  PACKET_DATE TIMESTAMP);
@@ -166,7 +166,7 @@ int main (int argc, char* argv[])
 	long	count_array[MAX_CLIENTS],event_id;
 
 	char	*event_buffer,*result_buffer,*start_time;
-			
+
 /*--------------------------------------------------------------------------*/
 
 /* Ready the database and express interest in asynchronous events */
@@ -220,21 +220,21 @@ int main (int argc, char* argv[])
 /* handle any PACKETS in the PIPELINES from the CLIENTS and update the */
 /* database with the number of events the SERVER has received */
 
-		if (!event) 
+		if (!event)
 		{
 #ifdef WIN_NT
 			Sleep(5000);
 #else
 			sleep(2);
 #endif
-		}	  
+		}
 
 		else {
-			event--; 
+			event--;
 
 			isc_event_counts(count_array,length,
 					  event_buffer,result_buffer);
-	
+
 			loop_count -= update_server_relation(count_array,verbose);
 			packet_handler(count_array,pipe_fd,verbose);
 			isc_que_events(isc_status,&DB,&event_id,length,event_buffer,
@@ -264,7 +264,7 @@ int main (int argc, char* argv[])
 	CHECK_STATUS;
 
 	stat = report_events(start_time,num_events,verbose);
-	COMMIT; 
+	COMMIT;
 	FINISH;
 	exit(stat);
 
@@ -525,7 +525,7 @@ void create_client(
    	client_events = num_events / MAX_CLIENTS;
    	extra_events  = num_events % MAX_CLIENTS;
 
-		 
+
 #ifdef WIN_NT
 
 	Sleep( 1 * 1000 );
@@ -541,7 +541,7 @@ void create_client(
 	attr.lpSecurityDescriptor = &descriptor;
 
 
-	if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 )) 
+	if (!CreatePipe (&pipe_write, &pipe_read, &attr, 2048 ))
 	{
 	  	fprintf(stdout,"Create pipe failed\n");
 		fflush(stdout);
@@ -549,13 +549,13 @@ void create_client(
 
 	pipe_fd[*client_count][0] = pipe_write;
 	pipe_fd[*client_count][1] = pipe_read;
-	
+
 	if (*client_count != 0)
 	sprintf(event_str,"%d",client_events);
 	else
 	sprintf(event_str,"%d",client_events+extra_events);
-   
-	sprintf(fd_str,"event_client.exe  %d %s %s %s ", 
+
+	sprintf(fd_str,"event_client.exe  %d %s %s %s ",
 			  pipe_fd[*client_count][1], event_str,
 			  client_name, NULL);
 
@@ -566,7 +566,7 @@ void create_client(
 	si.dwFlags = 0;
 	si.cbReserved2 = 0;
 	si.lpReserved2 = NULL;
- 
+
   	if ( ! CreateProcess("event_client.exe", fd_str, NULL,
 		 NULL, TRUE, NORMAL_PRIORITY_CLASS ,
 		 NULL, NULL, &si, &pi))
@@ -574,7 +574,7 @@ void create_client(
 		fprintf(stdout,"Error : CreateProcess Failed, Error Code %d \n",
 			  GetLastError() );
 		fflush(stdout);
-	
+
 	}
 
 
@@ -620,8 +620,8 @@ void create_client(
 	else
 	   fprintf(stdout,"\t\tClient %s will post %d events\n\n",
 			client_name, client_events + extra_events);
-  	fflush(stdout); 
-	
+  	fflush(stdout);
+
 
 	(*client_count)++;
 }
@@ -666,7 +666,7 @@ void packet_handler(
 
 	for (client_num = 0; client_num < MAX_CLIENTS; client_num++)
 		count_array[client_num] = 0;
-	 
+
 		return;
 
 	}
@@ -682,7 +682,7 @@ void packet_handler(
 
 #ifdef WIN_NT
 
-			for ( i = 0; i < IO_RETRY; i++ ) 
+			for ( i = 0; i < IO_RETRY; i++ )
 		 	{
 		 		if (!PeekNamedPipe((HANDLE) pipe_fd[client_num][0],NULL,
 			 				0,NULL, &outsize, NULL))
@@ -693,7 +693,7 @@ void packet_handler(
 				if ( outsize )
 		  		{
 		   			i = IO_RETRY;
-		  
+
 		   			if (ReadFile(pipe_fd[client_num][0],packet,size,&outsize,NULL))
 					{
 						EXEC SQL
@@ -994,7 +994,7 @@ void finish_packets(
 #endif
 
 	for ( client_num = 0; client_num < MAX_CLIENTS; client_num++ ) {
-	
+
 
 #ifdef WIN_NT
 
@@ -1011,7 +1011,7 @@ void finish_packets(
 
 			if ( outsize )
 			 {
-				
+
 				ReadFile((HANDLE) pipe_fd[client_num][0],packet,
 					  sizeof(packet), &outsize,NULL) ;
 
@@ -1023,7 +1023,7 @@ void finish_packets(
 
 				packet_num++;
 
-			  
+
 			 }
 		   }
 		 else
@@ -1094,7 +1094,7 @@ EXEC SQL
 
 /*--------------------------------------------------------------------------*/
 
-main(int argc,char* argv[])
+int main(int argc,char* argv[])
 {
 /****************************************************************************
  *
@@ -1139,7 +1139,7 @@ main(int argc,char* argv[])
 
 
 /* Create a PACKET of the form: 	"MOE_100" */
-	
+
 		strcpy(packet,client_name);
 		sprintf(events,"%d",loop_count+1);
 		strcat(packet,events);
@@ -1189,17 +1189,17 @@ main(int argc,char* argv[])
 
 #ifdef WIN_NT
 
-   
+
 /*	Sleep ( 24 * 1000 ); */
 
 
    	if (!CloseHandle (client_pipe))
   	{
 		sprintf(buf,"**%s failed on CLOSE of PIPE %d**\n",
-				client_name,client_pipe); 
+				client_name,client_pipe);
 		fflush(buf);
 	}
-					
+
 #else
 
  /*   sleep(240); */
@@ -1246,19 +1246,19 @@ void parse_client_args(
 	*num_events = atoi(argv[2]);
 	strcpy(client_name,argv[3]);
 
-}	
+}
 
 /*---------------------------------------------------------------------------*/
 $ GPRE -e event_client.e -d WHERE_GDB:asyn.gdb
 $ CC FLAG_CC event_client.c
-$ LINK FLAG_LINK event_client 
+$ LINK FLAG_LINK event_client
 $ GPRE -e event_server.e -d WHERE_GDB:asyn.gdb
 $ CC FLAG_CC event_server.c
-$ LINK FLAG_LINK event_server 
+$ LINK FLAG_LINK event_server
 $ RUN event_server
 $ SLEEP 1
 $ DELETE event_custom.h
-$ DELETE event_server* 
-$ DELETE event_client* 
+$ DELETE event_server*
+$ DELETE event_client*
 $ DELETE sql_event_13*
 $ DROP WHERE_GDB:asyn.gdb
