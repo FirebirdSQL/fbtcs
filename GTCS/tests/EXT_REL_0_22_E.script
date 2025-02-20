@@ -17,7 +17,7 @@
 #Expected Output:	Use CONNECT or CREATE DATABASE to specify a database
 #			Statement failed, SQLCODE = -625
 #
-#			validation error for column FIELD1, value "*** null ***"
+#			validation error for column "FIELD1", value "*** null ***"
 #			Database:  ext_rel_0_22_E.gdb
 #
 #			FIELD1 FIELD2

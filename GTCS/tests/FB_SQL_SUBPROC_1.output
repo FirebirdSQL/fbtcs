@@ -142,9 +142,9 @@ execute procedure p2 (1)!
 
 execute procedure p2 (null)!
 Statement failed, SQLSTATE = 42000
-validation error for variable ó1, value "*** null ***"
--At sub procedure 'súb1' line: 8, col: 3
-At procedure 'P2' line: 11, col: 2
+validation error for variable "ó1", value "*** null ***"
+-At sub procedure "súb1" line: 8, col: 3
+At procedure "PUBLIC"."P2" line: 11, col: 2
 After line 110 in file fb_sql_subproc_1.sql
 
 ---
@@ -233,12 +233,12 @@ select *
 	where rdb$dependent_name = 'P3'
 	order by rdb$dependent_name, rdb$depended_on_name, rdb$field_name!
 
-RDB$DEPENDENT_NAME                                              RDB$DEPENDED_ON_NAME                                            RDB$FIELD_NAME                                                  RDB$DEPENDENT_TYPE RDB$DEPENDED_ON_TYPE RDB$PACKAGE_NAME                                                
-=============================================================== =============================================================== =============================================================== ================== ==================== =============================================================== 
-P3                                                              D1                                                              <null>                                                                           5                    9 <null>                                                          
-P3                                                              D2                                                              <null>                                                                           5                    9 <null>                                                          
-P3                                                              P1                                                              <null>                                                                           5                    5 <null>                                                          
-P3                                                              T1                                                              X1                                                                               5                    0 <null>                                                          
+RDB$DEPENDENT_NAME                                              RDB$DEPENDED_ON_NAME                                            RDB$FIELD_NAME                                                  RDB$DEPENDENT_TYPE RDB$DEPENDED_ON_TYPE RDB$PACKAGE_NAME                                                RDB$DEPENDENT_SCHEMA_NAME                                       RDB$DEPENDED_ON_SCHEMA_NAME                                     
+=============================================================== =============================================================== =============================================================== ================== ==================== =============================================================== =============================================================== =============================================================== 
+P3                                                              D1                                                              <null>                                                                           5                    9 <null>                                                          PUBLIC                                                          PUBLIC                                                          
+P3                                                              D2                                                              <null>                                                                           5                    9 <null>                                                          PUBLIC                                                          PUBLIC                                                          
+P3                                                              P1                                                              <null>                                                                           5                    5 <null>                                                          PUBLIC                                                          PUBLIC                                                          
+P3                                                              T1                                                              X1                                                                               5                    0 <null>                                                          PUBLIC                                                          PUBLIC                                                          
 
 
 ---
@@ -288,7 +288,7 @@ select * from t1 order by x1!
 
 execute procedure p5!
 Statement failed, SQLSTATE = 28000
-no permission for UPDATE access to TABLE T1
+no permission for UPDATE access to TABLE "PUBLIC"."T1"
 -Effective user is QA_USER2
 After line 224 in file fb_sql_subproc_1.sql
 select * from t1 order by x1!
@@ -310,7 +310,7 @@ begin
 	execute procedure sub1;
 end!
 Statement failed, SQLSTATE = 28000
-no permission for UPDATE access to TABLE T1
+no permission for UPDATE access to TABLE "PUBLIC"."T1"
 -Effective user is QA_USER2
 After line 227 in file fb_sql_subproc_1.sql
 
@@ -324,9 +324,9 @@ execute procedure p2 (1)!
 
 execute procedure p2 (null)!
 Statement failed, SQLSTATE = 42000
-validation error for variable Ã³1, value "*** null ***"
--At sub procedure 'sÃºb1' line: 8, col: 3
-At procedure 'P2' line: 11, col: 2
+validation error for variable "Ã³1", value "*** null ***"
+-At sub procedure "sÃºb1" line: 8, col: 3
+At procedure "PUBLIC"."P2" line: 11, col: 2
 After line 242 in file fb_sql_subproc_1.sql
 
 ---
@@ -436,10 +436,13 @@ RDB$PROCEDURE_BLR:
         	      blr_label, 0,
         	         blr_begin,
         	            blr_begin,
-        	               blr_exec_subproc, 4, 'S','U','B','1',
-        	                  0,0,
-        	                  1,0,
+        	               blr_invoke_procedure,
+        	                  blr_invsel_procedure_id,
+        	                        blr_invsel_procedure_id_sub,
+        	                        blr_invsel_procedure_id_name, 4, 'S','U','B','1',
+        	                  blr_invsel_procedure_out_args, 1,0,
         	                     blr_variable, 0,0,
+        	                  blr_end,
         	               blr_begin,
         	                  blr_send, 1,
         	                     blr_begin,
@@ -455,8 +458,12 @@ RDB$PROCEDURE_BLR:
         	               blr_label, 1,
         	                  blr_for,
         	                     blr_rse, 1,
-        	                        blr_subproc, 4, 'S','U','B','1', 0,  0,
-        	                           0,0,
+        	                        blr_select_procedure,
+        	                           blr_invsel_procedure_id,
+        	                                 blr_invsel_procedure_id_sub,
+        	                                 blr_invsel_procedure_id_name, 4, 'S','U','B','1',
+        	                           blr_invsel_procedure_context, 0,0,
+        	                           blr_end,
         	                        blr_end,
         	                     blr_begin,
         	                        blr_assignment,

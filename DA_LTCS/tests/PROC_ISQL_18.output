@@ -54,7 +54,7 @@ Statement failed, SQLCODE = -84
 
 Dynamic SQL Error
 -SQL error code = -84
--procedure PROC_SELECT_INSERT does not return any values
+-procedure "PUBLIC"."PROC_SELECT_INSERT" does not return any values
 -At line 1, column 15.
 select * from sp;
 

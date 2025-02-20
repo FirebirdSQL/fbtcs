@@ -5,7 +5,7 @@
 
 Statement failed, SQLSTATE = 22018
 conversion error from string "x"
--At procedure 'CAST1' line: 3, col: 5
+-At procedure "PUBLIC"."CAST1" line: 3, col: 5
 After line 63 in file proc_cast10.sql
 
            B 
@@ -14,7 +14,7 @@ After line 63 in file proc_cast10.sql
 
 Statement failed, SQLSTATE = 22018
 conversion error from string "x"
--At procedure 'CAST2' line: 3, col: 5
+-At procedure "PUBLIC"."CAST2" line: 3, col: 5
 After line 65 in file proc_cast10.sql
 
              B 
@@ -23,7 +23,7 @@ After line 65 in file proc_cast10.sql
 
 Statement failed, SQLSTATE = 22018
 conversion error from string "x"
--At procedure 'CAST3' line: 3, col: 5
+-At procedure "PUBLIC"."CAST3" line: 3, col: 5
 After line 67 in file proc_cast10.sql
 
                       B 
@@ -32,7 +32,7 @@ After line 67 in file proc_cast10.sql
 
 Statement failed, SQLSTATE = 22018
 conversion error from string "abc"
--At procedure 'CAST4' line: 3, col: 5
+-At procedure "PUBLIC"."CAST4" line: 3, col: 5
 After line 69 in file proc_cast10.sql
 
            B 
@@ -41,7 +41,7 @@ After line 69 in file proc_cast10.sql
 
 Statement failed, SQLSTATE = 22018
 conversion error from string "abc"
--At procedure 'CAST5' line: 3, col: 5
+-At procedure "PUBLIC"."CAST5" line: 3, col: 5
 After line 71 in file proc_cast10.sql
 
           B 
@@ -55,7 +55,7 @@ After line 71 in file proc_cast10.sql
 
 Statement failed, SQLSTATE = 22018
 conversion error from string "abc"
--At procedure 'CAST7' line: 3, col: 5
+-At procedure "PUBLIC"."CAST7" line: 3, col: 5
 After line 74 in file proc_cast10.sql
 
 B          

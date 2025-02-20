@@ -1,7 +1,7 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 23000
-Operation violates CHECK constraint SMALLER on view or table EXT_TABLE
--At trigger 'CHECK_1'
+Operation violates CHECK constraint "SMALLER" on view or table "PUBLIC"."EXT_TABLE"
+-At trigger "PUBLIC"."CHECK_1"
 After line 4 in file isql.in
 
  FIELD1  FIELD2 

@@ -2,6 +2,6 @@ Use CONNECT or CREATE DATABASE to specify a database
 drop index dept_key;
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--DROP INDEX DEPT_KEY failed
+-DROP INDEX "PUBLIC"."DEPT_KEY" failed
 -Cannot delete index used by an Integrity Constraint
 After line 0 in file test3.sql

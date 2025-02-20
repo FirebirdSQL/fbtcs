@@ -1,5 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
-F_CHAR                          CHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T0
+F_CHAR                          CHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 CHAR_AS_INT                     Computed by: (cast(f_char as integer))
 
 CONSTANT          
@@ -11,7 +12,8 @@ CONSTANT
 ================= 
 Passed 1 - Update 
 
-F_CHAR                          CHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T5
+F_CHAR                          CHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 CHAR_AS_FLOAT                   Computed by: (cast(f_char as float))
 
 CONSTANT          
@@ -25,7 +27,8 @@ Passed 2 - Update
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-F_CHAR                          CHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T10
+F_CHAR                          CHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 CHAR_AS_DATE                    Computed by: (cast(f_char as date))
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
@@ -43,6 +46,7 @@ Passed 3 - Update
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
+Table: PUBLIC.T15
 F_DATE                          TIMESTAMP Nullable 
 DATE_AS_CHAR                    Computed by: (cast(f_date as char(15)))
 
@@ -55,6 +59,7 @@ CONSTANT
 ================= 
 Passed 4 - Update 
 
+Table: PUBLIC.T20
 F_INT                           INTEGER Nullable 
 INT_AS_CHAR                     Computed by: (cast(f_int as char(15)))
 
@@ -67,6 +72,7 @@ CONSTANT
 ================= 
 Passed 5 - Update 
 
+Table: PUBLIC.T25
 F_FLOAT                         FLOAT Nullable 
 FLOAT_AS_CHAR                   Computed by: (cast(f_float as char(15)))
 

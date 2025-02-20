@@ -1,11 +1,11 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
--CREATE SEQUENCE T_GEN failed
--Sequence T_GEN already exists
+-CREATE SEQUENCE "PUBLIC"."T_GEN" failed
+-Sequence "PUBLIC"."T_GEN" already exists
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
--INS
+-"INS"
 After line 1 in file show.sql

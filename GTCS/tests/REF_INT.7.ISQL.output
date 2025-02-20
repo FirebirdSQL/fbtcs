@@ -2,7 +2,7 @@ Use CONNECT or CREATE DATABASE to specify a database
 alter index dept_key inactive;
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--ALTER INDEX DEPT_KEY failed
+-ALTER INDEX "PUBLIC"."DEPT_KEY" failed
 -Cannot deactivate index used by an integrity constraint
 After line 0 in file test7.sql
 commit;

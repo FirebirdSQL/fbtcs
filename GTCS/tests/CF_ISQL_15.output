@@ -1,9 +1,9 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 39000
 unsuccessful metadata update
--CREATE TABLE T0 failed
+-CREATE TABLE "PUBLIC"."T0" failed
 -Dynamic SQL Error
 -SQL error code = -804
 -Function unknown
--NON_EXIST_UDF
+-"NON_EXIST_UDF"
 After line 1 in file cf_test.sql

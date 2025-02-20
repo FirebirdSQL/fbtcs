@@ -1,8 +1,8 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42S01
 unsuccessful metadata update
--CREATE TABLE EXT_TABLE failed
--Table EXT_TABLE already exists
+-CREATE TABLE "PUBLIC"."EXT_TABLE" failed
+-Table "PUBLIC"."EXT_TABLE" already exists
 After line 5 in file isql.in
 Use CONNECT or CREATE DATABASE to specify a database
 External file: WHERE_GDB_EXTERNAL:(PLATFORM_UPPER)EXTERNAL_DAT:

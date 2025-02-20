@@ -1,5 +1,5 @@
 unsuccessful metadata update
--Operation not supported for EXTERNAL FILE table EXT_TABLE
+-Operation not supported for EXTERNAL FILE table "PUBLIC"."EXT_TABLE"
 Data base error, SQLCODE = -607
 Use CONNECT or CREATE DATABASE to specify a database
 There is no table EXT_TABLE in this database

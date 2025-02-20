@@ -5,5 +5,5 @@ Dynamic SQL Error
 -Name longer than database column size
 -At line 1, column 33
 After line 9 in file proc_level_tests_2.sql
-PROC
+PUBLIC.PROC
 

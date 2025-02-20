@@ -1,58 +1,58 @@
-DOM02A1                         SMALLINT Nullable
+PUBLIC.DOM02A1                  SMALLINT Nullable
                                 default 0
-DOM02B1                         INTEGER Nullable
+PUBLIC.DOM02B1                  INTEGER Nullable
                                 default 0
-DOM02D1                         CHAR(30) CHARACTER SET NONE Nullable
+PUBLIC.DOM02D1                  CHAR(30) CHARACTER SET SYSTEM.NONE Nullable
                                 default 0
-DOM02E1                         VARCHAR(4) CHARACTER SET NONE Nullable
+PUBLIC.DOM02E1                  VARCHAR(4) CHARACTER SET SYSTEM.NONE Nullable
                                 default 0
-DOM02F1                         NUMERIC(15, 1) Nullable
+PUBLIC.DOM02F1                  NUMERIC(15, 1) Nullable
                                 default 0
-DOM02G1                         FLOAT Nullable
+PUBLIC.DOM02G1                  FLOAT Nullable
                                 default 0
-DOM02H1                         DOUBLE PRECISION Nullable
+PUBLIC.DOM02H1                  DOUBLE PRECISION Nullable
                                 default 0
-DOM02D2                         CHAR(30) CHARACTER SET NONE Nullable
+PUBLIC.DOM02D2                  CHAR(30) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'def'
-DOM02E2                         VARCHAR(4) CHARACTER SET NONE Nullable
+PUBLIC.DOM02E2                  VARCHAR(4) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'def'
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM02C3_1                       TIMESTAMP Nullable
+PUBLIC.DOM02C3_1                TIMESTAMP Nullable
                                 default '27-JAN-1992'
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM02C3_2                       TIMESTAMP Nullable
+PUBLIC.DOM02C3_2                TIMESTAMP Nullable
                                 default 'today'
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM02C3_3                       TIMESTAMP Nullable
+PUBLIC.DOM02C3_3                TIMESTAMP Nullable
                                 default '01/27/92'
-DOM02D3                         CHAR(30) CHARACTER SET NONE Nullable
+PUBLIC.DOM02D3                  CHAR(30) CHARACTER SET SYSTEM.NONE Nullable
                                 default '28-OCT-1990'
-DOM02E3                         VARCHAR(8) CHARACTER SET NONE Nullable
+PUBLIC.DOM02E3                  VARCHAR(8) CHARACTER SET SYSTEM.NONE Nullable
                                 default '09/01/82'
-DOM02J                          SMALLINT Nullable
+PUBLIC.DOM02J                   SMALLINT Nullable
                                 default null
-DOM02K                          INTEGER Nullable
+PUBLIC.DOM02K                   INTEGER Nullable
                                 default null
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM02L                          TIMESTAMP Nullable
+PUBLIC.DOM02L                   TIMESTAMP Nullable
                                 default null
-DOM02M                          CHAR(2) CHARACTER SET NONE Nullable
+PUBLIC.DOM02M                   CHAR(2) CHARACTER SET SYSTEM.NONE Nullable
                                 default null
-DOM02N                          VARCHAR(15) CHARACTER SET NONE Nullable
+PUBLIC.DOM02N                   VARCHAR(15) CHARACTER SET SYSTEM.NONE Nullable
                                 default null
-DOM02O                          DECIMAL(4, 1) Nullable
+PUBLIC.DOM02O                   DECIMAL(4, 1) Nullable
                                 default null
-DOM02P                          FLOAT Nullable
+PUBLIC.DOM02P                   FLOAT Nullable
                                 default null
-DOM02Q                          DOUBLE PRECISION Nullable
+PUBLIC.DOM02Q                   DOUBLE PRECISION Nullable
                                 default null
-DOM02R                          BLOB segment 80, subtype BINARY Nullable
+PUBLIC.DOM02R                   BLOB segment 80, subtype BINARY Nullable
                                 default null
-DOM02V                          CHAR(15) CHARACTER SET NONE Nullable
+PUBLIC.DOM02V                   CHAR(15) CHARACTER SET SYSTEM.NONE Nullable
                                 default user
-DOM02W                          VARCHAR(60) CHARACTER SET NONE Nullable
+PUBLIC.DOM02W                   VARCHAR(60) CHARACTER SET SYSTEM.NONE Nullable
                                 default user

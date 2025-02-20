@@ -1,15 +1,15 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
--CREATE INDEX T_IND failed
--Index T_IND already exists
+-CREATE INDEX "PUBLIC"."T_IND" failed
+-Index "PUBLIC"."T_IND" already exists
 Use CONNECT or CREATE DATABASE to specify a database
-T_IND UNIQUE INDEX ON T(B) 
+PUBLIC.T_IND UNIQUE INDEX ON T(B) 
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "T_IND"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."T_IND"
 -Problematic key value is ("B" = 10)
 After line 2 in file show.sql
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "T_IND"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."T_IND"
 -Problematic key value is ("B" = 10)
 After line 3 in file show.sql
 

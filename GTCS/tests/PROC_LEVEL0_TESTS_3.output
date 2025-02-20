@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
-CREATE PROCEDURE PROC failed
+CREATE PROCEDURE "PUBLIC"."PROC" failed
 -Dynamic SQL Error
 -SQL error code = -637
 -duplicate specification of A - not supported

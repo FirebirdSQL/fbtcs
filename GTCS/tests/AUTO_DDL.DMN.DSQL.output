@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
--CREATE DOMAIN A_VAR failed
--Domain A_VAR already exists
+-CREATE DOMAIN "PUBLIC"."A_VAR" failed
+-Domain "PUBLIC"."A_VAR" already exists
 Use CONNECT or CREATE DATABASE to specify a database
-A_VAR                           CHAR(10) CHARACTER SET NONE Nullable
+PUBLIC.A_VAR                    CHAR(10) CHARACTER SET SYSTEM.NONE Nullable

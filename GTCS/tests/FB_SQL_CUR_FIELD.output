@@ -289,7 +289,7 @@ end!
       OUT_ID OUT_NAME                        
 ============ =============================== 
 Statement failed, SQLSTATE = HY109
-Cursor TABLES1 is not positioned in a valid record
+Cursor "TABLES1" is not positioned in a valid record
 -At block line: 24, col: 3
 After line 203 in file fb_sql_cur_field.sql
 
@@ -356,7 +356,7 @@ Statement failed, SQLSTATE = 42S22
 Dynamic SQL Error
 -SQL error code = -206
 -Column unknown
--TABLES.ID
+-"TABLES"."ID"
 -At line 17, column 12
 At line 280 in file fb_sql_cur_field.sql
 
@@ -377,7 +377,7 @@ begin
   tables.id = 1;
 end!
 Statement failed, SQLSTATE = 42000
-attempted update of read-only column TABLES.ID
+attempted update of read-only column "TABLES"."ID"
 After line 284 in file fb_sql_cur_field.sql
 
 
@@ -399,7 +399,7 @@ begin
   end
 end!
 Statement failed, SQLSTATE = 42000
-attempted update of read-only column TABLES.ID
+attempted update of read-only column "TABLES"."ID"
 After line 301 in file fb_sql_cur_field.sql
 
 
@@ -465,7 +465,7 @@ end!
       OUT_ID OUT_NAME                        
 ============ =============================== 
 Statement failed, SQLSTATE = HY109
-Cursor TABLES is not positioned in a valid record
+Cursor "TABLES" is not positioned in a valid record
 -At block line: 13, col: 3
 After line 350 in file fb_sql_cur_field.sql
 
@@ -490,7 +490,7 @@ end!
       OUT_ID OUT_NAME                        
 ============ =============================== 
 Statement failed, SQLSTATE = HY109
-Cursor TABLES is not positioned in a valid record
+Cursor "TABLES" is not positioned in a valid record
 -At block line: 15, col: 3
 After line 366 in file fb_sql_cur_field.sql
 
@@ -541,7 +541,7 @@ Statement failed, SQLSTATE = 34000
 Dynamic SQL Error
 -SQL error code = -502
 -Invalid cursor declaration
--Cursor TABLES already exists in the current context
+-Cursor "TABLES" already exists in the current context
 After line 403 in file fb_sql_cur_field.sql
 
 
@@ -569,7 +569,7 @@ Statement failed, SQLSTATE = 34000
 Dynamic SQL Error
 -SQL error code = -502
 -Invalid cursor declaration
--Cursor TABLES already exists in the current context
+-Cursor "TABLES" already exists in the current context
 After line 423 in file fb_sql_cur_field.sql
 
 

@@ -1,20 +1,20 @@
-DOM04A                          SMALLINT Nullable
+PUBLIC.DOM04A                   SMALLINT Nullable
                                 check (value >=0 and value < 100)
-DOM04B                          INTEGER Nullable
+PUBLIC.DOM04B                   INTEGER Nullable
                                 check (value > 5000)
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM04C                          TIMESTAMP Nullable
+PUBLIC.DOM04C                   TIMESTAMP Nullable
                                 check (value >= 'today')
-DOM04D                          CHAR(20) CHARACTER SET NONE Nullable
+PUBLIC.DOM04D                   CHAR(20) CHARACTER SET SYSTEM.NONE Nullable
                                 check (value in (select river from rivers))
-DOM04E                          VARCHAR(25) CHARACTER SET NONE Nullable
+PUBLIC.DOM04E                   VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable
                                 check (value in (select river from river_states))
-DOM04F                          DECIMAL(6, 2) Nullable
+PUBLIC.DOM04F                   DECIMAL(6, 2) Nullable
                                 check (value > 0)
-DOM04G                          FLOAT Nullable
+PUBLIC.DOM04G                   FLOAT Nullable
                                 check (value < 50000.00)
-DOM04H                          DOUBLE PRECISION Nullable
+PUBLIC.DOM04H                   DOUBLE PRECISION Nullable
                                 check (value > 99.999)
-DOM04I                          BLOB segment 80, subtype BINARY Nullable
+PUBLIC.DOM04I                   BLOB segment 80, subtype BINARY Nullable
                                 check (value > 500)

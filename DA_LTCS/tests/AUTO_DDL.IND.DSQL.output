@@ -1,15 +1,15 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
 -STORE RDB$INDICES failed
--attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_5"
+-attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."RDB$INDEX_5"
 Use CONNECT or CREATE DATABASE to specify a database
 T_IND UNIQUE INDEX ON T(B) 
 Statement failed, SQLCODE = -803
 
-attempt to store duplicate value (visible to active transactions) in unique index "T_IND"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."T_IND"
 Statement failed, SQLCODE = -803
 
-attempt to store duplicate value (visible to active transactions) in unique index "T_IND"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."T_IND"
 
            A            B 
 ============ ============ 

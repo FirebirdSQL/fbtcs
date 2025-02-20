@@ -4,7 +4,7 @@ Statement failed, SQLCODE = -607
 
 unsuccessful metadata update
 -cannot delete
--COLUMN A
+-COLUMN "A"
 -there are 1 dependencies
 A                               INTEGER Nullable 
 AF                              Computed by: (a*3)
@@ -18,7 +18,7 @@ Statement failed, SQLCODE = -607
 
 unsuccessful metadata update
 -cannot delete
--COLUMN AF
+-COLUMN "AF"
 -there are 1 dependencies
 A                               INTEGER Nullable 
 AF                              Computed by: (a*4)

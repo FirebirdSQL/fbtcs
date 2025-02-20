@@ -22,5 +22,5 @@ Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 22003
 arithmetic exception, numeric overflow, or string truncation
 -Floating-point overflow.  The exponent of a floating-point operation is greater than the magnitude allowed.
--At procedure 'POWER' line: 12, col: 12
+-At procedure "PUBLIC"."POWER" line: 12, col: 12
 After line 25 in file power.sql

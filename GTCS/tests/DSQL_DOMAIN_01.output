@@ -1,25 +1,25 @@
-DOM01A_1                        SMALLINT Nullable
-DOM01A_2                        NUMERIC(3, 1) Nullable
-DOM01B_1                        INTEGER Nullable
-DOM01B_2                        INTEGER Nullable
-DOM01B_3                        NUMERIC(9, 0) Nullable
-DOM01B_4                        NUMERIC(6, 2) Nullable
+PUBLIC.DOM01A_1                 SMALLINT Nullable
+PUBLIC.DOM01A_2                 NUMERIC(3, 1) Nullable
+PUBLIC.DOM01B_1                 INTEGER Nullable
+PUBLIC.DOM01B_2                 INTEGER Nullable
+PUBLIC.DOM01B_3                 NUMERIC(9, 0) Nullable
+PUBLIC.DOM01B_4                 NUMERIC(6, 2) Nullable
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM01C                          TIMESTAMP Nullable
-DOM01D_1                        CHAR(20) CHARACTER SET NONE Nullable
-DOM01D_2                        CHAR(99) CHARACTER SET NONE Nullable
-DOM01E_1                        VARCHAR(25) CHARACTER SET NONE Nullable
-DOM01E_2                        VARCHAR(100) CHARACTER SET NONE Nullable
-DOM01E_3                        VARCHAR(2) CHARACTER SET NONE Nullable
-DOM01F_1                        DECIMAL(6, 2) Nullable
-DOM01G_1                        FLOAT Nullable
-DOM01G_2                        DOUBLE PRECISION Nullable
-DOM01G_3                        FLOAT Nullable
-DOM01H                          DOUBLE PRECISION Nullable
-DOM01I_1                        BLOB segment 80, subtype BINARY Nullable
-DOM01I_2                        BLOB segment 60, subtype TEXT CHARACTER SET NONE Nullable
-LONG_DOMAIN_NAME_OF_63_CHARSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX INTEGER Nullable
+PUBLIC.DOM01C                   TIMESTAMP Nullable
+PUBLIC.DOM01D_1                 CHAR(20) CHARACTER SET SYSTEM.NONE Nullable
+PUBLIC.DOM01D_2                 CHAR(99) CHARACTER SET SYSTEM.NONE Nullable
+PUBLIC.DOM01E_1                 VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable
+PUBLIC.DOM01E_2                 VARCHAR(100) CHARACTER SET SYSTEM.NONE Nullable
+PUBLIC.DOM01E_3                 VARCHAR(2) CHARACTER SET SYSTEM.NONE Nullable
+PUBLIC.DOM01F_1                 DECIMAL(6, 2) Nullable
+PUBLIC.DOM01G_1                 FLOAT Nullable
+PUBLIC.DOM01G_2                 DOUBLE PRECISION Nullable
+PUBLIC.DOM01G_3                 FLOAT Nullable
+PUBLIC.DOM01H                   DOUBLE PRECISION Nullable
+PUBLIC.DOM01I_1                 BLOB segment 80, subtype BINARY Nullable
+PUBLIC.DOM01I_2                 BLOB segment 60, subtype TEXT CHARACTER SET SYSTEM.NONE Nullable
+PUBLIC.LONG_DOMAIN_NAME_OF_63_CHARSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX INTEGER Nullable
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -104
@@ -40,8 +40,8 @@ Dynamic SQL Error
 At line 8 in file domain_01b.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--CREATE DOMAIN DOM01A_1 failed
--Domain DOM01A_1 already exists
+-CREATE DOMAIN "PUBLIC"."DOM01A_1" failed
+-Domain "PUBLIC"."DOM01A_1" already exists
 After line 9 in file domain_01b.sql
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error

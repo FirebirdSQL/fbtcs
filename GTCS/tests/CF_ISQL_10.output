@@ -1,5 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
-Generator GEN1, current value: 1000, initial value: 1, increment: 1
+Generator PUBLIC.GEN1, current value: 1000, initial value: 1, increment: 1
+Table: PUBLIC.T0
 A                               INTEGER Nullable 
 GENID_FIELD                     Computed by: (a + gen_id(gen1, 1))
 
@@ -8,11 +9,11 @@ GENID_FIELD                     Computed by: (a + gen_id(gen1, 1))
           10                  1011 
           12                  1014 
 
-Generator GEN1, current value: 1000, initial value: 1, increment: 1
+Generator PUBLIC.GEN1, current value: 1000, initial value: 1, increment: 1
 
            A           GENID_FIELD 
 ============ ===================== 
           10                  1011 
           12                  1014 
 
-Generator GEN1, current value: 1000, initial value: 1, increment: 1
+Generator PUBLIC.GEN1, current value: 1000, initial value: 1, increment: 1

@@ -3,4 +3,4 @@ Statement failed, SQLCODE = -607
 
 unsuccessful metadata update
 -DEFINE EXCEPTION failed
--attempt to store duplicate value (visible to active transactions) in unique index "RDB$INDEX_23"
+-attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."RDB$INDEX_23"

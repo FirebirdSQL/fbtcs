@@ -24,7 +24,7 @@ BLOB display set to subtype 1. This BLOB: subtype = 0
 ==============================================================================
 
 show procedures;
-PROC_ARR; Dependencies: CITIES (Table), OCTETS (Collation)
+PUBLIC.PROC_ARR; Dependencies: PUBLIC.CITIES (Table), SYSTEM.OCTETS (Collation)
 
 commit;
 quit;

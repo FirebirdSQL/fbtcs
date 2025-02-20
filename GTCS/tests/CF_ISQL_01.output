@@ -1,4 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
+Table: PUBLIC.T0
 I                               INTEGER Nullable 
 J                               Computed by: (i)
 
@@ -11,6 +12,7 @@ CONSTANT
 ================= 
 Passed 1 - Update 
 
+Table: PUBLIC.T5
 I                               INTEGER Nullable 
 J                               Computed by: (i+i)
 
@@ -23,6 +25,7 @@ CONSTANT
 ================= 
 Passed 2 - Update 
 
+Table: PUBLIC.T10
 I                               INTEGER Nullable 
 J                               Computed by: (i*i)
 
@@ -35,6 +38,7 @@ CONSTANT
 ================= 
 Paseed 3 - Update 
 
+Table: PUBLIC.T15
 I                               INTEGER Nullable 
 J                               Computed by: (i/i)
 
@@ -47,6 +51,7 @@ CONSTANT
 ================= 
 Passed 4 - Update 
 
+Table: PUBLIC.T20
 I                               INTEGER Nullable 
 J                               Computed by: (i+2)
 
@@ -59,6 +64,7 @@ CONSTANT
 ================= 
 Passed 5 - Update 
 
+Table: PUBLIC.T25
 I                               INTEGER Nullable 
 J                               Computed by: (i*2)
 
@@ -71,6 +77,7 @@ CONSTANT
 ================= 
 Passed 6 - Update 
 
+Table: PUBLIC.T30
 I                               INTEGER Nullable 
 J                               Computed by: (i/2)
 
@@ -83,6 +90,7 @@ CONSTANT
 ================= 
 Passed 7 - Update 
 
+Table: PUBLIC.T35
 I                               INTEGER Nullable 
 J                               Computed by: (-i)
 
@@ -95,6 +103,7 @@ CONSTANT
 ================= 
 Passed 8 - Update 
 
+Table: PUBLIC.T40
 I                               INTEGER Nullable 
 J                               Computed by: (+i)
 
@@ -107,6 +116,7 @@ CONSTANT
 ================= 
 Passed 9 - Update 
 
+Table: PUBLIC.T43
 I                               INTEGER Nullable 
 J                               Computed by: ((i-i+i)*i/i)
 
@@ -119,6 +129,7 @@ CONSTANT
 =================== 
 Passed 9.1 - Update 
 
+Table: PUBLIC.T45
 I                               INTEGER Nullable 
 J                               Computed by: (0)
 
@@ -131,6 +142,7 @@ CONSTANT
 ================== 
 Passed 10 - Update 
 
+Table: PUBLIC.T50
 I                               INTEGER Nullable 
 J                               Computed by: ((4*2-4+4)/2)
 

@@ -10,7 +10,7 @@ commit;
 insert into department values (1, 'hello');
 Statement failed, SQLCODE = -803
 
-violation of PRIMARY or UNIQUE KEY constraint "DEPT_KEY" on table "DEPARTMENT"
+violation of PRIMARY or UNIQUE KEY constraint "DEPT_KEY" on table "PUBLIC"."DEPARTMENT"
 commit;
 select * from department;
 

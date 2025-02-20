@@ -25,7 +25,7 @@
 
 Statement failed, SQLSTATE = 22018
 conversion error from string "100"
--At procedure 'CAST6' line: 3, col: 5
+-At procedure "PUBLIC"."CAST6" line: 3, col: 5
 After line 70 in file proc_cast1.sql
 
            B 

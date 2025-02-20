@@ -1,4 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
+Table: PUBLIC.T0
 A                               INTEGER Nullable 
 B                               INTEGER Nullable 
 A_B                             Computed by: (a*b)
@@ -12,6 +13,7 @@ CONSTANT
 ================= 
 Passed 1 - Update 
 
+Table: PUBLIC.T5
 A                               INTEGER Nullable 
 B                               INTEGER Nullable 
 C                               INTEGER Nullable 
@@ -26,6 +28,7 @@ CONSTANT
 ================= 
 Passed 2 - Update 
 
+Table: PUBLIC.T10
 A                               INTEGER Nullable 
 B                               INTEGER Nullable 
 A_B_CONST                       Computed by: (a/10*b)

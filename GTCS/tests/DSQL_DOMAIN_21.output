@@ -1,44 +1,45 @@
-DOM20A                          SMALLINT Nullable
+PUBLIC.DOM20A                   SMALLINT Nullable
                                 default 0
                                 check (value >= 0 and value < 100)
-DOM20B                          INTEGER Nullable
+PUBLIC.DOM20B                   INTEGER Nullable
                                 default 500
                                 check (value >= 500)
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM20C                          TIMESTAMP Nullable
+PUBLIC.DOM20C                   TIMESTAMP Nullable
                                 check (value >= 'today')
-DOM20D                          CHAR(20) CHARACTER SET NONE Nullable
+PUBLIC.DOM20D                   CHAR(20) CHARACTER SET SYSTEM.NONE Nullable
                                 check (value in (select river from rivers))
-DOM20E                          VARCHAR(25) CHARACTER SET NONE Nullable
+PUBLIC.DOM20E                   VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'VARYING DEFAULT'
-DOM20F                          DECIMAL(6, 2) Nullable
+PUBLIC.DOM20F                   DECIMAL(6, 2) Nullable
                                 default 4.2
                                 check (value > 0)
-DOM20G                          FLOAT Nullable
+PUBLIC.DOM20G                   FLOAT Nullable
                                 default 500.1
                                 check (value < 50000.00)
-DOM20H                          DOUBLE PRECISION Nullable
+PUBLIC.DOM20H                   DOUBLE PRECISION Nullable
                                 default 1000
                                 check (value > 99.999)
-FLD1                            (DOM20A) SMALLINT Nullable default 0
+Table: PUBLIC.TAB20A
+FLD1                            (PUBLIC.DOM20A) SMALLINT Nullable default 0
                                 check (value >= 0 and value < 100)
-FLD2                            (DOM20B) INTEGER Nullable default 500
+FLD2                            (PUBLIC.DOM20B) INTEGER Nullable default 500
                                 check (value >= 500)
-FLD3                            (DOM20C) TIMESTAMP Nullable 
+FLD3                            (PUBLIC.DOM20C) TIMESTAMP Nullable 
                                 check (value >= 'today')
-FLD4                            (DOM20D) CHAR(20) CHARACTER SET NONE Nullable 
+FLD4                            (PUBLIC.DOM20D) CHAR(20) CHARACTER SET SYSTEM.NONE Nullable 
                                 check (value in (select river from rivers))
-FLD5                            (DOM20E) VARCHAR(25) CHARACTER SET NONE Nullable default 'VARYING DEFAULT'
-FLD6                            (DOM20F) DECIMAL(6, 2) Nullable default 4.2
+FLD5                            (PUBLIC.DOM20E) VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable default 'VARYING DEFAULT'
+FLD6                            (PUBLIC.DOM20F) DECIMAL(6, 2) Nullable default 4.2
                                 check (value > 0)
-FLD7                            (DOM20G) FLOAT Nullable default 500.1
+FLD7                            (PUBLIC.DOM20G) FLOAT Nullable default 500.1
                                 check (value < 50000.00)
-FLD8                            (DOM20H) DOUBLE PRECISION Nullable default 1000
+FLD8                            (PUBLIC.DOM20H) DOUBLE PRECISION Nullable default 1000
                                 check (value > 99.999)
-DOM20A                          SMALLINT Nullable
+PUBLIC.DOM20A                   SMALLINT Nullable
                                 check (value > 100)
-DOM20A                          SMALLINT Nullable
+PUBLIC.DOM20A                   SMALLINT Nullable
                                 check (value > 100)
 
    FLD1         FLD2        FLD3 FLD4                 FLD5                              FLD6           FLD7                    FLD8 

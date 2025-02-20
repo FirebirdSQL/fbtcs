@@ -1,8 +1,8 @@
 Statement failed, SQLSTATE = HY000
 exception 11
--E1
+-"PUBLIC"."E1"
 -e1
--At procedure 'P1' line: 5, col: 3
+-At procedure "PUBLIC"."P1" line: 5, col: 3
 After line 41 in file dsql_except_04.sql
 
            N 
@@ -11,9 +11,9 @@ After line 41 in file dsql_except_04.sql
 
 Statement failed, SQLSTATE = HY000
 exception 11
--E1
+-"PUBLIC"."E1"
 -abcdef
--At procedure 'P2' line: 5, col: 3
+-At procedure "PUBLIC"."P2" line: 5, col: 3
 After line 43 in file dsql_except_04.sql
 
            N 
@@ -28,11 +28,11 @@ After line 43 in file dsql_except_04.sql
 
 Statement failed, SQLSTATE = HY000
 exception 11
--E1
+-"PUBLIC"."E1"
 -e1
--At procedure 'P1' line: 5, col: 3
-At procedure 'P4' line: 5, col: 3
--At procedure 'P4' line: 7, col: 3
+-At procedure "PUBLIC"."P1" line: 5, col: 3
+At procedure "PUBLIC"."P4" line: 5, col: 3
+-At procedure "PUBLIC"."P4" line: 7, col: 3
 After line 49 in file dsql_except_04.sql
 
            N 
@@ -42,19 +42,19 @@ After line 49 in file dsql_except_04.sql
 
 Statement failed, SQLSTATE = HY000
 exception 12
--E2
+-"PUBLIC"."E2"
 -@0 a @1 b @2 c @3 d @4 e @5 f
 -At block line: 4, col: 3
 After line 54 in file dsql_except_04.sql
 Statement failed, SQLSTATE = HY000
 exception 12
--E2
+-"PUBLIC"."E2"
 -123 @1 @2 456
 -At block line: 4, col: 3
 After line 60 in file dsql_except_04.sql
 Statement failed, SQLSTATE = HY000
 exception 12
--E2
+-"PUBLIC"."E2"
 -@0 a 1 b 1.3 c *** null *** d @4 e @5 f
 -At block line: 4, col: 3
 After line 66 in file dsql_except_04.sql
