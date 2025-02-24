@@ -515,7 +515,7 @@ end!
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -637
--duplicate specification of TABLES - not supported
+-duplicate specification of "TABLES" - not supported
 After line 384 in file fb_sql_cur_field.sql
 
 

@@ -160,7 +160,7 @@ end!
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
 -SQL error code = -637
--duplicate specification of X - not supported
+-duplicate specification of "X" - not supported
 After line 111 in file fb_sql_subproc_1.sql
 
 ---

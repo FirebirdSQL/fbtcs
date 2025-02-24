@@ -700,10 +700,10 @@ INPUT message field count: 0
 OUTPUT message field count: 2
 01: sqltype: 510 TIMESTAMP scale: 0 subtype: 0 len: 8
   :  name: CONSTANT  alias: CONSTANT
-  : table:   owner: 
+  : table:   schema:   owner: 
 02: sqltype: 560 TIME scale: 0 subtype: 0 len: 4
   :  name: DATEADD  alias: DATEADD
-  : table:   owner: 
+  : table:   schema:   owner: 
 
                  CONSTANT       DATEADD 
 ========================= ============= 
@@ -718,15 +718,15 @@ select 1
 INPUT message field count: 2
 01: sqltype: 510 TIMESTAMP scale: 0 subtype: 0 len: 8
   :  name:   alias: 
-  : table:   owner: 
+  : table:   schema:   owner: 
 02: sqltype: 560 TIME scale: 0 subtype: 0 len: 4
   :  name:   alias: 
-  : table:   owner: 
+  : table:   schema:   owner: 
 
 OUTPUT message field count: 1
 01: sqltype: 496 LONG scale: 0 subtype: 0 len: 4
   :  name: CONSTANT  alias: CONSTANT
-  : table:   owner: 
+  : table:   schema:   owner: 
 
     CONSTANT 
 ============ 

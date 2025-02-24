@@ -3,6 +3,6 @@ Statement failed, SQLSTATE = 42000
 CREATE PROCEDURE "PUBLIC"."PROC" failed
 -Dynamic SQL Error
 -SQL error code = -637
--duplicate specification of A - not supported
+-duplicate specification of "A" - not supported
 After line 3 in file proc_level0_tests3.sql
 There are no stored procedures in this database
