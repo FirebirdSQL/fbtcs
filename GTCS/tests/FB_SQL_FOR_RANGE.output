@@ -1,0 +1,170 @@
+create database "WHERE_GDB:for_range.fdb";
+
+set term !;
+
+---
+
+
+create or alter procedure p1 (init integer) returns (out integer)
+as
+begin
+    out = init;
+
+    for out = out to 16 by 2 do
+    begin
+        if (out = 5) then
+            continue;
+        else if (out = 9) then
+            out = out + 1;
+
+        suspend;
+    end
+
+    out = -out;
+    suspend;
+end!
+
+select * from p1(3)!
+
+         OUT 
+============ 
+           3 
+           7 
+          10 
+          12 
+          14 
+          16 
+         -18 
+
+select * from p1(11)!
+
+         OUT 
+============ 
+          11 
+          13 
+          15 
+         -17 
+
+
+
+create or alter procedure p2 (init integer) returns (out integer)
+as
+    declare finish integer = 5;
+    declare last integer;
+
+    declare procedure sub1 returns (out integer)
+    as
+    begin
+        for out = init to finish do
+        begin
+            last = out;
+            suspend;
+        end
+    end
+begin
+    for select out from sub1 into :out do
+        suspend;
+
+    out = last;
+    suspend;
+end!
+
+select * from p2(3)!
+
+         OUT 
+============ 
+           3 
+           4 
+           5 
+           5 
+
+
+
+execute block returns (out numeric(5,2))
+as
+    declare init integer = 10;
+    declare finish integer = 1;
+    declare by_val numeric(5,2) = 1.1;
+begin
+    for out = :init downto :finish by :by_val do
+    begin
+        init = init + 1;
+        finish = finish + 1;
+        by_val = by_val + 1;
+        suspend;
+    end
+
+    out = -out;
+    suspend;
+end!
+
+         OUT 
+============ 
+       10.00 
+        8.90 
+        7.80 
+        6.70 
+        5.60 
+        4.50 
+        3.40 
+        2.30 
+        1.20 
+       -0.10 
+
+
+
+execute block returns (out integer)
+as
+begin
+    for out = null to 10 do
+        suspend;
+
+    for out = 1 to null do
+        suspend;
+
+    for out = 1 to 10 by null do
+        suspend;
+end!
+
+
+execute block returns (out integer)
+as
+    declare i integer;
+begin
+    outer_for: for out = 1 to 8 do
+    begin
+        for i = 1 to 5 do
+        begin
+            if (i = 3) then
+                continue outer_for;
+            suspend;
+        end
+    end
+end!
+
+         OUT 
+============ 
+           1 
+           1 
+           2 
+           2 
+           3 
+           3 
+           4 
+           4 
+           5 
+           5 
+           6 
+           6 
+           7 
+           7 
+           8 
+           8 
+
+
+
+---
+
+drop database!
+
+exit!
