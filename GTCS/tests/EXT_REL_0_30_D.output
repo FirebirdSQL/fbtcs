@@ -1,8 +1,8 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--CREATE TABLE EXT_TABLE failed
--Can't use external table "EXT_TABLE" in FOREIGN KEY constraint
+-CREATE TABLE "PUBLIC"."EXT_TABLE" failed
+-Can't use external table "PUBLIC"."EXT_TABLE" in FOREIGN KEY constraint
 After line 5 in file isql.in
 Use CONNECT or CREATE DATABASE to specify a database
 There is no table EXT_TABLE in this database

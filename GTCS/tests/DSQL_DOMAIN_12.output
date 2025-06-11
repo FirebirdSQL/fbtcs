@@ -1,13 +1,14 @@
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-FLD1                            (DOM12A1) SMALLINT Nullable default 0
-FLD2                            (DOM12B1) INTEGER Nullable default 0
-FLD3                            (DOM12C1) TIMESTAMP Nullable default '12-12-57'
-FLD4                            (DOM12D1) CHAR(30) CHARACTER SET NONE Nullable default 'generic username'
-FLD5                            (DOM12E1) VARCHAR(4) CHARACTER SET NONE Nullable default null
-FLD6                            (DOM12F1) VARCHAR(10) CHARACTER SET NONE Nullable default 'default'
-FLD7                            (DOM12G1) FLOAT Nullable default 0
-FLD8                            (DOM12H1) DOUBLE PRECISION Nullable default null
+Table: PUBLIC.TAB12A
+FLD1                            (PUBLIC.DOM12A1) SMALLINT Nullable default 0
+FLD2                            (PUBLIC.DOM12B1) INTEGER Nullable default 0
+FLD3                            (PUBLIC.DOM12C1) TIMESTAMP Nullable default '12-12-57'
+FLD4                            (PUBLIC.DOM12D1) CHAR(30) CHARACTER SET SYSTEM.NONE Nullable default 'generic username'
+FLD5                            (PUBLIC.DOM12E1) VARCHAR(4) CHARACTER SET SYSTEM.NONE Nullable default null
+FLD6                            (PUBLIC.DOM12F1) VARCHAR(10) CHARACTER SET SYSTEM.NONE Nullable default 'default'
+FLD7                            (PUBLIC.DOM12G1) FLOAT Nullable default 0
+FLD8                            (PUBLIC.DOM12H1) DOUBLE PRECISION Nullable default null
 
    FLD1         FLD2        FLD3 FLD4                           FLD5   FLD6                 FLD7                    FLD8 
 ======= ============ =========== ============================== ====== ========== ============== ======================= 

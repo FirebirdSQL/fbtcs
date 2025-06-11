@@ -1,30 +1,31 @@
-DOM20A                          SMALLINT Nullable
+PUBLIC.DOM20A                   SMALLINT Nullable
                                 default 30
-DOM20B                          INTEGER Nullable
+PUBLIC.DOM20B                   INTEGER Nullable
                                 default 500
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM20C                          TIMESTAMP Nullable
+PUBLIC.DOM20C                   TIMESTAMP Nullable
                                 default '01-27-92'
-DOM20D                          CHAR(20) CHARACTER SET NONE Nullable
+PUBLIC.DOM20D                   CHAR(20) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'DEFAULT'
-DOM20E                          VARCHAR(25) CHARACTER SET NONE Nullable
+PUBLIC.DOM20E                   VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'VARYING DEFAULT'
-DOM20F                          DECIMAL(6, 2) Nullable
+PUBLIC.DOM20F                   DECIMAL(6, 2) Nullable
                                 default 4.2
-DOM20G                          FLOAT Nullable
+PUBLIC.DOM20G                   FLOAT Nullable
                                 default 500.1
-DOM20H                          DOUBLE PRECISION Nullable
+PUBLIC.DOM20H                   DOUBLE PRECISION Nullable
                                 default 1000
-FLD1                            (DOM20A) SMALLINT Nullable default 30
-FLD2                            (DOM20B) INTEGER Nullable default 500
-FLD3                            (DOM20C) TIMESTAMP Nullable default '01-27-92'
-FLD4                            (DOM20D) CHAR(20) CHARACTER SET NONE Nullable default 'DEFAULT'
-FLD5                            (DOM20E) VARCHAR(25) CHARACTER SET NONE Nullable default 'VARYING DEFAULT'
-FLD6                            (DOM20F) DECIMAL(6, 2) Nullable default 4.2
-FLD7                            (DOM20G) FLOAT Nullable default 500.1
-FLD8                            (DOM20H) DOUBLE PRECISION Nullable default 1000
-DOM20A                          SMALLINT Nullable
+Table: PUBLIC.TAB20A
+FLD1                            (PUBLIC.DOM20A) SMALLINT Nullable default 30
+FLD2                            (PUBLIC.DOM20B) INTEGER Nullable default 500
+FLD3                            (PUBLIC.DOM20C) TIMESTAMP Nullable default '01-27-92'
+FLD4                            (PUBLIC.DOM20D) CHAR(20) CHARACTER SET SYSTEM.NONE Nullable default 'DEFAULT'
+FLD5                            (PUBLIC.DOM20E) VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable default 'VARYING DEFAULT'
+FLD6                            (PUBLIC.DOM20F) DECIMAL(6, 2) Nullable default 4.2
+FLD7                            (PUBLIC.DOM20G) FLOAT Nullable default 500.1
+FLD8                            (PUBLIC.DOM20H) DOUBLE PRECISION Nullable default 1000
+PUBLIC.DOM20A                   SMALLINT Nullable
 
    FLD1         FLD2        FLD3 FLD4                 FLD5                              FLD6           FLD7                    FLD8 
 ======= ============ =========== ==================== ========================= ============ ============== ======================= 

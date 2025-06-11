@@ -24,13 +24,13 @@ Statement failed, SQLCODE = -204
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
--CAST1
+-"PUBLIC"."CAST1"
 Statement failed, SQLCODE = -204
 
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
--CAST2
+-"PUBLIC"."CAST2"
 
           B 
 =========== 
@@ -41,13 +41,13 @@ Statement failed, SQLCODE = -204
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
--CAST4
+-"PUBLIC"."CAST4"
 Statement failed, SQLCODE = -204
 
 Dynamic SQL Error
 -SQL error code = -204
 -Procedure unknown
--CAST5
+-"PUBLIC"."CAST5"
 Statement failed, SQLCODE = -413
 
 conversion error from string "1978-03-29"

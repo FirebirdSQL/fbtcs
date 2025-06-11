@@ -1,9 +1,9 @@
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -cannot delete
--EXCEPTION TRIG03_NULLRIVER
+-EXCEPTION "PUBLIC"."TRIG03_NULLRIVER"
 -there are 1 dependencies
 After line 14 in file dsql_except_03.sql
-TRIG03_NULLRIVER; Msg: River field cannot be left blank; Used by: TEST03A (Trigger)
+PUBLIC.TRIG03_NULLRIVER; Msg: River field cannot be left blank; Used by: PUBLIC.TEST03A (Trigger)
 There is no trigger RIVER_STATES in this database
 There is no exception TRIG03_NULLRIVER in this database

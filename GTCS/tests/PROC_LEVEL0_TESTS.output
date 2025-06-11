@@ -23,7 +23,7 @@ After line 11 in file proc_level0_tests.sql
 
 set term ; go
 show proc;
-ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHI
+PUBLIC.ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHI
 
 execute procedure abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_abcdefghi;
 

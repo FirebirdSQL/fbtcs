@@ -114,7 +114,7 @@ update or insert into tab values (2, 2) matching (n2) returning n1, n2, old.n1, 
           N1           N2     CONSTANT     CONSTANT           N1           N2 
 ============ ============ ============ ============ ============ ============ 
 Statement failed, SQLSTATE = 23000
-violation of PRIMARY or UNIQUE KEY constraint "INTEG_2" on table "TAB"
+violation of PRIMARY or UNIQUE KEY constraint "INTEG_2" on table "PUBLIC"."TAB"
 -Problematic key value is ("N1" = 2)
 After line 51 in file fb_sql_returning_1.sql
 rollback!
@@ -133,7 +133,7 @@ merge into tab2 using tab
 Statement failed, SQLSTATE = 42702
 Dynamic SQL Error
 -SQL error code = -204
--Ambiguous field name between table TAB and table TAB2 
+-Ambiguous field name between table "PUBLIC"."TAB" and table "PUBLIC"."TAB2"
 -N1
 After line 59 in file fb_sql_returning_1.sql
 
@@ -145,7 +145,7 @@ merge into tab2 using tab
 Statement failed, SQLSTATE = 42702
 Dynamic SQL Error
 -SQL error code = -204
--Ambiguous field name between table TAB and table TAB2 
+-Ambiguous field name between table "PUBLIC"."TAB" and table "PUBLIC"."TAB2"
 -N1
 After line 65 in file fb_sql_returning_1.sql
 
@@ -157,7 +157,7 @@ merge into tab2 using tab
 Statement failed, SQLSTATE = 42702
 Dynamic SQL Error
 -SQL error code = -204
--Ambiguous field name between table TAB and table TAB2 
+-Ambiguous field name between table "PUBLIC"."TAB" and table "PUBLIC"."TAB2"
 -N1
 After line 71 in file fb_sql_returning_1.sql
 

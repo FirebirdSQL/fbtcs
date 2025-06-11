@@ -1,20 +1,20 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42S22
 unsuccessful metadata update
--CREATE TABLE T0 failed
+-CREATE TABLE "PUBLIC"."T0" failed
 -Dynamic SQL Error
 -SQL error code = -206
 -Column unknown
--B
+-"B"
 -At line 4, column 45
 After line 1 in file cf_test.sql
 Statement failed, SQLSTATE = 42S22
 unsuccessful metadata update
--CREATE TABLE T1 failed
+-CREATE TABLE "PUBLIC"."T1" failed
 -Dynamic SQL Error
 -SQL error code = -206
 -Column unknown
--A
+-"A"
 -At line 4, column 34
 After line 6 in file cf_test.sql
 There are no tables in this database

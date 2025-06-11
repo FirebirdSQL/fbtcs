@@ -1,7 +1,7 @@
 create domain dom08a_1 as smallint;
 commit;
 show domain dom08a_1;
-DOM08A_1                        SMALLINT Nullable
+PUBLIC.DOM08A_1                 SMALLINT Nullable
 
 /* the next statement should fail */
 
@@ -15,79 +15,79 @@ Dynamic SQL Error
 At line 8 in file domain_08.sql
 commit;
 show domain dom08a_1;
-DOM08A_1                        SMALLINT Nullable
+PUBLIC.DOM08A_1                 SMALLINT Nullable
 create domain dom08a_2 as numeric(3,1);
 commit;
 show domain dom08a_2;
-DOM08A_2                        NUMERIC(3, 1) Nullable
+PUBLIC.DOM08A_2                 NUMERIC(3, 1) Nullable
 create domain dom08b_1 as integer;
 commit;
 show domain dom08b_1;
-DOM08B_1                        INTEGER Nullable
+PUBLIC.DOM08B_1                 INTEGER Nullable
 create domain dom08b_2 as int;
 commit;
 show domain dom08b_2;
-DOM08B_2                        INTEGER Nullable
+PUBLIC.DOM08B_2                 INTEGER Nullable
 create domain dom08b_3 as numeric;
 commit;
 show domain dom08b_3;
-DOM08B_3                        NUMERIC(9, 0) Nullable
+PUBLIC.DOM08B_3                 NUMERIC(9, 0) Nullable
 create domain dom08b_4 as numeric(6,2);
 commit;
 show domain dom08b_4;
-DOM08B_4                        NUMERIC(6, 2) Nullable
+PUBLIC.DOM08B_4                 NUMERIC(6, 2) Nullable
 create domain dom08c as date;
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
 commit;
 show domain dom08c;
-DOM08C                          TIMESTAMP Nullable
+PUBLIC.DOM08C                   TIMESTAMP Nullable
 create domain dom08d_1 as char(20);
 commit;
 show domain dom08d_1;
-DOM08D_1                        CHAR(20) CHARACTER SET NONE Nullable
+PUBLIC.DOM08D_1                 CHAR(20) CHARACTER SET SYSTEM.NONE Nullable
 create domain dom08d_2 as character(99);
 commit;
 show domain dom08d_2;
-DOM08D_2                        CHAR(99) CHARACTER SET NONE Nullable
+PUBLIC.DOM08D_2                 CHAR(99) CHARACTER SET SYSTEM.NONE Nullable
 create domain dom08e_1 as varchar(25);
 commit;
 show domain dom08e_1;
-DOM08E_1                        VARCHAR(25) CHARACTER SET NONE Nullable
+PUBLIC.DOM08E_1                 VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable
 create domain dom08e_2 as character varying(100);
 commit;
 show domain dom08e_2;
-DOM08E_2                        VARCHAR(100) CHARACTER SET NONE Nullable
+PUBLIC.DOM08E_2                 VARCHAR(100) CHARACTER SET SYSTEM.NONE Nullable
 create domain dom08e_3 as char varying(2);
 commit;
 show domain dom08e_3;
-DOM08E_3                        VARCHAR(2) CHARACTER SET NONE Nullable
+PUBLIC.DOM08E_3                 VARCHAR(2) CHARACTER SET SYSTEM.NONE Nullable
 create domain dom08f_1 as decimal(6,2);
 commit;
 show domain dom08f_1;
-DOM08F_1                        DECIMAL(6, 2) Nullable
+PUBLIC.DOM08F_1                 DECIMAL(6, 2) Nullable
 create domain dom08g_1 as float;
 commit;
 show domain dom08g_1;
-DOM08G_1                        FLOAT Nullable
+PUBLIC.DOM08G_1                 FLOAT Nullable
 create domain dom08g_2 as long float;
 commit;
 show domain dom08g_2;
-DOM08G_2                        DOUBLE PRECISION Nullable
+PUBLIC.DOM08G_2                 DOUBLE PRECISION Nullable
 create domain dom08g_3 as real;
 commit;
 show domain dom08g_3;
-DOM08G_3                        FLOAT Nullable
+PUBLIC.DOM08G_3                 FLOAT Nullable
 create domain dom08h as double precision;
 commit;
 show domain dom08h;
-DOM08H                          DOUBLE PRECISION Nullable
+PUBLIC.DOM08H                   DOUBLE PRECISION Nullable
 create domain dom08i_1 as blob;
 commit;
 show domain dom08i_1;
-DOM08I_1                        BLOB segment 80, subtype BINARY Nullable
+PUBLIC.DOM08I_1                 BLOB segment 80, subtype BINARY Nullable
 create domain dom08i_2 as blob(60,1);
 commit;
 show domain dom08i_2;
-DOM08I_2                        BLOB segment 60, subtype TEXT CHARACTER SET NONE Nullable
+PUBLIC.DOM08I_2                 BLOB segment 60, subtype TEXT CHARACTER SET SYSTEM.NONE Nullable
 exit;

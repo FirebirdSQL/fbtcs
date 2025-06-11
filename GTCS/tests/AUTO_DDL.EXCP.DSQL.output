@@ -1,18 +1,18 @@
 Use CONNECT or CREATE DATABASE to specify a database
 unsuccessful metadata update
--CREATE EXCEPTION FAIL_MSG failed
--Exception FAIL_MSG already exists
+-CREATE EXCEPTION "PUBLIC"."FAIL_MSG" failed
+-Exception "PUBLIC"."FAIL_MSG" already exists
 unsuccessful metadata update
 -cannot delete
--EXCEPTION FAIL_MSG
+-EXCEPTION "PUBLIC"."FAIL_MSG"
 -there are 1 dependencies
 unsuccessful metadata update
--CREATE EXCEPTION FAIL_MSG failed
--Exception FAIL_MSG already exists
+-CREATE EXCEPTION "PUBLIC"."FAIL_MSG" failed
+-Exception "PUBLIC"."FAIL_MSG" already exists
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = HY000
 exception 1
--FAIL_MSG
+-"PUBLIC"."FAIL_MSG"
 -THIS IS AN EXCEPTION !!
--At procedure 'PROC' line: 1, col: 32
+-At procedure "PUBLIC"."PROC" line: 1, col: 32
 After line 1 in file show.sql

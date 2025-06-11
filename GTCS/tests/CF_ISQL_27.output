@@ -31,7 +31,7 @@ END^
 SET TERM ; ^
 commit;
 show procedures;
-RPL$GENERATOR_VALUES; Dependencies: RDB$GENERATORS (Table)
+PUBLIC.RPL$GENERATOR_VALUES; Dependencies: SYSTEM.RDB$GENERATORS (Table)
 
 
 Use CONNECT or CREATE DATABASE to specify a database

@@ -1,24 +1,24 @@
-DOM20A                          SMALLINT Nullable
+PUBLIC.DOM20A                   SMALLINT Nullable
                                 default 0
                                 check (value >= 0 and value < 100)
-DOM20B                          INTEGER Nullable
+PUBLIC.DOM20B                   INTEGER Nullable
                                 default 500
                                 check (value >= 500)
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM20C                          TIMESTAMP Nullable
+PUBLIC.DOM20C                   TIMESTAMP Nullable
                                 check (value >= 'today')
-DOM20D                          CHAR(20) CHARACTER SET NONE Nullable
+PUBLIC.DOM20D                   CHAR(20) CHARACTER SET SYSTEM.NONE Nullable
                                 check (value in (select river from rivers))
-DOM20E                          VARCHAR(25) CHARACTER SET NONE Nullable
+PUBLIC.DOM20E                   VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'VARYING DEFAULT'
-DOM20F                          DECIMAL(6, 2) Nullable
+PUBLIC.DOM20F                   DECIMAL(6, 2) Nullable
                                 default 4.2
                                 check (value > 0)
-DOM20G                          FLOAT Nullable
+PUBLIC.DOM20G                   FLOAT Nullable
                                 default 500.1
                                 check (value < 50000.00)
-DOM20H                          DOUBLE PRECISION Not Null
+PUBLIC.DOM20H                   DOUBLE PRECISION Not Null
                                 default 1000
 There is no domain DOM20A in this database
 There is no domain DOM20B in this database

@@ -700,10 +700,10 @@ INPUT message field count: 0
 OUTPUT message field count: 2
 01: sqltype: 510 TIMESTAMP scale: 0 subtype: 0 len: 8
   :  name: CONSTANT  alias: CONSTANT
-  : table:   owner: 
+  : table:   schema:   owner: 
 02: sqltype: 560 TIME scale: 0 subtype: 0 len: 4
   :  name: DATEADD  alias: DATEADD
-  : table:   owner: 
+  : table:   schema:   owner: 
 
                  CONSTANT       DATEADD 
 ========================= ============= 
@@ -718,15 +718,15 @@ select 1
 INPUT message field count: 2
 01: sqltype: 510 TIMESTAMP scale: 0 subtype: 0 len: 8
   :  name:   alias: 
-  : table:   owner: 
+  : table:   schema:   owner: 
 02: sqltype: 560 TIME scale: 0 subtype: 0 len: 4
   :  name:   alias: 
-  : table:   owner: 
+  : table:   schema:   owner: 
 
 OUTPUT message field count: 1
 01: sqltype: 496 LONG scale: 0 subtype: 0 len: 4
   :  name: CONSTANT  alias: CONSTANT
-  : table:   owner: 
+  : table:   schema:   owner: 
 
     CONSTANT 
 ============ 
@@ -759,22 +759,22 @@ insert into timetz values (6, '11:33:33 +1:0');
 -- Duplicate in UTC.
 insert into timetz values (7, '12:33:33 +0:0');
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."TIMETZ_UK"
 -Problematic key value is ("V" = '12:33:33.0000 +00:00')
 After line 449 in file fb_sql_time_zone_a.sql
 insert into timetz values (8, '13:33:33 +1:0');
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."TIMETZ_UK"
 -Problematic key value is ("V" = '13:33:33.0000 +01:00')
 After line 452 in file fb_sql_time_zone_a.sql
 insert into timetz values (9, '14:33:33 +2:0');
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."TIMETZ_UK"
 -Problematic key value is ("V" = '14:33:33.0000 +02:00')
 After line 453 in file fb_sql_time_zone_a.sql
 insert into timetz values (10, '11:33:33 -03:00');
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "TIMETZ_UK"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."TIMETZ_UK"
 -Problematic key value is ("V" = '11:33:33.0000 -03:00')
 After line 454 in file fb_sql_time_zone_a.sql
 
@@ -899,17 +899,17 @@ insert into timestamptz values (6, '2018-01-01 11:33:33 +1:0');
 -- Duplicate in UTC.
 insert into timestamptz values (7, '2018-01-01 12:33:33 +0:0');
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 12:33:33.0000 +00:00')
 After line 495 in file fb_sql_time_zone_a.sql
 insert into timestamptz values (8, '2018-01-01 13:33:33 +1:0');
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 13:33:33.0000 +01:00')
 After line 498 in file fb_sql_time_zone_a.sql
 insert into timestamptz values (9, '2018-01-01 14:33:33 +2:0');
 Statement failed, SQLSTATE = 23000
-attempt to store duplicate value (visible to active transactions) in unique index "TIMESTAMPTZ_UK"
+attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."TIMESTAMPTZ_UK"
 -Problematic key value is ("V" = '2018-01-01 14:33:33.0000 +02:00')
 After line 499 in file fb_sql_time_zone_a.sql
 

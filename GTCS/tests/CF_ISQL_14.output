@@ -1,6 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
-attempted update of read-only column T0.AF
+attempted update of read-only column "PUBLIC"."T0"."AF"
 After line 7 in file cf_test.sql
 
            A                    AF 
@@ -8,7 +8,7 @@ After line 7 in file cf_test.sql
           10                    30 
 
 Statement failed, SQLSTATE = 42000
-attempted update of read-only column T0.AF
+attempted update of read-only column "PUBLIC"."T0"."AF"
 After line 13 in file cf_test.sql
 
            A                    AF 
@@ -17,7 +17,7 @@ After line 13 in file cf_test.sql
 
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--TABLE T5
+-TABLE "PUBLIC"."T5"
 -Can't have relation with only computed fields or constraints
 After line 19 in file cf_test.sql
 Statement failed, SQLSTATE = 21S01

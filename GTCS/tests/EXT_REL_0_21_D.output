@@ -1,10 +1,10 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = HY004
 unsuccessful metadata update
--CREATE TABLE EXT_TABLE failed
+-CREATE TABLE "PUBLIC"."EXT_TABLE" failed
 -SQL error code = -607
 -Invalid command
--Data type BLOB is not supported for EXTERNAL TABLES. Relation 'EXT_TABLE', field 'FIELD1'
+-Data type BLOB is not supported for EXTERNAL TABLES. Relation "PUBLIC"."EXT_TABLE", field "FIELD1"
 After line 2 in file isql.in
 Use CONNECT or CREATE DATABASE to specify a database
 There is no table EXT_TABLE in this database

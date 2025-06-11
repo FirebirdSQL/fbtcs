@@ -1,5 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
-S                               VARCHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T0
+S                               VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 SC                              Computed by: (s)
 
 CONSTANT          
@@ -11,7 +12,8 @@ CONSTANT
 ================= 
 Passed 1 - Update 
 
-S                               VARCHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T5
+S                               VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 SC                              Computed by: (s||s)
 
 CONSTANT          
@@ -23,7 +25,8 @@ CONSTANT
 ================= 
 Passed 2 - Update 
 
-S                               VARCHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T15
+S                               VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 SC                              Computed by: (s||' test')
 
 CONSTANT          
@@ -35,7 +38,8 @@ CONSTANT
 ================= 
 Passed 4 - Update 
 
-S                               VARCHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T20
+S                               VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 SC                              Computed by: ('test '||s)
 
 CONSTANT          
@@ -47,7 +51,8 @@ CONSTANT
 ================= 
 Passed 5 - Update 
 
-S                               VARCHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T25
+S                               VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 SC                              Computed by: ('test '||s||' test')
 
 CONSTANT          
@@ -59,7 +64,8 @@ CONSTANT
 ================= 
 Passed 6 - Update 
 
-S                               VARCHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T30
+S                               VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 SC                              Computed by: ('test')
 
 CONSTANT          
@@ -71,7 +77,8 @@ CONSTANT
 ================= 
 Passed 7 - Update 
 
-S                               VARCHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T35
+S                               VARCHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 SC                              Computed by: ('test '||' test')
 
 CONSTANT          

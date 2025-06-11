@@ -8,32 +8,43 @@ CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
 ALTER TABLE T_EXTRACT_BUG ADD check(a>='c');
 
 Use CONNECT or CREATE DATABASE to specify a database
-EXTRACT_BUG                     CHAR(1) CHARACTER SET ISO8859_1 COLLATE ES_ES Nullable
+PUBLIC.EXTRACT_BUG              CHAR(1) CHARACTER SET SYSTEM.ISO8859_1 COLLATE SYSTEM.ES_ES Nullable
                                 default 'v'
                                 check(value >='a' and value <='z')
-A                               (EXTRACT_BUG) CHAR(1) CHARACTER SET ISO8859_1 COLLATE PT_PT Nullable DEFAULT 'w'
+Table: PUBLIC.T_EXTRACT_BUG
+A                               (PUBLIC.EXTRACT_BUG) CHAR(1) CHARACTER SET SYSTEM.ISO8859_1 COLLATE SYSTEM.PT_PT Nullable DEFAULT 'w'
                                 check(value >='a' and value <='z')
 CONSTRAINT INTEG_1:
   check(a>='c')
 
 SET SQL DIALECT 3; 
 
-/* CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb' PAGE_SIZE 8192 DEFAULT CHARACTER SET NONE; */
+/* CREATE DATABASE 'WHERE_GDB:cf_isql_20.fdb' PAGE_SIZE 8192 DEFAULT CHARACTER SET SYSTEM.NONE; */
+
+/* Schema definitions */
+
+/* Schema: PUBLIC, Owner: SYSDBA */
+CREATE OR ALTER SCHEMA PUBLIC;
+
+COMMIT WORK;
 
 
 /* Domain definitions */
-CREATE DOMAIN EXTRACT_BUG AS CHAR(1) CHARACTER SET ISO8859_1
-         default 'v' COLLATE ES_ES;
+CREATE DOMAIN PUBLIC.EXTRACT_BUG AS CHAR(1) CHARACTER SET SYSTEM.ISO8859_1
+         default 'v' COLLATE SYSTEM.ES_ES(null);
 COMMIT WORK;
 
-/* Table: T_EXTRACT_BUG, Owner: SYSDBA */
-CREATE TABLE T_EXTRACT_BUG (A EXTRACT_BUG DEFAULT 'w' COLLATE PT_PT);
+/* Table: PUBLIC.T_EXTRACT_BUG, Owner: SYSDBA */
+CREATE TABLE PUBLIC.T_EXTRACT_BUG (A PUBLIC.EXTRACT_BUG DEFAULT 'w' COLLATE SYSTEM.PT_PT(null));
 
 /* Domain constraints */
-ALTER DOMAIN EXTRACT_BUG ADD CONSTRAINT
+ALTER DOMAIN PUBLIC.EXTRACT_BUG ADD CONSTRAINT
          check(value >='a' and value <='z');
 
 /* Table constraints */
 
-ALTER TABLE T_EXTRACT_BUG ADD 
+ALTER TABLE PUBLIC.T_EXTRACT_BUG ADD 
         check(a>='c');
+
+/* Grant permissions for this database */
+GRANT USAGE ON SCHEMA PUBLIC TO USER PUBLIC;

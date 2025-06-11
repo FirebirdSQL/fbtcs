@@ -1,4 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
+Table: PUBLIC.T0
 F_INTEGER                       INTEGER Nullable 
 F_FLOAT                         FLOAT Nullable 
 INTEGER_FLOAT                   Computed by: (f_integer*f_float)
@@ -24,8 +25,9 @@ Passed 1 - Update
           12      12.120000       145.4399986267090 
           13      11.120000       144.5599985122681 
 
+Table: PUBLIC.T5
 F_INTEGER                       INTEGER Nullable 
-F_CHAR                          CHAR(5) CHARACTER SET NONE Nullable 
+F_CHAR                          CHAR(5) CHARACTER SET SYSTEM.NONE Nullable 
 INTEGER_CHAR                    Computed by: (f_integer*f_char)
 
 CONSTANT          
@@ -49,8 +51,9 @@ Passed 2 - Update
           12 12.25        147.0000000000000 
           13 11           143.0000000000000 
 
+Table: PUBLIC.T10
 F_FLOAT                         FLOAT Nullable 
-F_CHAR                          CHAR(5) CHARACTER SET NONE Nullable 
+F_CHAR                          CHAR(5) CHARACTER SET SYSTEM.NONE Nullable 
 FLOAT_CHAR                      Computed by: (f_float*f_char)
 
 CONSTANT          
@@ -64,6 +67,7 @@ Passed 2 - Update
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
+Table: PUBLIC.T15
 F_FLOAT                         FLOAT Nullable 
 F_DATE                          TIMESTAMP Nullable 
 FLOAT_DATE                      Computed by: (f_date+f_float)
@@ -79,7 +83,8 @@ Passed 3 - Update
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-F_CHAR                          CHAR(15) CHARACTER SET NONE Nullable 
+Table: PUBLIC.T20
+F_CHAR                          CHAR(15) CHARACTER SET SYSTEM.NONE Nullable 
 F_DATE                          TIMESTAMP Nullable 
 CHAR_DATE                       Computed by: (f_char - f_date)
 
@@ -92,6 +97,7 @@ CONSTANT
 ================= 
 Passed 4 - Update 
 
+Table: PUBLIC.T25
 F_INTEGER                       INTEGER Nullable 
 LITERAL_INTEGER                 Computed by: ('10' + f_integer)
 
@@ -104,6 +110,7 @@ CONSTANT
 ================= 
 Passed 5 - Update 
 
+Table: PUBLIC.T30
 F_FLOAT                         FLOAT Nullable 
 LITERAL_FLOAT                   Computed by: ('1.12' + f_float)
 
@@ -118,6 +125,7 @@ Passed 6 - Update
 
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
+Table: PUBLIC.T35
 F_DATE                          TIMESTAMP Nullable 
 LITERAL_DATE                    Computed by: ('01/01/95' - f_date)
 

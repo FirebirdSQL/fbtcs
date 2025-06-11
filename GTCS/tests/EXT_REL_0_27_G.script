@@ -1,36 +1,36 @@
 
 #*******************************************************************************
-# 
+#
 #Test Name:  	EXT_REL_0_27_G
 #Test Level:     0
 #Series Name:    EXT_LEV_0
 #Date:  		July 5, 1994
 #Author:  	Scott Van Voris
-#Bug: 
-#Description:    This is a Level 0 test which is designed to verify the 
+#Bug:
+#Description:    This is a Level 0 test which is designed to verify the
 #		syntax to create an external relation with a column
 #		that has an allowable constraint for an external relation.
 #
-# 
-#Expected Output:        validation error for column FIELD2, value "1"
+#
+#Expected Output:        validation error for column "FIELD2", value "1"
 #			Welcome to QLI
 #			Query Language Interpreter
 #			QLI> QLI> QLI> QLI> ** QLI error from database "ext_rel_0_27_G.gdb" **
-# 
-#			QLI> 
+#
+#			QLI>
 #			FIELD1 FIELD2
 #			====== ======
-# 
+#
 #			 12000  13000
-# 
-#			QLI> QLI> 
+#
+#			QLI> QLI>
 #History:
 #2-Oct-95:  Mark
 #  Removed the Cleanup / Setup comments from the test.
 #  Also, added WHERE_GDB and RUN drop_gdb to the tests.
 #
 #3-Oct-95: Marco
-#  Added the WHERE_GDB_EXTERNAL, so the external file can be created 
+#  Added the WHERE_GDB_EXTERNAL, so the external file can be created
 #  by the server in the correct place when accessing data remotely.
 #  Also, I removed any referance to DIR external.dat and TYPE external.dat
 #  which would also fail when running remotely.
@@ -42,7 +42,7 @@
 DEFINE DATABASE "WHERE_GDB:ext_rel_0_27_G.gdb";
 
 DEFINE RELATION ext_table EXTERNAL_FILE "WHERE_GDB_EXTERNAL:external.dat"
-        field1 SHORT, 
+        field1 SHORT,
         field2 SHORT VALID IF (field1 < field2);
 
 >> qli.in

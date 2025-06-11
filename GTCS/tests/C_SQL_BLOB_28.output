@@ -1,10 +1,11 @@
 Test:
  CREATE VIEW VMB1 (TEST,RID,BHALFK,DESC) AS SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1
 -----------------------------------------------------------------------------------------
-TEST                            (TEST_NAME) CHAR(30) CHARACTER SET NONE Nullable 
-RID                             (ROW_ID) SMALLINT Nullable 
-BHALFK                          (B512) BLOB segment 512, subtype TEXT CHARACTER SET NONE Nullable 
-DESC                            (COMMENT) CHAR(100) CHARACTER SET NONE Nullable 
+View: PUBLIC.VMB1
+TEST                            (PUBLIC.TEST_NAME) CHAR(30) CHARACTER SET SYSTEM.NONE Nullable 
+RID                             (PUBLIC.ROW_ID) SMALLINT Nullable 
+BHALFK                          (PUBLIC.B512) BLOB segment 512, subtype TEXT CHARACTER SET SYSTEM.NONE Nullable 
+DESC                            (PUBLIC."COMMENT") CHAR(100) CHARACTER SET SYSTEM.NONE Nullable 
 View Source:
 ==== ======
 SELECT TEST_NAME, ROW_ID,B512,COMMENT FROM MB1

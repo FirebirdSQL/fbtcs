@@ -1,8 +1,8 @@
-ERROR; Msg: This error message comes from exception handling
-NORIVER; Msg: River does not currently exist in Rivers relation
-NOSTATE; Msg: State does not currently exist in State relation
-NOUPDATE; Msg: Update cannot be completed because of errors
-NOUPDATE; Msg: Update cannot be completed because of data errors
+PUBLIC.ERROR; Msg: This error message comes from exception handling
+PUBLIC.NORIVER; Msg: River does not currently exist in Rivers relation
+PUBLIC.NOSTATE; Msg: State does not currently exist in State relation
+PUBLIC.NOUPDATE; Msg: Update cannot be completed because of errors
+PUBLIC.NOUPDATE; Msg: Update cannot be completed because of data errors
 There is no exception ERROR in this database
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error
@@ -18,16 +18,16 @@ Dynamic SQL Error
 At line 21 in file dsql_except_01.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--CREATE EXCEPTION NOSTATE failed
--Exception NOSTATE already exists
+-CREATE EXCEPTION "PUBLIC"."NOSTATE" failed
+-Exception "PUBLIC"."NOSTATE" already exists
 After line 22 in file dsql_except_01.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--ALTER EXCEPTION RUBBISH failed
+-ALTER EXCEPTION "PUBLIC"."RUBBISH" failed
 -Exception not found
 After line 25 in file dsql_except_01.sql
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--DROP EXCEPTION RUBBISH failed
+-DROP EXCEPTION "PUBLIC"."RUBBISH" failed
 -Exception not found
 After line 27 in file dsql_except_01.sql

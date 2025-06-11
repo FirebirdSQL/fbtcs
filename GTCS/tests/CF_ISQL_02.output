@@ -1,4 +1,5 @@
 Use CONNECT or CREATE DATABASE to specify a database
+Table: PUBLIC.T0_S
 I                               SMALLINT Nullable 
 J                               Computed by: (i)
 
@@ -11,6 +12,7 @@ CONSTANT
 ==================== 
 Passed 1(s) - Update 
 
+Table: PUBLIC.T5_S
 I                               SMALLINT Nullable 
 J                               Computed by: (i+i)
 
@@ -23,6 +25,7 @@ CONSTANT
 ==================== 
 Passed 2(s) - Update 
 
+Table: PUBLIC.T10_S
 I                               SMALLINT Nullable 
 J                               Computed by: (i+i)
 
@@ -35,6 +38,7 @@ CONSTANT
 ==================== 
 Passed 3(s) - Update 
 
+Table: PUBLIC.T0_D
 I                               DECIMAL(15, 2) Nullable 
 J                               Computed by: (i)
 
@@ -47,6 +51,7 @@ CONSTANT
 ==================== 
 Passed 1(d) - Update 
 
+Table: PUBLIC.T5_D
 I                               DECIMAL(15, 2) Nullable 
 J                               Computed by: (i+i)
 
@@ -59,6 +64,7 @@ CONSTANT
 ==================== 
 Passed 2(d) - Update 
 
+Table: PUBLIC.T10_D
 I                               DECIMAL(15, 2) Nullable 
 J                               Computed by: (i+i)
 
@@ -71,6 +77,7 @@ CONSTANT
 ==================== 
 Passed 3(d) - Update 
 
+Table: PUBLIC.T0_N
 I                               NUMERIC(15, 2) Nullable 
 J                               Computed by: (i)
 
@@ -83,6 +90,7 @@ CONSTANT
 ==================== 
 Passed 1(n) - Update 
 
+Table: PUBLIC.T5_N
 I                               NUMERIC(15, 2) Nullable 
 J                               Computed by: (i+i)
 
@@ -95,6 +103,7 @@ CONSTANT
 ==================== 
 Passed 2(n) - Update 
 
+Table: PUBLIC.T10_N
 I                               NUMERIC(15, 2) Nullable 
 J                               Computed by: (i+i)
 
@@ -107,6 +116,7 @@ CONSTANT
 ==================== 
 Passed 3(n) - Update 
 
+Table: PUBLIC.T0_F
 I                               FLOAT Nullable 
 J                               Computed by: (i)
 
@@ -119,6 +129,7 @@ CONSTANT
 ==================== 
 Passed 1(f) - Update 
 
+Table: PUBLIC.T5_F
 I                               FLOAT Nullable 
 J                               Computed by: (i+i)
 
@@ -131,6 +142,7 @@ CONSTANT
 ==================== 
 Passed 2(f) - Update 
 
+Table: PUBLIC.T10_F
 I                               FLOAT Nullable 
 J                               Computed by: (i+i)
 
@@ -143,6 +155,7 @@ CONSTANT
 ==================== 
 Passed 3(f) - Update 
 
+Table: PUBLIC.T0_DP
 I                               DOUBLE PRECISION Nullable 
 J                               Computed by: (i)
 
@@ -155,6 +168,7 @@ CONSTANT
 ===================== 
 Passed 1(dp) - Update 
 
+Table: PUBLIC.T5_DP
 I                               DOUBLE PRECISION Nullable 
 J                               Computed by: (i+i)
 
@@ -167,6 +181,7 @@ CONSTANT
 ===================== 
 Passed 2(dp) - Update 
 
+Table: PUBLIC.T10_DP
 I                               DOUBLE PRECISION Nullable 
 J                               Computed by: (i+i)
 

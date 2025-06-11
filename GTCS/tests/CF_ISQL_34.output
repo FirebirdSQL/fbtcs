@@ -1,12 +1,12 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 28000
-no permission for SELECT access to TABLE RESTRICTED
+no permission for SELECT access to TABLE "PUBLIC"."RESTRICTED"
 -Effective user is QA_USER1
 After line 5 in file cf_isql_34_1.sql
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 28000
-no permission for INSERT access to TABLE RESTRICTED
+no permission for INSERT access to TABLE "PUBLIC"."RESTRICTED"
 -Effective user is QA_USER2
 After line 2 in file cf_isql_34_2.sql
 

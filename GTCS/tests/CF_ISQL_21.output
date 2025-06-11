@@ -15,30 +15,39 @@ commit ^
 Use CONNECT or CREATE DATABASE to specify a database
 connect 'WHERE_GDB:cf_isql_21.fdb';
 show table t;
+Table: PUBLIC.T
 A                               INTEGER Nullable 
 show table u;
+Table: PUBLIC.U
 A                               INTEGER Nullable 
 
-Triggers on Table U:
+Triggers on Table PUBLIC.U:
 T, Sequence: 0, Type: AFTER DELETE, Active
 
 
 SET SQL DIALECT 3; 
 
-/* CREATE DATABASE 'WHERE_GDB:cf_isql_21.fdb' PAGE_SIZE 8192 DEFAULT CHARACTER SET NONE; */
+/* CREATE DATABASE 'WHERE_GDB:cf_isql_21.fdb' PAGE_SIZE 8192 DEFAULT CHARACTER SET SYSTEM.NONE; */
+
+/* Schema definitions */
+
+/* Schema: PUBLIC, Owner: SYSDBA */
+CREATE OR ALTER SCHEMA PUBLIC;
+
+COMMIT WORK;
 
 
 COMMIT WORK;
 
-/* Table: T, Owner: SYSDBA */
-CREATE TABLE T (A INTEGER);
+/* Table: PUBLIC.T, Owner: SYSDBA */
+CREATE TABLE PUBLIC.T (A INTEGER);
 
-/* Table: U, Owner: SYSDBA */
-CREATE TABLE U (A INTEGER);
+/* Table: PUBLIC.U, Owner: SYSDBA */
+CREATE TABLE PUBLIC.U (A INTEGER);
 SET TERM ^ ;
 
 /* Triggers only will work for SQL triggers */
-CREATE TRIGGER T FOR U 
+CREATE TRIGGER PUBLIC.T FOR U 
 ACTIVE AFTER DELETE POSITION 0 
 as 
 declare variable i int;
@@ -49,3 +58,6 @@ end ^
 
 SET TERM ; ^
 COMMIT WORK;
+
+/* Grant permissions for this database */
+GRANT USAGE ON SCHEMA PUBLIC TO USER PUBLIC;

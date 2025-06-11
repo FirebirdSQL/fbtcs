@@ -14,12 +14,12 @@ end
 go
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--CREATE PROCEDURE ABC failed
--Procedure ABC already exists
+-CREATE PROCEDURE "PUBLIC"."ABC" failed
+-Procedure "PUBLIC"."ABC" already exists
 After line 10 in file proc_level0_tests1.sql
 
 set term ; go
 show proc;
-ABC
+PUBLIC.ABC
 
 

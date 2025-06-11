@@ -1,7 +1,7 @@
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--Operation not supported for EXTERNAL FILE table EXT_TABLE
+-Operation not supported for EXTERNAL FILE table "PUBLIC"."EXT_TABLE"
 After line 2 in file isql.in
 Use CONNECT or CREATE DATABASE to specify a database
 There is no table EXT_TABLE in this database

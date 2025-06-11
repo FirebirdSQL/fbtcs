@@ -3,6 +3,6 @@ alter table department
  drop constraint dept_key;
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--ALTER TABLE DEPARTMENT failed
+-ALTER TABLE "PUBLIC"."DEPARTMENT" failed
 -Cannot delete PRIMARY KEY being used in FOREIGN KEY definition.
 After line 0 in file test2.sql

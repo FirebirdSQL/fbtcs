@@ -8,16 +8,18 @@ create view v as select a from t;
 Use CONNECT or CREATE DATABASE to specify a database
 connect 'WHERE_GDB:cf_isql_22.fdb';
 show tables;
-T
+PUBLIC.T
 
 show views;
-V
+PUBLIC.V
 
 show table v;
 There is no table V in this database
 show table t;
+Table: PUBLIC.T
 A                               INTEGER Nullable 
 show view v;
+View: PUBLIC.V
 A                               INTEGER Nullable 
 View Source:
 ==== ======
@@ -28,14 +30,24 @@ There is no view T in this database
 
 SET SQL DIALECT 3; 
 
-/* CREATE DATABASE 'WHERE_GDB:cf_isql_22.fdb' PAGE_SIZE 8192 DEFAULT CHARACTER SET NONE; */
+/* CREATE DATABASE 'WHERE_GDB:cf_isql_22.fdb' PAGE_SIZE 8192 DEFAULT CHARACTER SET SYSTEM.NONE; */
+
+/* Schema definitions */
+
+/* Schema: PUBLIC, Owner: SYSDBA */
+CREATE OR ALTER SCHEMA PUBLIC;
+
+COMMIT WORK;
 
 
 COMMIT WORK;
 
-/* Table: T, Owner: SYSDBA */
-CREATE TABLE T (A INTEGER);
+/* Table: PUBLIC.T, Owner: SYSDBA */
+CREATE TABLE PUBLIC.T (A INTEGER);
 
-/* View: V, Owner: SYSDBA */
-CREATE VIEW V (A) AS
+/* View: PUBLIC.V, Owner: SYSDBA */
+CREATE VIEW PUBLIC.V (A) AS
 select a from t;
+
+/* Grant permissions for this database */
+GRANT USAGE ON SCHEMA PUBLIC TO USER PUBLIC;

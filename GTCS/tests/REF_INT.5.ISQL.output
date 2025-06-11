@@ -2,13 +2,13 @@ Use CONNECT or CREATE DATABASE to specify a database
 alter index dept_key inactive;
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--ALTER INDEX DEPT_KEY failed
+-ALTER INDEX "PUBLIC"."DEPT_KEY" failed
 -Cannot deactivate index used by an integrity constraint
 After line 0 in file test5.sql
 commit;
 insert into department values (1, 'hello');
 Statement failed, SQLSTATE = 23000
-violation of PRIMARY or UNIQUE KEY constraint "DEPT_KEY" on table "DEPARTMENT"
+violation of PRIMARY or UNIQUE KEY constraint "DEPT_KEY" on table "PUBLIC"."DEPARTMENT"
 -Problematic key value is ("DEPT_NO" = '1')
 After line 2 in file test5.sql
 commit;

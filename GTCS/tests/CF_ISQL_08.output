@@ -1,5 +1,6 @@
 Use CONNECT or CREATE DATABASE to specify a database
-A                               CHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T0
+A                               CHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 UPPER_A                         Computed by: (upper(a))
 
 CONSTANT          
@@ -11,7 +12,8 @@ CONSTANT
 ================= 
 Passed 1 - Update 
 
-A                               CHAR(25) CHARACTER SET NONE Nullable  
+Table: PUBLIC.T5
+A                               CHAR(25) CHARACTER SET SYSTEM.NONE Nullable 
 UPPER_CONST                     Computed by: (a || upper('upper()'))
 
 CONSTANT          

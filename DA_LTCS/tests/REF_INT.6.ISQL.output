@@ -10,4 +10,4 @@ commit;
 insert into employee values (11, 'e11', 34);
 Statement failed, SQLCODE = -530
 
-violation of FOREIGN KEY constraint "REF_KEY" on table "EMPLOYEE"
+violation of FOREIGN KEY constraint "REF_KEY" on table "PUBLIC"."EMPLOYEE"

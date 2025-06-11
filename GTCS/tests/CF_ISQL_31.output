@@ -60,13 +60,14 @@ INSERT INTO ITEMS(DESCRIPTION) VALUES('PA');
 commit;
 
 SHOW TABLE ITEMS;
-UID                             (DM_ID) BIGINT Not Null 
-DESCRIPTION                     VARCHAR(80) CHARACTER SET NONE Nullable 
+Table: PUBLIC.ITEMS
+UID                             (PUBLIC.DM_ID) BIGINT Not Null 
+DESCRIPTION                     VARCHAR(80) CHARACTER SET SYSTEM.NONE Nullable 
 QOH                             Computed by: (COALESCE((SELECT SUM(QOH) FROM MITEMS),0))
 CONSTRAINT INTEG_2:
   Primary key (UID)
 
-Triggers on Table ITEMS:
+Triggers on Table PUBLIC.ITEMS:
 ITEMS_TR0, Sequence: 0, Type: BEFORE INSERT, Active
 ITEMS_TR2, Sequence: 2, Type: AFTER INSERT, Active
 

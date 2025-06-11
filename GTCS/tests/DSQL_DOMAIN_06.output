@@ -1,47 +1,47 @@
-DOM06A1                         SMALLINT Nullable
+PUBLIC.DOM06A1                  SMALLINT Nullable
                                 default 0
-DOM06A1                         SMALLINT Nullable
-DOM06A1                         SMALLINT Nullable
+PUBLIC.DOM06A1                  SMALLINT Nullable
+PUBLIC.DOM06A1                  SMALLINT Nullable
                                 default 5000
-DOM06B1                         INTEGER Nullable
+PUBLIC.DOM06B1                  INTEGER Nullable
                                 default 0
-DOM06B1                         INTEGER Nullable
-DOM06B1                         INTEGER Nullable
+PUBLIC.DOM06B1                  INTEGER Nullable
+PUBLIC.DOM06B1                  INTEGER Nullable
                                 default -200
 SQL warning code = 301
 -DATE data type is now called TIMESTAMP
-DOM06C1                         TIMESTAMP Nullable
+PUBLIC.DOM06C1                  TIMESTAMP Nullable
                                 default '12-12-57'
-DOM06C1                         TIMESTAMP Nullable
-DOM06C1                         TIMESTAMP Nullable
+PUBLIC.DOM06C1                  TIMESTAMP Nullable
+PUBLIC.DOM06C1                  TIMESTAMP Nullable
                                 default '01/27/92'
-DOM06D1                         CHAR(30) CHARACTER SET NONE Nullable
+PUBLIC.DOM06D1                  CHAR(30) CHARACTER SET SYSTEM.NONE Nullable
                                 default user
-DOM06D1                         CHAR(30) CHARACTER SET NONE Nullable
-DOM06D1                         CHAR(30) CHARACTER SET NONE Nullable
+PUBLIC.DOM06D1                  CHAR(30) CHARACTER SET SYSTEM.NONE Nullable
+PUBLIC.DOM06D1                  CHAR(30) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'New default of 30 characters x'
-DOM06E1                         VARCHAR(4) CHARACTER SET NONE Nullable
+PUBLIC.DOM06E1                  VARCHAR(4) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'TEST'
-DOM06E1                         VARCHAR(4) CHARACTER SET NONE Nullable
-DOM06E1                         VARCHAR(4) CHARACTER SET NONE Nullable
+PUBLIC.DOM06E1                  VARCHAR(4) CHARACTER SET SYSTEM.NONE Nullable
+PUBLIC.DOM06E1                  VARCHAR(4) CHARACTER SET SYSTEM.NONE Nullable
                                 default 'def'
-DOM06F1                         NUMERIC(15, 1) Nullable
+PUBLIC.DOM06F1                  NUMERIC(15, 1) Nullable
                                 default 300.1
-DOM06F1                         NUMERIC(15, 1) Nullable
-DOM06F1                         NUMERIC(15, 1) Nullable
+PUBLIC.DOM06F1                  NUMERIC(15, 1) Nullable
+PUBLIC.DOM06F1                  NUMERIC(15, 1) Nullable
                                 default null
-DOM06G1                         FLOAT Nullable
+PUBLIC.DOM06G1                  FLOAT Nullable
                                 default 2.2
-DOM06G1                         FLOAT Nullable
-DOM06G1                         FLOAT Nullable
+PUBLIC.DOM06G1                  FLOAT Nullable
+PUBLIC.DOM06G1                  FLOAT Nullable
                                 default 55.55
-DOM06H1                         DOUBLE PRECISION Nullable
+PUBLIC.DOM06H1                  DOUBLE PRECISION Nullable
                                 default 0
-DOM06H1                         DOUBLE PRECISION Nullable
-DOM06H1                         DOUBLE PRECISION Nullable
+PUBLIC.DOM06H1                  DOUBLE PRECISION Nullable
+PUBLIC.DOM06H1                  DOUBLE PRECISION Nullable
                                 default -100
-DOM06I1                         BLOB segment 80, subtype BINARY Nullable
+PUBLIC.DOM06I1                  BLOB segment 80, subtype BINARY Nullable
                                 default null
-DOM06I1                         BLOB segment 80, subtype BINARY Nullable
-DOM06I1                         BLOB segment 80, subtype BINARY Nullable
+PUBLIC.DOM06I1                  BLOB segment 80, subtype BINARY Nullable
+PUBLIC.DOM06I1                  BLOB segment 80, subtype BINARY Nullable
                                 default 'default blob'
