@@ -37,8 +37,8 @@ BASED_ON SALES.PONUMB           PoNumb;
 char Test[]="SELECT S1.CUSTNO, S1.TOTAL_VALUE, \
 S1.PONUMB FROM SALES S1 WHERE S1.PONUMB STARTING WITH '8'";
 
-void Underline();
-void pad();
+void Underline(int);
+void pad(char *, int);
 
 int main(argc, argv)
 int argc;
@@ -102,8 +102,7 @@ ERR_LBL:
 
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

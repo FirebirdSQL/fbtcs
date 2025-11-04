@@ -39,8 +39,8 @@ BASED_ON DEPARTMENTS.HEAD_DEPT          Head_Dept;
 long  Sub_Total_Reports;                /* Calculated fields in the view */
 long  Sub_Budget;
 
-void Underline();
-void pad();
+void Underline(int);
+void pad(char *, int);
 
 
 char Test[]="SELECT * \
@@ -51,7 +51,7 @@ FROM DEPT_BUDGET V2,FULLEMP V3,EMPSAL V4 \
 WHERE V2.DEPTNO= V1.DEPTNO AND V2.DEPARTMENT = V3.DEPARTMENT \
 AND V3.EMPNO = V4.EMPNO)";
 
-void Underline();
+void Underline(int);
 int main(argc, argv)
 int argc;
 char *argv[];
@@ -126,8 +126,7 @@ ERR_LBL:    EXEC SQL
 	return 1;
 }
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -141,9 +140,7 @@ printf("\n");
  * pad the character string with blanks
  ***************************************************************
 */
-void pad(string,l)
-char *string;
-int l;
+void pad(char *string, int l)
 {
 
 char *s;

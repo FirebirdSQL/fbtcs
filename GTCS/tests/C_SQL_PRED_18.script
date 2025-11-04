@@ -35,8 +35,8 @@ BASED_ON DEPARTMENTS.DEPARTMENT         Department;
 BASED_ON DEPARTMENTS.MGRNO              MgrNo;
 int                                     DeptCount;
 
-void Underline();
-void pad();
+void Underline(int);
+void pad(char *, int);
 
 
 char Test[]=" SELECT V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO, COUNT(*) \
@@ -48,7 +48,7 @@ AND V3.EMPNO = V4.EMPNO) \
 GROUP BY V1.DEPTNO, V1.DEPARTMENT, V1.MGRNO \
 ORDER BY V1.DEPTNO)";
 
-void Underline();
+void Underline(int);
 int main(argc, argv)
 int argc;
 char *argv[];
@@ -121,9 +121,7 @@ ERR_LBL:    EXEC SQL
  * pad the character string with blanks
  ***************************************************************
 */
-void pad(string,l)
-char *string;
-int l;
+void pad(char *string, int l)
 {
 
 char *s;
@@ -142,8 +140,7 @@ for (;i<l;s++,i++)
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

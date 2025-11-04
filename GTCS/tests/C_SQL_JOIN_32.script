@@ -29,7 +29,7 @@ char Test[]="\
 select t.s1/1,t.s2*10,t.s3*(-10),t.table_row,x.s1*1,x.s2,x.table_row \
 from (st1 t left join st2 x on t.s1 = x.s1)";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -93,8 +93,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

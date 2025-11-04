@@ -35,7 +35,7 @@ char Test[]="SELECT EMPNO \
 FROM MANAGEMENT \
 WHERE EMPNO CONTAINING 1";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -92,8 +92,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

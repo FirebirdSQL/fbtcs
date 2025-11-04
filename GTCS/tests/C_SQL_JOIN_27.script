@@ -26,7 +26,7 @@ char Test[]="\
 select min(x.s1),max(x.s2),avg(y.s3), sum(y.sscale) \
 from (st5 x left join st1 y on x.s2 = y.s2)";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -83,8 +83,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

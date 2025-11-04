@@ -37,7 +37,7 @@ char Test[]="SELECT NAME \
 FROM EMPLOYEES \
 WHERE NAME CONTAINING LAST_NAME ORDER BY NAME";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -94,8 +94,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

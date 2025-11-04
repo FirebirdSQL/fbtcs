@@ -39,7 +39,7 @@ FROM CUSTOMERS \
 WHERE CUSTOMER CONTAINING 'A' \
 ORDER BY CUSTNO";
 
-void Underline();
+void Underline(int);
 
 
 
@@ -104,8 +104,7 @@ ERR_LBL:
 
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

@@ -31,7 +31,7 @@ char Test[]="\
 select x.s1,x.s2,x.table_row,y.s1,y.s2,y.table_row \
 from (st1 x right join st2 y on x.s1 <= y.s1)";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -93,8 +93,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

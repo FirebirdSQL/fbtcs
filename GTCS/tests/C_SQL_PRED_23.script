@@ -35,8 +35,8 @@ BASED_ON CUSTOMERS.ZIP_CODE	Zip_Code;
 BASED_ON CUSTOMERS.PHONE_NO	Phone_No;
 BASED_ON CUSTOMERS.ON_HOLD	On_Hold;
 
-void Underline();
-void pad();
+void Underline(int);
+void pad(char *, int);
 
 
 char Test[]="SELECT * FROM CUSTOMERS C1 WHERE SINGULAR \
@@ -44,7 +44,7 @@ char Test[]="SELECT * FROM CUSTOMERS C1 WHERE SINGULAR \
 WHERE S1.CUSTNO = C1.CUSTNO \
 AND S1.PONUMB CONTAINING '8902')";
 
-void Underline();
+void Underline(int);
 int main(argc, argv)
 int argc;
 char *argv[];
@@ -109,8 +109,7 @@ ERR_LBL:
 	return 1;
 }
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -124,9 +123,7 @@ printf("\n");
  * pad the character string with blanks
  ***************************************************************
 */
-void pad(string,l)
-char *string;
-int l;
+void pad(char *string, int l)
 {
 
 char *s;

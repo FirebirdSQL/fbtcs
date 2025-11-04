@@ -42,7 +42,7 @@ where t.s1 > \
 (select s1 from (st1 inner join st2 on st1.s2 = st2.s2 and st2.s2= 101)) \
 order by t.table_row ascending";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -108,8 +108,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

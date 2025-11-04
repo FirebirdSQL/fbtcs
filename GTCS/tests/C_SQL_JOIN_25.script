@@ -30,7 +30,7 @@ from st1 x where not exists \
 (st1 a left join st2 b on a.s1 = b.s1) \
 left join st3 c on c.s1 = b.s1 and c.s1 = 1)";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -89,8 +89,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

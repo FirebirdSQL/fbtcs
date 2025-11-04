@@ -39,7 +39,7 @@ FROM SALES_PEOPLE T1 WHERE SINGULAR \
 T3.SALES_REP = T1.EMPNO AND T3.TOTAL_VALUE > 6000 \
 AND T3.SALES_REP = T2.EMPNO)";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -99,8 +99,7 @@ ERR_LBL:
 
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

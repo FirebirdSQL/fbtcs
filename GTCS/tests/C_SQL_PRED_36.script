@@ -37,7 +37,7 @@ char Test[]="SELECT PROJ_NO, PROJ_NAME \
 FROM PROJECTS \
 WHERE PROJ_NO CONTAINING '3'";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -97,8 +97,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

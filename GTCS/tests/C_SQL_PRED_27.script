@@ -38,7 +38,7 @@ BASED_ON SALES.PONUMB           PoNumb;
 char Test[]="SELECT S1.CUSTNO, S1.TOTAL_VALUE, S1.PONUMB \
 FROM SALES S1 WHERE S1.PONUMB CONTAINING '8902' ORDER BY S1.CUSTNO ASCENDING";
 
-void Underline();
+void Underline(int);
 int main(argc, argv)
 int argc;
 char *argv[];
@@ -103,8 +103,7 @@ ERR_LBL:
 
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

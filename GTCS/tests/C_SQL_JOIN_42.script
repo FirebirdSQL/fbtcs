@@ -38,7 +38,7 @@ where t.s1 > ALL \
 (select z.s3 from st3 z where z.s3 is not null)) \
 order by t.table_row ascending";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -104,8 +104,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

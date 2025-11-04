@@ -37,7 +37,7 @@ char Test[]="SELECT * FROM CUSTOMERS C1 WHERE NOT SINGULAR \
 (SELECT * FROM CUSTOMERS C2 \
 WHERE C2.CUSTOMER = C1.CUSTOMER)";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -102,8 +102,7 @@ ERR_LBL:
 
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

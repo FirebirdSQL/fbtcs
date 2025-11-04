@@ -34,7 +34,7 @@ char Test[]="UPDATE CUSTOMERS \
 SET ZIP_CODE='99999'  \
 WHERE CUSTOMER CONTAINING ' ";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -99,8 +99,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

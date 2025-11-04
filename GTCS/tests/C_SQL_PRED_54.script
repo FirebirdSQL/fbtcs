@@ -41,7 +41,7 @@ WHERE CUSTOMER STARTING WITH 'T' \
 OR CUSTOMER STARTING WITH 'S' \
 ORDER BY CUSTOMER ASCENDING";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -103,8 +103,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

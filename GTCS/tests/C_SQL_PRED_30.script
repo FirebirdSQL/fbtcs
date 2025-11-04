@@ -36,7 +36,7 @@ char Test[]="SELECT CUSTNO, CUSTOMER FROM CUSTOMERS \
 WHERE CUSTOMER CONTAINING 'a' \
 OR CUSTOMER CONTAINING 'B' ORDER BY CUSTNO";
 
-void Underline();
+void Underline(int);
 
 
 int main(argc, argv)
@@ -98,8 +98,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

@@ -48,7 +48,7 @@ WHERE T1.CUSTNO = T2.CUSTNO \
 ORDER BY T2.CUSTNO ASCENDING, \
 T2.TOTAL_VALUE DESCENDING)";
 
-void Underline();
+void Underline(int);
 int main(argc, argv)
 int argc;
 char *argv[];
@@ -119,8 +119,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
