@@ -51,7 +51,7 @@ AND T2.TOTAL_VALUE > \
 FROM SALES T3 \
 WHERE T3.SALES_REP = 137))";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -115,8 +115,7 @@ ERR_LBL:
 
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

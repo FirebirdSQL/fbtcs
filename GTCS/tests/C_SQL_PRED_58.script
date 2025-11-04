@@ -37,7 +37,7 @@ char Test[]="SELECT EMPNO, LAST_NAME, FIRST_NAME \
 FROM EMPLOYEES \
 WHERE NAME STARTING WITH 'S'";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -96,8 +96,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

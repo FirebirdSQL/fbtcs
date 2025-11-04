@@ -30,7 +30,7 @@ char Test[]="\
 select t1.c1,t1.c10,t1.table_row,t2.c1,t2.c10,t2.table_row \
 from ct1 t1 full outer join ct2 t2 on t1.c1 = t2.c1";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -91,8 +91,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

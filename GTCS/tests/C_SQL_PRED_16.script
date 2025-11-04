@@ -36,8 +36,8 @@ BASED_ON JOBS.LEVEL                     Level;
 BASED_ON DEPARTMENTS.HEAD_DEPT          Head_Dept;
 BASED_ON JOBS.HIGH_SALARY_RANGE         Budget;
 
-void Underline();
-void pad();
+void Underline(int);
+void pad(char *, int);
 
 
 char Test[]="SELECT * \
@@ -47,7 +47,7 @@ WHERE SINGULAR \
 FROM FULLEMP \
 V2 WHERE V2.DEPARTMENT = V1.DEPARTMENT)";
 
-void Underline();
+void Underline(int);
 int main(argc, argv)
 int argc;
 char *argv[];
@@ -120,8 +120,7 @@ ERR_LBL:    EXEC SQL
 	return 1;
 }
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -135,9 +134,7 @@ printf("\n");
  * pad the character string with blanks
  ***************************************************************
 */
-void pad(string,l)
-char *string;
-int l;
+void pad(char *string, int l)
 {
 
 char *s;

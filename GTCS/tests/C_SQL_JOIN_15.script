@@ -31,7 +31,7 @@ select sum(x.s1), x.s1 \
 from (st5 x left join st2 y on x.s1 = y.s1) \
 group by x.s1";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -90,8 +90,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

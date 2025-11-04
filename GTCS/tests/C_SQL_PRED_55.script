@@ -38,7 +38,7 @@ WHERE STATE STARTING WITH 'C' \
 GROUP BY STATE \
 ORDER BY STATE";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -99,8 +99,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

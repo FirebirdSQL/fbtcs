@@ -48,7 +48,7 @@ static char             *months [] ={
                     "Dec"
 };
 
-void ToDate();
+void ToDate(ISC_TIMESTAMP *);
 char AlphaDate[13];
 struct tm UxTime;
 
@@ -58,7 +58,7 @@ WHERE SINGULAR \
 FROM CUSTOMERS C1 \
 WHERE C1.CUSTNO =S1.CUSTNO)";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -135,17 +135,15 @@ ERR_LBL:
  * Convert Interbase date to character string date
  ****************************************************************
 */
-void ToDate(InDate)
-GDS__QUAD *InDate;
+void ToDate(ISC_TIMESTAMP *InDate)
 {
-                isc_decode_date (InDate, &UxTime);
+                isc_decode_timestamp (InDate, &UxTime);
                 sprintf (AlphaDate, "%2d-%s-%4d ", UxTime.tm_mday,
 	 	months[UxTime.tm_mon], UxTime.tm_year + 1900);
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -169,4 +167,3 @@ quit;
 $ISQL -m -i sin005.sql
 $DROP WHERE_GDB:sh_test.gdb
 $ DELETE sin005*
-

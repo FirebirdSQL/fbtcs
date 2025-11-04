@@ -54,8 +54,8 @@ BASED_ON DEPARTMENTS.DEPARTMENT         Department;
 BASED_ON DEPARTMENTS.MGRNO              MgrNo;
 float                                   BudgetSum;
 
-void Underline();
-void pad();
+void Underline(int);
+void pad(char *, int);
 
 
 char Test[]="\
@@ -80,7 +80,7 @@ AND T1.TOTAL_VALUE > \
 (SELECT MIN(T2.TOTAL_VALUE) FROM SALES T2 WHERE T2.SALES_REP = 100)) \
 ORDER BY V2.DEPTNO" ;
 
-void Underline();
+void Underline(int);
 int main(argc, argv)
 int argc;
 char *argv[];
@@ -203,8 +203,7 @@ ERR_LBL:    EXEC SQL
 	return 1;
 }
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
@@ -218,9 +217,7 @@ printf("\n");
  * pad the character string with blanks
  ***************************************************************
 */
-void pad(string,l)
-char *string;
-int l;
+void pad(char *string, int l)
 {
 
 char *s;

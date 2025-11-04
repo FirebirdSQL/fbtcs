@@ -32,7 +32,7 @@ WHERE NOT SINGULAR \
 (SELECT * FROM SALES S1 \
 WHERE S1.CUSTNO = C1.CUSTNO)";
 
-void Underline();
+void Underline(int);
 
 int main(argc, argv)
 int argc;
@@ -92,8 +92,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

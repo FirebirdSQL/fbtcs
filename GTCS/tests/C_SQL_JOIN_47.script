@@ -80,7 +80,7 @@ from ((((st1 a left outer join st2 b on a.s1 = b.s1) left outer join st3 c on b.
 st4 d on c.s1 = d.s1) left outer join st5 e on d.s1 = e.s1) \
 order by a.table_row ascending";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -159,8 +159,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

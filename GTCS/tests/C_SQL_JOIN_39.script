@@ -33,7 +33,7 @@ select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row \
 from (st1 t full join st2 x on (t.s1 = x.s1 and t.sscale = x.sscale) and \
 (t.s1 = x.s1 and t.s3 = x.s3))";
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -96,8 +96,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

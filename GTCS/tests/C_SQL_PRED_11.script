@@ -56,7 +56,7 @@ WHERE T3.SALES_REP = 137)) \
 GROUP BY T1.SALES_REP \
 ORDER BY T1.SALES_REP DESCENDING";
 
-void Underline();
+void Underline(int);
 int main(argc, argv)
 int argc;
 char *argv[];
@@ -120,8 +120,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 

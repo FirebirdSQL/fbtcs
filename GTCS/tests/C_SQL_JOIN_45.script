@@ -50,7 +50,7 @@ left outer join st1 l on l.s1 = k.s1) left outer join st1 m on m.s1 = l.s1) left
 order by a.table_row ascending";
 */
 
-void Underline();
+void Underline(int);
 
 int main()
 {
@@ -126,8 +126,7 @@ ERR_LBL:
 }
 /*--- print and underline of width i */
 
-void Underline(i)
-int i;
+void Underline(int i)
 {
 int j;
 
