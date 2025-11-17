@@ -170,13 +170,16 @@ bool alter_index_active()
 		WHENEVER SQLERROR CONTINUE;
 
 	EXEC SQL EXECUTE IMMEDIATE 'ALTER INDEX BOOK_IND ACTIVE';
-	EXEC SQL COMMIT;
+	if (!SQLCODE)
+	{
+		EXEC SQL COMMIT;
+	}
 
 	if (SQLCODE)
 		got_err = true;
 
 
-	printf("alter_index_active expected SQLCODE = -803. Got SQLCODE = %d\n", SQLCODE);
+	printf("alter_index_active expected SQLCODE = -607. Got SQLCODE = %d\n", SQLCODE);
 
 	EXEC SQL
 		WHENEVER SQLERROR CONTINUE;
