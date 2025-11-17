@@ -5,5 +5,6 @@ unsuccessful metadata update
 -Table "PUBLIC"."EXT_TABLE" already exists
 After line 5 in file isql.in
 Use CONNECT or CREATE DATABASE to specify a database
+Table: PUBLIC.EXT_TABLE
 External file: WHERE_GDB_EXTERNAL:(PLATFORM_UPPER)EXTERNAL_DAT:
-FIELD1                          CHAR(10) CHARACTER SET NONE Nullable 
+FIELD1                          CHAR(10) CHARACTER SET SYSTEM.NONE Nullable 
