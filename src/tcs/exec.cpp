@@ -267,7 +267,7 @@ TEST_RESULT EXEC_test(char *test_name,
 		{
 			printf("internal error file %s not found\n", compare_file_name);
 			fflush(stdout);
-			return 1;
+			return unknown_result;
 		}
 		fwrite(buffer,1,strlen(buffer), compare_file);
 		fclose(compare_file);

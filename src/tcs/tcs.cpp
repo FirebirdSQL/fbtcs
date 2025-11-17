@@ -262,7 +262,7 @@ replacement* lookup_env_var(char* in_line)
 		if (new_rep->final == NULL){
 			printf("The enviroment variable %s have no value\n",envvar2);
 			fflush(stdout);
-			return 1;
+			return NULL;
 		}
 		new_rep->next = NULL;
 		new_rep->pos = start - in_line;
