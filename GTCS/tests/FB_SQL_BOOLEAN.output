@@ -5,42 +5,42 @@ create database "WHERE_GDB:boolean.fdb";
 
 select true is true, false is true, null is true from rdb$database;
 
-                        
+   BOOL    BOOL    BOOL 
 ======= ======= ======= 
 <true>  <false> <false> 
 
 
 select true is false, false is false, null is false from rdb$database;
 
-                        
+   BOOL    BOOL    BOOL 
 ======= ======= ======= 
 <false> <true>  <false> 
 
 
 select true is null, false is null, null is null from rdb$database;
 
-                        
+   BOOL    BOOL    BOOL 
 ======= ======= ======= 
 <false> <false> <true>  
 
 
 select true is not true, false is not true, null is not true from rdb$database;
 
-                        
+   BOOL    BOOL    BOOL 
 ======= ======= ======= 
 <false> <true>  <true>  
 
 
 select true is not false, false is not false, null is not false from rdb$database;
 
-                        
+   BOOL    BOOL    BOOL 
 ======= ======= ======= 
 <true>  <false> <true>  
 
 
 select true is not null, false is not null, null is not null from rdb$database;
 
-                        
+   BOOL    BOOL    BOOL 
 ======= ======= ======= 
 <true>  <true>  <false> 
 
