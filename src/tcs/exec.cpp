@@ -542,7 +542,8 @@ static int run_text(char *script,
 
 	success = script_parse(script, script_file, &n);
 
-	fclose(script_file);
+	if (success)
+		fclose(script_file);
 
 	// If we failed at creating script file return false
 
