@@ -1,18 +1,18 @@
-Statement failed, SQLSTATE = 2F000
-Error while parsing procedure "PUBLIC"."CAST1"'s BLR
--data type not supported for arithmetic
+Statement failed, SQLSTATE = 22008
+data type not supported for arithmetic
+-Error while parsing procedure "PUBLIC"."CAST1"'s BLR
 After line 1 in file proc_cast7.sql
-Statement failed, SQLSTATE = 2F000
-Error while parsing procedure "PUBLIC"."CAST2"'s BLR
--data type not supported for arithmetic
+Statement failed, SQLSTATE = 22008
+data type not supported for arithmetic
+-Error while parsing procedure "PUBLIC"."CAST2"'s BLR
 After line 7 in file proc_cast7.sql
-Statement failed, SQLSTATE = 2F000
-Error while parsing procedure "PUBLIC"."CAST4"'s BLR
--data type not supported for arithmetic
+Statement failed, SQLSTATE = 22008
+data type not supported for arithmetic
+-Error while parsing procedure "PUBLIC"."CAST4"'s BLR
 After line 19 in file proc_cast7.sql
-Statement failed, SQLSTATE = 2F000
-Error while parsing procedure "PUBLIC"."CAST5"'s BLR
--data type not supported for arithmetic
+Statement failed, SQLSTATE = 22008
+data type not supported for arithmetic
+-Error while parsing procedure "PUBLIC"."CAST5"'s BLR
 After line 25 in file proc_cast7.sql
 Statement failed, SQLSTATE = 42000
 Dynamic SQL Error

@@ -2,9 +2,8 @@ Use CONNECT or CREATE DATABASE to specify a database
 Use CONNECT or CREATE DATABASE to specify a database
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
--cannot delete
--COLUMN "PUBLIC"."T0"."A"
--there are 1 dependencies
+-TABLE "PUBLIC"."T0"
+-Can't have relation with only computed fields or constraints
 After line 1 in file cf_test_13b.sql
 Table: PUBLIC.T0
 A                               INTEGER Nullable 

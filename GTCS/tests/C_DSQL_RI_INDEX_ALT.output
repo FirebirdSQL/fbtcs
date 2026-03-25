@@ -20,4 +20,4 @@ BU2075,You Can Combat Computer Stress!,238-95-7766
 BU1032,Silicon Valley Gastronomic Treats,274-80-9391
 MC3021,The Gourmet Microwave,341-22-1782
 Number found: 6 Number expected: 6
-alter_index_active expected SQLCODE = -803. Got SQLCODE = -803
+alter_index_active expected SQLCODE = -607. Got SQLCODE = -607
