@@ -31,7 +31,8 @@ BASED_ON st2.table_row   t2table_row;
 char Test[]="\
 select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row \
 from (st1 t full join st2 x on (t.s1 = x.s1 and t.sscale = x.sscale) and \
-(t.s1 = x.s1 and t.s3 = x.s3))";
+(t.s1 = x.s1 and t.s3 = x.s3)) \
+order by t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row";
 
 void Underline(int);
 
@@ -46,8 +47,9 @@ int main()
     EXEC SQL
         DECLARE CR CURSOR FOR
         select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row
-        from (st1 t full join st2 x on (t.s1 = x.s1 and t.sscale = x.sscale) and
-        (t.s1 = x.s1 and t.s3 = x.s3));
+        from (st1 t full join st2 x
+          on (t.s1 = x.s1 and t.sscale = x.sscale) and (t.s1 = x.s1 and t.s3 = x.s3))
+        order by t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row;
 
         EXEC SQL
 		OPEN CR;
@@ -119,8 +121,9 @@ $ RUN join039
 >> join039.sql
 connect WHERE_GDB:sh_join_39.gdb;
 select t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row
-from (st1 t full join st2 x on (t.s1 = x.s1 and t.sscale = x.sscale)and
-(t.s1 = x.s1 and t.s3 = x.s3));
+  from (st1 t full join st2 x
+    on (t.s1 = x.s1 and t.sscale = x.sscale) and (t.s1 = x.s1 and t.s3 = x.s3))
+  order by t.s1,t.s2,t.s3,t.table_row,x.s1,x.s2,x.table_row;
 quit;
 $ISQL -m -i join039.sql
 $DROP WHERE_GDB:sh_join_39.gdb
