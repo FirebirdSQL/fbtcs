@@ -3,7 +3,7 @@ unsuccessful metadata update
 -CREATE INDEX "PUBLIC"."T_IND" failed
 -Index "PUBLIC"."T_IND" already exists
 Use CONNECT or CREATE DATABASE to specify a database
-PUBLIC.T_IND UNIQUE INDEX ON T(B) 
+PUBLIC.T_IND UNIQUE INDEX ON PUBLIC.T(B) 
 Statement failed, SQLSTATE = 23000
 attempt to store duplicate value (visible to active transactions) in unique index "PUBLIC"."T_IND"
 -Problematic key value is ("B" = 10)
