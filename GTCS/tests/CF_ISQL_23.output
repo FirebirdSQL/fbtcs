@@ -10,7 +10,7 @@ select count(*) from test;
 ===================== 
                  6000 
 
-select * from groups;
+select * from TGROUPS;
 
        GR_ID GR_NAME                                  
 ============ ======================================== 

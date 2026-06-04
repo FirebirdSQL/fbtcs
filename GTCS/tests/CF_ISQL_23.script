@@ -43,7 +43,7 @@ SET TERM ; ^
 /* Tables */
 /******************************************************************************/
 
-CREATE TABLE GROUPS (
+CREATE TABLE TGROUPS (
 GR_ID INTEGER NOT NULL,
 GR_NAME VARCHAR(40) CHARACTER SET ISO8859_1 NOT NULL
 COLLATE DE_DE
@@ -57,7 +57,7 @@ T_GROUP INTEGER NOT NULL
 /******************************************************************************/
 /* Primary Keys */
 /******************************************************************************/
-ALTER TABLE GROUPS ADD CONSTRAINT PK_GROUPS PRIMARY
+ALTER TABLE TGROUPS ADD CONSTRAINT PK_GROUPS PRIMARY
 KEY (GR_ID);
 ALTER TABLE TEST ADD CONSTRAINT PK_TEST PRIMARY KEY
 (ID, T_GROUP);
@@ -67,7 +67,7 @@ ALTER TABLE TEST ADD CONSTRAINT PK_TEST PRIMARY KEY
 /******************************************************************************/
 ALTER TABLE TEST ADD CONSTRAINT FK_TEST FOREIGN KEY
 (T_GROUP)
-REFERENCES GROUPS (GR_ID);
+REFERENCES TGROUPS (GR_ID);
 
 /******************************************************************************/
 /* Stored Procedures */
@@ -116,8 +116,8 @@ SET TERM ; ^
 commit;
 
 /* Default values for the tables. */
-insert into GROUPS VALUES ( 1 , 'Group1' );
-insert into GROUPS VALUES ( 2 , 'Group2' );
+insert into TGROUPS VALUES ( 1 , 'Group1' );
+insert into TGROUPS VALUES ( 2 , 'Group2' );
 commit;
 execute procedure INSERT_VALUES( 3000 , 1);
 commit;
@@ -130,7 +130,7 @@ connect 'WHERE_GDB:cf_isql_23.fdb';
 execute procedure GROUP_COPY( 1 , 2 );
 commit;
 select count(*) from test;
-select * from groups;
+select * from TGROUPS;
 
 $ISQL -m -i cf_isql_23a.sql
 $ISQL -m -i cf_isql_23b.sql
