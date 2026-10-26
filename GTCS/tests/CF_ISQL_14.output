@@ -17,6 +17,7 @@ After line 13 in file cf_test.sql
 
 Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
+-CREATE TABLE "PUBLIC"."T5" failed
 -TABLE "PUBLIC"."T5"
 -Can't have relation with only computed fields or constraints
 After line 19 in file cf_test.sql
